@@ -14,6 +14,7 @@ import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 import { cn } from '@/lib/utils';
 import { NMW_RATES, NMW_EFFECTIVE_LABEL } from '@/data/nmwRates';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const levyFacts = [
   'Annual payroll over £3 million',
@@ -205,9 +206,14 @@ const EmployerInfoPage = () => {
 
         {/* ── Intro ───────────────────────────────────────────────── */}
         <motion.div variants={itemVariants}>
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2">
+          <div
+            className={cn(
+              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-2',
+              CARD_SURFACE
+            )}
+          >
             <Eyebrow>Made for employers</Eyebrow>
-            <p className="text-[13.5px] text-white/85 leading-relaxed">
+            <p className="text-[13.5px] text-white leading-relaxed">
               This section helps employers understand apprenticeship funding and make the business
               case. Share it with employers who are unfamiliar with how funding works or need
               convincing that taking on an apprentice is a smart investment.
@@ -245,19 +251,24 @@ const EmployerInfoPage = () => {
             title="Digital Apprenticeship Service setup"
             meta="apprenticeships.education.gov.uk · 7 steps"
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+          <div
+            className={cn(
+              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
+              CARD_SURFACE
+            )}
+          >
             <ol className="space-y-2">
               {dasSteps.map((step, i) => (
                 <li key={step} className="flex items-start gap-3">
-                  <span className="inline-flex items-center justify-center w-6 h-6 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06] text-[11px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
+                  <span className="inline-flex items-center justify-center w-6 h-6 rounded-md border border-elec-yellow/25 bg-white/[0.05] text-[11px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
                     {i + 1}
                   </span>
-                  <span className="text-[12.5px] text-white/85 leading-relaxed">{step}</span>
+                  <span className="text-[12.5px] text-white leading-relaxed">{step}</span>
                 </li>
               ))}
             </ol>
-            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
-              <p className="text-[12.5px] text-white/85 leading-relaxed">
+            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3">
+              <p className="text-[12.5px] text-white leading-relaxed">
                 <span className="font-semibold text-elec-yellow">Note:</span> Most training
                 providers walk you through this for free. Many will set up the account on your
                 behalf with your permission.
@@ -273,12 +284,12 @@ const EmployerInfoPage = () => {
             title="10 things to check before you commit"
             meta="The provider has a massive impact on your apprentice's success"
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
+          <div className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}>
             <ul className="space-y-1.5">
               {providerCriteria.map((item) => (
                 <li
                   key={item}
-                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                 >
                   <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                   <span>{item}</span>
@@ -299,7 +310,10 @@ const EmployerInfoPage = () => {
             {yearByYear.map((y) => (
               <li
                 key={y.year}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3"
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
+                  CARD_SURFACE
+                )}
               >
                 <div className="flex items-baseline justify-between gap-3 flex-wrap">
                   <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
@@ -310,7 +324,7 @@ const EmployerInfoPage = () => {
                   {y.rows.map((row) => (
                     <li
                       key={row.label}
-                      className="flex items-start justify-between gap-3 text-[12.5px] text-white/85"
+                      className="flex items-start justify-between gap-3 text-[12.5px] text-white"
                     >
                       <span>{row.label}</span>
                       <span
@@ -324,7 +338,7 @@ const EmployerInfoPage = () => {
                     </li>
                   ))}
                 </ul>
-                <p className="text-[12.5px] text-white/70 leading-relaxed pt-1 border-t border-white/[0.04]">
+                <p className="text-[12.5px] text-white leading-relaxed pt-1 border-t border-white/[0.04]">
                   {y.narrative}
                 </p>
               </li>
@@ -339,12 +353,17 @@ const EmployerInfoPage = () => {
             title="Minimum hourly rates"
             meta="JIB-graded employers typically pay above minimum"
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+          <div
+            className={cn(
+              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
+              CARD_SURFACE
+            )}
+          >
             <ul className="space-y-1.5">
               {wageRates.map((rate) => (
                 <li
                   key={rate.label}
-                  className="flex items-start justify-between gap-3 text-[12.5px] text-white/85"
+                  className="flex items-start justify-between gap-3 text-[12.5px] text-white"
                 >
                   <span>{rate.label}</span>
                   <span className="font-mono tabular-nums font-semibold text-elec-yellow flex-shrink-0">
@@ -353,8 +372,8 @@ const EmployerInfoPage = () => {
                 </li>
               ))}
             </ul>
-            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
-              <p className="text-[12.5px] text-white/85 leading-relaxed">
+            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3">
+              <p className="text-[12.5px] text-white leading-relaxed">
                 <span className="font-semibold text-elec-yellow">Note:</span> Many electrical
                 employers pay above minimum from Year 2 onwards. JIB-graded employers follow JIB
                 recommended rates which are typically higher.
@@ -374,12 +393,15 @@ const EmployerInfoPage = () => {
             {concerns.map((c) => (
               <li
                 key={c.question}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-1.5"
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-1.5',
+                  CARD_SURFACE
+                )}
               >
                 <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
                   {c.question}
                 </h3>
-                <p className="text-[13px] text-white/85 leading-relaxed">{c.answer}</p>
+                <p className="text-[13px] text-white leading-relaxed">{c.answer}</p>
               </li>
             ))}
           </ul>
@@ -392,17 +414,17 @@ const EmployerInfoPage = () => {
             title="What's expected of the employer"
             meta="Decreases as competence increases"
             action={
-              <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06]">
+              <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-white/[0.05]">
                 <Users className="h-4 w-4 text-elec-yellow" />
               </span>
             }
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
+          <div className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}>
             <ul className="space-y-1.5">
               {supervisionRequirements.map((item) => (
                 <li
                   key={item}
-                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                 >
                   <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                   <span>{item}</span>
@@ -419,23 +441,28 @@ const EmployerInfoPage = () => {
             title="The maths on hiring instead"
             meta="What it actually costs to skip the apprenticeship"
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
-            <p className="text-[13px] text-white/85 leading-relaxed">
+          <div
+            className={cn(
+              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
+              CARD_SURFACE
+            )}
+          >
+            <p className="text-[13px] text-white leading-relaxed">
               Hiring a qualified electrician typically costs:
             </p>
             <ul className="space-y-1.5">
               {hireComparison.map((item) => (
                 <li
                   key={item}
-                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                 >
-                  <AlertTriangle className="h-3.5 w-3.5 text-white/55 flex-shrink-0 mt-0.5" />
+                  <AlertTriangle className="h-3.5 w-3.5 text-white flex-shrink-0 mt-0.5" />
                   <span>{item}</span>
                 </li>
               ))}
             </ul>
-            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
-              <p className="text-[12.5px] text-white/85 leading-relaxed">
+            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3">
+              <p className="text-[12.5px] text-white leading-relaxed">
                 An apprentice costs significantly less in Year 1–2, becomes productive from Year 2,
                 and is fully qualified by Year 4 — trained exactly to your standards, loyal to your
                 business, at a fraction of the total cost.
@@ -451,17 +478,17 @@ const EmployerInfoPage = () => {
             title="Typical SME electrical contractor"
             meta="6-person firm · £180k payroll · non-levy · 17-yo apprentice on L3"
             action={
-              <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06]">
+              <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-white/[0.05]">
                 <Building2 className="h-4 w-4 text-elec-yellow" />
               </span>
             }
           />
-          <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5">
+          <div className="rounded-xl border border-elec-yellow/25 bg-white/[0.05] p-4 sm:p-5">
             <ul className="space-y-1.5">
               {caseStudyBullets.map((item) => (
                 <li
                   key={item}
-                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                 >
                   <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
                   <span>{item}</span>
@@ -482,12 +509,15 @@ const EmployerInfoPage = () => {
             {stats.map((stat) => (
               <li
                 key={stat.label}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-3 sm:p-4 text-center space-y-1.5"
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 p-3 sm:p-4 text-center space-y-1.5',
+                  CARD_SURFACE
+                )}
               >
                 <p className="text-[20px] sm:text-[24px] font-mono font-semibold tabular-nums text-elec-yellow leading-none">
                   {stat.value}
                 </p>
-                <p className="text-[11px] text-white/70 leading-snug">{stat.label}</p>
+                <p className="text-[11px] text-white leading-snug">{stat.label}</p>
               </li>
             ))}
           </ul>
@@ -511,7 +541,9 @@ function FactsCard({
   tip: string;
 }) {
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+    <div
+      className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3', CARD_SURFACE)}
+    >
       <div className="space-y-0.5">
         <h3 className="text-[15px] font-semibold text-elec-yellow tracking-tight">{label}</h3>
         <Eyebrow>{sublabel}</Eyebrow>
@@ -520,15 +552,15 @@ function FactsCard({
         {items.map((item) => (
           <li
             key={item}
-            className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+            className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
           >
             <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
             <span>{item}</span>
           </li>
         ))}
       </ul>
-      <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
-        <p className="text-[12px] text-white/85 leading-relaxed">
+      <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3">
+        <p className="text-[12px] text-white leading-relaxed">
           <span className="font-semibold text-elec-yellow">Tip: </span>
           {tip}
         </p>

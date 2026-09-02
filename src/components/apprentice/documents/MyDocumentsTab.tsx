@@ -81,13 +81,13 @@ const MyDocumentsTab = () => {
   return (
     <div className="space-y-6">
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Upload documents
         </span>
         <div className="border-2 border-dashed border-white/15 rounded-xl p-8 text-center space-y-3">
-          <Upload className="h-10 w-10 text-white/55 mx-auto" />
+          <Upload className="h-10 w-10 text-white mx-auto" />
           <h3 className="text-[16px] font-semibold text-white">Upload your documents</h3>
-          <p className="text-[14px] text-white/85 leading-relaxed">
+          <p className="text-[14px] text-white leading-relaxed">
             Drag and drop files here, or click to browse
           </p>
           <Input
@@ -109,23 +109,23 @@ const MyDocumentsTab = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Storage overview
         </span>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 text-center space-y-1">
             <div className="text-2xl font-mono text-white">{documents.length}</div>
-            <div className="text-[12px] text-white/55">Total documents</div>
+            <div className="text-[12px] text-white">Total documents</div>
           </div>
           <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 text-center space-y-1">
             <div className="text-2xl font-mono text-white">
               {documents.reduce((acc, doc) => acc + parseFloat(doc.size), 0).toFixed(1)} MB
             </div>
-            <div className="text-[12px] text-white/55">Total size</div>
+            <div className="text-[12px] text-white">Total size</div>
           </div>
           <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 text-center space-y-1">
             <div className="text-2xl font-mono text-white">2.5 GB</div>
-            <div className="text-[12px] text-white/55">Available space</div>
+            <div className="text-[12px] text-white">Available space</div>
           </div>
         </div>
       </div>
@@ -145,10 +145,10 @@ const MyDocumentsTab = () => {
               className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 flex items-center justify-between gap-3 flex-wrap"
             >
               <div className="flex items-center gap-3 flex-1 min-w-0">
-                <FileText className="h-5 w-5 text-white/55 flex-shrink-0" />
+                <FileText className="h-5 w-5 text-white flex-shrink-0" />
                 <div className="min-w-0">
                   <h4 className="text-[14px] font-semibold text-white truncate">{doc.name}</h4>
-                  <p className="text-[12px] text-white/55 font-mono">
+                  <p className="text-[12px] text-white font-mono">
                     {doc.type} · {doc.size} · {doc.uploadDate}
                   </p>
                 </div>
@@ -186,7 +186,7 @@ const MyDocumentsTab = () => {
       ) : (
         <div className="flex flex-col items-center justify-center py-12 text-center space-y-2">
           <h3 className="text-[18px] font-semibold text-white">No documents found</h3>
-          <p className="text-[14px] text-white/85">Upload your first document to get started</p>
+          <p className="text-[14px] text-white">Upload your first document to get started</p>
         </div>
       )}
     </div>

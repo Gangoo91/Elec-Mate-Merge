@@ -9,9 +9,10 @@ const OffJobTrainingInfo = () => {
         <h3 className="font-semibold">Off-the-Job Training</h3>
       </div>
       <p className="text-sm text-white">
-        Electrical apprenticeships require a minimum of 20% off-the-job training, equating to at
-        least 278 hours over a 12-month period. All courses in the Study Centre count toward this
-        requirement. Your time spent learning on this app is automatically tracked in the{' '}
+        Off-the-job training is a fixed number of hours set by your apprenticeship standard — 1,066
+        hours for an Installation &amp; Maintenance Electrician (ST0152) for starts from 1 August
+        2025. All courses in the Study Centre count toward it. Your time spent learning on this app
+        is automatically tracked in the{' '}
         <Link to="/apprentice/ojt-hub" className="text-elec-yellow hover:underline">
           Off-the-Job Time Keeping
         </Link>{' '}

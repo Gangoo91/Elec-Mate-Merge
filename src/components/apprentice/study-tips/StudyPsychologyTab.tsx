@@ -112,10 +112,10 @@ const StudyPsychologyTab = () => {
   return (
     <div className="space-y-6">
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Psychology of learning
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           Understanding how your mind learns can dramatically improve your study effectiveness.
           These evidence-based psychological principles will help you master electrical concepts
           more efficiently and retain information longer.
@@ -129,19 +129,19 @@ const StudyPsychologyTab = () => {
             className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3"
           >
             <div className="space-y-1">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 {topic.title}
               </span>
-              <p className="text-[13px] text-white/70">{topic.description}</p>
+              <p className="text-[13px] text-white">{topic.description}</p>
             </div>
 
             <div className="space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Key principles
               </span>
               <ul className="space-y-1">
                 {topic.content.map((point, pointIndex) => (
-                  <li key={pointIndex} className="flex items-start gap-2 text-[13px] text-white/85">
+                  <li key={pointIndex} className="flex items-start gap-2 text-[13px] text-white">
                     <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                     <span>{point}</span>
                   </li>
@@ -150,12 +150,12 @@ const StudyPsychologyTab = () => {
             </div>
 
             <div className="space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Practical applications
               </span>
               <ul className="space-y-1">
                 {topic.tips.map((tip, tipIndex) => (
-                  <li key={tipIndex} className="flex items-start gap-2 text-[13px] text-white/85">
+                  <li key={tipIndex} className="flex items-start gap-2 text-[13px] text-white">
                     <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                     <span>{tip}</span>
                   </li>
@@ -167,7 +167,7 @@ const StudyPsychologyTab = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Evidence-based learning techniques
         </span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -177,12 +177,12 @@ const StudyPsychologyTab = () => {
               className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
             >
               <h4 className="text-[14px] font-semibold text-white">{technique.title}</h4>
-              <p className="text-[13px] text-white/70 leading-relaxed">{technique.description}</p>
+              <p className="text-[13px] text-white leading-relaxed">{technique.description}</p>
               <div className="rounded-md border border-white/10 bg-white/[0.03] p-2.5 space-y-0.5">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   For electrical training
                 </span>
-                <p className="text-[12px] text-white/85">{technique.application}</p>
+                <p className="text-[12px] text-white">{technique.application}</p>
               </div>
             </div>
           ))}
@@ -190,7 +190,7 @@ const StudyPsychologyTab = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Stress management & wellbeing
         </span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -200,9 +200,9 @@ const StudyPsychologyTab = () => {
               className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
             >
               <h4 className="text-[14px] font-semibold text-white">{item.technique}</h4>
-              <p className="text-[13px] text-white/85 leading-relaxed">{item.description}</p>
-              <p className="text-[12px] text-white/55">
-                <span className="text-white/70">When: </span>
+              <p className="text-[13px] text-white leading-relaxed">{item.description}</p>
+              <p className="text-[12px] text-white">
+                <span className="text-white">When: </span>
                 {item.when}
               </p>
             </div>
@@ -212,10 +212,10 @@ const StudyPsychologyTab = () => {
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Need to talk to someone?
           </span>
-          <p className="text-[13px] text-white/70 leading-relaxed">
+          <p className="text-[13px] text-white leading-relaxed">
             Studying alongside work is hard. If the pressure is getting too much, these free,
             confidential lines are there for people in the electrical and construction trades.
           </p>
@@ -228,7 +228,7 @@ const StudyPsychologyTab = () => {
             <span className="text-[13px] font-semibold text-white">
               Electrical Industries Charity
             </span>
-            <span className="text-[12px] text-white/70">0800 652 1618 — tap to call</span>
+            <span className="text-[12px] text-white">0800 652 1618 — tap to call</span>
           </a>
           <a
             href="tel:03456051956"
@@ -237,30 +237,30 @@ const StudyPsychologyTab = () => {
             <span className="text-[13px] font-semibold text-white">
               Lighthouse Construction Charity
             </span>
-            <span className="text-[12px] text-white/70">0345 605 1956 · text HARDHAT to 85258</span>
+            <span className="text-[12px] text-white">0345 605 1956 · text HARDHAT to 85258</span>
           </a>
           <a
             href="sms:85258?&body=HARDHAT"
             className="flex flex-col justify-center min-h-11 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 hover:bg-white/[0.06] touch-manipulation"
           >
             <span className="text-[13px] font-semibold text-white">Lighthouse text line</span>
-            <span className="text-[12px] text-white/70">Text HARDHAT to 85258 — tap to text</span>
+            <span className="text-[12px] text-white">Text HARDHAT to 85258 — tap to text</span>
           </a>
           <a
             href="tel:116123"
             className="flex flex-col justify-center min-h-11 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 hover:bg-white/[0.06] touch-manipulation"
           >
             <span className="text-[13px] font-semibold text-white">Samaritans</span>
-            <span className="text-[12px] text-white/70">116 123 — free, 24/7, tap to call</span>
+            <span className="text-[12px] text-white">116 123 — free, 24/7, tap to call</span>
           </a>
         </div>
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           The psychology of success
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           Your mindset and approach to learning are just as important as the time you spend
           studying. By understanding how your brain works and applying these psychological
           principles, you&apos;ll not only learn electrical concepts more effectively but also

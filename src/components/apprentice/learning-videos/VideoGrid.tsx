@@ -19,8 +19,8 @@ export function VideoGrid({ videos, isBookmarked, onVideoTap, onBookmarkToggle }
   if (videos.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-12 text-center space-y-2">
-        <p className="text-[14px] text-white/85">No videos found</p>
-        <p className="text-[12px] text-white/55">Try a different search or category</p>
+        <p className="text-[14px] text-white">No videos found</p>
+        <p className="text-[12px] text-white">Try a different search or category</p>
       </div>
     );
   }

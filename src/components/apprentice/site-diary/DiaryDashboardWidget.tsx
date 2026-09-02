@@ -49,38 +49,38 @@ export function DiaryDashboardWidget() {
           <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] min-h-[140px]">
             <div className="p-4 sm:p-5 flex items-start gap-4">
               <div className="flex-1 min-w-0 space-y-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   {todayFormatted}
                 </span>
                 <h3 className="text-[18px] font-semibold text-white">
                   {hasLoggedToday ? 'Add another entry' : 'Log today'}
                 </h3>
                 {hasLoggedToday && (
-                  <span className="inline-block text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07]">
+                  <span className="inline-block text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07]">
                     Done
                   </span>
                 )}
 
                 <div className="flex flex-wrap gap-1.5 pt-1">
                   {currentStreak > 0 ? (
-                    <span className="inline-flex items-center gap-1 text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07]">
+                    <span className="inline-flex items-center gap-1 text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07]">
                       <Flame className="h-3 w-3" />
                       {currentStreak}-day streak
                     </span>
                   ) : (
-                    <span className="inline-flex items-center gap-1 text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07]">
+                    <span className="inline-flex items-center gap-1 text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07]">
                       <Flame className="h-3 w-3" />
                       {streakMessage}
                     </span>
                   )}
                   {entries.length > 0 && (
-                    <span className="inline-flex items-center gap-1 text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07]">
+                    <span className="inline-flex items-center gap-1 text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07]">
                       <FileText className="h-3 w-3" />
                       {entries.length} {entries.length === 1 ? 'entry' : 'entries'}
                     </span>
                   )}
                   {currentStreak > 0 && nextMilestone && daysToNextMilestone > 0 && (
-                    <span className="inline-flex items-center gap-1 text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07] font-mono">
+                    <span className="inline-flex items-center gap-1 text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07] font-mono">
                       {daysToNextMilestone}d to {nextMilestone}-day milestone
                     </span>
                   )}
@@ -95,7 +95,7 @@ export function DiaryDashboardWidget() {
         {entries.length > 0 && (
           <Link
             to="/apprentice/site-diary"
-            className="flex items-center justify-center gap-2 h-11 text-[13px] text-white/85 font-medium touch-manipulation active:bg-white/[0.05] rounded-xl border border-white/[0.10] bg-white/[0.06]"
+            className="flex items-center justify-center gap-2 h-11 text-[13px] text-white font-medium touch-manipulation active:bg-white/[0.05] rounded-xl border border-white/[0.10] bg-white/[0.06]"
           >
             View all diary entries
             <ChevronRight className="h-4 w-4" />

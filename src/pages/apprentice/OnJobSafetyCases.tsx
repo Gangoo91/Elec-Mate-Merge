@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
-import { ArrowLeft, HardHat, AlertTriangle, Flame, Target } from 'lucide-react';
+import { HardHat, AlertTriangle, Flame, Target } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { itemVariants } from '@/components/college/primitives';
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';

@@ -6,18 +6,11 @@
  */
 
 import { useState, useRef, useEffect } from 'react';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetDescription,
-} from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
+import { FormSheet } from '@/components/forms/FormSheet';
+import { buttonPrimaryCn, inputCn } from '@/components/forms/fieldStyles';
+import { CARD_BASE, CARD_NEUTRAL, CARD_SURFACE } from '@/components/ui/card-recipe';
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { Send, Loader2, MessageSquare, ChevronLeft, User, CheckCheck, Clock } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
@@ -107,15 +100,14 @@ export function DirectMessaging({ open, onOpenChange }: DirectMessagingProps) {
     return formatDistanceToNow(date, { addSuffix: true });
   };
 
-  // Conversation List View
-  const ConversationList = () => (
+  // Conversation list — a JSX value, not a component declared in render
+  // (that remounted on every keystroke and dropped focus from the input).
+  const conversationList = (
     <div className="space-y-2">
       {connections.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-12 text-center">
-          <div className="p-4 rounded-full bg-muted mb-4">
-            <MessageSquare className="h-8 w-8 text-white" />
-          </div>
-          <p className="font-medium text-foreground">No conversations yet</p>
+          <MessageSquare className="mb-3 h-8 w-8 text-white" />
+          <p className="font-medium text-white">No conversations yet</p>
           <p className="text-sm text-white mt-1">Connect with a tutor to start messaging</p>
         </div>
       ) : (
@@ -129,28 +121,24 @@ export function DirectMessaging({ open, onOpenChange }: DirectMessagingProps) {
             <button
               key={connection.id}
               onClick={() => openConversation(connection.id)}
-              className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-muted/50 transition-colors active:scale-[0.98] touch-manipulation"
+              className={cn(CARD_BASE, CARD_NEUTRAL, 'w-full flex-row items-center gap-3 p-3')}
             >
               <Avatar className="h-12 w-12">
                 <AvatarImage src={mentor?.avatar_url} />
-                <AvatarFallback className="bg-elec-yellow/10 text-elec-yellow">
+                <AvatarFallback className="bg-white/[0.08] text-elec-yellow">
                   {getInitials(mentor?.full_name)}
                 </AvatarFallback>
               </Avatar>
               <div className="flex-1 text-left min-w-0">
                 <div className="flex items-center justify-between">
-                  <p className="font-medium text-foreground truncate">
-                    {mentor?.full_name || 'Tutor'}
-                  </p>
+                  <p className="truncate font-medium text-white">{mentor?.full_name || 'Tutor'}</p>
                   {lastMessage && (
                     <span className="text-xs text-white shrink-0 ml-2">
                       {formatMessageTime(lastMessage.created_at)}
                     </span>
                   )}
                 </div>
-                <p className="text-sm text-white truncate">
-                  {mentor?.role || 'Training Provider'}
-                </p>
+                <p className="text-sm text-white truncate">{mentor?.role || 'Training Provider'}</p>
               </div>
             </button>
           );
@@ -159,17 +147,17 @@ export function DirectMessaging({ open, onOpenChange }: DirectMessagingProps) {
     </div>
   );
 
-  // Message Bubble Component
-  const MessageBubble = ({ message }: { message: DirectMessage }) => {
+  const renderBubble = (message: DirectMessage) => {
     const isOwn = message.sender_type === 'apprentice';
 
     return (
       <div className={cn('flex', isOwn ? 'justify-end' : 'justify-start')}>
         <div
-          className={cn('max-w-[80%] rounded-2xl px-4 py-2.5',
+          className={cn(
+            'max-w-[80%] rounded-2xl px-4 py-2.5',
             isOwn
               ? 'bg-elec-yellow text-black rounded-br-sm'
-              : 'bg-muted text-foreground rounded-bl-sm'
+              : cn('text-white rounded-bl-sm', CARD_SURFACE)
           )}
         >
           <p className="text-sm whitespace-pre-wrap break-words">{message.content}</p>
@@ -191,103 +179,99 @@ export function DirectMessaging({ open, onOpenChange }: DirectMessagingProps) {
     );
   };
 
-  // Conversation View
-  const ConversationView = () => {
-    const mentor = activeConnection?.mentor;
+  const mentor = activeConnection?.mentor;
 
-    return (
-      <div className="flex flex-col h-full">
-        {/* Conversation Header */}
-        <div className="flex items-center gap-3 px-4 py-3 border-b border-border">
-          <Button variant="ghost" size="icon" onClick={handleBack} className="shrink-0 -ml-2">
-            <ChevronLeft className="h-5 w-5" />
-          </Button>
-          <Avatar className="h-10 w-10">
-            <AvatarImage src={mentor?.avatar_url} />
-            <AvatarFallback className="bg-elec-yellow/10 text-elec-yellow">
-              {getInitials(mentor?.full_name)}
-            </AvatarFallback>
-          </Avatar>
-          <div className="flex-1 min-w-0">
-            <p className="font-medium text-foreground truncate">{mentor?.full_name || 'Tutor'}</p>
-            <p className="text-xs text-white">{mentor?.role || 'Training Provider'}</p>
-          </div>
-        </div>
+  const conversationTitle = (
+    <span className="flex items-center gap-3">
+      <button
+        type="button"
+        onClick={handleBack}
+        aria-label="Back to conversations"
+        className="-ml-2 flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white touch-manipulation"
+      >
+        <ChevronLeft className="h-5 w-5" />
+      </button>
+      <Avatar className="h-10 w-10">
+        <AvatarImage src={mentor?.avatar_url} />
+        <AvatarFallback className="bg-white/[0.08] text-elec-yellow">
+          {getInitials(mentor?.full_name)}
+        </AvatarFallback>
+      </Avatar>
+      <span className="min-w-0">
+        <span className="block truncate text-[17px] font-semibold text-white">
+          {mentor?.full_name || 'Tutor'}
+        </span>
+        <span className="block text-[12px] font-normal text-white">
+          {mentor?.role || 'Training Provider'}
+        </span>
+      </span>
+    </span>
+  );
 
-        {/* Messages Area */}
-        <ScrollArea ref={scrollAreaRef} className="flex-1 px-4 py-4">
-          <div className="space-y-3">
-            {messages.length === 0 ? (
-              <div className="flex flex-col items-center justify-center py-8 text-center">
-                <User className="h-12 w-12 text-white mb-3" />
-                <p className="text-sm text-white">No messages yet. Start the conversation!</p>
-              </div>
-            ) : (
-              messages.map((message) => <MessageBubble key={message.id} message={message} />)
-            )}
-          </div>
-        </ScrollArea>
-
-        {/* Message Input */}
-        <div className="p-4 border-t border-border bg-background">
-          <div className="flex items-center gap-2">
-            <Input
-              ref={inputRef}
-              value={messageInput}
-              onChange={(e) => setMessageInput(e.target.value)}
-              onKeyDown={handleKeyPress}
-              placeholder="Type a message..."
-              className="flex-1 h-11 touch-manipulation"
-              disabled={isSending}
-            />
-            <Button
-              onClick={handleSend}
-              disabled={!messageInput.trim() || isSending}
-              className="h-11 w-11 p-0 bg-elec-yellow text-black hover:bg-elec-yellow/90 shrink-0"
-            >
-              {isSending ? (
-                <Loader2 className="h-5 w-5 animate-spin" />
-              ) : (
-                <Send className="h-5 w-5" />
-              )}
-            </Button>
-          </div>
-        </div>
-      </div>
-    );
-  };
+  const composer = (
+    <div className="flex items-center gap-2">
+      <Input
+        ref={inputRef}
+        value={messageInput}
+        onChange={(e) => setMessageInput(e.target.value)}
+        onKeyDown={handleKeyPress}
+        placeholder="Type a message…"
+        className={cn(inputCn, 'flex-1')}
+        disabled={isSending}
+      />
+      <button
+        type="button"
+        onClick={handleSend}
+        disabled={!messageInput.trim() || isSending}
+        aria-label="Send"
+        className={cn(buttonPrimaryCn, 'h-11 w-11 shrink-0 p-0')}
+      >
+        {isSending ? (
+          <Loader2 className="mx-auto h-5 w-5 animate-spin" />
+        ) : (
+          <Send className="mx-auto h-5 w-5" />
+        )}
+      </button>
+    </div>
+  );
 
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] rounded-t-3xl p-0">
-        <div className="w-12 h-1 bg-muted rounded-full mx-auto mt-3 mb-2" />
-
-        {isLoading ? (
-          <div className="flex flex-col items-center justify-center h-full">
-            <Loader2 className="h-8 w-8 animate-spin text-white" />
-            <p className="text-sm text-white mt-2">Loading messages...</p>
-          </div>
-        ) : activeConnectionId ? (
-          <ConversationView />
-        ) : (
-          <>
-            <SheetHeader className="px-4 pb-4">
-              <SheetTitle className="flex items-center gap-2">
-                <MessageSquare className="h-5 w-5 text-elec-yellow" />
-                Messages
-                {unreadCount > 0 && (
-                  <Badge className="bg-elec-yellow text-black">{unreadCount}</Badge>
-                )}
-              </SheetTitle>
-              <SheetDescription>Message your tutor or assessor</SheetDescription>
-            </SheetHeader>
-            <ScrollArea className="h-[calc(85vh-8rem)] px-4 pb-8">
-              <ConversationList />
-            </ScrollArea>
-          </>
-        )}
-      </SheetContent>
-    </Sheet>
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      eyebrow={activeConnectionId ? undefined : 'Portfolio'}
+      title={activeConnectionId ? conversationTitle : 'Messages'}
+      description={activeConnectionId ? undefined : 'Message your tutor or assessor'}
+      headerTrailing={
+        !activeConnectionId && unreadCount > 0 ? (
+          <span className="rounded-full bg-elec-yellow px-2 py-0.5 text-[11px] font-semibold tabular-nums text-black">
+            {unreadCount}
+          </span>
+        ) : undefined
+      }
+      footer={activeConnectionId ? composer : undefined}
+      bodyClassName="space-y-0"
+    >
+      {isLoading ? (
+        <div className="flex flex-col items-center justify-center py-16">
+          <Loader2 className="h-8 w-8 animate-spin text-white" />
+          <p className="mt-2 text-sm text-white">Loading messages…</p>
+        </div>
+      ) : activeConnectionId ? (
+        <div ref={scrollAreaRef} className="space-y-3 py-2">
+          {messages.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-8 text-center">
+              <User className="mb-3 h-12 w-12 text-white" />
+              <p className="text-sm text-white">No messages yet. Start the conversation.</p>
+            </div>
+          ) : (
+            messages.map((message) => <div key={message.id}>{renderBubble(message)}</div>)
+          )}
+        </div>
+      ) : (
+        conversationList
+      )}
+    </FormSheet>
   );
 }
 

@@ -80,13 +80,13 @@ const PPETab = () => {
   return (
     <div className="px-4 sm:px-6 py-4 sm:py-6 space-y-6">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           PPE & safety
         </span>
         <h2 className="text-[22px] sm:text-[26px] font-semibold text-white leading-tight">
           PPE & safety equipment
         </h2>
-        <p className="text-[14px] text-white/85 leading-relaxed max-w-2xl">
+        <p className="text-[14px] text-white leading-relaxed max-w-2xl">
           Personal Protective Equipment is essential for every UK electrical apprentice. Your safety
           is paramount - never compromise on PPE quality or suitability.
         </p>
@@ -113,10 +113,10 @@ const PPETab = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           PPE regulations & best practices
         </span>
-        <div className="space-y-2 text-[14px] text-white/85 leading-relaxed">
+        <div className="space-y-2 text-[14px] text-white leading-relaxed">
           <p>
             <strong>Legal requirements:</strong> The Personal Protective Equipment at Work
             Regulations 1992 (amended in 2022) requires employers to provide adequate PPE. However,
@@ -141,7 +141,7 @@ const PPETab = () => {
         <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
           Critical PPE safety
         </span>
-        <ul className="space-y-1.5 text-[14px] text-white/85 leading-relaxed">
+        <ul className="space-y-1.5 text-[14px] text-white leading-relaxed">
           <li className="flex items-start gap-2">
             <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
             <span>Never work without appropriate PPE - no job is worth an injury</span>

@@ -133,7 +133,7 @@ const TimeManagementTab = () => {
   return (
     <div className="space-y-6">
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Study schedule templates
         </span>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
@@ -150,12 +150,12 @@ const TimeManagementTab = () => {
                     className="rounded-md border border-white/10 bg-white/[0.03] p-3 space-y-1"
                   >
                     <div className="flex items-center gap-2">
-                      <span className="text-[11px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
+                      <span className="text-[11px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
                         {activity.time}
                       </span>
                       <h4 className="text-[13px] font-medium text-white">{activity.activity}</h4>
                     </div>
-                    <p className="text-[12px] text-white/70">{activity.description}</p>
+                    <p className="text-[12px] text-white">{activity.description}</p>
                   </div>
                 ))}
               </div>
@@ -165,7 +165,7 @@ const TimeManagementTab = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Time management strategies
         </span>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
@@ -179,7 +179,7 @@ const TimeManagementTab = () => {
                 {category.tips.map((item, itemIndex) => (
                   <div key={itemIndex} className="space-y-0.5">
                     <h4 className="text-[13px] text-white">{item.tip}</h4>
-                    <p className="text-[12px] text-white/70 leading-relaxed">{item.explanation}</p>
+                    <p className="text-[12px] text-white leading-relaxed">{item.explanation}</p>
                   </div>
                 ))}
               </div>
@@ -189,7 +189,7 @@ const TimeManagementTab = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Optimal study environment
         </span>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
@@ -203,7 +203,7 @@ const TimeManagementTab = () => {
                 {env.recommendations.map((rec, recIndex) => (
                   <li
                     key={recIndex}
-                    className="flex items-start gap-2 text-[13px] text-white/85"
+                    className="flex items-start gap-2 text-[13px] text-white"
                   >
                     <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                     <span>{rec}</span>

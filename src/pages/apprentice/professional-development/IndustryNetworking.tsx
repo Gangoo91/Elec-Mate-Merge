@@ -11,6 +11,8 @@ import { CheckCircle2 } from 'lucide-react';
 import { itemVariants } from '@/components/college/primitives';
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const professionalBodies = [
   {
@@ -314,8 +316,8 @@ const IndustryNetworking = () => {
 
         {/* ── Intro ─────────────────────────────────────────────────── */}
         <motion.div variants={itemVariants}>
-          <div className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4 sm:p-5">
-            <p className="text-[13.5px] text-white/85 leading-relaxed">
+          <div className="rounded-xl border border-elec-yellow/20 bg-white/[0.05] p-4 sm:p-5">
+            <p className="text-[13.5px] text-white leading-relaxed">
               Your network is your net worth in this industry. The connections you make as an
               apprentice can become lifelong professional relationships — opening doors to jobs,
               partnerships, and opportunities you'd never find on your own.
@@ -334,20 +336,23 @@ const IndustryNetworking = () => {
             {professionalBodies.map((body) => (
               <li
                 key={body.name}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3"
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
+                  CARD_SURFACE
+                )}
               >
                 <div className="flex items-baseline justify-between gap-3 flex-wrap">
                   <h3 className="text-[15px] font-semibold text-white tracking-tight">
                     {body.name}
                   </h3>
                   {body.recommended && (
-                    <span className="inline-flex items-center h-6 px-2 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[10px] font-medium uppercase tracking-[0.14em] text-elec-yellow">
+                    <span className="inline-flex items-center h-6 px-2 rounded-md border border-elec-yellow/30 bg-white/[0.05] text-[10px] font-medium uppercase tracking-[0.14em] text-elec-yellow">
                       Recommended
                     </span>
                   )}
                 </div>
-                <p className="text-[13px] text-white/85 leading-relaxed">{body.description}</p>
-                <div className="flex items-center gap-2 text-[11.5px] font-mono tabular-nums text-white/55">
+                <p className="text-[13px] text-white leading-relaxed">{body.description}</p>
+                <div className="flex items-center gap-2 text-[11.5px] font-mono tabular-nums text-white">
                   <span>{body.cost}</span>
                   <span>·</span>
                   <span>{body.members}</span>
@@ -356,7 +361,7 @@ const IndustryNetworking = () => {
                   {body.benefits.map((benefit) => (
                     <li
                       key={benefit}
-                      className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                      className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                     >
                       <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                       <span>{benefit}</span>
@@ -379,13 +384,16 @@ const IndustryNetworking = () => {
             {industryEvents.map((event) => (
               <li
                 key={event.name}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2"
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-2',
+                  CARD_SURFACE
+                )}
               >
                 <h3 className="text-[14px] font-semibold text-white tracking-tight">
                   {event.name}
                 </h3>
-                <p className="text-[13px] text-white/85 leading-relaxed">{event.description}</p>
-                <div className="flex items-center gap-2 text-[11.5px] font-mono tabular-nums text-white/55 flex-wrap">
+                <p className="text-[13px] text-white leading-relaxed">{event.description}</p>
+                <div className="flex items-center gap-2 text-[11.5px] font-mono tabular-nums text-white flex-wrap">
                   <span>{event.frequency}</span>
                   <span>·</span>
                   <span>{event.location}</span>
@@ -408,18 +416,21 @@ const IndustryNetworking = () => {
             {onlineCommunities.map((community) => (
               <li
                 key={community.name}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2"
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-2',
+                  CARD_SURFACE
+                )}
               >
                 <div className="flex items-baseline justify-between gap-3 flex-wrap">
                   <h3 className="text-[14px] font-semibold text-white tracking-tight">
                     {community.name}
                   </h3>
-                  <span className="inline-flex items-center h-6 px-2 rounded-md border border-white/[0.08] bg-white/[0.02] text-[10.5px] font-medium uppercase tracking-[0.14em] text-white/85">
+                  <span className="inline-flex items-center h-6 px-2 rounded-md border border-white/[0.08] bg-white/[0.02] text-[10.5px] font-medium uppercase tracking-[0.14em] text-white">
                     {community.cost}
                   </span>
                 </div>
-                <p className="text-[13px] text-white/85 leading-relaxed">{community.description}</p>
-                <p className="text-[11.5px] text-white/55 font-mono">{community.members}</p>
+                <p className="text-[13px] text-white leading-relaxed">{community.description}</p>
+                <p className="text-[11.5px] text-white font-mono">{community.members}</p>
               </li>
             ))}
           </ul>
@@ -436,10 +447,13 @@ const IndustryNetworking = () => {
             {linkedInTips.map((item) => (
               <li
                 key={item.tip}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-1"
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-1',
+                  CARD_SURFACE
+                )}
               >
                 <h3 className="text-[14px] font-semibold text-white tracking-tight">{item.tip}</h3>
-                <p className="text-[13px] text-white/85 leading-relaxed">{item.detail}</p>
+                <p className="text-[13px] text-white leading-relaxed">{item.detail}</p>
               </li>
             ))}
           </ul>
@@ -456,10 +470,13 @@ const IndustryNetworking = () => {
             {networkingTips.map((item) => (
               <li
                 key={item.tip}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-1"
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-1',
+                  CARD_SURFACE
+                )}
               >
                 <h3 className="text-[14px] font-semibold text-white tracking-tight">{item.tip}</h3>
-                <p className="text-[13px] text-white/85 leading-relaxed">{item.detail}</p>
+                <p className="text-[13px] text-white leading-relaxed">{item.detail}</p>
               </li>
             ))}
           </ul>
@@ -476,13 +493,16 @@ const IndustryNetworking = () => {
             {mentorshipProgrammes.map((programme) => (
               <li
                 key={programme.name}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2"
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-2',
+                  CARD_SURFACE
+                )}
               >
                 <h3 className="text-[14px] font-semibold text-white tracking-tight">
                   {programme.name}
                 </h3>
-                <p className="text-[13px] text-white/85 leading-relaxed">{programme.description}</p>
-                <div className="flex items-center gap-2 text-[11.5px] font-mono tabular-nums text-white/55">
+                <p className="text-[13px] text-white leading-relaxed">{programme.description}</p>
+                <div className="flex items-center gap-2 text-[11.5px] font-mono tabular-nums text-white">
                   <span>{programme.duration}</span>
                   <span>·</span>
                   <span>{programme.cost}</span>
@@ -503,10 +523,10 @@ const IndustryNetworking = () => {
             {actionPlan.map((item) => (
               <li
                 key={item.step}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
+                className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}
               >
                 <div className="flex items-start gap-3">
-                  <div className="h-8 w-8 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] flex items-center justify-center flex-shrink-0">
+                  <div className="h-8 w-8 rounded-md border border-elec-yellow/30 bg-white/[0.05] flex items-center justify-center flex-shrink-0">
                     <span className="text-[13px] font-mono font-semibold text-elec-yellow tabular-nums">
                       {item.step}
                     </span>
@@ -515,7 +535,7 @@ const IndustryNetworking = () => {
                     <h3 className="text-[14px] font-semibold text-white tracking-tight">
                       {item.title}
                     </h3>
-                    <p className="text-[13px] text-white/85 leading-relaxed">{item.detail}</p>
+                    <p className="text-[13px] text-white leading-relaxed">{item.detail}</p>
                   </div>
                 </div>
               </li>
@@ -525,9 +545,9 @@ const IndustryNetworking = () => {
 
         {/* ── ROI tip ──────────────────────────────────────────────── */}
         <motion.section variants={itemVariants}>
-          <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-1.5">
+          <div className="rounded-xl border border-elec-yellow/25 bg-white/[0.05] p-4 sm:p-5 space-y-1.5">
             <Eyebrow className="text-elec-yellow/85">The ROI of networking</Eyebrow>
-            <p className="text-[13.5px] text-white/85 leading-relaxed">
+            <p className="text-[13.5px] text-white leading-relaxed">
               Industry surveys consistently show that{' '}
               <span className="font-mono text-elec-yellow">60–70%</span> of job opportunities are
               never advertised publicly. They're filled through referrals and personal connections.
@@ -539,7 +559,7 @@ const IndustryNetworking = () => {
 
         {/* ── Footnote ─────────────────────────────────────────────── */}
         <motion.section variants={itemVariants}>
-          <p className="text-[11px] text-white/40 leading-relaxed">
+          <p className="text-[11px] text-white leading-relaxed">
             Professional body information based on current UK membership rates and benefits. Costs
             and offerings may change — check directly with each organisation for the latest details.
           </p>

@@ -8,13 +8,7 @@
  */
 
 import { useState, useEffect, useMemo } from 'react';
-import {
-  ChevronDown,
-  ChevronUp,
-  ChevronRight,
-  CheckCircle2,
-  Circle,
-} from 'lucide-react';
+import { ChevronDown, ChevronUp, ChevronRight, CheckCircle2, Circle } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 
 interface QualificationRequirement {
@@ -169,7 +163,7 @@ export function QualificationProgress({
   if (!qualificationCode) {
     return (
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-6 text-center">
-        <p className="text-[14px] text-white/55 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           Select a qualification to track your progress
         </p>
       </div>
@@ -190,14 +184,14 @@ export function QualificationProgress({
     <div className="space-y-3">
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4">
         <div className="flex items-baseline justify-between mb-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Overall progress
           </span>
           <span className="text-2xl font-mono text-white">{overall.percentage}%</span>
         </div>
 
         {qualificationName && (
-          <p className="text-[12px] text-white/55 mb-3 leading-relaxed">{qualificationName}</p>
+          <p className="text-[12px] text-white mb-3 leading-relaxed">{qualificationName}</p>
         )}
 
         <div className="h-1 rounded-full bg-white/5 overflow-hidden mb-2">
@@ -207,7 +201,7 @@ export function QualificationProgress({
           />
         </div>
 
-        <div className="flex justify-between text-[11px] text-white/55 font-mono">
+        <div className="flex justify-between text-[11px] text-white font-mono">
           <span>
             {overall.evidenced} of {overall.total} ACs evidenced
           </span>
@@ -221,17 +215,17 @@ export function QualificationProgress({
           className="w-full flex items-center justify-between px-4 py-3 touch-manipulation active:bg-white/[0.05] transition-colors min-h-[44px]"
         >
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Unit breakdown
             </span>
-            <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
+            <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
               {unitProgress.length} units
             </span>
           </div>
           {showBreakdown ? (
-            <ChevronUp className="h-4 w-4 text-white/55" />
+            <ChevronUp className="h-4 w-4 text-white" />
           ) : (
-            <ChevronDown className="h-4 w-4 text-white/55" />
+            <ChevronDown className="h-4 w-4 text-white" />
           )}
         </button>
 
@@ -260,15 +254,15 @@ export function QualificationProgress({
                     <div className="flex items-center justify-between mb-1.5">
                       <div className="flex items-center gap-2 flex-1 min-w-0 mr-3">
                         {isExpanded ? (
-                          <ChevronDown className="h-3.5 w-3.5 text-white/55 flex-shrink-0" />
+                          <ChevronDown className="h-3.5 w-3.5 text-white flex-shrink-0" />
                         ) : (
-                          <ChevronRight className="h-3.5 w-3.5 text-white/55 flex-shrink-0" />
+                          <ChevronRight className="h-3.5 w-3.5 text-white flex-shrink-0" />
                         )}
                         <div className="flex-1 min-w-0 text-left">
-                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                             Unit {unit.unitCode}
                           </span>
-                          <p className="text-[12px] text-white/85 truncate">{unit.unitTitle}</p>
+                          <p className="text-[12px] text-white truncate">{unit.unitTitle}</p>
                         </div>
                       </div>
                       <span className="text-[12px] text-white font-mono flex-shrink-0">
@@ -294,10 +288,7 @@ export function QualificationProgress({
                         const loExpanded = expandedLOs.has(loKey);
 
                         return (
-                          <div
-                            key={loKey}
-                            className="border-b border-white/[0.06] last:border-b-0"
-                          >
+                          <div key={loKey} className="border-b border-white/[0.06] last:border-b-0">
                             <button
                               onClick={() => {
                                 setExpandedLOs((prev) => {
@@ -314,17 +305,17 @@ export function QualificationProgress({
                               style={{ paddingLeft: '36px' }}
                             >
                               {loExpanded ? (
-                                <ChevronDown className="h-3 w-3 text-white/55 mt-1 flex-shrink-0" />
+                                <ChevronDown className="h-3 w-3 text-white mt-1 flex-shrink-0" />
                               ) : (
-                                <ChevronRight className="h-3 w-3 text-white/55 mt-1 flex-shrink-0" />
+                                <ChevronRight className="h-3 w-3 text-white mt-1 flex-shrink-0" />
                               )}
                               <div className="flex-1 text-left">
                                 {lo.loNumber != null && (
-                                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                                     LO{lo.loNumber}
                                   </span>
                                 )}
-                                <p className="text-[12px] text-white/85 leading-relaxed">
+                                <p className="text-[12px] text-white leading-relaxed">
                                   {lo.loText}
                                 </p>
                               </div>
@@ -344,15 +335,10 @@ export function QualificationProgress({
                                       {isEvidenced ? (
                                         <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow mt-0.5 flex-shrink-0" />
                                       ) : (
-                                        <Circle className="h-3.5 w-3.5 text-white/40 mt-0.5 flex-shrink-0" />
+                                        <Circle className="h-3.5 w-3.5 text-white mt-0.5 flex-shrink-0" />
                                       )}
-                                      <p
-                                        className={`text-[11px] leading-relaxed ${
-                                          isEvidenced ? 'text-white/85' : 'text-white/55'
-                                        }`}
-                                      >
-                                        <span className="font-mono">{ac.ac_code}</span>{' '}
-                                        {ac.ac_text}
+                                      <p className="text-[11px] leading-relaxed text-white">
+                                        <span className="font-mono">{ac.ac_code}</span> {ac.ac_text}
                                       </p>
                                     </div>
                                   );
@@ -378,29 +364,29 @@ export function QualificationProgress({
             className="w-full flex items-center justify-between px-4 py-3 touch-manipulation active:bg-white/[0.05] transition-colors min-h-[44px]"
           >
             <div className="flex items-center gap-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Gaps to fill
               </span>
-              <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
+              <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
                 {allGaps.length}
               </span>
             </div>
             {showGaps ? (
-              <ChevronUp className="h-4 w-4 text-white/55" />
+              <ChevronUp className="h-4 w-4 text-white" />
             ) : (
-              <ChevronDown className="h-4 w-4 text-white/55" />
+              <ChevronDown className="h-4 w-4 text-white" />
             )}
           </button>
 
           {showGaps && (
             <div className="px-4 pb-3 space-y-1.5 max-h-60 overflow-y-auto overscroll-contain">
               {allGaps.slice(0, 30).map((gap, idx) => (
-                <p key={idx} className="text-[12px] text-white/85 leading-relaxed text-left">
+                <p key={idx} className="text-[12px] text-white leading-relaxed text-left">
                   {gap}
                 </p>
               ))}
               {allGaps.length > 30 && (
-                <p className="text-[11px] text-white/55 italic text-left">
+                <p className="text-[11px] text-white italic text-left">
                   ...and {allGaps.length - 30} more
                 </p>
               )}

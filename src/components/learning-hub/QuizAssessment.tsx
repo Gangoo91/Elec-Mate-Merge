@@ -58,7 +58,7 @@ const QuizAssessment = () => {
             <div key={index} className="p-4 bg-muted rounded-lg">
               <div className="flex items-center justify-between mb-3">
                 <h4 className="font-medium text-foreground">{assessment.title}</h4>
-                {assessment.score && (
+                {assessment.score != null && (
                   <div className="flex items-center gap-1">
                     <Star className="h-4 w-4 text-elec-yellow" />
                     <span className="text-sm font-medium text-elec-yellow">

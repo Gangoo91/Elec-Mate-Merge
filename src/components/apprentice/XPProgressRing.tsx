@@ -74,7 +74,7 @@ export function XPProgressRing({
             fill="none"
             stroke="currentColor"
             strokeWidth={strokeWidth}
-            className="text-white/[0.06]"
+            className="text-white"
           />
           {/* Progress ring */}
           <circle

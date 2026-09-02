@@ -18,6 +18,8 @@ import {
 import { itemVariants } from '@/components/college/primitives';
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const gatewayRequirements = [
   {
@@ -53,7 +55,7 @@ const gatewayRequirements = [
   {
     title: 'Minimum duration met',
     description:
-      'Minimum 12 months on programme. Typical duration for Level 3 electrical is 42–48 months.',
+      'Minimum practical period of 8 months for starts from 1 August 2025 (12 months for earlier starts). A Level 3 electrical apprenticeship typically runs around four years — your training plan sets the date.',
   },
   {
     title: 'Off-the-job training hours met',
@@ -264,7 +266,7 @@ const timeline = [
   },
   {
     period: 'Wk 14–22',
-    event: 'Apprenticeship certificate issued by ESFA (4–8 weeks after results)',
+    event: 'Apprenticeship certificate issued through the DfE apprenticeship service',
   },
 ];
 
@@ -285,19 +287,24 @@ const GatewayPage = () => {
 
         {/* ── What is Gateway ─────────────────────────────────────── */}
         <motion.div variants={itemVariants}>
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+          <div
+            className={cn(
+              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
+              CARD_SURFACE
+            )}
+          >
             <div className="flex items-center gap-2">
               <Lock className="h-4 w-4 text-elec-yellow/85" />
               <Eyebrow>What is the Gateway?</Eyebrow>
             </div>
-            <p className="text-[13.5px] text-white/85 leading-relaxed">
+            <p className="text-[13.5px] text-white leading-relaxed">
               The Gateway is the formal readiness checkpoint before you enter EPA. A structured
               meeting between you, your employer, and your training provider — all three parties
               must agree you're ready. You cannot start EPA until Gateway is passed. It exists to
               protect you from being entered for assessment before you're prepared.
             </p>
-            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
-              <p className="text-[12.5px] text-white/85 leading-relaxed">
+            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3">
+              <p className="text-[12.5px] text-white leading-relaxed">
                 <span className="font-semibold text-elec-yellow">When does Gateway happen?</span>{' '}
                 Typically the final 3–6 months of your apprenticeship — once you've completed the
                 learning programme, your Level 3 qualification, and built a comprehensive portfolio.
@@ -318,7 +325,7 @@ const GatewayPage = () => {
             {gatewayRequirements.map((req) => (
               <li
                 key={req.title}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
+                className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}
               >
                 <div className="flex items-start gap-2.5">
                   <CheckCircle2 className="h-4 w-4 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
@@ -326,7 +333,7 @@ const GatewayPage = () => {
                     <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
                       {req.title}
                     </h3>
-                    <p className="text-[13px] text-white/85 leading-relaxed">{req.description}</p>
+                    <p className="text-[13px] text-white leading-relaxed">{req.description}</p>
                   </div>
                 </div>
               </li>
@@ -341,8 +348,13 @@ const GatewayPage = () => {
             title="The AM2S is your end-point assessment"
             meta="Taken after Gateway — not a separate pre-gateway hurdle"
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-4">
-            <p className="text-[13px] text-white/85 leading-relaxed">
+          <div
+            className={cn(
+              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-4',
+              CARD_SURFACE
+            )}
+          >
+            <p className="text-[13px] text-white leading-relaxed">
               For ST0152 there is one practical end-point assessment: the AM2S (Achievement
               Measurement 2 Standard), run by NET. It is an integrated assessment of your practical
               and applied-knowledge competence, taken after you pass Gateway. There is no separate
@@ -354,7 +366,7 @@ const GatewayPage = () => {
                 {am2sFacts.map((fact) => (
                   <li
                     key={fact}
-                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                    className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                   >
                     <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                     <span>{fact}</span>
@@ -362,19 +374,19 @@ const GatewayPage = () => {
                 ))}
               </ul>
             </div>
-            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-2">
+            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3 space-y-2">
               <Eyebrow className="text-elec-yellow/85">
                 AM2 vs AM2S vs AM2E — don't get them confused
               </Eyebrow>
               {am2Variants.map((v) => (
-                <p key={v.name} className="text-[12.5px] text-white/85 leading-relaxed">
+                <p key={v.name} className="text-[12.5px] text-white leading-relaxed">
                   <span className="font-semibold text-elec-yellow">{v.name}:</span> {v.who}
                 </p>
               ))}
             </div>
-            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-2">
+            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3 space-y-2">
               <Eyebrow className="text-elec-yellow/85">The correct sequence</Eyebrow>
-              <p className="text-[12.5px] text-white/85 leading-relaxed">
+              <p className="text-[12.5px] text-white leading-relaxed">
                 On-programme learning + Level 3 qualification + functional skills + fixed
                 off-the-job hours <span className="text-elec-yellow">→</span> Gateway sign-off{' '}
                 <span className="text-elec-yellow">→</span> AM2S (the practical and knowledge
@@ -384,7 +396,7 @@ const GatewayPage = () => {
             <div className="rounded-md border border-red-500/30 bg-red-500/[0.04] p-3">
               <div className="flex items-start gap-2">
                 <AlertTriangle className="h-3.5 w-3.5 text-red-300 flex-shrink-0 mt-0.5" />
-                <p className="text-[12.5px] text-white/85 leading-relaxed">
+                <p className="text-[12.5px] text-white leading-relaxed">
                   <span className="font-semibold text-red-300">If you don't pass the AM2S:</span>{' '}
                   you can re-sit. Your training provider arranges additional support first. Most
                   apprentices pass first time with proper preparation — use the AM2 Simulator in
@@ -406,17 +418,17 @@ const GatewayPage = () => {
             {gatewayMeetingSteps.map((item) => (
               <li
                 key={item.step}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
+                className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}
               >
                 <div className="flex items-start gap-3">
-                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[12px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
+                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-md border border-elec-yellow/30 bg-white/[0.05] text-[12px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
                     {item.step}
                   </span>
                   <div className="space-y-1">
                     <h3 className="text-[14px] font-semibold text-white tracking-tight">
                       {item.title}
                     </h3>
-                    <p className="text-[13px] text-white/85 leading-relaxed">{item.description}</p>
+                    <p className="text-[13px] text-white leading-relaxed">{item.description}</p>
                   </div>
                 </div>
               </li>
@@ -431,12 +443,12 @@ const GatewayPage = () => {
             title="14 statements you should agree with"
             meta="Tick honestly — your time and reputation matter"
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
+          <div className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}>
             <ul className="space-y-1.5">
               {readinessChecklist.map((item) => (
                 <li
                   key={item}
-                  className="flex items-start gap-2 text-[13px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[13px] text-white leading-relaxed"
                 >
                   <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                   <span>{item}</span>
@@ -457,7 +469,7 @@ const GatewayPage = () => {
             {notReadyOptions.map((item) => (
               <li
                 key={item.title}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
+                className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}
               >
                 <div className="flex items-start gap-2.5">
                   <AlertTriangle className="h-4 w-4 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
@@ -465,7 +477,7 @@ const GatewayPage = () => {
                     <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
                       {item.title}
                     </h3>
-                    <p className="text-[13px] text-white/85 leading-relaxed">{item.description}</p>
+                    <p className="text-[13px] text-white leading-relaxed">{item.description}</p>
                   </div>
                 </div>
               </li>
@@ -484,7 +496,10 @@ const GatewayPage = () => {
             {portfolioSections.map((item) => (
               <li
                 key={item.section}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-1.5"
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-1.5',
+                  CARD_SURFACE
+                )}
               >
                 <div className="flex items-center gap-2">
                   <ClipboardList className="h-3.5 w-3.5 text-elec-yellow/85" />
@@ -492,7 +507,7 @@ const GatewayPage = () => {
                     {item.section}
                   </h3>
                 </div>
-                <p className="text-[12.5px] text-white/85 leading-relaxed">{item.contents}</p>
+                <p className="text-[12.5px] text-white leading-relaxed">{item.contents}</p>
               </li>
             ))}
           </ul>
@@ -509,7 +524,7 @@ const GatewayPage = () => {
             {epaoInfo.map((item) => (
               <li
                 key={item.title}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
+                className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}
               >
                 <div className="flex items-start gap-2.5">
                   <Award className="h-4 w-4 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
@@ -517,7 +532,7 @@ const GatewayPage = () => {
                     <h3 className="text-[14px] font-semibold text-white tracking-tight">
                       {item.title}
                     </h3>
-                    <p className="text-[13px] text-white/85 leading-relaxed">{item.description}</p>
+                    <p className="text-[13px] text-white leading-relaxed">{item.description}</p>
                   </div>
                 </div>
               </li>
@@ -530,9 +545,14 @@ const GatewayPage = () => {
           <SectionHeader
             eyebrow="Timeline"
             title="From Gateway to your certificate"
-            meta="Typical 14–22 weeks from meeting to ESFA certificate"
+            meta="Illustrative timeline — your provider and NET confirm each step"
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+          <div
+            className={cn(
+              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
+              CARD_SURFACE
+            )}
+          >
             <ul className="space-y-2">
               {timeline.map((item) => (
                 <li key={item.period} className="flex items-start gap-3">
@@ -540,12 +560,12 @@ const GatewayPage = () => {
                   <span className="text-[11.5px] font-mono uppercase tracking-[0.14em] text-elec-yellow min-w-[70px] flex-shrink-0">
                     {item.period}
                   </span>
-                  <span className="text-[12.5px] text-white/85 leading-relaxed">{item.event}</span>
+                  <span className="text-[12.5px] text-white leading-relaxed">{item.event}</span>
                 </li>
               ))}
             </ul>
-            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
-              <p className="text-[12.5px] text-white/85 leading-relaxed">
+            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3">
+              <p className="text-[12.5px] text-white leading-relaxed">
                 <span className="font-semibold text-elec-yellow">Note:</span> Timelines vary
                 depending on NET centre availability, venue scheduling, and your personal readiness.
                 Your training provider will keep you updated as dates are confirmed.

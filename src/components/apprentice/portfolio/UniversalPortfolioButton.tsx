@@ -40,7 +40,7 @@ const UniversalPortfolioButton = ({
       variant={hasAdded ? 'default' : variant}
       onClick={handleAddToPortfolio}
       disabled={isProcessing || hasAdded}
-      className={`gap-1 ${hasAdded ? 'text-green-400 border-green-400' : 'text-elec-yellow hover:text-elec-yellow hover:bg-elec-yellow/10'} ${className}`}
+      className={`gap-1 ${hasAdded ? 'text-green-400 border-green-400' : 'text-elec-yellow hover:text-elec-yellow hover:bg-white/[0.06]'} ${className}`}
     >
       {hasAdded ? (
         <>

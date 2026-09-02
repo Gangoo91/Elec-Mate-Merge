@@ -102,7 +102,7 @@ const SupportSystemsTab = () => {
         'Apprentice National Minimum Wage is £8.00/hr from 1 April 2026',
         'Local council support schemes',
         'Union advice services',
-        'National Apprenticeship Helpline (England): 0800 015 0400',
+        'National Apprenticeship Helpline (England): 0800 015 0600',
       ],
     },
     {
@@ -119,7 +119,7 @@ const SupportSystemsTab = () => {
   return (
     <div className="space-y-6">
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Your support network
         </span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -129,7 +129,7 @@ const SupportSystemsTab = () => {
               className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
             >
               <h3 className="text-[16px] font-semibold text-white">{contact.title}</h3>
-              <p className="text-[14px] text-white/85 leading-relaxed">{contact.description}</p>
+              <p className="text-[14px] text-white leading-relaxed">{contact.description}</p>
               <div className="space-y-1.5 pt-1">
                 {contact.contactHref ? (
                   <a
@@ -145,12 +145,12 @@ const SupportSystemsTab = () => {
                     {contact.contact}
                   </a>
                 ) : (
-                  <div className="text-[13px] text-white/85">
-                    <span className="text-white/55">Contact: </span>
+                  <div className="text-[13px] text-white">
+                    <span className="text-white">Contact: </span>
                     {contact.contact}
                   </div>
                 )}
-                <span className="inline-block text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                <span className="inline-block text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                   {contact.action}
                 </span>
               </div>
@@ -159,7 +159,7 @@ const SupportSystemsTab = () => {
         </div>
       </div>
 
-      <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.03] p-4 sm:p-5 space-y-4">
+      <div className="rounded-xl border border-elec-yellow/25 bg-white/[0.05] p-4 sm:p-5 space-y-4">
         <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
           Mental health & wellbeing support
         </span>
@@ -170,7 +170,7 @@ const SupportSystemsTab = () => {
               className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
             >
               <h4 className="text-[16px] font-semibold text-white">{resource.service}</h4>
-              <p className="text-[14px] text-white/85 leading-relaxed">{resource.description}</p>
+              <p className="text-[14px] text-white leading-relaxed">{resource.description}</p>
               <div className="space-y-2 pt-1">
                 <a
                   href={resource.tel}
@@ -178,9 +178,7 @@ const SupportSystemsTab = () => {
                 >
                   {resource.contact}
                   {resource.contactNote ? (
-                    <span className="text-white/55 ml-1.5 no-underline">
-                      ({resource.contactNote})
-                    </span>
+                    <span className="text-white ml-1.5 no-underline">({resource.contactNote})</span>
                   ) : null}
                 </a>
                 {resource.text && resource.sms ? (
@@ -207,7 +205,7 @@ const SupportSystemsTab = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Practical support resources
         </span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -221,7 +219,7 @@ const SupportSystemsTab = () => {
                 {support.resources.map((resource, resourceIndex) => (
                   <li
                     key={resourceIndex}
-                    className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                    className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                   >
                     <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                     <span>{resource}</span>
@@ -234,7 +232,7 @@ const SupportSystemsTab = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Remember
         </span>
         <ul className="space-y-2">
@@ -247,7 +245,7 @@ const SupportSystemsTab = () => {
           ].map((point, idx) => (
             <li
               key={idx}
-              className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+              className="text-[14px] text-white leading-relaxed flex items-start gap-2"
             >
               <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
               <span>{point}</span>

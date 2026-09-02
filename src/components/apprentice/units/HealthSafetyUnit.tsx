@@ -66,7 +66,7 @@ const HealthSafetyUnit = ({ unitCode, onResourceClick }: HealthSafetyUnitProps) 
           <h2 className="text-[20px] sm:text-[22px] font-semibold text-white leading-tight">
             Health and Safety in Electrical Work
           </h2>
-          <p className="text-[14px] text-white/70 leading-relaxed">
+          <p className="text-[14px] text-white leading-relaxed">
             This section covers the key legislation and regulations that govern health and safety in
             electrical work, along with the roles and responsibilities of different stakeholders in
             maintaining a safe work environment.
@@ -83,12 +83,12 @@ const HealthSafetyUnit = ({ unitCode, onResourceClick }: HealthSafetyUnitProps) 
             >
               <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 h-full active:bg-white/[0.04] transition-colors space-y-2">
                 <div className="flex items-baseline gap-3">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 font-mono">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white font-mono">
                     {s.slug}
                   </span>
                   <h3 className="text-[16px] font-semibold text-white leading-tight">{s.title}</h3>
                 </div>
-                <p className="text-[14px] text-white/70 leading-relaxed">{s.description}</p>
+                <p className="text-[14px] text-white leading-relaxed">{s.description}</p>
               </div>
             </Link>
           ))}
@@ -120,7 +120,7 @@ const HealthSafetyUnit = ({ unitCode, onResourceClick }: HealthSafetyUnitProps) 
             >
               <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 h-full active:bg-white/[0.04] transition-colors">
                 <div className="flex items-baseline gap-3">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 font-mono">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white font-mono">
                     {section.sectionNumber}
                   </span>
                   <h3 className="text-[16px] font-semibold text-white leading-tight">
@@ -143,7 +143,7 @@ const HealthSafetyUnit = ({ unitCode, onResourceClick }: HealthSafetyUnitProps) 
         >
           <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 h-full relative active:bg-white/[0.04] transition-colors">
             <div className="flex items-baseline gap-3">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Quiz
               </span>
               <h3 className="text-[16px] font-semibold text-white leading-tight">

@@ -101,11 +101,11 @@ const LogbookEntryRow = ({ entry, onSave, onDelete }: LogbookEntryRowProps) => {
           </>
         ) : (
           <>
-            <td className="p-3 text-[14px] text-white/85">{entry.activity}</td>
+            <td className="p-3 text-[14px] text-white">{entry.activity}</td>
             <td className="p-3 text-center text-[13px] text-white font-mono">
               {Math.floor(entry.duration / 60)}h {entry.duration % 60}m
             </td>
-            <td className="p-3 hidden md:table-cell text-[13px] text-white/70">
+            <td className="p-3 hidden md:table-cell text-[13px] text-white">
               <div className="line-clamp-1">{entry.notes}</div>
             </td>
             <td className="p-3 text-right">
@@ -116,7 +116,7 @@ const LogbookEntryRow = ({ entry, onSave, onDelete }: LogbookEntryRowProps) => {
                       size="sm"
                       variant="ghost"
                       onClick={handleEdit}
-                      className="text-white/55 hover:text-white hover:bg-white/[0.05] touch-manipulation"
+                      className="text-white hover:text-white hover:bg-white/[0.05] touch-manipulation"
                     >
                       <Pencil className="h-4 w-4" />
                     </Button>
@@ -136,7 +136,7 @@ const LogbookEntryRow = ({ entry, onSave, onDelete }: LogbookEntryRowProps) => {
                   variant="ghost"
                   onClick={handleQuickAdd}
                   disabled={isConverting}
-                  className="text-white/55 hover:text-white hover:bg-white/[0.05] touch-manipulation"
+                  className="text-white hover:text-white hover:bg-white/[0.05] touch-manipulation"
                   title="Quick add to portfolio"
                 >
                   <Zap className="h-4 w-4" />
@@ -146,7 +146,7 @@ const LogbookEntryRow = ({ entry, onSave, onDelete }: LogbookEntryRowProps) => {
                   size="sm"
                   variant="ghost"
                   onClick={() => setShowPortfolioDialog(true)}
-                  className="text-white/55 hover:text-white hover:bg-white/[0.05] touch-manipulation"
+                  className="text-white hover:text-white hover:bg-white/[0.05] touch-manipulation"
                   title="Custom add to portfolio"
                 >
                   <Plus className="h-4 w-4" />

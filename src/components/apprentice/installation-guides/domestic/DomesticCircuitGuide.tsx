@@ -165,7 +165,8 @@ const DomesticCircuitGuide = () => {
 
   const diversityCalculations = {
     title: 'Diversity Calculations for Domestic Premises',
-    description: 'Standard diversity factors from IET Guidance Note 1 and IET On-Site Guide Appendix A',
+    description:
+      'Standard diversity factors from IET Guidance Note 1 and IET On-Site Guide Appendix A',
     currentDemand: [
       {
         load: 'Lighting',
@@ -326,7 +327,8 @@ const DomesticCircuitGuide = () => {
 
   const earthingConsiderations = {
     title: 'Earthing & Protective Conductor Sizing',
-    description: 'Minimum CPC sizes for compliance with BS 7671 Table 54.7',
+    description:
+      'CPC sizes as manufactured in twin-and-earth — smaller than the line conductor, so justified by the adiabatic equation (Reg 543.1.3), not by Table 54.7',
     cpcSizes: [
       { lineSize: '1.0mm²', cpcMin: '1.0mm²', twinAndEarth: '1.0mm² (in 1.0mm² T&E)' },
       { lineSize: '1.5mm²', cpcMin: '1.0mm²', twinAndEarth: '1.0mm² (in 1.5mm² T&E)' },
@@ -362,7 +364,9 @@ const DomesticCircuitGuide = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Circuit Design Guide</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              Circuit Design Guide
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4 p-0">
@@ -377,11 +381,11 @@ const DomesticCircuitGuide = () => {
                   <Badge variant="outline" className="border-elec-yellow text-elec-yellow text-xs">
                     {circuit.cable}
                   </Badge>
-                  <Badge variant="outline" className="border-white/10 text-white/70 text-xs">
+                  <Badge variant="outline" className="border-white/10 text-white text-xs">
                     {circuit.protection}
                   </Badge>
                   {circuit.maxFloorArea !== 'N/A' && circuit.maxFloorArea !== 'Unlimited' && (
-                    <Badge variant="outline" className="border-white/10 text-white/70 text-xs">
+                    <Badge variant="outline" className="border-white/10 text-white text-xs">
                       Max {circuit.maxFloorArea}
                     </Badge>
                   )}
@@ -393,7 +397,7 @@ const DomesticCircuitGuide = () => {
                   <h5 className="text-sm font-medium text-white mb-2">Advantages</h5>
                   <ul className="space-y-1">
                     {circuit.advantages.map((advantage, idx) => (
-                      <li key={idx} className="text-xs text-white/85 flex items-start gap-2">
+                      <li key={idx} className="text-xs text-white flex items-start gap-2">
                         <span className="w-1 h-1 bg-white/55 rounded-full mt-1.5 flex-shrink-0"></span>
                         {advantage}
                       </li>
@@ -404,7 +408,7 @@ const DomesticCircuitGuide = () => {
                   <h5 className="text-sm font-medium text-white mb-2">Considerations</h5>
                   <ul className="space-y-1">
                     {circuit.disadvantages.map((disadvantage, idx) => (
-                      <li key={idx} className="text-xs text-white/85 flex items-start gap-2">
+                      <li key={idx} className="text-xs text-white flex items-start gap-2">
                         <span className="w-1 h-1 bg-white/55 rounded-full mt-1.5 flex-shrink-0"></span>
                         {disadvantage}
                       </li>
@@ -421,16 +425,18 @@ const DomesticCircuitGuide = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{circuitDiagrams.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              {circuitDiagrams.title}
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4 p-0">
           {circuitDiagrams.diagrams.map((diagram, index) => (
             <div key={index} className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <h4 className="font-medium text-white mb-2">{diagram.name}</h4>
-              <p className="text-sm text-white/85 mb-3">{diagram.description}</p>
+              <p className="text-sm text-white mb-3">{diagram.description}</p>
 
-              <div className="bg-white/[0.06] p-3 rounded font-mono text-xs text-white/85 mb-3 overflow-x-auto">
+              <div className="bg-white/[0.06] p-3 rounded font-mono text-xs text-white mb-3 overflow-x-auto">
                 {diagram.layout.map((line, idx) => (
                   <div key={idx} className="whitespace-pre">
                     {line}
@@ -439,7 +445,7 @@ const DomesticCircuitGuide = () => {
               </div>
 
               <div className="space-y-1">
-                <h5 className="text-sm font-medium text-white/85">Key Points:</h5>
+                <h5 className="text-sm font-medium text-white">Key Points:</h5>
                 <ul className="space-y-1">
                   {diagram.keyPoints.map((point, idx) => (
                     <li key={idx} className="text-xs text-white flex items-start gap-2">
@@ -458,13 +464,15 @@ const DomesticCircuitGuide = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{cableSizingTable.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              {cableSizingTable.title}
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4 p-0">
           <Alert className="border-white/[0.10] bg-white/[0.06]">
-            <Info className="h-4 w-4 text-white/70" />
-            <AlertDescription className="text-white/85 text-sm">
+            <Info className="h-4 w-4 text-white" />
+            <AlertDescription className="text-white text-sm">
               {cableSizingTable.description}
             </AlertDescription>
           </Alert>
@@ -477,11 +485,11 @@ const DomesticCircuitGuide = () => {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/[0.10]">
-                    <th className="text-left py-2 text-white/85">Cable Size</th>
-                    <th className="text-left py-2 text-white/85">Method C</th>
-                    <th className="text-left py-2 text-white/85">Method A</th>
-                    <th className="text-left py-2 text-white/85">mV/A/m</th>
-                    <th className="text-left py-2 text-white/85">Typical Use</th>
+                    <th className="text-left py-2 text-white">Cable Size</th>
+                    <th className="text-left py-2 text-white">Method C</th>
+                    <th className="text-left py-2 text-white">Method A</th>
+                    <th className="text-left py-2 text-white">mV/A/m</th>
+                    <th className="text-left py-2 text-white">Typical Use</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -522,13 +530,15 @@ const DomesticCircuitGuide = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{maxCableLengths.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              {maxCableLengths.title}
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4 p-0">
           <Alert className="border-white/[0.10] bg-white/[0.06]">
-            <Info className="h-4 w-4 text-white/70" />
-            <AlertDescription className="text-white/85 text-sm">
+            <Info className="h-4 w-4 text-white" />
+            <AlertDescription className="text-white text-sm">
               {maxCableLengths.description}
             </AlertDescription>
           </Alert>
@@ -538,10 +548,10 @@ const DomesticCircuitGuide = () => {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/[0.10]">
-                    <th className="text-left py-2 text-white/85">Circuit Type</th>
-                    <th className="text-left py-2 text-white/85">Lighting (3%)</th>
-                    <th className="text-left py-2 text-white/85">Power (5%)</th>
-                    <th className="text-left py-2 text-white/85">Notes</th>
+                    <th className="text-left py-2 text-white">Circuit Type</th>
+                    <th className="text-left py-2 text-white">Lighting (3%)</th>
+                    <th className="text-left py-2 text-white">Power (5%)</th>
+                    <th className="text-left py-2 text-white">Notes</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -577,7 +587,9 @@ const DomesticCircuitGuide = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{voltageDrop.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              {voltageDrop.title}
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4 p-0">
@@ -612,7 +624,7 @@ const DomesticCircuitGuide = () => {
               {voltageDrop.examples.map((example, idx) => (
                 <div key={idx} className="mb-3 last:mb-0">
                   <p className="text-sm text-white mb-1">{example.scenario}</p>
-                  <p className="text-xs text-white/85 font-mono mb-1">{example.calculation}</p>
+                  <p className="text-xs text-white font-mono mb-1">{example.calculation}</p>
                   <p className="text-xs text-white">{example.result}</p>
                 </div>
               ))}
@@ -625,13 +637,15 @@ const DomesticCircuitGuide = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{diversityCalculations.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              {diversityCalculations.title}
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4 p-0">
           <Alert className="border-white/[0.10] bg-white/[0.06]">
-            <Info className="h-4 w-4 text-white/70" />
-            <AlertDescription className="text-white/85 text-sm">
+            <Info className="h-4 w-4 text-white" />
+            <AlertDescription className="text-white text-sm">
               {diversityCalculations.description}
             </AlertDescription>
           </Alert>
@@ -642,9 +656,9 @@ const DomesticCircuitGuide = () => {
               {diversityCalculations.currentDemand.map((item, idx) => (
                 <div key={idx} className="bg-white/[0.06] p-3 rounded border border-white/[0.10]">
                   <div className="flex items-start justify-between gap-2 mb-1">
-                    <h5 className="font-medium text-white/85 text-sm">{item.load}</h5>
+                    <h5 className="font-medium text-white text-sm">{item.load}</h5>
                   </div>
-                  <p className="text-xs text-white/85 mb-1">
+                  <p className="text-xs text-white mb-1">
                     <strong>Factor:</strong> {item.factor}
                   </p>
                   <p className="text-xs text-white mb-1">
@@ -664,9 +678,9 @@ const DomesticCircuitGuide = () => {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/[0.10]">
-                    <th className="text-left py-2 text-white/85">Load Item</th>
-                    <th className="text-left py-2 text-white/85">Calculation</th>
-                    <th className="text-left py-2 text-white/85">Result</th>
+                    <th className="text-left py-2 text-white">Load Item</th>
+                    <th className="text-left py-2 text-white">Calculation</th>
+                    <th className="text-left py-2 text-white">Result</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -704,13 +718,15 @@ const DomesticCircuitGuide = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{earthingConsiderations.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              {earthingConsiderations.title}
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4 p-0">
           <Alert className="border-white/[0.10] bg-white/[0.06]">
-            <Info className="h-4 w-4 text-white/70" />
-            <AlertDescription className="text-white/85 text-sm">
+            <Info className="h-4 w-4 text-white" />
+            <AlertDescription className="text-white text-sm">
               {earthingConsiderations.description}
             </AlertDescription>
           </Alert>
@@ -721,9 +737,9 @@ const DomesticCircuitGuide = () => {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/[0.10]">
-                    <th className="text-left py-2 text-white/85">Line Conductor</th>
-                    <th className="text-left py-2 text-white/85">Min CPC (Table 54.7)</th>
-                    <th className="text-left py-2 text-white/85">In T&E Cable</th>
+                    <th className="text-left py-2 text-white">Line Conductor</th>
+                    <th className="text-left py-2 text-white">Min CPC (Table 54.7)</th>
+                    <th className="text-left py-2 text-white">In T&E Cable</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -763,14 +779,16 @@ const DomesticCircuitGuide = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Design Considerations Summary</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              Design Considerations Summary
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="p-0">
           <ul className="space-y-2">
             {designConsiderations.map((consideration, index) => (
               <li key={index} className="text-sm text-white flex items-start gap-2">
-                <Shield className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
+                <Shield className="h-4 w-4 text-white mt-0.5 flex-shrink-0" />
                 {consideration}
               </li>
             ))}

@@ -41,11 +41,11 @@ const SiteAssessmentCategory = ({
         </div>
         <div className="flex items-center gap-2 flex-shrink-0">
           <span
-            className={`text-[12px] px-2 py-0.5 rounded-md border ${allDone ? 'border-elec-yellow/30 bg-white/[0.06] text-elec-yellow' : 'border-white/10 bg-white/[0.07] text-white/85'}`}
+            className={`text-[12px] px-2 py-0.5 rounded-md border ${allDone ? 'border-elec-yellow/30 bg-white/[0.06] text-elec-yellow' : 'border-white/10 bg-white/[0.07] text-white'}`}
           >
             {progress.checked}/{progress.total}
           </span>
-          <ChevronDown className="h-4 w-4 text-white/70 transition-transform [[data-state=open]>&]:rotate-180" />
+          <ChevronDown className="h-4 w-4 text-white transition-transform [[data-state=open]>&]:rotate-180" />
         </div>
       </CollapsibleTrigger>
       <CollapsibleContent>
@@ -78,9 +78,7 @@ const SiteAssessmentCategory = ({
                     >
                       {checked && <CheckCircle className="h-4 w-4 text-black" />}
                     </div>
-                    <span
-                      className={`text-[14px] leading-relaxed text-left ${checked ? 'text-white' : 'text-white/85'}`}
-                    >
+                    <span className={`text-[14px] leading-relaxed text-left text-white`}>
                       {item.text}
                     </span>
                   </button>
@@ -92,18 +90,18 @@ const SiteAssessmentCategory = ({
                       ${showInfo ? 'bg-white/[0.04] border border-white/10' : 'bg-white/[0.06] border border-white/[0.10] hover:border-white/10'}
                     `}
                   >
-                    <Info className={`h-4 w-4 ${showInfo ? 'text-white' : 'text-white/70'}`} />
+                    <Info className={`h-4 w-4 ${showInfo ? 'text-elec-yellow' : 'text-white'}`} />
                   </button>
                 </div>
 
                 {showInfo && (
                   <div className="ml-9 mr-[52px] p-3 rounded-xl bg-white/[0.06] border border-white/[0.10] mt-1 space-y-2">
-                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                       Why this matters
                     </span>
-                    <p className="text-[14px] text-white/85 leading-relaxed">{item.whyItMatters}</p>
+                    <p className="text-[14px] text-white leading-relaxed">{item.whyItMatters}</p>
                     {item.regulation && (
-                      <p className="text-[11px] text-white/70 font-mono">{item.regulation}</p>
+                      <p className="text-[11px] text-white font-mono">{item.regulation}</p>
                     )}
                   </div>
                 )}

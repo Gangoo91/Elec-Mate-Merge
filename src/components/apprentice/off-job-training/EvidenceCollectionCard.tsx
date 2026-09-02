@@ -126,10 +126,10 @@ const EvidenceCollectionCard = () => {
     <div className="space-y-6">
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Evidence collection and quality
           </span>
-          <p className="text-[14px] text-white/85 leading-relaxed">
+          <p className="text-[14px] text-white leading-relaxed">
             Best practices for collecting and maintaining high-quality training evidence
           </p>
         </div>
@@ -150,29 +150,27 @@ const EvidenceCollectionCard = () => {
                     key={index}
                     className={`rounded-xl border p-4 cursor-pointer transition-all touch-manipulation ${
                       active
-                        ? 'border-elec-yellow/30 bg-elec-yellow/[0.04]'
+                        ? 'border-elec-yellow/30 bg-white/[0.05]'
                         : 'border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04]'
                     }`}
-                    onClick={() =>
-                      setSelectedEvidenceType(active ? null : evidence.type)
-                    }
+                    onClick={() => setSelectedEvidenceType(active ? null : evidence.type)}
                   >
                     <h4 className="text-[14px] font-semibold text-white">{evidence.type}</h4>
-                    <p className="text-[14px] text-white/85 leading-relaxed mt-1">
+                    <p className="text-[14px] text-white leading-relaxed mt-1">
                       {evidence.description}
                     </p>
 
                     {active && (
                       <div className="space-y-3 animate-fade-in mt-3">
                         <div className="space-y-1">
-                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                             Examples
                           </span>
                           <ul className="space-y-1">
                             {evidence.examples.map((example, idx) => (
                               <li
                                 key={idx}
-                                className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                                className="text-[13px] text-white leading-relaxed flex items-start gap-2"
                               >
                                 <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                                 <span>{example}</span>
@@ -189,7 +187,7 @@ const EvidenceCollectionCard = () => {
                             {evidence.bestPractices.map((practice, idx) => (
                               <li
                                 key={idx}
-                                className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                                className="text-[13px] text-white leading-relaxed flex items-start gap-2"
                               >
                                 <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
                                 <span>{practice}</span>
@@ -199,14 +197,14 @@ const EvidenceCollectionCard = () => {
                         </div>
 
                         <div className="space-y-1">
-                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                             Recommended tools
                           </span>
                           <div className="flex flex-wrap gap-1.5">
                             {evidence.tools.map((tool, idx) => (
                               <span
                                 key={idx}
-                                className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
+                                className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
                               >
                                 {tool}
                               </span>
@@ -229,18 +227,18 @@ const EvidenceCollectionCard = () => {
                   className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
                 >
                   <h4 className="text-[14px] font-semibold text-white">{standard.standard}</h4>
-                  <p className="text-[14px] text-white/85 leading-relaxed">
+                  <p className="text-[14px] text-white leading-relaxed">
                     {standard.description}
                   </p>
                   <div className="space-y-1">
-                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                       Key checkpoints
                     </span>
                     <ul className="space-y-1">
                       {standard.checkpoints.map((checkpoint, idx) => (
                         <li
                           key={idx}
-                          className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                          className="text-[13px] text-white leading-relaxed flex items-start gap-2"
                         >
                           <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                           <span>{checkpoint}</span>
@@ -260,7 +258,7 @@ const EvidenceCollectionCard = () => {
                   Digital organisation structure
                 </h4>
                 <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4">
-                  <div className="space-y-2 text-[13px] font-mono text-white/85">
+                  <div className="space-y-2 text-[13px] font-mono text-white">
                     <div>Off-the-Job Training Evidence/</div>
                     <div className="ml-4">2024-2025/</div>
                     <div className="ml-8">Month-01-September/</div>
@@ -288,7 +286,7 @@ const EvidenceCollectionCard = () => {
                   ].map((item, index) => (
                     <li
                       key={index}
-                      className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                      className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                     >
                       <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
                       <span>{item}</span>

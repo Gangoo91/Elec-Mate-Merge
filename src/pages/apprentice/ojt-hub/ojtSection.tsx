@@ -12,7 +12,7 @@
  * names the section it was the same words twice — "GOALS / Your OTJ goals",
  * "ASSESSMENTS / Assessment deadlines".
  *
- * `meta` renders in full white. It was `text-white/55`, and grey body text is
+ * `meta` renders in full white. It was `text-white`, and grey body text is
  * not allowed (CLAUDE.md → Key UI rules).
  */
 import type { ReactNode } from 'react';

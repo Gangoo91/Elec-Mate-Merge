@@ -1,15 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import {
-  PageFrame,
-  PageHero,
-  SectionHeader,
-  itemVariants,
-  type Tone,
-} from '@/components/college/primitives';
-import { HubToolGrid } from '@/components/hub/HubPrimitives';
+import { itemVariants, type Tone } from '@/components/college/primitives';
+import { HubSubPage } from '@/components/hub/HubSubPage';
+import { HubToolGrid, HubSectionHeading } from '@/components/hub/HubPrimitives';
 
 interface Section {
   number: string;
@@ -77,40 +70,24 @@ const SECTIONS: Section[] = [
 const ApprenticeshipFunding = () => {
   const navigate = useNavigate();
   return (
-    <PageFrame className="px-4 sm:px-6 lg:px-8">
+    <HubSubPage
+      title="How your apprenticeship is paid for"
+      backTo="/apprentice/toolbox"
+      description="The Apprenticeship Levy, co-investment, CITB grants and government incentives — explained without the jargon. Knowing where the money comes from is how you tell whether your employer's doing it right."
+    >
       <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/apprentice/toolbox')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
-        >
-          <ArrowLeft className="mr-2 h-5 w-5" />
-          Back
-        </Button>
-      </motion.div>
-
-      <motion.div variants={itemVariants}>
-        <PageHero
-          eyebrow="Apprentice · Funding"
-          title="How your apprenticeship is paid for"
-          description="The Apprenticeship Levy, co-investment, CITB grants and government incentives — explained without the jargon. Knowing where the money comes from is how you tell whether your employer's doing it right."
-          tone="yellow"
-        />
-      </motion.div>
-
-      <motion.div variants={itemVariants}>
-        <div className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-3">
+        <div className="rounded-xl border border-elec-yellow/20 bg-white/[0.05] p-4 sm:p-5 space-y-3">
           <div className="flex items-baseline gap-2">
             <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
               Bottom line
             </span>
           </div>
-          <p className="text-[13px] text-white/85 leading-relaxed">
+          <p className="text-[13px] text-white leading-relaxed">
             You should never pay for your training, college fees, exam fees or End Point Assessment.
             If you're being asked to, something's wrong — flag it with your training provider, ACAS,
             or the National Apprenticeship Helpline.
           </p>
-          <p className="text-[12px] text-white/65 leading-relaxed pt-1 border-t border-white/[0.06]">
+          <p className="text-[12px] text-white leading-relaxed pt-1 border-t border-white/[0.06]">
             This guide covers the England system (the Levy, the £23,000 band and Skills England).
             Wales, Scotland and Northern Ireland fund apprenticeships differently — check your
             nation's scheme if you're outside England.
@@ -119,7 +96,7 @@ const ApprenticeshipFunding = () => {
       </motion.div>
 
       <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
-        <SectionHeader eyebrow="Sections" title="Five chapters" />
+        <HubSectionHeading>Five chapters</HubSectionHeading>
         <HubToolGrid
           label=""
           columns="two"
@@ -133,7 +110,7 @@ const ApprenticeshipFunding = () => {
           }))}
         />
       </motion.section>
-    </PageFrame>
+    </HubSubPage>
   );
 };
 

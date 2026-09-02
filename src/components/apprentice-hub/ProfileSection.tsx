@@ -41,13 +41,10 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetDescription,
-} from '@/components/ui/sheet';
+import { FormSheet } from '@/components/forms/FormSheet';
+import { SelectField } from '@/components/forms/SelectField';
+import { buttonPrimaryCn, buttonSecondaryCn, labelCn } from '@/components/forms/fieldStyles';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import {
   Select,
   SelectContent,
@@ -56,7 +53,6 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { useAuth } from '@/contexts/AuthContext';
 import { usePortfolioComments } from '@/hooks/portfolio/usePortfolioComments';
 import { usePortfolioSharing } from '@/hooks/portfolio/usePortfolioSharing';
@@ -270,7 +266,7 @@ export function ProfileSection() {
   return (
     <div className="py-5 sm:py-6 lg:py-8 space-y-7 lg:space-y-10">
       {/* ─── Editorial profile hero ─── */}
-      <header className={cn('rounded-2xl border border-white/[0.06] p-5 sm:p-6', CARD_SURFACE)}>
+      <header className={cn('rounded-2xl border border-elec-yellow/35 p-5 sm:p-6', CARD_SURFACE)}>
         <div className="flex items-start gap-4 sm:gap-5">
           <Avatar className="h-14 w-14 sm:h-16 sm:w-16 border border-white/[0.06] flex-shrink-0">
             <AvatarImage src={profile?.avatar_url} />
@@ -287,7 +283,7 @@ export function ProfileSection() {
               <p className="text-[12px] text-white font-mono truncate">{user.email}</p>
             )}
             <div className="pt-1.5">
-              <span className="inline-flex items-center gap-1.5 text-[11px] font-medium text-elec-yellow border border-elec-yellow/30 bg-elec-yellow/[0.04] px-2.5 py-1 rounded-md">
+              <span className="inline-flex items-center gap-1.5 text-[11px] font-medium text-elec-yellow border border-elec-yellow/30 bg-transparent px-2.5 py-1 rounded-md">
                 <GraduationCap className="h-3 w-3" />
                 {qualification}
               </span>
@@ -307,7 +303,10 @@ export function ProfileSection() {
             <li>
               <button
                 onClick={() => setShowMessages(true)}
-                className={cn('w-full flex items-center gap-3 px-4 py-3 rounded-2xl border border-white/[0.06] hover:bg-white/[0.04] transition-colors touch-manipulation text-left', CARD_SURFACE)}
+                className={cn(
+                  'w-full flex items-center gap-3 px-4 py-3 rounded-2xl border border-white/[0.06] hover:bg-white/[0.04] transition-colors touch-manipulation text-left',
+                  CARD_SURFACE
+                )}
               >
                 <AlertCircle
                   className={cn(
@@ -334,7 +333,10 @@ export function ProfileSection() {
             <li>
               <button
                 onClick={() => setShowMessages(true)}
-                className={cn('w-full flex items-center gap-3 px-4 py-3 rounded-2xl border border-white/[0.06] hover:bg-white/[0.04] transition-colors touch-manipulation text-left', CARD_SURFACE)}
+                className={cn(
+                  'w-full flex items-center gap-3 px-4 py-3 rounded-2xl border border-white/[0.06] hover:bg-white/[0.04] transition-colors touch-manipulation text-left',
+                  CARD_SURFACE
+                )}
               >
                 <Bell
                   className={cn(
@@ -351,7 +353,7 @@ export function ProfileSection() {
                   </p>
                 </div>
                 {unreadCount > 0 && (
-                  <span className="text-[11px] font-mono text-elec-yellow px-1.5 py-0 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06]">
+                  <span className="text-[11px] font-mono text-elec-yellow px-1.5 py-0 rounded-md border border-elec-yellow/30 bg-transparent">
                     {unreadCount}
                   </span>
                 )}
@@ -361,7 +363,10 @@ export function ProfileSection() {
             <li>
               <button
                 onClick={() => setShowDirectMessages(true)}
-                className={cn('w-full flex items-center gap-3 px-4 py-3 rounded-2xl border border-white/[0.06] hover:bg-white/[0.04] transition-colors touch-manipulation text-left', CARD_SURFACE)}
+                className={cn(
+                  'w-full flex items-center gap-3 px-4 py-3 rounded-2xl border border-white/[0.06] hover:bg-white/[0.04] transition-colors touch-manipulation text-left',
+                  CARD_SURFACE
+                )}
               >
                 <MessageSquare className="h-4 w-4 text-white flex-shrink-0" />
                 <div className="flex-1 min-w-0 space-y-0.5">
@@ -373,7 +378,7 @@ export function ProfileSection() {
                   </p>
                 </div>
                 {messageUnreadCount > 0 && (
-                  <span className="text-[11px] font-mono text-elec-yellow px-1.5 py-0 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06]">
+                  <span className="text-[11px] font-mono text-elec-yellow px-1.5 py-0 rounded-md border border-elec-yellow/30 bg-transparent">
                     {messageUnreadCount}
                   </span>
                 )}
@@ -393,7 +398,10 @@ export function ProfileSection() {
             <li>
               <button
                 onClick={() => setShowKSBMap(true)}
-                className={cn('w-full flex items-center gap-3 px-4 py-3 rounded-2xl border border-white/[0.06] hover:bg-white/[0.04] transition-colors touch-manipulation text-left', CARD_SURFACE)}
+                className={cn(
+                  'w-full flex items-center gap-3 px-4 py-3 rounded-2xl border border-white/[0.06] hover:bg-white/[0.04] transition-colors touch-manipulation text-left',
+                  CARD_SURFACE
+                )}
               >
                 <Shield className="h-4 w-4 text-elec-yellow flex-shrink-0" />
                 <div className="flex-1 min-w-0 space-y-0.5">
@@ -408,7 +416,10 @@ export function ProfileSection() {
             <li>
               <button
                 onClick={() => setShowEPAStatus(true)}
-                className={cn('w-full flex items-center gap-3 px-4 py-3 rounded-2xl border border-white/[0.06] hover:bg-white/[0.04] transition-colors touch-manipulation text-left', CARD_SURFACE)}
+                className={cn(
+                  'w-full flex items-center gap-3 px-4 py-3 rounded-2xl border border-white/[0.06] hover:bg-white/[0.04] transition-colors touch-manipulation text-left',
+                  CARD_SURFACE
+                )}
               >
                 <GraduationCap className="h-4 w-4 text-white flex-shrink-0" />
                 <div className="flex-1 min-w-0 space-y-0.5">
@@ -423,7 +434,10 @@ export function ProfileSection() {
             <li>
               <button
                 onClick={() => navigate('/apprentice/hub?tab=progress')}
-                className={cn('w-full flex items-center gap-3 px-4 py-3 rounded-2xl border border-white/[0.06] hover:bg-white/[0.04] transition-colors touch-manipulation text-left', CARD_SURFACE)}
+                className={cn(
+                  'w-full flex items-center gap-3 px-4 py-3 rounded-2xl border border-white/[0.06] hover:bg-white/[0.04] transition-colors touch-manipulation text-left',
+                  CARD_SURFACE
+                )}
               >
                 <Trophy className="h-4 w-4 text-white flex-shrink-0" />
                 <div className="flex-1 min-w-0 space-y-0.5">
@@ -454,15 +468,16 @@ export function ProfileSection() {
           <li>
             <button
               onClick={() => setShowShare(true)}
-              className={cn('w-full h-full flex items-center gap-3 px-4 py-4 rounded-2xl border border-white/[0.06] hover:bg-white/[0.04] transition-colors touch-manipulation text-left', CARD_SURFACE)}
+              className={cn(
+                'w-full h-full flex items-center gap-3 px-4 py-4 rounded-2xl border border-white/[0.06] hover:bg-white/[0.04] transition-colors touch-manipulation text-left',
+                CARD_SURFACE
+              )}
             >
               <Link2 className="h-4 w-4 text-elec-yellow flex-shrink-0" />
               <div className="flex-1 min-w-0 space-y-0.5">
                 <p className="text-[13px] font-medium text-white">Share link</p>
                 <p className="text-[11.5px] text-white">
-                  {shares.length > 0
-                    ? `${shares.length} active`
-                    : 'Generate a private link'}
+                  {shares.length > 0 ? `${shares.length} active` : 'Generate a private link'}
                 </p>
               </div>
               <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
@@ -472,7 +487,10 @@ export function ProfileSection() {
             <button
               onClick={handleExportPDF}
               disabled={isExportingPDF}
-              className={cn('w-full h-full flex items-center gap-3 px-4 py-4 rounded-2xl border border-white/[0.06] hover:bg-white/[0.04] transition-colors touch-manipulation text-left disabled:opacity-50', CARD_SURFACE)}
+              className={cn(
+                'w-full h-full flex items-center gap-3 px-4 py-4 rounded-2xl border border-white/[0.06] hover:bg-white/[0.04] transition-colors touch-manipulation text-left disabled:text-white/70',
+                CARD_SURFACE
+              )}
             >
               {isExportingPDF ? (
                 <Loader2 className="h-4 w-4 text-elec-yellow animate-spin flex-shrink-0" />
@@ -492,7 +510,10 @@ export function ProfileSection() {
             <button
               onClick={handleDownloadAll}
               disabled={isDownloadingAll}
-              className={cn('w-full h-full flex items-center gap-3 px-4 py-4 rounded-2xl border border-white/[0.06] hover:bg-white/[0.04] transition-colors touch-manipulation text-left disabled:opacity-50', CARD_SURFACE)}
+              className={cn(
+                'w-full h-full flex items-center gap-3 px-4 py-4 rounded-2xl border border-white/[0.06] hover:bg-white/[0.04] transition-colors touch-manipulation text-left disabled:text-white/70',
+                CARD_SURFACE
+              )}
             >
               {isDownloadingAll ? (
                 <Loader2 className="h-4 w-4 text-elec-yellow animate-spin flex-shrink-0" />
@@ -514,7 +535,12 @@ export function ProfileSection() {
       {/* ─── Account ─── */}
       <section className="space-y-3">
         <Eyebrow>Account</Eyebrow>
-        <ul className={cn('rounded-2xl border border-white/[0.06] divide-y divide-white/[0.04] overflow-hidden', CARD_SURFACE)}>
+        <ul
+          className={cn(
+            'rounded-2xl border border-white/[0.06] divide-y divide-white/[0.04] overflow-hidden',
+            CARD_SURFACE
+          )}
+        >
           <li>
             <button
               onClick={() => navigate('/settings')}
@@ -538,202 +564,203 @@ export function ProfileSection() {
       </section>
 
       {/* Share Sheet */}
-      <Sheet open={showShare} onOpenChange={setShowShare}>
-        <SheetContent side="bottom" className="h-[80vh] rounded-t-3xl">
-          <div className="w-12 h-1 bg-muted rounded-full mx-auto mb-4" />
-          <SheetHeader>
-            <SheetTitle>Share Portfolio</SheetTitle>
-            <SheetDescription>
-              Generate links to share your portfolio with tutors or assessors
-            </SheetDescription>
-          </SheetHeader>
+      <FormSheet
+        open={showShare}
+        onOpenChange={setShowShare}
+        eyebrow="Portfolio"
+        title="Share your portfolio"
+        description="Generate links to share your portfolio with tutors or assessors."
+        bodyClassName="space-y-6"
+      >
+        {/* Create New Link */}
+        <div className={cn('space-y-4 rounded-2xl border border-elec-yellow/35 p-4', CARD_SURFACE)}>
+          <h3 className="text-[15px] font-semibold tracking-tight text-white">Create a new link</h3>
 
-          <div className="space-y-6 mt-6 overflow-y-auto max-h-[calc(80vh-10rem)] pb-8">
-            {/* Create New Link */}
-            <div className="space-y-4 p-4 rounded-xl bg-muted/30 border border-border">
-              <h3 className="font-medium text-sm">Create New Link</h3>
+          {/* Expiry Selection */}
+          <div>
+            <label className={labelCn}>Link expires after</label>
+            <SelectField
+              value={shareExpiry}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              onValueChange={(v) => setShareExpiry(v as any)}
+              title="Link expires after"
+              options={[
+                { value: '24h', label: '24 hours' },
+                { value: '7d', label: '7 days' },
+                { value: '30d', label: '30 days' },
+                { value: 'never', label: 'Never' },
+              ]}
+            />
+          </div>
 
-              {/* Expiry Selection */}
-              <div className="space-y-2">
-                <label className="text-xs text-white">Link expires after</label>
-                {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                <Select value={shareExpiry} onValueChange={(v) => setShareExpiry(v as any)}>
-                  <SelectTrigger className="h-11">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="24h">24 hours</SelectItem>
-                    <SelectItem value="7d">7 days</SelectItem>
-                    <SelectItem value="30d">30 days</SelectItem>
-                    <SelectItem value="never">Never</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+          {/* Generate Button */}
+          <button
+            type="button"
+            onClick={handleGenerateLink}
+            disabled={isCreatingLink}
+            className={cn(buttonPrimaryCn, 'inline-flex w-full items-center justify-center')}
+          >
+            {isCreatingLink ? (
+              <>
+                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                Creating...
+              </>
+            ) : (
+              <>
+                <Link2 className="h-4 w-4 mr-2" />
+                Generate share link
+              </>
+            )}
+          </button>
+        </div>
 
-              {/* Generate Button */}
-              <Button
-                onClick={handleGenerateLink}
-                disabled={isCreatingLink}
-                className="w-full h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90"
-              >
-                {isCreatingLink ? (
-                  <>
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Creating...
-                  </>
-                ) : (
-                  <>
-                    <Link2 className="h-4 w-4 mr-2" />
-                    Generate Share Link
-                  </>
+        {/* Existing Links */}
+        {shares.length > 0 && (
+          <div className="space-y-3">
+            <h3 className="text-[15px] font-semibold tracking-tight text-white">Active links</h3>
+            {shares.map((share) => (
+              <div
+                key={share.id}
+                className={cn(
+                  'space-y-3 rounded-2xl border border-elec-yellow/35 p-3',
+                  CARD_SURFACE
                 )}
-              </Button>
-            </div>
-
-            {/* Existing Links */}
-            {shares.length > 0 && (
-              <div className="space-y-3">
-                <h3 className="font-medium text-sm">Active Links</h3>
-                {shares.map((share) => (
-                  <div
-                    key={share.id}
-                    className="p-3 rounded-xl bg-muted/50 border border-border space-y-3"
-                  >
-                    <div className="flex items-start justify-between gap-2">
-                      <div className="space-y-1 flex-1 min-w-0">
-                        <p className="text-sm font-medium truncate">
-                          {share.title || 'Portfolio Link'}
-                        </p>
-                        <div className="flex items-center gap-2 text-xs text-white flex-wrap">
-                          <Clock className="h-3 w-3" />
-                          <span>{formatExpiry(share.expires_at)}</span>
-                          <span className="text-border">•</span>
-                          <Eye className="h-3 w-3" />
-                          <span>{share.view_count} views</span>
-                          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                          {(share as any).last_viewed_at && (
-                            <>
-                              <span className="text-border">•</span>
-                              <span>
-                                Last viewed{' '}
-                                {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                                {formatDistanceToNow(new Date((share as any).last_viewed_at), {
-                                  addSuffix: true,
-                                })}
-                              </span>
-                            </>
-                          )}
-                        </div>
-                      </div>
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        onClick={() => handleRevokeLink(share.id)}
-                        className="text-destructive hover:text-destructive hover:bg-destructive/10"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                      <div className="flex-1 p-2 rounded-lg bg-background text-xs text-white truncate">
-                        {getShareUrl(share.token)}
-                      </div>
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={() => handleCopyLink(share.token)}
-                        className="shrink-0"
-                      >
-                        {copiedToken === share.token ? (
-                          <Check className="h-4 w-4 text-white" />
-                        ) : (
-                          <Copy className="h-4 w-4" />
-                        )}
-                      </Button>
+              >
+                <div className="flex items-start justify-between gap-2">
+                  <div className="space-y-1 flex-1 min-w-0">
+                    <p className="truncate text-sm font-medium text-white">
+                      {share.title || 'Portfolio Link'}
+                    </p>
+                    <div className="flex items-center gap-2 text-xs text-white flex-wrap">
+                      <Clock className="h-3 w-3" />
+                      <span>{formatExpiry(share.expires_at)}</span>
+                      <span className="text-white">·</span>
+                      <Eye className="h-3 w-3" />
+                      <span>{share.view_count} views</span>
+                      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                      {(share as any).last_viewed_at && (
+                        <>
+                          <span className="text-white">·</span>
+                          <span>
+                            Last viewed{' '}
+                            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                            {formatDistanceToNow(new Date((share as any).last_viewed_at), {
+                              addSuffix: true,
+                            })}
+                          </span>
+                        </>
+                      )}
                     </div>
                   </div>
-                ))}
-              </div>
-            )}
+                  <button
+                    type="button"
+                    onClick={() => handleRevokeLink(share.id)}
+                    aria-label="Revoke link"
+                    className={cn(buttonSecondaryCn, 'h-11 w-11 shrink-0 px-0 text-red-400')}
+                  >
+                    <Trash2 className="mx-auto h-4 w-4" />
+                  </button>
+                </div>
 
-            {/* Info */}
-            <p className="text-xs text-white text-center">
-              Anyone with a link can view your portfolio (read-only). Tutors can leave comments if
-              they sign in.
-            </p>
+                <div className="flex items-center gap-2">
+                  <div className="min-h-11 flex-1 truncate rounded-xl border border-white/[0.12] bg-white/[0.05] px-3 py-3 text-xs text-white">
+                    {getShareUrl(share.token)}
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => handleCopyLink(share.token)}
+                    aria-label="Copy link"
+                    className={cn(buttonSecondaryCn, 'h-11 w-11 shrink-0 px-0')}
+                  >
+                    {copiedToken === share.token ? (
+                      <Check className="mx-auto h-4 w-4 text-elec-yellow" />
+                    ) : (
+                      <Copy className="mx-auto h-4 w-4" />
+                    )}
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
-        </SheetContent>
-      </Sheet>
+        )}
+
+        {/* Info */}
+        <p className="text-center text-xs text-white">
+          Anyone with a link can view your portfolio (read-only). Tutors can leave comments if they
+          sign in.
+        </p>
+      </FormSheet>
 
       {/* Messages Sheet */}
-      <Sheet open={showMessages} onOpenChange={setShowMessages}>
-        <SheetContent side="bottom" className="h-[70vh] rounded-t-3xl">
-          <div className="w-12 h-1 bg-muted rounded-full mx-auto mb-4" />
-          <SheetHeader>
-            <SheetTitle>Messages & Actions</SheetTitle>
-            <SheetDescription>Review comments and actions from your tutor</SheetDescription>
-          </SheetHeader>
-
-          <div className="mt-6 overflow-y-auto max-h-[calc(70vh-10rem)] pb-8">
-            {comments.length === 0 ? (
-              <div className="flex flex-col items-center justify-center py-12 text-center">
-                <div className="p-4 rounded-full bg-muted mb-4">
-                  <MessageSquare className="h-8 w-8 text-white" />
-                </div>
-                <p className="text-sm font-medium text-foreground">No messages yet</p>
-                <p className="text-xs text-white mt-1">Comments from your tutor will appear here</p>
-              </div>
-            ) : (
-              <div className="space-y-3 px-4">
-                {comments.map((comment) => (
-                  <div
-                    key={comment.id}
-                    className={cn('p-3 rounded-xl border border-border bg-muted/30',
-                      comment.requiresAction &&
-                        !comment.isResolved &&
-                        'border-l-2 border-l-orange-500'
-                    )}
-                  >
-                    <div className="flex items-center justify-between mb-1.5">
-                      <div className="flex items-center gap-2">
-                        <Badge
-                          variant="outline"
-                          className={cn(
-                            'text-[10px]',
-                            // tutor and assessor branched to identical classes,
-                            // so the ternary decided nothing.
-                            comment.authorRole === 'tutor' || comment.authorRole === 'assessor'
-                              ? 'border-white/[0.06] text-white'
-                              : 'border-border'
-                          )}
-                        >
-                          {comment.authorRole === 'tutor'
-                            ? 'Tutor'
-                            : comment.authorRole === 'assessor'
-                              ? 'Assessor'
-                              : comment.authorRole}
-                        </Badge>
-                        <span className="text-xs text-white font-medium">{comment.authorName}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        {comment.requiresAction && !comment.isResolved && (
-                          <div className="w-2 h-2 rounded-full bg-red-400" aria-label="Needs a reply" />
+      <FormSheet
+        open={showMessages}
+        onOpenChange={setShowMessages}
+        eyebrow="Portfolio"
+        title="Messages & actions"
+        description="Review comments and actions from your tutor."
+        bodyClassName="space-y-0"
+      >
+        <div>
+          {comments.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-12 text-center">
+              <MessageSquare className="mb-3 h-8 w-8 text-white" />
+              <p className="text-sm font-medium text-white">No messages yet</p>
+              <p className="text-xs text-white mt-1">Comments from your tutor will appear here</p>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {comments.map((comment) => (
+                <div
+                  key={comment.id}
+                  className={cn(
+                    'rounded-2xl border border-elec-yellow/35 p-3',
+                    CARD_SURFACE,
+                    comment.requiresAction &&
+                      !comment.isResolved &&
+                      'border-l-2 border-l-orange-500'
+                  )}
+                >
+                  <div className="flex items-center justify-between mb-1.5">
+                    <div className="flex items-center gap-2">
+                      <Badge
+                        variant="outline"
+                        className={cn(
+                          'text-[10px]',
+                          // tutor and assessor branched to identical classes,
+                          // so the ternary decided nothing.
+                          comment.authorRole === 'tutor' || comment.authorRole === 'assessor'
+                            ? 'border-elec-yellow/50 text-elec-yellow'
+                            : 'border-white/[0.14] text-white'
                         )}
-                        {comment.isResolved && <Check className="h-3.5 w-3.5 text-white" />}
-                        <span className="text-xs text-white">
-                          {formatDistanceToNow(new Date(comment.createdAt), { addSuffix: true })}
-                        </span>
-                      </div>
+                      >
+                        {comment.authorRole === 'tutor'
+                          ? 'Tutor'
+                          : comment.authorRole === 'assessor'
+                            ? 'Assessor'
+                            : comment.authorRole}
+                      </Badge>
+                      <span className="text-xs text-white font-medium">{comment.authorName}</span>
                     </div>
-                    <p className="text-sm text-white">{comment.content}</p>
+                    <div className="flex items-center gap-2">
+                      {comment.requiresAction && !comment.isResolved && (
+                        <div
+                          className="w-2 h-2 rounded-full bg-red-400"
+                          aria-label="Needs a reply"
+                        />
+                      )}
+                      {comment.isResolved && <Check className="h-3.5 w-3.5 text-white" />}
+                      <span className="text-xs text-white">
+                        {formatDistanceToNow(new Date(comment.createdAt), { addSuffix: true })}
+                      </span>
+                    </div>
                   </div>
-                ))}
-              </div>
-            )}
-          </div>
-        </SheetContent>
-      </Sheet>
+                  <p className="text-sm text-white">{comment.content}</p>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </FormSheet>
 
       {/* KSB Coverage Map Sheet */}
       <KSBCoverageMap open={showKSBMap} onOpenChange={setShowKSBMap} />

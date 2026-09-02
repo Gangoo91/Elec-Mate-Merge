@@ -103,7 +103,7 @@ export const SectionBox = ({
 
   return (
     <div
-      className="border border-elec-yellow/20 rounded-lg overflow-hidden bg-[#1a1a1a] relative cursor-pointer hover:bg-elec-yellow/5 transition-all"
+      className="border border-elec-yellow/20 rounded-lg overflow-hidden bg-[#1a1a1a] relative cursor-pointer hover:bg-white/[0.05] transition-all"
       onClick={handleSectionClick}
     >
       <div className="p-4">

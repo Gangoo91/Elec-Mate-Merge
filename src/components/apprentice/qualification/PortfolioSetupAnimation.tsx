@@ -116,7 +116,7 @@ export function PortfolioSetupAnimation({
                 <motion.div
                   className={cn(
                     'w-24 h-24 rounded-full flex items-center justify-center',
-                    isComplete ? 'bg-green-500/20' : 'bg-elec-yellow/10'
+                    isComplete ? 'bg-green-500/20' : 'bg-white/[0.06]'
                   )}
                   animate={{
                     scale: isComplete ? [1, 1.1, 1] : 1,
@@ -169,7 +169,7 @@ export function PortfolioSetupAnimation({
                     key={step.id}
                     className={cn(
                       'flex items-center gap-3 p-3 rounded-xl transition-colors',
-                      isActive && 'bg-elec-yellow/10',
+                      isActive && 'bg-white/[0.06]',
                       isDone && 'bg-green-500/5'
                     )}
                     initial={{ x: -20, opacity: 0 }}
@@ -180,7 +180,7 @@ export function PortfolioSetupAnimation({
                     <div
                       className={cn(
                         'w-8 h-8 rounded-full flex items-center justify-center transition-colors',
-                        isDone ? 'bg-green-500/20' : isActive ? 'bg-elec-yellow/20' : 'bg-muted'
+                        isDone ? 'bg-green-500/20' : isActive ? 'bg-white/[0.08]' : 'bg-muted'
                       )}
                     >
                       {isDone ? (

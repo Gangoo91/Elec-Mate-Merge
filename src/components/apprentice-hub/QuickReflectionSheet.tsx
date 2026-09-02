@@ -1,5 +1,18 @@
-import { useEffect, useState } from 'react';
-import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
+import { useEffect, useRef, useState } from 'react';
+import { FormSheet } from '@/components/forms/FormSheet';
+import {
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  checkLineCn,
+  checkboxCn,
+  chipBase,
+  chipOff,
+  chipOn,
+  labelCn,
+  textareaCn,
+} from '@/components/forms/fieldStyles';
+import { Checkbox } from '@/components/ui/checkbox';
+import { useSheetDraft } from '@/hooks/useSheetDraft';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
@@ -30,19 +43,55 @@ const DURATION_PRESETS = [15, 30, 60, 90, 120];
 export function QuickReflectionSheet({ open, onOpenChange, onSaved }: Props) {
   const [text, setText] = useState('');
   const [countAsOtj, setCountAsOtj] = useState(true);
+  // Set once the user touches the toggle, so the college lookup below can't override their choice.
+  const otjTouched = useRef(false);
   const [duration, setDuration] = useState<number>(30);
   const [saving, setSaving] = useState(false);
   const [savedTick, setSavedTick] = useState(false);
   const [promptIdx] = useState(() => Math.floor(Math.random() * PROMPTS.length));
+  // undefined = not looked up yet, null = no college on record. An OTJ entry
+  // needs a college to verify it; without one the row would sit "pending"
+  // with nobody to sign it, while the toast claimed it had gone to a tutor.
+  const [collegeId, setCollegeId] = useState<string | null | undefined>(undefined);
   const { toast } = useToast();
+  const canLogOtj = Boolean(collegeId);
+  const [uid, setUid] = useState<string | null>(null);
+
+  // Free prose is exactly what gets lost when the phone goes back in a pocket.
+  const draft = useSheetDraft<string>(uid ? `reflection:${uid}` : null, text, {
+    enabled: open && !saving,
+    isEmpty: (t) => t.trim().length === 0,
+  });
 
   useEffect(() => {
-    if (open) {
-      setText('');
-      setCountAsOtj(true);
-      setDuration(30);
-      setSavedTick(false);
-    }
+    if (!open) return;
+    setText('');
+    setDuration(30);
+    setSavedTick(false);
+    setCountAsOtj(false);
+    otjTouched.current = false;
+    let cancelled = false;
+    (async () => {
+      const { data: u } = await supabase.auth.getUser();
+      const uid = u.user?.id;
+      if (!uid) {
+        if (!cancelled) setCollegeId(null);
+        return;
+      }
+      if (!cancelled) setUid(uid);
+      const { data: cs } = await supabase
+        .from('college_students')
+        .select('college_id')
+        .eq('user_id', uid)
+        .maybeSingle();
+      if (cancelled) return;
+      const id = (cs?.college_id as string | null) ?? null;
+      setCollegeId(id);
+      if (!otjTouched.current) setCountAsOtj(Boolean(id));
+    })();
+    return () => {
+      cancelled = true;
+    };
   }, [open]);
 
   const valid = text.trim().length >= 12 && (!countAsOtj || duration > 0);
@@ -63,13 +112,6 @@ export function QuickReflectionSheet({ open, onOpenChange, onSaved }: Props) {
         .maybeSingle();
       const recordedByName = (profile?.full_name as string | null) ?? null;
 
-      const { data: cs } = await supabase
-        .from('college_students')
-        .select('college_id')
-        .eq('user_id', uid)
-        .maybeSingle();
-      const collegeId = (cs?.college_id as string | null) ?? null;
-
       const trimmed = text.trim();
       const headline = trimmed.split('\n')[0].slice(0, 80);
       const today = new Date().toISOString().slice(0, 10);
@@ -87,8 +129,9 @@ export function QuickReflectionSheet({ open, onOpenChange, onSaved }: Props) {
       });
       if (pErr) throw pErr;
 
-      // 2. OTJ entry — optional, gated by the toggle.
-      if (countAsOtj) {
+      // 2. OTJ entry — optional, gated by the toggle AND a college to verify it.
+      const logOtj = countAsOtj && Boolean(collegeId);
+      if (logOtj) {
         const { error: oErr } = await supabase.from('college_otj_entries').insert({
           college_id: collegeId,
           student_id: uid,
@@ -106,10 +149,11 @@ export function QuickReflectionSheet({ open, onOpenChange, onSaved }: Props) {
         if (oErr) throw oErr;
       }
 
+      draft.clear();
       setSavedTick(true);
       toast({
-        title: countAsOtj ? 'Reflection saved · OTJ pending' : 'Reflection saved',
-        description: countAsOtj
+        title: logOtj ? 'Reflection saved · OTJ pending' : 'Reflection saved',
+        description: logOtj
           ? `${duration}m sent to your tutor for verification.`
           : 'Added to your portfolio.',
       });
@@ -130,117 +174,131 @@ export function QuickReflectionSheet({ open, onOpenChange, onSaved }: Props) {
   };
 
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        side="bottom"
-        className="h-[80vh] sm:max-w-2xl sm:mx-auto p-0 rounded-t-2xl overflow-hidden border-white/10 bg-[hsl(0_0%_8%)]"
-      >
-        <SheetTitle className="sr-only">Capture daily reflection</SheetTitle>
-        <div className="flex h-full flex-col">
-          <header className="px-4 sm:px-5 pt-5 pb-4 border-b border-white/[0.06]">
-            <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-cyan-300/85">
-              Daily reflection
-            </div>
-            <h2 className="mt-1 text-[18px] sm:text-[20px] font-semibold text-white leading-tight">
-              {PROMPTS[promptIdx]}
-            </h2>
-            <p className="mt-1 text-[12.5px] text-white/85 leading-snug">
-              Two minutes now saves your tutor an hour later. Goes straight into your portfolio and
-              — if you tick — counts toward your verified hours.
-            </p>
-          </header>
-
-          <div className="flex-1 overflow-y-auto px-4 sm:px-5 py-4 space-y-4">
-            <textarea
-              autoFocus
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-              rows={8}
-              placeholder="A few sentences. The job, the people, what you learned, where you got stuck…"
-              className="w-full px-3 py-2.5 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[14px] text-white placeholder:text-white/50 leading-relaxed focus:outline-none focus:border-white/[0.06] focus:ring-1 focus:ring-white/10 touch-manipulation resize-none"
-            />
-            <div className="flex items-baseline justify-between gap-3">
-              <span
-                className={cn(
-                  'text-[10.5px] tabular-nums',
-                  charCount >= 12 ? 'text-white/85' : 'text-white/95'
-                )}
-              >
-                {charCount} chars · 12 minimum
-              </span>
-            </div>
-
-            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] px-3 py-3">
-              <label className="flex items-start gap-2.5 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={countAsOtj}
-                  onChange={(e) => setCountAsOtj(e.target.checked)}
-                  className="mt-0.5 h-4 w-4 rounded border border-white/30 bg-white/[0.05] checked:bg-elec-yellow checked:border-elec-yellow touch-manipulation"
-                />
-                <div className="flex-1">
-                  <div className="text-[13px] font-medium text-white">
-                    Count this as off-the-job training
-                  </div>
-                  <div className="mt-0.5 text-[11.5px] text-white/85 leading-snug">
-                    Sends to your tutor for verification. Adds to your ESFA-verified hours once they
-                    sign off.
-                  </div>
-                </div>
-              </label>
-
-              {countAsOtj && (
-                <div className="mt-3 ml-6">
-                  <div className="text-[10.5px] font-medium uppercase tracking-[0.14em] text-white/85">
-                    Duration
-                  </div>
-                  <div className="mt-1.5 flex items-center flex-wrap gap-1.5">
-                    {DURATION_PRESETS.map((p) => (
-                      <button
-                        type="button"
-                        key={p}
-                        onClick={() => setDuration(p)}
-                        className={cn(
-                          'h-8 px-3 rounded-full border text-[11.5px] font-medium tabular-nums touch-manipulation transition-colors',
-                          duration === p
-                            ? 'border-white/[0.06] bg-white/[0.02] text-white/85'
-                            : 'border-white/[0.10] bg-white/[0.02] text-white/95 hover:text-white hover:border-white/[0.22]'
-                        )}
-                      >
-                        {p < 60 ? `${p}m` : `${p / 60}h`}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-
-          <footer className="border-t border-white/[0.06] px-4 sm:px-5 py-3 flex items-center gap-2 bg-[hsl(0_0%_6%)]">
-            <button
-              type="button"
-              onClick={() => onOpenChange(false)}
-              disabled={saving}
-              className="flex-1 h-11 rounded-lg border border-white/[0.10] bg-white/[0.02] text-[13px] font-medium text-white/80 hover:text-white hover:border-white/[0.22] transition-colors touch-manipulation disabled:opacity-50"
-            >
-              Cancel
-            </button>
-            <button
-              type="button"
-              onClick={handleSubmit}
-              disabled={!valid || saving}
-              className={cn(
-                'flex-1 h-11 rounded-lg text-[13px] font-semibold transition-colors touch-manipulation',
-                valid && !saving
-                  ? 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
-                  : 'bg-white/[0.05] text-white/40'
-              )}
-            >
-              {savedTick ? 'Saved ✓' : saving ? 'Saving…' : 'Save reflection'}
-            </button>
-          </footer>
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      eyebrow="Daily reflection"
+      title={PROMPTS[promptIdx]}
+      description="Thirty seconds, in your own words. It goes into your portfolio as a reflection."
+      headerTrailing={
+        draft.savedAt && text.trim() ? (
+          <span className="text-[12px] font-medium text-green-400">Draft saved</span>
+        ) : undefined
+      }
+      footer={
+        <div className="grid grid-cols-2 gap-2.5">
+          <button
+            type="button"
+            onClick={() => onOpenChange(false)}
+            disabled={saving}
+            className={buttonSecondaryCn}
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            onClick={handleSubmit}
+            disabled={!valid || saving}
+            className={buttonPrimaryCn}
+          >
+            {savedTick ? 'Saved ✓' : saving ? 'Saving…' : 'Save reflection'}
+          </button>
         </div>
-      </SheetContent>
-    </Sheet>
+      }
+    >
+      {draft.hasDraft && draft.draft && !text && (
+        <div className="space-y-3 rounded-2xl border border-elec-yellow/35 bg-white/[0.05] p-4">
+          <p className="text-[13px] leading-snug text-white">
+            <span className="font-semibold">Unfinished reflection</span> — pick up where you left
+            off?
+          </p>
+          <div className="grid grid-cols-2 gap-2">
+            <button type="button" onClick={draft.clear} className={cn(buttonSecondaryCn, 'h-11')}>
+              Discard
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                if (draft.draft) setText(draft.draft);
+                draft.dismiss();
+              }}
+              className={cn(buttonPrimaryCn, 'h-11')}
+            >
+              Resume
+            </button>
+          </div>
+        </div>
+      )}
+
+      <div>
+        <label className={labelCn} htmlFor="reflection-text">
+          Your reflection
+        </label>
+        <textarea
+          id="reflection-text"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          rows={6}
+          autoFocus
+          placeholder="What happened, what you learned, what you would do differently…"
+          className={cn(textareaCn, 'w-full resize-none')}
+        />
+        <div className="mt-1 text-right text-[11px] tabular-nums text-white">
+          {charCount} chars · 12 minimum
+        </div>
+      </div>
+
+      {canLogOtj ? (
+        <div className="space-y-3 rounded-2xl border border-white/[0.14] bg-white/[0.05] p-4">
+          <label className={checkLineCn}>
+            <Checkbox
+              checked={countAsOtj}
+              onCheckedChange={(v) => {
+                otjTouched.current = true;
+                setCountAsOtj(v === true);
+              }}
+              className={checkboxCn}
+            />
+            <span>
+              <span className="block text-[13px] font-medium text-white">
+                Count this as off-the-job training
+              </span>
+              <span className="mt-0.5 block text-[11.5px] leading-snug text-white">
+                Sends to your tutor for verification. Counts towards your off-the-job hours once
+                they sign it off.
+              </span>
+            </span>
+          </label>
+
+          {countAsOtj && (
+            <div>
+              <span className={labelCn}>Duration</span>
+              <div className="flex flex-wrap gap-2">
+                {DURATION_PRESETS.map((p) => (
+                  <button
+                    type="button"
+                    key={p}
+                    aria-pressed={duration === p}
+                    onClick={() => setDuration(p)}
+                    className={cn(
+                      chipBase,
+                      'px-3.5 tabular-nums',
+                      duration === p ? chipOn : chipOff
+                    )}
+                  >
+                    {p < 60 ? `${p}m` : `${p / 60}h`}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      ) : collegeId === null ? (
+        <p className="text-[12px] leading-snug text-white">
+          Saved to your portfolio. Link your college in Settings to log reflections as off-the-job
+          training for your tutor to verify.
+        </p>
+      ) : null}
+    </FormSheet>
   );
 }

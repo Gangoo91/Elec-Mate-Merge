@@ -20,8 +20,8 @@ const KIND_LABEL: Record<FocusAC['reasonKind'], string> = {
 
 const KIND_TONE: Record<FocusAC['reasonKind'], string> = {
   referred: 'border-red-400/30 text-red-300 bg-red-500/[0.08]',
-  'quick-win': 'border-elec-yellow/30 text-elec-yellow bg-elec-yellow/[0.05]',
-  'recent-match': 'border-elec-yellow/20 text-elec-yellow/85 bg-elec-yellow/[0.03]',
+  'quick-win': 'border-elec-yellow/30 text-elec-yellow bg-white/[0.05]',
+  'recent-match': 'border-elec-yellow/20 text-elec-yellow/85 bg-white/[0.05]',
   foundational: 'border-white/[0.10] text-white bg-white/[0.04]',
   'next-up': 'border-white/[0.08] text-white bg-white/[0.02]',
 };
@@ -60,11 +60,11 @@ export function TodaysFocusPanel({
     return (
       <div className="space-y-3">
         <SectionHeader eyebrow="Today's focus" title="All caught up" />
-        <div className="rounded-xl border border-elec-yellow/30 bg-elec-yellow/[0.04] p-5 space-y-1.5">
+        <div className="rounded-xl border border-elec-yellow/30 bg-white/[0.05] p-5 space-y-1.5">
           <Eyebrow className="text-elec-yellow">Strong coverage</Eyebrow>
           <p className="text-[14px] text-white leading-relaxed">
-            Every assessment criterion already has at least one piece of evidence. Focus on
-            depth and quality next — the EPA gateway looks at both.
+            Every assessment criterion already has at least one piece of evidence. Focus on depth
+            and quality next — the EPA gateway looks at both.
           </p>
         </div>
       </div>
@@ -94,9 +94,7 @@ export function TodaysFocusPanel({
               </span>
               <div className="flex-1 min-w-0 space-y-2">
                 <div className="flex items-baseline gap-2 flex-wrap">
-                  <span className="text-[11px] font-mono text-elec-yellow">
-                    {f.acRef}
-                  </span>
+                  <span className="text-[11px] font-mono text-elec-yellow">{f.acRef}</span>
                   <span className="text-[10px] uppercase tracking-[0.14em] text-white">
                     Unit {f.unitCode}
                   </span>

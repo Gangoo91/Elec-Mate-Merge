@@ -30,7 +30,7 @@ const ToolCard = ({
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 h-full">
       <div className="space-y-2">
         <h3 className="text-[18px] font-semibold text-white leading-tight">{title}</h3>
-        <p className="text-[14px] text-white/85 leading-relaxed">{description}</p>
+        <p className="text-[14px] text-white leading-relaxed">{description}</p>
       </div>
 
       <div className="space-y-3">
@@ -41,13 +41,13 @@ const ToolCard = ({
           >
             <div className="flex items-baseline justify-between gap-3">
               <h4 className="text-[14px] font-medium text-white">{item.name}</h4>
-              <span className="text-[10px] uppercase tracking-[0.18em] text-white/55 flex-shrink-0">
+              <span className="text-[10px] uppercase tracking-[0.18em] text-white flex-shrink-0">
                 {item.priority}
               </span>
             </div>
-            <p className="text-[13px] text-white/85 leading-relaxed">{item.description}</p>
+            <p className="text-[13px] text-white leading-relaxed">{item.description}</p>
             {item.ukStandard && (
-              <p className="text-[12px] text-white/55">{item.ukStandard}</p>
+              <p className="text-[12px] text-white">{item.ukStandard}</p>
             )}
             <div className="flex items-center justify-between pt-2 border-t border-white/[0.06]">
               <span className="text-[14px] font-semibold text-white">{item.priceRange}</span>
@@ -65,16 +65,16 @@ const ToolCard = ({
 
       <div className="space-y-3 pt-2 border-t border-white/[0.06]">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Apprentice tip
           </span>
-          <p className="text-[13px] text-white/85 leading-relaxed">{apprenticeTip}</p>
+          <p className="text-[13px] text-white leading-relaxed">{apprenticeTip}</p>
         </div>
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             UK consideration
           </span>
-          <p className="text-[13px] text-white/85 leading-relaxed">{ukConsideration}</p>
+          <p className="text-[13px] text-white leading-relaxed">{ukConsideration}</p>
         </div>
       </div>
     </div>

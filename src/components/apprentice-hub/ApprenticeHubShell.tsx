@@ -28,7 +28,7 @@ export function ApprenticeHubShell({
   const wide = activeTab === 'work' || activeTab === 'progress';
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen bg-elec-dark flex flex-col">
       {/* Top Navigation - Sticky */}
       <ApprenticeHubNav activeTab={activeTab} onTabChange={onTabChange} onCapture={onCapture} />
 

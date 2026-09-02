@@ -76,13 +76,13 @@ const FurtherEducation = () => {
   return (
     <div className="space-y-6">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Further education
         </span>
         <h2 className="text-[20px] sm:text-[24px] font-bold tracking-tight text-white leading-tight">
           Advancing your qualifications
         </h2>
-        <p className="text-[14px] text-white/70 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           Higher academic qualifications can open doors to senior roles and specialisations in the
           electrical industry. Below are key educational pathways that can enhance your career
           prospects and technical expertise.
@@ -97,7 +97,7 @@ const FurtherEducation = () => {
           >
             <div className="flex items-start justify-between gap-3">
               <div className="space-y-1">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   {option.institution} · {option.level}
                 </span>
                 <h3 className="text-[17px] font-semibold text-white leading-tight">
@@ -106,39 +106,39 @@ const FurtherEducation = () => {
               </div>
             </div>
 
-            <p className="text-[14px] text-white/85 leading-relaxed">{option.description}</p>
+            <p className="text-[14px] text-white leading-relaxed">{option.description}</p>
 
             <div className="space-y-3 mt-auto">
               <div className="space-y-2 text-[13px]">
                 <div>
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Duration
                   </span>
-                  <p className="text-white/85 mt-0.5">{option.duration}</p>
+                  <p className="text-white mt-0.5">{option.duration}</p>
                 </div>
                 <div>
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Entry requirements
                   </span>
-                  <p className="text-white/85 mt-0.5">{option.entryRequirements}</p>
+                  <p className="text-white mt-0.5">{option.entryRequirements}</p>
                 </div>
                 <div>
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Progression
                   </span>
-                  <p className="text-white/85 mt-0.5">{option.progressionOptions}</p>
+                  <p className="text-white mt-0.5">{option.progressionOptions}</p>
                 </div>
               </div>
 
               <div className="pt-3 border-t border-white/[0.06] space-y-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Key topics
                 </span>
                 <div className="flex flex-wrap gap-1.5">
                   {option.keyTopics.map((topic, idx) => (
                     <span
                       key={idx}
-                      className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
+                      className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
                     >
                       {topic}
                     </span>
@@ -147,10 +147,10 @@ const FurtherEducation = () => {
               </div>
 
               <div className="pt-3 border-t border-white/[0.06] space-y-1">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Example locations
                 </span>
-                <p className="text-[12px] text-white/70">{option.locations.join(', ')}</p>
+                <p className="text-[12px] text-white">{option.locations.join(', ')}</p>
               </div>
             </div>
           </div>
@@ -158,34 +158,34 @@ const FurtherEducation = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Education funding options
         </span>
         <div className="space-y-3">
           <div className="space-y-1">
             <p className="text-[13px] text-white">Advanced Learner Loan</p>
-            <p className="text-[12px] text-white/70">
+            <p className="text-[12px] text-white">
               Available for Level 3-6 qualifications. You don&apos;t pay back until you earn over
               £25,000 per year.
             </p>
           </div>
           <div className="space-y-1">
             <p className="text-[13px] text-white">Employer sponsorship</p>
-            <p className="text-[12px] text-white/70">
+            <p className="text-[12px] text-white">
               Many employers will fund further education that benefits their business. Speak to your
               line manager or HR department.
             </p>
           </div>
           <div className="space-y-1">
             <p className="text-[13px] text-white">Part-time study</p>
-            <p className="text-[12px] text-white/70">
+            <p className="text-[12px] text-white">
               Many courses offer evening and weekend options that allow you to continue working
               while studying.
             </p>
           </div>
           <div className="space-y-1">
             <p className="text-[13px] text-white">Professional association grants</p>
-            <p className="text-[12px] text-white/70">
+            <p className="text-[12px] text-white">
               Organisations like IET offer grants and scholarships for electrical engineering
               studies.
             </p>

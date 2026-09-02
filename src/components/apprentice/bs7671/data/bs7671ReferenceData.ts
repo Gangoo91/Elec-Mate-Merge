@@ -32,16 +32,16 @@ export const bs7671ReferenceCards: BS7671ReferenceCard[] = [
       type: 'steps',
       steps: [
         'Continuity of protective conductors (including main and supplementary bonding) — Regulation 643.2',
-        'Continuity of ring final circuit conductors — Regulation 643.3',
-        'Insulation resistance — Regulation 643.3',
+        'Continuity of ring final circuit conductors — Regulation 643.2',
+        'Insulation resistance — Regulation 643.3 (Table 64 values)',
         'Protection by SELV, PELV or electrical separation — Regulation 643.4',
-        'Protection by barriers or enclosures (basic protection) — Regulation 643.5',
-        'Insulation of non-conducting walls and floors — Regulation 643.6',
-        'Polarity — Regulation 643.7',
-        'Earth fault loop impedance (Zs) — Regulation 643.7 (live test)',
+        'Insulation resistance of non-conducting floors and walls (where Reg 418.1 applies) — Regulation 643.5',
+        'Polarity — Regulation 643.6',
+        'Earth fault loop impedance and earth electrode resistance — Regulation 643.7 (live test)',
         'Prospective fault current (PFC) — Regulation 643.8 (live test)',
         'Phase sequence check (three-phase) — Regulation 643.9 (live test)',
         'Functional testing including RCD operation — Regulation 643.10 (live test)',
+        'Regulation 643.1: tests 643.2 to 643.6 are carried out in that order before the installation is energised; a failed test is repeated, with any earlier test it could have affected, once the fault is put right',
       ],
     },
   },
@@ -53,13 +53,13 @@ export const bs7671ReferenceCards: BS7671ReferenceCard[] = [
     content: {
       type: 'steps',
       steps: [
-        'Select an approved voltage indicator compliant with GS38 — inspect for damage',
-        'Prove the voltage indicator on a known live source or proving unit',
-        'Identify the circuit or equipment to be isolated',
+        'Identify the circuit or equipment to be isolated — and check for any second source (PV, UPS, generator, borrowed neutral)',
         'Switch off at the correct isolator and lock off with a personal padlock and warning notice',
-        'Verify dead: test between L-N, L-E, and N-E (all conductors) at the point of work',
-        'Confirm dead: all readings should show zero/no voltage',
-        'Re-prove the voltage indicator on the known live source — must still work correctly',
+        'Select an approved voltage indicator compliant with GS38 — inspect it for damage',
+        'Prove the voltage indicator on a known live source or proving unit immediately before testing',
+        'Test for dead between L-N, L-E and N-E (all conductors) at the point of work — every reading should show no voltage',
+        'Re-prove the voltage indicator on the known live source — it must still work correctly',
+        'Only then start work; the lock and key stay with you until the job is finished',
       ],
     },
   },
@@ -72,7 +72,7 @@ export const bs7671ReferenceCards: BS7671ReferenceCard[] = [
       type: 'grouped-table',
       groups: [
         {
-          heading: 'Insulation Resistance (Table 6A, Regulation 643.3)',
+          heading: 'Insulation Resistance (Table 64, Regulation 643.3)',
           rows: [
             { label: 'SELV / PELV (250V DC test)', value: '\u2265 0.5 M\u03A9' },
             { label: 'Up to 500V exc. above (500V DC test)', value: '\u2265 1.0 M\u03A9' },
@@ -80,11 +80,20 @@ export const bs7671ReferenceCards: BS7671ReferenceCard[] = [
           ],
         },
         {
-          heading: 'RCD Trip Times (Regulation 643.10)',
+          heading: 'RCD Test (Regulation 643.10 \u2014 A4:2026)',
           rows: [
-            { label: 'At \u00BD\u00D7 I\u0394n (e.g. 15mA)', value: 'Must NOT trip' },
-            { label: 'At 1\u00D7 I\u0394n (e.g. 30mA)', value: '\u2264 300ms' },
-            { label: 'At 5\u00D7 I\u0394n (e.g. 150mA)', value: '\u2264 40ms' },
+            {
+              label: 'At 1\u00D7 I\u0394n (e.g. 30mA), AC test',
+              value: '\u2264 300ms (general); S-type 130\u2013500ms',
+            },
+            {
+              label: '5\u00D7 I\u0394n test',
+              value: 'Deleted at A4:2026 with Appendix 3 Table 3A \u2014 no longer required',
+            },
+            {
+              label: 'Integral test button',
+              value: 'Functional check only \u2014 not a substitute for the instrument test',
+            },
           ],
         },
         {
@@ -209,7 +218,11 @@ export const bs7671ReferenceCards: BS7671ReferenceCard[] = [
               label: 'IP20',
               value: 'Finger-safe, no water protection \u2014 indoor switchgear, consumer units',
             },
-            { label: 'IP2X', value: 'Minimum for consumer units (Regulation 421.1.201)' },
+            {
+              label: 'IP2X / IPXXB',
+              value:
+                'Basic protection by barriers or enclosures \u2014 live parts finger-safe (Regulation 416.2)',
+            },
             {
               label: 'IP44',
               value: 'Splash-proof \u2014 bathrooms (Zone 2), covered outdoor areas',
@@ -306,11 +319,11 @@ export const bs7671ReferenceCards: BS7671ReferenceCard[] = [
       points: [
         'Test probes must have finger barriers or guards against accidental contact with live parts',
         'Exposed metal tip must not exceed 4mm (2mm or less strongly recommended, or use spring-loaded retractable tips)',
-        'Test leads must have HBC (high breaking capacity) fuses \u2014 typically 500mA for voltage indicators, 10A for loop/RCD testers',
+        'Test leads must be protected against the effects of a fault \u2014 by HBC fuses (typically 500mA) or current-limiting resistors built into the probes',
         'Leads must be adequately insulated, clearly distinguishable (different colours), flexible, and not excessively long',
         'All test equipment must be rated for the installation category (CAT II, III, or IV) and voltage',
         'Probes, leads, and clips must be inspected before each use for damage or deterioration',
-        'Voltage indicators must comply with GS38 \u2014 multimeters alone are NOT recommended for proving dead',
+        'Voltage indicators must comply with GS38 \u2014 a multimeter is not suitable for proving dead, because it cannot tell a dead circuit from a flat battery or a broken lead',
       ],
     },
   },

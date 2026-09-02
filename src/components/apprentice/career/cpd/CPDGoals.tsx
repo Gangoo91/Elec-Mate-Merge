@@ -86,13 +86,13 @@ const CPDGoals = () => {
     <div className="space-y-6 animate-fade-in">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div className="space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             CPD goals
           </span>
           <h2 className="text-[20px] sm:text-[24px] font-bold tracking-tight text-white leading-tight">
             CPD goals
           </h2>
-          <p className="text-[14px] text-white/70 leading-relaxed">
+          <p className="text-[14px] text-white leading-relaxed">
             Set and track your professional development goals.
           </p>
         </div>
@@ -107,7 +107,7 @@ const CPDGoals = () => {
               Add goal
             </Button>
           </DialogTrigger>
-          <DialogContent className="bg-elec-gray border-white/[0.06] max-w-md">
+          <DialogContent className="bg-white/[0.06] border-white/[0.06] max-w-md">
             <DialogHeader>
               <DialogTitle className="text-white">
                 {editingGoal ? 'Edit goal' : 'Add new CPD goal'}
@@ -116,7 +116,7 @@ const CPDGoals = () => {
 
             <div className="space-y-3">
               <div>
-                <Label htmlFor="title" className="text-[12px] text-white/70">
+                <Label htmlFor="title" className="text-[12px] text-white">
                   Title
                 </Label>
                 <Input
@@ -130,7 +130,7 @@ const CPDGoals = () => {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <Label htmlFor="targetHours" className="text-[12px] text-white/70">
+                  <Label htmlFor="targetHours" className="text-[12px] text-white">
                     Target hours
                   </Label>
                   <Input
@@ -144,7 +144,7 @@ const CPDGoals = () => {
                 </div>
 
                 <div>
-                  <Label htmlFor="deadline" className="text-[12px] text-white/70">
+                  <Label htmlFor="deadline" className="text-[12px] text-white">
                     Deadline
                   </Label>
                   <Input
@@ -159,7 +159,7 @@ const CPDGoals = () => {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <Label htmlFor="category" className="text-[12px] text-white/70">
+                  <Label htmlFor="category" className="text-[12px] text-white">
                     Category
                   </Label>
                   <Select
@@ -169,7 +169,7 @@ const CPDGoals = () => {
                     <SelectTrigger className="h-11 bg-white/[0.03] border-white/10 text-white touch-manipulation">
                       <SelectValue placeholder="Select category" />
                     </SelectTrigger>
-                    <SelectContent className="bg-elec-gray border-white/10">
+                    <SelectContent className="bg-white/[0.06] border-white/10">
                       <SelectItem value="Technical Skills">Technical Skills</SelectItem>
                       <SelectItem value="Regulations & Standards">
                         Regulations & Standards
@@ -182,7 +182,7 @@ const CPDGoals = () => {
                 </div>
 
                 <div>
-                  <Label htmlFor="status" className="text-[12px] text-white/70">
+                  <Label htmlFor="status" className="text-[12px] text-white">
                     Status
                   </Label>
                   <Select
@@ -194,7 +194,7 @@ const CPDGoals = () => {
                     <SelectTrigger className="h-11 bg-white/[0.03] border-white/10 text-white touch-manipulation">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-elec-gray border-white/10">
+                    <SelectContent className="bg-white/[0.06] border-white/10">
                       <SelectItem value="Active">Active</SelectItem>
                       <SelectItem value="Completed">Completed</SelectItem>
                       <SelectItem value="Paused">Paused</SelectItem>
@@ -204,7 +204,7 @@ const CPDGoals = () => {
               </div>
 
               <div>
-                <Label htmlFor="description" className="text-[12px] text-white/70">
+                <Label htmlFor="description" className="text-[12px] text-white">
                   Description
                 </Label>
                 <Textarea
@@ -239,9 +239,9 @@ const CPDGoals = () => {
       {goals.length === 0 ? (
         <div className="rounded-2xl border border-white/[0.10] bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-8 text-center space-y-3">
           <h3 className="text-[18px] font-semibold tracking-tight text-white">No goals set yet.</h3>
-          <p className="text-[14px] text-white/70 leading-relaxed max-w-md mx-auto">
-            Create your first CPD goal to start tracking your professional development progress
-            and stay on track with your career objectives.
+          <p className="text-[14px] text-white leading-relaxed max-w-md mx-auto">
+            Create your first CPD goal to start tracking your professional development progress and
+            stay on track with your career objectives.
           </p>
           <Button
             onClick={() => setIsAddDialogOpen(true)}
@@ -260,7 +260,7 @@ const CPDGoals = () => {
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="space-y-1 flex-1 min-w-0">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     {goal.status} · {goal.category}
                   </span>
                   <h3 className="text-[16px] font-semibold text-white leading-tight">
@@ -281,7 +281,7 @@ const CPDGoals = () => {
                     size="sm"
                     variant="ghost"
                     onClick={() => deleteGoal(goal.id)}
-                    className="h-9 w-9 p-0 text-white/70 hover:bg-white/[0.05] touch-manipulation"
+                    className="h-9 w-9 p-0 text-white hover:bg-white/[0.05] touch-manipulation"
                   >
                     <Trash2 className="h-4 w-4" />
                   </Button>
@@ -290,31 +290,29 @@ const CPDGoals = () => {
 
               <div className="rounded-lg border border-white/[0.10] bg-white/[0.02] p-3 space-y-2">
                 <div className="flex justify-between text-[13px]">
-                  <span className="text-white/55">Progress</span>
+                  <span className="text-white">Progress</span>
                   <span className="text-white font-mono">
                     {goal.currentHours} / {goal.targetHours} hours
                   </span>
                 </div>
                 <Progress value={(goal.currentHours / goal.targetHours) * 100} className="h-2" />
-                <p className="text-[12px] text-white/55">
+                <p className="text-[12px] text-white">
                   {Math.round((goal.currentHours / goal.targetHours) * 100)}% complete
                 </p>
               </div>
 
-              <div className="space-y-1.5 text-[13px] text-white/85">
+              <div className="space-y-1.5 text-[13px] text-white">
                 <div className="flex items-center gap-2">
-                  <Calendar className="h-3.5 w-3.5 text-white/55" />
+                  <Calendar className="h-3.5 w-3.5 text-white" />
                   <span>Due: {new Date(goal.deadline).toLocaleDateString()}</span>
                 </div>
 
-                {goal.description && (
-                  <p className="text-white/70 line-clamp-2">{goal.description}</p>
-                )}
+                {goal.description && <p className="text-white line-clamp-2">{goal.description}</p>}
               </div>
 
               {goal.targetHours - goal.currentHours > 0 && (
-                <div className="flex items-center gap-2 rounded-md border border-white/10 bg-white/[0.03] p-2.5 text-[12px] text-white/85">
-                  <TrendingUp className="h-3.5 w-3.5 text-white/55" />
+                <div className="flex items-center gap-2 rounded-md border border-white/10 bg-white/[0.03] p-2.5 text-[12px] text-white">
+                  <TrendingUp className="h-3.5 w-3.5 text-white" />
                   <span>{goal.targetHours - goal.currentHours} hours remaining</span>
                 </div>
               )}

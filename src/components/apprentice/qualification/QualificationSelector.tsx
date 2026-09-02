@@ -14,6 +14,7 @@ import { toast } from 'sonner';
 import QualificationConfirmationDialog from './QualificationConfirmationDialog';
 import PortfolioSetupAnimation from './PortfolioSetupAnimation';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 interface RequirementStats {
   acCount: number;
@@ -139,8 +140,8 @@ const QualificationSelector = ({ lockedToCode }: QualificationSelectorProps = {}
     return (
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
         <div className="flex items-center gap-2">
-          <Loader2 className="h-4 w-4 text-white/55 animate-spin" />
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <Loader2 className="h-4 w-4 text-white animate-spin" />
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Loading qualifications
           </span>
         </div>
@@ -163,26 +164,31 @@ const QualificationSelector = ({ lockedToCode }: QualificationSelectorProps = {}
           <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
             Current qualification
           </span>
-          <p className="text-[12px] text-white/55 leading-relaxed">
+          <p className="text-[12px] text-white leading-relaxed">
             {lockedToCode
               ? 'Set by your college — your portfolio is tailored to these requirements.'
               : 'Your portfolio is tailored to these requirements.'}
           </p>
         </div>
 
-        <div className="relative rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_10%)] overflow-hidden">
+        <div
+          className={cn(
+            'relative rounded-2xl border border-elec-yellow/35 overflow-hidden',
+            CARD_SURFACE
+          )}
+        >
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none" />
           <div className="p-4 sm:p-5 space-y-3">
             {/* One meta line — never fights the title for width */}
             <div className="flex items-center gap-2 text-[11px] font-mono">
-              <span className="text-white/85 px-1.5 py-0.5 rounded border border-elec-yellow/25 bg-elec-yellow/[0.06] text-elec-yellow">
+              <span className="text-white px-1.5 py-0.5 rounded border border-elec-yellow/25 bg-white/[0.05] text-elec-yellow">
                 Level {userSelection.qualification?.level}
               </span>
-              <span className="text-white/55 truncate">
+              <span className="text-white truncate">
                 {userSelection.qualification?.awarding_body}
               </span>
-              <span className="text-white/35">·</span>
-              <span className="text-white/55">{userSelection.qualification?.code}</span>
+              <span className="text-white">·</span>
+              <span className="text-white">{userSelection.qualification?.code}</span>
             </div>
 
             {/* Title gets the full width */}
@@ -193,9 +199,7 @@ const QualificationSelector = ({ lockedToCode }: QualificationSelectorProps = {}
             {/* Progress as a bar, not a shouting number */}
             <div className="space-y-1.5 pt-1">
               <div className="flex items-baseline justify-between">
-                <span className="text-[10px] uppercase tracking-[0.18em] text-white/55">
-                  Progress
-                </span>
+                <span className="text-[10px] uppercase tracking-[0.18em] text-white">Progress</span>
                 <span className="text-[13px] font-mono tabular-nums text-white">{pct}%</span>
               </div>
               <div className="h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
@@ -207,7 +211,7 @@ const QualificationSelector = ({ lockedToCode }: QualificationSelectorProps = {}
             </div>
 
             {userSelection.target_completion_date && (
-              <div className="flex items-center gap-2 text-[12px] text-white/55 pt-2 border-t border-white/[0.05] font-mono">
+              <div className="flex items-center gap-2 text-[12px] text-white pt-2 border-t border-white/[0.05] font-mono">
                 <CalendarDays className="h-3 w-3" />
                 Target:{' '}
                 {new Date(userSelection.target_completion_date).toLocaleDateString('en-GB', {
@@ -230,17 +234,17 @@ const QualificationSelector = ({ lockedToCode }: QualificationSelectorProps = {}
           {/* College-enrolled apprentices can't remove their course — the
               college manages it. */}
           {!lockedToCode && (
-          <button
-            onClick={async () => {
-              const cleared = await clearQualificationSelection();
-              if (cleared) {
-                toast.success('Qualification removed');
-              }
-            }}
-            className="h-11 px-5 rounded-xl border border-red-500/30 text-red-300 font-medium text-[14px] touch-manipulation active:scale-[0.97] transition-transform hover:bg-red-500/[0.08]"
-          >
-            Remove
-          </button>
+            <button
+              onClick={async () => {
+                const cleared = await clearQualificationSelection();
+                if (cleared) {
+                  toast.success('Qualification removed');
+                }
+              }}
+              className="h-11 px-5 rounded-xl border border-red-500/30 text-red-300 font-medium text-[14px] touch-manipulation active:scale-[0.97] transition-transform hover:bg-red-500/[0.08]"
+            >
+              Remove
+            </button>
           )}
         </div>
       </div>
@@ -250,10 +254,10 @@ const QualificationSelector = ({ lockedToCode }: QualificationSelectorProps = {}
   return (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-5">
       <div className="space-y-1">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           {lockedToCode ? 'Your college course' : 'Select your qualification'}
         </span>
-        <p className="text-[12px] text-white/55 leading-relaxed">
+        <p className="text-[12px] text-white leading-relaxed">
           {lockedToCode
             ? `Your college enrolled you on ${lockedToCode} — your course is managed by them. Confirm it below to align your portfolio.`
             : 'Choose your course to get a tailored portfolio experience'}
@@ -261,16 +265,21 @@ const QualificationSelector = ({ lockedToCode }: QualificationSelectorProps = {}
       </div>
 
       {lockedToCode && lockedMatchCount === 0 && (
-        <p className="text-[12px] text-white/55 leading-relaxed rounded-xl border border-white/[0.08] bg-[hsl(0_0%_10%)] p-4">
-          Your college's course (<span className="font-mono text-white">{lockedToCode}</span>)
-          isn't in the course library yet — ask your tutor, or contact{' '}
+        <p
+          className={cn(
+            'text-[12px] text-white leading-relaxed rounded-2xl border border-elec-yellow/35 p-4',
+            CARD_SURFACE
+          )}
+        >
+          Your college's course (<span className="font-mono text-white">{lockedToCode}</span>) isn't
+          in the course library yet — ask your tutor, or contact{' '}
           <span className="text-white">info@elec-mate.com</span>.
         </p>
       )}
 
       {Object.entries(visibleBodies).map(([body, quals]) => (
         <div key={body} className="space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 px-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white px-1">
             {body}
           </span>
           <div className="space-y-2">
@@ -289,19 +298,18 @@ const QualificationSelector = ({ lockedToCode }: QualificationSelectorProps = {}
                     'border border-white/[0.06] bg-white/[0.02]',
                     'hover:bg-white/[0.04] active:scale-[0.98] transition-all duration-200 touch-manipulation',
                     'focus:outline-none focus:ring-2 focus:ring-elec-yellow/50',
-                    selectedQualification?.id === qualification.id &&
-                      'ring-2 ring-elec-yellow'
+                    selectedQualification?.id === qualification.id && 'ring-2 ring-elec-yellow'
                   )}
                 >
                   <div className="flex items-center gap-3">
-                    <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono flex-shrink-0">
+                    <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono flex-shrink-0">
                       {qualification.level}
                     </span>
                     <div className="flex-1 min-w-0 space-y-1">
                       <h3 className="text-[14px] font-medium text-white leading-tight line-clamp-2">
                         {qualification.title}
                       </h3>
-                      <div className="flex items-center gap-1.5 text-[11px] text-white/55 flex-wrap font-mono">
+                      <div className="flex items-center gap-1.5 text-[11px] text-white flex-wrap font-mono">
                         {stats && (
                           <>
                             <span>{stats.acCount} ACs</span>

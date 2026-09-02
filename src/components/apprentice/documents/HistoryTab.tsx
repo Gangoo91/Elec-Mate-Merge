@@ -77,7 +77,7 @@ const HistoryTab = () => {
   const summaryCard = (label: string, value: number) => (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 text-center space-y-1">
       <div className="text-2xl font-mono text-white">{value}</div>
-      <div className="text-[12px] text-white/55">{label}</div>
+      <div className="text-[12px] text-white">{label}</div>
     </div>
   );
 
@@ -91,7 +91,7 @@ const HistoryTab = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Download history
         </span>
         <div className="space-y-3">
@@ -103,16 +103,16 @@ const HistoryTab = () => {
               <div className="flex items-start justify-between gap-3 flex-wrap">
                 <div className="flex-1 min-w-0 space-y-2">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <FileText className="h-4 w-4 text-white/55 flex-shrink-0" />
+                    <FileText className="h-4 w-4 text-white flex-shrink-0" />
                     <h4 className="text-[14px] font-semibold text-white leading-snug">
                       {item.name}
                     </h4>
-                    <span className="text-[10px] uppercase tracking-[0.18em] text-white/55">
+                    <span className="text-[10px] uppercase tracking-[0.18em] text-white">
                       {item.type}
                     </span>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-[12px] text-white/55 font-mono">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-[12px] text-white font-mono">
                     <div className="space-y-0.5">
                       <div className="flex items-center gap-1">
                         <Calendar className="h-3 w-3" />
@@ -155,7 +155,7 @@ const HistoryTab = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Storage & retention
         </span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -170,7 +170,7 @@ const HistoryTab = () => {
               ].map((item, idx) => (
                 <li
                   key={idx}
-                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                  className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                 >
                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{item}</span>
@@ -189,7 +189,7 @@ const HistoryTab = () => {
               ].map((item, idx) => (
                 <li
                   key={idx}
-                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                  className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                 >
                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{item}</span>

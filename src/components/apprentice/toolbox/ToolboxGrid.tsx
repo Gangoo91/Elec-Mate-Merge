@@ -31,7 +31,7 @@ interface ToolboxGridProps {
 }
 
 const ToolboxGrid = ({ onToolSelection }: ToolboxGridProps) => {
-  const iconClass = 'h-5 w-5 text-white/85';
+  const iconClass = 'h-5 w-5 text-white';
 
   const toolboxCategories: ToolboxCategory[] = [
     {

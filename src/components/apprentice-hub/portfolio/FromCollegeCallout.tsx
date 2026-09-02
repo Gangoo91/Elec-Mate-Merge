@@ -18,10 +18,7 @@ import { AlertTriangle, MessageSquare, ShieldCheck, Clock, ChevronRight } from '
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { Eyebrow, SectionHeader } from './PortfolioPrimitives';
-import type {
-  ACSignoffRecord,
-  ACComplianceState,
-} from '@/hooks/portfolio/useACSignoffs';
+import type { ACSignoffRecord, ACComplianceState } from '@/hooks/portfolio/useACSignoffs';
 import type { PortfolioComment } from '@/hooks/portfolio/usePortfolioComments';
 
 interface FromCollegeCalloutProps {
@@ -78,8 +75,7 @@ export function FromCollegeCallout({
             ? `${r.assessorName} · ${fmtDate(r.assessorSignedAt)}`
             : fmtDate(r.assessorSignedAt),
           detail: r.assessorNarrative || 'Open the AC for the assessor note.',
-          onClick: () =>
-            onACClick?.(r.acCode, '', r.unitCode),
+          onClick: () => onACClick?.(r.acCode, '', r.unitCode),
         });
       }
     }
@@ -112,7 +108,9 @@ export function FromCollegeCallout({
       if (seenKeys.has(key)) continue;
       seenKeys.add(key);
       const stamp =
-        r.iqaSampledAt || r.assessorSignedAt ? new Date(r.iqaSampledAt || r.assessorSignedAt!).getTime() : 0;
+        r.iqaSampledAt || r.assessorSignedAt
+          ? new Date(r.iqaSampledAt || r.assessorSignedAt!).getTime()
+          : 0;
       if (!stamp) continue;
       if (now - stamp > DAYS(14)) continue;
       if (r.status === 'iqa_confirmed') {
@@ -209,9 +207,9 @@ export function FromCollegeCallout({
             s.kind === 'referral'
               ? 'border-red-500/30 bg-red-500/[0.04]'
               : s.kind === 'comment'
-                ? 'border-elec-yellow/25 bg-elec-yellow/[0.03]'
+                ? 'border-elec-yellow/25 bg-white/[0.05]'
                 : s.kind === 'confirm'
-                  ? 'border-elec-yellow/30 bg-elec-yellow/[0.05]'
+                  ? 'border-elec-yellow/30 bg-white/[0.05]'
                   : 'border-elec-yellow/35 bg-gradient-to-br from-white/[0.19] via-white/[0.105] to-white/[0.065] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.16),0_2px_10px_-4px_rgba(0,0,0,0.65)]';
           const Icon =
             s.kind === 'referral'
@@ -244,9 +242,7 @@ export function FromCollegeCallout({
                   <Icon className={cn('h-4 w-4 mt-0.5 flex-shrink-0', iconTone)} />
                   <div className="flex-1 min-w-0 space-y-1">
                     <div className="flex items-baseline justify-between gap-2 flex-wrap">
-                      <p className="text-[13px] font-medium text-white leading-snug">
-                        {s.title}
-                      </p>
+                      <p className="text-[13px] font-medium text-white leading-snug">{s.title}</p>
                       {s.meta && (
                         <span className="text-[11px] text-white font-mono flex-shrink-0">
                           {s.meta}
@@ -254,9 +250,7 @@ export function FromCollegeCallout({
                       )}
                     </div>
                     {s.detail && (
-                      <p className="text-[12px] text-white leading-relaxed italic">
-                        {s.detail}
-                      </p>
+                      <p className="text-[12px] text-white leading-relaxed italic">{s.detail}</p>
                     )}
                   </div>
                   {s.onClick && (

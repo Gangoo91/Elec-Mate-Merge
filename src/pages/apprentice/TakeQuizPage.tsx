@@ -20,6 +20,11 @@ import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
+import { HubSubPage } from '@/components/hub/HubSubPage';
+import { CARD_BASE, CARD_NEUTRAL, CARD_SURFACE } from '@/components/ui/card-recipe';
+import { buttonPrimaryCn, inputCn, labelCn, textareaCn } from '@/components/forms/fieldStyles';
+import { useSheetDraft } from '@/hooks/useSheetDraft';
+import { storageRemoveSync } from '@/utils/storage';
 
 /* ==========================================================================
    TakeQuizPage — /apprentice/college/quiz/:id
@@ -178,6 +183,29 @@ export default function TakeQuizPage() {
   // Server verdicts (from submit_quiz_attempt / get_attempt_review).
   const [verdictById, setVerdictById] = useState<Record<string, Verdict> | null>(null);
 
+  // Typed answers used to live only in React state: a pocketed phone mid-quiz
+  // lost every free-text answer. Mirror them locally per attempt; on resume,
+  // fill in only what the server does not hold (server answers win).
+  const draft = useSheetDraft<Record<string, LearnerAnswer>>(
+    attempt?.id ? `quiz:${attempt.id}` : null,
+    answers,
+    {
+      enabled: phase === 'in_progress' && !submitting,
+      isEmpty: (a) => Object.keys(a).length === 0,
+    }
+  );
+  useEffect(() => {
+    if (!draft.hasDraft || !draft.draft || phase !== 'in_progress') return;
+    const d = draft.draft;
+    setAnswers((prev) => {
+      const next = { ...prev };
+      for (const k of Object.keys(d)) if (next[k] == null) next[k] = d[k];
+      return next;
+    });
+    draft.dismiss();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [draft.hasDraft, phase]);
+
   const startedAtRef = useRef<Date | null>(null);
   const currentQidRef = useRef<string | null>(null);
 
@@ -319,6 +347,8 @@ export default function TakeQuizPage() {
               setRevealed(rMap);
             }
           }
+          // `draft.clear()` closes over a null key here (attempt not yet in state).
+          storageRemoveSync(`sheet-draft:quiz:${att.id}`);
           setPhase('submitted');
         } else if (att && att.started_at && !att.completed_at) {
           // Resuming — restore answers + start timer
@@ -632,6 +662,7 @@ export default function TakeQuizPage() {
           }
         }
         setResultPct(pct);
+        draft.clear();
         setPhase('submitted');
         toast({
           title: autoSubmitted ? 'Time up — submitted' : 'Quiz submitted',
@@ -748,6 +779,7 @@ export default function TakeQuizPage() {
         }
       }
       setResultPct(pct);
+      draft.clear();
       setPhase('submitted');
       if (autoSubmitted) {
         toast({
@@ -785,7 +817,7 @@ export default function TakeQuizPage() {
   if (phase === 'loading') {
     return (
       <CenterShell>
-        <div className="text-white/85 text-sm">Loading quiz…</div>
+        <div className="text-white text-sm">Loading quiz…</div>
       </CenterShell>
     );
   }
@@ -812,21 +844,16 @@ export default function TakeQuizPage() {
   if (!quiz) return null;
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] pb-24">
-      <div className="max-w-2xl mx-auto px-4 sm:px-6 py-6">
-        {/* Header */}
-        <button
-          onClick={() => navigate('/apprentice/college-plan')}
-          className="text-[12px] font-medium text-white hover:text-elec-yellow inline-flex items-center gap-1"
-        >
-          <ChevronLeft className="h-4 w-4" />
-          My college hub
-        </button>
-
-        <div className="mt-4 rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-5 py-4">
+    <HubSubPage
+      section="College"
+      title={quiz.is_homework ? 'Homework' : 'Quiz'}
+      backTo="/apprentice/college-plan"
+    >
+      <div className="mx-auto w-full max-w-3xl">
+        <div className={cn('rounded-2xl border border-elec-yellow/35 px-5 py-4', CARD_SURFACE)}>
           <div className="flex items-start gap-3">
-            <div className="h-10 w-10 rounded-xl bg-blue-500/[0.14] border border-blue-400/30 flex items-center justify-center flex-shrink-0">
-              <Brain className="h-5 w-5 text-blue-200" />
+            <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl border border-elec-yellow/35 bg-white/[0.06]">
+              <Brain className="h-5 w-5 text-elec-yellow" />
             </div>
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-1.5 flex-wrap mb-0.5">
@@ -834,7 +861,7 @@ export default function TakeQuizPage() {
                   {quiz.is_homework ? 'Homework' : 'Quiz'}
                 </span>
                 {quiz.source === 'ai_authored' && (
-                  <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-elec-yellow/[0.10] border border-elec-yellow/30 text-[9px] font-semibold tracking-[0.06em] uppercase text-elec-yellow">
+                  <span className="inline-flex h-4 items-center rounded-md border border-elec-yellow/50 px-1.5 text-[9px] font-semibold uppercase tracking-[0.06em] text-elec-yellow">
                     AI
                   </span>
                 )}
@@ -856,19 +883,19 @@ export default function TakeQuizPage() {
             <span>{questions.length} questions</span>
             {quiz.time_limit_minutes && (
               <>
-                <span className="text-white/35">·</span>
+                <span className="text-white">·</span>
                 <span>{quiz.time_limit_minutes}m</span>
               </>
             )}
             {quiz.pass_mark != null && (
               <>
-                <span className="text-white/35">·</span>
+                <span className="text-white">·</span>
                 <span>{quiz.pass_mark}% to pass</span>
               </>
             )}
             {phase === 'in_progress' && secondsLeft != null && (
               <>
-                <span className="text-white/35">·</span>
+                <span className="text-white">·</span>
                 <span
                   className={cn(
                     'inline-flex items-center gap-1',
@@ -939,7 +966,7 @@ export default function TakeQuizPage() {
           )}
         </div>
       </div>
-    </div>
+    </HubSubPage>
   );
 }
 
@@ -958,29 +985,29 @@ function IntroState({
 }) {
   return (
     <div className="space-y-3">
-      <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-5 py-4">
+      <div className={cn('rounded-2xl border border-elec-yellow/35 px-5 py-4', CARD_SURFACE)}>
         <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white mb-2">
           Before you start
         </div>
         <ul className="space-y-1.5 text-[12.5px] text-white leading-snug">
           <li className="pl-3 relative">
-            <span className="absolute left-0 top-[7px] inline-block h-1 w-1 rounded-full bg-white/65" />
+            <span className="absolute left-0 top-[7px] inline-block h-1 w-1 rounded-full bg-white" />
             {questions.length} {questionKindMixLabel(questions)}
           </li>
           {quiz.time_limit_minutes && (
             <li className="pl-3 relative">
-              <span className="absolute left-0 top-[7px] inline-block h-1 w-1 rounded-full bg-white/65" />
+              <span className="absolute left-0 top-[7px] inline-block h-1 w-1 rounded-full bg-white" />
               {quiz.time_limit_minutes} minute time limit — auto-submits when it runs out
             </li>
           )}
           {quiz.pass_mark != null && (
             <li className="pl-3 relative">
-              <span className="absolute left-0 top-[7px] inline-block h-1 w-1 rounded-full bg-white/65" />
+              <span className="absolute left-0 top-[7px] inline-block h-1 w-1 rounded-full bg-white" />
               Pass mark is {quiz.pass_mark}%
             </li>
           )}
           <li className="pl-3 relative">
-            <span className="absolute left-0 top-[7px] inline-block h-1 w-1 rounded-full bg-white/65" />
+            <span className="absolute left-0 top-[7px] inline-block h-1 w-1 rounded-full bg-white" />
             You'll see the explanation + BS 7671 citation after each answer
           </li>
         </ul>
@@ -988,7 +1015,7 @@ function IntroState({
       <button
         type="button"
         onClick={onStart}
-        className="w-full h-12 rounded-full bg-elec-yellow text-black text-[14px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation inline-flex items-center justify-center gap-2"
+        className={cn(buttonPrimaryCn, 'inline-flex w-full items-center justify-center gap-2')}
       >
         {hasInProgress ? (
           <>
@@ -1068,7 +1095,7 @@ function QuestionStep({
       </div>
 
       {/* Question card */}
-      <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-5 py-5">
+      <div className={cn('rounded-2xl border border-elec-yellow/35 px-5 py-5', CARD_SURFACE)}>
         <div className="flex items-center gap-1.5 flex-wrap mb-2">
           <span className="inline-flex items-center h-5 px-1.5 rounded-md bg-white/[0.04] border border-white/[0.10] text-[9.5px] font-semibold tracking-[0.06em] uppercase text-white">
             {kindLabel(q.question_kind)}
@@ -1088,7 +1115,7 @@ function QuestionStep({
             </span>
           )}
           {q.ac_ref && (
-            <span className="inline-flex items-center gap-1 h-5 px-1.5 rounded-md bg-blue-500/[0.10] border border-blue-400/30 text-[9.5px] font-semibold tracking-[0.06em] uppercase text-blue-200">
+            <span className="inline-flex items-center gap-1 h-5 px-1.5 rounded-md border border-elec-yellow/50 text-[9.5px] font-semibold tracking-[0.06em] uppercase text-elec-yellow">
               <Target className="h-2.5 w-2.5" /> AC {q.ac_ref}
             </span>
           )}
@@ -1133,17 +1160,17 @@ function QuestionStep({
 
               {q.bs7671_citations && q.bs7671_citations.length > 0 && (
                 <div className="mt-3 pt-3 border-t border-white/[0.04]">
-                  <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/65 mb-2">
+                  <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white mb-2">
                     BS 7671
                   </div>
                   <ul className="space-y-2.5">
                     {q.bs7671_citations.map((c, k) => (
-                      <li key={k} className="border-l-2 border-blue-400/30 pl-3 break-words">
-                        <div className="text-[10.5px] font-semibold tracking-[0.04em] text-blue-200 break-all">
+                      <li key={k} className="border-l-2 border-elec-yellow/50 pl-3 break-words">
+                        <div className="text-[10.5px] font-semibold tracking-[0.04em] text-elec-yellow break-all">
                           {c.ref}
                         </div>
                         {c.snippet && (
-                          <p className="mt-0.5 text-[12px] text-white/85 leading-relaxed break-words">
+                          <p className="mt-0.5 text-[12px] text-white leading-relaxed break-words">
                             {c.snippet}
                           </p>
                         )}
@@ -1209,8 +1236,8 @@ function AnswerInput({
                     : locked && keyKnown && isSelected && !correct
                       ? 'bg-red-500/[0.08] border-red-400/40 text-red-100'
                       : isSelected
-                        ? 'bg-elec-yellow/[0.10] border-elec-yellow/40 text-white'
-                        : 'bg-[hsl(0_0%_15%)] border-white/[0.10] text-white hover:bg-white/[0.04]'
+                        ? 'border-elec-yellow bg-white/[0.06] text-white'
+                        : 'border-white/[0.12] bg-white/[0.06] text-white'
                 )}
               >
                 <span
@@ -1269,8 +1296,8 @@ function AnswerInput({
                     : locked && keyKnown && isSelected && !correct
                       ? 'bg-red-500/[0.08] border-red-400/40 text-red-100'
                       : isSelected
-                        ? 'bg-elec-yellow/[0.10] border-elec-yellow/40 text-white'
-                        : 'bg-[hsl(0_0%_15%)] border-white/[0.10] text-white hover:bg-white/[0.04]'
+                        ? 'border-elec-yellow bg-white/[0.06] text-white'
+                        : 'border-white/[0.12] bg-white/[0.06] text-white'
                 )}
               >
                 {c.label}
@@ -1305,7 +1332,7 @@ function AnswerInput({
           }
           placeholder={placeholder}
           rows={minRows}
-          className="w-full rounded-xl bg-[hsl(0_0%_15%)] border border-white/[0.10] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow text-[13.5px] text-white placeholder:text-white/35 px-4 py-3 leading-relaxed touch-manipulation resize-y disabled:opacity-70"
+          className={cn(textareaCn, 'w-full resize-y leading-relaxed disabled:text-white/70')}
         />
         <div className="mt-1.5 flex items-center justify-between text-[10.5px] text-white tabular-nums">
           <span>
@@ -1314,14 +1341,14 @@ function AnswerInput({
               <span className="ml-1 text-amber-300">· aim for {expected.min_words}+</span>
             )}
           </span>
-          <span className="text-white/55">AI graded</span>
+          <span className="text-white">AI graded</span>
         </div>
         {q.marking_guidance && locked && (
           <div className="mt-2 rounded-lg bg-white/[0.03] border border-white/[0.08] px-3 py-2">
-            <div className="text-[9.5px] font-semibold uppercase tracking-[0.18em] text-white/65 mb-0.5">
+            <div className="text-[9.5px] font-semibold uppercase tracking-[0.18em] text-white mb-0.5">
               Marking guidance
             </div>
-            <p className="text-[11.5px] text-white/85 leading-snug">{q.marking_guidance}</p>
+            <p className="text-[11.5px] leading-snug text-white">{q.marking_guidance}</p>
           </div>
         )}
       </div>
@@ -1348,7 +1375,7 @@ function AnswerInput({
     return (
       <div className="space-y-3">
         <div>
-          <label className="text-[10.5px] font-semibold uppercase tracking-[0.12em] text-white/85">
+          <label className={labelCn}>
             Final answer{expected.units ? ` (${expected.units})` : ''}
           </label>
           <div className="mt-1 flex items-center gap-2">
@@ -1372,23 +1399,18 @@ function AnswerInput({
               }}
               placeholder="e.g. 24.5"
               className={cn(
-                'w-full h-12 rounded-xl bg-[hsl(0_0%_15%)] border text-[15px] font-semibold tabular-nums text-white placeholder:text-white/35 px-4 touch-manipulation',
-                locked
-                  ? keyKnown
-                    ? correct
-                      ? 'border-emerald-400/40'
-                      : 'border-red-400/40'
-                    : 'border-white/[0.10]'
-                  : 'border-white/[0.10] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow'
+                inputCn,
+                'font-semibold tabular-nums disabled:text-white/70',
+                locked && keyKnown && (correct ? '!border-emerald-400' : '!border-red-400')
               )}
             />
             {expected.units && (
-              <span className="text-[12px] text-white/65 whitespace-nowrap">{expected.units}</span>
+              <span className="text-[12px] text-white whitespace-nowrap">{expected.units}</span>
             )}
           </div>
         </div>
         <div>
-          <label className="text-[10.5px] font-semibold uppercase tracking-[0.12em] text-white/85">
+          <label className={labelCn}>
             Show your working{expected.working_required ? ' (required)' : ''}
           </label>
           <textarea
@@ -1399,7 +1421,10 @@ function AnswerInput({
             }
             placeholder="Step through your calculation…"
             rows={4}
-            className="mt-1 w-full rounded-xl bg-[hsl(0_0%_15%)] border border-white/[0.10] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow text-[13px] text-white placeholder:text-white/35 px-4 py-3 leading-relaxed touch-manipulation resize-y disabled:opacity-70 font-mono"
+            className={cn(
+              textareaCn,
+              'mt-1 w-full resize-y font-mono leading-relaxed disabled:text-white/70'
+            )}
           />
         </div>
       </div>
@@ -1501,7 +1526,7 @@ function MediaAnswerInput({
         type="button"
         onClick={() => fileInputRef.current?.click()}
         disabled={locked || uploading}
-        className="w-full rounded-xl border-2 border-dashed border-white/[0.10] bg-white/[0.02] hover:bg-white/[0.04] px-4 py-5 text-center disabled:opacity-50 touch-manipulation"
+        className="w-full rounded-2xl border border-dashed border-white/[0.14] bg-white/[0.04] px-4 py-5 text-center transition-colors hover:bg-white/[0.06] disabled:text-white/70 touch-manipulation"
       >
         <div className="inline-flex items-center justify-center h-9 w-9 rounded-xl bg-white/[0.06] mb-1.5">
           <Brain className="h-4 w-4 text-white" />
@@ -1513,7 +1538,7 @@ function MediaAnswerInput({
               ? 'Tap to upload your annotated image'
               : 'Tap to upload photo / video / PDF evidence'}
         </div>
-        <div className="text-[10.5px] text-white/65 mt-0.5">
+        <div className="text-[10.5px] text-white mt-0.5">
           Up to 10 MB per file.{' '}
           {q.question_kind === 'image_annotation' ? 'Image only.' : 'Image, video or PDF.'}
         </div>
@@ -1523,7 +1548,7 @@ function MediaAnswerInput({
           {current.files.map((f, i) => (
             <li
               key={i}
-              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_15%)] px-3 py-2 flex items-center gap-2"
+              className="flex items-center gap-2 rounded-xl border border-white/[0.12] bg-white/[0.05] px-3 py-2"
             >
               {f.mime?.startsWith('image/') ? (
                 <img
@@ -1533,7 +1558,7 @@ function MediaAnswerInput({
                 />
               ) : (
                 <div className="h-12 w-12 rounded-md bg-white/[0.04] inline-flex items-center justify-center flex-shrink-0">
-                  <BookOpen className="h-5 w-5 text-white/65" />
+                  <BookOpen className="h-5 w-5 text-white" />
                 </div>
               )}
               <div className="min-w-0 flex-1">
@@ -1546,7 +1571,7 @@ function MediaAnswerInput({
                   }}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-[10.5px] text-blue-300 hover:underline"
+                  className="text-[11px] font-medium text-elec-yellow hover:underline"
                 >
                   Open
                 </a>
@@ -1555,7 +1580,7 @@ function MediaAnswerInput({
                 <button
                   type="button"
                   onClick={() => removeFile(i)}
-                  className="h-8 w-8 inline-flex items-center justify-center rounded-md hover:bg-white/[0.06] text-white/65 hover:text-red-300 touch-manipulation"
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-lg text-white hover:bg-white/[0.06] hover:text-red-300 touch-manipulation"
                   aria-label="Remove"
                 >
                   <X className="h-3.5 w-3.5" />
@@ -1585,14 +1610,14 @@ function MediaAnswerInput({
             ? 'Describe what each annotation marks (the AI marks against your description + the image).'
             : 'Describe what the evidence shows and how it meets the AC.'
         }
-        className="w-full rounded-xl bg-[hsl(0_0%_15%)] border border-white/[0.10] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow text-[12.5px] text-white placeholder:text-white/35 px-4 py-3 leading-relaxed touch-manipulation resize-y disabled:opacity-70"
+        className={cn(textareaCn, 'w-full resize-y leading-relaxed disabled:text-white/70')}
       />
       {q.marking_guidance && locked && (
         <div className="rounded-lg bg-white/[0.03] border border-white/[0.08] px-3 py-2">
-          <div className="text-[9.5px] font-semibold uppercase tracking-[0.18em] text-white/65 mb-0.5">
+          <div className="text-[9.5px] font-semibold uppercase tracking-[0.18em] text-white mb-0.5">
             Marking guidance
           </div>
-          <p className="text-[11.5px] text-white/85 leading-snug">{q.marking_guidance}</p>
+          <p className="text-[11.5px] leading-snug text-white">{q.marking_guidance}</p>
         </div>
       )}
     </div>
@@ -1628,8 +1653,8 @@ function FeedbackBadge({
   }
   return (
     <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.18em]">
-      <Brain className="h-3 w-3 text-blue-200" />
-      <span className="text-blue-200">Awaiting AI review</span>
+      <Brain className="h-3 w-3 text-elec-yellow" />
+      <span className="text-elec-yellow">Awaiting AI review</span>
     </div>
   );
 }
@@ -1652,7 +1677,7 @@ function ReviewState({
   const unanswered = questions.filter((q) => answers[q.id] == null).length;
   return (
     <div className="space-y-3">
-      <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-5 py-4">
+      <div className={cn('rounded-2xl border border-elec-yellow/35 px-5 py-4', CARD_SURFACE)}>
         <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white mb-2">
           Review your answers
         </div>
@@ -1671,7 +1696,7 @@ function ReviewState({
               <button
                 type="button"
                 onClick={() => onJumpTo(i)}
-                className="w-full text-left rounded-xl border border-white/[0.06] bg-[hsl(0_0%_12%)] hover:bg-white/[0.03] px-4 py-3 transition-colors touch-manipulation"
+                className={cn(CARD_BASE, CARD_NEUTRAL, 'w-full px-4 py-3')}
               >
                 <div className="flex items-center gap-2">
                   <span className="text-[10px] font-semibold tabular-nums text-white">
@@ -1687,8 +1712,8 @@ function ReviewState({
                   )}
                 </div>
                 {preview && (
-                  <div className="mt-1 pl-7 text-[11px] text-white/65 truncate">
-                    <span className="text-white/45">Your answer: </span>
+                  <div className="mt-1 pl-7 text-[11px] text-white truncate">
+                    <span className="text-white">Your answer: </span>
                     {preview}
                   </div>
                 )}
@@ -1753,7 +1778,7 @@ function SubmittedState({
     <div className="space-y-6">
       {/* Headline — typography only, no card / icon */}
       <div className="px-1">
-        <div className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-white/65">
+        <div className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-white">
           {passed ? 'Passed' : 'Submitted'}
         </div>
         <div className="mt-2 flex items-baseline gap-3 flex-wrap">
@@ -1766,12 +1791,12 @@ function SubmittedState({
             {resultPct ?? 0}
             <span className="text-[28px] sm:text-[32px] ml-0.5 align-baseline">%</span>
           </span>
-          <span className="text-[13px] text-white/85 tabular-nums">
+          <span className="text-[13px] text-white tabular-nums">
             {correctCount} of {gradableCount} correct
             {pendingCount > 0 && ` · ${pendingCount} pending`}
           </span>
         </div>
-        <p className="mt-2 text-[12.5px] text-white/65 leading-relaxed">
+        <p className="mt-2 text-[12.5px] text-white leading-relaxed">
           {quiz.pass_mark != null && (
             <>
               Pass mark {quiz.pass_mark}% · you{' '}
@@ -1796,7 +1821,7 @@ function SubmittedState({
 
       {/* Question recap — editorial list, no per-row containers */}
       <div>
-        <div className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-white/65 mb-3 px-1">
+        <div className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-white mb-3 px-1">
           Question recap
         </div>
         <ol className="divide-y divide-white/[0.06] border-y border-white/[0.06]">
@@ -1807,14 +1832,14 @@ function SubmittedState({
             const verdictMeta = (() => {
               if (verdict === 'correct') return { label: 'Correct', cls: 'text-emerald-300' };
               if (verdict === 'incorrect') return { label: 'Wrong', cls: 'text-red-300' };
-              if (verdict === 'pending') return { label: 'Awaiting AI', cls: 'text-blue-300' };
+              if (verdict === 'pending') return { label: 'Awaiting AI', cls: 'text-elec-yellow' };
               if (verdict === 'no_key') return { label: 'For tutor review', cls: 'text-amber-300' };
-              return { label: 'Skipped', cls: 'text-white/45' };
+              return { label: 'Skipped', cls: 'text-white' };
             })();
             return (
               <li key={q.id} className="py-4 px-1">
                 <div className="flex items-baseline gap-3">
-                  <span className="text-[10.5px] tabular-nums text-white/55 font-mono w-6 flex-shrink-0">
+                  <span className="text-[10.5px] tabular-nums text-white font-mono w-6 flex-shrink-0">
                     {String(i + 1).padStart(2, '0')}
                   </span>
                   <div className="min-w-0 flex-1">
@@ -1830,12 +1855,12 @@ function SubmittedState({
                       {q.question_text}
                     </p>
                     {preview && (
-                      <p className="mt-1.5 text-[11.5px] text-white/65 leading-relaxed break-words">
-                        Your answer: <span className="text-white/85">{preview}</span>
+                      <p className="mt-1.5 text-[11.5px] text-white leading-relaxed break-words">
+                        Your answer: <span className="text-white">{preview}</span>
                       </p>
                     )}
                     {(verdict === 'incorrect' || verdict === 'no_key') && q.explanation && (
-                      <p className="mt-1.5 text-[11.5px] text-white/85 leading-relaxed break-words">
+                      <p className="mt-1.5 text-[11.5px] text-white leading-relaxed break-words">
                         {q.explanation}
                       </p>
                     )}

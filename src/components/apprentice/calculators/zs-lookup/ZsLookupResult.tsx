@@ -124,7 +124,7 @@ const ZsLookupResult = ({
       {searchType === 'device' && results.length > 0 && (
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
           <div className="flex justify-between items-start gap-3">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Device lookup results
             </span>
             <Button
@@ -176,33 +176,33 @@ const ZsLookupResult = ({
               <thead className="sticky top-0 bg-[#0a0a0a]">
                 <tr className="border-b border-white/[0.06]">
                   <th
-                    className="text-left p-2 cursor-pointer text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 whitespace-nowrap"
+                    className="text-left p-2 cursor-pointer text-[10px] font-medium uppercase tracking-[0.18em] text-white whitespace-nowrap"
                     onClick={() => handleSort('device')}
                   >
                     Device {sortColumn === 'device' && (sortDirection === 'asc' ? '↑' : '↓')}
                   </th>
                   <th
-                    className="text-left p-2 cursor-pointer text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 whitespace-nowrap"
+                    className="text-left p-2 cursor-pointer text-[10px] font-medium uppercase tracking-[0.18em] text-white whitespace-nowrap"
                     onClick={() => handleSort('curve')}
                   >
                     Curve {sortColumn === 'curve' && (sortDirection === 'asc' ? '↑' : '↓')}
                   </th>
                   <th
-                    className="text-left p-2 cursor-pointer text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 whitespace-nowrap"
+                    className="text-left p-2 cursor-pointer text-[10px] font-medium uppercase tracking-[0.18em] text-white whitespace-nowrap"
                     onClick={() => handleSort('rating')}
                   >
                     Rating {sortColumn === 'rating' && (sortDirection === 'asc' ? '↑' : '↓')}
                   </th>
                   <th
-                    className="text-left p-2 cursor-pointer text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 whitespace-nowrap"
+                    className="text-left p-2 cursor-pointer text-[10px] font-medium uppercase tracking-[0.18em] text-white whitespace-nowrap"
                     onClick={() => handleSort('maxZs')}
                   >
                     Max Zs {sortColumn === 'maxZs' && (sortDirection === 'asc' ? '↑' : '↓')}
                   </th>
-                  <th className="text-left p-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 whitespace-nowrap">
+                  <th className="text-left p-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white whitespace-nowrap">
                     80% Test
                   </th>
-                  <th className="text-left p-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 whitespace-nowrap">
+                  <th className="text-left p-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white whitespace-nowrap">
                     Table
                   </th>
                 </tr>
@@ -214,19 +214,19 @@ const ZsLookupResult = ({
 
                   return (
                     <tr key={index} className="border-b border-white/[0.04]">
-                      <td className="p-2 text-white/85 whitespace-nowrap">{item.device}</td>
+                      <td className="p-2 text-white whitespace-nowrap">{item.device}</td>
                       <td className="p-2">
-                        <span className="text-[11px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                        <span className="text-[11px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                           {item.curve}
                         </span>
                       </td>
-                      <td className="p-2 font-mono text-white/85 whitespace-nowrap">
+                      <td className="p-2 font-mono text-white whitespace-nowrap">
                         {item.rating}
                       </td>
                       <td className="p-2 font-mono text-white whitespace-nowrap">{item.maxZs}</td>
-                      <td className="p-2 font-mono text-white/85 whitespace-nowrap">{testValue}</td>
+                      <td className="p-2 font-mono text-white whitespace-nowrap">{testValue}</td>
                       <td className="p-2">
-                        <span className="text-[11px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] whitespace-nowrap">
+                        <span className="text-[11px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] whitespace-nowrap">
                           {item.tableRef || 'Table 41.3'}
                         </span>
                       </td>
@@ -236,7 +236,7 @@ const ZsLookupResult = ({
               </tbody>
             </table>
             {sortedResults.length === 0 && (
-              <p className="text-center text-[13px] text-white/55 py-4">
+              <p className="text-center text-[13px] text-white py-4">
                 No devices match your filter criteria
               </p>
             )}
@@ -248,7 +248,7 @@ const ZsLookupResult = ({
       {searchType === 'compliance' && complianceCheck && (
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
           <div className="flex justify-between items-start gap-3">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Compliance check for Zs = {complianceCheck.measuredZs}Ω
             </span>
             <Button
@@ -264,7 +264,7 @@ const ZsLookupResult = ({
 
           {complianceCheck.compliantDevices.length > 0 ? (
             <>
-              <p className="text-[14px] text-white/85 leading-relaxed">
+              <p className="text-[14px] text-white leading-relaxed">
                 {complianceCheck.compliantDevices.length} compliant protection devices found.
               </p>
 
@@ -272,25 +272,25 @@ const ZsLookupResult = ({
                 <table className="w-full text-[13px] min-w-[600px]">
                   <thead className="sticky top-0 bg-[#0a0a0a]">
                     <tr className="border-b border-white/[0.06]">
-                      <th className="text-left p-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 whitespace-nowrap">
+                      <th className="text-left p-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white whitespace-nowrap">
                         Device
                       </th>
-                      <th className="text-left p-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 whitespace-nowrap">
+                      <th className="text-left p-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white whitespace-nowrap">
                         Curve
                       </th>
-                      <th className="text-left p-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 whitespace-nowrap">
+                      <th className="text-left p-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white whitespace-nowrap">
                         Rating
                       </th>
-                      <th className="text-left p-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 whitespace-nowrap">
+                      <th className="text-left p-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white whitespace-nowrap">
                         Max Zs
                       </th>
-                      <th className="text-left p-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 whitespace-nowrap">
+                      <th className="text-left p-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white whitespace-nowrap">
                         Margin
                       </th>
-                      <th className="text-left p-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 whitespace-nowrap">
+                      <th className="text-left p-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white whitespace-nowrap">
                         Headroom
                       </th>
-                      <th className="text-left p-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 whitespace-nowrap">
+                      <th className="text-left p-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white whitespace-nowrap">
                         Status
                       </th>
                     </tr>
@@ -317,13 +317,13 @@ const ZsLookupResult = ({
 
                         return (
                           <tr key={index} className="border-b border-white/[0.04]">
-                            <td className="p-2 text-white/85 whitespace-nowrap">{item.device}</td>
+                            <td className="p-2 text-white whitespace-nowrap">{item.device}</td>
                             <td className="p-2">
-                              <span className="text-[11px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                              <span className="text-[11px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                                 {item.curve}
                               </span>
                             </td>
-                            <td className="p-2 font-mono text-white/85 whitespace-nowrap">
+                            <td className="p-2 font-mono text-white whitespace-nowrap">
                               {item.rating}
                             </td>
                             <td className="p-2 font-mono text-white whitespace-nowrap">
@@ -335,13 +335,13 @@ const ZsLookupResult = ({
                             <td className="p-2">
                               <div className="flex items-center gap-2">
                                 {getHeadroomBar(item.margin, item.maxZs)}
-                                <span className="text-[12px] text-white/85 font-mono whitespace-nowrap">
+                                <span className="text-[12px] text-white font-mono whitespace-nowrap">
                                   {headroom}%
                                 </span>
                               </div>
                             </td>
                             <td className="p-2">
-                              <span className="text-[11px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] whitespace-nowrap">
+                              <span className="text-[11px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] whitespace-nowrap">
                                 {status}
                               </span>
                             </td>
@@ -351,7 +351,7 @@ const ZsLookupResult = ({
                   </tbody>
                 </table>
                 {complianceCheck.compliantDevices.length > 20 && (
-                  <p className="text-[11px] text-white/55 mt-2">
+                  <p className="text-[11px] text-white mt-2">
                     Showing top 20 results of {complianceCheck.compliantDevices.length} compliant
                     devices.
                   </p>
@@ -364,13 +364,13 @@ const ZsLookupResult = ({
                 <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
                   No compliant protection devices found
                 </span>
-                <p className="text-[13px] text-white/85 leading-relaxed">
+                <p className="text-[13px] text-white leading-relaxed">
                   The measured Zs exceeds all maximum values in BS 7671.
                 </p>
               </div>
 
               <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Remediation options
                 </span>
                 <ul className="space-y-1.5">
@@ -382,7 +382,7 @@ const ZsLookupResult = ({
                   ].map((item, i) => (
                     <li
                       key={i}
-                      className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                      className="text-[13px] text-white leading-relaxed flex items-start gap-2"
                     >
                       <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                       <span>{item}</span>
@@ -397,7 +397,7 @@ const ZsLookupResult = ({
 
       {/* Why this matters */}
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Why this matters
         </span>
         <ul className="space-y-1.5">
@@ -408,7 +408,7 @@ const ZsLookupResult = ({
           ].map((item, i) => (
             <li
               key={i}
-              className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+              className="text-[13px] text-white leading-relaxed flex items-start gap-2"
             >
               <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
               <span>{item}</span>
@@ -419,7 +419,7 @@ const ZsLookupResult = ({
 
       {/* Assumptions */}
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Key assumptions
         </span>
         <ul className="space-y-1.5">
@@ -432,7 +432,7 @@ const ZsLookupResult = ({
           ].map((item, i) => (
             <li
               key={i}
-              className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+              className="text-[13px] text-white leading-relaxed flex items-start gap-2"
             >
               <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
               <span>{item}</span>

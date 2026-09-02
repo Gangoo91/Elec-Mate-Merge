@@ -52,15 +52,15 @@ const CollapsibleRecentSessions = ({ onAddToPortfolio }: CollapsibleRecentSessio
         <CollapsibleTrigger asChild>
           <button className="w-full p-4 flex items-center justify-between text-left touch-manipulation min-h-[44px]">
             <div className="flex items-center gap-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Recent training sessions
               </span>
-              <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
+              <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
                 {completedSessions.length}
               </span>
             </div>
             <ChevronDown
-              className={`h-4 w-4 text-white/55 transition-transform duration-200 ${
+              className={`h-4 w-4 text-white transition-transform duration-200 ${
                 isOpen ? 'rotate-180' : ''
               }`}
             />
@@ -70,7 +70,7 @@ const CollapsibleRecentSessions = ({ onAddToPortfolio }: CollapsibleRecentSessio
         <CollapsibleContent>
           <div className="px-4 pb-4">
             {completedSessions.length === 0 ? (
-              <p className="text-[14px] text-white/55 leading-relaxed py-4">
+              <p className="text-[14px] text-white leading-relaxed py-4">
                 No completed sessions yet. Start tracking your learning activities to see them here.
               </p>
             ) : (
@@ -86,12 +86,12 @@ const CollapsibleRecentSessions = ({ onAddToPortfolio }: CollapsibleRecentSessio
                           <h4 className="text-[14px] text-white truncate">
                             {session.activity_type}
                           </h4>
-                          <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
+                          <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
                             {formatDuration(session.duration || 0)}
                           </span>
                         </div>
 
-                        <div className="space-y-1 text-[11px] text-white/55">
+                        <div className="space-y-1 text-[11px] text-white">
                           <div className="flex items-center gap-1 font-mono">
                             <Calendar className="h-3 w-3" />
                             {formatSessionDate(session.start_time)}
@@ -113,7 +113,7 @@ const CollapsibleRecentSessions = ({ onAddToPortfolio }: CollapsibleRecentSessio
                         </div>
 
                         {session.notes && (
-                          <p className="text-[12px] text-white/70 mt-2 leading-relaxed">
+                          <p className="text-[12px] text-white mt-2 leading-relaxed">
                             {session.notes}
                           </p>
                         )}

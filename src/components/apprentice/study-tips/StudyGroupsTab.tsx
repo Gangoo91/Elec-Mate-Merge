@@ -9,17 +9,17 @@ const Section = ({
 }) => (
   <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
     <div className="space-y-1">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
         {eyebrow}
       </span>
-      {description && <p className="text-[14px] text-white/70 leading-relaxed">{description}</p>}
+      {description && <p className="text-[14px] text-white leading-relaxed">{description}</p>}
     </div>
     {children}
   </div>
 );
 
 const Pill = ({ children }: { children: React.ReactNode }) => (
-  <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+  <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
     {children}
   </span>
 );
@@ -157,10 +157,10 @@ const StudyGroupsTab = () => {
   return (
     <div className="space-y-5">
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Study groups and collaborative learning
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           Join fellow electrical apprentices in structured study groups. Collaborative learning
           improves retention and motivation compared to studying alone.
         </p>
@@ -177,7 +177,7 @@ const StudyGroupsTab = () => {
               className="rounded-md border border-white/[0.06] bg-white/[0.02] p-4 space-y-3"
             >
               <h4 className="text-[14px] font-semibold text-white">{group.name}</h4>
-              <p className="text-[13px] text-white/85 leading-relaxed">{group.description}</p>
+              <p className="text-[13px] text-white leading-relaxed">{group.description}</p>
               <div className="flex flex-wrap gap-1.5">
                 {group.tags.map((tag, tagIndex) => (
                   <Pill key={tagIndex}>{tag}</Pill>
@@ -196,12 +196,12 @@ const StudyGroupsTab = () => {
               className="rounded-md border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
             >
               <h4 className="text-[14px] font-semibold text-white">{benefit.title}</h4>
-              <p className="text-[13px] text-white/70 leading-relaxed">{benefit.description}</p>
+              <p className="text-[13px] text-white leading-relaxed">{benefit.description}</p>
               <ul className="space-y-1">
                 {benefit.benefits.map((item, itemIndex) => (
                   <li
                     key={itemIndex}
-                    className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                    className="text-[13px] text-white leading-relaxed flex items-start gap-2"
                   >
                     <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                     <span>{item}</span>
@@ -221,12 +221,12 @@ const StudyGroupsTab = () => {
               className="rounded-md border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
             >
               <h4 className="text-[14px] font-semibold text-white">{tip.platform}</h4>
-              <p className="text-[13px] text-white/70 leading-relaxed">{tip.description}</p>
+              <p className="text-[13px] text-white leading-relaxed">{tip.description}</p>
               <ul className="space-y-1">
                 {tip.features.map((feature, featureIndex) => (
                   <li
                     key={featureIndex}
-                    className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                    className="text-[13px] text-white leading-relaxed flex items-start gap-2"
                   >
                     <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                     <span>{feature}</span>
@@ -249,18 +249,18 @@ const StudyGroupsTab = () => {
                 <h4 className="text-[14px] font-semibold text-white">{format.format}</h4>
                 <Pill>{format.duration}</Pill>
               </div>
-              <p className="text-[13px] text-white/70 leading-relaxed">{format.description}</p>
+              <p className="text-[13px] text-white leading-relaxed">{format.description}</p>
               <div className="space-y-1">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Typical structure
                 </span>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-1.5">
                   {format.structure.map((step, stepIndex) => (
                     <div
                       key={stepIndex}
-                      className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                      className="text-[13px] text-white leading-relaxed flex items-start gap-2"
                     >
-                      <span className="text-white/55 font-mono">{stepIndex + 1}.</span>
+                      <span className="text-white font-mono">{stepIndex + 1}.</span>
                       <span>{step}</span>
                     </div>
                   ))}
@@ -272,7 +272,7 @@ const StudyGroupsTab = () => {
       </Section>
 
       <Section eyebrow="Ready to start?">
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           Message two people from your cohort today, agree one weekly slot, and pick a topic for the
           first session. A small, consistent group beats a big one that never meets.
         </p>

@@ -115,6 +115,8 @@ const trackingTips = [
 ];
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { DEFAULT_OTJ_STANDARD, OTJ_HOURS_FLOOR } from '@/data/otjStandards';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const WhatCountsPage = () => {
   return (
@@ -129,7 +131,7 @@ const WhatCountsPage = () => {
         <div className="space-y-3">
           <div className="flex items-baseline justify-between gap-3 pb-1">
             <div className="space-y-1 min-w-0">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Activities That Count
               </span>
             </div>
@@ -138,7 +140,10 @@ const WhatCountsPage = () => {
           {activitiesThatCount.map((item) => (
             <div
               key={item.title}
-              className="sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]"
+              className={cn(
+                '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+                CARD_SURFACE
+              )}
             >
               <div className="sm:p-5 py-4 flex items-start gap-3">
                 <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 mt-0.5 flex-shrink-0" />
@@ -178,7 +183,7 @@ const WhatCountsPage = () => {
         <div className="space-y-3">
           <div className="flex items-baseline justify-between gap-3 pb-1">
             <div className="space-y-1 min-w-0">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Grey Area Scenarios
               </span>
             </div>
@@ -191,7 +196,10 @@ const WhatCountsPage = () => {
           {greyAreaScenarios.map((item) => (
             <div
               key={item.scenario}
-              className="sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]"
+              className={cn(
+                '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+                CARD_SURFACE
+              )}
             >
               <div className="sm:p-5 py-4 space-y-2">
                 <div className="flex items-start gap-2">
@@ -215,13 +223,18 @@ const WhatCountsPage = () => {
         <div className="space-y-3">
           <div className="flex items-baseline justify-between gap-3 pb-1">
             <div className="space-y-1 min-w-0">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Hours Tracking Tips
               </span>
             </div>
           </div>
 
-          <div className="sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]">
+          <div
+            className={cn(
+              '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+              CARD_SURFACE
+            )}
+          >
             <div className="sm:p-5 space-y-3">
               <div className="flex items-center gap-2 mb-2">
                 <Clock className="h-3.5 w-3.5 text-elec-yellow/85" />
@@ -240,7 +253,7 @@ const WhatCountsPage = () => {
         </div>
 
         {/* ST0152 Note */}
-        <div className="sm:rounded-xl sm:border sm:border-elec-yellow/25 sm:bg-elec-yellow/[0.04]">
+        <div className="sm:rounded-xl sm:border sm:border-elec-yellow/25 sm:bg-white/[0.05]">
           <div className="sm:p-5">
             <p className="text-white text-sm leading-relaxed">
               All off-the-job training must be directly relevant to your apprenticeship standard.

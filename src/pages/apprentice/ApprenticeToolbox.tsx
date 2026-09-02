@@ -1,19 +1,12 @@
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import ActiveToolContent from '@/components/apprentice/toolbox/ActiveToolContent';
 import useSEO from '@/hooks/useSEO';
 import { cn } from '@/lib/utils';
 import { CARD_BASE, CARD_NEUTRAL } from '@/components/ui/card-recipe';
-import { HubKpi, HubKpiRow, HubToolGrid } from '@/components/hub/HubPrimitives';
-import {
-  PageFrame,
-  PageHero,
-  SectionHeader,
-  itemVariants,
-  type Tone,
-} from '@/components/college/primitives';
+import { HubKpi, HubKpiRow, HubToolGrid, HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { itemVariants, type Tone } from '@/components/college/primitives';
+import { HubSubPage } from '@/components/hub/HubSubPage';
 
 interface ToolboxItem {
   id: string;
@@ -188,27 +181,11 @@ export default function ApprenticeToolbox() {
   }
 
   return (
-    <PageFrame className="px-4 sm:px-6 lg:px-8">
-      <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/apprentice')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
-        >
-          <ArrowLeft className="mr-2 h-5 w-5" />
-          Back
-        </Button>
-      </motion.div>
-
-      <motion.div variants={itemVariants}>
-        <PageHero
-          eyebrow="Apprentice · Guidance Area"
-          title="The whole job, demystified"
-          description="Essential resources, skills development and support for UK electrical apprentices — eleven topics, from funding to EPA to your rights on site."
-          tone="yellow"
-        />
-      </motion.div>
-
+    <HubSubPage
+      title="The whole job, demystified"
+      backTo="/apprentice"
+      description="Essential resources, skills development and support for UK electrical apprentices — eleven topics, from funding to EPA to your rights on site."
+    >
       <motion.div variants={itemVariants}>
         <HubKpiRow>
           {QUICK_STATS.map((s, i) => (
@@ -223,7 +200,7 @@ export default function ApprenticeToolbox() {
         if (items.length === 0) return null;
         return (
           <motion.section key={cat.id} variants={itemVariants} className="space-y-5 sm:space-y-6">
-            <SectionHeader eyebrow={cat.eyebrow} title={cat.title} />
+            <HubSectionHeading>{cat.title}</HubSectionHeading>
             <HubToolGrid
               label=""
               columns={cat.id === 'wellbeing' ? 'two' : 'three'}
@@ -242,7 +219,7 @@ export default function ApprenticeToolbox() {
 
       {/* RELATED HUBS */}
       <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
-        <SectionHeader eyebrow="Need More" title="Related hubs" />
+        <HubSectionHeading>Related hubs</HubSectionHeading>
         <HubToolGrid
           label=""
           columns="two"
@@ -269,7 +246,7 @@ export default function ApprenticeToolbox() {
 
       {/* CRISIS / WELLBEING — one-tap helplines */}
       <motion.section variants={itemVariants} className="space-y-3 sm:space-y-4">
-        <SectionHeader eyebrow="Support" title="Need to talk now?" />
+        <HubSectionHeading>Need to talk now?</HubSectionHeading>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <a
             href="tel:116123"
@@ -295,6 +272,6 @@ export default function ApprenticeToolbox() {
           </a>
         </div>
       </motion.section>
-    </PageFrame>
+    </HubSubPage>
   );
 }

@@ -153,10 +153,10 @@ const SuppliersAndCostsTab = () => {
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Smart purchasing guide
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           Smart supplier selection and budgeting can save you hundreds of pounds on your
           professional toolkit while ensuring you get quality tools.
         </p>
@@ -164,10 +164,10 @@ const SuppliersAndCostsTab = () => {
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Major UK tool suppliers
           </span>
-          <p className="text-[13px] text-white/55">
+          <p className="text-[13px] text-white">
             Key suppliers for electrical tools and equipment across the UK
           </p>
         </div>
@@ -180,32 +180,32 @@ const SuppliersAndCostsTab = () => {
               <div className="flex items-start justify-between gap-3 flex-wrap">
                 <div className="space-y-1">
                   <h3 className="text-[14px] font-semibold text-white">{supplier.name}</h3>
-                  <p className="text-[13px] text-white/85">{supplier.speciality}</p>
+                  <p className="text-[13px] text-white">{supplier.speciality}</p>
                 </div>
-                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                   {supplier.type}
                 </span>
               </div>
 
               <div className="grid grid-cols-2 gap-2 text-[12px]">
                 <div>
-                  <span className="text-white/55">Locations</span>
-                  <p className="text-white/85">{supplier.locations}</p>
+                  <span className="text-white">Locations</span>
+                  <p className="text-white">{supplier.locations}</p>
                 </div>
                 <div>
-                  <span className="text-white/55">Best for</span>
-                  <p className="text-white/85">{supplier.bestFor}</p>
+                  <span className="text-white">Best for</span>
+                  <p className="text-white">{supplier.bestFor}</p>
                 </div>
               </div>
 
               <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Apprentice support
                 </span>
-                <p className="text-[13px] text-white/85">{supplier.apprenticeSupport}</p>
+                <p className="text-[13px] text-white">{supplier.apprenticeSupport}</p>
               </div>
 
-              <div className="flex items-center gap-2 text-[12px] text-white/55">
+              <div className="flex items-center gap-2 text-[12px] text-white">
                 <Globe className="h-3.5 w-3.5" />
                 <span className="font-mono">{supplier.website}</span>
               </div>
@@ -218,10 +218,10 @@ const SuppliersAndCostsTab = () => {
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Budgeting strategies for apprentices
           </span>
-          <p className="text-[13px] text-white/55">
+          <p className="text-[13px] text-white">
             Smart approaches to building your professional toolkit
           </p>
         </div>
@@ -233,22 +233,22 @@ const SuppliersAndCostsTab = () => {
             >
               <div className="flex items-center justify-between flex-wrap gap-2">
                 <h3 className="text-[14px] font-semibold text-white">{strategy.strategy}</h3>
-                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
+                <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
                   {strategy.monthlyBudget}/month
                 </span>
               </div>
-              <p className="text-[14px] text-white/85 leading-relaxed">{strategy.description}</p>
+              <p className="text-[14px] text-white leading-relaxed">{strategy.description}</p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Benefits
                   </span>
                   <ul className="space-y-1.5">
                     {strategy.benefits.map((benefit, idx) => (
                       <li
                         key={idx}
-                        className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                        className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                       >
                         <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
                         <span>{benefit}</span>
@@ -257,14 +257,14 @@ const SuppliersAndCostsTab = () => {
                   </ul>
                 </div>
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Timeline
                   </span>
                   <ul className="space-y-1.5">
                     {strategy.timeline.map((phase, idx) => (
                       <li
                         key={idx}
-                        className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                        className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                       >
                         <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                         <span>{phase}</span>
@@ -280,10 +280,10 @@ const SuppliersAndCostsTab = () => {
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Money-saving tips for tool purchases
           </span>
-          <p className="text-[13px] text-white/55">
+          <p className="text-[13px] text-white">
             Smart strategies to get the best value for your money
           </p>
         </div>
@@ -295,16 +295,16 @@ const SuppliersAndCostsTab = () => {
             >
               <div className="flex items-center justify-between gap-2">
                 <h3 className="text-[14px] font-semibold text-white">{tip.tip}</h3>
-                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
+                <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
                   Save {tip.savings}
                 </span>
               </div>
-              <p className="text-[14px] text-white/85 leading-relaxed">{tip.description}</p>
+              <p className="text-[14px] text-white leading-relaxed">{tip.description}</p>
               <ul className="space-y-1.5">
                 {tip.details.map((detail, idx) => (
                   <li
                     key={idx}
-                    className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                    className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                   >
                     <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                     <span>{detail}</span>
@@ -318,10 +318,10 @@ const SuppliersAndCostsTab = () => {
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Financing options for larger purchases
           </span>
-          <p className="text-[13px] text-white/55">
+          <p className="text-[13px] text-white">
             Responsible financing options for expensive test equipment
           </p>
         </div>
@@ -333,26 +333,26 @@ const SuppliersAndCostsTab = () => {
             >
               <div className="flex items-center justify-between flex-wrap gap-2">
                 <h3 className="text-[14px] font-semibold text-white">{option.option}</h3>
-                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
+                <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
                   {option.rate}
                 </span>
               </div>
 
               <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-[13px]">
                 <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-2 space-y-0.5">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Amount
                   </span>
                   <p className="text-white font-mono">{option.amount}</p>
                 </div>
                 <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-2 space-y-0.5">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Term
                   </span>
                   <p className="text-white">{option.term}</p>
                 </div>
                 <div className="col-span-2 rounded-md border border-white/[0.06] bg-white/[0.02] p-2 space-y-0.5">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Eligibility
                   </span>
                   <p className="text-white">{option.eligibility}</p>
@@ -361,14 +361,14 @@ const SuppliersAndCostsTab = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                 <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Pros
                   </span>
                   <ul className="space-y-1">
                     {option.pros.map((pro, idx) => (
                       <li
                         key={idx}
-                        className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                        className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                       >
                         <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
                         <span>{pro}</span>
@@ -377,14 +377,14 @@ const SuppliersAndCostsTab = () => {
                   </ul>
                 </div>
                 <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Cons
                   </span>
                   <ul className="space-y-1">
                     {option.cons.map((con, idx) => (
                       <li
                         key={idx}
-                        className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                        className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                       >
                         <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                         <span>{con}</span>
@@ -402,7 +402,7 @@ const SuppliersAndCostsTab = () => {
         <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
           Financial warning
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           Only borrow what you can afford to repay. Tool purchases are an investment, but debt can
           impact your financial future. Consider starting with essential items and upgrading
           gradually.

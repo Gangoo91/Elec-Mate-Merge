@@ -157,7 +157,7 @@ const SmartInputSuggestions: React.FC<SmartInputSuggestionsProps> = ({
         variant="ghost"
         size="sm"
         onClick={() => setShowSuggestions(!showSuggestions)}
-        className="h-9 px-2 text-[12px] text-white/55 hover:text-white hover:bg-white/[0.05] touch-manipulation"
+        className="h-9 px-2 text-[12px] text-white hover:text-white hover:bg-white/[0.05] touch-manipulation"
       >
         {showSuggestions ? 'Hide' : 'Show'} common values
         <ChevronDown
@@ -173,14 +173,14 @@ const SmartInputSuggestions: React.FC<SmartInputSuggestionsProps> = ({
                 key={index}
                 type="button"
                 onClick={() => onSuggestionSelect(suggestion.value)}
-                className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] touch-manipulation min-h-[28px]"
+                className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] touch-manipulation min-h-[28px]"
               >
                 {suggestion.label}
               </button>
             ))}
           </div>
           {filteredSuggestions.length > 6 && (
-            <p className="text-[11px] text-white/55">
+            <p className="text-[11px] text-white">
               And {filteredSuggestions.length - 6} more suggestions...
             </p>
           )}

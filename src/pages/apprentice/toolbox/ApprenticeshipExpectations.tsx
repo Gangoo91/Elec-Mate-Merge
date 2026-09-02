@@ -37,11 +37,16 @@ import { itemVariants } from '@/components/college/primitives';
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 import SalaryProgressionChart from '@/components/apprentice/apprenticeship-expectations/SalaryProgressionChart';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 /* ─── Editorial card ─── */
 const Card = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
   <div
-    className={'rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 ' + className}
+    className={
+      'rounded-2xl border border-elec-yellow/35 bg-gradient-to-br from-white/[0.11] via-white/[0.065] to-white/[0.04] p-4 sm:p-5 ' +
+      className
+    }
   >
     {children}
   </div>
@@ -49,7 +54,7 @@ const Card = ({ children, className = '' }: { children: React.ReactNode; classNa
 
 /* ─── Single bullet with icon ─── */
 const Bullet = ({ icon: Icon, children }: { icon: LucideIcon; children: React.ReactNode }) => (
-  <li className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed">
+  <li className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed">
     <Icon className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
     <span>{children}</span>
   </li>
@@ -71,10 +76,13 @@ const YearCard = ({
 }) => (
   <Link
     to={to}
-    className="block rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 active:bg-white/[0.04] active:scale-[0.99] transition-all touch-manipulation"
+    className={cn(
+      'block rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 active:bg-white/[0.04] active:scale-[0.99] transition-all touch-manipulation',
+      CARD_SURFACE
+    )}
   >
     <div className="flex items-start gap-3">
-      <div className="h-9 w-9 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] flex items-center justify-center flex-shrink-0">
+      <div className="h-9 w-9 rounded-md border border-elec-yellow/30 bg-white/[0.05] flex items-center justify-center flex-shrink-0">
         <span className="text-[13px] font-mono font-semibold text-elec-yellow tabular-nums">
           {year}
         </span>
@@ -86,15 +94,15 @@ const YearCard = ({
           </h3>
           <span className="text-[11px] font-mono text-elec-yellow tabular-nums">{salary}</span>
         </div>
-        <p className="text-[12.5px] text-white/70 leading-relaxed">{subtitle}</p>
+        <p className="text-[12.5px] text-white leading-relaxed">{subtitle}</p>
         <div className="flex items-center gap-3 pt-0.5">
-          <span className="inline-flex items-center gap-1 text-[10.5px] uppercase tracking-[0.14em] text-white/55">
+          <span className="inline-flex items-center gap-1 text-[10.5px] uppercase tracking-[0.14em] text-white">
             <Clock className="h-3 w-3" />
             12 months
           </span>
         </div>
       </div>
-      <ChevronRight className="h-4 w-4 text-white/40 flex-shrink-0 mt-1" />
+      <ChevronRight className="h-4 w-4 text-white flex-shrink-0 mt-1" />
     </div>
   </Link>
 );
@@ -117,8 +125,8 @@ const CareerCard = ({
         <h3 className="text-[15px] font-semibold text-white tracking-tight">{title}</h3>
         <span className="text-[11px] font-mono text-elec-yellow tabular-nums">{salary}</span>
       </div>
-      <p className="text-[12.5px] text-white/70 leading-relaxed">{description}</p>
-      <span className="inline-flex items-center h-6 px-2 rounded-md border border-white/[0.08] bg-white/[0.02] text-[10px] font-medium uppercase tracking-[0.14em] text-white/85">
+      <p className="text-[12.5px] text-white leading-relaxed">{description}</p>
+      <span className="inline-flex items-center h-6 px-2 rounded-md border border-white/[0.08] bg-white/[0.02] text-[10px] font-medium uppercase tracking-[0.14em] text-white">
         {badge}
       </span>
     </div>
@@ -139,7 +147,7 @@ const GridStat = ({
     <Icon className="h-4 w-4 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
     <div className="min-w-0">
       <p className="text-[12.5px] font-medium text-white leading-snug">{title}</p>
-      <p className="text-[10.5px] text-white/55 leading-snug mt-0.5">{meta}</p>
+      <p className="text-[10.5px] text-white leading-snug mt-0.5">{meta}</p>
     </div>
   </div>
 );
@@ -220,7 +228,12 @@ const ApprenticeshipExpectations = () => {
             meta="NMW · JIB rates · regional variance"
           />
           <div className="space-y-2.5">
-            <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden">
+            <div
+              className={cn(
+                'rounded-2xl border border-elec-yellow/35 overflow-hidden',
+                CARD_SURFACE
+              )}
+            >
               <SalaryProgressionChart />
             </div>
             <Card>
@@ -343,7 +356,7 @@ const ApprenticeshipExpectations = () => {
             <Card>
               <div className="flex items-baseline justify-between gap-3 flex-wrap">
                 <Eyebrow>End point assessment (AM2S)</Eyebrow>
-                <span className="inline-flex items-center gap-1 text-[10.5px] uppercase tracking-[0.14em] text-white/55">
+                <span className="inline-flex items-center gap-1 text-[10.5px] uppercase tracking-[0.14em] text-white">
                   <Clock className="h-3 w-3" />
                   ~2.5 days
                 </span>
@@ -353,16 +366,16 @@ const ApprenticeshipExpectations = () => {
                   Sole EPAO: NET (National Electrotechnical Training)
                 </Bullet>
                 <Bullet icon={Wrench}>
-                  A single integrated practical assessment (~16–18 hours, typically over ~2.5 days):
-                  safe isolation, composite installation, inspection &amp; testing, and fault
-                  diagnosis
+                  A single integrated practical assessment, run over about 2½–3 days: safe
+                  isolation, composite installation, inspection &amp; testing, and fault diagnosis
                 </Bullet>
                 <Bullet icon={BookOpen}>
                   An embedded online multiple-choice applied-knowledge test (the knowledge element
                   is sat within the AM2S, not as a separate exam)
                 </Bullet>
                 <Bullet icon={Award}>
-                  <span className="font-medium">Grading:</span> Fail / Pass / Distinction
+                  <span className="font-medium">Grading:</span> Pass / Fail — the AM2S is
+                  competence-based, with no tiers
                 </Bullet>
                 <Bullet icon={CheckCircle2}>
                   Gateway: complete the NVQ, evidence your off-the-job hours, and have your
@@ -405,10 +418,10 @@ const ApprenticeshipExpectations = () => {
             ].map((c) => (
               <Card key={c.title}>
                 <h3 className="text-[14px] font-semibold text-white leading-snug">{c.title}</h3>
-                <p className="text-[12.5px] text-white/85 leading-relaxed mt-1.5">{c.body}</p>
+                <p className="text-[12.5px] text-white leading-relaxed mt-1.5">{c.body}</p>
               </Card>
             ))}
-            <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-2">
+            <div className="rounded-xl border border-elec-yellow/25 bg-white/[0.05] p-4 sm:p-5 space-y-2">
               <Eyebrow className="text-elec-yellow/85">Getting the most from your mentor</Eyebrow>
               <ul className="space-y-1.5 list-none mt-1">
                 <Bullet icon={Lightbulb}>
@@ -435,7 +448,7 @@ const ApprenticeshipExpectations = () => {
                 </Bullet>
               </ul>
             </div>
-            <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-2">
+            <div className="rounded-xl border border-elec-yellow/25 bg-white/[0.05] p-4 sm:p-5 space-y-2">
               <Eyebrow className="text-elec-yellow/85">External support</Eyebrow>
               <ul className="space-y-1.5 list-none mt-1">
                 <Bullet icon={Heart}>
@@ -551,7 +564,7 @@ const ApprenticeshipExpectations = () => {
         <motion.section variants={itemVariants} className="space-y-3">
           <SectionHeader
             eyebrow="Industry outlook"
-            title="UK electrical industry · 2025/26"
+            title="UK electrical industry · 2026/27"
             meta="Why demand is high and where it's heading"
           />
           <Card>
@@ -571,9 +584,9 @@ const ApprenticeshipExpectations = () => {
 
         {/* ── JIB footer ───────────────────────────────────────────── */}
         <motion.section variants={itemVariants}>
-          <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-1.5">
+          <div className="rounded-xl border border-elec-yellow/25 bg-white/[0.05] p-4 sm:p-5 space-y-1.5">
             <Eyebrow className="text-elec-yellow/85">JIB grade progression</Eyebrow>
-            <p className="text-[13px] text-white/85 leading-relaxed">
+            <p className="text-[13px] text-white leading-relaxed">
               Electrician → Approved Electrician (2 yr + Inspection & Testing quals) → Technician (5
               yr + Level 4 qualification).
             </p>
@@ -588,10 +601,15 @@ const ApprenticeshipExpectations = () => {
 
 function StatCell({ label, value, sub }: { label: string; value: string; sub?: string }) {
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-3 sm:p-4 space-y-0.5">
+    <div
+      className={cn(
+        'rounded-2xl border border-elec-yellow/35 p-3 sm:p-4 space-y-0.5',
+        CARD_SURFACE
+      )}
+    >
       <Eyebrow className="text-[9.5px]">{label}</Eyebrow>
       <p className="text-[14px] sm:text-[15px] font-semibold text-white tracking-tight">{value}</p>
-      {sub && <p className="text-[10px] text-white/55">{sub}</p>}
+      {sub && <p className="text-[10px] text-white">{sub}</p>}
     </div>
   );
 }

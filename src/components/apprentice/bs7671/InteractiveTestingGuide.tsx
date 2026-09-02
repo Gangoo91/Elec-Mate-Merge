@@ -79,18 +79,12 @@ const InteractiveTestingGuide = ({
   const currentStepData = guide.steps[currentStep];
   const isLastStep = currentStep === guide.steps.length - 1;
 
-  const Section = ({
-    eyebrow,
-    children,
-  }: {
-    eyebrow: string;
-    children: React.ReactNode;
-  }) => (
+  const Section = ({ eyebrow, children }: { eyebrow: string; children: React.ReactNode }) => (
     <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
         {eyebrow}
       </span>
-      <div className="text-[14px] text-white/85 leading-relaxed">{children}</div>
+      <div className="text-[14px] text-white leading-relaxed">{children}</div>
     </div>
   );
 
@@ -108,27 +102,27 @@ const InteractiveTestingGuide = ({
         </Button>
 
         <div className="space-y-2">
-          <div className="flex items-baseline gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+          <div className="flex items-baseline gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             <span>{guide.difficulty}</span>
-            <span className="text-white/25">·</span>
+            <span className="text-white">·</span>
             <span>{guide.duration}</span>
-            <span className="text-white/25">·</span>
+            <span className="text-white">·</span>
             <span className="font-mono normal-case tracking-normal">{guide.regulationClause}</span>
           </div>
           <h2 className="text-[24px] sm:text-[28px] font-bold tracking-tight text-white leading-tight">
             {guide.title}
           </h2>
-          <p className="text-[14px] text-white/70 leading-relaxed max-w-2xl">{guide.description}</p>
+          <p className="text-[14px] text-white leading-relaxed max-w-2xl">{guide.description}</p>
         </div>
       </div>
 
       {/* Progress strip */}
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-3">
         <div className="flex items-baseline justify-between">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Progress
           </span>
-          <span className="text-[12px] text-white/85 font-mono">
+          <span className="text-[12px] text-white font-mono">
             {completedCount}/{guide.steps.length} · {Math.round(progressPercent)}%
           </span>
         </div>
@@ -148,7 +142,7 @@ const InteractiveTestingGuide = ({
               ? 'bg-elec-yellow text-black font-semibold border-elec-yellow'
               : isCompleted
                 ? 'bg-white/[0.04] text-white border-white/10'
-                : 'bg-transparent text-white/70 border-white/10';
+                : 'bg-transparent text-white border-white/10';
 
             return (
               <button
@@ -172,16 +166,14 @@ const InteractiveTestingGuide = ({
       <div className="space-y-4">
         <div className="flex items-baseline justify-between gap-4">
           <div className="space-y-1">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Step {currentStep + 1} of {guide.steps.length}
             </span>
             <h3 className="text-[20px] sm:text-[22px] font-semibold text-white leading-tight">
               {currentStepData.title}
             </h3>
           </div>
-          {isStepCompleted && (
-            <CheckCircle className="h-5 w-5 text-elec-yellow flex-shrink-0" />
-          )}
+          {isStepCompleted && <CheckCircle className="h-5 w-5 text-elec-yellow flex-shrink-0" />}
         </div>
 
         <StepDiagram test={guide} step={currentStepData} />
@@ -193,7 +185,7 @@ const InteractiveTestingGuide = ({
         <Section eyebrow="Instructions">
           <p>{currentStepData.instruction}</p>
           {currentStepData.regulationReference && (
-            <p className="mt-2 text-[11px] text-white/70 font-mono">
+            <p className="mt-2 text-[11px] text-white font-mono">
               Ref: {currentStepData.regulationReference}
             </p>
           )}
@@ -210,21 +202,21 @@ const InteractiveTestingGuide = ({
             <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
               Safety warning
             </span>
-            <p className="text-[14px] text-white/85 leading-relaxed">
+            <p className="text-[14px] text-white leading-relaxed">
               {currentStepData.safetyWarning}
             </p>
           </div>
         )}
 
         <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Equipment
           </span>
           <div className="flex flex-wrap gap-1.5">
             {currentStepData.equipment.map((item, index) => (
               <span
                 key={index}
-                className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07]"
+                className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07]"
               >
                 {item}
               </span>
@@ -241,7 +233,7 @@ const InteractiveTestingGuide = ({
               {currentStepData.tips.map((tip, index) => (
                 <li
                   key={index}
-                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                  className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                 >
                   <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
                   <span>{tip}</span>
@@ -255,11 +247,11 @@ const InteractiveTestingGuide = ({
           <Collapsible open={troubleshootingOpen} onOpenChange={setTroubleshootingOpen}>
             <CollapsibleTrigger asChild>
               <button className="w-full rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 flex items-center justify-between text-left touch-manipulation h-auto min-h-[44px]">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Troubleshooting
                 </span>
                 <ChevronDown
-                  className={`h-4 w-4 text-white/70 transition-transform duration-200 ${
+                  className={`h-4 w-4 text-white transition-transform duration-200 ${
                     troubleshootingOpen ? 'rotate-180' : ''
                   }`}
                 />
@@ -271,7 +263,7 @@ const InteractiveTestingGuide = ({
                   {currentStepData.troubleshooting.map((item, index) => (
                     <li
                       key={index}
-                      className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                      className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                     >
                       <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                       <span>{item}</span>
@@ -289,7 +281,7 @@ const InteractiveTestingGuide = ({
             variant="outline"
             onClick={handlePrevious}
             disabled={currentStep === 0}
-            className="h-11 border-white/15 text-white hover:bg-white/[0.05] disabled:opacity-40 touch-manipulation"
+            className="h-11 border-white/15 text-white hover:bg-white/[0.05] disabled:text-white/70 touch-manipulation"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Previous
@@ -311,7 +303,7 @@ const InteractiveTestingGuide = ({
               <Button
                 onClick={handleComplete}
                 disabled={!isStepCompleted}
-                className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98] disabled:opacity-40"
+                className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
               >
                 Complete test
                 <CheckCircle className="h-4 w-4 ml-2" />
@@ -331,7 +323,7 @@ const InteractiveTestingGuide = ({
 
       {/* Test Overview */}
       <div className="space-y-4 pt-4 border-t border-white/[0.10]">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Test overview
         </span>
 
@@ -339,14 +331,14 @@ const InteractiveTestingGuide = ({
 
         {guide.testLimits.length > 0 && (
           <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Test limits
             </span>
             <div className="space-y-1">
               {guide.testLimits.map((limit, index) => (
                 <div
                   key={index}
-                  className="flex items-baseline justify-between text-[13px] text-white/85"
+                  className="flex items-baseline justify-between text-[13px] text-white"
                 >
                   <span>{limit.parameter}</span>
                   <span className="font-mono text-white">

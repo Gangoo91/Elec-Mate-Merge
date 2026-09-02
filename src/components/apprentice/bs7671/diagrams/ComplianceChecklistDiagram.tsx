@@ -54,15 +54,15 @@ const ComplianceChecklistDiagram = ({ installationType }: ComplianceChecklistDia
 
   return (
     <div className="space-y-4">
-      <p className="text-[14px] text-white/85 leading-relaxed">
+      <p className="text-[14px] text-white leading-relaxed">
         BS 7671 compliance verification checklist.
       </p>
 
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Regulation 641.3 — inspection requirements
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           The inspection shall be made to verify that the installed electrical equipment is in
           accordance with BS 7671, is not visibly damaged or defective so as to impair safety, and
           is correctly selected and erected.
@@ -76,16 +76,16 @@ const ComplianceChecklistDiagram = ({ installationType }: ComplianceChecklistDia
             className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2"
           >
             <div className="space-y-0.5">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 {category.category}
               </span>
-              <p className="text-[11px] text-white/70 font-mono">{category.regulation}</p>
+              <p className="text-[11px] text-white font-mono">{category.regulation}</p>
             </div>
             <ul className="space-y-1.5">
               {category.items.map((item, itemIndex) => (
                 <li
                   key={itemIndex}
-                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                  className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                 >
                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{item}</span>
@@ -97,12 +97,12 @@ const ComplianceChecklistDiagram = ({ installationType }: ComplianceChecklistDia
       </div>
 
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Competent person requirements (Regulation 641.4)
         </span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-1.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Inspector qualifications
             </span>
             <ul className="space-y-1.5">
@@ -114,7 +114,7 @@ const ComplianceChecklistDiagram = ({ installationType }: ComplianceChecklistDia
               ].map((item, i) => (
                 <li
                   key={i}
-                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                  className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                 >
                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{item}</span>
@@ -123,7 +123,7 @@ const ComplianceChecklistDiagram = ({ installationType }: ComplianceChecklistDia
             </ul>
           </div>
           <div className="space-y-1.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Testing personnel
             </span>
             <ul className="space-y-1.5">
@@ -135,7 +135,7 @@ const ComplianceChecklistDiagram = ({ installationType }: ComplianceChecklistDia
               ].map((item, i) => (
                 <li
                   key={i}
-                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                  className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                 >
                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{item}</span>
@@ -150,7 +150,7 @@ const ComplianceChecklistDiagram = ({ installationType }: ComplianceChecklistDia
         <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
           Non-compliance action required
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">If non-compliance is identified:</p>
+        <p className="text-[14px] text-white leading-relaxed">If non-compliance is identified:</p>
         <ul className="space-y-1.5">
           {[
             'Document the specific regulation contravention',
@@ -161,7 +161,7 @@ const ComplianceChecklistDiagram = ({ installationType }: ComplianceChecklistDia
           ].map((item, i) => (
             <li
               key={i}
-              className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+              className="text-[14px] text-white leading-relaxed flex items-start gap-2"
             >
               <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
               <span>{item}</span>

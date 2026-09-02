@@ -794,7 +794,7 @@ const CommercialCircuitGuide = () => {
                   <h5 className="font-medium text-white mb-2">Characteristics</h5>
                   <ul className="space-y-1">
                     {system.characteristics.map((char, idx) => (
-                      <li key={idx} className="text-white/85 text-xs flex items-start gap-2">
+                      <li key={idx} className="text-white text-xs flex items-start gap-2">
                         <span className="w-1 h-1 bg-white/55 rounded-full mt-1.5 flex-shrink-0"></span>
                         {char}
                       </li>
@@ -805,7 +805,7 @@ const CommercialCircuitGuide = () => {
                   <h5 className="font-medium text-white mb-2">Requirements</h5>
                   <ul className="space-y-1">
                     {system.requirements.map((req, idx) => (
-                      <li key={idx} className="text-white/85 text-xs flex items-start gap-2">
+                      <li key={idx} className="text-white text-xs flex items-start gap-2">
                         <span className="w-1 h-1 bg-white/55 rounded-full mt-1.5 flex-shrink-0"></span>
                         {req}
                       </li>
@@ -816,7 +816,7 @@ const CommercialCircuitGuide = () => {
                   <h5 className="font-medium text-white mb-2">Limitations</h5>
                   <ul className="space-y-1">
                     {system.limitations.map((limit, idx) => (
-                      <li key={idx} className="text-white/85 text-xs flex items-start gap-2">
+                      <li key={idx} className="text-white text-xs flex items-start gap-2">
                         <span className="w-1 h-1 bg-white/55 rounded-full mt-1.5 flex-shrink-0"></span>
                         {limit}
                       </li>
@@ -842,7 +842,7 @@ const CommercialCircuitGuide = () => {
           {loadBalancing.principles.map((principle, index) => (
             <div key={index} className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <h4 className="font-medium text-white mb-2">{principle.principle}</h4>
-              <p className="text-sm text-white/85 mb-2">{principle.explanation}</p>
+              <p className="text-sm text-white mb-2">{principle.explanation}</p>
               {'target' in principle && (
                 <p className="text-xs text-white">
                   <strong>Target:</strong> {principle.target}
@@ -881,7 +881,7 @@ const CommercialCircuitGuide = () => {
             <div className="space-y-3">
               {loadBalancing.practicalGuidance.map((guide, idx) => (
                 <div key={idx} className="bg-white/[0.06] p-3 rounded border border-white/[0.10]">
-                  <h5 className="font-medium text-white/85 text-sm mb-1">{guide.scenario}</h5>
+                  <h5 className="font-medium text-white text-sm mb-1">{guide.scenario}</h5>
                   <p className="text-xs text-white mb-1">
                     <strong>Approach:</strong> {guide.approach}
                   </p>
@@ -897,8 +897,8 @@ const CommercialCircuitGuide = () => {
             <h4 className="font-medium text-white mb-3">Monitoring Recommendations</h4>
             <ul className="space-y-1">
               {loadBalancing.monitoring.map((item, idx) => (
-                <li key={idx} className="text-sm text-white/85 flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
+                <li key={idx} className="text-sm text-white flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-white mt-0.5 flex-shrink-0" />
                   {item}
                 </li>
               ))}
@@ -925,7 +925,7 @@ const CommercialCircuitGuide = () => {
                   {level.typical}
                 </Badge>
               </div>
-              <p className="text-sm text-white/85 mb-2">
+              <p className="text-sm text-white mb-2">
                 <strong>Location:</strong> {level.location}
               </p>
               <p className="text-xs text-white mb-3">
@@ -933,10 +933,10 @@ const CommercialCircuitGuide = () => {
               </p>
 
               <div>
-                <h5 className="font-medium text-white/85 mb-2 text-sm">Key Features</h5>
+                <h5 className="font-medium text-white mb-2 text-sm">Key Features</h5>
                 <div className="grid grid-cols-2 gap-2">
                   {level.features.map((feature, idx) => (
-                    <div key={idx} className="text-xs text-white/85 flex items-start gap-2">
+                    <div key={idx} className="text-xs text-white flex items-start gap-2">
                       <span className="w-1 h-1 bg-white/55 rounded-full mt-1.5 flex-shrink-0"></span>
                       {feature}
                     </div>
@@ -947,8 +947,8 @@ const CommercialCircuitGuide = () => {
           ))}
 
           <Alert className="border-white/[0.10] bg-white/[0.06]">
-            <AlertTriangle className="h-4 w-4 text-white/70" />
-            <AlertDescription className="text-white/85 text-sm">
+            <AlertTriangle className="h-4 w-4 text-white" />
+            <AlertDescription className="text-white text-sm">
               <strong>Design Considerations:</strong>
               <ul className="mt-2 space-y-1">
                 {subDistributionDesign.designConsiderations.map((item, idx) => (
@@ -987,10 +987,10 @@ const CommercialCircuitGuide = () => {
                 </div>
                 <p className="text-xs text-white mb-2">{type.features}</p>
                 <div className="mb-2">
-                  <span className="text-xs text-white/85 font-medium">Applications:</span>
+                  <span className="text-xs text-white font-medium">Applications:</span>
                   <ul className="mt-1 space-y-0.5">
                     {type.applications.map((app, idx) => (
-                      <li key={idx} className="text-xs text-white/85">
+                      <li key={idx} className="text-xs text-white">
                         - {app}
                       </li>
                     ))}
@@ -1005,10 +1005,10 @@ const CommercialCircuitGuide = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
-              <h4 className="font-medium text-white/85 mb-3">Installation Requirements</h4>
+              <h4 className="font-medium text-white mb-3">Installation Requirements</h4>
               <ul className="space-y-1">
                 {busbarTrunking.installationRequirements.map((req, idx) => (
-                  <li key={idx} className="text-xs text-white/85 flex items-start gap-2">
+                  <li key={idx} className="text-xs text-white flex items-start gap-2">
                     <span className="w-1 h-1 bg-white/55 rounded-full mt-1.5 flex-shrink-0"></span>
                     {req}
                   </li>
@@ -1017,10 +1017,10 @@ const CommercialCircuitGuide = () => {
             </div>
 
             <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
-              <h4 className="font-medium text-white/85 mb-3">Testing Requirements</h4>
+              <h4 className="font-medium text-white mb-3">Testing Requirements</h4>
               <ul className="space-y-1">
                 {busbarTrunking.testingRequirements.map((req, idx) => (
-                  <li key={idx} className="text-xs text-white/85 flex items-start gap-2">
+                  <li key={idx} className="text-xs text-white flex items-start gap-2">
                     <span className="w-1 h-1 bg-white/55 rounded-full mt-1.5 flex-shrink-0"></span>
                     {req}
                   </li>
@@ -1045,8 +1045,8 @@ const CommercialCircuitGuide = () => {
           <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <h4 className="font-medium text-white mb-2">{cableSizing.diversityFactors.title}</h4>
             <Alert className="border-white/[0.10] bg-white/[0.06] mb-3">
-              <Info className="h-4 w-4 text-white/70" />
-              <AlertDescription className="text-white/85 text-xs">
+              <Info className="h-4 w-4 text-white" />
+              <AlertDescription className="text-white text-xs">
                 {cableSizing.diversityFactors.note}
               </AlertDescription>
             </Alert>
@@ -1054,9 +1054,9 @@ const CommercialCircuitGuide = () => {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/[0.10]">
-                    <th className="text-left py-2 text-white/85">Load Type</th>
-                    <th className="text-left py-2 text-white/85">Diversity</th>
-                    <th className="text-left py-2 text-white/85">Notes</th>
+                    <th className="text-left py-2 text-white">Load Type</th>
+                    <th className="text-left py-2 text-white">Diversity</th>
+                    <th className="text-left py-2 text-white">Notes</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -1079,14 +1079,14 @@ const CommercialCircuitGuide = () => {
             <div className="grid grid-cols-4 md:grid-cols-6 gap-2 mb-3">
               {cableSizing.groupingFactors.table.map((row, idx) => (
                 <div key={idx} className="bg-white/[0.06] p-2 rounded text-center">
-                  <div className="text-white/85 text-xs font-medium">{row.circuits} circuits</div>
+                  <div className="text-white text-xs font-medium">{row.circuits} circuits</div>
                   <div className="text-white text-sm font-bold">{row.factor}</div>
                 </div>
               ))}
             </div>
             <ul className="space-y-1">
               {cableSizing.groupingFactors.notes.map((note, idx) => (
-                <li key={idx} className="text-xs text-white/85 flex items-start gap-2">
+                <li key={idx} className="text-xs text-white flex items-start gap-2">
                   <span className="w-1 h-1 bg-white/55 rounded-full mt-1.5 flex-shrink-0"></span>
                   {note}
                 </li>
@@ -1101,8 +1101,8 @@ const CommercialCircuitGuide = () => {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/[0.10]">
-                    <th className="text-left py-2 text-white/85">Length in Insulation</th>
-                    <th className="text-left py-2 text-white/85">Derating Factor</th>
+                    <th className="text-left py-2 text-white">Length in Insulation</th>
+                    <th className="text-left py-2 text-white">Derating Factor</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -1126,9 +1126,9 @@ const CommercialCircuitGuide = () => {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/[0.10]">
-                    <th className="text-left py-2 text-white/85">Cable Size</th>
-                    <th className="text-left py-2 text-white/85">Current Rating</th>
-                    <th className="text-left py-2 text-white/85">Typical Use</th>
+                    <th className="text-left py-2 text-white">Cable Size</th>
+                    <th className="text-left py-2 text-white">Current Rating</th>
+                    <th className="text-left py-2 text-white">Typical Use</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -1170,7 +1170,7 @@ const CommercialCircuitGuide = () => {
                 </div>
                 <ul className="space-y-1">
                   {step.actions.map((action, idx) => (
-                    <li key={idx} className="text-xs text-white/85 flex items-start gap-2">
+                    <li key={idx} className="text-xs text-white flex items-start gap-2">
                       <span className="w-1 h-1 bg-white/55 rounded-full mt-1.5 flex-shrink-0"></span>
                       {action}
                     </li>
@@ -1189,10 +1189,10 @@ const CommercialCircuitGuide = () => {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/[0.10]">
-                    <th className="text-left py-2 text-white/85">Load Item</th>
-                    <th className="text-left py-2 text-white/85">Connected</th>
-                    <th className="text-left py-2 text-white/85">Diversity</th>
-                    <th className="text-left py-2 text-white/85">Diversified</th>
+                    <th className="text-left py-2 text-white">Load Item</th>
+                    <th className="text-left py-2 text-white">Connected</th>
+                    <th className="text-left py-2 text-white">Diversity</th>
+                    <th className="text-left py-2 text-white">Diversified</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -1218,7 +1218,7 @@ const CommercialCircuitGuide = () => {
               </table>
             </div>
             <div className="mt-3 p-3 bg-white/[0.06] rounded border border-white/[0.10]">
-              <p className="text-xs text-white/85">
+              <p className="text-xs text-white">
                 <strong>Calculation:</strong> {maximumDemand.exampleCalculation.calculation}
               </p>
               <p className="text-xs text-white mt-1">
@@ -1243,7 +1243,7 @@ const CommercialCircuitGuide = () => {
             <h4 className="font-medium text-white mb-3">Power Factor Basics</h4>
             <ul className="space-y-2">
               {powerFactorCorrection.basics.explanation.map((item, idx) => (
-                <li key={idx} className="text-sm text-white/85 flex items-start gap-2">
+                <li key={idx} className="text-sm text-white flex items-start gap-2">
                   <span className="w-1.5 h-1.5 bg-white/55 rounded-full mt-1.5 flex-shrink-0"></span>
                   {item}
                 </li>
@@ -1261,16 +1261,16 @@ const CommercialCircuitGuide = () => {
                 key={index}
                 className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]"
               >
-                <h5 className="font-medium text-white/85 mb-2">{method.method}</h5>
+                <h5 className="font-medium text-white mb-2">{method.method}</h5>
                 <p className="text-xs text-white mb-2">{method.description}</p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
                   <div>
-                    <span className="text-white/70">Advantages: </span>
-                    <span className="text-white/85">{method.advantages}</span>
+                    <span className="text-white">Advantages: </span>
+                    <span className="text-white">{method.advantages}</span>
                   </div>
                   <div>
-                    <span className="text-white/70">Disadvantages: </span>
-                    <span className="text-white/85">{method.disadvantages}</span>
+                    <span className="text-white">Disadvantages: </span>
+                    <span className="text-white">{method.disadvantages}</span>
                   </div>
                 </div>
                 <p className="text-xs text-white mt-2">
@@ -1282,7 +1282,7 @@ const CommercialCircuitGuide = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
-              <h4 className="font-medium text-white/85 mb-3">Typical Power Factors</h4>
+              <h4 className="font-medium text-white mb-3">Typical Power Factors</h4>
               <div className="space-y-1">
                 {powerFactorCorrection.typicalValues.map((item, idx) => (
                   <div key={idx} className="flex justify-between text-xs">
@@ -1324,7 +1324,7 @@ const CommercialCircuitGuide = () => {
               <h4 className="font-medium text-white mb-2">
                 {socketCircuits.comparison.ring.title}
               </h4>
-              <p className="text-xs text-white/85 mb-3">
+              <p className="text-xs text-white mb-3">
                 <strong>Protection:</strong> {socketCircuits.comparison.ring.protection}
                 <br />
                 <strong>Max Area:</strong> {socketCircuits.comparison.ring.maxArea}
@@ -1334,7 +1334,7 @@ const CommercialCircuitGuide = () => {
                   <span className="text-xs text-white font-medium">Advantages:</span>
                   <ul className="mt-1 space-y-0.5">
                     {socketCircuits.comparison.ring.advantages.map((adv, idx) => (
-                      <li key={idx} className="text-xs text-white/85">
+                      <li key={idx} className="text-xs text-white">
                         + {adv}
                       </li>
                     ))}
@@ -1344,7 +1344,7 @@ const CommercialCircuitGuide = () => {
                   <span className="text-xs text-white font-medium">Disadvantages:</span>
                   <ul className="mt-1 space-y-0.5">
                     {socketCircuits.comparison.ring.disadvantages.map((dis, idx) => (
-                      <li key={idx} className="text-xs text-white/85">
+                      <li key={idx} className="text-xs text-white">
                         - {dis}
                       </li>
                     ))}
@@ -1361,7 +1361,7 @@ const CommercialCircuitGuide = () => {
               <h4 className="font-medium text-white mb-2">
                 {socketCircuits.comparison.radial.title}
               </h4>
-              <div className="text-xs text-white/85 mb-3">
+              <div className="text-xs text-white mb-3">
                 <strong>Options:</strong>
                 <ul className="mt-1">
                   {socketCircuits.comparison.radial.options.map((opt, idx) => (
@@ -1376,7 +1376,7 @@ const CommercialCircuitGuide = () => {
                   <span className="text-xs text-white font-medium">Advantages:</span>
                   <ul className="mt-1 space-y-0.5">
                     {socketCircuits.comparison.radial.advantages.map((adv, idx) => (
-                      <li key={idx} className="text-xs text-white/85">
+                      <li key={idx} className="text-xs text-white">
                         + {adv}
                       </li>
                     ))}
@@ -1386,7 +1386,7 @@ const CommercialCircuitGuide = () => {
                   <span className="text-xs text-white font-medium">Disadvantages:</span>
                   <ul className="mt-1 space-y-0.5">
                     {socketCircuits.comparison.radial.disadvantages.map((dis, idx) => (
-                      <li key={idx} className="text-xs text-white/85">
+                      <li key={idx} className="text-xs text-white">
                         - {dis}
                       </li>
                     ))}
@@ -1403,7 +1403,7 @@ const CommercialCircuitGuide = () => {
             <h4 className="font-medium text-white mb-3">Commercial Considerations</h4>
             <ul className="space-y-1">
               {socketCircuits.commercialConsiderations.map((item, idx) => (
-                <li key={idx} className="text-xs text-white/85 flex items-start gap-2">
+                <li key={idx} className="text-xs text-white flex items-start gap-2">
                   <span className="w-1 h-1 bg-white/55 rounded-full mt-1.5 flex-shrink-0"></span>
                   {item}
                 </li>
@@ -1412,8 +1412,8 @@ const CommercialCircuitGuide = () => {
           </div>
 
           <Alert className="border-white/[0.10] bg-white/[0.06]">
-            <Info className="h-4 w-4 text-white/70" />
-            <AlertDescription className="text-white/85 text-sm">
+            <Info className="h-4 w-4 text-white" />
+            <AlertDescription className="text-white text-sm">
               {socketCircuits.recommendation}
             </AlertDescription>
           </Alert>
@@ -1438,7 +1438,7 @@ const CommercialCircuitGuide = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {serverRoomPower.supplyRequirements.configurations.map((config, idx) => (
                 <div key={idx} className="bg-white/[0.06] p-3 rounded border border-white/[0.10]">
-                  <h5 className="font-medium text-white/85 text-sm mb-1">{config.type}</h5>
+                  <h5 className="font-medium text-white text-sm mb-1">{config.type}</h5>
                   <p className="text-xs text-white mb-1">{config.description}</p>
                   <p className="text-xs text-elec-yellow">
                     <strong>Reliability:</strong> {config.reliability}
@@ -1458,7 +1458,7 @@ const CommercialCircuitGuide = () => {
               {serverRoomPower.upsRequirements.types.map((type, idx) => (
                 <div key={idx} className="bg-white/[0.06] p-3 rounded border border-white/[0.10]">
                   <div className="flex items-center gap-2 mb-1">
-                    <h5 className="font-medium text-white/85 text-sm">{type.type}</h5>
+                    <h5 className="font-medium text-white text-sm">{type.type}</h5>
                     <Badge variant="outline" className="border-white/10 text-white text-xs">
                       Transfer: {type.transferTime}
                     </Badge>
@@ -1478,12 +1478,12 @@ const CommercialCircuitGuide = () => {
 
             <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3">
               <div>
-                <h5 className="font-medium text-white/85 mb-2 text-sm">
+                <h5 className="font-medium text-white mb-2 text-sm">
                   UPS Sizing Considerations
                 </h5>
                 <ul className="space-y-1">
                   {serverRoomPower.upsRequirements.sizing.map((item, idx) => (
-                    <li key={idx} className="text-xs text-white/85 flex items-start gap-2">
+                    <li key={idx} className="text-xs text-white flex items-start gap-2">
                       <span className="w-1 h-1 bg-white/55 rounded-full mt-1.5 flex-shrink-0"></span>
                       {item}
                     </li>
@@ -1491,12 +1491,12 @@ const CommercialCircuitGuide = () => {
                 </ul>
               </div>
               <div>
-                <h5 className="font-medium text-white/85 mb-2 text-sm">
+                <h5 className="font-medium text-white mb-2 text-sm">
                   Installation Requirements
                 </h5>
                 <ul className="space-y-1">
                   {serverRoomPower.upsRequirements.installation.map((item, idx) => (
-                    <li key={idx} className="text-xs text-white/85 flex items-start gap-2">
+                    <li key={idx} className="text-xs text-white flex items-start gap-2">
                       <span className="w-1 h-1 bg-white/55 rounded-full mt-1.5 flex-shrink-0"></span>
                       {item}
                     </li>
@@ -1514,9 +1514,9 @@ const CommercialCircuitGuide = () => {
             <div className="space-y-3 mb-4">
               {serverRoomPower.cleanEarth.methods.map((method, idx) => (
                 <div key={idx} className="bg-white/[0.06] p-3 rounded border border-white/[0.10]">
-                  <h5 className="font-medium text-white/85 text-sm mb-1">{method.method}</h5>
+                  <h5 className="font-medium text-white text-sm mb-1">{method.method}</h5>
                   <p className="text-xs text-white">{method.description}</p>
-                  <p className="text-xs text-white/85">
+                  <p className="text-xs text-white">
                     <strong>Installation:</strong> {method.installation}
                   </p>
                   <p className="text-xs text-white">
@@ -1548,7 +1548,7 @@ const CommercialCircuitGuide = () => {
               <div className="space-y-2">
                 {serverRoomPower.powerDistribution.components.map((comp, idx) => (
                   <div key={idx} className="bg-white/[0.06] p-2 rounded border border-white/[0.10]">
-                    <h5 className="font-medium text-white/85 text-xs">{comp.item}</h5>
+                    <h5 className="font-medium text-white text-xs">{comp.item}</h5>
                     <p className="text-xs text-white">{comp.description}</p>
                   </div>
                 ))}
@@ -1561,7 +1561,7 @@ const CommercialCircuitGuide = () => {
               </h4>
               <ul className="space-y-1">
                 {serverRoomPower.coolingIntegration.items.map((item, idx) => (
-                  <li key={idx} className="text-xs text-white/85 flex items-start gap-2">
+                  <li key={idx} className="text-xs text-white flex items-start gap-2">
                     <span className="w-1 h-1 bg-white/55 rounded-full mt-1.5 flex-shrink-0"></span>
                     {item}
                   </li>
@@ -1591,17 +1591,17 @@ const CommercialCircuitGuide = () => {
                   <Badge variant="outline" className="border-white/10 text-white text-xs">
                     {circuit.cable}
                   </Badge>
-                  <Badge variant="outline" className="border-white/10 text-white/70 text-xs">
+                  <Badge variant="outline" className="border-white/10 text-white text-xs">
                     {circuit.protection}
                   </Badge>
                 </div>
               </div>
 
               <div>
-                <h5 className="font-medium text-white/85 mb-2 text-sm">Features</h5>
+                <h5 className="font-medium text-white mb-2 text-sm">Features</h5>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                   {circuit.features.map((feature, idx) => (
-                    <div key={idx} className="text-xs text-white/85 flex items-center gap-1">
+                    <div key={idx} className="text-xs text-white flex items-center gap-1">
                       <span className="w-1 h-1 bg-white/55 rounded-full"></span>
                       {feature}
                     </div>

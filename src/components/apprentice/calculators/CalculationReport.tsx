@@ -48,10 +48,10 @@ const CalculationReport: React.FC<CalculationReportProps> = ({
 
   return (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
         Calculation report
       </span>
-      <p className="text-[13px] text-white/85 leading-relaxed">
+      <p className="text-[13px] text-white leading-relaxed">
         Generate a calculation report for documentation and compliance purposes.
       </p>
 
@@ -64,7 +64,7 @@ const CalculationReport: React.FC<CalculationReportProps> = ({
       </Button>
 
       <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Report includes
         </span>
         <ul className="space-y-1.5">
@@ -77,7 +77,7 @@ const CalculationReport: React.FC<CalculationReportProps> = ({
           ].map((item, i) => (
             <li
               key={i}
-              className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+              className="text-[13px] text-white leading-relaxed flex items-start gap-2"
             >
               <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
               <span>{item}</span>

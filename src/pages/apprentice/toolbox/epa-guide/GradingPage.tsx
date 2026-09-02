@@ -12,6 +12,8 @@ import type { LucideIcon } from 'lucide-react';
 import { itemVariants } from '@/components/college/primitives';
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 interface GradeProfile {
   grade: string;
@@ -90,7 +92,7 @@ const resultsCommunication = [
   {
     title: 'Certificate',
     description:
-      'Once you pass the AM2S and complete the standard, your apprenticeship certificate is requested from ESFA. Your official qualification — Level 3 Installation & Maintenance Electrician.',
+      'Once you pass the AM2S and complete the standard, your training provider requests your apprenticeship certificate through the Department for Education apprenticeship service. Your official qualification — Level 3 Installation & Maintenance Electrician.',
   },
   {
     title: 'Certificate delivery',
@@ -111,9 +113,9 @@ const resultsCommunication = [
 
 const afterPassing = [
   'You are now a qualified Level 3 Installation & Maintenance Electrician',
-  'Apply for your JIB Approved Electrician (ECS Gold) card via ECS — your Level 3 qualification, AM2S pass and apprenticeship completion are what they check',
-  'Eligible to register with a competent person scheme (NICEIC, NAPIT, ELECSA) once you have the required experience',
-  'Review your pay against the JIB ladder — the electrician rate is around £35,841, rising to roughly £43,778 at higher grades on 2026 rates',
+  'Apply for your ECS Gold card at Electrician grade via ECS — they check your Level 3 qualification, AM2S pass, the 18th Edition (C&G 2382) certificate and a current ECS Health, Safety & Environmental assessment (Approved Electrician comes later, with experience and the 2391-52)',
+  'Eligible to register with a competent person scheme (NICEIC or NAPIT) once you have the required experience',
+  'Review your pay against the JIB ladder — on 2026 national rates the Electrician grade is £18.38/hr (about £35,800 a year on a 37.5-hour week), Approved Electrician £20.08/hr and Technician £22.70/hr (about £44,300)',
   'Consider next steps — specialisation, further qualifications (Level 4 Design & Verification 2396, or the C&G 2382 Regs update for BS 7671:2018+A4:2026), or self-employment',
   'Keep CPD up to date — regulations change, staying current is essential for your career',
 ];
@@ -190,15 +192,20 @@ const GradingPage = () => {
 
         {/* ── How grading works ───────────────────────────────────── */}
         <motion.div variants={itemVariants}>
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+          <div
+            className={cn(
+              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
+              CARD_SURFACE
+            )}
+          >
             <Eyebrow>How your result is determined</Eyebrow>
-            <p className="text-[13.5px] text-white/85 leading-relaxed">
+            <p className="text-[13.5px] text-white leading-relaxed">
               The AM2S is assessed against the required competence standard across all its sections.
               You must meet the standard in every section — falling short in one (for example an
               unsafe isolation) means you don&rsquo;t pass and will need to re-sit that part.
             </p>
-            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
-              <p className="text-[12.5px] text-white/85 leading-relaxed">
+            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3">
+              <p className="text-[12.5px] text-white leading-relaxed">
                 <span className="font-semibold text-elec-yellow">Important:</span> NET confirms the
                 exact assessment criteria and what counts as meeting the standard. The descriptions
                 below are general guidance — your training provider can talk you through the detail.
@@ -220,7 +227,10 @@ const GradingPage = () => {
               return (
                 <li
                   key={profile.grade}
-                  className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3"
+                  className={cn(
+                    'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
+                    CARD_SURFACE
+                  )}
                 >
                   <div className="flex items-center gap-2">
                     <Icon className="h-4 w-4 text-elec-yellow flex-shrink-0" />
@@ -228,7 +238,7 @@ const GradingPage = () => {
                       {profile.grade}
                     </h3>
                   </div>
-                  <p className="text-[13.5px] text-white/85 leading-relaxed">
+                  <p className="text-[13.5px] text-white leading-relaxed">
                     {profile.description}
                   </p>
                   <div className="space-y-2 pt-2 border-t border-white/[0.04]">
@@ -237,7 +247,7 @@ const GradingPage = () => {
                       {profile.signals.map((s) => (
                         <li
                           key={s}
-                          className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                          className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                         >
                           <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                           <span>{s}</span>
@@ -262,7 +272,7 @@ const GradingPage = () => {
             {resitOptions.map((item) => (
               <li
                 key={item.title}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
+                className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}
               >
                 <div className="flex items-start gap-2.5">
                   <AlertTriangle className="h-4 w-4 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
@@ -270,7 +280,7 @@ const GradingPage = () => {
                     <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
                       {item.title}
                     </h3>
-                    <p className="text-[13px] text-white/85 leading-relaxed">{item.description}</p>
+                    <p className="text-[13px] text-white leading-relaxed">{item.description}</p>
                   </div>
                 </div>
               </li>
@@ -289,12 +299,12 @@ const GradingPage = () => {
             {resultsCommunication.map((item) => (
               <li
                 key={item.title}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
+                className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}
               >
                 <h3 className="text-[14px] font-semibold text-white tracking-tight">
                   {item.title}
                 </h3>
-                <p className="text-[13px] text-white/85 leading-relaxed mt-1">{item.description}</p>
+                <p className="text-[13px] text-white leading-relaxed mt-1">{item.description}</p>
               </li>
             ))}
           </ul>
@@ -307,12 +317,12 @@ const GradingPage = () => {
             title="Six next steps"
             meta="Your career begins the moment your grade lands"
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
+          <div className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}>
             <ul className="space-y-2">
               {afterPassing.map((item) => (
                 <li
                   key={item}
-                  className="flex items-start gap-2 text-[13px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[13px] text-white leading-relaxed"
                 >
                   <Sparkles className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                   <span>{item}</span>
@@ -333,7 +343,7 @@ const GradingPage = () => {
             {careerMeaning.map((item) => (
               <li
                 key={item.title}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
+                className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}
               >
                 <div className="flex items-start gap-2.5">
                   <CheckCircle2 className="h-4 w-4 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
@@ -341,7 +351,7 @@ const GradingPage = () => {
                     <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
                       {item.title}
                     </h3>
-                    <p className="text-[13px] text-white/85 leading-relaxed">{item.description}</p>
+                    <p className="text-[13px] text-white leading-relaxed">{item.description}</p>
                   </div>
                 </div>
               </li>
@@ -360,24 +370,24 @@ const GradingPage = () => {
             {appealSteps.map((item) => (
               <li
                 key={item.step}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
+                className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}
               >
                 <div className="flex items-start gap-3">
-                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[12px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
+                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-md border border-elec-yellow/30 bg-white/[0.05] text-[12px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
                     {item.step}
                   </span>
                   <div className="space-y-1">
                     <h3 className="text-[14px] font-semibold text-white tracking-tight">
                       {item.title}
                     </h3>
-                    <p className="text-[13px] text-white/85 leading-relaxed">{item.description}</p>
+                    <p className="text-[13px] text-white leading-relaxed">{item.description}</p>
                   </div>
                 </div>
               </li>
             ))}
           </ol>
-          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
-            <p className="text-[12.5px] text-white/85 leading-relaxed">
+          <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3">
+            <p className="text-[12.5px] text-white leading-relaxed">
               <span className="font-semibold text-elec-yellow">Grounds for appeal:</span> procedural
               errors (assessment not conducted properly), mitigating circumstances (illness,
               disruption during assessment), or evidence of assessor bias. You can&rsquo;t appeal

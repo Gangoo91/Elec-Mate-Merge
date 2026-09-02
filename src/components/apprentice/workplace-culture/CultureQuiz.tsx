@@ -81,10 +81,10 @@ const CultureQuiz = ({ progress, onClose }: CultureQuizProps) => {
 
           <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
             <div className="flex items-baseline justify-between">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Result
               </span>
-              <span className="text-[12px] text-white/85 font-mono">
+              <span className="text-[12px] text-white font-mono">
                 {score}/{questions.length} · {percentage}%
               </span>
             </div>
@@ -98,7 +98,7 @@ const CultureQuiz = ({ progress, onClose }: CultureQuizProps) => {
           </div>
 
           <div className="space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Breakdown
             </span>
             <div className="flex flex-wrap gap-2">
@@ -108,7 +108,7 @@ const CultureQuiz = ({ progress, onClose }: CultureQuizProps) => {
                   className={`w-9 h-9 rounded-lg flex items-center justify-center text-[12px] font-semibold border ${
                     correct
                       ? 'bg-white/[0.06] text-elec-yellow border-elec-yellow/30'
-                      : 'bg-white/[0.06] text-white/70 border-white/10'
+                      : 'bg-white/[0.06] text-white border-white/10'
                   }`}
                 >
                   {i + 1}
@@ -150,7 +150,7 @@ const CultureQuiz = ({ progress, onClose }: CultureQuizProps) => {
             </button>
             <h1 className="text-[20px] sm:text-[22px] font-semibold text-white">Culture quiz</h1>
           </div>
-          <span className="text-[12px] text-white/70 font-mono">
+          <span className="text-[12px] text-white font-mono">
             Q{currentIndex + 1}/{questions.length}
           </span>
         </div>
@@ -178,7 +178,7 @@ const CultureQuiz = ({ progress, onClose }: CultureQuizProps) => {
 
         <div className="space-y-2">
           {currentQ.options.map((option, idx) => {
-            let optionStyle = 'bg-white/[0.06] border-white/[0.10] text-white/85';
+            let optionStyle = 'bg-white/[0.06] border-white/[0.10] text-white';
             if (showExplanation && idx === currentQ.correctIndex) {
               optionStyle = 'bg-white/[0.06] border-elec-yellow/30 text-white';
             } else if (showExplanation && selectedAnswer === idx && idx !== currentQ.correctIndex) {
@@ -211,10 +211,10 @@ const CultureQuiz = ({ progress, onClose }: CultureQuizProps) => {
 
         {showExplanation && (
           <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-2 animate-fade-in">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Explanation
             </span>
-            <p className="text-[14px] text-white/85 leading-relaxed">{currentQ.explanation}</p>
+            <p className="text-[14px] text-white leading-relaxed">{currentQ.explanation}</p>
           </div>
         )}
 

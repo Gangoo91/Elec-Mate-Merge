@@ -66,7 +66,7 @@ const JargonSearchAndFilter = ({
     <div className="space-y-4">
       <div className="relative">
         {!searchTerm && (
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/55 pointer-events-none" />
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
         )}
         <Input
           placeholder="Search terms, definitions, or usage examples..."
@@ -105,7 +105,7 @@ const JargonSearchAndFilter = ({
           )}
         </Button>
 
-        <span className="text-[12px] text-white/55">
+        <span className="text-[12px] text-white">
           {filteredCount} of {totalTerms} terms
         </span>
       </div>
@@ -114,7 +114,7 @@ const JargonSearchAndFilter = ({
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Category
               </span>
               <Select value={selectedCategory} onValueChange={onCategoryChange}>
@@ -133,7 +133,7 @@ const JargonSearchAndFilter = ({
             </div>
 
             <div className="space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Difficulty
               </span>
               <Select value={selectedDifficulty} onValueChange={onDifficultyChange}>
@@ -152,7 +152,7 @@ const JargonSearchAndFilter = ({
 
           {availableTags.length > 0 && (
             <div className="space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Tags
               </span>
               <div className="flex flex-wrap gap-1.5">
@@ -166,7 +166,7 @@ const JargonSearchAndFilter = ({
                         'text-[12px] px-2 py-0.5 rounded-md border touch-manipulation transition-colors',
                         active
                           ? 'bg-elec-yellow text-black border-elec-yellow'
-                          : 'text-white/85 border-white/10 bg-white/[0.03] hover:bg-white/[0.05]'
+                          : 'text-white border-white/10 bg-white/[0.03] hover:bg-white/[0.05]'
                       )}
                     >
                       {tag}

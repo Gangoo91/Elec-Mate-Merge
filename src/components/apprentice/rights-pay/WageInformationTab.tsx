@@ -33,36 +33,23 @@ const WageInformationTab = () => {
     },
   ];
 
+  // JIB 2026 apprentice rates (National Working Rules, effective 5 January 2026).
+  // One rate for all hours including off-the-job — the lower "at college" rate was removed.
   const regionalVariations = [
     {
-      region: 'London',
-      averageWage: '£20,000 - £25,000',
-      description: 'Higher cost of living adjustments common',
+      region: 'JIB national rate',
+      averageWage: '£8.16 – £14.03/hour',
+      description: 'Stage 1 £8.16 · Stage 2 £10.60 · Stage 3 £13.05 · Stage 4 £14.03',
     },
     {
-      region: 'South East',
-      averageWage: '£18,000 - £22,000',
-      description: 'Competitive market with good opportunities',
+      region: 'JIB London Zone',
+      averageWage: '£9.14 – £15.72/hour',
+      description: 'Stage 1 £9.14 · Stage 2 £11.88 · Stage 3 £14.62 · Stage 4 £15.72',
     },
     {
-      region: 'Scotland',
-      averageWage: '£17,000 - £20,000',
-      description: 'Strong electrical sector, especially renewables',
-    },
-    {
-      region: 'North West',
-      averageWage: '£16,000 - £19,000',
-      description: 'Industrial heritage with modern opportunities',
-    },
-    {
-      region: 'Yorkshire',
-      averageWage: '£16,000 - £19,000',
-      description: 'Growing manufacturing and construction sectors',
-    },
-    {
-      region: 'Other regions',
-      averageWage: '£15,000 - £18,000',
-      description: 'Varies by local economic conditions',
+      region: 'Non-JIB employers',
+      averageWage: 'At least the legal minimum',
+      description: 'Many pay above it — the JIB ladder is the benchmark to negotiate against',
     },
   ];
 
@@ -81,21 +68,21 @@ const WageInformationTab = () => {
     },
     {
       stage: 'Newly Qualified',
-      wage: '£15-18/hour',
-      annual: '£30,000-36,000',
-      description: 'Basic competency achieved',
+      wage: '£18.38/hour',
+      annual: '≈ £35,800',
+      description: 'JIB Electrician grade, 2026 national rate (London Zone £20.58/hour)',
     },
     {
-      stage: 'Experienced (2-5 years)',
-      wage: '£18-25/hour',
-      annual: '£36,000-50,000',
-      description: 'Proven track record',
+      stage: 'Approved Electrician / Technician',
+      wage: '£20.08 – £22.70/hour',
+      annual: '≈ £39,150 – £44,265',
+      description: 'JIB grades above Electrician — Approved needs the 2391-52 plus experience',
     },
     {
       stage: 'Senior/Specialist',
-      wage: '£25-40/hour',
-      annual: '£50,000-80,000+',
-      description: 'Leadership or specialisation',
+      wage: 'Above the JIB Technician rate',
+      annual: 'Set by the employer',
+      description: 'Supervisory, design and specialist roles sit outside the JIB grade ladder',
     },
   ];
 
@@ -147,31 +134,77 @@ const WageInformationTab = () => {
     {
       grade: 'Approved Electrician',
       jibRate: `£${JIB_RATES_2026.graded.approvedElectrician.toFixed(2)}`,
-      description: 'Experienced and additionally qualified (e.g. inspection & testing). Can work independently and sign off own work.',
+      description:
+        'Experienced and additionally qualified (e.g. inspection & testing). Can work independently and sign off own work.',
     },
     {
       grade: 'Site / Installation Technician',
       jibRate: `£${JIB_RATES_2026.graded.technician.toFixed(2)}`,
-      description: 'Advanced qualifications (Testing & Inspection, Design). Higher technical responsibility.',
+      description:
+        'Advanced qualifications (Testing & Inspection, Design). Higher technical responsibility.',
     },
   ];
 
   const payslipBreakdown = [
-    { item: 'Gross Pay', description: 'Your total earnings before any deductions. Includes basic hours, overtime, and allowances.' },
-    { item: 'Income Tax (PAYE)', description: 'Collected by your employer via Pay As You Earn. You pay 0% on the first £12,570, then 20% on earnings up to £50,270.' },
-    { item: 'National Insurance (NI)', description: 'Contributions towards state pension and benefits. 8% on earnings between £12,570 and £50,270 per year.' },
-    { item: 'Pension', description: 'Auto-enrolled after 3 months if eligible. Minimum 5% employee + 3% employer contribution.' },
-    { item: 'Student Loan', description: 'Only if you have one. Plan 2: 9% on earnings above £27,295/year. Plan 5: 9% above £25,000.' },
-    { item: 'Net Pay', description: 'What you actually receive in your bank account after all deductions. This is your take-home pay.' },
+    {
+      item: 'Gross Pay',
+      description:
+        'Your total earnings before any deductions. Includes basic hours, overtime, and allowances.',
+    },
+    {
+      item: 'Income Tax (PAYE)',
+      description:
+        'Collected by your employer via Pay As You Earn. You pay 0% on the first £12,570, then 20% on earnings up to £50,270.',
+    },
+    {
+      item: 'National Insurance (NI)',
+      description:
+        'Contributions towards state pension and benefits. 8% on earnings between £12,570 and £50,270 per year.',
+    },
+    {
+      item: 'Pension',
+      description:
+        'Auto-enrolled if eligible (aged 22+ and earning over £10,000 a year); your employer may postpone enrolment by up to three months. Minimum 5% employee + 3% employer contribution.',
+    },
+    {
+      item: 'Student Loan',
+      description:
+        'Only if you have one. Plan 2: 9% of earnings above the Plan 2 threshold, which is uprated each April (check GOV.UK). Plan 5: 9% above £25,000.',
+    },
+    {
+      item: 'Net Pay',
+      description:
+        'What you actually receive in your bank account after all deductions. This is your take-home pay.',
+    },
   ];
 
   const overtimeRates = [
-    { type: 'Standard Overtime', rate: 'Time and a quarter (x1.25)', when: 'Weekday evenings beyond normal hours' },
+    {
+      type: 'Standard Overtime',
+      rate: 'Time and a quarter (x1.25)',
+      when: 'Weekday evenings beyond normal hours',
+    },
     { type: 'Weekend Overtime', rate: 'Time and a half (x1.5)', when: 'Saturday working' },
-    { type: 'Sunday/Bank Holiday', rate: 'Double time (x2.0)', when: 'Sunday and public holiday working' },
-    { type: 'Emergency Call-out', rate: 'Minimum 4 hours at x1.5', when: 'After-hours emergency response' },
-    { type: 'Travel Time', rate: 'Varies (often basic rate)', when: 'Travel to sites beyond normal base — check your contract' },
-    { type: 'Lodge/Away Allowance', rate: '£40-£60 per night typical', when: 'Working away from home overnight' },
+    {
+      type: 'Sunday/Bank Holiday',
+      rate: 'Double time (x2.0)',
+      when: 'Sunday and public holiday working',
+    },
+    {
+      type: 'Emergency Call-out',
+      rate: 'Minimum 4 hours at x1.5',
+      when: 'After-hours emergency response',
+    },
+    {
+      type: 'Travel Time',
+      rate: 'Varies (often basic rate)',
+      when: 'Travel to sites beyond normal base — check your contract',
+    },
+    {
+      type: 'Lodge/Away Allowance',
+      rate: 'Set by the JIB agreement',
+      when: 'Working away from home overnight — check the current JIB lodge figure',
+    },
   ];
 
   const negotiationTips = [
@@ -198,19 +231,17 @@ const WageInformationTab = () => {
       accent === 'red'
         ? 'rounded-xl border border-red-500/30 bg-red-500/[0.04]'
         : accent === 'yellow'
-          ? 'rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04]'
+          ? 'rounded-xl border border-elec-yellow/20 bg-white/[0.05]'
           : 'rounded-xl border border-white/[0.06] bg-white/[0.02]';
     const eyebrowClass =
       accent === 'red'
         ? 'text-red-300'
         : accent === 'yellow'
           ? 'text-elec-yellow/85'
-          : 'text-white/55';
+          : 'text-white';
     return (
       <div className={`${containerClass} p-4 sm:p-5 space-y-3`}>
-        <span
-          className={`text-[10px] font-medium uppercase tracking-[0.18em] ${eyebrowClass}`}
-        >
+        <span className={`text-[10px] font-medium uppercase tracking-[0.18em] ${eyebrowClass}`}>
           {eyebrow}
         </span>
         {children}
@@ -221,25 +252,25 @@ const WageInformationTab = () => {
   return (
     <div className="space-y-6">
       <Section eyebrow="Important" accent="yellow">
-        <p className="text-[14px] text-white/85 leading-relaxed">
-          Rates shown are the legal minimum — many employers pay above these. Current 2025/26 rates
-          apply until 31 March 2026, then new rates take effect.
+        <p className="text-[14px] text-white leading-relaxed">
+          Rates shown are the legal minimum — many employers pay above these. These are the rates in
+          force from 1 April 2026; the next uprating is due 1 April 2027.
         </p>
       </Section>
 
       <Section eyebrow="UK minimum wage rates for apprentices">
         <div className="space-y-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Current rates (from 1 April 2026)
           </span>
           <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 flex justify-between items-center">
-            <span className="text-[14px] text-white/85">Apprentice rate (Year 1 / Under 19)</span>
+            <span className="text-[14px] text-white">Apprentice rate (Year 1 / Under 19)</span>
             <span className="font-mono text-elec-yellow text-[13px]">
               £{currentRates.apprenticeMinimum}/hr
             </span>
           </div>
           <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 flex justify-between items-center">
-            <span className="text-[14px] text-white/85">After Year 1, aged 21+ (NLW)</span>
+            <span className="text-[14px] text-white">After Year 1, aged 21+ (NLW)</span>
             <span className="font-mono text-elec-yellow text-[13px]">
               £{currentRates.nationalLivingWage}/hr
             </span>
@@ -247,11 +278,11 @@ const WageInformationTab = () => {
         </div>
 
         <div className="space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             All age-based rates
           </span>
           <div className="rounded-lg border border-white/[0.06] overflow-hidden">
-            <div className="grid grid-cols-2 gap-0 text-[12px] p-2 bg-white/[0.04] text-white/85">
+            <div className="grid grid-cols-2 gap-0 text-[12px] p-2 bg-white/[0.04] text-white">
               <span>Age group</span>
               <span className="text-center">Rate (from 1 Apr 2026)</span>
             </div>
@@ -260,7 +291,7 @@ const WageInformationTab = () => {
                 key={index}
                 className="grid grid-cols-2 gap-0 text-[12px] p-2 border-t border-white/[0.06]"
               >
-                <span className="text-white/85">{rate.age}</span>
+                <span className="text-white">{rate.age}</span>
                 <span className="text-center font-mono text-elec-yellow">
                   £{rate.rate.toFixed(2)}
                 </span>
@@ -279,7 +310,7 @@ const WageInformationTab = () => {
             >
               <div>
                 <h4 className="text-[16px] font-semibold text-white">{stage.stage}</h4>
-                <p className="text-[13px] text-white/70 mt-1">{stage.description}</p>
+                <p className="text-[13px] text-white mt-1">{stage.description}</p>
               </div>
               <div className="text-center">
                 <div className="text-[14px] font-semibold text-white">{stage.wage}</div>
@@ -301,11 +332,11 @@ const WageInformationTab = () => {
             >
               <div className="flex justify-between items-start gap-2">
                 <h4 className="text-[14px] font-semibold text-white">{region.region}</h4>
-                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] whitespace-nowrap">
+                <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] whitespace-nowrap">
                   {region.averageWage}
                 </span>
               </div>
-              <p className="text-[13px] text-white/70 leading-relaxed">{region.description}</p>
+              <p className="text-[13px] text-white leading-relaxed">{region.description}</p>
             </div>
           ))}
         </div>
@@ -319,15 +350,15 @@ const WageInformationTab = () => {
               className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1"
             >
               <h4 className="text-[14px] font-semibold text-white">{factor.factor}</h4>
-              <p className="text-[14px] text-white/85 leading-relaxed">{factor.impact}</p>
-              <p className="text-[12px] text-white/55 leading-relaxed">{factor.examples}</p>
+              <p className="text-[14px] text-white leading-relaxed">{factor.impact}</p>
+              <p className="text-[12px] text-white leading-relaxed">{factor.examples}</p>
             </div>
           ))}
         </div>
       </Section>
 
       <Section eyebrow="JIB grading & industry pay rates">
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           The Joint Industry Board (JIB) sets recommended pay grades for the electrical contracting
           industry. JIB-registered employers typically pay these rates, which are significantly
           higher than legal minimums. These are hourly base rates — overtime is additional.
@@ -340,22 +371,22 @@ const WageInformationTab = () => {
             >
               <div className="flex justify-between items-start gap-2">
                 <h4 className="text-[14px] font-semibold text-white">{grade.grade}</h4>
-                <span className="text-[12px] font-mono text-elec-yellow px-2 py-0.5 rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] whitespace-nowrap">
+                <span className="text-[12px] font-mono text-elec-yellow px-2 py-0.5 rounded-md border border-elec-yellow/20 bg-white/[0.05] whitespace-nowrap">
                   {grade.jibRate}/hr
                 </span>
               </div>
-              <p className="text-[13px] text-white/70 leading-relaxed">{grade.description}</p>
+              <p className="text-[13px] text-white leading-relaxed">{grade.description}</p>
             </div>
           ))}
         </div>
-        <p className="text-[12px] text-white/55 leading-relaxed">
+        <p className="text-[12px] text-white leading-relaxed">
           JIB rates are reviewed annually and typically exceed legal minimums. Not all employers are
           JIB-registered — ask at interview whether they follow JIB grading.
         </p>
       </Section>
 
       <Section eyebrow="Overtime, call-out & additional pay">
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           Overtime rates vary by employer, but these are typical in the electrical industry. Your
           contract should specify your exact rates — check before you start.
         </p>
@@ -367,20 +398,20 @@ const WageInformationTab = () => {
             >
               <div className="flex justify-between items-start gap-2">
                 <h4 className="text-[14px] font-semibold text-white">{item.type}</h4>
-                <span className="text-[12px] text-elec-yellow px-2 py-0.5 rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] whitespace-nowrap">
+                <span className="text-[12px] text-elec-yellow px-2 py-0.5 rounded-md border border-elec-yellow/20 bg-white/[0.05] whitespace-nowrap">
                   {item.rate}
                 </span>
               </div>
-              <p className="text-[13px] text-white/70 leading-relaxed">{item.when}</p>
+              <p className="text-[13px] text-white leading-relaxed">{item.when}</p>
             </div>
           ))}
         </div>
       </Section>
 
       <Section eyebrow="Understanding your payslip">
-        <p className="text-[14px] text-white/85 leading-relaxed">
-          Your employer must provide an itemised payslip every pay period. Here is what each
-          section means:
+        <p className="text-[14px] text-white leading-relaxed">
+          Your employer must provide an itemised payslip every pay period. Here is what each section
+          means:
         </p>
         <div className="space-y-3">
           {payslipBreakdown.map((item, index) => (
@@ -389,15 +420,15 @@ const WageInformationTab = () => {
               className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 space-y-1"
             >
               <h4 className="text-[14px] font-semibold text-white">{item.item}</h4>
-              <p className="text-[13px] text-white/85 leading-relaxed">{item.description}</p>
+              <p className="text-[13px] text-white leading-relaxed">{item.description}</p>
             </div>
           ))}
         </div>
-        <div className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-1">
+        <div className="rounded-xl border border-elec-yellow/20 bg-white/[0.05] p-3 space-y-1">
           <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
             Tax code tips
           </span>
-          <p className="text-[13px] text-white/85 leading-relaxed">
+          <p className="text-[13px] text-white leading-relaxed">
             Most apprentices will be on tax code 1257L, meaning you can earn £12,570 before paying
             any income tax. If your tax code looks wrong (e.g. BR which means you pay tax on
             everything), contact HMRC on 0300 200 3300 to get it corrected. Wrong tax codes are
@@ -407,7 +438,7 @@ const WageInformationTab = () => {
       </Section>
 
       <Section eyebrow="Negotiating a pay rise">
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           Many apprentices assume they cannot negotiate pay. While Year 1 rates are often fixed,
           from Year 2 onwards many employers are open to paying above the minimum — especially if
           you are productive, reliable, and progressing well.
@@ -416,7 +447,7 @@ const WageInformationTab = () => {
           {negotiationTips.map((tip, index) => (
             <li
               key={index}
-              className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+              className="text-[14px] text-white leading-relaxed flex items-start gap-2"
             >
               <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
               <span>{tip}</span>
@@ -426,7 +457,7 @@ const WageInformationTab = () => {
       </Section>
 
       <Section eyebrow="What to do if you are underpaid" accent="red">
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           Being paid below the legal minimum wage is a criminal offence. If you suspect you are
           being underpaid, follow these steps:
         </p>
@@ -435,38 +466,32 @@ const WageInformationTab = () => {
             {
               step: '1',
               title: 'Check your payslips',
-              desc:
-                'Calculate your hourly rate by dividing gross pay by hours worked. Include all hours — travel between sites, training time, and overtime.',
+              desc: 'Calculate your hourly rate by dividing gross pay by hours worked. Include all hours — travel between sites, training time, and overtime.',
             },
             {
               step: '2',
               title: 'Check which rate applies to you',
-              desc:
-                'Under 19 or in your first year = apprentice rate (£8.00 from 1 April 2026). Over 21 and past first year = NLW (£12.71 from 1 April 2026).',
+              desc: 'Under 19 or in your first year = apprentice rate (£8.00 from 1 April 2026). Over 21 and past first year = NLW (£12.71 from 1 April 2026).',
             },
             {
               step: '3',
               title: 'Talk to your employer first',
-              desc:
-                'It may be a genuine payroll mistake. Raise it in writing (email) so there is a record.',
+              desc: 'It may be a genuine payroll mistake. Raise it in writing (email) so there is a record.',
             },
             {
               step: '4',
               title: 'Contact ACAS',
-              desc:
-                'Free, confidential advice on 0300 123 1100. They can help mediate if your employer will not resolve it.',
+              desc: 'Free, confidential advice on 0300 123 1100. They can help mediate if your employer will not resolve it.',
             },
             {
               step: '5',
               title: 'Report to HMRC',
-              desc:
-                'Call the NMW helpline on 0300 123 1100 or use the online complaint form. HMRC can investigate and enforce back-pay.',
+              desc: 'Call the NMW helpline on 0300 123 1100 or use the online complaint form. HMRC can investigate and enforce back-pay.',
             },
             {
               step: '6',
               title: 'Keep records',
-              desc:
-                'Save all payslips, timesheets, rotas, and any written communication. These are your evidence.',
+              desc: 'Save all payslips, timesheets, rotas, and any written communication. These are your evidence.',
             },
           ].map((item, index) => (
             <div
@@ -479,14 +504,14 @@ const WageInformationTab = () => {
                 </span>
                 <h4 className="text-[14px] font-semibold text-white">{item.title}</h4>
               </div>
-              <p className="text-[13px] text-white/85 leading-relaxed ml-8">{item.desc}</p>
+              <p className="text-[13px] text-white leading-relaxed ml-8">{item.desc}</p>
             </div>
           ))}
         </div>
       </Section>
 
       <Section eyebrow="Important" accent="yellow">
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           Many electrical apprentices earn above minimum wage. Research typical rates in your area
           and don't be afraid to negotiate, especially if you have prior experience or additional
           qualifications.

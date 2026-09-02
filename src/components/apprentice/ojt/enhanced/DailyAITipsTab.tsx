@@ -33,7 +33,7 @@ const DailyAITipsTab = () => {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <div className="flex items-center gap-3 text-white/55">
+        <div className="flex items-center gap-3 text-white">
           <Loader2 className="h-4 w-4 animate-spin text-elec-yellow" />
           <span className="text-[13px]">Reading your training record…</span>
         </div>
@@ -50,9 +50,9 @@ const DailyAITipsTab = () => {
         <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-white leading-tight">
           Your tips kick in once you start practising.
         </h2>
-        <p className="text-[13px] text-white/65 leading-relaxed">
-          Run a single AM2 simulator session and the daily tips become personalised — driven by
-          your weak areas, blind-spot regs, and portfolio progress.
+        <p className="text-[13px] text-white leading-relaxed">
+          Run a single AM2 simulator session and the daily tips become personalised — driven by your
+          weak areas, blind-spot regs, and portfolio progress.
         </p>
         <button
           type="button"
@@ -83,9 +83,9 @@ const DailyAITipsTab = () => {
         <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-white leading-tight max-w-xl">
           {topSummary(snapshot)}
         </h2>
-        <p className="text-[12.5px] text-white/55 leading-relaxed max-w-xl">
-          {tips.length} tip{tips.length === 1 ? '' : 's'} ranked by what'll move you fastest,
-          based on your actual training record. Top of the list first.
+        <p className="text-[12.5px] text-white leading-relaxed max-w-xl">
+          {tips.length} tip{tips.length === 1 ? '' : 's'} ranked by what'll move you fastest, based
+          on your actual training record. Top of the list first.
         </p>
       </div>
 
@@ -112,7 +112,7 @@ const DailyAITipsTab = () => {
       </div>
 
       {/* Footnote — reminds them this is real data, not generic content */}
-      <p className="text-[10.5px] text-white/40 leading-relaxed max-w-xl">
+      <p className="text-[10.5px] text-white leading-relaxed max-w-xl">
         Tips refresh as your training record updates. AM2 scores, portfolio uploads, OTJ logs and
         college attendance all feed this view.
       </p>
@@ -151,7 +151,7 @@ function TipCard({ tip, index, onAction, onAskDave, onRegClick }: TipCardProps) 
         'rounded-2xl border overflow-hidden',
         isPriority
           ? 'border-elec-yellow/35 bg-gradient-to-br from-elec-yellow/[0.06] to-elec-yellow/[0.01]'
-          : 'border-white/[0.08] bg-[hsl(0_0%_10%)]'
+          : 'border-white/[0.12] bg-white/[0.06]'
       )}
     >
       <div className="px-4 sm:px-5 py-4 sm:py-5 space-y-3">
@@ -166,7 +166,7 @@ function TipCard({ tip, index, onAction, onAskDave, onRegClick }: TipCardProps) 
             </span>
           </div>
           {isPriority && (
-            <span className="inline-flex items-center gap-1 text-[9.5px] font-semibold uppercase tracking-[0.14em] text-elec-yellow/85 bg-elec-yellow/[0.08] border border-elec-yellow/30 px-2 py-0.5 rounded-full">
+            <span className="inline-flex items-center gap-1 text-[9.5px] font-semibold uppercase tracking-[0.14em] text-elec-yellow/85 bg-white/[0.05] border border-elec-yellow/30 px-2 py-0.5 rounded-full">
               <Sparkles className="h-2.5 w-2.5" />
               Top priority
             </span>
@@ -178,7 +178,7 @@ function TipCard({ tip, index, onAction, onAskDave, onRegClick }: TipCardProps) 
           <h3 className="text-[15px] sm:text-base font-semibold text-white tracking-tight leading-snug">
             {tip.title}
           </h3>
-          <p className="text-[12.5px] text-white/65 leading-relaxed">{tip.body}</p>
+          <p className="text-[12.5px] text-white leading-relaxed">{tip.body}</p>
         </div>
 
         {/* Optional reg pill */}
@@ -212,7 +212,7 @@ function TipCard({ tip, index, onAction, onAskDave, onRegClick }: TipCardProps) 
             <button
               type="button"
               onClick={onAskDave}
-              className="inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg text-[12px] font-medium text-white/80 hover:text-white bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.08] touch-manipulation transition-colors"
+              className="inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg text-[12px] font-medium text-white hover:text-white bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.08] touch-manipulation transition-colors"
             >
               Ask Dave
             </button>
@@ -226,7 +226,7 @@ function TipCard({ tip, index, onAction, onAskDave, onRegClick }: TipCardProps) 
 /* ─── Headline composer ──────────────────────────────────────────────── */
 
 function topSummary(snap: ReturnType<typeof useStudentSnapshot>): string {
-  const greeting = snap.firstName ? `${snap.firstName}, here's` : 'Here\'s';
+  const greeting = snap.firstName ? `${snap.firstName}, here's` : "Here's";
   if (snap.weakAreas.length > 0) {
     return `${greeting} where to put 20 minutes today.`;
   }

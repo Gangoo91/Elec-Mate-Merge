@@ -80,11 +80,11 @@ const SectionDisplay = ({
             <CheckCircle className="h-5 w-5 text-elec-yellow flex-shrink-0" />
           )}
         </div>
-        <p className="text-[14px] text-white/70 leading-relaxed">{sectionData.description}</p>
+        <p className="text-[14px] text-white leading-relaxed">{sectionData.description}</p>
       </div>
 
       <div className="space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Section content
         </span>
 
@@ -95,7 +95,7 @@ const SectionDisplay = ({
             className="w-full text-left rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 active:bg-white/[0.04] transition-colors touch-manipulation"
           >
             <div className="flex items-start gap-3">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 font-mono mt-1">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white font-mono mt-1">
                 {index + 1}
               </span>
               <div className="flex-1 space-y-1">
@@ -107,11 +107,11 @@ const SectionDisplay = ({
                     <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0" />
                   )}
                 </div>
-                <p className="text-[14px] text-white/70 leading-relaxed line-clamp-2">
+                <p className="text-[14px] text-white leading-relaxed line-clamp-2">
                   {subsection.content}
                 </p>
               </div>
-              <ChevronRight className="h-4 w-4 text-white/55 flex-shrink-0 mt-1" />
+              <ChevronRight className="h-4 w-4 text-white flex-shrink-0 mt-1" />
             </div>
           </button>
         ))}

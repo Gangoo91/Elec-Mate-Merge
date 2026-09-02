@@ -92,6 +92,15 @@ interface DiaryEntrySheetProps {
   initialDate?: string | null;
   /** Qualification unit codes + titles for course-aware skill prompts */
   qualificationUnits?: { unitCode: string; unitTitle: string }[];
+  /**
+   * Dates that already have an entry, so the form can flag a repeat.
+   *
+   * Deliberately a warning and not a database constraint: an electrician can
+   * genuinely work two sites in a day, and the form has a single Site field, so
+   * that legitimately means two entries. What is worth catching is the
+   * accidental second entry for a day you already wrote up.
+   */
+  datesWithEntries?: string[];
 }
 
 export function DiaryEntrySheet({
@@ -102,6 +111,7 @@ export function DiaryEntrySheet({
   existingEntry,
   initialDate,
   qualificationUnits,
+  datesWithEntries = [],
 }: DiaryEntrySheetProps) {
   const isEditing = !!existingEntry;
   const haptic = useHaptic();
@@ -396,6 +406,15 @@ export function DiaryEntrySheet({
                 />
               </div>
 
+              {!isEditing && datesWithEntries.includes(date) && (
+                <div className="px-4 pb-2.5 -mt-1">
+                  <p className="text-[11px] leading-relaxed text-elec-yellow">
+                    You already have an entry for this day. Carry on if you worked a second site —
+                    otherwise close this and edit the existing one.
+                  </p>
+                </div>
+              )}
+
               {/* Site name */}
               <div className="px-4 py-2.5 border-t border-white/[0.04]">
                 <label className="text-[11px] text-white mb-1 flex items-center gap-1.5">
@@ -532,7 +551,7 @@ export function DiaryEntrySheet({
             {qualificationUnits && qualificationUnits.length > 0 && (
               <div className="rounded-2xl bg-white/[0.07] border border-white/[0.10] overflow-hidden">
                 <div className="px-4 pt-4 pb-2 flex items-center gap-2.5">
-                  <GraduationCap className="h-4 w-4 text-purple-400/70" />
+                  <GraduationCap className="h-4 w-4 text-elec-yellow" />
                   <span className="text-[13px] font-bold text-white tracking-wide">
                     Qualification units
                   </span>
@@ -551,8 +570,8 @@ export function DiaryEntrySheet({
                           onClick={() => toggleSkill(label)}
                           className={`inline-flex items-center gap-1.5 px-3.5 min-h-[44px] text-xs font-medium rounded-xl border touch-manipulation transition-all active:scale-[0.97] ${
                             selectedSkills.includes(label)
-                              ? 'bg-white/[0.06] border-purple-500/40 text-purple-400 shadow-[0_0_12px_-3px] shadow-purple-500/20'
-                              : 'bg-white/[0.07] border-purple-500/20 text-purple-300/80 active:bg-white/[0.10]'
+                              ? 'border-elec-yellow bg-white/[0.10] text-elec-yellow'
+                              : 'border-white/[0.16] bg-white/[0.06] text-white active:border-white/[0.32]'
                           }`}
                         >
                           {selectedSkills.includes(label) && <Check className="h-3.5 w-3.5" />}

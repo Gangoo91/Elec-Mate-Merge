@@ -40,10 +40,10 @@ export function RecommendationCard({
   return (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5">
       <div className="flex items-start gap-3">
-        <Icon className="h-4 w-4 text-white/55 flex-shrink-0 mt-1" />
+        <Icon className="h-4 w-4 text-white flex-shrink-0 mt-1" />
         <div className="flex-1 min-w-0 space-y-1">
           <h4 className="text-[14px] font-semibold text-white">{title}</h4>
-          <p className="text-[13px] text-white/70 leading-relaxed">{description}</p>
+          <p className="text-[13px] text-white leading-relaxed">{description}</p>
         </div>
       </div>
       <button

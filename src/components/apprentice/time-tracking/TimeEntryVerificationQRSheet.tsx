@@ -142,10 +142,14 @@ export function TimeEntryVerificationQRSheet({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-        <div className="flex flex-col h-full bg-background">
+      <SheetContent
+        side="bottom"
+        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.06] bg-[hsl(0_0%_8%)]"
+      >
+        <div className="flex flex-col h-full">
+          <div className="mx-auto mt-3 h-1 w-12 shrink-0 rounded-full bg-white/15" />
           {/* Header */}
-          <SheetHeader className="px-5 pt-5 pb-3 border-b border-border">
+          <SheetHeader className="px-5 pt-4 pb-3 border-b border-white/[0.06]">
             <div className="flex items-center justify-between">
               <SheetTitle className="flex items-center gap-2 text-base">
                 <ShieldCheck className="h-5 w-5 text-emerald-400" />
@@ -216,9 +220,7 @@ export function TimeEntryVerificationQRSheet({
                     Verified by {verification?.supervisor_name}
                   </p>
                   {verification?.supervisor_company && (
-                    <p className="text-xs text-white mt-0.5">
-                      {verification.supervisor_company}
-                    </p>
+                    <p className="text-xs text-white mt-0.5">{verification.supervisor_company}</p>
                   )}
                   <p className="text-xs text-white mt-1">
                     {verification?.verified_at &&

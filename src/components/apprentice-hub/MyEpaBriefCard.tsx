@@ -37,7 +37,12 @@ export function MyEpaBriefCard() {
 
   return (
     <>
-      <section className={cn('rounded-2xl border border-white/[0.06] px-4 sm:px-5 py-4 sm:py-5', CARD_SURFACE)}>
+      <section
+        className={cn(
+          'rounded-2xl border border-elec-yellow/35 px-4 sm:px-5 py-4 sm:py-5',
+          CARD_SURFACE
+        )}
+      >
         <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
           Personalised brief
         </div>

@@ -118,7 +118,7 @@ export const renderSection1 = ({
   console.log('Section1Renderer - No matching subsection found for:', subsectionId);
   return (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 text-center">
-      <p className="text-[14px] text-white/85 leading-relaxed">
+      <p className="text-[14px] text-white leading-relaxed">
         Content for subsection {subsectionId} is not yet available.
       </p>
     </div>

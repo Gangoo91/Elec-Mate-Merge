@@ -1,12 +1,20 @@
 import { useEffect, useRef, useState } from 'react';
 import { Mic, Square } from 'lucide-react';
-import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
+import { FormSheet } from '@/components/forms/FormSheet';
+import { useSheetDraft } from '@/hooks/useSheetDraft';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { useSpeechToText } from '@/hooks/useSpeechToText';
 import { parseOtjSpeech } from '@/lib/parseOtjSpeech';
 import { cn } from '@/lib/utils';
-import { inputCn, textareaCn } from '@/components/forms/fieldStyles';
+import {
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  inputCn,
+  labelCn,
+  textareaCn,
+} from '@/components/forms/fieldStyles';
 
 /* ==========================================================================
    SubmitWorkOtjSheet — apprentice-side. Submit a work-based off-the-job
@@ -98,6 +106,7 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
   // null = unknown/loading. Drives whether we frame this as "send to tutor"
   // (college-linked) or "get your supervisor to attest" (no college yet).
   const [hasCollege, setHasCollege] = useState<boolean | null>(null);
+  const [uid, setUid] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
 
@@ -115,7 +124,10 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
     const said = `${speech.transcript} ${speech.interimTranscript}`.trim();
     if (said.length < 8) {
       if (said.length > 0) {
-        toast({ title: 'Too short to fill from', description: 'Say what you did, how long and when.' });
+        toast({
+          title: 'Too short to fill from',
+          description: 'Say what you did, how long and when.',
+        });
       }
       return;
     }
@@ -123,9 +135,7 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
     setForm((f) => ({
       ...f,
       title: parsed.title ?? f.title,
-      description: f.description
-        ? `${f.description}\n${parsed.description}`
-        : parsed.description,
+      description: f.description ? `${f.description}\n${parsed.description}` : parsed.description,
       duration_minutes: parsed.duration_minutes
         ? String(parsed.duration_minutes)
         : f.duration_minutes,
@@ -159,12 +169,13 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
       const { data: userData } = await supabase.auth.getUser();
       const uid = userData.user?.id;
       if (!uid) return;
+      if (!cancelled) setUid(uid);
       const { data } = await supabase
         .from('college_students')
         .select('college_id')
         .eq('user_id', uid)
         .maybeSingle();
-      if (!cancelled) setHasCollege(!!(data?.college_id));
+      if (!cancelled) setHasCollege(!!data?.college_id);
     })();
     return () => {
       cancelled = true;
@@ -172,6 +183,14 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
   }, [open]);
 
   const noCollege = hasCollege === false;
+
+  // A half-written entry survives the phone going in a pocket. Restoring is
+  // the apprentice's choice — the banner at the top of the form offers it.
+  const draft = useSheetDraft<FormState>(uid ? `otj-submit:${uid}` : null, form, {
+    // Never let an AI prefill overwrite the apprentice's own half-written draft.
+    enabled: open && !saving && !prefill,
+    isEmpty: (f) => !f.title.trim() && !f.description.trim(),
+  });
 
   // Single open-time effect: when the sheet opens, either hydrate from the
   // AI-drafted prefill or start from an empty form. Apprentice keeps full
@@ -310,6 +329,7 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
         .maybeSingle();
       if (insErr) throw insErr;
 
+      draft.clear();
       setSavedTick(true);
       toast({
         title: noCollege ? 'Activity saved' : 'Sent to your tutor',
@@ -333,100 +353,130 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
     }
   };
 
-  return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        side="bottom"
-        className="h-[85vh] sm:mx-auto sm:max-w-2xl overflow-hidden rounded-t-2xl border-white/10 bg-[hsl(0_0%_8%)] p-0"
+  const footer = (
+    <div className="grid grid-cols-2 gap-2.5">
+      <button
+        type="button"
+        onClick={() => onOpenChange(false)}
+        disabled={saving}
+        className={buttonSecondaryCn}
       >
-        <SheetTitle className="sr-only">Submit work-based off-the-job training</SheetTitle>
-        <div className="flex h-full flex-col">
-          <header className="px-4 sm:px-5 pt-5 pb-4 border-b border-white/[0.06]">
-            <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
-              {noCollege ? 'Log activity' : 'Submit to tutor'}
-            </div>
-            <h2 className="mt-1 text-[18px] sm:text-[20px] font-semibold text-white leading-tight">
-              Off-the-job work activity
-            </h2>
-            <p className="mt-1 text-[12.5px] leading-snug text-white">
-              {noCollege ? (
-                <>
-                  No college linked yet — log it here, then get your supervisor to confirm the
-                  hours. After saving, tap the entry to send an attestation link.
-                </>
-              ) : (
-                <>
-                  Counts toward your verified hours once your tutor signs it off. Be specific about
-                  what you did and what you learned — the AI checks the evidence too.
-                </>
+        Cancel
+      </button>
+      <button
+        type="button"
+        onClick={handleSubmit}
+        disabled={!valid || saving}
+        className={buttonPrimaryCn}
+      >
+        {savedTick ? 'Saved ✓' : saving ? 'Saving…' : noCollege ? 'Save activity' : 'Send to tutor'}
+      </button>
+    </div>
+  );
+
+  return (
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      eyebrow={noCollege ? 'Log activity' : 'Submit to tutor'}
+      title="Off-the-job work activity"
+      description={
+        noCollege
+          ? 'No college linked yet — log it here, then get your supervisor to confirm the hours. After saving, tap the entry to send an attestation link.'
+          : 'Counts toward your verified hours once your tutor signs it off. Be specific about what you did and what you learned — the AI checks the evidence too.'
+      }
+      footer={footer}
+    >
+      {draft.hasDraft && draft.draft && !prefill && (
+        <div className={cn('space-y-3 rounded-2xl border border-elec-yellow/35 p-4', CARD_SURFACE)}>
+          <div>
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
+              Unfinished entry
+            </span>
+            <p className="mt-1 text-[13px] leading-snug text-white">
+              {draft.draft.title.trim() || 'An entry you started earlier'} — pick up where you left
+              off?
+            </p>
+          </div>
+          <div className="grid grid-cols-2 gap-2">
+            <button type="button" onClick={draft.clear} className={cn(buttonSecondaryCn, 'h-11')}>
+              Discard
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                if (draft.draft) setForm(draft.draft);
+                draft.dismiss();
+              }}
+              className={cn(buttonPrimaryCn, 'h-11')}
+            >
+              Resume
+            </button>
+          </div>
+        </div>
+      )}
+      {/* Voice-first entry — speak it, the parser fills the form, you
+                check it. Gloves-friendly: one tap to start, one to stop. */}
+      {speech.isSupported && (
+        <div
+          className={cn(
+            'rounded-2xl border p-3.5 space-y-2.5 transition-colors',
+            CARD_SURFACE,
+            speech.isListening ? 'border-elec-yellow' : 'border-elec-yellow/35'
+          )}
+        >
+          <button
+            type="button"
+            onClick={speech.isListening ? handleVoiceStop : handleVoiceStart}
+            className={cn(
+              'w-full h-11 rounded-xl inline-flex items-center justify-center gap-2 text-[13px] font-medium touch-manipulation transition-colors',
+              speech.isListening
+                ? 'bg-elec-yellow text-black'
+                : 'border border-elec-yellow/35 bg-white/[0.06] text-elec-yellow hover:bg-white/[0.1]'
+            )}
+          >
+            {speech.isListening ? (
+              <>
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="absolute inline-flex h-full w-full rounded-full bg-black/60 animate-ping" />
+                  <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-black" />
+                </span>
+                <Square className="h-3.5 w-3.5" />
+                Stop &amp; fill the form
+              </>
+            ) : (
+              <>
+                <Mic className="h-4 w-4" />
+                Speak it — what, how long, when
+              </>
+            )}
+          </button>
+          {(speech.isListening || speech.interimTranscript || speech.transcript) && (
+            <p className="text-[12.5px] text-white leading-snug min-h-[18px]">
+              {speech.transcript}
+              <span className="text-white">{speech.interimTranscript}</span>
+              {speech.isListening && !speech.transcript && !speech.interimTranscript && (
+                <span className="text-white">
+                  Listening… e.g. &ldquo;Two hours second fix wiring at the Hartlepool job
+                  yesterday&rdquo;
+                </span>
               )}
             </p>
-          </header>
+          )}
+        </div>
+      )}
 
-          <div className="flex-1 overflow-y-auto px-4 sm:px-5 py-4 space-y-5">
-            {/* Voice-first entry — speak it, the parser fills the form, you
-                check it. Gloves-friendly: one tap to start, one to stop. */}
-            {speech.isSupported && (
-              <div
-                className={cn(
-                  'rounded-2xl border p-3.5 space-y-2.5 transition-colors',
-                  speech.isListening
-                    ? 'border-elec-yellow/40 bg-elec-yellow/[0.05]'
-                    : 'border-white/[0.08] bg-[hsl(0_0%_10%)]'
-                )}
-              >
-                <button
-                  type="button"
-                  onClick={speech.isListening ? handleVoiceStop : handleVoiceStart}
-                  className={cn(
-                    'w-full h-11 rounded-xl inline-flex items-center justify-center gap-2 text-[13px] font-medium touch-manipulation transition-colors',
-                    speech.isListening
-                      ? 'bg-elec-yellow text-black'
-                      : 'border border-elec-yellow/25 bg-elec-yellow/10 text-elec-yellow hover:bg-elec-yellow/20'
-                  )}
-                >
-                  {speech.isListening ? (
-                    <>
-                      <span className="relative flex h-2.5 w-2.5">
-                        <span className="absolute inline-flex h-full w-full rounded-full bg-black/60 animate-ping" />
-                        <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-black" />
-                      </span>
-                      <Square className="h-3.5 w-3.5" />
-                      Stop &amp; fill the form
-                    </>
-                  ) : (
-                    <>
-                      <Mic className="h-4 w-4" />
-                      Speak it — what, how long, when
-                    </>
-                  )}
-                </button>
-                {(speech.isListening || speech.interimTranscript || speech.transcript) && (
-                  <p className="text-[12.5px] text-white leading-snug min-h-[18px]">
-                    {speech.transcript}
-                    <span className="text-white">{speech.interimTranscript}</span>
-                    {speech.isListening && !speech.transcript && !speech.interimTranscript && (
-                      <span className="text-white">
-                        Listening… e.g. &ldquo;Two hours second fix wiring at the Hartlepool job
-                        yesterday&rdquo;
-                      </span>
-                    )}
-                  </p>
-                )}
-              </div>
-            )}
+      <Field label="Date">
+        <input
+          type="date"
+          value={form.activity_date}
+          max={todayIso()}
+          onChange={(e) => setForm((f) => ({ ...f, activity_date: e.target.value }))}
+          className={inputClass}
+        />
+      </Field>
 
-            <Field label="Date">
-              <input
-                type="date"
-                value={form.activity_date}
-                max={todayIso()}
-                onChange={(e) => setForm((f) => ({ ...f, activity_date: e.target.value }))}
-                className={inputClass}
-              />
-            </Field>
-
-            {/*
+      {/*
               Chips, not ten stacked cards.
               Two problems here. The selected state was INVISIBLE — selected
               carried `border-white/[0.06]` against unselected's
@@ -437,175 +487,148 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
               The hint now shows once, for the current choice, instead of ten
               times for choices you have not made.
             */}
-            <Field label="Activity type">
-              <div className="flex flex-wrap gap-2">
-                {ACTIVITY_TYPES.map((a) => {
-                  const on = form.activity_type === a.value;
-                  return (
-                    <button
-                      key={a.value}
-                      type="button"
-                      aria-pressed={on}
-                      onClick={() => setForm((f) => ({ ...f, activity_type: a.value }))}
-                      className={cn(
-                        'inline-flex h-11 items-center rounded-full border px-3.5 text-[12.5px] transition-colors touch-manipulation active:scale-[0.98]',
-                        on
-                          ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
-                          : 'border-white/[0.12] bg-white/[0.06] font-medium text-white hover:border-white/[0.25]'
-                      )}
-                    >
-                      {a.label}
-                    </button>
-                  );
-                })}
-              </div>
-              {ACTIVITY_TYPES.find((a) => a.value === form.activity_type)?.hint && (
-                <p className="mt-2 text-[12px] leading-snug text-white">
-                  {ACTIVITY_TYPES.find((a) => a.value === form.activity_type)?.hint}
-                </p>
-              )}
-            </Field>
-
-            <Field label="Headline">
-              <input
-                type="text"
-                value={form.title}
-                onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
-                placeholder="e.g. Replaced consumer unit on domestic install"
-                maxLength={120}
-                className={inputClass}
-              />
-            </Field>
-
-            <Field label="Duration">
-              <div className="space-y-2">
-                <input
-                  type="number"
-                  inputMode="numeric"
-                  min={1}
-                  max={1440}
-                  value={form.duration_minutes}
-                  onChange={(e) => setForm((f) => ({ ...f, duration_minutes: e.target.value }))}
-                  placeholder="Minutes"
-                  className={inputClass}
-                />
-                <div className="flex items-center flex-wrap gap-1.5">
-                  {DURATION_PRESETS.map((p) => (
-                    <button
-                      key={p}
-                      type="button"
-                      onClick={() => setForm((f) => ({ ...f, duration_minutes: String(p) }))}
-                      className="h-8 px-2.5 rounded-full border border-white/[0.1] bg-white/[0.03] text-[11px] font-medium text-white hover:text-white hover:border-white/[0.22] transition-colors touch-manipulation tabular-nums"
-                    >
-                      {p < 60 ? `${p}m` : `${p / 60}h`}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </Field>
-
-            <Field
-              label="What did you do — and what did you learn?"
-              hint="At least 12 characters. Be specific — your tutor can't verify a vague entry."
-            >
-              <textarea
-                value={form.description}
-                rows={4}
-                onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
-                placeholder="The job, the people you worked with, the kit, what was different from anything you'd done before, where you got stuck and how you solved it."
-                className={textareaClass}
-              />
-              <div className="mt-1 text-right text-[10.5px] text-white tabular-nums">
-                {form.description.trim().length} chars
-              </div>
-            </Field>
-
-            <Field label="Unit codes covered" hint="Optional. Comma-separated, e.g. 304, 305">
-              <input
-                type="text"
-                value={form.unit_codes_text}
-                onChange={(e) => setForm((f) => ({ ...f, unit_codes_text: e.target.value }))}
-                placeholder="304, 305"
-                className={inputClass}
-              />
-            </Field>
-
-            <Field
-              label="Photo evidence"
-              hint="Up to 4 photos · 8MB each · optional but strengthens verification"
-            >
-              <div className="space-y-2">
-                <input
-                  ref={fileRef}
-                  type="file"
-                  accept="image/*"
-                  multiple
-                  className="hidden"
-                  onChange={(e) => addFiles(e.target.files)}
-                />
-                <button
-                  type="button"
-                  onClick={() => fileRef.current?.click()}
-                  disabled={photos.length >= 4}
-                  className="w-full h-11 rounded-lg border border-white/[0.10] bg-white/[0.02] text-[12.5px] font-medium text-white hover:text-white hover:border-white/[0.22] transition-colors disabled:opacity-50 touch-manipulation"
-                >
-                  {photos.length === 0 ? 'Add photos' : `Add more (${photos.length}/4)`}
-                </button>
-                {photos.length > 0 && (
-                  <ul className="space-y-1">
-                    {photos.map((p, i) => (
-                      <li
-                        key={i}
-                        className="flex items-center justify-between gap-3 px-3 py-2 rounded-md border border-white/[0.06] bg-white/[0.02]"
-                      >
-                        <span className="truncate text-[12px] text-white">{p.name}</span>
-                        <button
-                          type="button"
-                          onClick={() => setPhotos(photos.filter((_, j) => j !== i))}
-                          className="text-[11px] text-white hover:text-white tabular-nums"
-                        >
-                          remove
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
+      <Field label="Activity type">
+        <div className="flex flex-wrap gap-2">
+          {ACTIVITY_TYPES.map((a) => {
+            const on = form.activity_type === a.value;
+            return (
+              <button
+                key={a.value}
+                type="button"
+                aria-pressed={on}
+                onClick={() => setForm((f) => ({ ...f, activity_type: a.value }))}
+                className={cn(
+                  'inline-flex h-11 items-center rounded-full border px-3.5 text-[12.5px] transition-colors touch-manipulation active:scale-[0.98]',
+                  on
+                    ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+                    : 'border-white/[0.12] bg-white/[0.06] font-medium text-white hover:border-white/[0.25]'
                 )}
-              </div>
-            </Field>
-          </div>
-
-          <footer className="border-t border-white/[0.06] px-4 sm:px-5 py-3 flex items-center gap-2 bg-[hsl(0_0%_6%)]">
-            <button
-              type="button"
-              onClick={() => onOpenChange(false)}
-              disabled={saving}
-              className="flex-1 h-11 rounded-lg border border-white/[0.10] bg-white/[0.02] text-[13px] font-medium text-white hover:text-white hover:border-white/[0.22] transition-colors touch-manipulation disabled:opacity-50"
-            >
-              Cancel
-            </button>
-            <button
-              type="button"
-              onClick={handleSubmit}
-              disabled={!valid || saving}
-              className={cn(
-                'flex-1 h-11 rounded-lg text-[13px] font-semibold transition-colors touch-manipulation',
-                valid && !saving
-                  ? 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
-                  : 'bg-white/[0.05] text-white'
-              )}
-            >
-              {savedTick
-                ? 'Saved ✓'
-                : saving
-                  ? 'Saving…'
-                  : noCollege
-                    ? 'Save activity'
-                    : 'Send to tutor'}
-            </button>
-          </footer>
+              >
+                {a.label}
+              </button>
+            );
+          })}
         </div>
-      </SheetContent>
-    </Sheet>
+        {ACTIVITY_TYPES.find((a) => a.value === form.activity_type)?.hint && (
+          <p className="mt-2 text-[12px] leading-snug text-white">
+            {ACTIVITY_TYPES.find((a) => a.value === form.activity_type)?.hint}
+          </p>
+        )}
+      </Field>
+
+      <Field label="Headline">
+        <input
+          type="text"
+          value={form.title}
+          onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
+          placeholder="e.g. Replaced consumer unit on domestic install"
+          maxLength={120}
+          className={inputClass}
+        />
+      </Field>
+
+      <Field label="Duration">
+        <div className="space-y-2">
+          <input
+            type="number"
+            inputMode="numeric"
+            min={1}
+            max={1440}
+            value={form.duration_minutes}
+            onChange={(e) => setForm((f) => ({ ...f, duration_minutes: e.target.value }))}
+            placeholder="Minutes"
+            className={inputClass}
+          />
+          <div className="flex items-center flex-wrap gap-1.5">
+            {DURATION_PRESETS.map((p) => (
+              <button
+                key={p}
+                type="button"
+                onClick={() => setForm((f) => ({ ...f, duration_minutes: String(p) }))}
+                aria-pressed={form.duration_minutes === String(p)}
+                className={cn(
+                  'h-11 rounded-full border px-3.5 text-[12.5px] tabular-nums transition-colors touch-manipulation',
+                  form.duration_minutes === String(p)
+                    ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+                    : 'border-white/[0.12] bg-white/[0.06] font-medium text-white'
+                )}
+              >
+                {p < 60 ? `${p}m` : `${p / 60}h`}
+              </button>
+            ))}
+          </div>
+        </div>
+      </Field>
+
+      <Field
+        label="What did you do — and what did you learn?"
+        hint="At least 12 characters. Be specific — your tutor can't verify a vague entry."
+      >
+        <textarea
+          value={form.description}
+          rows={4}
+          onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
+          placeholder="The job, the people you worked with, the kit, what was different from anything you'd done before, where you got stuck and how you solved it."
+          className={textareaClass}
+        />
+        <div className="mt-1 text-right text-[10.5px] text-white tabular-nums">
+          {form.description.trim().length} chars
+        </div>
+      </Field>
+
+      <Field label="Unit codes covered" hint="Optional. Comma-separated, e.g. 304, 305">
+        <input
+          type="text"
+          value={form.unit_codes_text}
+          onChange={(e) => setForm((f) => ({ ...f, unit_codes_text: e.target.value }))}
+          placeholder="304, 305"
+          className={inputClass}
+        />
+      </Field>
+
+      <Field
+        label="Photo evidence"
+        hint="Up to 4 photos · 8MB each · optional but strengthens verification"
+      >
+        <div className="space-y-2">
+          <input
+            ref={fileRef}
+            type="file"
+            accept="image/*"
+            multiple
+            className="hidden"
+            onChange={(e) => addFiles(e.target.files)}
+          />
+          <button
+            type="button"
+            onClick={() => fileRef.current?.click()}
+            disabled={photos.length >= 4}
+            className={cn(buttonSecondaryCn, 'h-11 w-full text-[13px]')}
+          >
+            {photos.length === 0 ? 'Add photos' : `Add more (${photos.length}/4)`}
+          </button>
+          {photos.length > 0 && (
+            <ul className="space-y-1">
+              {photos.map((p, i) => (
+                <li
+                  key={i}
+                  className="flex items-center justify-between gap-3 px-3 py-2 rounded-md border border-white/[0.06] bg-white/[0.02]"
+                >
+                  <span className="truncate text-[12px] text-white">{p.name}</span>
+                  <button
+                    type="button"
+                    onClick={() => setPhotos(photos.filter((_, j) => j !== i))}
+                    className="text-[11px] text-white hover:text-white tabular-nums"
+                  >
+                    remove
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </Field>
+    </FormSheet>
   );
 }
 
@@ -632,9 +655,7 @@ function Field({
   return (
     <div>
       <div className="flex items-baseline justify-between gap-3">
-        <label className="text-[10.5px] font-medium uppercase tracking-[0.16em] text-white">
-          {label}
-        </label>
+        <label className={cn(labelCn, 'mb-0')}>{label}</label>
         {hint && <span className="text-[10.5px] text-white leading-snug">{hint}</span>}
       </div>
       <div className="mt-1.5">{children}</div>

@@ -163,7 +163,7 @@ const PortfolioSubmissionPanel: React.FC<PortfolioSubmissionPanelProps> = ({
 
   if (isLoading) {
     return (
-      <Card className="bg-white/5 border-elec-gray/40">
+      <Card className="bg-white/5 border-white/[0.12]">
         <CardContent className="flex items-center justify-center py-12">
           <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
         </CardContent>
@@ -173,7 +173,7 @@ const PortfolioSubmissionPanel: React.FC<PortfolioSubmissionPanelProps> = ({
 
   if (!hasQualificationSelected || !qualificationId) {
     return (
-      <Card className="bg-white/5 border-elec-gray/40">
+      <Card className="bg-white/5 border-white/[0.12]">
         <CardContent className="py-12 text-center">
           <Award className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
           <h3 className="text-lg font-semibold mb-2">No Qualification Selected</h3>
@@ -199,7 +199,7 @@ const PortfolioSubmissionPanel: React.FC<PortfolioSubmissionPanelProps> = ({
   return (
     <div className="space-y-6">
       {/* Progress Overview */}
-      <Card className="bg-white/5 border-elec-gray/40">
+      <Card className="bg-white/5 border-white/[0.12]">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Award className="h-5 w-5 text-elec-yellow" />
@@ -230,7 +230,7 @@ const PortfolioSubmissionPanel: React.FC<PortfolioSubmissionPanelProps> = ({
       </Card>
 
       {/* Category List */}
-      <Card className="bg-white/5 border-elec-gray/40">
+      <Card className="bg-white/5 border-white/[0.12]">
         <CardHeader>
           <CardTitle className="text-base">Units & Categories</CardTitle>
           <CardDescription>
@@ -252,7 +252,7 @@ const PortfolioSubmissionPanel: React.FC<PortfolioSubmissionPanelProps> = ({
                 <AccordionItem
                   key={category.id}
                   value={category.id}
-                  className="border border-elec-gray/40 rounded-lg overflow-hidden"
+                  className="border border-white/[0.12] rounded-lg overflow-hidden"
                 >
                   <AccordionTrigger className="px-4 py-3 hover:no-underline hover:bg-white/5">
                     <div className="flex items-center gap-3 flex-1">
@@ -410,7 +410,7 @@ const PortfolioSubmissionPanel: React.FC<PortfolioSubmissionPanelProps> = ({
 
       {/* Confirmation Dialog */}
       <Dialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
-        <DialogContent className="bg-elec-dark border-elec-gray/40">
+        <DialogContent className="bg-elec-dark border-white/[0.12]">
           <DialogHeader>
             <DialogTitle>Submit for Review</DialogTitle>
             <DialogDescription>
@@ -427,7 +427,7 @@ const PortfolioSubmissionPanel: React.FC<PortfolioSubmissionPanelProps> = ({
             <Button
               variant="outline"
               onClick={() => setShowConfirmDialog(false)}
-              className="border-elec-gray/40"
+              className="border-white/[0.12]"
             >
               Cancel
             </Button>

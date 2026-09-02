@@ -58,16 +58,16 @@ const ProtectiveDeviceSection = ({
     >
       <CollapsibleTrigger className="w-full flex items-center justify-between touch-manipulation min-h-[44px]">
         <div className="flex items-baseline gap-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Protective device check
           </span>
-          <span className="text-[11px] text-white/55 font-mono hidden sm:inline">
+          <span className="text-[11px] text-white font-mono hidden sm:inline">
             BS 7671 Reg 433.1
           </span>
         </div>
         <ChevronDown
           className={cn(
-            'h-4 w-4 text-white/55 flex-shrink-0 transition-transform duration-200',
+            'h-4 w-4 text-white flex-shrink-0 transition-transform duration-200',
             isOpen && 'rotate-180'
           )}
         />
@@ -77,7 +77,7 @@ const ProtectiveDeviceSection = ({
         {/* Device summary — the selection itself lives on the input form, since
             App 4 §5.1.1 sizes the cable on In and Cf depends on the device. */}
         <div className="p-4 rounded-xl border border-white/[0.06] bg-white/[0.02] space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Device sized on
           </span>
           <p className="text-[14px] font-medium text-white">
@@ -101,7 +101,7 @@ const ProtectiveDeviceSection = ({
                   : 'border-red-500/30 bg-red-500/[0.04]'
               }`}
             >
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 {validation.allPassed
                   ? 'All BS 7671 coordination checks passed'
                   : 'Coordination check failed'}
@@ -118,12 +118,12 @@ const ProtectiveDeviceSection = ({
                     <div className="flex items-center justify-between gap-2">
                       <span className="text-[14px] font-medium text-white">Check 1: Ib ≤ In</span>
                       <span
-                        className={`text-[11px] font-medium uppercase tracking-[0.18em] flex-shrink-0 ${validation.checks.ibLessEqualIn.passed ? 'text-white/85' : 'text-red-300'}`}
+                        className={`text-[11px] font-medium uppercase tracking-[0.18em] flex-shrink-0 ${validation.checks.ibLessEqualIn.passed ? 'text-white' : 'text-red-300'}`}
                       >
                         {validation.checks.ibLessEqualIn.passed ? 'Pass' : 'Fail'}
                       </span>
                     </div>
-                    <p className="text-[13px] text-white/85 leading-relaxed mt-1 font-mono">
+                    <p className="text-[13px] text-white leading-relaxed mt-1 font-mono">
                       Design current ({validation.checks.ibLessEqualIn.ib}A){' '}
                       {validation.checks.ibLessEqualIn.passed ? '≤' : '>'} Device rating (
                       {validation.checks.ibLessEqualIn.in_}A)
@@ -140,12 +140,12 @@ const ProtectiveDeviceSection = ({
                     <div className="flex items-center justify-between gap-2">
                       <span className="text-[14px] font-medium text-white">Check 2: In ≤ Iz</span>
                       <span
-                        className={`text-[11px] font-medium uppercase tracking-[0.18em] flex-shrink-0 ${validation.checks.inLessEqualIz.passed ? 'text-white/85' : 'text-red-300'}`}
+                        className={`text-[11px] font-medium uppercase tracking-[0.18em] flex-shrink-0 ${validation.checks.inLessEqualIz.passed ? 'text-white' : 'text-red-300'}`}
                       >
                         {validation.checks.inLessEqualIz.passed ? 'Pass' : 'Fail'}
                       </span>
                     </div>
-                    <p className="text-[13px] text-white/85 leading-relaxed mt-1 font-mono">
+                    <p className="text-[13px] text-white leading-relaxed mt-1 font-mono">
                       Device rating ({validation.checks.inLessEqualIz.in_}A){' '}
                       {validation.checks.inLessEqualIz.passed ? '≤' : '>'} Effective capacity (
                       {validation.checks.inLessEqualIz.iz}A)
@@ -164,12 +164,12 @@ const ProtectiveDeviceSection = ({
                         Check 3: I₂ ≤ 1.45 × Iz
                       </span>
                       <span
-                        className={`text-[11px] font-medium uppercase tracking-[0.18em] flex-shrink-0 ${validation.checks.i2LessEqual145Iz.passed ? 'text-white/85' : 'text-red-300'}`}
+                        className={`text-[11px] font-medium uppercase tracking-[0.18em] flex-shrink-0 ${validation.checks.i2LessEqual145Iz.passed ? 'text-white' : 'text-red-300'}`}
                       >
                         {validation.checks.i2LessEqual145Iz.passed ? 'Pass' : 'Fail'}
                       </span>
                     </div>
-                    <p className="text-[13px] text-white/85 leading-relaxed mt-1 font-mono">
+                    <p className="text-[13px] text-white leading-relaxed mt-1 font-mono">
                       Overload trip ({validation.checks.i2LessEqual145Iz.i2}A){' '}
                       {validation.checks.i2LessEqual145Iz.passed ? '≤' : '>'} 1.45 × Iz (
                       {validation.checks.i2LessEqual145Iz.limit}A)
@@ -182,14 +182,14 @@ const ProtectiveDeviceSection = ({
             {/* Suggestions if failed */}
             {validation.suggestions.length > 0 && (
               <div className="p-4 rounded-xl border border-white/[0.06] bg-white/[0.02] space-y-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Suggestions
                 </span>
                 <ul className="space-y-1.5">
                   {validation.suggestions.map((suggestion, idx) => (
                     <li
                       key={idx}
-                      className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                      className="text-[13px] text-white leading-relaxed flex items-start gap-2"
                     >
                       <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                       <span>{suggestion}</span>
@@ -201,24 +201,24 @@ const ProtectiveDeviceSection = ({
 
             {/* Device Reference Info */}
             <div className="p-4 rounded-xl border border-white/[0.06] bg-white/[0.02] space-y-3">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Device I₂ values
               </span>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
                 <div className="flex items-baseline justify-between p-2 text-[13px]">
-                  <span className="text-white/85">MCB / RCBO</span>
+                  <span className="text-white">MCB / RCBO</span>
                   <span className="font-mono text-white">1.45 × In</span>
                 </div>
                 <div className="flex items-baseline justify-between p-2 text-[13px]">
-                  <span className="text-white/85">BS 88 gG</span>
+                  <span className="text-white">BS 88 gG</span>
                   <span className="font-mono text-white">1.6 × In</span>
                 </div>
                 <div className="flex items-baseline justify-between p-2 text-[13px]">
-                  <span className="text-white/85">BS 3036</span>
+                  <span className="text-white">BS 3036</span>
                   <span className="font-mono text-white">2.0 × In</span>
                 </div>
                 <div className="flex items-baseline justify-between p-2 text-[13px]">
-                  <span className="text-white/85">MCCB</span>
+                  <span className="text-white">MCCB</span>
                   <span className="font-mono text-white">1.3 × In</span>
                 </div>
               </div>

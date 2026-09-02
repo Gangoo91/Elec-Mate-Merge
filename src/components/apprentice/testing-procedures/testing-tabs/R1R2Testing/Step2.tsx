@@ -21,14 +21,14 @@ const R1R2Step2 = () => {
   return (
     <div className="space-y-3">
       <div className="space-y-1">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Step 2
         </span>
         <h3 className="text-[18px] font-semibold text-white leading-tight">Perform the test</h3>
       </div>
       <ul className="space-y-1.5">
         {items.map((item, i) => (
-          <li key={i} className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2">
+          <li key={i} className="text-[14px] text-white leading-relaxed flex items-start gap-2">
             <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
             <span>{item}</span>
           </li>
@@ -38,7 +38,7 @@ const R1R2Step2 = () => {
       <R1R2Diagram />
 
       <div className="space-y-2">
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           Where the line conductor cannot be linked — a protective conductor downstream of a control
           device that is open-circuit with the supply off, for instance — use the wander lead
           instead. It verifies the protective conductor, but the value it gives you is R₂ on its

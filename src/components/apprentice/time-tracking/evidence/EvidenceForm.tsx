@@ -62,7 +62,7 @@ const EvidenceForm = ({ onAddEvidence, isUploading, setIsUploading }: EvidenceFo
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="space-y-2">
-        <Label htmlFor="evidence-title" className="text-[13px] text-white/85">
+        <Label htmlFor="evidence-title" className="text-[13px] text-white">
           Title
         </Label>
         <Input
@@ -77,7 +77,7 @@ const EvidenceForm = ({ onAddEvidence, isUploading, setIsUploading }: EvidenceFo
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label htmlFor="training-type" className="text-[13px] text-white/85">
+          <Label htmlFor="training-type" className="text-[13px] text-white">
             Training type
           </Label>
           <Select value={type} onValueChange={setType}>
@@ -94,7 +94,7 @@ const EvidenceForm = ({ onAddEvidence, isUploading, setIsUploading }: EvidenceFo
           </Select>
         </div>
         <div className="space-y-2">
-          <Label htmlFor="training-date" className="text-[13px] text-white/85">
+          <Label htmlFor="training-date" className="text-[13px] text-white">
             Date
           </Label>
           <Input
@@ -109,7 +109,7 @@ const EvidenceForm = ({ onAddEvidence, isUploading, setIsUploading }: EvidenceFo
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="training-description" className="text-[13px] text-white/85">
+        <Label htmlFor="training-description" className="text-[13px] text-white">
           Description
         </Label>
         <Textarea
@@ -123,7 +123,7 @@ const EvidenceForm = ({ onAddEvidence, isUploading, setIsUploading }: EvidenceFo
       </div>
 
       <div className="space-y-2">
-        <Label className="text-[13px] text-white/85">Upload evidence files</Label>
+        <Label className="text-[13px] text-white">Upload evidence files</Label>
         <FileUpload
           onFileSelect={handleFileSelect}
           selectedFiles={selectedFiles}
@@ -136,7 +136,7 @@ const EvidenceForm = ({ onAddEvidence, isUploading, setIsUploading }: EvidenceFo
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="hours-spent" className="text-[13px] text-white/85">
+        <Label htmlFor="hours-spent" className="text-[13px] text-white">
           Hours spent
         </Label>
         <Input
@@ -150,7 +150,7 @@ const EvidenceForm = ({ onAddEvidence, isUploading, setIsUploading }: EvidenceFo
           value={hours}
           onChange={(e) => setHours(e.target.value)}
         />
-        <p className="text-[11px] text-white/55">
+        <p className="text-[11px] text-white">
           This will be added to your off-the-job training hours total
         </p>
       </div>

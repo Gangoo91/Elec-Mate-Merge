@@ -27,7 +27,7 @@ const ExamHeader: React.FC<ExamHeaderProps> = ({
   return (
     <div className="space-y-3">
       <div className="flex items-baseline justify-between gap-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Question {currentQuestionIndex + 1} of {totalQuestions}
         </span>
         <span className="font-mono text-[13px] text-white">{formatTime(timeRemaining)}</span>

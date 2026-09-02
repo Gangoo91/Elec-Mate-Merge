@@ -28,6 +28,7 @@ import { itemVariants } from '@/components/college/primitives';
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 interface MonthlyPeriod {
   month: string;
@@ -377,7 +378,7 @@ export default function Year3() {
             <div className="h-2 w-12 sm:w-16 rounded-full bg-elec-yellow" />
             <div className="h-2 w-12 sm:w-16 rounded-full bg-elec-yellow" />
             <div className="h-2 w-12 sm:w-16 rounded-full bg-white/[0.08]" />
-            <span className="text-[11px] uppercase tracking-[0.18em] text-white/55 ml-2">
+            <span className="text-[11px] uppercase tracking-[0.18em] text-white ml-2">
               Year 3 of 4
             </span>
           </div>
@@ -401,17 +402,17 @@ export default function Year3() {
             title="Your value compounds yearly"
             meta="The biggest jump is often Year 3 → Year 4"
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
+          <div className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
               <StatCell label="Year 1" value="£16.5k" mono />
               <StatCell label="Year 2" value="£20k" mono />
-              <div className="rounded-xl border border-elec-yellow/30 bg-elec-yellow/[0.06] p-3 sm:p-4 space-y-0.5">
+              <div className="rounded-xl border border-elec-yellow/30 bg-white/[0.05] p-3 sm:p-4 space-y-0.5">
                 <Eyebrow className="text-[9.5px] text-elec-yellow/85">Year 3</Eyebrow>
                 <p className="text-[14px] sm:text-[15px] font-mono font-semibold tabular-nums text-elec-yellow">
                   £26k
                 </p>
               </div>
-              <div className="rounded-xl border border-elec-yellow/30 bg-elec-yellow/[0.06] p-3 sm:p-4 space-y-0.5">
+              <div className="rounded-xl border border-elec-yellow/30 bg-white/[0.05] p-3 sm:p-4 space-y-0.5">
                 <Eyebrow className="text-[9.5px] text-elec-yellow/85">Uplift</Eyebrow>
                 <p className="text-[14px] sm:text-[15px] font-mono font-semibold tabular-nums text-elec-yellow">
                   +30%
@@ -428,19 +429,24 @@ export default function Year3() {
             title="The AM2S — one integrated assessment"
             meta="A single practical assessment via NET — start preparing now, not in Year 4"
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+          <div
+            className={cn(
+              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
+              CARD_SURFACE
+            )}
+          >
             <div className="flex items-start gap-2 flex-wrap">
-              <span className="inline-flex items-center h-6 px-2 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[10.5px] uppercase tracking-[0.14em] text-elec-yellow">
+              <span className="inline-flex items-center h-6 px-2 rounded-md border border-elec-yellow/30 bg-white/[0.05] text-[10.5px] uppercase tracking-[0.14em] text-elec-yellow">
                 ~16–18 hours
               </span>
-              <span className="inline-flex items-center h-6 px-2 rounded-md border border-white/[0.10] bg-white/[0.03] text-[10.5px] uppercase tracking-[0.14em] text-white/85">
+              <span className="inline-flex items-center h-6 px-2 rounded-md border border-white/[0.10] bg-white/[0.03] text-[10.5px] uppercase tracking-[0.14em] text-white">
                 ~2.5 days
               </span>
-              <span className="inline-flex items-center h-6 px-2 rounded-md border border-white/[0.10] bg-white/[0.03] text-[10.5px] uppercase tracking-[0.14em] text-white/85">
+              <span className="inline-flex items-center h-6 px-2 rounded-md border border-white/[0.10] bg-white/[0.03] text-[10.5px] uppercase tracking-[0.14em] text-white">
                 Fail / Pass / Distinction
               </span>
             </div>
-            <p className="text-[13px] text-white/85 leading-relaxed">
+            <p className="text-[13px] text-white leading-relaxed">
               The AM2S is a single integrated practical assessment run by NET, worked through in
               equipped assessment booths. There is no separate professional discussion — the
               applied-knowledge element is sat as an embedded online multiple-choice test (Section
@@ -453,7 +459,10 @@ export default function Year3() {
               return (
                 <li
                   key={s.section}
-                  className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2"
+                  className={cn(
+                    'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-2',
+                    CARD_SURFACE
+                  )}
                 >
                   <div className="flex items-center gap-2 min-w-0">
                     <Icon className="h-4 w-4 text-elec-yellow flex-shrink-0" />
@@ -461,18 +470,23 @@ export default function Year3() {
                       {s.section}
                     </h3>
                   </div>
-                  <p className="text-[12.5px] text-white/85 leading-relaxed">{s.description}</p>
+                  <p className="text-[12.5px] text-white leading-relaxed">{s.description}</p>
                 </li>
               );
             })}
           </ul>
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2">
+          <div
+            className={cn(
+              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-2',
+              CARD_SURFACE
+            )}
+          >
             <Eyebrow className="text-elec-yellow/85">How to prepare</Eyebrow>
             <ul className="space-y-1.5">
               {epaPrepTips.map((tip) => (
                 <li
                   key={tip}
-                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                 >
                   <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                   <span>{tip}</span>
@@ -499,8 +513,8 @@ export default function Year3() {
                   className={cn(
                     'rounded-xl border overflow-hidden transition-colors',
                     isExpanded
-                      ? 'border-elec-yellow/25 bg-elec-yellow/[0.04]'
-                      : 'border-white/[0.06] bg-[hsl(0_0%_10%)]'
+                      ? 'border-elec-yellow/25 bg-white/[0.05]'
+                      : 'border-white/[0.12] bg-white/[0.06]'
                   )}
                 >
                   <button
@@ -511,7 +525,7 @@ export default function Year3() {
                       <Icon
                         className={cn(
                           'h-4 w-4 flex-shrink-0 mt-0.5',
-                          isExpanded ? 'text-elec-yellow' : 'text-white/55'
+                          isExpanded ? 'text-elec-yellow' : 'text-white'
                         )}
                       />
                       <div className="flex-1 min-w-0 space-y-1">
@@ -519,15 +533,15 @@ export default function Year3() {
                           <h3 className="text-[14px] font-semibold text-white leading-snug">
                             {period.title}
                           </h3>
-                          <span className="text-[10.5px] font-mono uppercase tracking-[0.14em] text-white/55">
+                          <span className="text-[10.5px] font-mono uppercase tracking-[0.14em] text-white">
                             {period.month}
                           </span>
                         </div>
-                        <p className="text-[12px] text-white/70 leading-snug">{period.focus}</p>
+                        <p className="text-[12px] text-white leading-snug">{period.focus}</p>
                       </div>
                       <ChevronDown
                         className={cn(
-                          'h-4 w-4 text-white/40 flex-shrink-0 transition-transform mt-0.5',
+                          'h-4 w-4 text-white flex-shrink-0 transition-transform mt-0.5',
                           isExpanded && 'rotate-180'
                         )}
                       />
@@ -536,14 +550,14 @@ export default function Year3() {
                   {isExpanded && (
                     <div className="px-4 sm:px-5 pb-4 sm:pb-5 border-t border-elec-yellow/15 pt-3 animate-fade-in">
                       <div className="pl-7 space-y-3">
-                        <p className="text-[12.5px] text-white/85 italic leading-relaxed">
+                        <p className="text-[12.5px] text-white italic leading-relaxed">
                           "{period.dayInLife}"
                         </p>
                         <ul className="space-y-1.5">
                           {period.activities.map((activity, idx) => (
                             <li
                               key={idx}
-                              className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                              className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                             >
                               <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                               <span>{activity}</span>
@@ -572,7 +586,10 @@ export default function Year3() {
               return (
                 <li
                   key={area.title}
-                  className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3"
+                  className={cn(
+                    'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
+                    CARD_SURFACE
+                  )}
                 >
                   <div className="flex items-center gap-2 min-w-0">
                     <Icon className="h-4 w-4 text-elec-yellow flex-shrink-0" />
@@ -584,7 +601,7 @@ export default function Year3() {
                     {area.topics.map((topic) => (
                       <li
                         key={topic}
-                        className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                        className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                       >
                         <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                         <span>{topic}</span>
@@ -610,7 +627,10 @@ export default function Year3() {
               return (
                 <li
                   key={opp.opportunity}
-                  className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3"
+                  className={cn(
+                    'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
+                    CARD_SURFACE
+                  )}
                 >
                   <div className="flex items-center gap-2">
                     <Icon className="h-4 w-4 text-elec-yellow flex-shrink-0" />
@@ -618,14 +638,14 @@ export default function Year3() {
                       {opp.opportunity}
                     </h3>
                   </div>
-                  <p className="text-[13px] text-white/85 leading-relaxed">{opp.description}</p>
+                  <p className="text-[13px] text-white leading-relaxed">{opp.description}</p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 pt-2 border-t border-white/[0.04]">
                     <div className="space-y-1.5">
                       <Eyebrow>What you get</Eyebrow>
                       {opp.benefits.map((b) => (
                         <p
                           key={b}
-                          className="flex items-start gap-2 text-[12px] text-white/85 leading-relaxed"
+                          className="flex items-start gap-2 text-[12px] text-white leading-relaxed"
                         >
                           <CheckCircle2 className="h-3 w-3 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                           <span>{b}</span>
@@ -637,7 +657,7 @@ export default function Year3() {
                       {opp.responsibilities.map((r) => (
                         <p
                           key={r}
-                          className="flex items-start gap-2 text-[12px] text-white/85 leading-relaxed"
+                          className="flex items-start gap-2 text-[12px] text-white leading-relaxed"
                         >
                           <Target className="h-3 w-3 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                           <span>{r}</span>
@@ -658,7 +678,12 @@ export default function Year3() {
             title="What your schedule might look like"
             meta="More leadership, more diagnostics, more independence"
           />
-          <ul className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] divide-y divide-white/[0.04] overflow-hidden">
+          <ul
+            className={cn(
+              'rounded-2xl border border-elec-yellow/35 divide-y divide-white/[0.04] overflow-hidden',
+              CARD_SURFACE
+            )}
+          >
             {weeklyScheduleExample.map(({ day, location, activities }) => (
               <li key={day} className="flex items-center gap-2.5 sm:gap-4 p-3.5 sm:p-4">
                 <span className="w-14 sm:w-20 shrink-0 text-[12.5px] font-medium text-white">
@@ -668,13 +693,13 @@ export default function Year3() {
                   className={cn(
                     'inline-flex items-center justify-center h-6 px-2 rounded-md border text-[10px] font-medium uppercase tracking-[0.14em] flex-shrink-0 w-14 sm:w-16',
                     location === 'College'
-                      ? 'border-elec-yellow/30 bg-elec-yellow/[0.06] text-elec-yellow'
-                      : 'border-white/[0.10] bg-white/[0.03] text-white/85'
+                      ? 'border-elec-yellow/30 bg-white/[0.05] text-elec-yellow'
+                      : 'border-white/[0.10] bg-white/[0.03] text-white'
                   )}
                 >
                   {location}
                 </span>
-                <span className="text-[12.5px] text-white/85 flex-1 min-w-0 leading-snug">
+                <span className="text-[12.5px] text-white flex-1 min-w-0 leading-snug">
                   {activities}
                 </span>
               </li>
@@ -699,8 +724,8 @@ export default function Year3() {
                   className={cn(
                     'rounded-xl border overflow-hidden transition-colors',
                     isExpanded
-                      ? 'border-elec-yellow/25 bg-elec-yellow/[0.04]'
-                      : 'border-white/[0.06] bg-[hsl(0_0%_10%)]'
+                      ? 'border-elec-yellow/25 bg-white/[0.05]'
+                      : 'border-white/[0.12] bg-white/[0.06]'
                   )}
                 >
                   <button
@@ -711,20 +736,18 @@ export default function Year3() {
                       <Icon
                         className={cn(
                           'h-4 w-4 flex-shrink-0 mt-0.5',
-                          isExpanded ? 'text-elec-yellow' : 'text-white/55'
+                          isExpanded ? 'text-elec-yellow' : 'text-white'
                         )}
                       />
                       <div className="flex-1 min-w-0 space-y-1">
                         <h3 className="text-[14px] font-semibold text-white leading-snug">
                           {item.challenge}
                         </h3>
-                        <p className="text-[12.5px] text-white/70 leading-snug">
-                          {item.description}
-                        </p>
+                        <p className="text-[12.5px] text-white leading-snug">{item.description}</p>
                       </div>
                       <ChevronDown
                         className={cn(
-                          'h-4 w-4 text-white/40 flex-shrink-0 transition-transform mt-0.5',
+                          'h-4 w-4 text-white flex-shrink-0 transition-transform mt-0.5',
                           isExpanded && 'rotate-180'
                         )}
                       />
@@ -738,7 +761,7 @@ export default function Year3() {
                           {item.solutions.map((solution, idx) => (
                             <li
                               key={idx}
-                              className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                              className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                             >
                               <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                               <span>{solution}</span>
@@ -756,9 +779,9 @@ export default function Year3() {
 
         {/* ── Closer ───────────────────────────────────────────────── */}
         <motion.section variants={itemVariants}>
-          <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-1.5">
+          <div className="rounded-xl border border-elec-yellow/25 bg-white/[0.05] p-4 sm:p-5 space-y-1.5">
             <Eyebrow className="text-elec-yellow/85">End of Year 3</Eyebrow>
-            <p className="text-[13.5px] text-white/85 leading-relaxed">
+            <p className="text-[13.5px] text-white leading-relaxed">
               By the end of Year 3 you should be{' '}
               <span className="font-semibold text-elec-yellow">commercially competent</span>,
               mentoring junior apprentices with confidence, your portfolio substantially complete,
@@ -786,7 +809,12 @@ function StatCell({
   highlight?: boolean;
 }) {
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-3 sm:p-4 space-y-0.5">
+    <div
+      className={cn(
+        'rounded-2xl border border-elec-yellow/35 p-3 sm:p-4 space-y-0.5',
+        CARD_SURFACE
+      )}
+    >
       <Eyebrow className="text-[9.5px]">{label}</Eyebrow>
       <p
         className={cn(

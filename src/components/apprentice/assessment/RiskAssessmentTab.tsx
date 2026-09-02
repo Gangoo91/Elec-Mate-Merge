@@ -110,13 +110,13 @@ const RiskAssessmentTab = () => {
   return (
     <div className="space-y-5 animate-fade-in">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Risk assessment tools
         </span>
         <h2 className="text-[20px] sm:text-[24px] font-semibold tracking-tight text-white leading-tight">
           HSE guidelines & BS EN ISO 31000 compliant
         </h2>
-        <p className="text-[14px] text-white/70 leading-relaxed max-w-2xl">
+        <p className="text-[14px] text-white leading-relaxed max-w-2xl">
           Comprehensive risk assessment tools following HSE guidelines and BS EN ISO 31000
           standards. Identify hazards, calculate risk levels, and implement effective control
           measures.
@@ -155,7 +155,7 @@ const RiskAssessmentTab = () => {
 
         <TabsContent value="process" className="space-y-4 mt-5">
           <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Risk assessment process
             </span>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
@@ -170,7 +170,7 @@ const RiskAssessmentTab = () => {
                     </span>
                     <p className="text-[14px] text-white">{step.title}</p>
                   </div>
-                  <p className="text-[13px] text-white/70 leading-relaxed">{step.description}</p>
+                  <p className="text-[13px] text-white leading-relaxed">{step.description}</p>
                 </div>
               ))}
             </div>
@@ -178,14 +178,14 @@ const RiskAssessmentTab = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Legal requirements
               </span>
               <ul className="space-y-1.5">
                 {legalRequirements.map((req, index) => (
                   <li
                     key={index}
-                    className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed"
+                    className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
                   >
                     <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                     <span>{req}</span>
@@ -195,14 +195,14 @@ const RiskAssessmentTab = () => {
             </div>
 
             <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Best practices
               </span>
               <ul className="space-y-1.5">
                 {bestPractices.map((practice, index) => (
                   <li
                     key={index}
-                    className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed"
+                    className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
                   >
                     <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                     <span>{practice}</span>
@@ -221,7 +221,7 @@ const RiskAssessmentTab = () => {
               <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
                 Selected hazard
               </span>
-              <p className="text-[14px] text-white/85 leading-relaxed">{selectedHazard}</p>
+              <p className="text-[14px] text-white leading-relaxed">{selectedHazard}</p>
             </div>
           )}
 
@@ -241,7 +241,7 @@ const RiskAssessmentTab = () => {
           ) : (
             <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-8 text-center space-y-2">
               <p className="text-[16px] font-medium text-white">No assessment data</p>
-              <p className="text-[14px] text-white/70 leading-relaxed">
+              <p className="text-[14px] text-white leading-relaxed">
                 Complete a risk assessment in the Assessment tab to view guidance
               </p>
             </div>

@@ -28,7 +28,7 @@ const SpecialistCompliancePanel = () => (
   <div className="space-y-6">
     <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
       <div className="space-y-1">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Standards
         </span>
         <h3 className="text-[16px] font-semibold text-white leading-tight">
@@ -39,7 +39,7 @@ const SpecialistCompliancePanel = () => (
         {keyStandards.map((standard, index) => (
           <li
             key={index}
-            className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed"
+            className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
           >
             <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
             <span>{standard}</span>
@@ -55,7 +55,7 @@ const SpecialistCompliancePanel = () => (
           className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2"
         >
           <h4 className="text-[14px] font-semibold text-white">{card.title}</h4>
-          <p className="text-[14px] text-white/85 leading-relaxed">{card.body}</p>
+          <p className="text-[14px] text-white leading-relaxed">{card.body}</p>
         </div>
       ))}
     </div>
@@ -64,7 +64,7 @@ const SpecialistCompliancePanel = () => (
       <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
         Specialist installation safety
       </span>
-      <div className="space-y-2 text-[14px] text-white/85 leading-relaxed">
+      <div className="space-y-2 text-[14px] text-white leading-relaxed">
         <p>
           <strong>Competency requirements:</strong> Specialist installations require additional
           training and certification. Ensure you have appropriate qualifications before undertaking

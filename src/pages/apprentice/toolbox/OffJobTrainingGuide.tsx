@@ -1,22 +1,17 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import {
-  PageFrame,
-  PageHero,
-  SectionHeader,
-  itemVariants,
-  type Tone,
-} from '@/components/college/primitives';
-import { HubToolGrid } from '@/components/hub/HubPrimitives';
+import { itemVariants, type Tone } from '@/components/college/primitives';
+import { HubSubPage } from '@/components/hub/HubSubPage';
+import { HubToolGrid, HubSectionHeading } from '@/components/hub/HubPrimitives';
 import {
   OTJ_STANDARDS,
   DEFAULT_OTJ_STANDARD,
   OTJ_HOURS_FLOOR,
   getOtjStandard,
 } from '@/data/otjStandards';
+import { selectTriggerCn } from '@/components/forms/fieldStyles';
+import { cn } from '@/lib/utils';
 
 interface Section {
   number: string;
@@ -106,40 +101,24 @@ const OffJobTrainingGuide = () => {
   const [stdCode, setStdCode] = useState(DEFAULT_OTJ_STANDARD.code);
   const selected = getOtjStandard(stdCode) ?? DEFAULT_OTJ_STANDARD;
   return (
-    <PageFrame className="px-4 sm:px-6 lg:px-8">
+    <HubSubPage
+      title="Off-the-job training"
+      backTo="/apprentice/toolbox"
+      description="Off-the-job training is a legal requirement. Since August 2025 it is a fixed number of hours set by your apprenticeship standard, delivered during paid working time over a provider-agreed timeframe (minimum 8-month practical period). Done right, it's where most of your real progression happens."
+    >
       <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/apprentice/toolbox')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
-        >
-          <ArrowLeft className="mr-2 h-5 w-5" />
-          Back
-        </Button>
-      </motion.div>
-
-      <motion.div variants={itemVariants}>
-        <PageHero
-          eyebrow="Apprentice · OJT"
-          title="Off-the-job training"
-          description="Off-the-job training is a legal requirement. Since August 2025 it is a fixed number of hours set by your apprenticeship standard, delivered during paid working time over a provider-agreed timeframe (minimum 8-month practical period). Done right, it's where most of your real progression happens."
-          tone="yellow"
-        />
-      </motion.div>
-
-      <motion.div variants={itemVariants}>
-        <div className="sm:rounded-xl sm:border sm:border-elec-yellow/20 sm:bg-elec-yellow/[0.04] sm:p-5 space-y-3">
+        <div className="sm:rounded-xl sm:border sm:border-elec-yellow/20 sm:bg-white/[0.05] sm:p-5 space-y-3">
           <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
             Your fixed hours
           </span>
-          <label htmlFor="otj-standard" className="text-[11.5px] text-white/70 block">
+          <label htmlFor="otj-standard" className="text-[11.5px] text-white block">
             Choose your apprenticeship standard to see your target:
           </label>
           <select
             id="otj-standard"
             value={stdCode}
             onChange={(e) => setStdCode(e.target.value)}
-            className="h-11 w-full px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
+            className={cn(selectTriggerCn, 'w-full [color-scheme:dark]')}
           >
             {OTJ_STANDARDS.map((s) => (
               <option key={s.code} value={s.code}>
@@ -151,9 +130,9 @@ const OffJobTrainingGuide = () => {
             <span className="text-3xl font-semibold tabular-nums text-elec-yellow leading-none">
               {selected.otjHours.toLocaleString()}
             </span>
-            <span className="text-[13px] text-white/85">hours total · {selected.code}</span>
+            <span className="text-[13px] text-white">hours total · {selected.code}</span>
           </div>
-          <p className="text-[13px] text-white/85 leading-relaxed">
+          <p className="text-[13px] text-white leading-relaxed">
             That is the total set in your training plan — not a weekly percentage. Over a typical
             programme it averages roughly 5-6 hours a week, commonly delivered as one college day a
             week or block release. The legal test is the total fixed hours, with an absolute floor
@@ -163,7 +142,7 @@ const OffJobTrainingGuide = () => {
       </motion.div>
 
       <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
-        <SectionHeader eyebrow="Sections" title="Seven chapters" />
+        <HubSectionHeading>Seven chapters</HubSectionHeading>
         <HubToolGrid
           label=""
           columns="three"
@@ -177,7 +156,7 @@ const OffJobTrainingGuide = () => {
           }))}
         />
       </motion.section>
-    </PageFrame>
+    </HubSubPage>
   );
 };
 

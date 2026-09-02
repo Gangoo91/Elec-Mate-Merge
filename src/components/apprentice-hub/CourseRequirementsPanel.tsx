@@ -26,10 +26,7 @@ export function CourseRequirementsPanel({ onChangeCourse }: CourseRequirementsPa
   const [requirementsOpen, setRequirementsOpen] = useState(false);
   const { qualificationName, qualificationCode, isLoading } = useStudentQualification();
   const { entries: portfolioEntries } = usePortfolioData();
-  const evidencedACs = useMemo(
-    () => parseEvidencedACs(portfolioEntries || []),
-    [portfolioEntries]
-  );
+  const evidencedACs = useMemo(() => parseEvidencedACs(portfolioEntries || []), [portfolioEntries]);
 
   if (isLoading) {
     return (
@@ -108,7 +105,8 @@ export function CourseRequirementsPanel({ onChangeCourse }: CourseRequirementsPa
               </p>
             </div>
             <div
-              className={cn('w-8 h-8 rounded-full bg-white/5 flex items-center justify-center transition-transform flex-shrink-0',
+              className={cn(
+                'w-8 h-8 rounded-full bg-white/5 flex items-center justify-center transition-transform flex-shrink-0',
                 expanded && 'rotate-180'
               )}
             >
@@ -127,7 +125,7 @@ export function CourseRequirementsPanel({ onChangeCourse }: CourseRequirementsPa
 
             <button
               onClick={() => setRequirementsOpen(true)}
-              className="w-full flex items-center justify-center gap-2 h-12 rounded-xl bg-elec-yellow/10 border border-elec-yellow/25 text-elec-yellow text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all"
+              className="w-full flex items-center justify-center gap-2 h-12 rounded-xl bg-white/[0.06] border border-elec-yellow/25 text-elec-yellow text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all"
             >
               <BookOpen className="h-4 w-4" />
               View Full Requirements

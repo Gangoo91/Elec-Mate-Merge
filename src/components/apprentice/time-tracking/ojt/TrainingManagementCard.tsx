@@ -50,7 +50,7 @@ const TrainingManagementCard = ({
   };
 
   const Legend = () => (
-    <div className="flex flex-wrap items-center gap-3 text-[11px] text-white/55">
+    <div className="flex flex-wrap items-center gap-3 text-[11px] text-white">
       <div className="flex items-center gap-1.5">
         <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full"></div>
         <span>Automatic</span>
@@ -73,16 +73,14 @@ const TrainingManagementCard = ({
         className
       )}
     >
-      <div
-        className={`flex items-start ${isMobile ? 'flex-col gap-2' : 'justify-between gap-4'}`}
-      >
+      <div className={`flex items-start ${isMobile ? 'flex-col gap-2' : 'justify-between gap-4'}`}>
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Off-the-job training logger
           </span>
           {isMobile && (
-            <p className="text-[13px] text-white/70 leading-relaxed">
-              Track your 20% off-the-job training time
+            <p className="text-[13px] text-white leading-relaxed">
+              Track your off-the-job training hours
             </p>
           )}
         </div>
@@ -111,10 +109,7 @@ const TrainingManagementCard = ({
                 <DropdownMenuItem onClick={() => setActiveTab('auto')} className="justify-center">
                   Auto-track
                 </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => setActiveTab('recent')}
-                  className="justify-center"
-                >
+                <DropdownMenuItem onClick={() => setActiveTab('recent')} className="justify-center">
                   Recent
                 </DropdownMenuItem>
                 <DropdownMenuItem
@@ -123,10 +118,7 @@ const TrainingManagementCard = ({
                 >
                   Logbook
                 </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => setActiveTab('weekly')}
-                  className="justify-center"
-                >
+                <DropdownMenuItem onClick={() => setActiveTab('weekly')} className="justify-center">
                   Weekly
                 </DropdownMenuItem>
                 <DropdownMenuItem
@@ -195,10 +187,10 @@ const TrainingManagementCard = ({
       {isMobile && (
         <div className="flex items-center justify-between mt-2 pt-3 border-t border-white/[0.06]">
           <div className="flex items-center gap-2">
-            <Clock className="h-4 w-4 text-white/55" />
+            <Clock className="h-4 w-4 text-white" />
             <span className="text-2xl font-mono text-white">4h 3m</span>
           </div>
-          <span className="text-[11px] text-white/55">Total logged time</span>
+          <span className="text-[11px] text-white">Total logged time</span>
         </div>
       )}
     </div>

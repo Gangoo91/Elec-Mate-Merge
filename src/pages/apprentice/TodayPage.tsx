@@ -29,8 +29,8 @@ import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
-  ArrowLeft,
   ArrowRight,
+  ChevronRight,
   BookOpen,
   Camera,
   Clock,
@@ -57,6 +57,10 @@ import { useWeeklyRecap } from '@/hooks/useWeeklyRecap';
 import { WeeklyRecapSheet } from '@/components/apprentice-hub/WeeklyRecapSheet';
 import { getCount as getMissedCount } from '@/lib/missedQuestions';
 import { cn } from '@/lib/utils';
+import { HubSubPage } from '@/components/hub/HubSubPage';
+import { HubKpi, HubKpiRow, HubQuickStart, HubWorkList } from '@/components/hub/HubPrimitives';
+import { CARD_BASE, CARD_NEUTRAL, CARD_SURFACE } from '@/components/ui/card-recipe';
+import { buttonPrimaryCn } from '@/components/forms/fieldStyles';
 
 const partOfDay = (): string => {
   const h = new Date().getHours();
@@ -326,16 +330,21 @@ export default function TodayPage() {
   const quickActions = [
     {
       label: 'Log hours',
+      description: 'Add today’s off-the-job time',
       icon: Clock,
       onClick: () => navigate('/apprentice/ojt-hub'),
     },
     {
       label: 'Capture evidence',
+      description: 'Photo or file straight into your portfolio',
       icon: Camera,
       onClick: () => window.dispatchEvent(new CustomEvent('elecmate:open-capture')),
     },
     {
       label: 'Continue course',
+      description: lastLocation?.title
+        ? `Back to ${lastLocation.title}`
+        : 'Pick up where you left off',
       icon: BookOpen,
       onClick: () => navigate(continuePath),
     },
@@ -344,6 +353,7 @@ export default function TodayPage() {
     missedCount > 0
       ? {
           label: 'Quick revision',
+          description: `Drill the ${missedCount} you’ve missed`,
           icon: ClipboardList,
           // Pass the origin so the session's Back returns here rather than
           // to a hardcoded default.
@@ -354,362 +364,293 @@ export default function TodayPage() {
         }
       : {
           label: 'Quick quiz',
+          description: 'Ten questions, five minutes',
           icon: ClipboardList,
           onClick: () => navigate(hasCollegeLink ? '/apprentice/college-plan' : '/study-centre'),
         },
   ];
 
+  // Why each plate item is on the list — HubWorkList wants a reason, not a
+  // restatement of the title.
+  const PLATE_REASON: Record<string, string> = {
+    overdue: 'Past the date your tutor set',
+    newquiz: 'Set by your tutor, not started yet',
+    feedback: 'Unread comments on your evidence',
+    signoff: 'Waiting on a supervisor signature',
+    hours: 'Behind this week’s off-the-job pace',
+    revision: 'Questions you got wrong last time',
+  };
+
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      {/* House masthead — Today is the tab-bar home, but the rest of the
-          apprentice world lives off /apprentice; without this there was no
-          route back to the dashboard. */}
-      <div className="sticky top-0 z-50 bg-elec-dark/95 backdrop-blur-sm border-b border-white/[0.08]">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center h-14 gap-3">
-            <button
-              type="button"
-              onClick={() => navigate('/apprentice')}
-              className="-ml-1 flex h-11 shrink-0 items-center gap-1.5 rounded-full border border-white/[0.12] bg-white/[0.06] pl-2.5 pr-4 text-[13px] font-medium text-white transition-colors hover:bg-white/[0.1] touch-manipulation"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Apprentice Hub
-            </button>
-            <span className="min-w-0 flex-1 truncate text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
-              Today
-            </span>
-          </div>
-        </div>
-      </div>
-      <motion.div
-        initial={{ opacity: 0, y: 4 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.18 }}
-        className="mx-auto max-w-6xl space-y-6 px-4 pb-28 pt-6 sm:px-6 lg:px-8"
+    <HubSubPage title="Today" backTo="/apprentice">
+      {/* 1 · Greeting — the one editorial line the daily front door keeps */}
+      <header className="space-y-1">
+        <p className="text-[13px] text-white">{eyebrow}</p>
+        <h1 className="text-[22px] font-semibold tracking-tight leading-tight text-white sm:text-[26px]">
+          {salutation}, {apprentice.firstName}
+        </h1>
+      </header>
+
+      {/* 2 · WHAT'S NEXT — the one thing to do, so it keeps the full width.
+          On a wide screen the copy and the action sit side by side rather
+          than the button stretching to 1100px, which read as a banner. */}
+      <section
+        className={cn('rounded-2xl border border-elec-yellow/35 p-5 sm:p-6', CARD_SURFACE)}
+        aria-label="What's next"
       >
-        {/* 1 · Greeting */}
-        <header className="space-y-1">
-          <p className="text-[13px] text-white">{eyebrow}</p>
-          <h1 className="text-[24px] font-semibold tracking-tight leading-tight sm:text-[30px]">
-            {salutation}, {apprentice.firstName}
-          </h1>
-        </header>
-
-        {/* 2 · WHAT'S NEXT — the one thing to do, so it keeps the full width.
-            On a wide screen the copy and the action sit side by side rather
-            than the button stretching to 1100px, which read as a banner. */}
-        <section
-          className="relative bg-[hsl(0_0%_10%)] border border-white/[0.08] rounded-2xl overflow-hidden"
-          aria-label="What's next"
-        >
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none" />
-          <div className="p-5 sm:p-6">
-            <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
-              What's next
-            </span>
-            {heroLoading ? (
-              <div className="mt-3 space-y-3" aria-hidden>
-                <div className="h-6 w-3/4 rounded bg-white/[0.06] animate-pulse" />
-                <div className="h-4 w-1/2 rounded bg-white/[0.05] animate-pulse" />
-                <div className="h-11 w-full rounded-xl bg-white/[0.04] animate-pulse" />
-              </div>
-            ) : (
-              <div className="mt-3 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between lg:gap-8">
-                <div className="min-w-0 space-y-2">
-                  <h2 className="text-[20px] font-semibold tracking-tight leading-snug text-white sm:text-[24px]">
-                    {nextUp.title}
-                  </h2>
-                  <p className="max-w-[60ch] text-[13.5px] leading-relaxed text-white">
-                    {nextUp.verdict}
-                  </p>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => navigate(nextUp.to)}
-                  className="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-xl bg-elec-yellow px-6 text-[13.5px] font-semibold text-black transition-transform active:scale-[0.98] touch-manipulation lg:h-12"
-                >
-                  {nextUp.ctaLabel}
-                  <ArrowRight className="h-4 w-4" />
-                </button>
-              </div>
-            )}
+        <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
+          What's next
+        </span>
+        {heroLoading ? (
+          <div className="mt-3 space-y-3" aria-hidden>
+            <div className="h-6 w-3/4 animate-pulse rounded bg-white/[0.06]" />
+            <div className="h-4 w-1/2 animate-pulse rounded bg-white/[0.05]" />
+            <div className="h-11 w-full animate-pulse rounded-xl bg-white/[0.04]" />
           </div>
-        </section>
-
-        {/* 2b · AM2 milestone — countdown + readiness (only when relevant) */}
-        {am2Visible && (
-          <section aria-label="AM2 readiness">
+        ) : (
+          <div className="mt-3 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between lg:gap-8">
+            <div className="min-w-0 space-y-2">
+              <h2 className="text-[20px] font-semibold leading-snug tracking-tight text-white sm:text-[24px]">
+                {nextUp.title}
+              </h2>
+              <p className="max-w-[60ch] text-[13.5px] leading-relaxed text-white">
+                {nextUp.verdict}
+              </p>
+            </div>
             <button
               type="button"
-              onClick={() => navigate('/apprentice/am2-simulator')}
+              onClick={() => navigate(nextUp.to)}
               className={cn(
-                'group relative w-full text-left bg-[hsl(0_0%_10%)] border rounded-2xl overflow-hidden p-4 touch-manipulation transition-colors',
-                am2Urgent
-                  ? 'border-red-400/25 hover:bg-red-500/[0.04]'
-                  : 'border-white/[0.08] hover:bg-elec-yellow/[0.03]'
+                buttonPrimaryCn,
+                'inline-flex shrink-0 items-center justify-center gap-2 px-6 lg:h-12'
               )}
             >
-              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent pointer-events-none" />
-              <div className="flex items-center gap-4">
-                <div className="flex-1 min-w-0">
-                  <span
-                    className={cn(
-                      'text-[10px] font-medium uppercase tracking-[0.18em]',
-                      am2Urgent ? 'text-red-300/80' : 'text-elec-yellow/80'
-                    )}
-                  >
-                    {am2Counting ? 'Your AM2' : 'AM2 practical'}
-                  </span>
-                  {am2Counting ? (
-                    <div className="mt-1 flex items-baseline gap-1.5">
-                      <span className="text-[22px] font-semibold tracking-tight tabular-nums text-white">
-                        {am2DayLabel}
-                      </span>
-                      <span className="text-[12.5px] text-white">to go</span>
-                    </div>
-                  ) : (
-                    <div className="mt-1 text-[15px] font-semibold text-white">
-                      Keep your match fitness up
-                    </div>
-                  )}
-                  {am2.score !== null ? (
-                    <p className="mt-1 text-[12px] text-white">
-                      Readiness{' '}
-                      <span className="text-white font-medium tabular-nums">{am2.score}%</span> ·{' '}
-                      {am2.sessionsCount} timed run{am2.sessionsCount === 1 ? '' : 's'}
-                    </p>
-                  ) : (
-                    <p className="mt-1 text-[12px] text-white">
-                      Take your first timed run to see your readiness
-                    </p>
-                  )}
-                </div>
-                {am2.score !== null && (
-                  <div
-                    className={cn(
-                      'shrink-0 flex flex-col items-center justify-center h-12 w-12 rounded-xl border',
-                      am2Urgent
-                        ? 'border-red-400/30 bg-red-500/10'
-                        : 'border-elec-yellow/25 bg-elec-yellow/[0.07]'
-                    )}
-                  >
-                    <span
-                      className={cn(
-                        'text-[15px] font-semibold leading-none tabular-nums',
-                        am2Urgent ? 'text-red-200' : 'text-elec-yellow'
-                      )}
-                    >
-                      {am2.score}
-                    </span>
-                    <span className="text-[8px] uppercase tracking-wider text-white mt-0.5">
-                      ready
-                    </span>
-                  </div>
+              {nextUp.ctaLabel}
+              <ArrowRight className="h-4 w-4" />
+            </button>
+          </div>
+        )}
+      </section>
+
+      {/* 2b · AM2 milestone — countdown + readiness (only when relevant).
+          Red is reserved for a date that is genuinely close; otherwise the
+          card sits in the same neutral surface as everything else. */}
+      {am2Visible && (
+        <section aria-label="AM2 readiness">
+          <button
+            type="button"
+            onClick={() => navigate('/apprentice/am2-simulator')}
+            className={cn(
+              CARD_BASE,
+              CARD_NEUTRAL,
+              'w-full flex-row items-center gap-4 p-4',
+              am2Urgent && 'border-red-400/40 hover:border-red-400/60'
+            )}
+          >
+            <div className="min-w-0 flex-1">
+              <span
+                className={cn(
+                  'text-[10px] font-medium uppercase tracking-[0.18em]',
+                  am2Urgent ? 'text-red-300' : 'text-elec-yellow'
                 )}
-                <ArrowRight
-                  className={cn(
-                    'h-4 w-4 shrink-0 transition-all group-hover:translate-x-0.5',
-                    am2Urgent ? 'text-red-300' : 'text-white group-hover:text-elec-yellow'
-                  )}
-                />
-              </div>
+              >
+                {am2Counting ? 'Your AM2' : 'AM2 practical'}
+              </span>
+              {am2Counting ? (
+                <div className="mt-1 flex items-baseline gap-1.5">
+                  <span className="text-[22px] font-semibold tabular-nums tracking-tight text-white">
+                    {am2DayLabel}
+                  </span>
+                  <span className="text-[12.5px] text-white">to go</span>
+                </div>
+              ) : (
+                <div className="mt-1 text-[15px] font-semibold text-white">
+                  Keep your match fitness up
+                </div>
+              )}
+              {am2.score !== null ? (
+                <p className="mt-1 text-[12px] text-white">
+                  Readiness{' '}
+                  <span className="font-medium tabular-nums text-white">{am2.score}%</span> ·{' '}
+                  {am2.sessionsCount} timed run{am2.sessionsCount === 1 ? '' : 's'}
+                </p>
+              ) : (
+                <p className="mt-1 text-[12px] text-white">
+                  Take your first timed run to see your readiness
+                </p>
+              )}
               {am2.score !== null && (
-                <div className="mt-3 h-1 rounded-full bg-white/[0.06] overflow-hidden">
+                <div className="mt-3 h-1 overflow-hidden rounded-full bg-white/[0.08]">
                   <div
                     className={cn(
                       'h-full rounded-full',
-                      am2Urgent ? 'bg-red-400/70' : 'bg-elec-yellow/70'
+                      am2Urgent ? 'bg-red-400' : 'bg-elec-yellow'
                     )}
                     style={{ width: `${am2.score}%` }}
                   />
                 </div>
               )}
-            </button>
-          </section>
-        )}
-
-        {/* 3 · Stat strip */}
-        <section
-          className="grid grid-cols-4 gap-[2px] bg-black border border-white/[0.08] rounded-2xl overflow-hidden"
-          aria-label="Today's stats"
-        >
-          {statCells.map((cell) => (
-            <div
-              key={cell.label}
-              className="bg-[hsl(0_0%_10%)] px-2 py-3.5 flex flex-col items-center justify-center gap-1 text-center"
-            >
-              {isLoading ? (
-                <div className="h-5 w-8 rounded bg-white/[0.06] animate-pulse" aria-hidden />
-              ) : (
-                <span className="text-[18px] font-semibold tabular-nums leading-none text-white">
-                  {cell.value}
-                </span>
-              )}
-              <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-white">
-                {cell.label}
-              </span>
             </div>
-          ))}
-        </section>
-
-        {/* Working grid — today's work on the left, standing context on the
-            right. Stacks on a phone, where the sidebar simply follows. */}
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
-          <div className="min-w-0 space-y-6">
-            {/* 3b · ON YOUR PLATE — the rest of today's open items */}
-            {!heroLoading && plateItems.length > 0 && (
-              <section className="space-y-3" aria-label="On your plate">
-                <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
-                  On your plate
+            {am2.score !== null && (
+              <div
+                className={cn(
+                  'flex h-12 w-12 shrink-0 flex-col items-center justify-center rounded-xl border',
+                  am2Urgent ? 'border-red-400/40' : 'border-elec-yellow/35'
+                )}
+              >
+                <span
+                  className={cn(
+                    'text-[15px] font-semibold leading-none tabular-nums',
+                    am2Urgent ? 'text-red-300' : 'text-elec-yellow'
+                  )}
+                >
+                  {am2.score}
                 </span>
-                <div className="bg-[hsl(0_0%_10%)] border border-white/[0.08] rounded-2xl overflow-hidden divide-y divide-white/[0.05]">
-                  {plateItems.map(({ id, label, icon: Icon, to, count, urgent }) => (
-                    <button
-                      key={id}
-                      type="button"
-                      onClick={() => navigate(to)}
-                      className="group w-full flex items-center gap-3 px-4 py-3 text-left touch-manipulation hover:bg-white/[0.06] transition-colors"
-                    >
-                      <span
-                        className={cn(
-                          'flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border',
-                          urgent
-                            ? 'border-red-400/25 bg-red-500/[0.08]'
-                            : 'border-elec-yellow/20 bg-elec-yellow/[0.06]'
-                        )}
-                      >
-                        <Icon
-                          className={cn('h-4 w-4', urgent ? 'text-red-300' : 'text-elec-yellow')}
-                          strokeWidth={2}
-                        />
-                      </span>
-                      <span className="flex-1 min-w-0 text-[13.5px] font-medium text-white truncate">
-                        {label}
-                      </span>
-                      {count != null && count > 0 && (
-                        <span
-                          className={cn(
-                            'shrink-0 text-[10px] font-semibold tabular-nums px-1.5 py-0.5 rounded border',
-                            urgent
-                              ? 'text-red-300 border-red-400/30 bg-red-500/10'
-                              : 'text-elec-yellow border-elec-yellow/30 bg-elec-yellow/10'
-                          )}
-                        >
-                          {count}
-                        </span>
-                      )}
-                      <ArrowRight className="h-4 w-4 shrink-0 text-white group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all" />
-                    </button>
-                  ))}
-                </div>
-              </section>
-            )}
-
-            {/* 4 · Quick actions */}
-            <section className="space-y-3" aria-label="Quick actions">
-              <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
-                Quick actions
-              </span>
-              {/* Four across once there's room — two-up in a wide column made each
-              tile 500px of empty space around a 20px icon. */}
-              <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-                {quickActions.map(({ label, icon: Icon, onClick }) => (
-                  <button
-                    key={label}
-                    type="button"
-                    onClick={onClick}
-                    className={cn(
-                      'h-[84px] rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_10%)]',
-                      'flex flex-col items-center justify-center gap-2 touch-manipulation',
-                      'hover:bg-[hsl(0_0%_15%)] active:scale-[0.98] transition-all'
-                    )}
-                  >
-                    <Icon className="h-5 w-5 text-elec-yellow" strokeWidth={2} />
-                    <span className="text-[12.5px] font-medium text-white">{label}</span>
-                  </button>
-                ))}
+                <span className="mt-0.5 text-[8px] uppercase tracking-wider text-white">ready</span>
               </div>
-            </section>
-          </div>
-
-          <aside className="space-y-6 lg:sticky lg:top-20 lg:self-start">
-            {/* 4b · NEXT BADGE — the closest locked achievement, live progress */}
-            {nextBadge && (
-              <section aria-label="Next achievement">
-                <button
-                  type="button"
-                  onClick={() => navigate('/apprentice/hub?tab=progress')}
-                  className="group w-full flex items-center gap-3 rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] px-4 py-3.5 text-left touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors"
-                >
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-elec-yellow/20 bg-elec-yellow/[0.06]">
-                    <Trophy className="h-4 w-4 text-elec-yellow" strokeWidth={2} />
-                  </span>
-                  <span className="flex-1 min-w-0">
-                    <span className="flex items-baseline justify-between gap-2">
-                      <span className="text-[13.5px] font-medium text-white truncate">
-                        {nextBadge.title}
-                      </span>
-                      <span className="text-[11px] font-mono tabular-nums text-white shrink-0">
-                        {nextBadge.current}/{nextBadge.target}
-                      </span>
-                    </span>
-                    <span className="mt-1.5 block h-1 rounded-full bg-white/[0.06] overflow-hidden">
-                      <span
-                        className="block h-full rounded-full bg-elec-yellow transition-all"
-                        style={{ width: `${nextBadge.pct}%` }}
-                      />
-                    </span>
-                  </span>
-                  <ArrowRight className="h-4 w-4 shrink-0 text-white group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all" />
-                </button>
-              </section>
             )}
+            <ChevronRight className="h-4 w-4 shrink-0 text-white" />
+          </button>
+        </section>
+      )}
 
-            {/* 5 · FROM YOUR COLLEGE — college-linked apprentices only */}
-            {hasCollegeLink && (
-              <section aria-label="From your college">
-                <button
-                  type="button"
-                  onClick={() => navigate('/apprentice/college-plan')}
-                  className="group w-full flex items-center gap-3 rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] px-4 py-3.5 text-left touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors"
-                >
-                  <GraduationCap className="h-5 w-5 shrink-0 text-elec-yellow" strokeWidth={2} />
-                  <span className="flex-1 min-w-0">
-                    <span className="block text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white">
-                      From your college
-                    </span>
-                    <span className="block text-[13.5px] font-medium text-white truncate">
-                      Goals &amp; quizzes from your tutor
-                    </span>
-                  </span>
-                  {overdueQuizzes.length > 0 ? (
-                    <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-red-300 border border-red-400/30 bg-red-500/10 px-1.5 py-0.5 rounded shrink-0">
-                      {overdueQuizzes.length} overdue
-                    </span>
-                  ) : newCount > 0 ? (
-                    <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-elec-yellow border border-elec-yellow/30 bg-elec-yellow/10 px-1.5 py-0.5 rounded shrink-0">
-                      {newCount} new
-                    </span>
-                  ) : null}
-                  <ArrowRight className="h-4 w-4 shrink-0 text-white group-hover:translate-x-0.5 transition-transform" />
-                </button>
-              </section>
-            )}
-          </aside>
+      {/* 3 · KPI row — same primitive as the hub landing, so the figures read
+          the same way on both screens. Only the first carries volt. */}
+      <HubKpiRow>
+        <HubKpi
+          label="Streak"
+          value={isLoading ? '—' : `${streak}`}
+          context={streak === 1 ? 'day' : 'days'}
+          accent
+        />
+        <HubKpi
+          label="This week"
+          value={isLoading ? '—' : `${Math.round(thisWeekHours * 10) / 10}h`}
+          context="off-the-job"
+        />
+        <HubKpi label="Course" value={isLoading ? '—' : `${stats.progress.overallPercent}%`} />
+        <HubKpi
+          label="Sign-off"
+          value={isLoading ? '—' : `${stats.portfolio.pendingReview}`}
+          context="waiting"
+        />
+      </HubKpiRow>
+
+      {/* Working grid — today's work on the left, standing context on the
+          right. Stacks on a phone, where the sidebar simply follows. */}
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-8">
+        <div className="min-w-0 space-y-8">
+          {/* 3b · ON YOUR PLATE — the rest of today's open items */}
+          {!heroLoading && plateItems.length > 0 && (
+            <HubWorkList
+              label="On your plate"
+              unit="item"
+              items={plateItems.map(({ id, label, to, count, urgent }) => ({
+                id,
+                title: label,
+                reason: PLATE_REASON[id] ?? '',
+                trailing: count != null && count > 0 ? `${count}` : undefined,
+                urgent,
+                to,
+              }))}
+            />
+          )}
+
+          {/* 4 · Quick actions */}
+          <HubQuickStart
+            label="Quick actions"
+            items={quickActions.map(({ label, description, onClick }, i) => ({
+              title: label,
+              description,
+              onClick,
+              primary: i === 1,
+            }))}
+          />
         </div>
 
-        {/* 6 · Quiet wellbeing footer */}
-        <button
-          type="button"
-          onClick={() => navigate('/apprentice/mental-health')}
-          className="w-full h-11 flex items-center justify-center gap-2 text-[12.5px] text-white hover:text-elec-yellow touch-manipulation transition-colors"
-        >
-          <HeartHandshake className="h-4 w-4" />
-          Struggling or need to talk?
-        </button>
-      </motion.div>
+        <aside className="space-y-6 lg:sticky lg:top-20 lg:self-start">
+          {/* 4b · NEXT BADGE — the closest locked achievement, live progress */}
+          {nextBadge && (
+            <section aria-label="Next achievement">
+              <button
+                type="button"
+                onClick={() => navigate('/apprentice/hub?tab=progress')}
+                className={cn(
+                  CARD_BASE,
+                  CARD_NEUTRAL,
+                  'w-full flex-row items-center gap-3 px-4 py-3.5'
+                )}
+              >
+                <Trophy className="h-5 w-5 shrink-0 text-elec-yellow" strokeWidth={2} />
+                <span className="min-w-0 flex-1">
+                  <span className="flex items-baseline justify-between gap-2">
+                    <span className="truncate text-[13.5px] font-medium text-white">
+                      {nextBadge.title}
+                    </span>
+                    <span className="shrink-0 text-[11px] tabular-nums text-white">
+                      {nextBadge.current}/{nextBadge.target}
+                    </span>
+                  </span>
+                  <span className="mt-1.5 block h-1 overflow-hidden rounded-full bg-white/[0.08]">
+                    <span
+                      className="block h-full rounded-full bg-elec-yellow transition-all"
+                      style={{ width: `${nextBadge.pct}%` }}
+                    />
+                  </span>
+                </span>
+                <ChevronRight className="h-4 w-4 shrink-0 text-white" />
+              </button>
+            </section>
+          )}
+
+          {/* 5 · FROM YOUR COLLEGE — college-linked apprentices only */}
+          {hasCollegeLink && (
+            <section aria-label="From your college">
+              <button
+                type="button"
+                onClick={() => navigate('/apprentice/college-plan')}
+                className={cn(
+                  CARD_BASE,
+                  CARD_NEUTRAL,
+                  'w-full flex-row items-center gap-3 px-4 py-3.5'
+                )}
+              >
+                <GraduationCap className="h-5 w-5 shrink-0 text-elec-yellow" strokeWidth={2} />
+                <span className="min-w-0 flex-1">
+                  <span className="block text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                    From your college
+                  </span>
+                  <span className="block truncate text-[13.5px] font-medium text-white">
+                    Goals &amp; quizzes from your tutor
+                  </span>
+                </span>
+                {overdueQuizzes.length > 0 ? (
+                  <span className="shrink-0 text-[12px] font-semibold tabular-nums text-red-300">
+                    {overdueQuizzes.length} overdue
+                  </span>
+                ) : newCount > 0 ? (
+                  <span className="shrink-0 text-[12px] font-semibold tabular-nums text-elec-yellow">
+                    {newCount} new
+                  </span>
+                ) : null}
+                <ChevronRight className="h-4 w-4 shrink-0 text-white" />
+              </button>
+            </section>
+          )}
+        </aside>
+      </div>
+
+      {/* 6 · Quiet wellbeing footer */}
+      <button
+        type="button"
+        onClick={() => navigate('/apprentice/mental-health')}
+        className="flex h-11 w-full items-center justify-center gap-2 text-[12.5px] text-white transition-colors hover:text-elec-yellow touch-manipulation"
+      >
+        <HeartHandshake className="h-4 w-4" />
+        Struggling or need to talk?
+      </button>
 
       <WeeklyRecapSheet open={showRecap} onClose={dismissRecap} recap={recap} />
-    </div>
+    </HubSubPage>
   );
 }

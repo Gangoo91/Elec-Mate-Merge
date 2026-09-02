@@ -22,10 +22,10 @@ const SimpleValidationIndicator = ({
   return (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
       <div className="flex items-center justify-between">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Safety validation
         </span>
-        <span className="text-[11px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+        <span className="text-[11px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
           {getStatusText()}
         </span>
       </div>
@@ -33,25 +33,25 @@ const SimpleValidationIndicator = ({
       {/* Safety Factors */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         <div className="text-center space-y-1">
-          <div className="text-[11px] uppercase tracking-[0.18em] text-white/55">Temperature</div>
+          <div className="text-[11px] uppercase tracking-[0.18em] text-white">Temperature</div>
           <div className="text-[14px] font-mono text-white">
             {(validation.safetyFactors.temperatureDerating * 100).toFixed(0)}%
           </div>
         </div>
         <div className="text-center space-y-1">
-          <div className="text-[11px] uppercase tracking-[0.18em] text-white/55">Grouping</div>
+          <div className="text-[11px] uppercase tracking-[0.18em] text-white">Grouping</div>
           <div className="text-[14px] font-mono text-white">
             {(validation.safetyFactors.groupingFactor * 100).toFixed(0)}%
           </div>
         </div>
         <div className="text-center space-y-1">
-          <div className="text-[11px] uppercase tracking-[0.18em] text-white/55">Safety margin</div>
+          <div className="text-[11px] uppercase tracking-[0.18em] text-white">Safety margin</div>
           <div className="text-[14px] font-mono text-white">
             {(validation.safetyFactors.safetyMargin * 100).toFixed(0)}%
           </div>
         </div>
         <div className="text-center space-y-1">
-          <div className="text-[11px] uppercase tracking-[0.18em] text-white/55">BS 7671</div>
+          <div className="text-[11px] uppercase tracking-[0.18em] text-white">BS 7671</div>
           <div className="text-[14px]">
             {validation.complianceChecks.bs7671 ? (
               <CheckCircle className="h-5 w-5 text-elec-yellow mx-auto" />
@@ -72,7 +72,7 @@ const SimpleValidationIndicator = ({
             {validation.criticalAlerts.map((alert, index) => (
               <li
                 key={index}
-                className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                className="text-[13px] text-white leading-relaxed flex items-start gap-2"
               >
                 <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                 <span>{alert}</span>
@@ -92,7 +92,7 @@ const SimpleValidationIndicator = ({
             {validation.errors.map((error, index) => (
               <li
                 key={index}
-                className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                className="text-[13px] text-white leading-relaxed flex items-start gap-2"
               >
                 <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                 <span>{error}</span>
@@ -105,14 +105,14 @@ const SimpleValidationIndicator = ({
       {/* Warnings */}
       {validation.warnings.length > 0 && (
         <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Warnings
           </span>
           <ul className="space-y-1.5">
             {validation.warnings.map((warning, index) => (
               <li
                 key={index}
-                className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                className="text-[13px] text-white leading-relaxed flex items-start gap-2"
               >
                 <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                 <span>{warning}</span>
@@ -126,7 +126,7 @@ const SimpleValidationIndicator = ({
       {validation.isValid &&
         validation.warnings.length === 0 &&
         validation.criticalAlerts.length === 0 && (
-          <p className="text-[13px] text-white/85 leading-relaxed">
+          <p className="text-[13px] text-white leading-relaxed">
             Calculation passed all safety validations. This design meets BS 7671 requirements.
           </p>
         )}

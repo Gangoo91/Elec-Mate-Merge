@@ -36,10 +36,8 @@ import { useStreakInsights } from '@/hooks/apprentice-stats/useStreakInsights';
 import { useSmartRecommendations } from '@/hooks/useSmartRecommendations';
 import { ActivityGrid } from './ActivityGrid';
 import { RecommendationCard, type RecommendationVariant } from './RecommendationCard';
-import {
-  Eyebrow,
-  SectionHeader,
-} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 interface StudyStreakDetailSheetProps {
   open: boolean;
@@ -101,14 +99,13 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
   if (studiedToday) subtitleParts.push('Studied today');
   else if (currentStreak > 0) subtitleParts.push(`Last studied ${lastStudiedText}`);
   else if (lastStudiedText) subtitleParts.push(`Last studied ${lastStudiedText}`);
-  if (longestStreak > currentStreak)
-    subtitleParts.push(`Personal best ${longestStreak}d`);
+  if (longestStreak > currentStreak) subtitleParts.push(`Personal best ${longestStreak}d`);
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side="bottom"
-        className="h-[90vh] sm:h-[85vh] p-0 rounded-t-3xl overflow-hidden bg-[hsl(0_0%_8%)] border-white/[0.06]"
+        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_8%)] border-white/[0.06]"
       >
         <div className="flex flex-col h-full">
           <SheetHeader className="flex-shrink-0 relative">
@@ -121,7 +118,7 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
               className="absolute right-2 top-2 h-11 w-11 flex items-center justify-center rounded-full active:bg-white/10 touch-manipulation z-10"
               aria-label="Close"
             >
-              <X className="h-5 w-5 text-white/70" />
+              <X className="h-5 w-5 text-white" />
             </button>
           </SheetHeader>
 
@@ -147,13 +144,13 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
                   'No streak — yet'
                 ) : (
                   <>
-                    <span className="font-mono tabular-nums">{currentStreak}</span>{' '}
-                    day{currentStreak === 1 ? '' : 's'} on the trot
+                    <span className="font-mono tabular-nums">{currentStreak}</span> day
+                    {currentStreak === 1 ? '' : 's'} on the trot
                   </>
                 )}
               </h2>
               {subtitleParts.length > 0 && (
-                <p className="text-[13.5px] text-white/70 leading-relaxed">
+                <p className="text-[13.5px] text-white leading-relaxed">
                   {subtitleParts.join(' · ')}
                 </p>
               )}
@@ -175,45 +172,22 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
                 sub={currentStreak === 0 ? 'Start today' : 'Days in a row'}
                 highlight={currentStreak > 0}
               />
-              <KpiCell
-                label="Longest"
-                value={longestStreak}
-                sub="Personal best"
-                icon={Trophy}
-              />
-              <KpiCell
-                label="Sessions"
-                value={totalSessions}
-                sub="Lifetime"
-                icon={BookOpen}
-              />
-              <KpiCell
-                label="Cards"
-                value={totalCardsReviewed}
-                sub="Reviewed"
-                icon={Brain}
-              />
+              <KpiCell label="Longest" value={longestStreak} sub="Personal best" icon={Trophy} />
+              <KpiCell label="Sessions" value={totalSessions} sub="Lifetime" icon={BookOpen} />
+              <KpiCell label="Cards" value={totalCardsReviewed} sub="Reviewed" icon={Brain} />
             </div>
 
             {/* ── Milestones ──────────────────────────────────────── */}
             <section className="space-y-3">
               <SectionHeader
                 eyebrow="Milestones"
-                title={
-                  nextMilestone
-                    ? `Next: ${nextMilestone.label}`
-                    : 'All unlocked'
-                }
+                title={nextMilestone ? `Next: ${nextMilestone.label}` : 'All unlocked'}
                 meta={
                   nextMilestone
                     ? `${nextMilestone.days - currentStreak} more day${nextMilestone.days - currentStreak === 1 ? '' : 's'} to go`
                     : 'Legendary streaker'
                 }
-                action={
-                  nextMilestone && (
-                    <span className="text-[18px]">{nextMilestone.emoji}</span>
-                  )
-                }
+                action={nextMilestone && <span className="text-[18px]">{nextMilestone.emoji}</span>}
               />
               <div className="grid grid-cols-5 gap-1.5 sm:gap-2">
                 {milestones.map((m, i) => (
@@ -225,7 +199,7 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
                     className={cn(
                       'flex flex-col items-center gap-1 py-2.5 rounded-lg border transition-all',
                       m.unlocked
-                        ? 'border-elec-yellow/25 bg-elec-yellow/[0.06]'
+                        ? 'border-elec-yellow/25 bg-white/[0.05]'
                         : 'border-white/[0.06] bg-white/[0.02] opacity-50'
                     )}
                   >
@@ -233,7 +207,7 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
                     <span
                       className={cn(
                         'text-[9.5px] font-medium uppercase tracking-[0.12em]',
-                        m.unlocked ? 'text-elec-yellow' : 'text-white/55'
+                        m.unlocked ? 'text-elec-yellow' : 'text-white'
                       )}
                     >
                       {m.label}
@@ -245,10 +219,15 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
 
             {/* ── Last 7 days + best day ──────────────────────────── */}
             <section className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
-              <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+              <div
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
+                  CARD_SURFACE
+                )}
+              >
                 <div className="flex items-baseline justify-between gap-2">
                   <Eyebrow>Last 7 days</Eyebrow>
-                  <span className="text-[12px] font-mono text-white/85 tabular-nums">
+                  <span className="text-[12px] font-mono text-white tabular-nums">
                     {daysStudiedLast7} / 7
                   </span>
                 </div>
@@ -266,7 +245,7 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
                     />
                   ))}
                 </div>
-                <span className="text-[11px] text-white/55 block leading-snug">
+                <span className="text-[11px] text-white block leading-snug">
                   {daysStudiedLast7 >= 5
                     ? 'Strong consistency'
                     : daysStudiedLast7 >= 3
@@ -274,12 +253,17 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
                       : 'Build the cadence'}
                 </span>
               </div>
-              <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-1.5">
+              <div
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-1.5',
+                  CARD_SURFACE
+                )}
+              >
                 <Eyebrow>Best day</Eyebrow>
                 <p className="text-[22px] sm:text-[24px] font-semibold tracking-tight text-white leading-none">
                   {bestStudyDay || '—'}
                 </p>
-                <span className="text-[11px] text-white/55 block leading-snug">
+                <span className="text-[11px] text-white block leading-snug">
                   {bestStudyDay
                     ? 'Your most consistent day of the week'
                     : 'Need more sessions to surface'}
@@ -294,7 +278,9 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
                 title="Last 90 days"
                 meta="Quizzes · flashcards · diary · OJT all roll up here"
               />
-              <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
+              <div
+                className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}
+              >
                 <ActivityGrid activityMap={activityMap} variant="yellow" />
               </div>
             </section>
@@ -305,22 +291,25 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-1.5"
+                className="rounded-xl border border-elec-yellow/20 bg-white/[0.05] p-4 sm:p-5 space-y-1.5"
               >
                 <Eyebrow className="text-elec-yellow/85">Insight</Eyebrow>
-                <p className="text-[13.5px] text-white/85 leading-relaxed">
-                  {insightText}
-                </p>
+                <p className="text-[13.5px] text-white leading-relaxed">{insightText}</p>
               </motion.div>
             )}
 
             {/* ── Empty state ─────────────────────────────────────── */}
             {currentStreak === 0 && !studiedToday && (
-              <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-6 sm:p-7 text-center space-y-3">
+              <div
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 p-6 sm:p-7 text-center space-y-3',
+                  CARD_SURFACE
+                )}
+              >
                 <Eyebrow>No streak yet</Eyebrow>
-                <p className="text-[14px] text-white/85 leading-relaxed max-w-[300px] mx-auto">
-                  A streak builds the moment you take a quiz, review a flashcard
-                  set, or log a diary entry. Five minutes is enough.
+                <p className="text-[14px] text-white leading-relaxed max-w-[300px] mx-auto">
+                  A streak builds the moment you take a quiz, review a flashcard set, or log a diary
+                  entry. Five minutes is enough.
                 </p>
                 <button
                   onClick={goToStudyCentre}
@@ -402,9 +391,14 @@ function KpiCell({
   icon?: LucideIcon;
 }) {
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-3.5 sm:p-5 space-y-1.5">
+    <div
+      className={cn(
+        'rounded-2xl border border-elec-yellow/35 p-3.5 sm:p-5 space-y-1.5',
+        CARD_SURFACE
+      )}
+    >
       <div className="flex items-center gap-1.5">
-        {Icon && <Icon className="h-3 w-3 text-white/40" />}
+        {Icon && <Icon className="h-3 w-3 text-white" />}
         <Eyebrow className="text-[9.5px] sm:text-[10px]">{label}</Eyebrow>
       </div>
       <div
@@ -416,9 +410,7 @@ function KpiCell({
         {value}
       </div>
       {sub && (
-        <span className="text-[10.5px] sm:text-[11px] text-white/55 block leading-snug">
-          {sub}
-        </span>
+        <span className="text-[10.5px] sm:text-[11px] text-white block leading-snug">{sub}</span>
       )}
     </div>
   );

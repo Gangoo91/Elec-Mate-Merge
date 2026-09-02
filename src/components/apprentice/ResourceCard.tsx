@@ -88,7 +88,7 @@ const ResourceCard = ({
         <Button
           variant={isCompleted ? 'outline' : 'default'}
           size="sm"
-          className={`${isCompleted ? 'bg-green-500/20 hover:bg-green-500/30 text-green-500 border-green-500/30' : 'bg-elec-yellow/20 hover:bg-elec-yellow/30 text-elec-yellow border-elec-yellow/30'}`}
+          className={`${isCompleted ? 'bg-green-500/20 hover:bg-green-500/30 text-green-500 border-green-500/30' : 'bg-white/[0.08] hover:bg-elec-yellow/30 text-elec-yellow border-elec-yellow/30'}`}
           onClick={handleToggleComplete}
         >
           {isCompleted ? 'Completed' : 'Mark Complete'}

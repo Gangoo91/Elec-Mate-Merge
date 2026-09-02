@@ -26,7 +26,7 @@ const QuizNavigation = ({
         variant="outline"
         onClick={handlePrevious}
         disabled={activeQuestion === 0}
-        className="w-full sm:w-auto border-elec-yellow/30 hover:bg-elec-yellow/10"
+        className="w-full sm:w-auto border-elec-yellow/30 hover:bg-white/[0.06]"
       >
         <ChevronLeft className="h-4 w-4 mr-1" /> Previous
       </Button>
@@ -40,7 +40,7 @@ const QuizNavigation = ({
         variant="outline"
         onClick={handleNext}
         disabled={activeQuestion === questionsCount - 1}
-        className="w-full sm:w-auto border-elec-yellow/30 hover:bg-elec-yellow/10"
+        className="w-full sm:w-auto border-elec-yellow/30 hover:bg-white/[0.06]"
       >
         Next <ChevronRight className="h-4 w-4 ml-1" />
       </Button>

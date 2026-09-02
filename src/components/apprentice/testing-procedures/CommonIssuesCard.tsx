@@ -30,7 +30,7 @@ const CommonIssuesCard = ({ issues }: { issues: Issue[] }) => {
 
   return (
     <div className={cn(PANEL, "space-y-3")}>
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
         Common issues
       </span>
 
@@ -45,7 +45,7 @@ const CommonIssuesCard = ({ issues }: { issues: Issue[] }) => {
               <span className="text-[14px] text-white">{issue.title}</span>
               <ChevronRight
                 className={cn(
-                  'h-4 w-4 shrink-0 text-white/70 transition-transform',
+                  'h-4 w-4 shrink-0 text-white transition-transform',
                   expandedIssue === index && 'rotate-90'
                 )}
               />
@@ -53,11 +53,11 @@ const CommonIssuesCard = ({ issues }: { issues: Issue[] }) => {
 
             {expandedIssue === index && (
               <div className="mt-1 mb-2 pl-3 border-l border-white/[0.12] animate-fade-in space-y-1">
-                <p className="text-[13px] text-white/85 leading-relaxed">{issue.description}</p>
-                <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70 pt-1">
+                <p className="text-[13px] text-white leading-relaxed">{issue.description}</p>
+                <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white pt-1">
                   What to check
                 </p>
-                <p className="text-[13px] text-white/85 leading-relaxed">{issue.solution}</p>
+                <p className="text-[13px] text-white leading-relaxed">{issue.solution}</p>
               </div>
             )}
           </li>

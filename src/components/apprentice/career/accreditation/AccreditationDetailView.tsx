@@ -11,7 +11,7 @@ interface AccreditationDetailViewProps {
 
 const Section = ({ eyebrow, children }: { eyebrow: string; children: React.ReactNode }) => (
   <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
       {eyebrow}
     </span>
     <div>{children}</div>
@@ -19,7 +19,7 @@ const Section = ({ eyebrow, children }: { eyebrow: string; children: React.React
 );
 
 const Pill = ({ children }: { children: React.ReactNode }) => (
-  <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+  <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
     {children}
   </span>
 );
@@ -29,7 +29,7 @@ const Bullets = ({ items }: { items: string[] }) => (
     {items.map((item, idx) => (
       <li
         key={idx}
-        className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+        className="text-[14px] text-white leading-relaxed flex items-start gap-2"
       >
         <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
         <span>{item}</span>
@@ -52,13 +52,13 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
       </Button>
 
       <div className="space-y-3">
-        <div className="flex flex-wrap items-baseline gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <div className="flex flex-wrap items-baseline gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           <span>{accreditation.level}</span>
-          <span className="text-white/25">·</span>
+          <span className="text-white">·</span>
           <span>{accreditation.category}</span>
           {accreditation.onlineAvailable && (
             <>
-              <span className="text-white/25">·</span>
+              <span className="text-white">·</span>
               <span>Online available</span>
             </>
           )}
@@ -66,8 +66,8 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
         <h2 className="text-[24px] sm:text-[28px] font-bold tracking-tight text-white leading-tight">
           {accreditation.title}
         </h2>
-        <p className="text-[14px] text-white/70">{accreditation.provider}</p>
-        <p className="text-[14px] text-white/85 leading-relaxed">{accreditation.description}</p>
+        <p className="text-[14px] text-white">{accreditation.provider}</p>
+        <p className="text-[14px] text-white leading-relaxed">{accreditation.description}</p>
       </div>
 
       {/* Quick info grid */}
@@ -86,16 +86,16 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
             key={item.label}
             className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 space-y-1"
           >
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               {item.label}
             </span>
-            <div className="text-[14px] text-white/85">{item.value}</div>
+            <div className="text-[14px] text-white">{item.value}</div>
           </div>
         ))}
       </div>
 
       <Section eyebrow="Career impact">
-        <p className="text-[14px] text-white/85 leading-relaxed">{accreditation.careerImpact}</p>
+        <p className="text-[14px] text-white leading-relaxed">{accreditation.careerImpact}</p>
       </Section>
 
       {/* Tabs */}
@@ -138,14 +138,14 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div>
                 <h5 className="text-[14px] text-white mb-1">Industry standing</h5>
-                <p className="text-[14px] text-white/85 leading-relaxed">
+                <p className="text-[14px] text-white leading-relaxed">
                   Gain credibility within the electrical industry, setting you apart from non-accredited
                   professionals.
                 </p>
               </div>
               <div>
                 <h5 className="text-[14px] text-white mb-1">Consumer trust</h5>
-                <p className="text-[14px] text-white/85 leading-relaxed">
+                <p className="text-[14px] text-white leading-relaxed">
                   Customers actively seek accredited professionals, providing immediate confidence in
                   your services.
                 </p>
@@ -157,21 +157,21 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               <div>
                 <h5 className="text-[14px] text-white mb-1">Pricing</h5>
-                <p className="text-[14px] text-white/85 leading-relaxed">
+                <p className="text-[14px] text-white leading-relaxed">
                   Many accredited professionals are able to charge a premium relative to non-accredited
                   competitors.
                 </p>
               </div>
               <div>
                 <h5 className="text-[14px] text-white mb-1">Marketing</h5>
-                <p className="text-[14px] text-white/85 leading-relaxed">
+                <p className="text-[14px] text-white leading-relaxed">
                   Use accreditation logos and marketing materials to win contracts and build trust with
                   potential clients.
                 </p>
               </div>
               <div>
                 <h5 className="text-[14px] text-white mb-1">Insurance</h5>
-                <p className="text-[14px] text-white/85 leading-relaxed">
+                <p className="text-[14px] text-white leading-relaxed">
                   Access reduced premiums through accreditation body partnerships.
                 </p>
               </div>
@@ -183,7 +183,7 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
           </Section>
 
           <Section eyebrow="Return on investment">
-            <p className="text-[14px] text-white/85 leading-relaxed mb-2">
+            <p className="text-[14px] text-white leading-relaxed mb-2">
               Most professionals recoup their annual membership costs within the first few contracts
               through:
             </p>
@@ -218,21 +218,21 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               <div>
                 <h5 className="text-[14px] text-white mb-1">Years required</h5>
-                <p className="text-[14px] text-white/85 leading-relaxed">
+                <p className="text-[14px] text-white leading-relaxed">
                   Typically 2-4 years post-qualification experience in installation, testing, or
                   design.
                 </p>
               </div>
               <div>
                 <h5 className="text-[14px] text-white mb-1">Type of work</h5>
-                <p className="text-[14px] text-white/85 leading-relaxed">
+                <p className="text-[14px] text-white leading-relaxed">
                   Domestic, commercial, or industrial work with evidence of competence across multiple
                   areas.
                 </p>
               </div>
               <div>
                 <h5 className="text-[14px] text-white mb-1">Portfolio</h5>
-                <p className="text-[14px] text-white/85 leading-relaxed">
+                <p className="text-[14px] text-white leading-relaxed">
                   Documented evidence of completed projects, installations, and ongoing development.
                 </p>
               </div>
@@ -294,7 +294,7 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
               </span>
               <ul className="space-y-1.5">
                 {accreditation.prerequisites.map((p, idx) => (
-                  <li key={idx} className="text-[14px] text-white/85 leading-relaxed">
+                  <li key={idx} className="text-[14px] text-white leading-relaxed">
                     {p}
                   </li>
                 ))}
@@ -336,9 +336,9 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
               {accreditation.nextSteps.map((step, idx) => (
                 <div
                   key={idx}
-                  className="flex items-start gap-3 text-[14px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-3 text-[14px] text-white leading-relaxed"
                 >
-                  <span className="flex-shrink-0 w-6 h-6 rounded-md border border-white/10 bg-white/[0.03] flex items-center justify-center text-[12px] text-white/85 font-mono">
+                  <span className="flex-shrink-0 w-6 h-6 rounded-md border border-white/10 bg-white/[0.03] flex items-center justify-center text-[12px] text-white font-mono">
                     {idx + 1}
                   </span>
                   <span>{step}</span>
@@ -413,7 +413,7 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
           </Section>
 
           <Section eyebrow="Total timeline">
-            <p className="text-[14px] text-white/85 leading-relaxed">
+            <p className="text-[14px] text-white leading-relaxed">
               Approximately 6-12 weeks from start to finish, broken down across the four phases above.
             </p>
           </Section>
@@ -521,7 +521,7 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
           </Section>
 
           <Section eyebrow="Cost overview">
-            <p className="text-[14px] text-white/85 leading-relaxed">
+            <p className="text-[14px] text-white leading-relaxed">
               Initial investment includes the application fee ({accreditation.cost.split(' ')[0]}),
               an assessment fee, and documentation costs. Most professionals see a return through
               higher rates and reduced insurance premiums over the first year.
@@ -547,20 +547,20 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               <div>
                 <h5 className="text-[14px] text-white mb-1">Market recognition</h5>
-                <p className="text-[14px] text-white/85 leading-relaxed">
+                <p className="text-[14px] text-white leading-relaxed">
                   Recognised by {accreditation.popularity}% of UK electrical professionals and trusted
                   by major contractors nationwide.
                 </p>
               </div>
               <div>
                 <h5 className="text-[14px] text-white mb-1">Consumer awareness</h5>
-                <p className="text-[14px] text-white/85 leading-relaxed">
+                <p className="text-[14px] text-white leading-relaxed">
                   Promoted through government and industry channels.
                 </p>
               </div>
               <div>
                 <h5 className="text-[14px] text-white mb-1">Regulatory standing</h5>
-                <p className="text-[14px] text-white/85 leading-relaxed">
+                <p className="text-[14px] text-white leading-relaxed">
                   Recognised for Building Regulations compliance and notification rights where
                   applicable.
                 </p>
@@ -618,22 +618,22 @@ const AccreditationDetailView = ({ accreditation, onBack }: AccreditationDetailV
           </div>
 
           <Section eyebrow="Accreditation specifications">
-            <div className="space-y-2 text-[14px] text-white/85 leading-relaxed">
+            <div className="space-y-2 text-[14px] text-white leading-relaxed">
               <div>
-                <span className="text-white/55">Accrediting body: </span>
+                <span className="text-white">Accrediting body: </span>
                 {accreditation.accreditationBody}
               </div>
               <div>
-                <span className="text-white/55">Coverage areas: </span>
+                <span className="text-white">Coverage areas: </span>
                 {accreditation.locations.join(', ')}
               </div>
               <div>
-                <span className="text-white/55">Difficulty: </span>
+                <span className="text-white">Difficulty: </span>
                 {accreditation.difficulty} — suitable for experienced professionals
               </div>
               {accreditation.renewalPeriod && (
                 <div>
-                  <span className="text-white/55">Renewal: </span>
+                  <span className="text-white">Renewal: </span>
                   {accreditation.renewalPeriod}
                 </div>
               )}

@@ -11,6 +11,8 @@ import { CheckCircle2, AlertTriangle, Quote, Compass } from 'lucide-react';
 import { itemVariants } from '@/components/college/primitives';
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const commonMistakes = [
   {
@@ -168,12 +170,12 @@ const faqs = [
   {
     question: 'What certificate do I receive?',
     answer:
-      'An apprenticeship completion certificate from ESFA showing your name, the apprenticeship standard, and completion date, plus your AM2S pass from NET. These confirm you have completed the standard.',
+      'An apprenticeship completion certificate issued through the Department for Education showing your name, the apprenticeship standard, and completion date, plus your AM2S pass from NET. These confirm you have completed the standard.',
   },
   {
     question: 'How soon after the AM2S can I get my ECS Gold Card?',
     answer:
-      'Once you have your AM2S pass and apprenticeship completion. The JIB Approved Electrician (ECS Gold) card is applied for through ECS — they check your Level 3 qualification, AM2S pass, and apprenticeship completion. Apply via ecscard.org.uk; it usually takes a few weeks.',
+      'Once you have your AM2S pass and apprenticeship completion. The ECS Gold card at Electrician grade is applied for through ECS — they check your Level 3 qualification, AM2S pass, the 18th Edition (C&G 2382) certificate and a current ECS Health, Safety & Environmental assessment. Apply via ecscard.org.uk; it usually takes a few weeks.',
   },
 ];
 
@@ -235,13 +237,13 @@ const postEpaSteps = [
     step: 1,
     title: 'Apply for your ECS Gold Card',
     description:
-      'The JIB Approved Electrician (ECS Gold) card is the industry-recognised proof of competence. Apply through ECS (ecscard.org.uk) once you have your Level 3 qualification, AM2S pass, and apprenticeship completion. Your employer or the JIB can guide you.',
+      'The ECS Gold card (Electrician grade) is the industry-recognised proof of competence. Apply through ECS (ecscard.org.uk) once you have your Level 3 qualification, AM2S pass, and apprenticeship completion. Approved Electrician grade follows with experience and the 2391-52.',
   },
   {
     step: 2,
     title: 'Negotiate your pay',
     description:
-      "You're now a fully qualified electrician — you should be paid accordingly. The JIB-graded electrician rate is around £35,841 (rising to roughly £43,778 at higher grades) on 2026 rates. Speak to your employer about a pay review against the JIB ladder.",
+      "You're now a fully qualified electrician — you should be paid accordingly. On 2026 JIB national rates the Electrician grade is £18.38/hr (about £35,800 a year on a 37.5-hour week), rising to £20.08 (Approved) and £22.70 (Technician). Speak to your employer about a pay review against the JIB ladder.",
   },
   {
     step: 3,
@@ -253,7 +255,7 @@ const postEpaSteps = [
     step: 4,
     title: 'Competent person scheme',
     description:
-      'Once you have sufficient experience (typically 1–2 years post-qualification), you can register with NICEIC, NAPIT, or ELECSA to self-certify notifiable work under Part P.',
+      'Once you have sufficient experience, you can register with NICEIC or NAPIT to self-certify notifiable work under Part P.',
   },
   {
     step: 5,
@@ -365,7 +367,10 @@ const MistakesAndTipsPage = () => {
             {commonMistakes.map((item) => (
               <li
                 key={item.mistake}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3"
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
+                  CARD_SURFACE
+                )}
               >
                 <div className="flex items-start gap-2">
                   <AlertTriangle className="h-4 w-4 text-red-300 flex-shrink-0 mt-0.5" />
@@ -373,10 +378,10 @@ const MistakesAndTipsPage = () => {
                     {item.mistake}
                   </h3>
                 </div>
-                <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
+                <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3">
                   <div className="flex items-start gap-2">
                     <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                    <p className="text-[12.5px] text-white/85 leading-relaxed">
+                    <p className="text-[12.5px] text-white leading-relaxed">
                       <span className="font-semibold text-elec-yellow">Solution: </span>
                       {item.solution}
                     </p>
@@ -398,17 +403,20 @@ const MistakesAndTipsPage = () => {
             {tips.map((tip) => (
               <li
                 key={tip.quote}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2"
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-2',
+                  CARD_SURFACE
+                )}
               >
                 <div className="flex items-start gap-2">
                   <Quote className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                  <p className="text-[13px] text-white/85 italic leading-relaxed">{tip.quote}</p>
+                  <p className="text-[13px] text-white italic leading-relaxed">{tip.quote}</p>
                 </div>
                 <div className="flex items-center gap-2 pl-5">
-                  <span className="inline-flex items-center h-6 px-2 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[10.5px] font-medium uppercase tracking-[0.14em] text-elec-yellow">
+                  <span className="inline-flex items-center h-6 px-2 rounded-md border border-elec-yellow/30 bg-white/[0.05] text-[10.5px] font-medium uppercase tracking-[0.14em] text-elec-yellow">
                     {tip.grade}
                   </span>
-                  <span className="text-[11.5px] text-white/55">{tip.name}</span>
+                  <span className="text-[11.5px] text-white">{tip.name}</span>
                 </div>
               </li>
             ))}
@@ -422,12 +430,12 @@ const MistakesAndTipsPage = () => {
             title={`Preparation checklist · ${dayBeforeChecklist.length} items`}
             meta="Run through this the evening before each component"
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
+          <div className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}>
             <ul className="space-y-1.5">
               {dayBeforeChecklist.map((item) => (
                 <li
                   key={item}
-                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                 >
                   <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                   <span>{item}</span>
@@ -448,12 +456,12 @@ const MistakesAndTipsPage = () => {
             {thingsGoWrong.map((item) => (
               <li
                 key={item.situation}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
+                className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}
               >
                 <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
                   {item.situation}
                 </h3>
-                <p className="text-[13px] text-white/85 leading-relaxed mt-1">{item.action}</p>
+                <p className="text-[13px] text-white leading-relaxed mt-1">{item.action}</p>
               </li>
             ))}
           </ul>
@@ -470,12 +478,15 @@ const MistakesAndTipsPage = () => {
             {faqs.map((faq) => (
               <li
                 key={faq.question}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-1.5"
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-1.5',
+                  CARD_SURFACE
+                )}
               >
                 <h3 className="text-[13.5px] font-semibold text-white tracking-tight">
                   {faq.question}
                 </h3>
-                <p className="text-[12.5px] text-white/85 leading-relaxed">{faq.answer}</p>
+                <p className="text-[12.5px] text-white leading-relaxed">{faq.answer}</p>
               </li>
             ))}
           </ul>
@@ -492,17 +503,17 @@ const MistakesAndTipsPage = () => {
             {postEpaSteps.map((item) => (
               <li
                 key={item.step}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
+                className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}
               >
                 <div className="flex items-start gap-3">
-                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[12px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
+                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-md border border-elec-yellow/30 bg-white/[0.05] text-[12px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
                     {item.step}
                   </span>
                   <div className="space-y-1">
                     <h3 className="text-[14px] font-semibold text-white tracking-tight">
                       {item.title}
                     </h3>
-                    <p className="text-[13px] text-white/85 leading-relaxed">{item.description}</p>
+                    <p className="text-[13px] text-white leading-relaxed">{item.description}</p>
                   </div>
                 </div>
               </li>
@@ -517,7 +528,7 @@ const MistakesAndTipsPage = () => {
             title="EPA terms worth knowing"
             meta="Bookmark this — you'll come back to it"
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
+          <div className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}>
             <ul className="space-y-2.5">
               {glossary.map((item) => (
                 <li key={item.term} className="flex items-start gap-3">
@@ -526,7 +537,7 @@ const MistakesAndTipsPage = () => {
                     <span className="text-[12.5px] font-mono font-semibold text-elec-yellow">
                       {item.term}
                     </span>
-                    <p className="text-[12.5px] text-white/85 leading-relaxed">{item.definition}</p>
+                    <p className="text-[12.5px] text-white leading-relaxed">{item.definition}</p>
                   </div>
                 </li>
               ))}

@@ -77,19 +77,24 @@ const OnJobAssessment = () => {
 
         {/* ── Progress strip ────────────────────────────────────────── */}
         <motion.div variants={itemVariants}>
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+          <div
+            className={cn(
+              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
+              CARD_SURFACE
+            )}
+          >
             <div className="flex items-baseline justify-between gap-3 flex-wrap">
               <div className="flex items-center gap-2">
                 {allDone ? (
                   <CheckCircle2 className="h-4 w-4 text-elec-yellow flex-shrink-0" />
                 ) : (
-                  <ClipboardCheck className="h-4 w-4 text-white/70 flex-shrink-0" />
+                  <ClipboardCheck className="h-4 w-4 text-white flex-shrink-0" />
                 )}
                 <span className="text-[13px] font-mono tabular-nums text-white">
                   {progress.completedCount} / {totalCount} checks
                 </span>
-                <span className="text-[11px] text-white/70">·</span>
-                <AlertTriangle className="h-3.5 w-3.5 text-white/70" />
+                <span className="text-[11px] text-white">·</span>
+                <AlertTriangle className="h-3.5 w-3.5 text-white" />
                 <span className="text-[13px] font-mono tabular-nums text-white">
                   {progress.riskAssessments.length} risk assessment
                   {progress.riskAssessments.length === 1 ? '' : 's'}
@@ -98,7 +103,7 @@ const OnJobAssessment = () => {
               <span
                 className={cn(
                   'text-[12px] font-mono tabular-nums',
-                  allDone ? 'text-elec-yellow' : 'text-white/70'
+                  allDone ? 'text-elec-yellow' : 'text-white'
                 )}
               >
                 {Math.round(pct)}%
@@ -128,12 +133,12 @@ const OnJobAssessment = () => {
                   'p-3.5 sm:p-5 rounded-xl border transition-all touch-manipulation text-left space-y-2',
                   isActive
                     ? 'border-elec-yellow/70'
-                    : 'border-white/[0.06] bg-[hsl(0_0%_10%)] active:bg-white/[0.04]'
+                    : 'border-white/[0.12] bg-white/[0.06]'
                 )}
               >
                 <div className="flex items-center gap-1.5">
                   <Icon
-                    className={cn('h-3.5 w-3.5', isActive ? 'text-elec-yellow' : 'text-white/70')}
+                    className={cn('h-3.5 w-3.5', isActive ? 'text-elec-yellow' : 'text-white')}
                   />
                   <Eyebrow className={cn('text-[9.5px]', isActive && 'text-elec-yellow/85')}>
                     {tool.label}
@@ -162,7 +167,7 @@ const OnJobAssessment = () => {
           <div className={cn('rounded-xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}>
             <div className="flex items-start gap-2.5">
               <Shield className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <p className="text-[13px] text-white/85 leading-relaxed">
+              <p className="text-[13px] text-white leading-relaxed">
                 Always complete a thorough site assessment before beginning any electrical work.
                 When in doubt,{' '}
                 <span className="font-semibold text-elec-yellow">

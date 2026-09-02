@@ -86,15 +86,15 @@ const DocumentationRequirementsDiagram = ({
 
   return (
     <div className="space-y-4">
-      <p className="text-[14px] text-white/85 leading-relaxed">
+      <p className="text-[14px] text-white leading-relaxed">
         BS 7671 documentation requirements for initial verification.
       </p>
 
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Regulation 641.7 — documentation requirements
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           Upon completion of the work, the person responsible for the construction of the
           installation shall provide the person ordering the work with a certificate confirming
           that the installation complies with BS 7671.
@@ -102,7 +102,7 @@ const DocumentationRequirementsDiagram = ({
       </div>
 
       <div className="space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Mandatory documentation
         </span>
 
@@ -116,10 +116,10 @@ const DocumentationRequirementsDiagram = ({
                 <h5 className="text-[16px] font-semibold text-white leading-tight">
                   {doc.document}
                 </h5>
-                <p className="text-[11px] text-white/70 font-mono">{doc.regulation}</p>
+                <p className="text-[11px] text-white font-mono">{doc.regulation}</p>
               </div>
               {doc.critical && (
-                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07]">
+                <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07]">
                   Critical
                 </span>
               )}
@@ -127,24 +127,24 @@ const DocumentationRequirementsDiagram = ({
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div className="space-y-0.5">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Purpose
                 </span>
-                <p className="text-[14px] text-white/85 leading-relaxed">{doc.purpose}</p>
+                <p className="text-[14px] text-white leading-relaxed">{doc.purpose}</p>
               </div>
               <div className="space-y-0.5">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Completed by
                 </span>
-                <p className="text-[14px] text-white/85 leading-relaxed">{doc.completedBy}</p>
+                <p className="text-[14px] text-white leading-relaxed">{doc.completedBy}</p>
               </div>
             </div>
 
             <div className="space-y-0.5">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Timing
               </span>
-              <p className="text-[14px] text-white/85 leading-relaxed">{doc.timing}</p>
+              <p className="text-[14px] text-white leading-relaxed">{doc.timing}</p>
             </div>
           </div>
         ))}
@@ -152,7 +152,7 @@ const DocumentationRequirementsDiagram = ({
 
       {additionalDocuments.length > 0 && (
         <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             {installationType?.charAt(0).toUpperCase()}
             {installationType?.slice(1)} installation — additional requirements
           </span>
@@ -160,7 +160,7 @@ const DocumentationRequirementsDiagram = ({
             {additionalDocuments.map((doc, index) => (
               <li
                 key={index}
-                className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                className="text-[14px] text-white leading-relaxed flex items-start gap-2"
               >
                 <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                 <span>{doc}</span>
@@ -171,18 +171,18 @@ const DocumentationRequirementsDiagram = ({
       )}
 
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Documentation timeline
         </span>
         <ol className="space-y-2">
           {timeline.map((item, index) => (
             <li key={index} className="flex items-start gap-3">
-              <span className="text-[12px] font-mono text-white/70 flex-shrink-0 w-5 mt-0.5">
+              <span className="text-[12px] font-mono text-white flex-shrink-0 w-5 mt-0.5">
                 {index + 1}.
               </span>
               <div className="space-y-0.5">
                 <span className="text-[14px] text-white font-medium">{item.step}</span>
-                <p className="text-[14px] text-white/85 leading-relaxed">{item.description}</p>
+                <p className="text-[14px] text-white leading-relaxed">{item.description}</p>
               </div>
             </li>
           ))}
@@ -190,12 +190,12 @@ const DocumentationRequirementsDiagram = ({
       </div>
 
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Document retention & distribution
         </span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-1.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Original copies
             </span>
             <ul className="space-y-1.5">
@@ -206,7 +206,7 @@ const DocumentationRequirementsDiagram = ({
               ].map((item, i) => (
                 <li
                   key={i}
-                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                  className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                 >
                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{item}</span>
@@ -215,7 +215,7 @@ const DocumentationRequirementsDiagram = ({
             </ul>
           </div>
           <div className="space-y-1.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Retention period
             </span>
             <ul className="space-y-1.5">
@@ -226,7 +226,7 @@ const DocumentationRequirementsDiagram = ({
               ].map((item, i) => (
                 <li
                   key={i}
-                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                  className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                 >
                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{item}</span>

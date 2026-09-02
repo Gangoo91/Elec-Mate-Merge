@@ -14,13 +14,13 @@ const Section = ({ children }: { children: React.ReactNode }) => (
 );
 
 const Eyebrow = ({ children }: { children: React.ReactNode }) => (
-  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
     {children}
   </span>
 );
 
 const Pill = ({ children }: { children: React.ReactNode }) => (
-  <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+  <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
     {children}
   </span>
 );
@@ -30,7 +30,7 @@ const Bullets = ({ items }: { items: string[] }) => (
     {items.map((item, idx) => (
       <li
         key={idx}
-        className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+        className="text-[14px] text-white leading-relaxed flex items-start gap-2"
       >
         <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
         <span>{item}</span>
@@ -235,8 +235,8 @@ const IndustryInsightsAnalysis = () => {
   return (
     <div className="space-y-4">
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 flex items-start gap-3">
-        <BarChart3 className="h-4 w-4 text-white/55 mt-1 flex-shrink-0" />
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <BarChart3 className="h-4 w-4 text-white mt-1 flex-shrink-0" />
+        <p className="text-[14px] text-white leading-relaxed">
           Skills shortages across the industry are creating opportunities for faster career
           progression in specialist areas.
         </p>
@@ -251,14 +251,14 @@ const IndustryInsightsAnalysis = () => {
             className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 space-y-1"
           >
             <Eyebrow>{metric.metric}</Eyebrow>
-            <div className="text-[14px] text-white/85">{metric.data}</div>
+            <div className="text-[14px] text-white">{metric.data}</div>
           </div>
         ))}
       </div>
 
       <MobileAccordion type="single" collapsible className="space-y-2">
         <MobileAccordionItem value="market-trends">
-          <MobileAccordionTrigger icon={<TrendingUp className="h-5 w-5 text-white/55" />}>
+          <MobileAccordionTrigger icon={<TrendingUp className="h-5 w-5 text-white" />}>
             Key market trends and growth areas
           </MobileAccordionTrigger>
           <MobileAccordionContent>
@@ -269,7 +269,7 @@ const IndustryInsightsAnalysis = () => {
                     <h4 className="text-[16px] text-white">{trend.trend}</h4>
                     <Pill>{trend.growthRate}</Pill>
                   </div>
-                  <p className="text-[14px] text-white/85 leading-relaxed">{trend.description}</p>
+                  <p className="text-[14px] text-white leading-relaxed">{trend.description}</p>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div className="space-y-2">
@@ -284,7 +284,7 @@ const IndustryInsightsAnalysis = () => {
 
                   <div className="space-y-1">
                     <Eyebrow>Timeline</Eyebrow>
-                    <p className="text-[14px] text-white/85 leading-relaxed">{trend.timeline}</p>
+                    <p className="text-[14px] text-white leading-relaxed">{trend.timeline}</p>
                   </div>
                 </div>
               ))}
@@ -293,7 +293,7 @@ const IndustryInsightsAnalysis = () => {
         </MobileAccordionItem>
 
         <MobileAccordionItem value="sector-analysis">
-          <MobileAccordionTrigger icon={<Building className="h-5 w-5 text-white/55" />}>
+          <MobileAccordionTrigger icon={<Building className="h-5 w-5 text-white" />}>
             Sector analysis and market opportunities
           </MobileAccordionTrigger>
           <MobileAccordionContent>
@@ -305,13 +305,13 @@ const IndustryInsightsAnalysis = () => {
                     <Pill>{sector.marketShare}</Pill>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-[14px] text-white/85">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-[14px] text-white">
                     <div>
-                      <span className="text-white/55">Project value: </span>
+                      <span className="text-white">Project value: </span>
                       {sector.averageProjectValue}
                     </div>
                     <div>
-                      <span className="text-white/55">Profit margins: </span>
+                      <span className="text-white">Profit margins: </span>
                       {sector.profitMargins}
                     </div>
                   </div>
@@ -337,7 +337,7 @@ const IndustryInsightsAnalysis = () => {
         </MobileAccordionItem>
 
         <MobileAccordionItem value="future-skills">
-          <MobileAccordionTrigger icon={<Zap className="h-5 w-5 text-white/55" />}>
+          <MobileAccordionTrigger icon={<Zap className="h-5 w-5 text-white" />}>
             Future skills demand
           </MobileAccordionTrigger>
           <MobileAccordionContent>
@@ -359,12 +359,12 @@ const IndustryInsightsAnalysis = () => {
                           <h5 className="text-[14px] text-white">{skill.skill}</h5>
                           <Pill>{skill.demandLevel}</Pill>
                         </div>
-                        <p className="text-[14px] text-white/85 leading-relaxed">
+                        <p className="text-[14px] text-white leading-relaxed">
                           {skill.description}
                         </p>
                         <div className="pt-2 border-t border-white/[0.06]">
                           <Eyebrow>Learning path</Eyebrow>
-                          <p className="mt-1 text-[14px] text-white/85 leading-relaxed">
+                          <p className="mt-1 text-[14px] text-white leading-relaxed">
                             {skill.learningPath}
                           </p>
                         </div>
@@ -378,7 +378,7 @@ const IndustryInsightsAnalysis = () => {
         </MobileAccordionItem>
 
         <MobileAccordionItem value="industry-outlook">
-          <MobileAccordionTrigger icon={<Globe className="h-5 w-5 text-white/55" />}>
+          <MobileAccordionTrigger icon={<Globe className="h-5 w-5 text-white" />}>
             Industry outlook and strategic recommendations
           </MobileAccordionTrigger>
           <MobileAccordionContent>

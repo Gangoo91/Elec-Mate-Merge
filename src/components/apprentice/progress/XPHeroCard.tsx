@@ -29,7 +29,7 @@ export function XPHeroCard() {
 
   return (
     <>
-      <div className={cn('rounded-2xl border border-white/[0.06] p-5', CARD_SURFACE)}>
+      <div className={cn('rounded-2xl border border-elec-yellow/35 p-5', CARD_SURFACE)}>
         <div className="flex items-center gap-4 sm:gap-5">
           <XPProgressRing
             xpToday={xpToday}

@@ -45,7 +45,8 @@ export const useComplianceTracking = () => {
         const otjGoalData = data?.find((g) => g.goal_type === '20_percent_otj');
         setOtjGoal(otjGoalData || null);
 
-        // If no 20% OTJ goal exists, create one
+        // If no OTJ goal exists, create a default one (the real target is the fixed
+        // hours in the apprenticeship standard — see useOtjProgramme)
         if (!otjGoalData) {
           await createDefaultOTJGoal(user.id);
         }
@@ -91,7 +92,8 @@ export const useComplianceTracking = () => {
 
   const createDefaultOTJGoal = async (userId: string) => {
     try {
-      // Default to 400 hours per year (20% of 2000 hour work year)
+      // Default to 400 hours per year as a placeholder; since 1 August 2025 the
+      // requirement is a fixed total set by the standard (ST0152 = 1,066 h), not 20%
       const { data, error } = await supabase
         .from('compliance_goals')
         .insert({

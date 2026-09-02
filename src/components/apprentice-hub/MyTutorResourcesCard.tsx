@@ -50,7 +50,9 @@ export function MyTutorResourcesCard() {
   };
 
   return (
-    <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
+    <section
+      className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
+    >
       <div className="px-4 sm:px-5 py-4 sm:py-5">
         <div className="flex items-baseline justify-between gap-3 flex-wrap">
           <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
@@ -77,7 +79,8 @@ export function MyTutorResourcesCard() {
                     type="button"
                     onClick={() => handleOpen(r)}
                     disabled={opening === r.id}
-                    className={cn('w-full px-1 py-2.5 flex items-baseline justify-between gap-3 text-left hover:bg-white/[0.02] transition-colors touch-manipulation',
+                    className={cn(
+                      'w-full px-1 py-2.5 flex items-baseline justify-between gap-3 text-left hover:bg-white/[0.02] transition-colors touch-manipulation',
                       opening === r.id && 'opacity-60'
                     )}
                   >
@@ -131,7 +134,9 @@ export function MyTutorResourcesCard() {
 
 function Skeleton() {
   return (
-    <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
+    <section
+      className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
+    >
       <div className="px-4 sm:px-5 py-4 sm:py-5 space-y-3">
         <div className="h-3 w-44 rounded-full bg-white/[0.05]" />
         {[0, 1, 2].map((i) => (

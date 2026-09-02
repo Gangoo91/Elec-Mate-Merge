@@ -8,6 +8,8 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { Loader2, Mail } from 'lucide-react';
+import { textareaCn } from '@/components/forms/fieldStyles';
+import { cn } from '@/lib/utils';
 
 const enquirySchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
@@ -90,7 +92,7 @@ export default function CourseEnquiryForm({ course, onSuccess }: CourseEnquiryFo
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label htmlFor="name" className="text-[12px] text-white/70">
+          <Label htmlFor="name" className="text-[12px] text-white">
             Full name *
           </Label>
           <Input
@@ -103,7 +105,7 @@ export default function CourseEnquiryForm({ course, onSuccess }: CourseEnquiryFo
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="email" className="text-[12px] text-white/70">
+          <Label htmlFor="email" className="text-[12px] text-white">
             Email address *
           </Label>
           <Input
@@ -119,7 +121,7 @@ export default function CourseEnquiryForm({ course, onSuccess }: CourseEnquiryFo
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label htmlFor="phone" className="text-[12px] text-white/70">
+          <Label htmlFor="phone" className="text-[12px] text-white">
             Phone number (optional)
           </Label>
           <Input
@@ -132,7 +134,7 @@ export default function CourseEnquiryForm({ course, onSuccess }: CourseEnquiryFo
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="preferredStartDate" className="text-[12px] text-white/70">
+          <Label htmlFor="preferredStartDate" className="text-[12px] text-white">
             Preferred start date
           </Label>
           <Input
@@ -145,7 +147,7 @@ export default function CourseEnquiryForm({ course, onSuccess }: CourseEnquiryFo
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="message" className="text-[12px] text-white/70">
+        <Label htmlFor="message" className="text-[12px] text-white">
           Message (optional)
         </Label>
         <textarea
@@ -153,7 +155,7 @@ export default function CourseEnquiryForm({ course, onSuccess }: CourseEnquiryFo
           {...register('message')}
           rows={4}
           placeholder="Any specific questions or requirements..."
-          className="w-full px-3 py-3 border border-white/10 bg-white/[0.03] rounded-lg text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-yellow-500/20 focus:border-yellow-500 transition-colors"
+          className={cn(textareaCn, 'w-full resize-none')}
         />
       </div>
 

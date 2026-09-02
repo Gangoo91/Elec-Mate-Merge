@@ -18,7 +18,7 @@ const Subsection6_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         <h2 className="text-2xl font-bold text-elec-yellow">
           Personal Protective Equipment (PPE) for Electrical Work
         </h2>
-        <p className="mt-2 text-elec-light/80">
+        <p className="mt-2 text-white">
           PPE serves as the final line of defence against electrical hazards when all other safety
           measures have been implemented. The Electricity at Work Regulations 1989 mandate the use
           of appropriate PPE for electrical work.
@@ -28,7 +28,7 @@ const Subsection6_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
       {/* Decorative Separator with Icon */}
       <div className="flex items-center gap-4 py-2">
         <Separator className="flex-grow bg-elec-yellow/30" />
-        <div className="bg-elec-yellow/10 p-2 rounded-full">
+        <div className="bg-white/[0.06] p-2 rounded-full">
           <span className="text-elec-yellow text-xl">⚡</span>
         </div>
         <Separator className="flex-grow bg-elec-yellow/30" />
@@ -44,7 +44,7 @@ const Subsection6_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 PPE Categories for Electrical Work
               </h3>
             </div>
-            <div className="px-3 py-1.5 bg-elec-yellow/10 rounded-full text-sm text-elec-yellow border border-elec-yellow/20 hidden md:flex items-center gap-2">
+            <div className="px-3 py-1.5 bg-white/[0.06] rounded-full text-sm text-elec-yellow border border-elec-yellow/20 hidden md:flex items-center gap-2">
               <Shield className="h-4 w-4" />
               <span>Essential Protection</span>
             </div>
@@ -61,7 +61,7 @@ const Subsection6_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             {/* Insulating PPE */}
             <div className="space-y-4">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-elec-yellow/10 rounded-lg">
+                <div className="p-2 bg-white/[0.06] rounded-lg">
                   <Shield className="h-5 w-5 text-elec-yellow" />
                 </div>
                 <h4 className="font-medium text-elec-yellow text-lg">Insulating PPE</h4>
@@ -98,7 +98,7 @@ const Subsection6_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             {/* Arc Flash Protection */}
             <div className="space-y-4">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-elec-yellow/10 rounded-lg">
+                <div className="p-2 bg-white/[0.06] rounded-lg">
                   <ShieldAlert className="h-5 w-5 text-elec-yellow" />
                 </div>
                 <h4 className="font-medium text-elec-yellow text-lg">Arc Flash Protection</h4>
@@ -259,7 +259,7 @@ const Subsection6_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 </li>
               </ul>
 
-              <div className="mt-4 p-3 bg-elec-yellow/5 rounded-lg border border-elec-yellow/20">
+              <div className="mt-4 p-3 bg-white/[0.05] rounded-lg border border-elec-yellow/20">
                 <h5 className="font-medium text-elec-yellow text-sm">Documentation Requirements</h5>
                 <ul className="list-disc pl-5 mt-2 text-sm space-y-1">
                   <li>Record of PPE issued to workers</li>

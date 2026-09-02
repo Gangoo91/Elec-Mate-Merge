@@ -50,10 +50,10 @@ const TestEquipmentPanel = () => {
   return (
     <div className="space-y-3 animate-fade-in">
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Test equipment
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           Your test instruments are what separate you from a DIYer. An uncalibrated tester means
           invalid certificates. Build your test kit progressively through your apprenticeship.
         </p>
@@ -71,14 +71,14 @@ const TestEquipmentPanel = () => {
               <button className="w-full flex items-center justify-between p-4 rounded-xl border border-white/[0.06] bg-white/[0.02] transition-all touch-manipulation active:scale-[0.99] hover:bg-white/[0.04] min-h-[44px]">
                 <div className="flex items-center gap-2">
                   <span className="text-[14px] font-semibold text-white">{section.title}</span>
-                  <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                  <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                     {section.count}
                   </span>
                 </div>
                 {isOpen ? (
-                  <ChevronDown className="h-4 w-4 text-white/55" />
+                  <ChevronDown className="h-4 w-4 text-white" />
                 ) : (
-                  <ChevronRight className="h-4 w-4 text-white/55" />
+                  <ChevronRight className="h-4 w-4 text-white" />
                 )}
               </button>
             </CollapsibleTrigger>
@@ -92,8 +92,8 @@ const TestEquipmentPanel = () => {
                         className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2"
                       >
                         <h4 className="text-[14px] font-semibold text-white">{fn.test}</h4>
-                        <p className="text-[14px] text-white/85 leading-relaxed">{fn.purpose}</p>
-                        <div className="text-[13px] text-white/85 space-y-1">
+                        <p className="text-[14px] text-white leading-relaxed">{fn.purpose}</p>
+                        <div className="text-[13px] text-white space-y-1">
                           <div>
                             <span className="font-medium">Acceptable range:</span>{' '}
                             {fn.acceptableRange}
@@ -114,14 +114,14 @@ const TestEquipmentPanel = () => {
                       >
                         <div className="flex items-center justify-between gap-2">
                           <h4 className="text-[14px] font-semibold text-white">{brand.brand}</h4>
-                          <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] whitespace-nowrap">
+                          <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] whitespace-nowrap">
                             {brand.priceRange}
                           </span>
                         </div>
-                        <p className="text-[14px] text-white/85 leading-relaxed">
+                        <p className="text-[14px] text-white leading-relaxed">
                           {brand.strengths}
                         </p>
-                        <div className="text-[13px] text-white/85">
+                        <div className="text-[13px] text-white">
                           <span className="font-medium">Key models:</span> {brand.models}
                         </div>
                       </div>
@@ -135,11 +135,11 @@ const TestEquipmentPanel = () => {
                     >
                       <div className="flex items-start justify-between gap-2">
                         <h4 className="text-[14px] font-semibold text-white">{instrument.name}</h4>
-                        <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] whitespace-nowrap">
+                        <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] whitespace-nowrap">
                           {instrument.price}
                         </span>
                       </div>
-                      <p className="text-[14px] text-white/85 leading-relaxed">
+                      <p className="text-[14px] text-white leading-relaxed">
                         {instrument.description}
                       </p>
                       {instrument.functions && (
@@ -147,7 +147,7 @@ const TestEquipmentPanel = () => {
                           {instrument.functions.map((fn) => (
                             <span
                               key={fn}
-                              className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
+                              className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
                             >
                               {fn}
                             </span>
@@ -158,24 +158,23 @@ const TestEquipmentPanel = () => {
                         {instrument.brands.map((brand) => (
                           <span
                             key={brand}
-                            className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
+                            className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
                           >
                             {brand}
                           </span>
                         ))}
                       </div>
                       {instrument.calibration && (
-                        <div className="text-[13px] text-white/85">
-                          <span className="font-medium">Calibration:</span>{' '}
-                          {instrument.calibration}
+                        <div className="text-[13px] text-white">
+                          <span className="font-medium">Calibration:</span> {instrument.calibration}
                         </div>
                       )}
                       {instrument.apprenticeTip && (
-                        <div className="rounded-lg border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-1">
+                        <div className="rounded-lg border border-elec-yellow/20 bg-white/[0.05] p-3 space-y-1">
                           <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
                             Tip
                           </span>
-                          <p className="text-[14px] text-white/85 leading-relaxed">
+                          <p className="text-[14px] text-white leading-relaxed">
                             {instrument.apprenticeTip}
                           </p>
                         </div>
@@ -189,11 +188,11 @@ const TestEquipmentPanel = () => {
         );
       })}
 
-      <div className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-2">
+      <div className="rounded-xl border border-elec-yellow/20 bg-white/[0.05] p-4 sm:p-5 space-y-2">
         <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
           Testing sequence
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">{testEquipmentTip}</p>
+        <p className="text-[14px] text-white leading-relaxed">{testEquipmentTip}</p>
       </div>
     </div>
   );

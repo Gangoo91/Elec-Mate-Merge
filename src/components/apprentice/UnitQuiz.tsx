@@ -220,7 +220,7 @@ const UnitQuiz = ({
     <div className="bg-white/5 p-6 rounded-lg border border-elec-yellow/20 space-y-6 animate-fade-in">
       <div className="flex justify-between items-center">
         <h3 className="font-bold">Unit Quiz - ELEC2/01</h3>
-        <div className="text-sm text-elec-light/70">
+        <div className="text-sm text-white">
           {activeQuestion + 1} of {quizQuestions.length} questions
         </div>
       </div>

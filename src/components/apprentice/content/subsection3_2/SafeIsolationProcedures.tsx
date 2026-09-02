@@ -9,7 +9,7 @@ const SafeIsolationProcedures = () => {
         Safe Isolation Procedures
       </h3>
 
-      <p className="mb-4 text-elec-light/90">
+      <p className="mb-4 text-white">
         Safe isolation is a critical procedure that must be followed before working on electrical
         systems. The HSE's guidance HSG85 emphasises the importance of proper isolation to prevent
         accidental energisation. Failure to follow proper isolation procedures has resulted in
@@ -38,7 +38,7 @@ const SafeIsolationProcedures = () => {
               <span className="font-medium">Reprove</span> the tester works on a known live source
             </li>
           </ol>
-          <p className="mt-3 text-elec-light/80">
+          <p className="mt-3 text-white">
             Each step must be documented in accordance with company procedures, and a permit-to-work
             may be required for complex systems.
           </p>
@@ -46,7 +46,7 @@ const SafeIsolationProcedures = () => {
 
         <div>
           <h4 className="font-semibold text-elec-yellow mb-3">When live work is permitted:</h4>
-          <p className="mb-2 text-elec-light/80">
+          <p className="mb-2 text-white">
             Regulation 14 of the Electricity at Work Regulations states that live working is only
             permitted when:
           </p>

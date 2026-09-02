@@ -34,7 +34,7 @@ export function SkillRadarChart({ data }: SkillRadarChartProps) {
   const hasSignal = data.some((d) => d.score > 0);
   if (!hasSignal) {
     return (
-      <div className={cn('rounded-2xl border border-white/[0.06] p-5 space-y-2.5', CARD_SURFACE)}>
+      <div className={cn('rounded-2xl border border-elec-yellow/35 p-5 space-y-2.5', CARD_SURFACE)}>
         <Eyebrow>Skill radar</Eyebrow>
         <p className="text-[13px] text-white leading-relaxed">
           Nothing to plot yet. Quizzes and flashcards score you across{' '}
@@ -82,79 +82,79 @@ export function SkillRadarChart({ data }: SkillRadarChartProps) {
   });
 
   return (
-    <div className={cn('rounded-2xl border border-white/[0.06] p-4 space-y-3', CARD_SURFACE)}>
+    <div className={cn('rounded-2xl border border-elec-yellow/35 p-4 space-y-3', CARD_SURFACE)}>
       <Eyebrow>Skill radar</Eyebrow>
 
       <div className="flex justify-center">
         <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-            {/* Grid rings */}
-            {gridRings.map((points, i) => (
-              <polygon
-                key={`ring-${i}`}
-                points={points}
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={0.5}
-                className="text-white/[0.12]"
-              />
-            ))}
-
-            {/* Grid lines */}
-            {gridLines.map((line, i) => (
-              <line
-                key={`line-${i}`}
-                {...line}
-                stroke="currentColor"
-                strokeWidth={0.5}
-                className="text-white/[0.10]"
-              />
-            ))}
-
-            {/* Data polygon fill */}
+          {/* Grid rings */}
+          {gridRings.map((points, i) => (
             <polygon
-              points={dataPolygon}
-              fill="rgba(250, 204, 21, 0.12)"
-              stroke="rgba(250, 204, 21, 0.6)"
-              strokeWidth={2}
-              strokeLinejoin="round"
+              key={`ring-${i}`}
+              points={points}
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={0.5}
+              className="text-white"
             />
+          ))}
 
-            {/* Data points */}
-            {dataPoints.map((p, i) => (
-              <circle
-                key={`point-${i}`}
-                cx={p.x}
-                cy={p.y}
-                r={3}
-                fill="#facc15"
-                stroke="rgba(250, 204, 21, 0.3)"
-                strokeWidth={4}
-              />
-            ))}
+          {/* Grid lines */}
+          {gridLines.map((line, i) => (
+            <line
+              key={`line-${i}`}
+              {...line}
+              stroke="currentColor"
+              strokeWidth={0.5}
+              className="text-white"
+            />
+          ))}
 
-            {/* Labels */}
-            {labelPoints.map((p, i) => (
-              <g key={`label-${i}`}>
-                <text
-                  x={p.x}
-                  y={p.y}
-                  textAnchor="middle"
-                  dominantBaseline="middle"
-                  className="fill-white text-[10px] font-medium"
-                >
-                  {p.label}
-                </text>
-                <text
-                  x={p.x}
-                  y={p.y + 12}
-                  textAnchor="middle"
-                  dominantBaseline="middle"
-                  className="fill-elec-yellow text-[10px] font-mono"
-                >
-                  {p.score}%
-                </text>
-              </g>
-            ))}
+          {/* Data polygon fill */}
+          <polygon
+            points={dataPolygon}
+            fill="rgba(250, 204, 21, 0.12)"
+            stroke="rgba(250, 204, 21, 0.6)"
+            strokeWidth={2}
+            strokeLinejoin="round"
+          />
+
+          {/* Data points */}
+          {dataPoints.map((p, i) => (
+            <circle
+              key={`point-${i}`}
+              cx={p.x}
+              cy={p.y}
+              r={3}
+              fill="#facc15"
+              stroke="rgba(250, 204, 21, 0.3)"
+              strokeWidth={4}
+            />
+          ))}
+
+          {/* Labels */}
+          {labelPoints.map((p, i) => (
+            <g key={`label-${i}`}>
+              <text
+                x={p.x}
+                y={p.y}
+                textAnchor="middle"
+                dominantBaseline="middle"
+                className="fill-white text-[10px] font-medium"
+              >
+                {p.label}
+              </text>
+              <text
+                x={p.x}
+                y={p.y + 12}
+                textAnchor="middle"
+                dominantBaseline="middle"
+                className="fill-elec-yellow text-[10px] font-mono"
+              >
+                {p.score}%
+              </text>
+            </g>
+          ))}
         </svg>
       </div>
     </div>

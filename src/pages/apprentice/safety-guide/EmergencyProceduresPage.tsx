@@ -1,5 +1,7 @@
 import { CheckCircle2, AlertTriangle, Phone } from 'lucide-react';
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const EmergencyProceduresPage = () => {
   return (
@@ -63,7 +65,7 @@ const EmergencyProceduresPage = () => {
               </p>
             </div>
 
-            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 sm:p-4 space-y-2">
+            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3 sm:p-4 space-y-2">
               <h3 className="text-[13.5px] font-semibold text-elec-yellow tracking-tight">
                 The Primary Survey — DR ABC
               </h3>
@@ -159,7 +161,7 @@ const EmergencyProceduresPage = () => {
               ))}
             </div>
 
-            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
+            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3">
               <p className="text-white text-xs">
                 <span className="font-semibold text-elec-yellow">Important: </span>
                 Even if the casualty seems fine after an electric shock, they{' '}
@@ -348,7 +350,7 @@ const EmergencyProceduresPage = () => {
         </div>
 
         {/* RIDDOR */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 sm:p-5 space-y-4">
             <h2 className="text-lg font-semibold text-elec-yellow">RIDDOR Reporting</h2>
             <p className="text-white text-sm leading-relaxed">
@@ -394,7 +396,7 @@ const EmergencyProceduresPage = () => {
         </div>
 
         {/* First Aid on Site */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 sm:p-5 space-y-4">
             <h2 className="text-lg font-semibold text-elec-yellow">First Aid Awareness on Site</h2>
             <p className="text-white text-sm leading-relaxed">
@@ -421,7 +423,7 @@ const EmergencyProceduresPage = () => {
               ))}
             </div>
 
-            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
+            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3">
               <p className="text-white text-xs">
                 <span className="font-semibold text-elec-yellow">Tip: </span>
                 Consider getting a first aid at work certificate (3-day course or 1-day emergency
@@ -439,7 +441,7 @@ const EmergencyProceduresPage = () => {
               <Phone className="h-5 w-5 text-red-400" />
               <h3 className="text-sm font-semibold text-red-400">Key Emergency Numbers</h3>
             </div>
-            <p className="text-white/70 text-xs">
+            <p className="text-white text-xs">
               Tap a number to call. On a mobile, 999 and 112 both reach UK emergency services — 112
               works across the EU and on locked phones with no signal from your own network.
             </p>
@@ -484,7 +486,7 @@ const EmergencyProceduresPage = () => {
                 >
                   <div>
                     <p className="text-white text-sm font-medium">{contact.label}</p>
-                    <p className="text-white/70 text-xs">{contact.note}</p>
+                    <p className="text-white text-xs">{contact.note}</p>
                   </div>
                   <span className="inline-flex items-center gap-1.5 text-red-400 font-bold text-sm whitespace-nowrap">
                     <Phone className="h-3.5 w-3.5" />
@@ -497,7 +499,7 @@ const EmergencyProceduresPage = () => {
         </div>
 
         {/* Footer */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 sm:p-5">
             <p className="text-white text-xs leading-relaxed">
               Emergency procedures based on Resuscitation Council UK Guidelines (2021), the Health

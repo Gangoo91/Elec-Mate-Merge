@@ -67,7 +67,7 @@ const TimeEntryForm = ({ onAddEntry, onCancel }: TimeEntryFormProps) => {
         </div>
 
         <div className="space-y-2">
-          <Label className="text-[13px] text-white/85">Training notes (optional)</Label>
+          <Label className="text-[13px] text-white">Training notes (optional)</Label>
           <Textarea
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
@@ -75,7 +75,7 @@ const TimeEntryForm = ({ onAddEntry, onCancel }: TimeEntryFormProps) => {
             rows={4}
             className="touch-manipulation text-base min-h-[120px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500 resize-none"
           />
-          <p className="text-[11px] text-white/55">
+          <p className="text-[11px] text-white">
             Good practice: Note key learning points, skills developed, or areas for improvement
           </p>
         </div>

@@ -121,8 +121,8 @@ const Subsection1_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               <li>
                 <span className="font-semibold">Registered Competent Person Scheme</span>
                 <p className="mt-1">
-                  If you're registered with a Competent Person Scheme (such as NICEIC, ELECSA,
-                  NAPIT), you can:
+                  If you're registered with a Competent Person Scheme (such as NICEIC, NAPIT), you
+                  can:
                 </p>
                 <ul className="list-disc pl-5 mt-1 space-y-1">
                   <li>Self-certify your electrical work</li>

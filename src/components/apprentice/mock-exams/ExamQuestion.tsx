@@ -39,8 +39,8 @@ const ExamQuestion: React.FC<ExamQuestionProps> = ({
             type="button"
             className={`w-full text-left p-4 min-h-[52px] rounded-lg border text-[14px] leading-relaxed transition-all touch-manipulation active:scale-[0.98] ${
               selectedAnswer === index
-                ? 'bg-elec-yellow/[0.06] border-elec-yellow text-white'
-                : 'bg-white/[0.02] border-white/[0.06] text-white/85 hover:border-white/15'
+                ? 'bg-white/[0.05] border-elec-yellow text-white'
+                : 'bg-white/[0.02] border-white/[0.06] text-white hover:border-white/15'
             }`}
             onClick={() => onSelectAnswer(question.id, index)}
           >
@@ -54,7 +54,7 @@ const ExamQuestion: React.FC<ExamQuestionProps> = ({
           variant="outline"
           onClick={onPrevious}
           disabled={isFirstQuestion}
-          className="h-11 border-white/15 text-white hover:bg-white/[0.05] disabled:opacity-40 touch-manipulation"
+          className="h-11 border-white/15 text-white hover:bg-white/[0.05] disabled:text-white/70 touch-manipulation"
         >
           Previous
         </Button>

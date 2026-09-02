@@ -15,7 +15,7 @@ const ExamIntroduction: React.FC<ExamIntroductionProps> = ({ exam, onStart }) =>
   return (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-5">
       <div className="space-y-1">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Exam instructions
         </span>
         <h2 className="text-[20px] sm:text-[22px] font-semibold text-white leading-tight">
@@ -23,17 +23,17 @@ const ExamIntroduction: React.FC<ExamIntroductionProps> = ({ exam, onStart }) =>
         </h2>
       </div>
 
-      <p className="text-[14px] text-white/85 leading-relaxed">{exam.description}</p>
+      <p className="text-[14px] text-white leading-relaxed">{exam.description}</p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Duration
           </span>
           <p className="text-[14px] text-white mt-1">{exam.duration} minutes</p>
         </div>
         <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Questions
           </span>
           <p className="text-[14px] text-white mt-1">{exam.questionCount}</p>
@@ -41,7 +41,7 @@ const ExamIntroduction: React.FC<ExamIntroductionProps> = ({ exam, onStart }) =>
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Important notes
         </span>
         <ul className="space-y-1.5">
@@ -53,7 +53,7 @@ const ExamIntroduction: React.FC<ExamIntroductionProps> = ({ exam, onStart }) =>
           ].map((note, idx) => (
             <li
               key={idx}
-              className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+              className="text-[14px] text-white leading-relaxed flex items-start gap-2"
             >
               <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
               <span>{note}</span>

@@ -238,7 +238,7 @@ const CommercialReferenceGuide = () => {
                       <Badge variant="outline" className="border-white/10 text-white text-xs">
                         {light.duration}
                       </Badge>
-                      <Badge variant="outline" className="border-white/10 text-white/70 text-xs">
+                      <Badge variant="outline" className="border-white/10 text-white text-xs">
                         {light.standard}
                       </Badge>
                     </div>
@@ -268,7 +268,10 @@ const CommercialReferenceGuide = () => {
             </CardHeader>
             <CardContent className="space-y-4 p-0">
               {fireAlarmZones.map((zone, index) => (
-                <div key={index} className="p-4 rounded-lg border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]">
+                <div
+                  key={index}
+                  className="p-4 rounded-lg border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]"
+                >
                   <h4 className="font-medium text-white mb-3">{zone.zone}</h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
                     <div>
@@ -313,7 +316,7 @@ const CommercialReferenceGuide = () => {
                   description: 'Requirements for Electrical Installations (18th Edition)',
                 },
                 {
-                  standard: 'BS 5266-1:2016',
+                  standard: 'BS 5266-1:2025',
                   description:
                     'Emergency lighting - Code of practice for the emergency lighting of premises',
                 },
@@ -344,9 +347,9 @@ const CommercialReferenceGuide = () => {
                   key={index}
                   className="flex items-start gap-3 bg-white/[0.06] p-3 rounded-lg border border-white/[0.10]"
                 >
-                  <BookOpen className="h-5 w-5 text-white/70 mt-0.5 flex-shrink-0" />
+                  <BookOpen className="h-5 w-5 text-white mt-0.5 flex-shrink-0" />
                   <div>
-                    <h4 className="font-medium text-white/85">{item.standard}</h4>
+                    <h4 className="font-medium text-white">{item.standard}</h4>
                     <p className="text-sm text-white">{item.description}</p>
                   </div>
                 </div>

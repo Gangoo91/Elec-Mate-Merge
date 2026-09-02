@@ -156,7 +156,7 @@ const EVChargingGuide = () => {
     title: 'Cable Sizing for EV Chargers',
     factors: [
       'Circuit current rating (16A, 32A, etc.)',
-      'Voltage drop (max 3% for final circuits per BS 7671)',
+      'Voltage drop (5% for a power circuit — Appendix 4 Table 4Ab; 3% is the lighting figure)',
       'Cable route length',
       'Installation method (clipped, enclosed, buried)',
       'Ambient temperature',
@@ -201,7 +201,7 @@ const EVChargingGuide = () => {
       },
     ],
     voltageDropCalc: 'Voltage drop = (mV/A/m x Current x Length) / 1000',
-    maxVoltageDrop: '230V x 3% = 6.9V maximum for final circuit',
+    maxVoltageDrop: '230V x 5% = 11.5V maximum for an EV charging (power) circuit',
   };
 
   const protectionRequirements = {
@@ -242,7 +242,7 @@ const EVChargingGuide = () => {
     description:
       'Protective device that disconnects the supply if the PEN conductor becomes open-circuit or the supply neutral is lost',
     requirement:
-      'Required by BS 7671 Amendment 2 for TN-C-S (PME) supplies where vehicle may be connected during charging',
+      'One of the options Regulation 722.411.4.1 permits for a charge point on a PME (TN-C-S) supply — alternatives are an installation earth electrode (option b) or a TT earthing arrangement. A2:2022 deleted the old option (a); the PEN-fault rule itself predates it.',
     reason: [
       'In PME systems, loss of the PEN conductor can cause metalwork to rise to dangerous voltages',
       'Electric vehicles provide a path between the supply neutral and true earth via the vehicle chassis and tyres',
@@ -282,7 +282,7 @@ const EVChargingGuide = () => {
         type: 'TN-C-S (PME)',
         description: 'Combined neutral and earth supplied by DNO',
         requirements: [
-          'O-PEN protection device required (BS 7671)',
+          'Open-PEN protection to Reg 722.411.4.1 — an O-PEN device (option c/d), an earth electrode (option b) or TT',
           'Alternative: TT earthing for EV circuit',
           'Main bonding to installation earth',
           'Risk assessment for PME fault scenarios',
@@ -466,7 +466,8 @@ const EVChargingGuide = () => {
       {
         test: 'RCD operation',
         description: 'Trip time and current',
-        acceptable: '30mA: <300ms (standard), <40ms (Type S)',
+        acceptable:
+          '30mA: ≤300ms at IΔn (general); S-type is slower, 130–500ms. 5× test deleted at A4:2026',
       },
       {
         test: 'Functional testing',
@@ -563,10 +564,12 @@ const EVChargingGuide = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-3">
-            <Car className="h-8 w-8 text-white/70" />
+            <Car className="h-8 w-8 text-white" />
             <div>
-              <CardTitle className="text-[15px] font-semibold tracking-tight text-white">EV Charging Installation Guide</CardTitle>
-              <p className="text-white/85">
+              <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+                EV Charging Installation Guide
+              </CardTitle>
+              <p className="text-white">
                 BS 7671 Section 722 - Comprehensive guide for UK electricians
               </p>
             </div>
@@ -575,22 +578,22 @@ const EVChargingGuide = () => {
         <CardContent className="p-0">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="bg-white/[0.06] p-3 rounded-lg border border-white/[0.10]">
-              <Award className="h-5 w-5 text-white/70 mb-2" />
+              <Award className="h-5 w-5 text-white mb-2" />
               <p className="text-xs text-white">Certification</p>
               <p className="text-sm font-medium text-white">OZEV Approved</p>
             </div>
             <div className="bg-white/[0.06] p-3 rounded-lg border border-white/[0.10]">
-              <Shield className="h-5 w-5 text-white/70 mb-2" />
+              <Shield className="h-5 w-5 text-white mb-2" />
               <p className="text-xs text-white">Key Protection</p>
               <p className="text-sm font-medium text-white">O-PEN Device</p>
             </div>
             <div className="bg-white/[0.06] p-3 rounded-lg border border-white/[0.10]">
-              <PlugZap className="h-5 w-5 text-white/70 mb-2" />
+              <PlugZap className="h-5 w-5 text-white mb-2" />
               <p className="text-xs text-white">Standard Power</p>
               <p className="text-sm font-medium text-white">7kW / 32A</p>
             </div>
             <div className="bg-white/[0.06] p-3 rounded-lg border border-white/[0.10]">
-              <Clock className="h-5 w-5 text-white/70 mb-2" />
+              <Clock className="h-5 w-5 text-white mb-2" />
               <p className="text-xs text-white">Typical Install</p>
               <p className="text-sm font-medium text-white">2-4 Hours</p>
             </div>
@@ -613,32 +616,26 @@ const EVChargingGuide = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">EV Charging Modes (IEC 61851)</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              EV Charging Modes (IEC 61851)
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4 p-0">
           {chargingModes.map((mode, idx) => (
-            <div
-              key={idx}
-              className="p-4 rounded-lg border border-elec-yellow/30 bg-white/[0.06]"
-            >
+            <div key={idx} className="p-4 rounded-lg border border-elec-yellow/30 bg-white/[0.06]">
               <div className="flex items-start gap-4">
-                <div
-                  className="flex-shrink-0 w-12 h-12 rounded-full border border-elec-yellow/40 bg-white/[0.06] flex items-center justify-center"
-                >
+                <div className="flex-shrink-0 w-12 h-12 rounded-full border border-elec-yellow/40 bg-white/[0.06] flex items-center justify-center">
                   <mode.icon className="h-6 w-6 text-elec-yellow" />
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
-                    <Badge
-                      variant="outline"
-                      className="border-elec-yellow/50 text-elec-yellow"
-                    >
+                    <Badge variant="outline" className="border-elec-yellow/50 text-elec-yellow">
                       {mode.mode}
                     </Badge>
                     <h4 className="font-medium text-white">{mode.name}</h4>
                   </div>
-                  <p className="text-sm text-white/85 mb-3">{mode.description}</p>
+                  <p className="text-sm text-white mb-3">{mode.description}</p>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mb-3">
                     <div className="text-xs">
@@ -678,7 +675,9 @@ const EVChargingGuide = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Charger Types & Specifications</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              Charger Types & Specifications
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="p-0">
@@ -686,11 +685,11 @@ const EVChargingGuide = () => {
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b-2 border-white/[0.10]">
-                  <th className="text-left p-3 text-white/85">Type</th>
-                  <th className="text-left p-3 text-white/85">Current/Voltage</th>
-                  <th className="text-left p-3 text-white/85">Typical Use</th>
-                  <th className="text-left p-3 text-white/85">Cable</th>
-                  <th className="text-left p-3 text-white/85">Protection</th>
+                  <th className="text-left p-3 text-white">Type</th>
+                  <th className="text-left p-3 text-white">Current/Voltage</th>
+                  <th className="text-left p-3 text-white">Typical Use</th>
+                  <th className="text-left p-3 text-white">Cable</th>
+                  <th className="text-left p-3 text-white">Protection</th>
                 </tr>
               </thead>
               <tbody>
@@ -713,8 +712,8 @@ const EVChargingGuide = () => {
           </div>
 
           <Alert className="mt-4 border-white/[0.10] bg-white/[0.06]">
-            <Lightbulb className="h-4 w-4 text-white/70" />
-            <AlertDescription className="text-white/85 text-sm">
+            <Lightbulb className="h-4 w-4 text-white" />
+            <AlertDescription className="text-white text-sm">
               <strong>7kW (32A single-phase)</strong> is the most common domestic installation in
               the UK. It provides a good balance of charging speed (5-7 hours for typical EV) and
               installation cost. Most vehicles can accept this power level.
@@ -727,16 +726,18 @@ const EVChargingGuide = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{cableSizing.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              {cableSizing.title}
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4 p-0">
           <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
-            <h4 className="font-medium text-white/85 mb-3">Factors Affecting Cable Size</h4>
+            <h4 className="font-medium text-white mb-3">Factors Affecting Cable Size</h4>
             <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
               {cableSizing.factors.map((factor, idx) => (
                 <li key={idx} className="text-sm text-white flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="h-4 w-4 text-white mt-0.5 flex-shrink-0" />
                   {factor}
                 </li>
               ))}
@@ -748,11 +749,11 @@ const EVChargingGuide = () => {
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b-2 border-white/[0.10]">
-                  <th className="text-left p-2 text-white/85">Charger</th>
-                  <th className="text-left p-2 text-white/85">Method</th>
-                  <th className="text-left p-2 text-white/85">Max Length</th>
-                  <th className="text-left p-2 text-white/85">Cable</th>
-                  <th className="text-left p-2 text-white/85">Protection</th>
+                  <th className="text-left p-2 text-white">Charger</th>
+                  <th className="text-left p-2 text-white">Method</th>
+                  <th className="text-left p-2 text-white">Max Length</th>
+                  <th className="text-left p-2 text-white">Cable</th>
+                  <th className="text-left p-2 text-white">Protection</th>
                 </tr>
               </thead>
               <tbody>
@@ -770,8 +771,8 @@ const EVChargingGuide = () => {
           </div>
 
           <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
-            <h4 className="font-medium text-white/85 mb-2">Voltage Drop Calculation</h4>
-            <code className="block bg-white/[0.06] p-2 rounded text-xs text-white/85 mb-3">
+            <h4 className="font-medium text-white mb-2">Voltage Drop Calculation</h4>
+            <code className="block bg-white/[0.06] p-2 rounded text-xs text-white mb-3">
               {cableSizing.voltageDropCalc}
             </code>
             <p className="text-xs text-white">
@@ -785,14 +786,19 @@ const EVChargingGuide = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{protectionRequirements.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              {protectionRequirements.title}
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4 p-0">
           <h4 className="font-medium text-white">RCD Protection Types</h4>
           <div className="space-y-3">
             {protectionRequirements.rcdProtection.map((rcd, idx) => (
-              <div key={idx} className="p-4 rounded-lg border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]">
+              <div
+                key={idx}
+                className="p-4 rounded-lg border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]"
+              >
                 <div className="flex items-center justify-between mb-2">
                   <Badge variant="outline" className="border-red-400 text-red-300">
                     {rcd.type}
@@ -802,11 +808,11 @@ const EVChargingGuide = () => {
                 <p className="text-sm text-white mb-2">{rcd.description}</p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
                   <div>
-                    <span className="text-white/70">When to use:</span>
+                    <span className="text-white">When to use:</span>
                     <p className="text-white">{rcd.when}</p>
                   </div>
                   <div>
-                    <span className="text-white/70">Limitation:</span>
+                    <span className="text-white">Limitation:</span>
                     <p className="text-white">{rcd.limitation}</p>
                   </div>
                 </div>
@@ -830,23 +836,25 @@ const EVChargingGuide = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{openDevice.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              {openDevice.title}
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4 p-0">
           <Alert className="border-white/[0.10] bg-white/[0.06]">
-            <Shield className="h-4 w-4 text-white/70" />
-            <AlertDescription className="text-white/85 text-sm">
+            <Shield className="h-4 w-4 text-white" />
+            <AlertDescription className="text-white text-sm">
               <strong>Mandatory Requirement:</strong> {openDevice.requirement}
             </AlertDescription>
           </Alert>
 
           <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
-            <h4 className="font-medium text-white/85 mb-3">Why O-PEN Protection is Required</h4>
+            <h4 className="font-medium text-white mb-3">Why O-PEN Protection is Required</h4>
             <ul className="space-y-2">
               {openDevice.reason.map((reason, idx) => (
                 <li key={idx} className="text-sm text-white flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
+                  <AlertTriangle className="h-4 w-4 text-white mt-0.5 flex-shrink-0" />
                   {reason}
                 </li>
               ))}
@@ -856,7 +864,7 @@ const EVChargingGuide = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {openDevice.solutions.map((sol, idx) => (
               <div key={idx} className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
-                <h5 className="font-medium text-white/85 mb-2">{sol.solution}</h5>
+                <h5 className="font-medium text-white mb-2">{sol.solution}</h5>
                 <p className="text-xs text-white mb-2">{sol.description}</p>
                 <p className="text-xs text-white">{sol.notes}</p>
               </div>
@@ -864,11 +872,11 @@ const EVChargingGuide = () => {
           </div>
 
           <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
-            <h4 className="font-medium text-white/85 mb-3">Installation Points</h4>
+            <h4 className="font-medium text-white mb-3">Installation Points</h4>
             <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
               {openDevice.installation.map((point, idx) => (
                 <li key={idx} className="text-sm text-white flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="h-4 w-4 text-white mt-0.5 flex-shrink-0" />
                   {point}
                 </li>
               ))}
@@ -881,7 +889,9 @@ const EVChargingGuide = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{earthingConsiderations.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              {earthingConsiderations.title}
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4 p-0">
@@ -894,11 +904,11 @@ const EVChargingGuide = () => {
                   </Badge>
                   <span className="text-xs text-white">{supply.prevalence}</span>
                 </div>
-                <p className="text-sm text-white/85 mb-3">{supply.description}</p>
+                <p className="text-sm text-white mb-3">{supply.description}</p>
                 <ul className="space-y-1">
                   {supply.requirements.map((req, reqIdx) => (
                     <li key={reqIdx} className="text-xs text-white flex items-start gap-2">
-                      <CheckCircle className="h-3 w-3 text-white/70 mt-0.5 flex-shrink-0" />
+                      <CheckCircle className="h-3 w-3 text-white mt-0.5 flex-shrink-0" />
                       {req}
                     </li>
                   ))}
@@ -908,11 +918,11 @@ const EVChargingGuide = () => {
           </div>
 
           <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
-            <h4 className="font-medium text-white/85 mb-3">Bonding Requirements</h4>
+            <h4 className="font-medium text-white mb-3">Bonding Requirements</h4>
             <ul className="space-y-1">
               {earthingConsiderations.bonding.map((item, idx) => (
                 <li key={idx} className="text-sm text-white flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="h-4 w-4 text-white mt-0.5 flex-shrink-0" />
                   {item}
                 </li>
               ))}
@@ -925,14 +935,16 @@ const EVChargingGuide = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{loadManagement.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              {loadManagement.title}
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4 p-0">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {loadManagement.types.map((type, idx) => (
               <div key={idx} className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
-                <h4 className="font-medium text-white/85 mb-2">{type.type}</h4>
+                <h4 className="font-medium text-white mb-2">{type.type}</h4>
                 <p className="text-xs text-white mb-2">{type.description}</p>
                 <p className="text-xs text-white mb-1">
                   <strong>When:</strong> {type.when}
@@ -945,11 +957,11 @@ const EVChargingGuide = () => {
           </div>
 
           <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
-            <h4 className="font-medium text-white/85 mb-3">Smart Charging Features</h4>
+            <h4 className="font-medium text-white mb-3">Smart Charging Features</h4>
             <ul className="grid grid-cols-2 md:grid-cols-3 gap-2">
               {loadManagement.smartFeatures.map((feature, idx) => (
                 <li key={idx} className="text-sm text-white flex items-start gap-2">
-                  <Lightbulb className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
+                  <Lightbulb className="h-4 w-4 text-white mt-0.5 flex-shrink-0" />
                   {feature}
                 </li>
               ))}
@@ -962,19 +974,21 @@ const EVChargingGuide = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{ozevGrant.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              {ozevGrant.title}
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4 p-0">
           <Alert className="border-white/[0.10] bg-white/[0.06]">
-            <AlertTriangle className="h-4 w-4 text-white/70" />
-            <AlertDescription className="text-white/85 text-sm">
+            <AlertTriangle className="h-4 w-4 text-white" />
+            <AlertDescription className="text-white text-sm">
               <strong>Note:</strong> {ozevGrant.note}
             </AlertDescription>
           </Alert>
 
           <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
-            <h4 className="font-medium text-white/85 mb-3">{ozevGrant.workplaceScheme.name}</h4>
+            <h4 className="font-medium text-white mb-3">{ozevGrant.workplaceScheme.name}</h4>
             <Badge variant="outline" className="border-white/10 text-white mb-3">
               {ozevGrant.workplaceScheme.status}
             </Badge>
@@ -985,7 +999,7 @@ const EVChargingGuide = () => {
                 <ul className="space-y-1">
                   {ozevGrant.workplaceScheme.eligibility.map((item, idx) => (
                     <li key={idx} className="text-xs text-white flex items-start gap-2">
-                      <CheckCircle className="h-3 w-3 text-white/70 mt-0.5 flex-shrink-0" />
+                      <CheckCircle className="h-3 w-3 text-white mt-0.5 flex-shrink-0" />
                       {item}
                     </li>
                   ))}
@@ -996,7 +1010,7 @@ const EVChargingGuide = () => {
                 <ul className="space-y-1">
                   {ozevGrant.workplaceScheme.requirements.map((item, idx) => (
                     <li key={idx} className="text-xs text-white flex items-start gap-2">
-                      <CheckCircle className="h-3 w-3 text-white/70 mt-0.5 flex-shrink-0" />
+                      <CheckCircle className="h-3 w-3 text-white mt-0.5 flex-shrink-0" />
                       {item}
                     </li>
                   ))}
@@ -1006,11 +1020,11 @@ const EVChargingGuide = () => {
           </div>
 
           <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
-            <h4 className="font-medium text-white/85 mb-3">Installer Approval Requirements</h4>
+            <h4 className="font-medium text-white mb-3">Installer Approval Requirements</h4>
             <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
               {ozevGrant.installerApproval.map((item, idx) => (
                 <li key={idx} className="text-sm text-white flex items-start gap-2">
-                  <Award className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
+                  <Award className="h-4 w-4 text-white mt-0.5 flex-shrink-0" />
                   {item}
                 </li>
               ))}
@@ -1023,14 +1037,16 @@ const EVChargingGuide = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{commercialConsiderations.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              {commercialConsiderations.title}
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="p-0">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {commercialConsiderations.factors.map((factor, idx) => (
               <div key={idx} className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
-                <h4 className="font-medium text-white/85 mb-3">{factor.factor}</h4>
+                <h4 className="font-medium text-white mb-3">{factor.factor}</h4>
                 <ul className="space-y-1">
                   {factor.considerations.map((item, itemIdx) => (
                     <li key={itemIdx} className="text-xs text-white flex items-start gap-2">
@@ -1049,7 +1065,9 @@ const EVChargingGuide = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{testingCommissioning.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              {testingCommissioning.title}
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="p-0">
@@ -1067,7 +1085,7 @@ const EVChargingGuide = () => {
                   key={idx}
                   className="flex items-center gap-2 p-2 bg-white/[0.06] rounded border border-white/[0.10]"
                 >
-                  <CheckCircle className="h-4 w-4 text-white/70" />
+                  <CheckCircle className="h-4 w-4 text-white" />
                   <span className="text-sm text-white">{item}</span>
                 </div>
               ))}
@@ -1080,7 +1098,7 @@ const EVChargingGuide = () => {
                   className="bg-white/[0.06] p-3 rounded-lg border border-white/[0.10]"
                 >
                   <div className="flex justify-between items-start mb-1">
-                    <h5 className="font-medium text-white/85 text-sm">{test.test}</h5>
+                    <h5 className="font-medium text-white text-sm">{test.test}</h5>
                     <Badge variant="outline" className="border-white/10 text-white text-xs">
                       {test.acceptable}
                     </Badge>
@@ -1096,7 +1114,7 @@ const EVChargingGuide = () => {
                   key={idx}
                   className="flex items-center gap-2 p-2 bg-white/[0.06] rounded border border-white/[0.10]"
                 >
-                  <Shield className="h-4 w-4 text-white/70" />
+                  <Shield className="h-4 w-4 text-white" />
                   <span className="text-sm text-white">{item}</span>
                 </div>
               ))}
@@ -1108,7 +1126,7 @@ const EVChargingGuide = () => {
                   key={idx}
                   className="flex items-center gap-2 p-2 bg-white/[0.06] rounded border border-white/[0.10]"
                 >
-                  <FileCheck className="h-4 w-4 text-white/70" />
+                  <FileCheck className="h-4 w-4 text-white" />
                   <span className="text-sm text-white">{doc}</span>
                 </div>
               ))}
@@ -1121,21 +1139,17 @@ const EVChargingGuide = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Common Installation Scenarios</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              Common Installation Scenarios
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4 p-0">
           {installationScenarios.map((scenario, idx) => (
-            <div
-              key={idx}
-              className="p-4 rounded-lg border border-elec-yellow/30 bg-white/[0.06]"
-            >
+            <div key={idx} className="p-4 rounded-lg border border-elec-yellow/30 bg-white/[0.06]">
               <div className="flex items-center justify-between mb-3">
                 <h4 className="font-medium text-white">{scenario.scenario}</h4>
-                <Badge
-                  variant="outline"
-                  className="border-elec-yellow/50 text-elec-yellow text-xs"
-                >
+                <Badge variant="outline" className="border-elec-yellow/50 text-elec-yellow text-xs">
                   {scenario.typical}
                 </Badge>
               </div>
@@ -1146,9 +1160,7 @@ const EVChargingGuide = () => {
                   <ul className="space-y-1">
                     {scenario.considerations.map((item, itemIdx) => (
                       <li key={itemIdx} className="text-xs text-white flex items-start gap-2">
-                        <CheckCircle
-                          className="h-3 w-3 text-elec-yellow mt-0.5 flex-shrink-0"
-                        />
+                        <CheckCircle className="h-3 w-3 text-elec-yellow mt-0.5 flex-shrink-0" />
                         {item}
                       </li>
                     ))}
@@ -1159,7 +1171,7 @@ const EVChargingGuide = () => {
                   <ul className="space-y-1">
                     {scenario.challenges.map((item, itemIdx) => (
                       <li key={itemIdx} className="text-xs text-white flex items-start gap-2">
-                        <AlertTriangle className={`h-3 w-3 text-white/70 mt-0.5 flex-shrink-0`} />
+                        <AlertTriangle className={`h-3 w-3 text-white mt-0.5 flex-shrink-0`} />
                         {item}
                       </li>
                     ))}
@@ -1173,8 +1185,8 @@ const EVChargingGuide = () => {
 
       {/* Final Important Notice */}
       <Alert className="border-white/[0.10] bg-white/[0.06]">
-        <AlertTriangle className="h-5 w-5 text-white/70" />
-        <AlertDescription className="text-white/85">
+        <AlertTriangle className="h-5 w-5 text-white" />
+        <AlertDescription className="text-white">
           <strong className="text-white">Remember:</strong> EV charging installations must comply
           with BS 7671 Section 722, including O-PEN protection for PME supplies. Always verify
           supply type, assess earthing arrangements, and ensure appropriate RCD protection. For

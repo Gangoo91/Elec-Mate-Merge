@@ -10,7 +10,7 @@ interface DueTodayCardProps {
 /**
  * The one thing on the flashcards hub worth doing right now.
  *
- * Was `bg-elec-yellow/[0.04]` under a `/20` edge — a translucent volt wash,
+ * Was `bg-white/[0.05]` under a `/20` edge — a translucent volt wash,
  * which mixes with the near-black ground into sludge and made the page's
  * primary action the dimmest thing on it. Solid volt is the recipe's primary
  * and the only treatment that reads as "do this".

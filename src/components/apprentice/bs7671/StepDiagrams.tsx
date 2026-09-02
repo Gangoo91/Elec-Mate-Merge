@@ -9,7 +9,7 @@ import type { BS7671Test, BS7671TestStep } from '@/data/bs7671-testing/allBS7671
 
 const FRAME_CLASS =
   'rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3';
-const EYEBROW_CLASS = 'text-[10px] font-medium uppercase tracking-[0.18em] text-white/70';
+const EYEBROW_CLASS = 'text-[10px] font-medium uppercase tracking-[0.18em] text-white';
 
 const yellow = '#facc15';
 const white55 = 'rgba(255,255,255,0.55)';
@@ -37,7 +37,7 @@ const SvgFrame = ({
         {children}
       </svg>
     </div>
-    {caption && <p className="text-[12px] text-white/70 leading-relaxed">{caption}</p>}
+    {caption && <p className="text-[12px] text-white leading-relaxed">{caption}</p>}
   </figure>
 );
 

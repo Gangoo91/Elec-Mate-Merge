@@ -9,7 +9,7 @@
  *   read as three floating thumbnails rather than three cards, which is why
  *   this block looked like it belonged to a different app.
  *
- *   THE GREYS. `text-white/55` on the level label and the empty state.
+ *   THE GREYS. `text-white` on the level label and the empty state.
  *
  *   THREE BUTTONS PER CARD. The thumbnail, the bookmark and the caption were
  *   separate controls, with the caption nested inside the card's own hover

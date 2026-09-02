@@ -20,7 +20,7 @@
  * flat `bg-[hsl(0_0%_10%)]` + white-border surfaces this page used to carry —
  * those read as grey rectangles with no brand on them next to the redesigned
  * exam screens. Volt fills are solid only; the graduation banner used to use a
- * translucent `bg-elec-yellow/[0.08]` wash, which goes muddy on this ground.
+ * translucent `bg-white/[0.05]` wash, which goes muddy on this ground.
  *
  * Back navigation is caller-aware: entry points pass `state.from`, so leaving
  * returns you where you came from rather than always dumping you on Today.

@@ -32,7 +32,7 @@ const CourseSearchForm = ({ locations, onSearch }: CourseSearchFormProps) => {
 
   return (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
         Find courses & training centres
       </span>
       <Form {...form}>
@@ -44,7 +44,7 @@ const CourseSearchForm = ({ locations, onSearch }: CourseSearchFormProps) => {
               <FormItem className="flex-1">
                 <div className="relative">
                   {!field.value && (
-                    <Search className="absolute left-3 top-3 h-4 w-4 text-white/55 pointer-events-none" />
+                    <Search className="absolute left-3 top-3 h-4 w-4 text-white pointer-events-none" />
                   )}
                   <FormControl>
                     <Input
@@ -66,14 +66,14 @@ const CourseSearchForm = ({ locations, onSearch }: CourseSearchFormProps) => {
             render={({ field }) => (
               <FormItem className="w-full md:w-56">
                 <div className="relative">
-                  <MapPin className="absolute left-3 top-3 h-4 w-4 text-white/55 z-10" />
+                  <MapPin className="absolute left-3 top-3 h-4 w-4 text-white z-10" />
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger className="w-full h-11 pl-10 bg-white/[0.03] border-white/10 text-white touch-manipulation">
                         <SelectValue placeholder="Location" />
                       </SelectTrigger>
                     </FormControl>
-                    <SelectContent className="bg-elec-gray border-white/10">
+                    <SelectContent className="bg-white/[0.06] border-white/10">
                       {locations.map((location) => (
                         <SelectItem key={location} value={location}>
                           {location}

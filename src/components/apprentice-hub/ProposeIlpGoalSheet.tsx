@@ -1,5 +1,20 @@
 import { useEffect, useRef, useState } from 'react';
-import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
+import { Input } from '@/components/ui/input';
+import { FormSheet } from '@/components/forms/FormSheet';
+import { SelectField } from '@/components/forms/SelectField';
+import {
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  chipBase,
+  chipOff,
+  chipOn,
+  grid2Cn,
+  inputCn,
+  labelCn,
+  textareaCn,
+} from '@/components/forms/fieldStyles';
+import { useSheetDraft } from '@/hooks/useSheetDraft';
+import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
@@ -70,6 +85,15 @@ export function ProposeIlpGoalSheet({ open, onOpenChange, onSubmitted, prefill }
   const [saving, setSaving] = useState(false);
   const [savedTick, setSavedTick] = useState(false);
   const { toast } = useToast();
+  const { user } = useAuth();
+
+  // A half-written goal survives the phone going in a pocket; restoring is
+  // offered, never forced, and only when nothing was prefilled by the AI.
+  const draft = useSheetDraft<FormState>(user?.id ? `ilp-goal:${user.id}` : null, form, {
+    // Never let an AI prefill overwrite the apprentice's own half-written draft.
+    enabled: open && !saving && !prefill,
+    isEmpty: (f) => !f.title.trim() && !f.description.trim(),
+  });
 
   // Single open-time effect: hydrate from prefill if present, else empty.
   // Gated by wasOpenRef so it fires only on the false → true transition,
@@ -116,6 +140,7 @@ export function ProposeIlpGoalSheet({ open, onOpenChange, onSubmitted, prefill }
       });
       if (error) throw error;
 
+      draft.clear();
       setSavedTick(true);
       toast({
         title: 'Sent to your tutor',
@@ -137,153 +162,148 @@ export function ProposeIlpGoalSheet({ open, onOpenChange, onSubmitted, prefill }
     }
   };
 
+  const canSend = !saving && !!form.title.trim() && !!form.description.trim();
+
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        side="bottom"
-        className="h-[88vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_8%)] border-white/[0.06]"
-      >
-        <SheetTitle className="sr-only">Propose ILP goal</SheetTitle>
-        <div className="flex flex-col h-full">
-          <div className="px-4 sm:px-5 pt-4 pb-3 border-b border-white/[0.06]">
-            <div className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-white/85">
-              Propose a goal
-            </div>
-            <h2 className="mt-1 text-[18px] font-semibold text-white tracking-tight leading-tight">
-              Send to your tutor for review
-            </h2>
-            <p className="mt-1 text-[12px] text-white/85 leading-snug">
-              Edit anything before sending. Your tutor sees this in their next ILP review and can
-              accept, edit, or come back to you with a tweak.
-            </p>
-          </div>
-
-          <div className="flex-1 overflow-y-auto px-4 sm:px-5 py-4 space-y-4">
-            <Field label="Title">
-              <input
-                type="text"
-                value={form.title}
-                onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
-                placeholder="e.g. Master initial verification testing"
-                maxLength={200}
-                className="w-full h-11 px-3 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[14.5px] text-white placeholder:text-white/45 focus:outline-none focus:border-white/30 touch-manipulation"
-              />
-            </Field>
-
-            <Field
-              label="Why this goal"
-              hint="What you want to get better at — and why it matters."
-            >
-              <textarea
-                value={form.description}
-                onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
-                rows={4}
-                maxLength={4000}
-                className="w-full px-3 py-2.5 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[14.5px] text-white placeholder:text-white/45 leading-relaxed focus:outline-none focus:border-white/30 touch-manipulation resize-none"
-              />
-            </Field>
-
-            <Field
-              label="What 'done' looks like"
-              hint="The SMART bit — how you and your tutor will know you've hit it."
-            >
-              <textarea
-                value={form.acceptance_criteria}
-                onChange={(e) => setForm((f) => ({ ...f, acceptance_criteria: e.target.value }))}
-                placeholder="e.g. Pass the next IV quiz with ≥80% and complete one site IV under supervision."
-                rows={3}
-                maxLength={2000}
-                className="w-full px-3 py-2.5 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[14.5px] text-white placeholder:text-white/45 leading-relaxed focus:outline-none focus:border-white/30 touch-manipulation resize-none"
-              />
-            </Field>
-
-            <div className="grid grid-cols-2 gap-3">
-              <Field label="Category">
-                <select
-                  value={form.category}
-                  onChange={(e) => setForm((f) => ({ ...f, category: e.target.value }))}
-                  className="w-full h-11 px-3 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[14.5px] text-white focus:outline-none focus:border-white/30 touch-manipulation"
-                >
-                  {CATEGORY_OPTIONS.map((c) => (
-                    <option key={c.value} value={c.value} className="bg-[hsl(0_0%_10%)]">
-                      {c.label}
-                    </option>
-                  ))}
-                </select>
-              </Field>
-
-              <Field label="Priority">
-                <select
-                  value={form.priority}
-                  onChange={(e) => setForm((f) => ({ ...f, priority: e.target.value }))}
-                  className="w-full h-11 px-3 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[14.5px] text-white focus:outline-none focus:border-white/30 touch-manipulation"
-                >
-                  {PRIORITY_OPTIONS.map((p) => (
-                    <option key={p.value} value={p.value} className="bg-[hsl(0_0%_10%)]">
-                      {p.label}
-                    </option>
-                  ))}
-                </select>
-              </Field>
-            </div>
-
-            <Field
-              label="Target date"
-              hint="When do you want to hit this by? Leave empty if open-ended."
-            >
-              <input
-                type="date"
-                value={form.target_date}
-                onChange={(e) => setForm((f) => ({ ...f, target_date: e.target.value }))}
-                className="w-full h-11 px-3 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[14.5px] text-white focus:outline-none focus:border-white/30 touch-manipulation"
-              />
-            </Field>
-          </div>
-
-          <div className="px-4 sm:px-5 py-3 border-t border-white/[0.06] bg-[hsl(0_0%_10%)] flex items-center justify-between gap-3">
-            <button
-              type="button"
-              onClick={() => onOpenChange(false)}
-              disabled={saving}
-              className="h-11 px-4 rounded-lg text-[13px] font-medium text-white/85 hover:text-white hover:bg-white/[0.04] transition-colors touch-manipulation disabled:opacity-50"
-            >
-              Cancel
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      eyebrow="Propose a goal"
+      title="Send to your tutor for review"
+      description="Edit anything before sending. Your tutor sees this in their next ILP review and can accept it, edit it, or come back to you with a tweak."
+      footer={
+        <div className="grid grid-cols-2 gap-2.5">
+          <button
+            type="button"
+            onClick={() => onOpenChange(false)}
+            disabled={saving}
+            className={buttonSecondaryCn}
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            onClick={handleSubmit}
+            disabled={!canSend}
+            className={buttonPrimaryCn}
+          >
+            {savedTick ? 'Sent ✓' : saving ? 'Sending…' : 'Send to tutor'}
+          </button>
+        </div>
+      }
+    >
+      {draft.hasDraft && draft.draft && !prefill && (
+        <div className="space-y-3 rounded-2xl border border-elec-yellow/35 bg-white/[0.05] p-4">
+          <p className="text-[13px] leading-snug text-white">
+            <span className="font-semibold">Unfinished goal</span> —{' '}
+            {draft.draft.title.trim() || 'one you started earlier'}. Pick up where you left off?
+          </p>
+          <div className="grid grid-cols-2 gap-2">
+            <button type="button" onClick={draft.clear} className={cn(buttonSecondaryCn, 'h-11')}>
+              Discard
             </button>
             <button
               type="button"
-              onClick={handleSubmit}
-              disabled={saving || !form.title.trim() || !form.description.trim()}
-              className={cn('inline-flex items-center h-11 px-4 rounded-lg text-[13px] font-semibold text-black transition-colors touch-manipulation',
-                saving || !form.title.trim() || !form.description.trim()
-                  ? 'bg-white/[0.05] text-white/40'
-                  : 'bg-white/[0.02] hover:bg-white/[0.02]'
-              )}
+              onClick={() => {
+                if (draft.draft) setForm(draft.draft);
+                draft.dismiss();
+              }}
+              className={cn(buttonPrimaryCn, 'h-11')}
             >
-              {savedTick ? 'Sent ✓' : saving ? 'Sending…' : 'Send to tutor'}
+              Resume
             </button>
           </div>
         </div>
-      </SheetContent>
-    </Sheet>
-  );
-}
+      )}
 
-function Field({
-  label,
-  hint,
-  children,
-}: {
-  label: string;
-  hint?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <label className="block">
-      <span className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-white/85">
-        {label}
-      </span>
-      {hint && <span className="block mt-0.5 text-[11.5px] text-white/55">{hint}</span>}
-      <div className="mt-1.5">{children}</div>
-    </label>
+      <div>
+        <label className={labelCn} htmlFor="ilp-title">
+          Title
+        </label>
+        <Input
+          id="ilp-title"
+          type="text"
+          value={form.title}
+          onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
+          placeholder="e.g. Master initial verification testing"
+          maxLength={200}
+          className={inputCn}
+        />
+      </div>
+
+      <div>
+        <label className={labelCn} htmlFor="ilp-description">
+          Why this goal
+        </label>
+        <textarea
+          id="ilp-description"
+          value={form.description}
+          onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
+          placeholder="What you want to get better at, and why it matters"
+          rows={4}
+          maxLength={4000}
+          className={cn(textareaCn, 'w-full resize-none')}
+        />
+      </div>
+
+      <div>
+        <label className={labelCn} htmlFor="ilp-criteria">
+          What &lsquo;done&rsquo; looks like
+        </label>
+        <textarea
+          id="ilp-criteria"
+          value={form.acceptance_criteria}
+          onChange={(e) => setForm((f) => ({ ...f, acceptance_criteria: e.target.value }))}
+          placeholder="e.g. Pass the next IV quiz with 80% or more and complete one site IV under supervision"
+          rows={3}
+          maxLength={2000}
+          className={cn(textareaCn, 'w-full resize-none')}
+        />
+        <p className="mt-1.5 text-[11.5px] leading-snug text-white">
+          The SMART bit — how you and your tutor will know you have hit it.
+        </p>
+      </div>
+
+      <div className={grid2Cn}>
+        <div>
+          <label className={labelCn}>Category</label>
+          <SelectField
+            value={form.category}
+            onValueChange={(v) => setForm((f) => ({ ...f, category: v }))}
+            title="Category"
+            options={CATEGORY_OPTIONS}
+          />
+        </div>
+        <div>
+          <label className={labelCn} htmlFor="ilp-date">
+            Target date
+          </label>
+          <Input
+            id="ilp-date"
+            type="date"
+            value={form.target_date}
+            onChange={(e) => setForm((f) => ({ ...f, target_date: e.target.value }))}
+            className={inputCn}
+          />
+        </div>
+      </div>
+
+      <div>
+        <label className={labelCn}>Priority</label>
+        <div className="flex gap-2">
+          {PRIORITY_OPTIONS.map((p) => (
+            <button
+              key={p.value}
+              type="button"
+              aria-pressed={form.priority === p.value}
+              onClick={() => setForm((f) => ({ ...f, priority: p.value }))}
+              className={cn(chipBase, 'flex-1 px-2', form.priority === p.value ? chipOn : chipOff)}
+            >
+              {p.label}
+            </button>
+          ))}
+        </div>
+      </div>
+    </FormSheet>
   );
 }

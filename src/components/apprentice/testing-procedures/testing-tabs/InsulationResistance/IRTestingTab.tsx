@@ -28,7 +28,7 @@ const IRTestingTab = () => {
           <h2 className="text-[20px] sm:text-[22px] font-semibold text-white leading-tight">
             Insulation resistance (IR) testing
           </h2>
-          <p className="text-[14px] text-white/70 leading-relaxed">
+          <p className="text-[14px] text-white leading-relaxed">
             Tests the insulation resistance between live conductors and between live conductors and
             earth.
           </p>
@@ -38,7 +38,7 @@ const IRTestingTab = () => {
           {items.map((item, i) => (
             <li
               key={i}
-              className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+              className="text-[14px] text-white leading-relaxed flex items-start gap-2"
             >
               <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
               <span>{item}</span>
@@ -50,7 +50,7 @@ const IRTestingTab = () => {
       </div>
 
       <div className={cn(PANEL, "space-y-3")}>
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Test voltages and minimum values — BS 7671 Table 64
         </span>
         <div className="overflow-x-auto">
@@ -65,15 +65,15 @@ const IRTestingTab = () => {
             <tbody>
               {table64.map(([circuit, voltage, min]) => (
                 <tr key={circuit} className="border-b border-white/[0.05] last:border-0">
-                  <td className="py-2 pr-3 text-white/85">{circuit}</td>
-                  <td className="py-2 pr-3 font-mono text-white/85">{voltage}</td>
+                  <td className="py-2 pr-3 text-white">{circuit}</td>
+                  <td className="py-2 pr-3 font-mono text-white">{voltage}</td>
                   <td className="py-2 font-mono text-white">{min}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        <p className="text-[13px] text-white/85 leading-relaxed">
+        <p className="text-[13px] text-white leading-relaxed">
           A typical 230 V final circuit is the middle row: test at 500 V DC, and it is satisfactory
           at 1.0 MΩ or above. Where equipment has to stay connected and would be damaged or would
           influence the result, Regulation 643.3.3 allows a 250 V DC test after connection, which
@@ -85,7 +85,7 @@ const IRTestingTab = () => {
         <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
           Meeting the minimum is not the same as being healthy
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           1.0 MΩ is the floor for compliance, not a target. A circuit reading a little above it is
           worth investigating rather than signing off — sound new wiring normally reads far higher,
           often beyond the range of the instrument.

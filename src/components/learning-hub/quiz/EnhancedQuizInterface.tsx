@@ -1,14 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import {
-  Clock,
-  ChevronRight,
-  X,
-  CheckCircle2,
-  XCircle,
-  ArrowLeft,
-  BookOpen,
-} from 'lucide-react';
+import { Clock, ChevronRight, X, CheckCircle2, XCircle, ArrowLeft, BookOpen } from 'lucide-react';
 import { QuizQuestion, Assessment } from '@/types/quiz';
 import { useQuizSession } from '@/hooks/useQuizSession';
 
@@ -132,7 +124,13 @@ const EnhancedQuizInterface = ({
                   showExitConfirm ? 'bg-red-500 text-white' : 'text-white hover:bg-white/10'
                 }`}
               >
-                {showExitConfirm ? <><X className="h-4 w-4" /> Exit</> : <X className="h-5 w-5" />}
+                {showExitConfirm ? (
+                  <>
+                    <X className="h-4 w-4" /> Exit
+                  </>
+                ) : (
+                  <X className="h-5 w-5" />
+                )}
               </button>
               <h1 className="text-sm font-semibold text-white truncate">{assessment.title}</h1>
             </div>
@@ -157,8 +155,12 @@ const EnhancedQuizInterface = ({
               />
             </div>
             <div className="flex justify-between mt-1">
-              <span className="text-[10px] text-white">Question {progress.current} of {progress.total}</span>
-              <span className="text-[10px] text-white">{progress.total - progress.current} remaining</span>
+              <span className="text-[10px] text-white">
+                Question {progress.current} of {progress.total}
+              </span>
+              <span className="text-[10px] text-white">
+                {progress.total - progress.current} remaining
+              </span>
             </div>
           </div>
         </div>
@@ -174,7 +176,9 @@ const EnhancedQuizInterface = ({
           {currentQuestion.regulation && (
             <div className="flex items-center gap-1.5">
               <BookOpen className="h-3 w-3 text-yellow-400" />
-              <span className="text-[11px] text-yellow-400 font-mono">{currentQuestion.regulation}</span>
+              <span className="text-[11px] text-yellow-400 font-mono">
+                {currentQuestion.regulation}
+              </span>
             </div>
           )}
         </div>
@@ -210,8 +214,16 @@ const EnhancedQuizInterface = ({
                 className={`w-full text-left p-4 rounded-2xl border transition-all duration-200 touch-manipulation active:scale-[0.98] ${bgClass} ${hasAnswered ? 'cursor-default' : ''}`}
               >
                 <div className="flex items-center gap-3">
-                  <div className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold text-sm shrink-0 transition-all ${labelClass}`}>
-                    {showAsCorrect ? <CheckCircle2 className="h-5 w-5" /> : showAsWrong ? <XCircle className="h-5 w-5" /> : optionLabels[index]}
+                  <div
+                    className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold text-sm shrink-0 transition-all ${labelClass}`}
+                  >
+                    {showAsCorrect ? (
+                      <CheckCircle2 className="h-5 w-5" />
+                    ) : showAsWrong ? (
+                      <XCircle className="h-5 w-5" />
+                    ) : (
+                      optionLabels[index]
+                    )}
                   </div>
                   <p className="text-sm text-white leading-snug flex-1">{option}</p>
                 </div>
@@ -222,9 +234,13 @@ const EnhancedQuizInterface = ({
 
         {/* Explanation — shown immediately after answering */}
         {hasAnswered && (
-          <div className={`rounded-2xl p-4 space-y-2 ${isCorrect ? 'bg-green-500/10 border border-green-500/20' : 'bg-orange-500/10 border border-orange-500/20'}`}>
-            <p className={`text-xs font-bold uppercase tracking-wider ${isCorrect ? 'text-green-400' : 'text-orange-400'}`}>
-              {isCorrect ? 'Correct!' : 'Not quite — here\'s why:'}
+          <div
+            className={`rounded-2xl p-4 space-y-2 ${isCorrect ? 'bg-green-500/10 border border-green-500/20' : 'bg-orange-500/10 border border-orange-500/20'}`}
+          >
+            <p
+              className={`text-xs font-bold uppercase tracking-wider ${isCorrect ? 'text-green-400' : 'text-orange-400'}`}
+            >
+              {isCorrect ? 'Correct!' : "Not quite — here's why:"}
             </p>
             <p className="text-sm text-white leading-relaxed">{currentQuestion.explanation}</p>
             {currentQuestion.regulation && (
@@ -240,14 +256,18 @@ const EnhancedQuizInterface = ({
           <Button
             onClick={handleNext}
             disabled={!hasAnswered}
-            className="w-full h-12 bg-yellow-400 text-black hover:bg-yellow-300 font-semibold disabled:opacity-30 disabled:bg-white/10 disabled:text-white rounded-xl touch-manipulation active:scale-[0.98] transition-all text-sm"
+            className="w-full h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold disabled:bg-white/[0.08] disabled:text-white/70 rounded-xl touch-manipulation active:scale-[0.98] transition-all text-sm"
           >
             {!hasAnswered ? (
               'Select an answer'
             ) : progress.current === progress.total ? (
-              <><CheckCircle2 className="h-4 w-4 mr-2" /> See Results</>
+              <>
+                <CheckCircle2 className="h-4 w-4 mr-2" /> See Results
+              </>
             ) : (
-              <>Next Question <ChevronRight className="h-4 w-4 ml-1" /></>
+              <>
+                Next Question <ChevronRight className="h-4 w-4 ml-1" />
+              </>
             )}
           </Button>
         </div>

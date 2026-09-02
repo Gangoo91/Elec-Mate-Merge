@@ -1,23 +1,11 @@
-import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import {
-  ArrowLeft,
-  CheckCircle,
-  Shield,
-  AlertTriangle,
-  Zap,
-  Eye,
-  Star,
-  Phone,
-  Heart,
-} from 'lucide-react';
-import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
+import { CheckCircle, Shield, AlertTriangle, Zap, Eye, Star, Phone, Heart } from 'lucide-react';
+import { itemVariants } from '@/components/college/primitives';
+import { HubSubPage } from '@/components/hub/HubSubPage';
 
 const SafetyFundamentals = () => {
-  const navigate = useNavigate();
   const safetyPrinciples = [
     'Always assume circuits are live until proven dead',
     'Use appropriate PPE for every electrical task',
@@ -33,7 +21,12 @@ const SafetyFundamentals = () => {
       requirement: 'Steel toecap, electrical hazard rated',
       standard: 'BS EN ISO 20345',
     },
-    { item: 'Hard hat', requirement: 'Class C electrical rating', standard: 'BS EN 397' },
+    {
+      item: 'Hard hat',
+      requirement:
+        'BS EN 397 for impact; for live-work protection an electrically insulating helmet to BS EN 50365 (1000 V) — a "Class C" helmet is CONDUCTIVE',
+      standard: 'BS EN 397 / BS EN 50365',
+    },
     {
       item: 'Safety glasses',
       requirement: 'Impact resistant, side protection',
@@ -51,18 +44,19 @@ const SafetyFundamentals = () => {
     },
     {
       item: 'Arc flash PPE',
-      requirement: 'Cat 2+ rating for high energy work',
-      standard: 'BS EN 61482',
+      requirement:
+        'Arc-rated to the incident energy from the arc-flash assessment (box-test class APC 1 or 2, or an ATPV/ELIM rating)',
+      standard: 'BS EN 61482-1-2 / -2',
     },
   ];
 
   const isolationSteps = [
-    'Switch off supply at source',
-    'Isolate all sources of supply',
-    'Lock off isolation points',
-    'Test isolation is effective',
-    'Test voltage indicator',
-    'Issue permits to work if required',
+    'Identify the circuit and every source of supply (including PV, UPS, generators and borrowed neutrals)',
+    'Switch off and isolate at the correct point',
+    'Lock off with your own padlock and post a warning notice — the key stays with you',
+    'Prove your GS38 voltage indicator on a known live source or proving unit',
+    'Test for dead at the point of work — L-N, L-E and N-E, all conductors',
+    'Re-prove the indicator on the known live source, then work under a permit if the site requires one',
   ];
 
   const emergencyProcedures = [
@@ -77,9 +71,9 @@ const SafetyFundamentals = () => {
       label: 'PPE Items',
       value: '6+',
       icon: Eye,
-      color: 'text-blue-400',
-      bg: 'from-blue-500/10 to-blue-500/5',
-      border: 'border-blue-500/30',
+      color: 'text-elec-yellow',
+      bg: 'from-white/[0.06] to-white/[0.03]',
+      border: 'border-elec-yellow/35',
     },
     {
       label: 'Isolation Steps',
@@ -101,34 +95,18 @@ const SafetyFundamentals = () => {
       label: 'Priority',
       value: '#1',
       icon: Star,
-      color: 'text-green-400',
-      bg: 'from-green-500/10 to-green-500/5',
-      border: 'border-green-500/30',
+      color: 'text-white',
+      bg: 'from-white/[0.06] to-white/[0.03]',
+      border: 'border-white/[0.12]',
     },
   ];
 
   return (
-    <PageFrame className="px-4 sm:px-6 lg:px-8">
-      <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/apprentice/toolbox')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
-        >
-          <ArrowLeft className="mr-2 h-5 w-5" />
-          Back
-        </Button>
-      </motion.div>
-
-      <motion.div variants={itemVariants}>
-        <PageHero
-          eyebrow="Apprentice · Safety"
-          title="Safety fundamentals"
-          description="The non-negotiable principles, PPE standards, isolation procedures and emergency responses that keep electricians alive. Read these once a year, every year — they pay back the time."
-          tone="yellow"
-        />
-      </motion.div>
-
+    <HubSubPage
+      title="Safety fundamentals"
+      backTo="/apprentice/toolbox"
+      description="The principles, PPE standards, isolation procedures and emergency responses every electrician has to know."
+    >
       {/* Quick Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
         {quickStats.map((stat, index) => (
@@ -171,11 +149,11 @@ const SafetyFundamentals = () => {
       </Card>
 
       {/* PPE Requirements */}
-      <Card className="border-blue-500/30 bg-gradient-to-br from-blue-500/10 to-blue-500/5">
+      <Card className="border-elec-yellow/35 bg-gradient-to-br from-white/[0.06] to-white/[0.03]">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <Eye className="h-6 w-6 text-blue-400" />
-            <CardTitle className="text-blue-400">Personal Protective Equipment (PPE)</CardTitle>
+            <Eye className="h-6 w-6 text-elec-yellow" />
+            <CardTitle className="text-elec-yellow">Personal Protective Equipment (PPE)</CardTitle>
           </div>
           <p className="text-white text-sm">
             Essential PPE for electrical work with relevant standards
@@ -186,7 +164,7 @@ const SafetyFundamentals = () => {
             {ppeItems.map((ppe, index) => (
               <div
                 key={index}
-                className="bg-white/5 border border-white/10 p-4 rounded-lg hover:border-blue-500/30 transition-all"
+                className="bg-white/5 border border-white/10 p-4 rounded-lg hover:border-elec-yellow/35 transition-all"
               >
                 <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
                   <div className="flex-1">
@@ -195,7 +173,7 @@ const SafetyFundamentals = () => {
                   </div>
                   <Badge
                     variant="outline"
-                    className="border-blue-500/40 text-blue-400 w-fit text-xs"
+                    className="border-elec-yellow/40 text-elec-yellow w-fit text-xs"
                   >
                     {ppe.standard}
                   </Badge>
@@ -372,7 +350,7 @@ const SafetyFundamentals = () => {
           </div>
         </CardContent>
       </Card>
-    </PageFrame>
+    </HubSubPage>
   );
 };
 

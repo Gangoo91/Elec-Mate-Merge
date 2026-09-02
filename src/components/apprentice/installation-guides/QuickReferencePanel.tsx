@@ -30,8 +30,8 @@ interface QuickReferencePanelProps {
 function TipBanner({ text }: { text: string }) {
   return (
     <div className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-3 space-y-1">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">Tip</span>
-      <p className="text-[14px] text-white/85 leading-relaxed">{text}</p>
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">Tip</span>
+      <p className="text-[14px] text-white leading-relaxed">{text}</p>
     </div>
   );
 }
@@ -51,7 +51,7 @@ function Section({
       <CollapsibleTrigger className="flex items-center justify-between w-full h-11 px-3 rounded-lg border border-white/[0.10] bg-white/[0.06] touch-manipulation">
         <span className="text-[14px] text-white font-medium">{title}</span>
         <ChevronDown
-          className={`h-4 w-4 text-white/70 transition-transform ${open ? 'rotate-180' : ''}`}
+          className={`h-4 w-4 text-white transition-transform ${open ? 'rotate-180' : ''}`}
         />
       </CollapsibleTrigger>
       <CollapsibleContent className="pt-3 space-y-3">{children}</CollapsibleContent>
@@ -64,7 +64,7 @@ function DataCard({ items }: { items: { label: string; value: string }[] }) {
     <div className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-3 space-y-1.5">
       {items.map((item, i) => (
         <div key={i} className="flex justify-between gap-2">
-          <span className="text-[13px] text-white/70">{item.label}</span>
+          <span className="text-[13px] text-white">{item.label}</span>
           <span className="text-[13px] text-white text-right">{item.value}</span>
         </div>
       ))}
@@ -76,7 +76,7 @@ function CableSizingPanel() {
   return (
     <div className="space-y-3">
       <h3 className="text-[16px] font-semibold text-white">Cable sizing quick reference</h3>
-      <p className="text-[14px] text-white/85 leading-relaxed">
+      <p className="text-[14px] text-white leading-relaxed">
         T&E current ratings (Reference Method C — clipped direct) from BS 7671 Table 4D5.
       </p>
       {cableSizingData.map((row, i) => (
@@ -116,7 +116,7 @@ function CircuitEssentialsPanel() {
               {circuit.extras.map((e, j) => (
                 <li
                   key={j}
-                  className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
                 >
                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{e}</span>
@@ -172,8 +172,8 @@ function EarthingSystemsPanel() {
       {earthingSystems.map((sys, i) => (
         <Section key={i} title={sys.shortName} defaultOpen={i === 0}>
           <div className="space-y-2">
-            <p className="text-[13px] text-white/85 font-medium">{sys.prevalence}</p>
-            <p className="text-[14px] text-white/85 leading-relaxed">{sys.description}</p>
+            <p className="text-[13px] text-white font-medium">{sys.prevalence}</p>
+            <p className="text-[14px] text-white leading-relaxed">{sys.description}</p>
             <DataCard items={[{ label: 'Typical Ze', value: sys.ze }]} />
             <TipBanner text={sys.tip} />
           </div>
@@ -221,7 +221,7 @@ function CableColoursPanel() {
           {colourSafetyPoints.map((point, i) => (
             <li
               key={i}
-              className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed"
+              className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
             >
               <AlertTriangle className="h-4 w-4 text-red-400 shrink-0 mt-0.5" />
               <span>{point}</span>
@@ -239,7 +239,7 @@ function SafeIsolationPanel() {
   return (
     <div className="space-y-3">
       <h3 className="text-[16px] font-semibold text-white">Safe isolation procedure (GS38)</h3>
-      <p className="text-[14px] text-white/85 leading-relaxed">
+      <p className="text-[14px] text-white leading-relaxed">
         The 8 steps — in order, every time:
       </p>
 
@@ -249,12 +249,12 @@ function SafeIsolationPanel() {
             key={s.step}
             className="flex items-start gap-3 rounded-lg border border-white/[0.10] bg-white/[0.06] p-3"
           >
-            <span className="flex items-center justify-center w-7 h-7 rounded-full bg-white/[0.05] text-white/85 text-[13px] font-semibold shrink-0">
+            <span className="flex items-center justify-center w-7 h-7 rounded-full bg-white/[0.05] text-white text-[13px] font-semibold shrink-0">
               {s.step}
             </span>
             <div className="space-y-0.5">
               <p className="text-[14px] text-white font-semibold">{s.title}</p>
-              <p className="text-[14px] text-white/85 leading-relaxed">{s.description}</p>
+              <p className="text-[14px] text-white leading-relaxed">{s.description}</p>
             </div>
           </div>
         ))}
@@ -268,7 +268,7 @@ function SafeIsolationPanel() {
           {safeIsolationRules.map((rule, i) => (
             <li
               key={i}
-              className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed"
+              className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
             >
               <AlertTriangle className="h-4 w-4 text-red-400 shrink-0 mt-0.5" />
               <span>{rule}</span>
@@ -306,7 +306,7 @@ function AccessoryHeightsPanel() {
           {partMKeyPoints.map((point, i) => (
             <li
               key={i}
-              className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed"
+              className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
             >
               <span className="w-1 h-1 rounded-full bg-white/55 mt-2 shrink-0" />
               <span>{point}</span>

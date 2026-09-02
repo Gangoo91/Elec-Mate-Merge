@@ -84,20 +84,20 @@ const InteractiveProgressTracker = () => {
   return (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
       <div className="space-y-1">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Progress tracker
         </span>
         <h3 className="text-[18px] font-semibold text-white leading-tight">
           Interactive progress tracker
         </h3>
-        <p className="text-[13px] text-white/70">
+        <p className="text-[13px] text-white">
           Track your apprenticeship milestones and earn points.
         </p>
       </div>
 
       <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
         <div className="flex items-baseline justify-between">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Overall progress
           </span>
           <span className="text-[12px] text-white font-mono">
@@ -135,11 +135,8 @@ const InteractiveProgressTracker = () => {
         <div className="space-y-3">
           <div className="flex items-baseline justify-between">
             <h3 className="text-[15px] font-semibold text-white">{currentYearData.title}</h3>
-            <span className="text-[12px] text-white/85">
-              {
-                currentYearData.milestones.filter((m) => completedMilestones.includes(m.id))
-                  .length
-              }{' '}
+            <span className="text-[12px] text-white">
+              {currentYearData.milestones.filter((m) => completedMilestones.includes(m.id)).length}{' '}
               / {currentYearData.milestones.length} completed
             </span>
           </div>
@@ -154,7 +151,7 @@ const InteractiveProgressTracker = () => {
                   onClick={() => toggleMilestone(milestone.id)}
                   className={`w-full text-left rounded-lg border p-3 touch-manipulation transition-colors ${
                     isComplete
-                      ? 'border-elec-yellow/30 bg-elec-yellow/[0.04]'
+                      ? 'border-elec-yellow/30 bg-white/[0.05]'
                       : 'border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04]'
                   }`}
                 >
@@ -163,17 +160,17 @@ const InteractiveProgressTracker = () => {
                       {isComplete ? (
                         <CheckCircle className="h-5 w-5 text-elec-yellow flex-shrink-0" />
                       ) : (
-                        <Circle className="h-5 w-5 text-white/40 flex-shrink-0" />
+                        <Circle className="h-5 w-5 text-white flex-shrink-0" />
                       )}
                       <span
                         className={`text-[13px] ${
-                          isComplete ? 'text-white/55 line-through' : 'text-white/85'
+                          isComplete ? 'text-white line-through' : 'text-white'
                         }`}
                       >
                         {milestone.text}
                       </span>
                     </div>
-                    <span className="text-[12px] text-white/85 font-mono">
+                    <span className="text-[12px] text-white font-mono">
                       {milestone.points} pts
                     </span>
                   </div>
@@ -190,11 +187,11 @@ const InteractiveProgressTracker = () => {
             key={year.year}
             className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-1.5"
           >
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Year {year.year}
             </span>
             <Progress value={getYearProgress(year.year)} className="h-1" />
-            <p className="text-[11px] text-white/70">
+            <p className="text-[11px] text-white">
               {year.milestones.filter((m) => completedMilestones.includes(m.id)).length} /{' '}
               {year.milestones.length}
             </p>

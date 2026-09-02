@@ -120,7 +120,7 @@ const PortfolioExportDialog = ({ entries }: PortfolioExportDialogProps) => {
     <>
       <Button
         variant="outline"
-        className="gap-1.5 border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow/10 text-sm h-11 touch-manipulation"
+        className="gap-1.5 border-elec-yellow/50 text-elec-yellow hover:bg-white/[0.06] text-sm h-11 touch-manipulation"
         size="sm"
         onClick={() => setOpen(true)}
       >
@@ -296,7 +296,9 @@ const PortfolioExportDialog = ({ entries }: PortfolioExportDialogProps) => {
                 <div className="w-full bg-white/5 rounded-full h-2">
                   <div
                     className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
-                    style={{ width: `${(exportProgress.progress / exportProgress.total) * 100}%` }}
+                    style={{
+                      width: `${exportProgress.total > 0 ? (exportProgress.progress / exportProgress.total) * 100 : 0}%`,
+                    }}
                   />
                 </div>
               </div>

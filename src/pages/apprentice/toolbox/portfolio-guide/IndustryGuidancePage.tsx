@@ -12,6 +12,8 @@ import type { LucideIcon } from 'lucide-react';
 import { itemVariants } from '@/components/college/primitives';
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 interface SectorGuide {
   sector: string;
@@ -52,7 +54,7 @@ const sectors: SectorGuide[] = [
       'BS 7671:2018+A4:2026 (18th Edition Wiring Regulations)',
       'Part P of the Building Regulations (England and Wales)',
       'BS 5839-6 (domestic fire detection and fire alarm systems)',
-      'NICEIC / NAPIT / ELECSA scheme requirements',
+      'NICEIC / NAPIT scheme requirements',
       'IET Guidance Notes (particularly GN1, GN3, GN7)',
       'Building Regulations Approved Document P',
     ],
@@ -211,9 +213,14 @@ const IndustryGuidancePage = () => {
 
         {/* ── Intro ───────────────────────────────────────────────── */}
         <motion.div variants={itemVariants}>
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2">
+          <div
+            className={cn(
+              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-2',
+              CARD_SURFACE
+            )}
+          >
             <Eyebrow>Why sector matters</Eyebrow>
-            <p className="text-[13.5px] text-white/85 leading-relaxed">
+            <p className="text-[13.5px] text-white leading-relaxed">
               Different sectors have different evidence types and regulations. Most apprentices
               experience a mix — collect evidence from all areas you work in to build a well-rounded
               portfolio.
@@ -231,19 +238,24 @@ const IndustryGuidancePage = () => {
                 title={sector.sector}
                 meta={sector.description}
                 action={
-                  <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06]">
+                  <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-white/[0.05]">
                     <Icon className="h-4 w-4 text-elec-yellow" />
                   </span>
                 }
               />
-              <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-4">
+              <div
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-4',
+                  CARD_SURFACE
+                )}
+              >
                 <div className="space-y-2">
                   <Eyebrow>Key work areas to evidence</Eyebrow>
                   <ul className="space-y-1.5">
                     {sector.workAreas.map((item) => (
                       <li
                         key={item}
-                        className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                        className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                       >
                         <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                         <span>{item}</span>
@@ -257,7 +269,7 @@ const IndustryGuidancePage = () => {
                     {sector.evidenceTypes.map((item) => (
                       <li
                         key={item}
-                        className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                        className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                       >
                         <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                         <span>{item}</span>
@@ -271,7 +283,7 @@ const IndustryGuidancePage = () => {
                     {sector.regulations.map((item) => (
                       <li
                         key={item}
-                        className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                        className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                       >
                         <Shield className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                         <span>{item}</span>
@@ -295,7 +307,10 @@ const IndustryGuidancePage = () => {
             {universalRequirements.map((section) => (
               <li
                 key={section.category}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2"
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-2',
+                  CARD_SURFACE
+                )}
               >
                 <h3 className="text-[13.5px] font-semibold text-elec-yellow tracking-tight">
                   {section.category}
@@ -304,7 +319,7 @@ const IndustryGuidancePage = () => {
                   {section.items.map((item) => (
                     <li
                       key={item}
-                      className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                      className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                     >
                       <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                       <span>{item}</span>
@@ -323,12 +338,12 @@ const IndustryGuidancePage = () => {
             title="A well-rounded portfolio is stronger"
             meta="If your employer focuses on one sector, branch out"
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
+          <div className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}>
             <ul className="space-y-1.5">
               {maximisingExposure.map((item) => (
                 <li
                   key={item}
-                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                 >
                   <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                   <span>{item}</span>
@@ -346,13 +361,13 @@ const IndustryGuidancePage = () => {
             meta="A portfolio that confirms gateway readiness vs one that gets sent back"
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-            <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-3">
+            <div className="rounded-xl border border-elec-yellow/25 bg-white/[0.05] p-4 sm:p-5 space-y-3">
               <Eyebrow className="text-elec-yellow/85">What assessors look for</Eyebrow>
               <ul className="space-y-1.5">
                 {assessorsLookFor.map((item) => (
                   <li
                     key={item}
-                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                    className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                   >
                     <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
                     <span>{item}</span>
@@ -366,7 +381,7 @@ const IndustryGuidancePage = () => {
                 {portfolioWeakeners.map((item) => (
                   <li
                     key={item}
-                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                    className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                   >
                     <AlertTriangle className="h-3.5 w-3.5 text-red-300 flex-shrink-0 mt-0.5" />
                     <span>{item}</span>
@@ -379,14 +394,14 @@ const IndustryGuidancePage = () => {
 
         {/* ── Confidentiality ─────────────────────────────────────── */}
         <motion.section variants={itemVariants}>
-          <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-1.5">
+          <div className="rounded-xl border border-elec-yellow/25 bg-white/[0.05] p-4 sm:p-5 space-y-1.5">
             <Eyebrow className="text-elec-yellow/85">Client confidentiality</Eyebrow>
-            <p className="text-[13.5px] text-white/85 leading-relaxed">
+            <p className="text-[13.5px] text-white leading-relaxed">
               Always respect client confidentiality. Remove or redact client names, addresses, and
               personal details from certificates and photos. Never share portfolio evidence publicly
               on social media. If in doubt, ask your employer and the client for permission first.
             </p>
-            <p className="text-[12.5px] text-white/70 leading-relaxed">
+            <p className="text-[12.5px] text-white leading-relaxed">
               Client addresses and personal details are personal data under UK GDPR and the Data
               Protection Act 2018 — redact them before adding a certificate or photo to your
               portfolio.

@@ -107,17 +107,17 @@ const LocationBasedCourseSearch: React.FC<LocationBasedCourseSearchProps> = ({
 
   return (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
         Find courses near you
       </span>
 
       <div className="space-y-2">
-        <Label htmlFor="location-search" className="text-[12px] text-white/70">
+        <Label htmlFor="location-search" className="text-[12px] text-white">
           Location
         </Label>
         <div className="flex gap-2">
           <div className="relative flex-1">
-            <MapPin className="absolute left-3 top-3.5 h-4 w-4 text-white/55" />
+            <MapPin className="absolute left-3 top-3.5 h-4 w-4 text-white" />
             <Input
               ref={inputRef}
               id="location-search"
@@ -162,15 +162,15 @@ const LocationBasedCourseSearch: React.FC<LocationBasedCourseSearchProps> = ({
       </div>
 
       {isAutoDetecting && (
-        <div className="flex items-center gap-2 text-[13px] text-white/85 rounded-md border border-white/10 bg-white/[0.03] p-3">
+        <div className="flex items-center gap-2 text-[13px] text-white rounded-md border border-white/10 bg-white/[0.03] p-3">
           <Loader2 className="h-4 w-4 animate-spin" />
           <span>Detecting your location...</span>
         </div>
       )}
 
       {currentLocation && !isAutoDetecting && (
-        <div className="flex items-center gap-2 text-[13px] text-white/85 rounded-md border border-white/10 bg-white/[0.03] p-3">
-          <MapPin className="h-4 w-4 text-white/55" />
+        <div className="flex items-center gap-2 text-[13px] text-white rounded-md border border-white/10 bg-white/[0.03] p-3">
+          <MapPin className="h-4 w-4 text-white" />
           <span>
             Current location: <span className="text-white">{currentLocation}</span>
           </span>
@@ -178,7 +178,7 @@ const LocationBasedCourseSearch: React.FC<LocationBasedCourseSearchProps> = ({
       )}
 
       <div className="space-y-2">
-        <Label className="text-[12px] text-white/70">Search radius</Label>
+        <Label className="text-[12px] text-white">Search radius</Label>
         <div className="flex flex-wrap gap-1.5">
           {radiusOptions.map((radius) => {
             const isActive = searchRadius === radius;
@@ -190,7 +190,7 @@ const LocationBasedCourseSearch: React.FC<LocationBasedCourseSearchProps> = ({
                 className={`text-[12px] px-2.5 py-1 rounded-md border touch-manipulation min-h-[36px] active:scale-[0.98] ${
                   isActive
                     ? 'bg-elec-yellow text-black font-semibold border-elec-yellow'
-                    : 'text-white/85 border-white/10 bg-white/[0.03]'
+                    : 'text-white border-white/10 bg-white/[0.03]'
                 }`}
               >
                 {radius} miles
@@ -200,7 +200,7 @@ const LocationBasedCourseSearch: React.FC<LocationBasedCourseSearchProps> = ({
         </div>
       </div>
 
-      <p className="text-[12px] text-white/55 leading-relaxed">
+      <p className="text-[12px] text-white leading-relaxed">
         Use the search above to find training courses and colleges near your location. Results
         will be filtered based on your selected radius.
       </p>

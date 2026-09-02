@@ -2,8 +2,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 
 /* ==========================================================================
-   useOtjForecast — predict whether an apprentice will hit their ESFA OTJ
-   minimum (20% of contracted hours) by their expected_end_date, based on
+   useOtjForecast — predict whether an apprentice will hit their off-the-job
+   hours requirement (a fixed total set by the standard) by their expected_end_date, based on
    their current logging pace.
    ELE-928 (I2).
    ========================================================================== */
@@ -39,9 +39,12 @@ export async function computeOtjForecast(studentId: string): Promise<OtjForecast
     .eq('id', studentId)
     .maybeSingle();
   if (sErr) throw sErr;
-  const student = studentRow as
-    | { id: string; start_date: string | null; expected_end_date: string | null; cohort_id: string | null }
-    | null;
+  const student = studentRow as {
+    id: string;
+    start_date: string | null;
+    expected_end_date: string | null;
+    cohort_id: string | null;
+  } | null;
   if (!student) throw new Error('Student not found');
 
   let startDate = student.start_date ? new Date(student.start_date) : null;
@@ -53,9 +56,11 @@ export async function computeOtjForecast(studentId: string): Promise<OtjForecast
       .select('id, start_date, end_date')
       .eq('id', student.cohort_id)
       .maybeSingle();
-    const cohort = cohortRow as
-      | { id: string; start_date: string | null; end_date: string | null }
-      | null;
+    const cohort = cohortRow as {
+      id: string;
+      start_date: string | null;
+      end_date: string | null;
+    } | null;
     if (cohort) {
       if (!startDate && cohort.start_date) startDate = new Date(cohort.start_date);
       if (!endDate && cohort.end_date) endDate = new Date(cohort.end_date);
@@ -112,23 +117,18 @@ export async function computeOtjForecast(studentId: string): Promise<OtjForecast
     .reduce((acc, e) => acc + (e.duration_minutes ?? 0), 0);
   const currentHours = Math.round((verifiedMinutes / 60) * 10) / 10;
 
-  const requiredHours = Math.round(
-    totalWeeks * DEFAULT_CONTRACTED_WEEKLY_HOURS * ESFA_OTJ_RATIO
-  );
+  const requiredHours = Math.round(totalWeeks * DEFAULT_CONTRACTED_WEEKLY_HOURS * ESFA_OTJ_RATIO);
 
   const weeksElapsed = Math.max(daysElapsed / 7, 0.5);
   const weeklyPace = currentHours / weeksElapsed;
   const forecastHoursAtEnd = currentHours + weeklyPace * (daysRemaining / 7);
-  const forecastPct = requiredHours
-    ? Math.round((forecastHoursAtEnd / requiredHours) * 100)
-    : 0;
+  const forecastPct = requiredHours ? Math.round((forecastHoursAtEnd / requiredHours) * 100) : 0;
   const shortfall = forecastHoursAtEnd - requiredHours;
   const weeklyNeededToCloseGap =
     daysRemaining > 0 && shortfall < 0
       ? Math.round((Math.abs(shortfall) / (daysRemaining / 7)) * 10) / 10
       : 0;
-  const risk: OtjRisk =
-    forecastPct >= 100 ? 'green' : forecastPct >= 90 ? 'amber' : 'red';
+  const risk: OtjRisk = forecastPct >= 100 ? 'green' : forecastPct >= 90 ? 'amber' : 'red';
 
   return {
     student_id: studentId,

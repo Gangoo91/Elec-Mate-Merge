@@ -8,7 +8,7 @@ const RiskAssessment = () => {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <h3 className="text-2xl font-bold text-elec-yellow">Risk Assessment for Electrical Work</h3>
 
-        <div className="flex items-center gap-2 px-3 py-1.5 bg-elec-yellow/10 rounded-full text-sm text-elec-yellow border border-elec-yellow/20">
+        <div className="flex items-center gap-2 px-3 py-1.5 bg-white/[0.06] rounded-full text-sm text-elec-yellow border border-elec-yellow/20">
           <Clipboard className="h-4 w-4" />
           <span>Required Documentation</span>
         </div>
@@ -32,8 +32,8 @@ const RiskAssessment = () => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             {/* Step 1 */}
             <div className="bg-white/5 border border-elec-yellow/10 rounded-lg overflow-hidden hover:border-elec-yellow/30 transition-colors duration-300">
-              <div className="bg-elec-yellow/5 p-3 border-b border-elec-yellow/10 flex items-center gap-2">
-                <div className="bg-elec-yellow/10 rounded-full h-7 w-7 flex items-center justify-center text-elec-yellow font-medium">
+              <div className="bg-white/[0.05] p-3 border-b border-elec-yellow/10 flex items-center gap-2">
+                <div className="bg-white/[0.06] rounded-full h-7 w-7 flex items-center justify-center text-elec-yellow font-medium">
                   1
                 </div>
                 <h5 className="font-medium text-elec-yellow">Identify Hazards</h5>
@@ -66,8 +66,8 @@ const RiskAssessment = () => {
 
             {/* Step 2 */}
             <div className="bg-white/5 border border-elec-yellow/10 rounded-lg overflow-hidden hover:border-elec-yellow/30 transition-colors duration-300">
-              <div className="bg-elec-yellow/5 p-3 border-b border-elec-yellow/10 flex items-center gap-2">
-                <div className="bg-elec-yellow/10 rounded-full h-7 w-7 flex items-center justify-center text-elec-yellow font-medium">
+              <div className="bg-white/[0.05] p-3 border-b border-elec-yellow/10 flex items-center gap-2">
+                <div className="bg-white/[0.06] rounded-full h-7 w-7 flex items-center justify-center text-elec-yellow font-medium">
                   2
                 </div>
                 <h5 className="font-medium text-elec-yellow">Evaluate Risks</h5>
@@ -100,8 +100,8 @@ const RiskAssessment = () => {
 
             {/* Step 3 */}
             <div className="bg-white/5 border border-elec-yellow/10 rounded-lg overflow-hidden hover:border-elec-yellow/30 transition-colors duration-300">
-              <div className="bg-elec-yellow/5 p-3 border-b border-elec-yellow/10 flex items-center gap-2">
-                <div className="bg-elec-yellow/10 rounded-full h-7 w-7 flex items-center justify-center text-elec-yellow font-medium">
+              <div className="bg-white/[0.05] p-3 border-b border-elec-yellow/10 flex items-center gap-2">
+                <div className="bg-white/[0.06] rounded-full h-7 w-7 flex items-center justify-center text-elec-yellow font-medium">
                   3
                 </div>
                 <h5 className="font-medium text-elec-yellow">Control Measures</h5>
@@ -134,8 +134,8 @@ const RiskAssessment = () => {
 
             {/* Step 4 */}
             <div className="bg-white/5 border border-elec-yellow/10 rounded-lg overflow-hidden hover:border-elec-yellow/30 transition-colors duration-300">
-              <div className="bg-elec-yellow/5 p-3 border-b border-elec-yellow/10 flex items-center gap-2">
-                <div className="bg-elec-yellow/10 rounded-full h-7 w-7 flex items-center justify-center text-elec-yellow font-medium">
+              <div className="bg-white/[0.05] p-3 border-b border-elec-yellow/10 flex items-center gap-2">
+                <div className="bg-white/[0.06] rounded-full h-7 w-7 flex items-center justify-center text-elec-yellow font-medium">
                   4
                 </div>
                 <h5 className="font-medium text-elec-yellow">Review & Update</h5>

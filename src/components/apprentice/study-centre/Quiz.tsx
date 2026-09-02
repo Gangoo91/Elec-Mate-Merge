@@ -100,7 +100,7 @@ export const Quiz: React.FC<QuizProps> = ({ questions: rawQuestions, title = 'Qu
     return (
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-5">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Quiz complete
           </span>
           <h3 className="text-[20px] sm:text-[22px] font-semibold text-white leading-tight">
@@ -111,19 +111,19 @@ export const Quiz: React.FC<QuizProps> = ({ questions: rawQuestions, title = 'Qu
           <div className={`text-5xl font-bold ${passed ? 'text-elec-yellow' : 'text-red-300'}`}>
             {percentage}%
           </div>
-          <p className="text-[14px] text-white/85 leading-relaxed">
+          <p className="text-[14px] text-white leading-relaxed">
             You scored {score} out of {questions.length} questions correctly
           </p>
           <div className="flex items-center justify-center gap-2">
             {passed ? (
               <>
                 <CheckCircle className="h-4 w-4 text-elec-yellow" />
-                <span className="text-[14px] text-white/85 font-medium">Passed</span>
+                <span className="text-[14px] text-white font-medium">Passed</span>
               </>
             ) : (
               <>
                 <XCircle className="h-4 w-4 text-red-300" />
-                <span className="text-[14px] text-white/85 font-medium">Review required</span>
+                <span className="text-[14px] text-white font-medium">Review required</span>
               </>
             )}
           </div>
@@ -143,11 +143,11 @@ export const Quiz: React.FC<QuizProps> = ({ questions: rawQuestions, title = 'Qu
   return (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           {title}
         </span>
         <div className="flex items-baseline justify-between gap-3">
-          <span className="text-[12px] text-white/55 font-mono">
+          <span className="text-[12px] text-white font-mono">
             Question {currentQuestion + 1} of {questions.length}
           </span>
           <div className="flex gap-1 items-center">
@@ -179,12 +179,12 @@ export const Quiz: React.FC<QuizProps> = ({ questions: rawQuestions, title = 'Qu
                 selectedAnswers[currentQuestion] === index
                   ? showResult
                     ? index === correctIndex
-                      ? 'bg-elec-yellow/[0.08] border-elec-yellow/40 text-white'
+                      ? 'bg-white/[0.05] border-elec-yellow/40 text-white'
                       : 'bg-red-500/[0.08] border-red-500/40 text-white'
-                    : 'bg-elec-yellow/[0.08] border-elec-yellow/40 text-white'
+                    : 'bg-white/[0.05] border-elec-yellow/40 text-white'
                   : showResult && index === correctIndex
-                    ? 'bg-elec-yellow/[0.08] border-elec-yellow/40 text-white'
-                    : 'bg-white/[0.02] border-white/[0.06] text-white/85'
+                    ? 'bg-white/[0.05] border-elec-yellow/40 text-white'
+                    : 'bg-white/[0.02] border-white/[0.06] text-white'
               }`}
             >
               <div className="flex items-center gap-3">
@@ -222,16 +222,16 @@ export const Quiz: React.FC<QuizProps> = ({ questions: rawQuestions, title = 'Qu
         <div
           className={`rounded-xl border p-4 space-y-1 ${
             isCorrect
-              ? 'border-elec-yellow/20 bg-elec-yellow/[0.04]'
+              ? 'border-elec-yellow/20 bg-white/[0.05]'
               : 'border-white/[0.06] bg-white/[0.02]'
           }`}
         >
           <span
-            className={`text-[10px] font-medium uppercase tracking-[0.18em] ${isCorrect ? 'text-elec-yellow/85' : 'text-white/55'}`}
+            className={`text-[10px] font-medium uppercase tracking-[0.18em] ${isCorrect ? 'text-elec-yellow/85' : 'text-white'}`}
           >
             {isCorrect ? 'Correct' : 'Explanation'}
           </span>
-          <p className="text-[14px] text-white/85 leading-relaxed">{currentQ.explanation}</p>
+          <p className="text-[14px] text-white leading-relaxed">{currentQ.explanation}</p>
         </div>
       )}
 
@@ -240,7 +240,7 @@ export const Quiz: React.FC<QuizProps> = ({ questions: rawQuestions, title = 'Qu
           onClick={handlePrevious}
           disabled={currentQuestion === 0}
           variant="outline"
-          className="h-11 border-white/15 text-white hover:bg-white/[0.05] disabled:opacity-40 touch-manipulation"
+          className="h-11 border-white/15 text-white hover:bg-white/[0.05] disabled:text-white/70 touch-manipulation"
         >
           Previous
         </Button>

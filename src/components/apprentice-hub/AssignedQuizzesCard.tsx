@@ -180,7 +180,8 @@ function Section({
 }) {
   return (
     <section
-      className={cn('rounded-2xl border overflow-hidden',
+      className={cn(
+        'rounded-2xl border overflow-hidden',
         accent ? 'border-elec-yellow/30' : 'border-white/[0.06]'
       )}
     >
@@ -193,7 +194,8 @@ function Section({
         </h2>
         {subtle && (
           <span
-            className={cn('text-[11px] tabular-nums whitespace-nowrap',
+            className={cn(
+              'text-[11px] tabular-nums whitespace-nowrap',
               subtleTone === 'red' ? 'text-red-300' : 'text-white'
             )}
           >
@@ -274,7 +276,8 @@ function QuizRow({ q, isNew, onClick }: { q: AssignedQuiz; isNew: boolean; onCli
     <button
       type="button"
       onClick={onClick}
-      className={cn('group w-full -mx-4 sm:-mx-5 px-4 sm:px-5 py-3.5 flex items-baseline gap-4 text-left transition-colors touch-manipulation',
+      className={cn(
+        'group w-full -mx-4 sm:-mx-5 px-4 sm:px-5 py-3.5 flex items-baseline gap-4 text-left transition-colors touch-manipulation',
         'hover:bg-white/[0.02] active:bg-white/[0.04]'
       )}
     >
@@ -293,13 +296,15 @@ function QuizRow({ q, isNew, onClick }: { q: AssignedQuiz; isNew: boolean; onCli
         <p className="mt-1 text-[11.5px] sm:text-[11px] text-white tabular-nums leading-relaxed">
           <span className={statusMeta.cls}>{statusMeta.label}</span>
           <Sep />
-          <span>{q.questions_count} questions</span>
-          {q.time_limit_minutes && (
+          <span>
+            {q.questions_count} {q.questions_count === 1 ? 'question' : 'questions'}
+          </span>
+          {q.time_limit_minutes ? (
             <>
               <Sep />
               <span>{q.time_limit_minutes} min</span>
             </>
-          )}
+          ) : null}
           {q.pass_mark != null && q.status !== 'completed' && (
             <>
               <Sep />

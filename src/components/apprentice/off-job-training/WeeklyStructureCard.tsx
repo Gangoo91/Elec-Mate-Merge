@@ -148,32 +148,32 @@ const WeeklyStructureCard = () => {
     <div className="space-y-6">
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Weekly and monthly structure planning
           </span>
-          <p className="text-[14px] text-white/85 leading-relaxed">
+          <p className="text-[14px] text-white leading-relaxed">
             Understanding how to structure your off-the-job training time effectively
           </p>
         </div>
 
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             20% time allocation breakdown
           </span>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3">
               <div className="text-2xl font-mono text-white">{weeklyStructure.totalHours}</div>
-              <div className="text-[11px] text-white/55 mt-1">Total hours/week</div>
+              <div className="text-[11px] text-white mt-1">Total hours/week</div>
             </div>
             <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3">
               <div className="text-2xl font-mono text-white">
                 {weeklyStructure.offJobRequired}
               </div>
-              <div className="text-[11px] text-white/55 mt-1">Off-the-job hours</div>
+              <div className="text-[11px] text-white mt-1">Off-the-job hours</div>
             </div>
             <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3">
               <div className="text-2xl font-mono text-white">{weeklyStructure.percentage}%</div>
-              <div className="text-[11px] text-white/55 mt-1">Required minimum</div>
+              <div className="text-[11px] text-white mt-1">Required minimum</div>
             </div>
           </div>
           <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
@@ -182,7 +182,7 @@ const WeeklyStructureCard = () => {
               style={{ width: `${weeklyStructure.percentage}%` }}
             />
           </div>
-          <p className="text-[11px] text-white/55 font-mono">
+          <p className="text-[11px] text-white font-mono">
             This equals approximately 278 hours over a 12-month period
           </p>
         </div>
@@ -196,14 +196,14 @@ const WeeklyStructureCard = () => {
             >
               <div className="flex items-center justify-between gap-2 flex-wrap">
                 <h5 className="text-[14px] font-semibold text-white">{schedule.pattern}</h5>
-                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                   {schedule.structure}
                 </span>
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Schedule breakdown
                   </span>
                   <div className="space-y-2">
@@ -216,11 +216,11 @@ const WeeklyStructureCard = () => {
                           <span className="text-[13px] font-semibold text-white">
                             {item.day || item.period || item.element}
                           </span>
-                          <div className="text-[12px] text-white/70">
+                          <div className="text-[12px] text-white">
                             {item.activities.join(', ')}
                           </div>
                         </div>
-                        <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] whitespace-nowrap">
+                        <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] whitespace-nowrap">
                           {typeof item.hours === 'number' ? `${item.hours}h` : item.hours}
                         </span>
                       </div>
@@ -237,7 +237,7 @@ const WeeklyStructureCard = () => {
                       {schedule.pros.map((pro, idx) => (
                         <li
                           key={idx}
-                          className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                          className="text-[13px] text-white leading-relaxed flex items-start gap-2"
                         >
                           <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
                           <span>{pro}</span>
@@ -247,14 +247,14 @@ const WeeklyStructureCard = () => {
                   </div>
 
                   <div className="space-y-1">
-                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                       Considerations
                     </span>
                     <ul className="space-y-1">
                       {schedule.cons.map((con, idx) => (
                         <li
                           key={idx}
-                          className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                          className="text-[13px] text-white leading-relaxed flex items-start gap-2"
                         >
                           <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                           <span>{con}</span>
@@ -278,27 +278,27 @@ const WeeklyStructureCard = () => {
               >
                 <div className="flex items-center justify-between gap-2">
                   <h5 className="text-[14px] font-semibold text-white">{month.month}</h5>
-                  <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                  <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                     {month.offJobHours}h
                   </span>
                 </div>
 
                 <div className="space-y-1">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Focus area
                   </span>
-                  <p className="text-[14px] text-white/85 leading-relaxed">{month.focus}</p>
+                  <p className="text-[14px] text-white leading-relaxed">{month.focus}</p>
                 </div>
 
                 <div className="space-y-1">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Key activities
                   </span>
                   <ul className="space-y-1">
                     {month.activities.map((activity, idx) => (
                       <li
                         key={idx}
-                        className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                        className="text-[13px] text-white leading-relaxed flex items-start gap-2"
                       >
                         <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                         <span>{activity}</span>
@@ -315,7 +315,7 @@ const WeeklyStructureCard = () => {
                     {month.assessments.map((assessment, idx) => (
                       <li
                         key={idx}
-                        className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                        className="text-[13px] text-white leading-relaxed flex items-start gap-2"
                       >
                         <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
                         <span>{assessment}</span>

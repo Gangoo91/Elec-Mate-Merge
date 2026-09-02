@@ -74,13 +74,13 @@ const CPDHistory = () => {
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="rounded-2xl border border-white/[0.10] bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5 sm:p-6 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Filter CPD records
         </span>
         <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
           <div className="relative md:col-span-2">
             {!searchTerm && (
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/55 pointer-events-none" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
             )}
             <Input
               placeholder="Search activities..."
@@ -97,7 +97,7 @@ const CPDHistory = () => {
             <SelectTrigger className="h-11 bg-white/[0.03] border-white/10 text-white touch-manipulation">
               <SelectValue placeholder="All categories" />
             </SelectTrigger>
-            <SelectContent className="bg-elec-gray border-white/10">
+            <SelectContent className="bg-white/[0.06] border-white/10">
               <SelectItem value="all">All categories</SelectItem>
               {categories.map(([id, name]) => (
                 <SelectItem key={id} value={id}>
@@ -111,7 +111,7 @@ const CPDHistory = () => {
             <SelectTrigger className="h-11 bg-white/[0.03] border-white/10 text-white touch-manipulation">
               <SelectValue placeholder="All years" />
             </SelectTrigger>
-            <SelectContent className="bg-elec-gray border-white/10">
+            <SelectContent className="bg-white/[0.06] border-white/10">
               <SelectItem value="all">All years</SelectItem>
               {years.map((year) => (
                 <SelectItem key={year} value={year}>
@@ -125,7 +125,7 @@ const CPDHistory = () => {
             <SelectTrigger className="h-11 bg-white/[0.03] border-white/10 text-white touch-manipulation">
               <SelectValue placeholder="All status" />
             </SelectTrigger>
-            <SelectContent className="bg-elec-gray border-white/10">
+            <SelectContent className="bg-white/[0.06] border-white/10">
               <SelectItem value="all">All status</SelectItem>
               <SelectItem value="verified">Verified</SelectItem>
               <SelectItem value="pending">Pending</SelectItem>
@@ -134,13 +134,13 @@ const CPDHistory = () => {
         </div>
 
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-3 border-t border-white/[0.06]">
-          <div className="flex items-center gap-4 text-[13px] text-white/85">
+          <div className="flex items-center gap-4 text-[13px] text-white">
             <span>
-              <span className="text-white/55">Entries: </span>
+              <span className="text-white">Entries: </span>
               {filteredEntries.length}
             </span>
             <span>
-              <span className="text-white/55">Total: </span>
+              <span className="text-white">Total: </span>
               <span className="text-white font-mono">{totalHours} hours</span>
             </span>
           </div>
@@ -158,12 +158,12 @@ const CPDHistory = () => {
       {loading ? (
         <div className="rounded-2xl border border-white/[0.10] bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-8 text-center">
           <Loader2 className="h-6 w-6 animate-spin mx-auto mb-3 text-elec-yellow" />
-          <p className="text-[13px] text-white/85">Loading CPD entries…</p>
+          <p className="text-[13px] text-white">Loading CPD entries…</p>
         </div>
       ) : filteredEntries.length === 0 ? (
         <div className="rounded-2xl border border-white/[0.10] bg-[linear-gradient(180deg,hsl(0_0%_13%)_0%,hsl(0_0%_10%)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-8 text-center space-y-2">
           <h3 className="text-[18px] font-semibold tracking-tight text-white">No entries match.</h3>
-          <p className="text-[13px] leading-relaxed text-white/85 max-w-md mx-auto">
+          <p className="text-[13px] leading-relaxed text-white max-w-md mx-auto">
             Loosen the filters or clear the search to widen the results.
           </p>
         </div>
@@ -180,17 +180,15 @@ const CPDHistory = () => {
                     <div className="flex-1 min-w-0 space-y-1">
                       <h3 className="text-[15px] font-semibold text-white">{entry.title}</h3>
                       {entry.description && (
-                        <p className="text-[13px] text-white/70 line-clamp-2">
-                          {entry.description}
-                        </p>
+                        <p className="text-[13px] text-white line-clamp-2">{entry.description}</p>
                       )}
                     </div>
                     <div className="flex flex-wrap gap-1.5">
-                      <span className="text-[11px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                      <span className="text-[11px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                         {entry.is_verified ? 'Verified' : 'Pending'}
                       </span>
                       {entry.evidence_files && entry.evidence_files.length > 0 && (
-                        <span className="text-[11px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                        <span className="text-[11px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                           Evidence
                         </span>
                       )}
@@ -198,26 +196,26 @@ const CPDHistory = () => {
                   </div>
 
                   <div className="flex flex-wrap items-center gap-1.5 text-[11px]">
-                    <span className="text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                    <span className="text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                       {format(new Date(entry.date_completed), 'dd MMM yyyy')}
                     </span>
-                    <span className="text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
+                    <span className="text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
                       {entry.hours} hours
                     </span>
-                    <span className="text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                    <span className="text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                       {categoryNames[entry.category] || entry.category}
                     </span>
-                    <span className="text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                    <span className="text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                       {activityTypeNames[entry.activity_type] || entry.activity_type}
                     </span>
                   </div>
 
                   {entry.learning_outcomes && entry.learning_outcomes.length > 0 && (
                     <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-2.5 space-y-1">
-                      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                         Learning outcomes
                       </span>
-                      <p className="text-[12px] text-white/85">
+                      <p className="text-[12px] text-white">
                         {entry.learning_outcomes.join(', ')}
                       </p>
                     </div>

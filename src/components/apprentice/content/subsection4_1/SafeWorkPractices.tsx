@@ -4,7 +4,7 @@ import { AlertCircle, HardHat, Shield } from 'lucide-react';
 
 const SafeWorkPractices = () => {
   return (
-    <Card className="border border-elec-yellow/30 bg-elec-card rounded-xl overflow-hidden">
+    <Card className="border border-elec-yellow/30 bg-white/[0.06] rounded-xl overflow-hidden">
       <CardHeader className="pb-3">
         <CardTitle className="text-xl font-bold text-elec-yellow">
           Safe Working Practices with Ladders

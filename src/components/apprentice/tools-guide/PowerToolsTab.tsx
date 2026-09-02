@@ -107,13 +107,13 @@ const PowerToolsTab = () => {
   return (
     <div className="px-4 sm:px-6 py-4 sm:py-6 space-y-6">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Power tools
         </span>
         <h2 className="text-[22px] sm:text-[26px] font-semibold text-white leading-tight">
           Power tools
         </h2>
-        <p className="text-[14px] text-white/85 leading-relaxed max-w-2xl">
+        <p className="text-[14px] text-white leading-relaxed max-w-2xl">
           Whilst your employer often provides larger power tools, having some basics of your own
           gives you flexibility and ensures you're never without essential equipment.
         </p>
@@ -152,7 +152,7 @@ const PowerToolsTab = () => {
         <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
           Power tool safety & maintenance
         </span>
-        <div className="space-y-2 text-[14px] text-white/85 leading-relaxed">
+        <div className="space-y-2 text-[14px] text-white leading-relaxed">
           <p>
             <strong>PAT testing:</strong> All portable electrical tools must be PAT tested annually
             (or as per company policy). Keep records and labels up to date.
@@ -174,10 +174,10 @@ const PowerToolsTab = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Investment timeline for apprentices
         </span>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-[14px] text-white/85 leading-relaxed">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-[14px] text-white leading-relaxed">
           <div className="space-y-2">
             <p className="font-medium text-white">Year 1-2: basics (£150-250)</p>
             <ul className="space-y-1">

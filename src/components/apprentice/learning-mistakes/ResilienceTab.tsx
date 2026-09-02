@@ -136,7 +136,7 @@ const ResilienceTab = () => {
   return (
     <div className="space-y-6">
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-5">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Resilience assessment
         </span>
 
@@ -144,7 +144,7 @@ const ResilienceTab = () => {
           <div className="space-y-5">
             <div className="space-y-2">
               <div className="flex items-baseline justify-between">
-                <span className="text-[12px] text-white/85 font-mono">
+                <span className="text-[12px] text-white font-mono">
                   {currentQuestion + 1}/{resilienceQuestions.length}
                 </span>
               </div>
@@ -166,7 +166,7 @@ const ResilienceTab = () => {
                   key={index}
                   variant="outline"
                   onClick={() => handleAnswer(option.score)}
-                  className="w-full text-left justify-start h-auto p-4 min-h-[52px] border-white/[0.06] bg-white/[0.02] text-white/85 hover:bg-white/[0.05] hover:border-white/15 touch-manipulation whitespace-normal"
+                  className="w-full text-left justify-start h-auto p-4 min-h-[52px] border-white/[0.06] bg-white/[0.02] text-white hover:bg-white/[0.05] hover:border-white/15 touch-manipulation whitespace-normal"
                 >
                   {option.text}
                 </Button>
@@ -179,10 +179,10 @@ const ResilienceTab = () => {
               <div className="text-[40px] font-mono text-white leading-none">
                 {Math.round(resilienceScore)}%
               </div>
-              <div className="text-[14px] text-white/85">
+              <div className="text-[14px] text-white">
                 {getResilienceLevel(resilienceScore).level} resilience
               </div>
-              <p className="text-[14px] text-white/85 leading-relaxed">
+              <p className="text-[14px] text-white leading-relaxed">
                 {getResilienceLevel(resilienceScore).description}
               </p>
             </div>
@@ -198,7 +198,7 @@ const ResilienceTab = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Building resilience
         </span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -208,12 +208,12 @@ const ResilienceTab = () => {
               className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
             >
               <h4 className="text-[16px] font-semibold text-white">{strategy.title}</h4>
-              <p className="text-[14px] text-white/85 leading-relaxed">{strategy.description}</p>
+              <p className="text-[14px] text-white leading-relaxed">{strategy.description}</p>
               <ul className="space-y-1.5 pt-1">
                 {strategy.techniques.map((technique, techIndex) => (
                   <li
                     key={techIndex}
-                    className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                    className="text-[13px] text-white leading-relaxed flex items-start gap-2"
                   >
                     <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
                     <span>{technique}</span>
@@ -225,11 +225,11 @@ const ResilienceTab = () => {
         </div>
       </div>
 
-      <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.03] p-4 sm:p-5 space-y-3">
+      <div className="rounded-xl border border-elec-yellow/25 bg-white/[0.05] p-4 sm:p-5 space-y-3">
         <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
           Turn reflection into evidence
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           A written reflection on a mistake — what happened, what you changed, what you learned — is
           recognised off-the-job training. Log it in your OJT hub so it counts towards your
           portfolio and end-point assessment.

@@ -1,7 +1,8 @@
 import { CheckCircle2, AlertTriangle } from 'lucide-react';
-import { SectionHeader } from '@/components/college/primitives';
-import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { HubPage, HubBody, HubMasthead, HubSectionHeading } from '@/components/hub/HubPrimitives';
 import { DEFAULT_OTJ_STANDARD } from '@/data/otjStandards';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const RightsPage = () => {
   return (
@@ -19,9 +20,14 @@ const RightsPage = () => {
         </p>
 
         {/* Employment Rights */}
-        <div className="border-0 bg-transparent sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]">
+        <div
+          className={cn(
+            'border-0 bg-transparent -mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+            CARD_SURFACE
+          )}
+        >
           <div className="py-4 sm:p-5 space-y-4">
-            <SectionHeader eyebrow="Employment" title="Core employment rights" />
+            <HubSectionHeading>Core employment rights</HubSectionHeading>
             <ul className="space-y-2">
               {[
                 'A written apprenticeship agreement signed before you start',
@@ -40,7 +46,7 @@ const RightsPage = () => {
                 </li>
               ))}
             </ul>
-            <div className="rounded-lg border border-elec-yellow/25 bg-elec-yellow/[0.05] p-3">
+            <div className="rounded-lg border border-elec-yellow/25 bg-white/[0.05] p-3">
               <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85 mb-1">
                 What's changing
               </p>
@@ -54,9 +60,14 @@ const RightsPage = () => {
         </div>
 
         {/* Training Rights */}
-        <div className="border-0 bg-transparent sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]">
+        <div
+          className={cn(
+            'border-0 bg-transparent -mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+            CARD_SURFACE
+          )}
+        >
           <div className="py-4 sm:p-5 space-y-4">
-            <SectionHeader eyebrow="Training" title="Training rights" />
+            <HubSectionHeading>Training rights</HubSectionHeading>
             <ul className="space-y-2">
               {[
                 `A fixed amount of off-the-job training set by your apprenticeship standard (${DEFAULT_OTJ_STANDARD.otjHours.toLocaleString('en-GB')} hours for the ${DEFAULT_OTJ_STANDARD.code} ${DEFAULT_OTJ_STANDARD.name}), delivered during paid working hours`,
@@ -74,7 +85,7 @@ const RightsPage = () => {
               ))}
             </ul>
             <div className="rounded-lg border border-white/10 bg-white/[0.03] p-3">
-              <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 mb-1">
+              <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white mb-1">
                 Why you never pay
               </p>
               <p className="text-white text-xs leading-relaxed">
@@ -89,9 +100,14 @@ const RightsPage = () => {
         </div>
 
         {/* Under 18 */}
-        <div className="border-0 bg-transparent sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]">
+        <div
+          className={cn(
+            'border-0 bg-transparent -mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+            CARD_SURFACE
+          )}
+        >
           <div className="py-4 sm:p-5 space-y-4">
-            <SectionHeader eyebrow="Young workers" title="Additional rights if under 18" />
+            <HubSectionHeading>Additional rights if under 18</HubSectionHeading>
             <ul className="space-y-2">
               {[
                 'Maximum 8 hours per day and 40 hours per week',

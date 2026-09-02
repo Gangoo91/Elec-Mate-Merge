@@ -3,14 +3,18 @@ import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
+import { useOtjProgramme } from '@/hooks/useOtjProgramme';
 
 /* ==========================================================================
-   MyComplianceCard — ESFA off-the-job compliance traffic light. Computes
+   MyComplianceCard — off-the-job compliance traffic light. Computes
    verified hours vs the expected hours at this point in the programme:
 
      expected = (weeks elapsed / total programme weeks) × programme target
-     programme target = working hours over duration × 20% (defaults to
-                        37.5h × programme_weeks × 0.20 if no override)
+     programme target = the FIXED off-the-job total for the apprentice's
+                        standard (DfE Annex C — 1,066 h for ST0152), taken
+                        from useOtjProgramme. It used to be 37.5 h × weeks ×
+                        20%, the rule that ended on 1 Aug 2025, which put a
+                        4-year programme at ~1,560 h and lit this card red.
 
    Verdict:
      verified >= expected            → green (on track / ahead)
@@ -52,9 +56,6 @@ const STATUS_BAR: Record<Status, string> = {
   unknown: 'bg-white/[0.10]',
 };
 
-const WORKING_HOURS_PER_WEEK = 37.5;
-const ESFA_OTJ_RATIO = 0.2; // 20% off-the-job
-
 function fmtHours(h: number): string {
   if (h >= 100) return `${Math.round(h)}h`;
   if (h >= 10) return `${h.toFixed(0)}h`;
@@ -67,6 +68,7 @@ interface ProgrammeRow {
 }
 
 export function MyComplianceCard() {
+  const otj = useOtjProgramme();
   const [programme, setProgramme] = useState<ProgrammeRow | null>(null);
   const [verifiedMin, setVerifiedMin] = useState(0);
   const [pendingMin, setPendingMin] = useState(0);
@@ -164,7 +166,7 @@ export function MyComplianceCard() {
     const totalWeeks = totalMs / (7 * 86_400_000);
     const elapsedWeeks = Math.max(0, elapsedMs / (7 * 86_400_000));
 
-    const programmeTargetHours = totalWeeks * WORKING_HOURS_PER_WEEK * ESFA_OTJ_RATIO;
+    const programmeTargetHours = otj.totalTargetHours;
     const expectedHours = elapsedWeeks > 0 ? (elapsedWeeks / totalWeeks) * programmeTargetHours : 0;
 
     const verifiedHours = verifiedMin / 60;
@@ -186,18 +188,20 @@ export function MyComplianceCard() {
       elapsedWeeks: Math.round(elapsedWeeks),
       totalWeeks: Math.round(totalWeeks),
     };
-  }, [programme, verifiedMin, pendingMin]);
+  }, [programme, verifiedMin, pendingMin, otj.totalTargetHours]);
 
-  if (loading) return <Skeleton />;
+  if (loading || otj.loading) return <Skeleton />;
 
   // No programme dates set — render a quieter "no baseline" panel.
   if (!calc) {
     if (!hasAnyData) return null;
     return (
-      <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
+      <section
+        className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
+      >
         <div className="px-4 sm:px-5 py-4 sm:py-5">
           <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-white">
-            ESFA compliance
+            Off-the-job compliance
           </div>
           <p className="mt-3 text-[12.5px] text-white leading-snug">
             We can't calculate compliance yet — your programme start and end dates aren't set. Ask
@@ -216,11 +220,12 @@ export function MyComplianceCard() {
       <div className="px-4 sm:px-5 py-4 sm:py-5">
         <div className="flex items-baseline justify-between gap-3 flex-wrap">
           <div
-            className={cn('text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em]',
+            className={cn(
+              'text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em]',
               STATUS_TONE[status]
             )}
           >
-            ESFA compliance · {STATUS_LABEL[status]}
+            Off-the-job compliance · {STATUS_LABEL[status]}
           </div>
           <span className="text-[10.5px] tabular-nums text-white">
             week {calc.elapsedWeeks} of {calc.totalWeeks}
@@ -256,7 +261,8 @@ export function MyComplianceCard() {
         </div>
 
         <p
-          className={cn('mt-3 text-[12px] leading-snug',
+          className={cn(
+            'mt-3 text-[12px] leading-snug',
             status === 'green'
               ? 'text-white'
               : status === 'amber'
@@ -267,11 +273,11 @@ export function MyComplianceCard() {
           )}
         >
           {status === 'green' &&
-            `You've covered ${pct}% of what's expected at this point. Keep logging — every verified hour reinforces your ESFA position.`}
+            `You've covered ${pct}% of what's expected at this point. Keep logging — every verified hour counts at gateway.`}
           {status === 'amber' &&
             `You're at ${pct}% of the expected pace. Submit any work activities you haven't logged yet — closing the gap now is easier than at gateway.`}
           {status === 'red' &&
-            `You're at ${pct}% of the expected pace. This is a real ESFA risk — submit work activities and ask your tutor for a 1-2-1 to plan catch-up hours.`}
+            `You're at ${pct}% of the expected pace. This is a real gateway risk — submit work activities and ask your tutor for a 1-2-1 to plan catch-up hours.`}
           {status === 'unknown' &&
             'Programme just started — your compliance baseline will activate once a few weeks have elapsed.'}
           {calc.pendingHours > 0 && (
@@ -303,7 +309,9 @@ function Stat({ value, label, tone }: { value: string; label: string; tone: stri
 
 function Skeleton() {
   return (
-    <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
+    <section
+      className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
+    >
       <div className="px-4 sm:px-5 py-4 sm:py-5 space-y-4">
         <div className="h-3 w-32 rounded-full bg-white/[0.05]" />
         <div className="grid grid-cols-3 gap-3">

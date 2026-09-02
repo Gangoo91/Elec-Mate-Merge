@@ -30,7 +30,7 @@ interface FlashcardSetCardProps {
  * One flashcard set in the list.
  *
  * Was `bg-white/[0.02]` behind a `border-white/[0.06]` edge with its metadata
- * at `text-white/55` — on a phone in daylight that is a near-invisible
+ * at `text-white` — on a phone in daylight that is a near-invisible
  * rectangle of grey text, which is exactly how the hub read. Now on the shared
  * card recipe: a lit diagonal surface under a volt edge, with every piece of
  * text at full white.

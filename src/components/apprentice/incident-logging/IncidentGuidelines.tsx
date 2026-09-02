@@ -6,7 +6,7 @@ const IncidentGuidelines = () => {
     <div className="space-y-6">
       <Alert className="rounded-xl border-red-500/30 bg-red-500/[0.04]">
         <AlertTriangle className="h-4 w-4 text-red-400" />
-        <AlertDescription className="text-[14px] text-white/85 leading-relaxed">
+        <AlertDescription className="text-[14px] text-white leading-relaxed">
           <strong className="text-white">Emergency first:</strong> If anyone is injured or
           there&apos;s immediate danger, call 999 first. Complete this form only after ensuring
           everyone&apos;s safety.
@@ -15,7 +15,7 @@ const IncidentGuidelines = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             When to report incidents
           </span>
 
@@ -31,7 +31,7 @@ const IncidentGuidelines = () => {
                 ].map((item, idx) => (
                   <li
                     key={idx}
-                    className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                    className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                   >
                     <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
                     <span>{item}</span>
@@ -51,7 +51,7 @@ const IncidentGuidelines = () => {
                 ].map((item, idx) => (
                   <li
                     key={idx}
-                    className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                    className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                   >
                     <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                     <span>{item}</span>
@@ -63,7 +63,7 @@ const IncidentGuidelines = () => {
         </div>
 
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Legal requirements (UK)
           </span>
 
@@ -72,14 +72,14 @@ const IncidentGuidelines = () => {
               <h4 className="text-[14px] font-semibold text-white">
                 Health and Safety at Work Act 1974
               </h4>
-              <p className="text-[14px] text-white/85 leading-relaxed">
+              <p className="text-[14px] text-white leading-relaxed">
                 Employees have a duty to report incidents that could affect health and safety.
               </p>
             </div>
 
             <div className="space-y-1">
               <h4 className="text-[14px] font-semibold text-white">RIDDOR regulations</h4>
-              <p className="text-[14px] text-white/85 leading-relaxed">
+              <p className="text-[14px] text-white leading-relaxed">
                 Certain incidents must be reported to the HSE within specific timeframes:
               </p>
               <ul className="space-y-1 pt-1">
@@ -90,7 +90,7 @@ const IncidentGuidelines = () => {
                 ].map((item, idx) => (
                   <li
                     key={idx}
-                    className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                    className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                   >
                     <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                     <span>{item}</span>
@@ -101,7 +101,7 @@ const IncidentGuidelines = () => {
 
             <div className="space-y-1">
               <h4 className="text-[14px] font-semibold text-white">Data protection</h4>
-              <p className="text-[14px] text-white/85 leading-relaxed">
+              <p className="text-[14px] text-white leading-relaxed">
                 Personal information in incident reports is protected under UK GDPR.
               </p>
             </div>
@@ -109,7 +109,7 @@ const IncidentGuidelines = () => {
         </div>
 
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             How to report effectively
           </span>
 
@@ -148,7 +148,7 @@ const IncidentGuidelines = () => {
                   {section.items.map((item, i) => (
                     <li
                       key={i}
-                      className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                      className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                     >
                       <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                       <span>{item}</span>
@@ -161,7 +161,7 @@ const IncidentGuidelines = () => {
         </div>
 
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Emergency contacts
           </span>
 
@@ -171,24 +171,24 @@ const IncidentGuidelines = () => {
                 Emergency services
               </span>
               <p className="text-2xl font-mono text-white">999</p>
-              <p className="text-[13px] text-white/85">
+              <p className="text-[13px] text-white">
                 For immediate medical assistance or fire/police response
               </p>
             </div>
 
             <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 HSE incident contact centre
               </span>
               <p className="text-[18px] font-mono text-white">0345 300 9923</p>
-              <p className="text-[13px] text-white/85">For reporting RIDDOR incidents</p>
+              <p className="text-[13px] text-white">For reporting RIDDOR incidents</p>
             </div>
 
             <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Site safety officer
               </span>
-              <p className="text-[14px] text-white/85 leading-relaxed">
+              <p className="text-[14px] text-white leading-relaxed">
                 Contact your site safety officer or supervisor for non-emergency incidents
               </p>
             </div>
@@ -197,7 +197,7 @@ const IncidentGuidelines = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Common electrical industry incidents
         </span>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -238,7 +238,7 @@ const IncidentGuidelines = () => {
             return (
               <div key={idx} className={containerClass}>
                 <h4 className="text-[14px] font-semibold text-white">{item.title}</h4>
-                <p className="text-[13px] text-white/85 leading-relaxed">{item.description}</p>
+                <p className="text-[13px] text-white leading-relaxed">{item.description}</p>
               </div>
             );
           })}
@@ -246,7 +246,7 @@ const IncidentGuidelines = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Additional resources
         </span>
         <div className="space-y-3">
@@ -269,7 +269,7 @@ const IncidentGuidelines = () => {
           ].map((item, idx) => (
             <div key={idx} className="space-y-1">
               <h4 className="text-[14px] font-semibold text-white">{item.title}</h4>
-              <p className="text-[14px] text-white/85 leading-relaxed">{item.description}</p>
+              <p className="text-[14px] text-white leading-relaxed">{item.description}</p>
             </div>
           ))}
         </div>

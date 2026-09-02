@@ -1,5 +1,7 @@
 import { CheckCircle2, AlertTriangle, Shield, Users, IdCard } from 'lucide-react';
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const SiteSafetyRulesPage = () => {
   return (
@@ -17,7 +19,7 @@ const SiteSafetyRulesPage = () => {
         </p>
 
         {/* Intro */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 sm:p-5 space-y-4">
             <div className="flex items-center gap-2">
               <Shield className="h-5 w-5 text-elec-yellow" />
@@ -37,7 +39,7 @@ const SiteSafetyRulesPage = () => {
         </div>
 
         {/* Site Inductions */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 sm:p-5 space-y-4">
             <h2 className="text-lg font-semibold text-elec-yellow">Site Inductions</h2>
             <p className="text-white text-sm leading-relaxed">
@@ -71,7 +73,7 @@ const SiteSafetyRulesPage = () => {
               ))}
             </div>
 
-            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
+            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3">
               <p className="text-white text-xs">
                 <span className="font-semibold text-elec-yellow">Tip: </span>
                 Take notes during your induction. Keep your induction card safe — you may need to
@@ -83,7 +85,7 @@ const SiteSafetyRulesPage = () => {
         </div>
 
         {/* CSCS / ECS Cards */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 sm:p-5 space-y-4">
             <div className="flex items-center gap-2">
               <IdCard className="h-5 w-5 text-elec-yellow" />
@@ -124,7 +126,7 @@ const SiteSafetyRulesPage = () => {
               ].map((card) => (
                 <div
                   key={card.title}
-                  className="rounded-lg border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4 space-y-3"
+                  className="rounded-lg border border-elec-yellow/20 bg-white/[0.05] p-4 space-y-3"
                 >
                   <h3 className="font-semibold text-elec-yellow text-sm">{card.title}</h3>
                   <div className="space-y-1">
@@ -139,7 +141,7 @@ const SiteSafetyRulesPage = () => {
               ))}
             </div>
 
-            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
+            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3">
               <p className="text-white text-xs">
                 <span className="font-semibold text-elec-yellow">Important: </span>
                 Always carry your CSCS or ECS card on site. You may be asked to show it at any time
@@ -194,7 +196,7 @@ const SiteSafetyRulesPage = () => {
               ].map((item) => (
                 <div
                   key={item.permit}
-                  className="rounded-md border border-white/[0.08] bg-[hsl(0_0%_12%)] p-3"
+                  className="rounded-xl border border-white/[0.12] bg-white/[0.05] p-3"
                 >
                   <h4 className="text-white font-semibold text-sm mb-1">{item.permit}</h4>
                   <p className="text-white text-xs">{item.detail}</p>
@@ -222,7 +224,7 @@ const SiteSafetyRulesPage = () => {
         </div>
 
         {/* CDM Overview */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 sm:p-5 space-y-4">
             <h2 className="text-lg font-semibold text-elec-yellow">CDM Regulations 2015</h2>
             <p className="text-white text-sm leading-relaxed">
@@ -258,7 +260,7 @@ const SiteSafetyRulesPage = () => {
               ].map((item) => (
                 <div
                   key={item.role}
-                  className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3"
+                  className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3"
                 >
                   <h4 className="text-elec-yellow font-semibold text-sm mb-1">{item.role}</h4>
                   <p className="text-white text-xs">{item.duty}</p>
@@ -269,7 +271,7 @@ const SiteSafetyRulesPage = () => {
         </div>
 
         {/* Welfare */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 sm:p-5 space-y-4">
             <div className="flex items-center gap-2">
               <Users className="h-5 w-5 text-elec-yellow" />
@@ -298,7 +300,7 @@ const SiteSafetyRulesPage = () => {
               ))}
             </div>
 
-            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
+            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3">
               <p className="text-white text-xs">
                 <span className="font-semibold text-elec-yellow">
                   If facilities are inadequate:{' '}
@@ -313,7 +315,7 @@ const SiteSafetyRulesPage = () => {
         </div>
 
         {/* Toolbox Talks */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 sm:p-5 space-y-4">
             <h2 className="text-lg font-semibold text-elec-yellow">Toolbox Talks</h2>
             <p className="text-white text-sm leading-relaxed">
@@ -341,7 +343,7 @@ const SiteSafetyRulesPage = () => {
         </div>
 
         {/* Common Site Rules */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 sm:p-5 space-y-4">
             <h2 className="text-lg font-semibold text-elec-yellow">Common Site Rules</h2>
             <p className="text-white text-sm leading-relaxed">
@@ -389,7 +391,7 @@ const SiteSafetyRulesPage = () => {
               ].map((item) => (
                 <div
                   key={item.rule}
-                  className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3"
+                  className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3"
                 >
                   <h4 className="text-elec-yellow font-semibold text-sm mb-1">{item.rule}</h4>
                   <p className="text-white text-xs">{item.detail}</p>
@@ -400,7 +402,7 @@ const SiteSafetyRulesPage = () => {
         </div>
 
         {/* PUWER — Tools & Equipment */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 sm:p-5 space-y-4">
             <h2 className="text-lg font-semibold text-elec-yellow">
               Tools and Equipment — PUWER 1998
@@ -433,7 +435,7 @@ const SiteSafetyRulesPage = () => {
         </div>
 
         {/* Safety Signage */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 sm:p-5 space-y-4">
             <h2 className="text-lg font-semibold text-elec-yellow">Safety Signs on Site</h2>
             <p className="text-white text-sm leading-relaxed">
@@ -473,7 +475,7 @@ const SiteSafetyRulesPage = () => {
               ].map((item) => (
                 <div
                   key={item.sign}
-                  className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3"
+                  className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3"
                 >
                   <h4 className="text-elec-yellow font-semibold text-sm mb-1">{item.sign}</h4>
                   <p className="text-white text-xs">{item.detail}</p>
@@ -481,7 +483,7 @@ const SiteSafetyRulesPage = () => {
               ))}
             </div>
 
-            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
+            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3">
               <p className="text-white text-xs">
                 <span className="font-semibold text-elec-yellow">On the tools: </span>
                 When you isolate a circuit, your caution/danger notice and lock-off are part of this
@@ -492,7 +494,7 @@ const SiteSafetyRulesPage = () => {
         </div>
 
         {/* Manual Handling */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 sm:p-5 space-y-4">
             <h2 className="text-lg font-semibold text-elec-yellow">Manual Handling</h2>
             <p className="text-white text-sm leading-relaxed">
@@ -552,7 +554,7 @@ const SiteSafetyRulesPage = () => {
         </div>
 
         {/* Right to Refuse */}
-        <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04]">
+        <div className="rounded-xl border border-elec-yellow/25 bg-white/[0.05]">
           <div className="p-4 sm:p-5 space-y-3">
             <h2 className="text-lg font-semibold text-elec-yellow">
               Your Right to Refuse Unsafe Work
@@ -569,7 +571,7 @@ const SiteSafetyRulesPage = () => {
         </div>
 
         {/* Footer */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 sm:p-5">
             <p className="text-white text-xs leading-relaxed">
               Based on the Construction (Design and Management) Regulations 2015, the Health and

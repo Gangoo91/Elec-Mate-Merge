@@ -4,20 +4,20 @@ const ApprenticeRightsTab = () => {
       category: 'Working time & conditions',
       items: [
         'Maximum 48-hour working week (averaged over 17 weeks) — you can opt out voluntarily in writing',
-        'Minimum 20 days paid holiday plus 8 bank holidays (28 days total) — increases with service',
+        '5.6 weeks paid holiday a year (28 days for a five-day week, and that can include the bank holidays) — the statutory minimum does not rise with service, though your contract may give more',
         'Rest breaks: 20 minutes if working over 6 hours continuously (paid break time)',
         '11 hours consecutive rest between working days (protected by law)',
         '24 hours consecutive rest in each 7-day period (usually includes one full weekend day)',
         'Night work restrictions (22:00-06:00) with mandatory health assessments for regular night workers',
         'Overtime pay rates must be clearly defined in your contract — cannot be below minimum wage',
-        'Flexible working requests can be made after 26 weeks of employment',
+        'Flexible working can be requested from your first day (a day-one right since 6 April 2024) — two requests a year, and your employer must consult you before refusing',
         'Protection from excessive working hours that could affect your studies or wellbeing',
       ],
     },
     {
       category: 'Training & development rights',
       items: [
-        'Minimum 20% off-the-job training (equivalent to 1 day per week) — this is legally protected time',
+        'A fixed number of off-the-job training hours set by your apprenticeship standard (1,066 hours for an Installation & Maintenance Electrician, ST0152) for starts from 1 August 2025 — delivered in paid working time. Starts before that date stay on the older 20% / 6-hours-a-week rule',
         'Access to structured learning programme aligned to your specific apprenticeship standard',
         'Regular progress reviews every 12 weeks with documented feedback and development planning',
         'Qualified mentor or supervisor support throughout your apprenticeship journey',
@@ -55,7 +55,7 @@ const ApprenticeRightsTab = () => {
         'Protection from discrimination based on age, gender, race, religion, disability, sexual orientation',
         'Reasonable adjustments for apprentices with disabilities or health conditions',
         'Access to formal grievance and disciplinary procedures with right to representation',
-        'Right to request flexible working arrangements after 26 weeks of employment',
+        'Right to request flexible working from day one of employment',
         'Protection from victimisation for exercising your employment rights',
       ],
     },
@@ -71,7 +71,7 @@ const ApprenticeRightsTab = () => {
         'Protection from having to pay back training costs if you leave through no fault of your own',
         'Clear explanation of any training bond or repayment clauses before you sign',
         'Right to National Insurance number and understanding of your tax obligations',
-        'Access to pension auto-enrolment after 3 months if you meet the criteria',
+        'Pension auto-enrolment if you are 22 or over and earn above the earnings trigger — your employer may postpone enrolment by up to three months; under 22 you can ask to opt in',
       ],
     },
   ];
@@ -99,7 +99,7 @@ const ApprenticeRightsTab = () => {
     {
       topic: 'Notice periods',
       detail:
-        'During your apprenticeship, the standard notice period is 1 week during the first 2 years, then 1 week per year of service. Your contract may specify longer. Your employer must give you the same notice.',
+        'The statutory minimum notice your employer must give is 1 week once you have worked for them a month, rising to 1 week for each complete year from 2 years of service (up to 12 weeks). You must give at least 1 week. Your contract may specify longer either way.',
     },
     {
       topic: 'Probation period',
@@ -170,7 +170,7 @@ const ApprenticeRightsTab = () => {
     {
       issue: 'Being denied off-the-job training time',
       action:
-        'Document missed training sessions and speak to your training provider. Report to ESFA if unresolved.',
+        'Document missed training sessions and speak to your training provider. Report to the DfE apprenticeship service if unresolved.',
     },
     {
       issue: 'Working excessive hours without proper breaks',
@@ -184,7 +184,7 @@ const ApprenticeRightsTab = () => {
     {
       issue: 'Being treated as cheap labour rather than a learner',
       action:
-        'Contact your apprenticeship provider and ESFA. You must be given genuine learning opportunities.',
+        'Contact your apprenticeship provider and, if unresolved, the DfE apprenticeship service. You must be given genuine learning opportunities.',
     },
     {
       issue: 'Pay below minimum wage rates',
@@ -221,10 +221,7 @@ const ApprenticeRightsTab = () => {
   const renderBulletList = (items: string[], accent: 'neutral' | 'yellow' = 'neutral') => (
     <ul className="space-y-1.5">
       {items.map((item, i) => (
-        <li
-          key={i}
-          className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
-        >
+        <li key={i} className="text-[14px] text-white leading-relaxed flex items-start gap-2">
           <span
             className={`w-1 h-1 rounded-full mt-2 flex-shrink-0 ${
               accent === 'yellow' ? 'bg-elec-yellow' : 'bg-white/55'
@@ -238,11 +235,11 @@ const ApprenticeRightsTab = () => {
 
   return (
     <div className="space-y-6 sm:space-y-8">
-      <div className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-2">
+      <div className="rounded-xl border border-elec-yellow/20 bg-white/[0.05] p-4 sm:p-5 space-y-2">
         <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
           Know your rights
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           These rights are protected by law. Understanding them helps ensure you receive fair
           treatment throughout your apprenticeship.
         </p>
@@ -254,7 +251,7 @@ const ApprenticeRightsTab = () => {
             key={index}
             className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3"
           >
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               {section.category}
             </span>
             {renderBulletList(section.items)}
@@ -266,7 +263,7 @@ const ApprenticeRightsTab = () => {
         <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
           Electrical safety rights
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           As an electrical apprentice, you have specific safety rights beyond general employment
           law. The Electricity at Work Regulations 1989 place strict duties on your employer:
         </p>
@@ -274,7 +271,7 @@ const ApprenticeRightsTab = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Contract, agreement & employment law
         </span>
         <div className="space-y-3">
@@ -284,17 +281,17 @@ const ApprenticeRightsTab = () => {
               className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1"
             >
               <h4 className="text-[14px] font-semibold text-white">{item.topic}</h4>
-              <p className="text-[14px] text-white/85 leading-relaxed">{item.detail}</p>
+              <p className="text-[14px] text-white leading-relaxed">{item.detail}</p>
             </div>
           ))}
         </div>
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Discrimination & harassment protection
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           The Equality Act 2010 protects you from discrimination on 9 protected characteristics. If
           you experience any of the following, you have the right to raise a formal grievance and,
           if necessary, take your case to an Employment Tribunal.
@@ -306,7 +303,7 @@ const ApprenticeRightsTab = () => {
               className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1"
             >
               <h4 className="text-[14px] font-semibold text-white">{item.type}</h4>
-              <p className="text-[14px] text-white/85 leading-relaxed">{item.example}</p>
+              <p className="text-[14px] text-white leading-relaxed">{item.example}</p>
             </div>
           ))}
         </div>
@@ -314,11 +311,11 @@ const ApprenticeRightsTab = () => {
           <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
             Important
           </span>
-          <p className="text-[14px] text-white/85 leading-relaxed">
+          <p className="text-[14px] text-white leading-relaxed">
             Banter is not an excuse. If comments make you uncomfortable, they can constitute
             harassment regardless of intent. You do not need to prove the person meant to offend —
-            only that the behaviour had that effect. Report it to your employer, and if they fail
-            to act, contact ACAS.
+            only that the behaviour had that effect. Report it to your employer, and if they fail to
+            act, contact ACAS.
           </p>
         </div>
       </div>
@@ -334,27 +331,27 @@ const ApprenticeRightsTab = () => {
               className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1"
             >
               <div className="space-y-1">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Issue
                 </span>
-                <p className="text-[14px] text-white/85 leading-relaxed">{violation.issue}</p>
+                <p className="text-[14px] text-white leading-relaxed">{violation.issue}</p>
               </div>
               <div className="space-y-1">
                 <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
                   Action
                 </span>
-                <p className="text-[14px] text-white/85 leading-relaxed">{violation.action}</p>
+                <p className="text-[14px] text-white leading-relaxed">{violation.action}</p>
               </div>
             </li>
           ))}
         </ul>
       </div>
 
-      <div className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-2">
+      <div className="rounded-xl border border-elec-yellow/20 bg-white/[0.05] p-4 sm:p-5 space-y-2">
         <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
           Remember
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           Your apprenticeship should be a positive learning experience. If you're experiencing
           problems, don't suffer in silence — help is available and using it shows strength, not
           weakness.

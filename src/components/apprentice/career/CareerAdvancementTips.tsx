@@ -11,14 +11,14 @@ const CareerAdvancementTips = () => {
 
   return (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3 animate-fade-in">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
         Career advancement tips
       </span>
       <ul className="space-y-2">
         {tips.map((tip, index) => (
           <li
             key={index}
-            className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed"
+            className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
           >
             <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
             <span>{tip}</span>

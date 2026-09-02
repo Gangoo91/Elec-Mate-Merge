@@ -6,7 +6,7 @@
  */
 
 import { useState, useRef } from 'react';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { FormSheet } from '@/components/forms/FormSheet';
 import { Button } from '@/components/ui/button';
 import { Camera, Image as ImageIcon, X, Loader2, Check, AlertCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -139,118 +139,113 @@ export function ChatImageUpload({
   };
 
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-auto max-h-[60vh] rounded-t-2xl p-0">
-        <div className="w-12 h-1 bg-muted rounded-full mx-auto mt-3 mb-2" />
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      eyebrow="Elec-AI"
+      title="Add a photo"
+      description="A clear shot of the wiring, board or component is enough."
+    >
+      <div className="space-y-4">
+        {/* Preview Area */}
+        <AnimatePresence mode="wait">
+          {previewUrl ? (
+            <motion.div
+              key="preview"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="relative aspect-video rounded-xl overflow-hidden bg-white/[0.06]"
+            >
+              <img src={previewUrl} alt="Preview" className="w-full h-full object-cover" />
 
-        <SheetHeader className="px-4 pb-3">
-          <SheetTitle className="flex items-center gap-2 text-base">
-            <Camera className="h-5 w-5 text-elec-yellow" />
-            Add Photo
-          </SheetTitle>
-        </SheetHeader>
-
-        <div className="px-4 pb-6 space-y-4">
-          {/* Preview Area */}
-          <AnimatePresence mode="wait">
-            {previewUrl ? (
-              <motion.div
-                key="preview"
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                className="relative aspect-video rounded-xl overflow-hidden bg-muted"
-              >
-                <img src={previewUrl} alt="Preview" className="w-full h-full object-cover" />
-
-                {/* Upload Progress Overlay */}
-                {isUploading && (
-                  <div className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center">
-                    <Loader2 className="h-8 w-8 text-elec-yellow animate-spin mb-2" />
-                    <div className="w-32 h-1.5 bg-white/20 rounded-full overflow-hidden">
-                      <motion.div
-                        className="h-full bg-elec-yellow rounded-full"
-                        initial={{ width: 0 }}
-                        animate={{ width: `${uploadProgress}%` }}
-                        transition={{ duration: 0.3 }}
-                      />
-                    </div>
-                    <p className="text-xs text-white mt-2">Uploading...</p>
+              {/* Upload Progress Overlay */}
+              {isUploading && (
+                <div className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center">
+                  <Loader2 className="h-8 w-8 text-elec-yellow animate-spin mb-2" />
+                  <div className="w-32 h-1.5 bg-white/20 rounded-full overflow-hidden">
+                    <motion.div
+                      className="h-full bg-elec-yellow rounded-full"
+                      initial={{ width: 0 }}
+                      animate={{ width: `${uploadProgress}%` }}
+                      transition={{ duration: 0.3 }}
+                    />
                   </div>
-                )}
+                  <p className="text-xs text-white mt-2">Uploading...</p>
+                </div>
+              )}
 
-                {/* Remove Button */}
-                {!isUploading && (
-                  <button
-                    onClick={handleCancel}
-                    className="absolute top-2 right-2 p-1.5 rounded-full bg-black/50 hover:bg-black/70 transition-colors"
-                  >
-                    <X className="h-4 w-4 text-white" />
-                  </button>
-                )}
-              </motion.div>
-            ) : (
-              <motion.div
-                key="options"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="grid grid-cols-2 gap-3"
-              >
-                {/* Camera Button */}
+              {/* Remove Button */}
+              {!isUploading && (
                 <button
-                  onClick={() => cameraInputRef.current?.click()}
-                  className="flex flex-col items-center gap-2 p-6 rounded-xl bg-elec-yellow/10 border border-elec-yellow/30 hover:bg-elec-yellow/20 transition-colors touch-manipulation"
+                  onClick={handleCancel}
+                  className="absolute top-2 right-2 flex h-10 w-10 items-center justify-center rounded-full bg-black/60 hover:bg-black/75 transition-colors touch-manipulation"
                 >
-                  <div className="w-12 h-12 rounded-full bg-elec-yellow/20 flex items-center justify-center">
-                    <Camera className="h-6 w-6 text-elec-yellow" />
-                  </div>
-                  <span className="text-sm font-medium">Take Photo</span>
-                  <span className="text-xs text-muted-foreground">Use camera</span>
+                  <X className="h-4 w-4 text-white" />
                 </button>
+              )}
+            </motion.div>
+          ) : (
+            <motion.div
+              key="options"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="grid grid-cols-2 gap-3"
+            >
+              {/* Camera Button */}
+              <button
+                onClick={() => cameraInputRef.current?.click()}
+                className="flex flex-col items-center gap-2 p-6 rounded-xl bg-white/[0.06] border border-elec-yellow/30 hover:bg-white/[0.08] transition-colors touch-manipulation"
+              >
+                <div className="w-12 h-12 rounded-full bg-white/[0.08] flex items-center justify-center">
+                  <Camera className="h-6 w-6 text-elec-yellow" />
+                </div>
+                <span className="text-sm font-medium">Take Photo</span>
+                <span className="text-xs text-white">Use camera</span>
+              </button>
 
-                {/* Gallery Button */}
-                <button
-                  onClick={() => galleryInputRef.current?.click()}
-                  className="flex flex-col items-center gap-2 p-6 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors touch-manipulation"
-                >
-                  <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
-                    <ImageIcon className="h-6 w-6 text-foreground/70" />
-                  </div>
-                  <span className="text-sm font-medium">Choose Photo</span>
-                  <span className="text-xs text-muted-foreground">From gallery</span>
-                </button>
-              </motion.div>
-            )}
-          </AnimatePresence>
+              {/* Gallery Button */}
+              <button
+                onClick={() => galleryInputRef.current?.click()}
+                className="flex flex-col items-center gap-2 p-6 rounded-xl bg-white/[0.04] border border-white/[0.12] hover:bg-white/[0.08] transition-colors touch-manipulation"
+              >
+                <div className="w-12 h-12 rounded-full bg-white/[0.08] flex items-center justify-center">
+                  <ImageIcon className="h-6 w-6 text-white" />
+                </div>
+                <span className="text-sm font-medium">Choose Photo</span>
+                <span className="text-xs text-white">From gallery</span>
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-          {/* Tips */}
-          <div className="flex items-start gap-2 p-3 rounded-xl border border-white/[0.06] bg-white/[0.02]">
-            <AlertCircle className="h-4 w-4 text-white/55 shrink-0 mt-0.5" />
-            <p className="text-[12px] text-white/85">
-              Take a clear photo of wiring, boards, or components. Dave can identify issues and give
-              specific advice.
-            </p>
-          </div>
-
-          {/* Hidden file inputs */}
-          <input
-            ref={cameraInputRef}
-            type="file"
-            accept="image/*"
-            capture="environment"
-            onChange={handleFileSelect}
-            className="hidden"
-          />
-          <input
-            ref={galleryInputRef}
-            type="file"
-            accept="image/*"
-            onChange={handleFileSelect}
-            className="hidden"
-          />
+        {/* Tips */}
+        <div className="flex items-start gap-2 p-3 rounded-xl border border-white/[0.06] bg-white/[0.02]">
+          <AlertCircle className="h-4 w-4 text-white shrink-0 mt-0.5" />
+          <p className="text-[12px] text-white">
+            Take a clear photo of wiring, boards, or components. Dave can identify issues and give
+            specific advice.
+          </p>
         </div>
-      </SheetContent>
-    </Sheet>
+
+        {/* Hidden file inputs */}
+        <input
+          ref={cameraInputRef}
+          type="file"
+          accept="image/*"
+          capture="environment"
+          onChange={handleFileSelect}
+          className="hidden"
+        />
+        <input
+          ref={galleryInputRef}
+          type="file"
+          accept="image/*"
+          onChange={handleFileSelect}
+          className="hidden"
+        />
+      </div>
+    </FormSheet>
   );
 }
 
@@ -271,12 +266,12 @@ export function ImagePreviewBadge({
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 10 }}
-      className="relative inline-flex items-center gap-2 px-2 py-1.5 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30"
+      className="relative inline-flex items-center gap-2 px-2 py-1.5 rounded-lg bg-white/[0.06] border border-elec-yellow/30"
     >
       <div className="w-8 h-8 rounded overflow-hidden">
         <img src={imageUrl} alt="Attached" className="w-full h-full object-cover" loading="lazy" />
       </div>
-      <span className="text-xs text-foreground/70">Photo attached</span>
+      <span className="text-xs text-white">Photo attached</span>
       <button onClick={onRemove} className="p-1 rounded-full hover:bg-white/10 transition-colors">
         <X className="h-3.5 w-3.5 text-foreground/50" />
       </button>

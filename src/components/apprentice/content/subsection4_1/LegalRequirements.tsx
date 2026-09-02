@@ -17,7 +17,7 @@ const LegalRequirements = () => {
           <h4 className="font-semibold text-elec-yellow mb-3">
             Key Regulations for Electrical Work
           </h4>
-          <ul className="list-disc pl-5 space-y-2 text-elec-light/80">
+          <ul className="list-disc pl-5 space-y-2 text-white">
             <li>
               <span className="font-medium text-white">Regulation 4:</span> Proper planning and
               organization of all work at height

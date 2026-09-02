@@ -613,20 +613,20 @@ const CaseStudiesTab = () => {
     `h-9 px-3 rounded-lg border text-[12px] touch-manipulation transition-all ${
       active
         ? 'bg-elec-yellow text-black font-semibold border-elec-yellow'
-        : 'bg-white/[0.06] text-white/85 border-white/10 hover:bg-white/[0.05]'
+        : 'bg-white/[0.06] text-white border-white/10 hover:bg-white/[0.05]'
     }`;
 
   return (
     <div className="space-y-6 animate-fade-in text-left">
       {/* Header */}
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Case studies library
         </span>
         <h2 className="text-[24px] sm:text-[28px] font-bold tracking-tight text-white leading-tight">
           Real incident case studies
         </h2>
-        <p className="text-[14px] text-white/70 leading-relaxed max-w-2xl">
+        <p className="text-[14px] text-white leading-relaxed max-w-2xl">
           Learn from real incidents and near-misses in the electrical industry. Each case study
           includes detailed analysis, downloadable reports, and practical learning outcomes.
         </p>
@@ -634,7 +634,7 @@ const CaseStudiesTab = () => {
 
       {/* Filters */}
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Filter by severity
         </span>
         <div className="flex flex-wrap gap-2">
@@ -673,17 +673,17 @@ const CaseStudiesTab = () => {
           >
             {/* Title + meta */}
             <div className="space-y-2">
-              <div className="flex items-baseline gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white/70 flex-wrap">
+              <div className="flex items-baseline gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white flex-wrap">
                 <span>{study.severity}</span>
-                <span className="text-white/25">·</span>
+                <span className="text-white">·</span>
                 <span>{study.category}</span>
-                <span className="text-white/25">·</span>
+                <span className="text-white">·</span>
                 <span>{study.difficulty}</span>
               </div>
               <h3 className="text-[16px] sm:text-[18px] font-medium text-white leading-snug">
                 {study.title}
               </h3>
-              <div className="flex items-center gap-4 text-[12px] text-white/70 flex-wrap">
+              <div className="flex items-center gap-4 text-[12px] text-white flex-wrap">
                 <span className="flex items-center gap-1">
                   <Calendar className="h-3 w-3" />
                   {study.date}
@@ -703,26 +703,26 @@ const CaseStudiesTab = () => {
               </div>
             </div>
 
-            <p className="text-[14px] text-white/85 leading-relaxed">{study.detailedDescription}</p>
+            <p className="text-[14px] text-white leading-relaxed">{study.detailedDescription}</p>
 
             {/* Causes & prevention */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Root causes
                 </span>
                 <ul className="space-y-1.5">
                   {study.rootCauses.slice(0, 3).map((cause, causeIndex) => (
                     <li
                       key={causeIndex}
-                      className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                      className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                     >
                       <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                       <span>{cause}</span>
                     </li>
                   ))}
                   {study.rootCauses.length > 3 && (
-                    <li className="text-[12px] text-white/70">
+                    <li className="text-[12px] text-white">
                       +{study.rootCauses.length - 3} more
                     </li>
                   )}
@@ -730,21 +730,21 @@ const CaseStudiesTab = () => {
               </div>
 
               <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Prevention measures
                 </span>
                 <ul className="space-y-1.5">
                   {study.preventiveMeasures.slice(0, 3).map((measure, measureIndex) => (
                     <li
                       key={measureIndex}
-                      className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                      className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                     >
                       <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                       <span>{measure}</span>
                     </li>
                   ))}
                   {study.preventiveMeasures.length > 3 && (
-                    <li className="text-[12px] text-white/70">
+                    <li className="text-[12px] text-white">
                       +{study.preventiveMeasures.length - 3} more
                     </li>
                   )}
@@ -754,10 +754,10 @@ const CaseStudiesTab = () => {
 
             {/* Lesson learned */}
             <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Key lesson
               </span>
-              <p className="text-[14px] text-white/85 leading-relaxed italic">
+              <p className="text-[14px] text-white leading-relaxed italic">
                 &ldquo;{study.lessonsLearned}&rdquo;
               </p>
             </div>
@@ -768,13 +768,13 @@ const CaseStudiesTab = () => {
                 {study.regulations.slice(0, 2).map((regulation, regIndex) => (
                   <span
                     key={regIndex}
-                    className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07]"
+                    className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07]"
                   >
                     {regulation}
                   </span>
                 ))}
                 {study.regulations.length > 2 && (
-                  <span className="text-[12px] text-white/70 px-2 py-0.5">
+                  <span className="text-[12px] text-white px-2 py-0.5">
                     +{study.regulations.length - 2}
                   </span>
                 )}
@@ -813,10 +813,10 @@ const CaseStudiesTab = () => {
       {/* Analytics summary */}
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-4">
         <div className="space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Analytics
           </span>
-          <p className="text-[14px] text-white/85 leading-relaxed">
+          <p className="text-[14px] text-white leading-relaxed">
             These case studies are based on real incidents reported to the HSE and other safety
             organisations. They represent valuable learning opportunities that have shaped current
             safety practices.
@@ -837,7 +837,7 @@ const CaseStudiesTab = () => {
             },
           ].map((m) => (
             <div key={m.label} className="space-y-1">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 {m.label}
               </span>
               <p className="text-[20px] font-semibold text-white font-mono">{m.value}</p>

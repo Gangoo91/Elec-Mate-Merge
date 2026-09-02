@@ -14,10 +14,10 @@ const StandardsReference = () => {
   return (
     <div className="space-y-5">
       <div className="space-y-1">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           UK electrical standards reference
         </span>
-        <p className="text-[13px] text-white/85 leading-relaxed">
+        <p className="text-[13px] text-white leading-relaxed">
           Key standards used in calculations
         </p>
       </div>
@@ -39,11 +39,11 @@ const StandardsReference = () => {
                 >
                   <div className="flex-1 text-left min-w-0">
                     <span className="text-[14px] font-mono text-white">{standard.code}</span>
-                    <span className="text-[13px] text-white/85 ml-2">{standard.description}</span>
+                    <span className="text-[13px] text-white ml-2">{standard.description}</span>
                   </div>
                   <ChevronDown
                     className={cn(
-                      'h-4 w-4 text-white/55 shrink-0 transition-transform duration-200',
+                      'h-4 w-4 text-white shrink-0 transition-transform duration-200',
                       isOpen && 'rotate-180'
                     )}
                   />
@@ -54,21 +54,21 @@ const StandardsReference = () => {
                 <div className="pl-4 pr-2 py-3 space-y-4">
                   <div className="space-y-1">
                     <h4 className="text-[14px] font-medium text-white">{standard.title}</h4>
-                    <p className="text-[13px] text-white/85 leading-relaxed">{standard.scope}</p>
+                    <p className="text-[13px] text-white leading-relaxed">{standard.scope}</p>
                     {standard.notes && (
-                      <p className="text-[12px] text-white/55 leading-relaxed">{standard.notes}</p>
+                      <p className="text-[12px] text-white leading-relaxed">{standard.notes}</p>
                     )}
                   </div>
 
                   <div className="space-y-1.5">
-                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                       Common use cases
                     </span>
                     <ul className="space-y-1">
                       {standard.useCases.map((useCase, idx) => (
                         <li
                           key={idx}
-                          className="flex items-start gap-2 text-[13px] text-white/85 leading-relaxed"
+                          className="flex items-start gap-2 text-[13px] text-white leading-relaxed"
                         >
                           <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                           <span>{useCase}</span>
@@ -78,14 +78,14 @@ const StandardsReference = () => {
                   </div>
 
                   <div className="space-y-1.5">
-                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                       Key points
                     </span>
                     <ul className="space-y-1">
                       {standard.keyPoints.map((point, idx) => (
                         <li
                           key={idx}
-                          className="flex items-start gap-2 text-[13px] text-white/85 leading-relaxed"
+                          className="flex items-start gap-2 text-[13px] text-white leading-relaxed"
                         >
                           <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                           <span>{point}</span>
@@ -95,14 +95,14 @@ const StandardsReference = () => {
                   </div>
 
                   <div className="space-y-1.5">
-                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                       Key sections
                     </span>
                     <ul className="space-y-1">
                       {standard.sections.map((section, idx) => (
                         <li
                           key={idx}
-                          className="flex items-start gap-2 text-[13px] text-white/85 leading-relaxed"
+                          className="flex items-start gap-2 text-[13px] text-white leading-relaxed"
                         >
                           <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                           <span>{section}</span>
@@ -119,7 +119,7 @@ const StandardsReference = () => {
 
       {/* Voltage Drop Limits */}
       <div className="space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           BS 7671 voltage drop limits
         </span>
         <div className="space-y-2">
@@ -132,15 +132,15 @@ const StandardsReference = () => {
                 <span className="text-[14px] text-white font-medium">{item.circuit}</span>
                 <span className="text-xl font-mono text-elec-yellow">{item.limit}</span>
               </div>
-              <div className="space-y-0.5 text-[13px] text-white/85">
+              <div className="space-y-0.5 text-[13px] text-white">
                 <p>
-                  <span className="text-white/55">Reference:</span> {item.reference}
+                  <span className="text-white">Reference:</span> {item.reference}
                 </p>
                 <p>
-                  <span className="text-white/55">Application:</span> {item.application}
+                  <span className="text-white">Application:</span> {item.application}
                 </p>
                 <p>
-                  <span className="text-white/55">Calculation:</span> {item.calculation}
+                  <span className="text-white">Calculation:</span> {item.calculation}
                 </p>
               </div>
             </div>
@@ -148,7 +148,7 @@ const StandardsReference = () => {
         </div>
       </div>
 
-      <p className="text-[12px] text-white/55 leading-relaxed">
+      <p className="text-[12px] text-white leading-relaxed">
         These calculators are based on current UK electrical standards but should not replace
         professional electrical design. Always consult qualified personnel for critical
         installations and verify against the latest editions of relevant standards.

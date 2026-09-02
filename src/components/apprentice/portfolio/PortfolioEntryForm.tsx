@@ -1,20 +1,26 @@
 import { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Clock, ImagePlus, ChevronLeft, ChevronRight, Check, BookOpen } from 'lucide-react';
+import { Check, ChevronRight } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { FormSheet } from '@/components/forms/FormSheet';
+import { SelectField } from '@/components/forms/SelectField';
+import {
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  checkLineCn,
+  checkboxCn,
+  chipBase,
+  chipOff,
+  grid2Cn,
+  inputCn,
+  labelCn,
+  textareaCn,
+} from '@/components/forms/fieldStyles';
+import { Checkbox } from '@/components/ui/checkbox';
 import { PortfolioEntry, PortfolioCategory, PortfolioFile, EvidenceType } from '@/types/portfolio';
 import { cn } from '@/lib/utils';
 import { EvidenceUploader } from '@/components/apprentice/shared/EvidenceUploader';
 import { EvidenceRequirementsGuide } from '@/components/apprentice/portfolio/EvidenceRequirementsGuide';
 import { useMediaQuery } from '@/hooks/use-media-query';
-import {
-  ScrollbarFreeSelect,
-  ScrollbarFreeSelectContent,
-  ScrollbarFreeSelectItem,
-  ScrollbarFreeSelectTrigger,
-  ScrollbarFreeSelectValue,
-} from '@/components/ui/scrollbar-free-select';
 import { SingleSelectWithAdd } from '@/components/ui/single-select-with-add';
 import { useStudentQualification } from '@/hooks/useStudentQualification';
 import { ACPickerSheet } from '@/components/apprentice/portfolio/ACPickerSheet';
@@ -61,16 +67,14 @@ const TAGS_OPTIONS = [
 ];
 
 const AWARDING_BODY_STANDARDS_OPTIONS = [
-  { value: 'bs7671', label: 'BS 7671:2018 - Wiring Regulations' },
-  { value: 'bs5839', label: 'BS 5839 - Fire Detection & Alarm Systems' },
-  { value: 'bs6651', label: 'BS 6651 - Lightning Protection' },
-  { value: 'bs5266', label: 'BS 5266 - Emergency Lighting' },
+  { value: 'bs7671', label: 'BS 7671:2018+A4:2026 — Wiring Regulations' },
+  { value: 'bs5839', label: 'BS 5839 — Fire detection and alarm systems' },
+  { value: 'bs6651', label: 'BS EN 62305 — Protection against lightning' },
+  { value: 'bs5266', label: 'BS 5266 — Emergency lighting' },
   { value: 'iet-guidance', label: 'IET Guidance Notes' },
   { value: 'city-guilds-2365', label: 'City & Guilds 2365' },
   { value: 'eal-electrical', label: 'EAL Electrical Installation' },
   { value: 'btec-electrical', label: 'BTEC Electrical Engineering' },
-  { value: 'niceic-standards', label: 'NICEIC Standards' },
-  { value: 'napit-requirements', label: 'NAPIT Requirements' },
 ];
 
 const EVIDENCE_TYPE_OPTIONS: { value: EvidenceType; label: string }[] = [
@@ -82,8 +86,7 @@ const EVIDENCE_TYPE_OPTIONS: { value: EvidenceType; label: string }[] = [
   { value: 'reflective-account', label: 'Reflective account' },
 ];
 
-const INPUT_CLS =
-  'w-full h-12 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium px-4';
+const AREA_CLS = cn(textareaCn, 'w-full resize-none');
 
 // Wizard steps configuration
 const WIZARD_STEPS = [
@@ -129,9 +132,7 @@ const PortfolioEntryForm = ({
     authenticityConfirmed: initialData?.metadata?.authenticityConfirmed || false,
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
+  const handleSubmit = () => {
     const selectedCategory = categories.find((cat) => cat.id === formData.categoryId);
     if (!selectedCategory) return;
 
@@ -230,560 +231,424 @@ const PortfolioEntryForm = ({
     }
   };
 
-  // Step Progress Indicator
-  const StepIndicator = () => (
-    <div className="flex items-center justify-center gap-1 sm:gap-2 py-3 px-2">
-      {WIZARD_STEPS.map((step, idx) => (
-        <div key={step.id} className="flex items-center">
+  const set = <K extends keyof typeof formData>(key: K, value: (typeof formData)[K]) =>
+    setFormData((prev) => ({ ...prev, [key]: value }));
+
+  // Cert-style step tabs: the word carries the state, a 2px volt rule marks the
+  // current step, done steps read in volt. No dots, no green.
+  const stepTabs = (
+    <nav className="flex" aria-label="Steps">
+      {WIZARD_STEPS.map((step, idx) => {
+        const active = idx === currentStep;
+        const done = idx < currentStep;
+        return (
           <button
+            key={step.id}
             type="button"
             onClick={() => setCurrentStep(idx)}
-            className={`
-              flex items-center justify-center transition-all duration-200
-              ${
-                idx === currentStep
-                  ? 'bg-elec-yellow text-elec-dark'
-                  : idx < currentStep
-                    ? 'bg-green-500 text-white'
-                    : 'bg-white/5 text-elec-light/60'
-              }
-              ${
-                isMobile
-                  ? 'w-8 h-8 rounded-full text-xs font-bold'
-                  : 'px-3 py-1.5 rounded-lg text-sm font-medium gap-2'
-              }
-            `}
-          >
-            {idx < currentStep ? (
-              <Check className="h-4 w-4" />
-            ) : isMobile ? (
-              idx + 1
-            ) : (
-              <>
-                <span className="w-5 h-5 rounded-full bg-current/20 flex items-center justify-center text-xs">
-                  {idx + 1}
-                </span>
-                {step.shortTitle}
-              </>
+            aria-current={active ? 'step' : undefined}
+            className={cn(
+              'flex h-11 flex-1 items-center justify-center text-[13px] font-semibold touch-manipulation lg:text-sm',
+              done ? 'text-elec-yellow' : 'text-white'
             )}
+          >
+            <span
+              className={cn(
+                'border-b-2 px-1 pb-2.5 pt-3',
+                active ? 'border-elec-yellow' : 'border-transparent'
+              )}
+            >
+              {step.shortTitle}
+            </span>
           </button>
-          {idx < WIZARD_STEPS.length - 1 && (
-            <div
-              className={`w-4 sm:w-8 h-0.5 mx-1 ${idx < currentStep ? 'bg-green-500' : 'bg-white/5'}`}
-            />
-          )}
-        </div>
-      ))}
-    </div>
+        );
+      })}
+    </nav>
   );
 
-  // Step 1: Basics
-  const BasicsStep = () => (
-    <div className="space-y-5">
-      {/* Title */}
-      <div className="space-y-2">
-        <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
-          <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
-          Entry Title
+  const basicsStep = (
+    <>
+      <div>
+        <label className={labelCn} htmlFor="pe-title">
+          Entry title
         </label>
-        <input
-          type="text"
+        <Input
+          id="pe-title"
           value={formData.title}
-          onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
-          placeholder="e.g., Three-phase motor installation"
-          className="w-full h-12 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium px-4"
+          onChange={(e) => set('title', e.target.value)}
+          placeholder="e.g. Three-phase motor installation"
+          className={inputCn}
           required
         />
       </div>
 
-      {/* Category */}
-      <ScrollbarFreeSelect
-        value={formData.categoryId}
-        onValueChange={(value) => setFormData((prev) => ({ ...prev, categoryId: value }))}
-      >
-        <ScrollbarFreeSelectTrigger
-          label="Category"
-          hint="Choose the most relevant category for this work"
-        >
-          <ScrollbarFreeSelectValue placeholder="Select category" />
-        </ScrollbarFreeSelectTrigger>
-        <ScrollbarFreeSelectContent>
-          {categoryOptions.map((option) => (
-            <ScrollbarFreeSelectItem key={option.value} value={option.value}>
-              {option.label}
-            </ScrollbarFreeSelectItem>
-          ))}
-        </ScrollbarFreeSelectContent>
-      </ScrollbarFreeSelect>
+      <div>
+        <label className={labelCn}>Category</label>
+        <SelectField
+          value={formData.categoryId}
+          onValueChange={(value) => set('categoryId', value)}
+          placeholder="Select category"
+          title="Category"
+          options={categoryOptions}
+        />
+        <p className="mt-1.5 text-[11.5px] leading-snug text-white">
+          Choose the most relevant category for this work.
+        </p>
+      </div>
 
-      {/* Description */}
-      <div className="space-y-2">
-        <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
-          <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+      <div>
+        <label className={labelCn} htmlFor="pe-description">
           Description
         </label>
         <textarea
+          id="pe-description"
           value={formData.description}
-          onChange={(e) => setFormData((prev) => ({ ...prev, description: e.target.value }))}
-          placeholder="Describe what you did and what you learned..."
+          onChange={(e) => set('description', e.target.value)}
+          placeholder="What you did and what you learned"
           rows={4}
-          className="w-full bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium p-4 resize-none"
-          style={{ minHeight: isMobile ? '120px' : '100px' }}
+          className={AREA_CLS}
           required
         />
       </div>
 
-      {/* Status and Time Spent */}
-      <div className="grid grid-cols-2 gap-4">
-        <ScrollbarFreeSelect
-          value={formData.status}
-          onValueChange={(value) => setFormData((prev) => ({ ...prev, status: value as any }))}
-        >
-          <ScrollbarFreeSelectTrigger label="Status">
-            <ScrollbarFreeSelectValue placeholder="Select status" />
-          </ScrollbarFreeSelectTrigger>
-          <ScrollbarFreeSelectContent>
-            {statusOptions.map((option) => (
-              <ScrollbarFreeSelectItem key={option.value} value={option.value}>
-                {option.label}
-              </ScrollbarFreeSelectItem>
-            ))}
-          </ScrollbarFreeSelectContent>
-        </ScrollbarFreeSelect>
-
-        <div className="space-y-2">
-          <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
-            <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
-            Time Spent
+      <div className={grid2Cn}>
+        <div>
+          <label className={labelCn}>Status</label>
+          <SelectField
+            value={formData.status}
+            onValueChange={(value) => set('status', value as typeof formData.status)}
+            placeholder="Select status"
+            title="Status"
+            options={statusOptions}
+          />
+        </div>
+        <div>
+          <label className={labelCn} htmlFor="pe-time">
+            Time spent (minutes)
           </label>
-          <div className="relative">
-            <Clock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-elec-light/60" />
-            <input
-              type="number"
-              min="0"
-              value={formData.timeSpent}
-              onChange={(e) =>
-                setFormData((prev) => ({ ...prev, timeSpent: parseInt(e.target.value) || 0 }))
-              }
-              className="w-full h-12 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 text-base font-medium pl-10 pr-16"
-            />
-            <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-sm text-elec-light/60">
-              mins
-            </span>
-          </div>
+          <Input
+            id="pe-time"
+            type="number"
+            min="0"
+            inputMode="numeric"
+            value={formData.timeSpent}
+            onChange={(e) => set('timeSpent', parseInt(e.target.value) || 0)}
+            className={inputCn}
+          />
         </div>
       </div>
-    </div>
+    </>
   );
 
-  // Step 2: Skills & Learning Outcomes
-  const SkillsStep = () => (
-    <div className="space-y-5">
-      {/* Skills */}
+  const skillsStep = (
+    <>
       <SingleSelectWithAdd
-        label="Skills Demonstrated"
+        label="Skills demonstrated"
         placeholder="Select a skill"
         value={formData.skills}
-        onValueChange={(value) => setFormData((prev) => ({ ...prev, skills: value }))}
+        onValueChange={(value) => set('skills', value)}
         options={SKILLS_OPTIONS}
         hint="Add electrical skills you used or developed"
       />
 
-      {/* Assessment Criteria (from real qualification data) */}
-      <div className="space-y-2">
-        <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
-          <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
-          Assessment Criteria
-        </label>
-        <Button
+      <div>
+        <label className={labelCn}>Assessment criteria</label>
+        <button
           type="button"
-          variant="outline"
-          className="w-full h-12 justify-between border-elec-gray/50 hover:border-elec-yellow/40 touch-manipulation"
           onClick={() => setShowACPicker(true)}
+          className={cn(buttonSecondaryCn, 'flex w-full items-center justify-between px-4')}
         >
-          <span className="flex items-center gap-2 text-sm">
-            <BookOpen className="h-4 w-4 text-elec-yellow" />
+          <span className="text-[14px]">
             {formData.assessmentCriteria.length > 0
               ? `${formData.assessmentCriteria.length} criteria selected`
               : 'Select assessment criteria'}
           </span>
-          <ChevronRight className="h-4 w-4 text-elec-light/60" />
-        </Button>
+          <ChevronRight className="h-4 w-4 text-white" />
+        </button>
         {formData.assessmentCriteria.length > 0 && (
-          <div className="flex flex-wrap gap-1">
+          <div className="mt-2 flex flex-wrap gap-2">
             {formData.assessmentCriteria.slice(0, 6).map((ac) => (
-              <Badge
+              <span
                 key={ac}
-                variant="outline"
-                className="text-[10px] border-elec-yellow/30 text-elec-yellow"
+                className="inline-flex h-8 items-center rounded-lg border border-elec-yellow/50 px-2.5 font-mono text-[11px] text-elec-yellow"
               >
                 {ac}
-              </Badge>
+              </span>
             ))}
             {formData.assessmentCriteria.length > 6 && (
-              <Badge variant="outline" className="text-[10px]">
+              <span className="inline-flex h-8 items-center rounded-lg border border-white/[0.14] px-2.5 text-[11px] text-white">
                 +{formData.assessmentCriteria.length - 6} more
-              </Badge>
+              </span>
             )}
           </div>
         )}
-        <p className="text-xs text-elec-light/70">
-          Browse your qualification's units and select criteria this work demonstrates
+        <p className="mt-1.5 text-[11.5px] leading-snug text-white">
+          Browse your qualification&rsquo;s units and pick the criteria this work demonstrates.
         </p>
       </div>
 
-      {/* Tags */}
       <SingleSelectWithAdd
         label="Tags"
         placeholder="Select a tag"
         value={formData.tags}
-        onValueChange={(value) => setFormData((prev) => ({ ...prev, tags: value }))}
+        onValueChange={(value) => set('tags', value)}
         options={TAGS_OPTIONS}
         hint="Add tags to help categorise your work"
       />
 
-      {/* Awarding Body Standards */}
       <SingleSelectWithAdd
-        label="Standards & Regulations"
+        label="Standards & regulations"
         placeholder="Select a standard or regulation"
         value={formData.awardingBodyStandards}
-        onValueChange={(value) =>
-          setFormData((prev) => ({ ...prev, awardingBodyStandards: value }))
-        }
+        onValueChange={(value) => set('awardingBodyStandards', value)}
         options={AWARDING_BODY_STANDARDS_OPTIONS}
-        hint="Add relevant standards or regulations that apply"
+        hint="Add the standards this work was carried out to"
       />
 
       <ACPickerSheet
         open={showACPicker}
         onOpenChange={setShowACPicker}
-        qualificationCode={qualificationCode}
+        requirementCode={qualificationCode}
         selectedACs={formData.assessmentCriteria}
-        onDone={(acs) => setFormData((prev) => ({ ...prev, assessmentCriteria: acs }))}
+        onDone={(acs) => set('assessmentCriteria', acs)}
       />
-    </div>
+    </>
   );
 
-  // Step 3: Evidence
-  const EvidenceStep = () => (
-    <div className="space-y-5">
-      {/* Evidence Requirements Guide */}
+  const evidenceStep = (
+    <>
+      {/* PortfolioFile carries no File object, so the old `f.file` map was
+          always an empty list — the guide never saw an upload. */}
       {formData.categoryId && (
-        <EvidenceRequirementsGuide
-          categoryId={formData.categoryId}
-          uploadedFiles={formData.evidenceFiles.map((f) => f.file).filter(Boolean) as File[]}
-          compact={isMobile}
-        />
+        <EvidenceRequirementsGuide categoryId={formData.categoryId} compact={isMobile} />
       )}
 
-      <div className="space-y-3">
-        <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
-          <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
-          <ImagePlus className="h-4 w-4" />
-          Evidence Files
-        </label>
+      <div>
+        <label className={labelCn}>Evidence files</label>
         <EvidenceUploader
           files={formData.evidenceFiles}
           onFilesChange={handleFilesChange}
           entryId={initialData?.id}
           maxFiles={10}
         />
-        <p className="text-xs text-elec-light/70">
-          Upload photos, documents, or videos as evidence of your work. Max 10 files, 10MB each.
+        <p className="mt-1.5 text-[11.5px] leading-snug text-white">
+          Photos, documents or videos of your work. Up to 10 files, 10MB each.
         </p>
       </div>
-    </div>
+    </>
   );
 
-  // Step 4: Reflection
-  const ReflectionStep = () => (
-    <div className="space-y-5">
-      {/* Self Assessment */}
-      <ScrollbarFreeSelect
-        value={formData.selfAssessment.toString()}
-        onValueChange={(value) =>
-          setFormData((prev) => ({ ...prev, selfAssessment: parseInt(value) }))
-        }
-      >
-        <ScrollbarFreeSelectTrigger
-          label="Self Assessment"
-          hint="Rate your performance on this task"
-        >
-          <ScrollbarFreeSelectValue placeholder="Rate your performance" />
-        </ScrollbarFreeSelectTrigger>
-        <ScrollbarFreeSelectContent>
-          {selfAssessmentOptions.map((option) => (
-            <ScrollbarFreeSelectItem key={option.value} value={option.value}>
-              {option.label}
-            </ScrollbarFreeSelectItem>
-          ))}
-        </ScrollbarFreeSelectContent>
-      </ScrollbarFreeSelect>
+  const reflectionStep = (
+    <>
+      <div>
+        <label className={labelCn}>Self assessment</label>
+        <SelectField
+          value={formData.selfAssessment.toString()}
+          onValueChange={(value) => set('selfAssessment', parseInt(value))}
+          placeholder="Rate your performance"
+          title="Self assessment"
+          options={selfAssessmentOptions}
+        />
+      </div>
 
-      {/* Reflection */}
-      <div className="space-y-2">
-        <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
-          <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+      <div>
+        <label className={labelCn} htmlFor="pe-reflection">
           Reflection
         </label>
         <textarea
+          id="pe-reflection"
           value={formData.reflection}
-          onChange={(e) => setFormData((prev) => ({ ...prev, reflection: e.target.value }))}
-          placeholder="Reflect on your learning, challenges faced, and what you'd do differently..."
+          onChange={(e) => set('reflection', e.target.value)}
+          placeholder="What you learned, what was hard, and what you would do differently"
           rows={5}
-          className="w-full bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium p-4 resize-none"
-          style={{ minHeight: isMobile ? '150px' : '120px' }}
+          className={AREA_CLS}
           required
         />
-        <p className="text-xs text-elec-light/70">
-          Critical thinking about your experience and learning
-        </p>
       </div>
 
-      {/* Supervisor Feedback */}
-      <div className="space-y-2">
-        <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
-          <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
-          Supervisor Feedback
-          <span className="text-xs text-elec-light/50 font-normal">(Optional)</span>
+      <div>
+        <label className={labelCn} htmlFor="pe-feedback">
+          Supervisor feedback (optional)
         </label>
         <textarea
+          id="pe-feedback"
           value={formData.supervisorFeedback}
-          onChange={(e) => setFormData((prev) => ({ ...prev, supervisorFeedback: e.target.value }))}
-          placeholder="Enter any feedback from your supervisor or assessor..."
+          onChange={(e) => set('supervisorFeedback', e.target.value)}
+          placeholder="Any feedback from your supervisor or assessor"
           rows={3}
-          className="w-full bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium p-4 resize-none"
-          style={{ minHeight: isMobile ? '100px' : '80px' }}
+          className={AREA_CLS}
         />
       </div>
 
       {/* Work details — assessor-ready metadata (all optional) */}
-      <div className="space-y-4 pt-4 border-t border-elec-gray/20">
-        <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
-          <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
-          Work details
-          <span className="text-xs text-elec-light/50 font-normal">(helps it pass)</span>
-        </label>
+      <div className="space-y-4 border-t border-white/[0.1] pt-4">
+        <h3 className="text-sm font-semibold text-white">Work details</h3>
 
-        <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <label className="text-xs text-elec-light/70">Date of work</label>
-            <input
+        <div className={grid2Cn}>
+          <div>
+            <label className={labelCn} htmlFor="pe-workdate">
+              Date of work
+            </label>
+            <Input
+              id="pe-workdate"
               type="date"
               value={formData.workDate}
-              onChange={(e) => setFormData((prev) => ({ ...prev, workDate: e.target.value }))}
-              className={INPUT_CLS}
+              onChange={(e) => set('workDate', e.target.value)}
+              className={inputCn}
             />
           </div>
-          <div className="space-y-2">
-            <label className="text-xs text-elec-light/70">Site / job reference</label>
-            <input
+          <div>
+            <label className={labelCn} htmlFor="pe-siteref">
+              Site / job reference
+            </label>
+            <Input
+              id="pe-siteref"
               type="text"
               value={formData.siteRef}
-              onChange={(e) => setFormData((prev) => ({ ...prev, siteRef: e.target.value }))}
+              onChange={(e) => set('siteRef', e.target.value)}
               placeholder="e.g. 14 Mill Lane rewire"
-              className={INPUT_CLS}
+              className={inputCn}
             />
           </div>
         </div>
 
-        <div className="space-y-2">
-          <label className="text-xs text-elec-light/70">What you personally did</label>
+        <div>
+          <label className={labelCn} htmlFor="pe-role">
+            What you personally did
+          </label>
           <textarea
+            id="pe-role"
             value={formData.role}
-            onChange={(e) => setFormData((prev) => ({ ...prev, role: e.target.value }))}
-            placeholder="Your own role on this job — what you carried out, not the team's…"
+            onChange={(e) => set('role', e.target.value)}
+            placeholder="Your own role on this job — what you carried out, not the team’s"
             rows={2}
-            className="w-full bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium p-4 resize-none"
+            className={AREA_CLS}
           />
         </div>
 
-        <ScrollbarFreeSelect
-          value={formData.evidenceType}
-          onValueChange={(value) =>
-            setFormData((prev) => ({ ...prev, evidenceType: value as EvidenceType }))
-          }
-        >
-          <ScrollbarFreeSelectTrigger label="Type of evidence">
-            <ScrollbarFreeSelectValue placeholder="Select type" />
-          </ScrollbarFreeSelectTrigger>
-          <ScrollbarFreeSelectContent>
-            {EVIDENCE_TYPE_OPTIONS.map((option) => (
-              <ScrollbarFreeSelectItem key={option.value} value={option.value}>
-                {option.label}
-              </ScrollbarFreeSelectItem>
-            ))}
-          </ScrollbarFreeSelectContent>
-        </ScrollbarFreeSelect>
+        <div>
+          <label className={labelCn}>Type of evidence</label>
+          <SelectField
+            value={formData.evidenceType}
+            onValueChange={(value) => set('evidenceType', value as EvidenceType)}
+            placeholder="Select type"
+            title="Type of evidence"
+            options={EVIDENCE_TYPE_OPTIONS}
+          />
+        </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <label className="text-xs text-elec-light/70">Witness name</label>
-            <input
+        <div className={grid2Cn}>
+          <div>
+            <label className={labelCn} htmlFor="pe-witness">
+              Witness name
+            </label>
+            <Input
+              id="pe-witness"
               type="text"
               value={formData.witnessName}
-              onChange={(e) => setFormData((prev) => ({ ...prev, witnessName: e.target.value }))}
+              onChange={(e) => set('witnessName', e.target.value)}
               placeholder="Name"
-              className={INPUT_CLS}
+              className={inputCn}
             />
           </div>
-          <div className="space-y-2">
-            <label className="text-xs text-elec-light/70">Witness role</label>
-            <input
+          <div>
+            <label className={labelCn} htmlFor="pe-witness-role">
+              Witness role
+            </label>
+            <Input
+              id="pe-witness-role"
               type="text"
               value={formData.witnessRole}
-              onChange={(e) => setFormData((prev) => ({ ...prev, witnessRole: e.target.value }))}
+              onChange={(e) => set('witnessRole', e.target.value)}
               placeholder="e.g. supervisor"
-              className={INPUT_CLS}
+              className={inputCn}
             />
           </div>
         </div>
-        <div className="space-y-2">
-          <label className="text-xs text-elec-light/70">Date witnessed</label>
-          <input
+        <div>
+          <label className={labelCn} htmlFor="pe-witness-date">
+            Date witnessed
+          </label>
+          <Input
+            id="pe-witness-date"
             type="date"
             value={formData.witnessDate}
-            onChange={(e) => setFormData((prev) => ({ ...prev, witnessDate: e.target.value }))}
-            className={INPUT_CLS}
+            onChange={(e) => set('witnessDate', e.target.value)}
+            className={inputCn}
           />
         </div>
 
-        <button
-          type="button"
-          onClick={() =>
-            setFormData((prev) => ({ ...prev, authenticityConfirmed: !prev.authenticityConfirmed }))
-          }
-          className="flex items-start gap-2.5 text-left touch-manipulation"
-        >
-          <span
-            className={cn(
-              'mt-0.5 w-5 h-5 rounded border flex items-center justify-center shrink-0',
-              formData.authenticityConfirmed
-                ? 'bg-elec-yellow border-elec-yellow text-black'
-                : 'border-elec-gray/50'
-            )}
-          >
-            {formData.authenticityConfirmed && <Check className="h-3.5 w-3.5" />}
-          </span>
-          <span className="text-sm text-elec-light/80 leading-relaxed">
+        <label className={checkLineCn}>
+          <Checkbox
+            checked={formData.authenticityConfirmed}
+            onCheckedChange={(v) => set('authenticityConfirmed', v === true)}
+            className={checkboxCn}
+          />
+          <span className="text-sm leading-relaxed text-white">
             I confirm this is my own work and an accurate record of what I did.
           </span>
-        </button>
+        </label>
       </div>
-    </div>
+    </>
   );
 
-  // Invoke as plain functions (not <BasicsStep />) so the JSX is inlined into
-  // this component's tree. Rendering them as elements creates a fresh component
-  // identity every keystroke, which remounts the step and blurs the focused
-  // input mid-typing.
-  const renderStep = () => {
-    switch (currentStep) {
-      case 0:
-        return BasicsStep();
-      case 1:
-        return SkillsStep();
-      case 2:
-        return EvidenceStep();
-      case 3:
-        return ReflectionStep();
-      default:
-        return null;
-    }
-  };
+  const steps = [basicsStep, skillsStep, evidenceStep, reflectionStep];
+  const last = currentStep === WIZARD_STEPS.length - 1;
 
-  // Navigation Buttons
-  const NavigationButtons = () => (
-    <div
-      className={`flex gap-3 pt-4 border-t border-elec-gray/20 ${isMobile ? 'sticky bottom-0 bg-white/5 pb-safe' : ''}`}
-    >
+  const footer = (
+    <div className="grid grid-cols-2 gap-2.5">
       {currentStep > 0 ? (
-        <Button
-          type="button"
-          variant="outline"
-          onClick={prevStep}
-          className="flex-1 border-elec-yellow/30 hover:bg-elec-yellow/10 font-medium py-3 h-12"
-        >
-          <ChevronLeft className="h-4 w-4 mr-1" />
+        <button type="button" onClick={prevStep} className={buttonSecondaryCn}>
           Back
-        </Button>
+        </button>
       ) : (
-        <Button
-          type="button"
-          variant="ghost"
-          onClick={onCancel}
-          className="flex-1 text-elec-light/70 hover:text-elec-light hover:bg-white/5 font-medium py-3 h-12"
-        >
+        <button type="button" onClick={onCancel} className={buttonSecondaryCn}>
           Cancel
-        </Button>
+        </button>
       )}
-
-      {currentStep < WIZARD_STEPS.length - 1 ? (
-        <Button
+      {last ? (
+        <button
+          type="button"
+          onClick={() => handleSubmit()}
+          disabled={!canProceed()}
+          className={cn(buttonPrimaryCn, 'inline-flex items-center justify-center gap-2')}
+        >
+          <Check className="h-4 w-4" />
+          {initialData ? 'Save changes' : 'Create entry'}
+        </button>
+      ) : (
+        <button
           type="button"
           onClick={nextStep}
           disabled={!canProceed()}
-          className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold py-3 h-12 disabled:bg-white/[0.08] disabled:text-white/70"
+          className={buttonPrimaryCn}
         >
-          Next
-          <ChevronRight className="h-4 w-4 ml-1" />
-        </Button>
-      ) : (
-        <Button
-          type="submit"
-          disabled={!canProceed()}
-          className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold py-3 h-12 disabled:bg-white/[0.08] disabled:text-white/70"
-        >
-          <Check className="h-4 w-4 mr-1" />
-          {initialData ? 'Update Entry' : 'Create Entry'}
-        </Button>
+          Continue to {WIZARD_STEPS[currentStep + 1].shortTitle}
+        </button>
       )}
     </div>
   );
 
   return (
-    <Dialog open={true} onOpenChange={onCancel}>
-      <DialogContent
-        className={`
-          bg-white/5 border-elec-gray/40
-          ${
-            isMobile
-              ? 'max-w-full h-[100dvh] max-h-[100dvh] rounded-none p-0 flex flex-col'
-              : 'max-w-2xl max-h-[95vh]'
-          }
-        `}
-      >
-        <div className={`${isMobile ? 'flex flex-col h-full' : ''}`}>
-          {/* Header */}
-          <DialogHeader
-            className={`pb-2 bg-white/5 ${isMobile ? 'sticky top-0 z-10 px-4 pt-4 border-b border-elec-gray/20' : ''}`}
-          >
-            <DialogTitle className="text-elec-light text-lg sm:text-xl font-semibold">
-              {initialData ? 'Edit Portfolio Entry' : 'New Portfolio Entry'}
-            </DialogTitle>
-            <StepIndicator />
-          </DialogHeader>
-
-          {/* Form Content */}
-          <form
-            onSubmit={handleSubmit}
-            className={`
-              bg-white/5
-              ${
-                isMobile
-                  ? 'flex-1 overflow-y-auto px-4 py-4'
-                  : 'space-y-6 overflow-y-auto max-h-[calc(95vh-180px)] px-1'
-              }
-            `}
-          >
-            <div className={isMobile ? 'min-h-full' : ''}>{renderStep()}</div>
-
-            {/* Navigation */}
-            <NavigationButtons />
-          </form>
-        </div>
-      </DialogContent>
-    </Dialog>
+    <FormSheet
+      open
+      onOpenChange={(v) => {
+        if (!v) onCancel();
+      }}
+      eyebrow="Portfolio"
+      title={initialData ? 'Edit portfolio entry' : 'New portfolio entry'}
+      headerTrailing={
+        <span className="text-[12px] tabular-nums text-white">
+          Step {currentStep + 1} of {WIZARD_STEPS.length}
+        </span>
+      }
+      subheader={stepTabs}
+      footer={footer}
+    >
+      <div key={currentStep} className="space-y-5 py-2 motion-safe:animate-mw-step-in">
+        {steps[currentStep]}
+      </div>
+    </FormSheet>
   );
 };
 

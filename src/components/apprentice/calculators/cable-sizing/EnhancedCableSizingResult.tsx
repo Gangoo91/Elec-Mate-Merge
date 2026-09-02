@@ -19,11 +19,11 @@ const EnhancedCableSizingResult: React.FC<EnhancedCableSizingResultProps> = ({
       case 'pass':
         return <CheckCircle className="h-4 w-4 text-elec-yellow" />;
       case 'warning':
-        return <AlertTriangle className="h-4 w-4 text-white/55" />;
+        return <AlertTriangle className="h-4 w-4 text-white" />;
       case 'fail':
         return <XCircle className="h-4 w-4 text-red-300" />;
       default:
-        return <CheckCircle className="h-4 w-4 text-white/55" />;
+        return <CheckCircle className="h-4 w-4 text-white" />;
     }
   };
 
@@ -31,10 +31,10 @@ const EnhancedCableSizingResult: React.FC<EnhancedCableSizingResultProps> = ({
     return (
       <div className="h-full flex items-center justify-center text-center p-4 sm:p-6">
         <div className="space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 block">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white block">
             Enhanced cable calculator
           </span>
-          <p className="text-[14px] text-white/85 leading-relaxed max-w-md">
+          <p className="text-[14px] text-white leading-relaxed max-w-md">
             Enter your project details and calculation parameters to get cable sizing
             recommendations with compliance checking.
           </p>
@@ -51,7 +51,7 @@ const EnhancedCableSizingResult: React.FC<EnhancedCableSizingResultProps> = ({
         </span>
         <div className="space-y-1">
           {Object.entries(result.errors).map(([field, error]) => (
-            <p key={field} className="text-[14px] text-white/85 leading-relaxed">
+            <p key={field} className="text-[14px] text-white leading-relaxed">
               {error}
             </p>
           ))}
@@ -84,7 +84,7 @@ const EnhancedCableSizingResult: React.FC<EnhancedCableSizingResultProps> = ({
       {/* Recommended Cable */}
       {result.recommendedCable && (
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Recommended cable
           </span>
 
@@ -93,16 +93,16 @@ const EnhancedCableSizingResult: React.FC<EnhancedCableSizingResultProps> = ({
               <div className="text-2xl sm:text-3xl font-mono text-white">
                 {result.recommendedCable.cable.size}
               </div>
-              <div className="text-[13px] text-white/55 mt-1">
+              <div className="text-[13px] text-white mt-1">
                 {result.recommendedCable.cable.coreConfig} •{' '}
                 {result.recommendedCable.cable.cableType}
               </div>
             </div>
             <div className="flex flex-wrap gap-1.5">
-              <span className="text-[11px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+              <span className="text-[11px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                 Suitability: {result.recommendedCable.suitabilityScore}%
               </span>
-              <span className="text-[11px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+              <span className="text-[11px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                 {result.recommendedCable.costEffectiveness}
               </span>
             </div>
@@ -111,7 +111,7 @@ const EnhancedCableSizingResult: React.FC<EnhancedCableSizingResultProps> = ({
           {/* Cable Properties */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             <div className="p-3 rounded-lg border border-white/[0.06] bg-white/[0.02]">
-              <div className="text-[11px] uppercase tracking-[0.18em] text-white/55 mb-1">
+              <div className="text-[11px] uppercase tracking-[0.18em] text-white mb-1">
                 Current rating
               </div>
               <div className="text-[14px] font-mono text-white">
@@ -119,7 +119,7 @@ const EnhancedCableSizingResult: React.FC<EnhancedCableSizingResultProps> = ({
               </div>
             </div>
             <div className="p-3 rounded-lg border border-white/[0.06] bg-white/[0.02]">
-              <div className="text-[11px] uppercase tracking-[0.18em] text-white/55 mb-1">
+              <div className="text-[11px] uppercase tracking-[0.18em] text-white mb-1">
                 Max operating temp
               </div>
               <div className="text-[14px] font-mono text-white">
@@ -127,7 +127,7 @@ const EnhancedCableSizingResult: React.FC<EnhancedCableSizingResultProps> = ({
               </div>
             </div>
             <div className="p-3 rounded-lg border border-white/[0.06] bg-white/[0.02] sm:col-span-2 lg:col-span-1">
-              <div className="text-[11px] uppercase tracking-[0.18em] text-white/55 mb-1">
+              <div className="text-[11px] uppercase tracking-[0.18em] text-white mb-1">
                 Voltage drop
               </div>
               <div className="text-[14px] font-mono text-white">
@@ -139,12 +139,12 @@ const EnhancedCableSizingResult: React.FC<EnhancedCableSizingResultProps> = ({
           {/* Warning Notes */}
           {result.recommendedCable.warningNotes.length > 0 && (
             <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Important notes
               </span>
               <div className="space-y-1">
                 {result.recommendedCable.warningNotes.map((note, index) => (
-                  <p key={index} className="text-[13px] text-white/85 leading-relaxed">
+                  <p key={index} className="text-[13px] text-white leading-relaxed">
                     {note}
                   </p>
                 ))}
@@ -156,13 +156,13 @@ const EnhancedCableSizingResult: React.FC<EnhancedCableSizingResultProps> = ({
 
       {/* Calculation Summary */}
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Calculation summary
         </span>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
           <div className="space-y-3">
             <div>
-              <div className="text-[11px] uppercase tracking-[0.18em] text-white/55">
+              <div className="text-[11px] uppercase tracking-[0.18em] text-white">
                 Design current
               </div>
               <div className="text-[14px] font-mono text-white">
@@ -170,7 +170,7 @@ const EnhancedCableSizingResult: React.FC<EnhancedCableSizingResultProps> = ({
               </div>
             </div>
             <div>
-              <div className="text-[11px] uppercase tracking-[0.18em] text-white/55">
+              <div className="text-[11px] uppercase tracking-[0.18em] text-white">
                 Protective device rating
               </div>
               <div className="text-[14px] font-mono text-white">
@@ -180,7 +180,7 @@ const EnhancedCableSizingResult: React.FC<EnhancedCableSizingResultProps> = ({
           </div>
           <div className="space-y-3">
             <div>
-              <div className="text-[11px] uppercase tracking-[0.18em] text-white/55">
+              <div className="text-[11px] uppercase tracking-[0.18em] text-white">
                 Environmental derating
               </div>
               <div className="text-[14px] font-mono text-white">
@@ -188,7 +188,7 @@ const EnhancedCableSizingResult: React.FC<EnhancedCableSizingResultProps> = ({
               </div>
             </div>
             <div>
-              <div className="text-[11px] uppercase tracking-[0.18em] text-white/55">
+              <div className="text-[11px] uppercase tracking-[0.18em] text-white">
                 Zs calculation
               </div>
               <div className="text-[14px] font-mono text-white">
@@ -205,7 +205,7 @@ const EnhancedCableSizingResult: React.FC<EnhancedCableSizingResultProps> = ({
 
       {/* Compliance Checks */}
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Compliance checks
         </span>
         <div className="space-y-2">
@@ -218,12 +218,12 @@ const EnhancedCableSizingResult: React.FC<EnhancedCableSizingResultProps> = ({
               <div className="flex-1 min-w-0">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-3">
                   <div className="text-[14px] font-medium text-white">{check.requirement}</div>
-                  <span className="text-[11px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] w-fit font-mono">
+                  <span className="text-[11px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] w-fit font-mono">
                     {check.regulation}
                   </span>
                 </div>
                 {check.details && (
-                  <p className="text-[13px] text-white/55 leading-relaxed mt-1">{check.details}</p>
+                  <p className="text-[13px] text-white leading-relaxed mt-1">{check.details}</p>
                 )}
               </div>
             </div>
@@ -234,7 +234,7 @@ const EnhancedCableSizingResult: React.FC<EnhancedCableSizingResultProps> = ({
       {/* Alternative Cables */}
       {result.alternativeCables.length > 0 && (
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Alternative options ({result.alternativeCables.length})
           </span>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
@@ -245,11 +245,11 @@ const EnhancedCableSizingResult: React.FC<EnhancedCableSizingResultProps> = ({
               >
                 <div className="flex items-center justify-between mb-2">
                   <div className="text-[14px] font-mono text-white">{alt.cable.size}</div>
-                  <span className="text-[11px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                  <span className="text-[11px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                     {alt.suitabilityScore}% match
                   </span>
                 </div>
-                <div className="text-[12px] text-white/55">
+                <div className="text-[12px] text-white">
                   {alt.cable.coreConfig} • Rating: {alt.cable.currentRating.pvc}A
                 </div>
               </div>
@@ -263,14 +263,14 @@ const EnhancedCableSizingResult: React.FC<EnhancedCableSizingResultProps> = ({
         <div className="space-y-3">
           {result.warnings.length > 0 && (
             <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Warnings
               </span>
               <ul className="space-y-1.5">
                 {result.warnings.map((warning, index) => (
                   <li
                     key={index}
-                    className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                    className="text-[13px] text-white leading-relaxed flex items-start gap-2"
                   >
                     <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                     <span>{warning}</span>
@@ -282,14 +282,14 @@ const EnhancedCableSizingResult: React.FC<EnhancedCableSizingResultProps> = ({
 
           {result.recommendations.length > 0 && (
             <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Recommendations
               </span>
               <ul className="space-y-1.5">
                 {result.recommendations.map((rec, index) => (
                   <li
                     key={index}
-                    className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                    className="text-[13px] text-white leading-relaxed flex items-start gap-2"
                   >
                     <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                     <span>{rec}</span>

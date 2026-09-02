@@ -1,6 +1,8 @@
 import { CheckCircle2, AlertTriangle } from 'lucide-react';
 import DifficultSituationsTab from '@/components/apprentice/communication-skills/DifficultSituationsTab';
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const DifficultSituationsPage = () => {
   return (
@@ -12,7 +14,12 @@ const DifficultSituationsPage = () => {
       />
       <HubBody>
         {/* Intro Card */}
-        <div className="border-0 bg-transparent p-0 space-y-4 sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)] sm:p-5">
+        <div
+          className={cn(
+            'border-0 bg-transparent p-0 space-y-4 -mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+            CARD_SURFACE
+          )}
+        >
           <h2 className="text-lg font-semibold text-white">Handling Challenging Conversations</h2>
           <p className="text-white text-sm leading-relaxed">
             Every electrician will face difficult conversations — disagreements with supervisors,
@@ -20,7 +27,7 @@ const DifficultSituationsPage = () => {
             professionalism and can make the difference between escalation and resolution.
           </p>
 
-          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 sm:p-4 space-y-2">
+          <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3 sm:p-4 space-y-2">
             <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
               What You Will Learn
             </span>
@@ -34,7 +41,7 @@ const DifficultSituationsPage = () => {
               ].map((item) => (
                 <li
                   key={item}
-                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                 >
                   <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                   {item}
@@ -43,7 +50,7 @@ const DifficultSituationsPage = () => {
             </ul>
           </div>
 
-          <div className="rounded-lg border border-elec-yellow/20 bg-elec-yellow/[0.06] p-3">
+          <div className="rounded-lg border border-elec-yellow/20 bg-white/[0.05] p-3">
             <div className="flex items-start gap-2">
               <AlertTriangle className="h-4 w-4 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
               <p className="text-white text-xs leading-relaxed">

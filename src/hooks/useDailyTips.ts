@@ -152,7 +152,7 @@ export function useDailyTips(): UseDailyTipsResult {
         eyebrow: 'Blind spots',
         title: `You got ${snapshot.overconfidentWrongs} regulation${snapshot.overconfidentWrongs === 1 ? '' : 's'} wrong while certain`,
         body:
-          'These are the dangerous gaps — you don\'t know you don\'t know them, so you won\'t revise them. Open them up before AM2 day.' +
+          "These are the dangerous gaps — you don't know you don't know them, so you won't revise them. Open them up before AM2 day." +
           (reg ? ` Start with ${reg.title ?? `Part ${reg.part ?? ''}`}.` : ''),
         actionLabel: 'See blind-spot regs',
         actionHref: '/apprentice/am2-simulator?tab=knowledge',
@@ -169,11 +169,10 @@ export function useDailyTips(): UseDailyTipsResult {
         category: 'portfolio',
         eyebrow: 'Portfolio',
         title: 'No portfolio evidence logged yet',
-        body:
-          'Your portfolio is what the EPA panel actually sees. Start with the last job you worked — what you did, photos, the BS 7671 regs that applied. 15 minutes now saves weeks of catch-up later.',
+        body: 'Your portfolio is what the EPA panel actually sees. Start with the last job you worked — what you did, photos, the BS 7671 regs that applied. 15 minutes now saves weeks of catch-up later.',
         actionLabel: 'Add first evidence',
         actionHref: '/apprentice/hub',
-        askDave: 'I\'ve never written portfolio evidence — what makes a good entry?',
+        askDave: "I've never written portfolio evidence — what makes a good entry?",
         priority: 75,
       });
     } else if (snapshot.portfolioRecent === 0) {
@@ -185,7 +184,7 @@ export function useDailyTips(): UseDailyTipsResult {
         body: `You've got ${snapshot.portfolioItems} item${snapshot.portfolioItems === 1 ? '' : 's'} logged — keep the rhythm. Write up something you did this week before the detail fades.`,
         actionLabel: 'Add evidence',
         actionHref: '/apprentice/hub',
-        askDave: 'What\'s a quick way to capture portfolio evidence from a routine job?',
+        askDave: "What's a quick way to capture portfolio evidence from a routine job?",
         priority: 65,
       });
     }
@@ -197,8 +196,7 @@ export function useDailyTips(): UseDailyTipsResult {
         category: 'otj',
         eyebrow: 'OTJ',
         title: `${snapshot.otjPendingHours}h of OTJ pending tutor sign-off`,
-        body:
-          'Pending hours don\'t count toward your 20% off-the-job target until verified. Nudge your tutor — the longer you leave it, the harder evidence is to defend.',
+        body: "Pending hours don't count toward your off-the-job hours until verified. Nudge your tutor — the longer you leave it, the harder evidence is to defend.",
         actionLabel: 'Open OTJ log',
         actionHref: '/apprentice/ojt-hub',
         priority: 60,
@@ -212,8 +210,7 @@ export function useDailyTips(): UseDailyTipsResult {
         category: 'ilp-goal',
         eyebrow: 'ILP',
         title: `${snapshot.ilpGoalsActive} active goal${snapshot.ilpGoalsActive === 1 ? '' : 's'} from your tutor`,
-        body:
-          'Your tutor has set targets for you. Knock one down today — even 30 minutes of focused effort beats a generic study session.',
+        body: 'Your tutor has set targets for you. Knock one down today — even 30 minutes of focused effort beats a generic study session.',
         actionLabel: 'Open ILP',
         actionHref: '/apprentice/college/plan',
         priority: 55,
@@ -229,8 +226,7 @@ export function useDailyTips(): UseDailyTipsResult {
         category: 'attendance',
         eyebrow: 'Attendance',
         title: `${tone} — ${snapshot.attendancePct}% over 30 days`,
-        body:
-          'Sustained dips here trigger ILP reviews and can put your apprenticeship status at risk. If something\'s blocking you, raise it with your tutor early — they\'d rather know.',
+        body: "Sustained dips here trigger ILP reviews and can put your apprenticeship status at risk. If something's blocking you, raise it with your tutor early — they'd rather know.",
         actionLabel: 'Message my tutor',
         actionHref: '/apprentice/college/plan',
         priority: snapshot.attendancePct < 80 ? 80 : 50,
@@ -244,8 +240,7 @@ export function useDailyTips(): UseDailyTipsResult {
         category: 'ac-coverage',
         eyebrow: 'Qualification',
         title: `${snapshot.acCoveragePct}% of your assessment criteria evidenced`,
-        body:
-          'AC coverage is what the qualification body actually checks. Match each piece of evidence you upload to an AC code as you go — chasing them at the end is brutal.',
+        body: 'AC coverage is what the qualification body actually checks. Match each piece of evidence you upload to an AC code as you go — chasing them at the end is brutal.',
         actionLabel: 'See AC coverage',
         actionHref: '/apprentice/hub',
         askDave: 'Which assessment criteria should I prioritise covering next?',
@@ -260,8 +255,7 @@ export function useDailyTips(): UseDailyTipsResult {
         category: 'practice-rhythm',
         eyebrow: 'Practice',
         title: 'No AM2 practice in the last fortnight',
-        body:
-          'A single 10-minute drill resets the rhythm. Safe isolation takes 8 minutes and is the one thing AM2 will fail you instantly on — start there.',
+        body: 'A single 10-minute drill resets the rhythm. Safe isolation takes 8 minutes and is the one thing AM2 will fail you instantly on — start there.',
         actionLabel: 'Start safe isolation',
         actionHref: '/apprentice/am2-simulator?tab=safe-isolation',
         priority: 70,
@@ -272,8 +266,7 @@ export function useDailyTips(): UseDailyTipsResult {
         category: 'practice-rhythm',
         eyebrow: 'Practice rhythm',
         title: `Strong rhythm — ${snapshot.recentPracticeCount} sessions in 14 days`,
-        body:
-          'You\'re practising more than 85% of apprentices at your stage. Don\'t plateau — start mixing in a Mock AM2 Day every fortnight to compound the work.',
+        body: "You're practising more than 85% of apprentices at your stage. Don't plateau — start mixing in a Mock AM2 Day every fortnight to compound the work.",
         actionLabel: 'Try Mock AM2 day',
         actionHref: '/apprentice/am2-simulator?tab=mock-day',
         priority: 30,
@@ -287,8 +280,7 @@ export function useDailyTips(): UseDailyTipsResult {
         category: 'evergreen',
         eyebrow: 'Skill of the day',
         title: 'The 8-step safe isolation procedure',
-        body:
-          'AM2 will fail you instantly if you don\'t prove dead correctly. 8 steps, no shortcuts — practise it until you can do it without thinking.',
+        body: "AM2 will fail you instantly if you don't prove dead correctly. 8 steps, no shortcuts — practise it until you can do it without thinking.",
         actionLabel: 'Practise it',
         actionHref: '/apprentice/am2-simulator?tab=safe-isolation',
         askDave: 'Walk me through the 8-step safe isolation procedure',
@@ -299,8 +291,7 @@ export function useDailyTips(): UseDailyTipsResult {
         category: 'evergreen',
         eyebrow: 'Test sequence',
         title: 'Dead before live — every single time',
-        body:
-          'Continuity → IR → polarity → Zs → RCD. Live tests only after every dead test passes. Reg 643.1 + GN3 Table 10.1.',
+        body: 'Continuity → IR → polarity → Zs → RCD. Live tests only after every dead test passes. Reg 643.1 + GN3 Table 10.1.',
         actionLabel: 'Drill the sequence',
         actionHref: '/apprentice/am2-simulator?tab=testing',
         askDave: 'Quiz me on the initial verification sequence',

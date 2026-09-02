@@ -80,7 +80,7 @@ const FavouritesTab = () => {
   return (
     <div className="space-y-6">
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Quick access
         </span>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -90,11 +90,11 @@ const FavouritesTab = () => {
               className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
             >
               <div className="flex items-center gap-2">
-                <FileText className="h-4 w-4 text-white/55" />
+                <FileText className="h-4 w-4 text-white" />
                 <h4 className="text-[14px] font-medium text-white">{doc.name}</h4>
               </div>
-              <p className="text-[13px] text-white/85">{doc.category}</p>
-              <p className="text-[11px] text-white/55 font-mono">Last used {doc.lastUsed}</p>
+              <p className="text-[13px] text-white">{doc.category}</p>
+              <p className="text-[11px] text-white font-mono">Last used {doc.lastUsed}</p>
               <Button
                 size="sm"
                 className="mt-2 w-full h-10 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation"
@@ -108,23 +108,23 @@ const FavouritesTab = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Favourites summary
         </span>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 text-center space-y-1">
             <div className="text-2xl font-mono text-white">{favouriteDocuments.length}</div>
-            <div className="text-[12px] text-white/55">Favourite documents</div>
+            <div className="text-[12px] text-white">Favourite documents</div>
           </div>
           <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 text-center space-y-1">
             <div className="text-2xl font-mono text-white">
               {new Set(favouriteDocuments.map((d) => d.category)).size}
             </div>
-            <div className="text-[12px] text-white/55">Document categories</div>
+            <div className="text-[12px] text-white">Document categories</div>
           </div>
           <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 text-center space-y-1">
             <div className="text-2xl font-mono text-white">24</div>
-            <div className="text-[12px] text-white/55">Downloads this month</div>
+            <div className="text-[12px] text-white">Downloads this month</div>
           </div>
         </div>
       </div>
@@ -138,7 +138,7 @@ const FavouritesTab = () => {
             >
               <div className="flex items-start justify-between gap-2">
                 <div className="flex items-center gap-2 flex-1 min-w-0">
-                  <FileText className="h-5 w-5 text-white/55 flex-shrink-0" />
+                  <FileText className="h-5 w-5 text-white flex-shrink-0" />
                   <h3 className="text-[14px] font-semibold text-white leading-snug">
                     {document.name}
                   </h3>
@@ -148,7 +148,7 @@ const FavouritesTab = () => {
                   <Button
                     size="sm"
                     variant="ghost"
-                    className="p-1 h-auto text-white/55 hover:text-white hover:bg-white/[0.05]"
+                    className="p-1 h-auto text-white hover:text-white hover:bg-white/[0.05]"
                     onClick={() => handleRemoveFavourite(document.id)}
                   >
                     <Trash2 className="h-4 w-4" />
@@ -156,7 +156,7 @@ const FavouritesTab = () => {
                 </div>
               </div>
 
-              <div className="text-[12px] text-white/55 font-mono space-y-0.5">
+              <div className="text-[12px] text-white font-mono space-y-0.5">
                 <p>
                   {document.type} · {document.size}
                 </p>
@@ -188,7 +188,7 @@ const FavouritesTab = () => {
       ) : (
         <div className="flex flex-col items-center justify-center py-12 text-center space-y-3">
           <h3 className="text-[18px] font-semibold text-white">No favourites yet</h3>
-          <p className="text-[14px] text-white/85">
+          <p className="text-[14px] text-white">
             Star your most important documents for quick access
           </p>
           <Button

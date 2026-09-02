@@ -9,15 +9,9 @@
  * prioritised gaps to close next.
  */
 
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetDescription,
-} from '@/components/ui/sheet';
+import { FormSheet } from '@/components/forms/FormSheet';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { Progress } from '@/components/ui/progress';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useStudentQualification } from '@/hooks/useStudentQualification';
@@ -33,11 +27,8 @@ interface EPAGatewayStatusProps {
 }
 
 const STATUS_META: Record<ReadinessStatus, { label: string; cls: string }> = {
-  ready: { label: 'Gateway ready', cls: 'text-elec-yellow border-elec-yellow/40 bg-elec-yellow/[0.08]' },
-  nearly_ready: {
-    label: 'Nearly ready',
-    cls: 'text-elec-yellow/85 border-elec-yellow/30 bg-elec-yellow/[0.05]',
-  },
+  ready: { label: 'Gateway ready', cls: 'bg-elec-yellow border-elec-yellow text-black' },
+  nearly_ready: { label: 'Nearly ready', cls: 'text-elec-yellow border-elec-yellow/60' },
   needs_work: {
     label: 'Needs work',
     cls: 'text-orange-200 border-orange-400/40 bg-orange-400/[0.08]',
@@ -69,119 +60,116 @@ export function EPAGatewayStatus({ open, onOpenChange }: EPAGatewayStatusProps) 
     : [];
 
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] rounded-t-3xl p-0">
-        <div className="w-12 h-1 bg-muted rounded-full mx-auto mt-3 mb-2" />
-
-        <SheetHeader className="px-4 pb-4">
-          <SheetTitle className="text-white">EPA gateway readiness</SheetTitle>
-          <SheetDescription>
-            Your live End-Point Assessment readiness — the same engine as your dashboard.
-          </SheetDescription>
-        </SheetHeader>
-
-        {isLoading || !data ? (
-          <div className="flex flex-col items-center justify-center py-12">
-            <Loader2 className="h-8 w-8 animate-spin text-white/70" />
-            <p className="text-sm text-white/70 mt-2">Checking readiness…</p>
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      eyebrow="End-point assessment"
+      title="Gateway readiness"
+      description="Your live End-Point Assessment readiness — the same engine as your dashboard."
+      bodyClassName="space-y-0"
+    >
+      {isLoading || !data ? (
+        <div className="flex flex-col items-center justify-center py-12">
+          <Loader2 className="h-8 w-8 animate-spin text-white" />
+          <p className="text-sm text-white mt-2">Checking readiness…</p>
+        </div>
+      ) : (
+        <div>
+          {/* Overall */}
+          <div className={cn('mb-4 rounded-2xl border border-elec-yellow/35 p-4', CARD_SURFACE)}>
+            <div className="flex items-center justify-between mb-3">
+              <div>
+                <p className="font-semibold text-white">Gateway readiness</p>
+                <span
+                  className={cn(
+                    'inline-block mt-1.5 text-[10px] font-bold uppercase tracking-[0.12em] px-2 py-0.5 rounded-full border',
+                    STATUS_META[data.overallStatus].cls
+                  )}
+                >
+                  {STATUS_META[data.overallStatus].label}
+                </span>
+              </div>
+              <div className="text-right">
+                <p className="text-3xl font-bold text-white tabular-nums leading-none">
+                  {data.overallScore}%
+                </p>
+                <p className="text-xs text-white mt-1">overall</p>
+              </div>
+            </div>
+            <Progress value={data.overallScore} className="h-2" />
+            <p className="mt-2 text-[11px] text-white leading-snug">
+              70%+ across the weighted components is the typical gateway bar.
+            </p>
           </div>
-        ) : (
-          <ScrollArea className="h-[calc(85vh-8rem)] px-4 pb-8">
-            {/* Overall */}
-            <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] mb-4">
-              <div className="flex items-center justify-between mb-3">
-                <div>
-                  <p className="font-semibold text-white">Gateway readiness</p>
-                  <span
-                    className={cn(
-                      'inline-block mt-1.5 text-[10px] font-bold uppercase tracking-[0.12em] px-2 py-0.5 rounded-full border',
-                      STATUS_META[data.overallStatus].cls
-                    )}
-                  >
-                    {STATUS_META[data.overallStatus].label}
+
+          {/* Components */}
+          <div className="space-y-2.5 mb-6">
+            <h3 className="text-[11px] font-medium uppercase tracking-[0.16em] text-white">
+              Components
+            </h3>
+            {components.map((c) => (
+              <div
+                key={c.label}
+                className={cn('rounded-2xl border border-elec-yellow/35 p-3.5', CARD_SURFACE)}
+              >
+                <div className="flex items-center justify-between gap-3">
+                  <span className="text-[13.5px] font-medium text-white">{c.label}</span>
+                  <span className="text-[12px] font-mono tabular-nums text-white">
+                    {c.score}%<span className="text-white"> · {Math.round(c.weight * 100)}%</span>
                   </span>
                 </div>
-                <div className="text-right">
-                  <p className="text-3xl font-bold text-white tabular-nums leading-none">
-                    {data.overallScore}%
-                  </p>
-                  <p className="text-xs text-white/55 mt-1">overall</p>
+                <div className="mt-2 h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
+                  <div
+                    className="h-full rounded-full bg-elec-yellow transition-all duration-500"
+                    style={{ width: `${c.score}%` }}
+                  />
                 </div>
+                {c.detail && (
+                  <p className="mt-1.5 text-[11.5px] text-white leading-snug">{c.detail}</p>
+                )}
               </div>
-              <Progress value={data.overallScore} className="h-2" />
-              <p className="mt-2 text-[11px] text-white/45 leading-snug">
-                70%+ across the weighted components is the typical gateway bar.
-              </p>
-            </div>
+            ))}
+          </div>
 
-            {/* Components */}
+          {/* Gaps */}
+          {data.gaps.length > 0 && (
             <div className="space-y-2.5 mb-6">
-              <h3 className="text-[11px] font-medium uppercase tracking-[0.16em] text-white/55">
-                Components
+              <h3 className="text-[11px] font-medium uppercase tracking-[0.16em] text-white">
+                Close these next
               </h3>
-              {components.map((c) => (
+              {data.gaps.map((g, i) => (
                 <div
-                  key={c.label}
-                  className="p-3.5 rounded-xl bg-[hsl(0_0%_10%)] border border-white/[0.06]"
+                  key={`${g.area}-${i}`}
+                  className={cn(
+                    'space-y-1 rounded-2xl border border-l-[3px] border-elec-yellow/35 p-3.5',
+                    CARD_SURFACE,
+                    PRIORITY_CLS[g.priority]
+                  )}
                 >
-                  <div className="flex items-center justify-between gap-3">
-                    <span className="text-[13.5px] font-medium text-white">{c.label}</span>
-                    <span className="text-[12px] font-mono tabular-nums text-white/90">
-                      {c.score}%<span className="text-white/40"> · {Math.round(c.weight * 100)}%</span>
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-[13px] font-semibold text-white">{g.area}</span>
+                    <span className="text-[10px] uppercase tracking-[0.12em] text-white">
+                      {g.priority}
                     </span>
                   </div>
-                  <div className="mt-2 h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
-                    <div
-                      className="h-full rounded-full bg-elec-yellow transition-all duration-500"
-                      style={{ width: `${c.score}%` }}
-                    />
-                  </div>
-                  {c.detail && (
-                    <p className="mt-1.5 text-[11.5px] text-white/55 leading-snug">{c.detail}</p>
-                  )}
+                  <p className="text-[12px] text-white leading-relaxed">{g.description}</p>
+                  <p className="text-[12px] text-elec-yellow/90 leading-relaxed">{g.action}</p>
                 </div>
               ))}
             </div>
+          )}
 
-            {/* Gaps */}
-            {data.gaps.length > 0 && (
-              <div className="space-y-2.5 mb-6">
-                <h3 className="text-[11px] font-medium uppercase tracking-[0.16em] text-white/55">
-                  Close these next
-                </h3>
-                {data.gaps.map((g, i) => (
-                  <div
-                    key={`${g.area}-${i}`}
-                    className={cn(
-                      'rounded-xl border border-l-[3px] border-white/[0.06] bg-white/[0.02] p-3.5 space-y-1',
-                      PRIORITY_CLS[g.priority]
-                    )}
-                  >
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="text-[13px] font-semibold text-white">{g.area}</span>
-                      <span className="text-[10px] uppercase tracking-[0.12em] text-white/50">
-                        {g.priority}
-                      </span>
-                    </div>
-                    <p className="text-[12px] text-white/70 leading-relaxed">{g.description}</p>
-                    <p className="text-[12px] text-elec-yellow/90 leading-relaxed">{g.action}</p>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {/* Info note */}
-            <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06]">
-              <p className="text-[12px] font-medium text-white mb-1">About the gateway</p>
-              <p className="text-[11.5px] text-white/55 leading-relaxed">
-                The gateway is the formal check before your End-Point Assessment. Your employer and
-                training provider confirm you've met the requirements before you proceed to the EPA.
-              </p>
-            </div>
-          </ScrollArea>
-        )}
-      </SheetContent>
-    </Sheet>
+          {/* Info note */}
+          <div className={cn('rounded-2xl border border-white/[0.14] p-4', CARD_SURFACE)}>
+            <p className="text-[12px] font-medium text-white mb-1">About the gateway</p>
+            <p className="text-[11.5px] text-white leading-relaxed">
+              The gateway is the formal check before your End-Point Assessment. Your employer and
+              training provider confirm you've met the requirements before you proceed to the EPA.
+            </p>
+          </div>
+        </div>
+      )}
+    </FormSheet>
   );
 }
 

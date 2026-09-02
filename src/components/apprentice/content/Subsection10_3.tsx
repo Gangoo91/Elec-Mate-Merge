@@ -147,8 +147,7 @@ const Subsection10_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsectio
                 <ul className="list-disc pl-5 space-y-2 text-sm">
                   <li>Required for notifiable work under Part P of the Building Regulations</li>
                   <li>
-                    Issued by a registered competent person scheme member (e.g., NICEIC, ELECSA,
-                    NAPIT)
+                    Issued by a registered competent person scheme member (e.g., NICEIC, NAPIT)
                   </li>
                   <li>Confirms work meets Building Regulations requirements</li>
                   <li>Must be provided to the client within 30 days of completion</li>

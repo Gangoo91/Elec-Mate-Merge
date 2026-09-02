@@ -85,13 +85,13 @@ const CareerCourses = () => {
     <div className="space-y-6">
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
         <div className="space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Training & courses
           </span>
           <h2 className="text-[20px] sm:text-[24px] font-bold tracking-tight text-white leading-tight">
             UK electrical career courses
           </h2>
-          <p className="text-[14px] text-white/70 leading-relaxed">
+          <p className="text-[14px] text-white leading-relaxed">
             Professional development courses to advance your electrical career.
           </p>
         </div>
@@ -125,21 +125,21 @@ const CareerCourses = () => {
 
       {(isLocationFiltered || selectedCategory !== 'All Categories') && (
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Active filters
           </span>
           <div className="flex flex-wrap items-center gap-1.5">
             {isLocationFiltered && (
-              <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+              <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                 {locationState.location} ({locationState.searchRadius} miles)
               </span>
             )}
             {selectedCategory !== 'All Categories' && (
-              <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+              <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                 {selectedCategory}
               </span>
             )}
-            <span className="text-[12px] text-white/55 ml-auto">
+            <span className="text-[12px] text-white ml-auto">
               {filteredCourses.length + filteredCenters.length} results
             </span>
           </div>
@@ -156,7 +156,7 @@ const CareerCourses = () => {
       )}
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Filter by category
         </span>
         <div className="flex flex-wrap gap-2">

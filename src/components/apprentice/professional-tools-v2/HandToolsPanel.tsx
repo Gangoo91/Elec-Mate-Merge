@@ -5,10 +5,10 @@ const HandToolsPanel = () => {
   return (
     <div className="space-y-3 animate-fade-in">
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Hand tools
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           The foundation of every electrician's toolkit. Invest in quality VDE-rated tools — they
           protect your life and last years longer than cheap alternatives.
         </p>

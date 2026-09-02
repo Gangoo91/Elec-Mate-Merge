@@ -39,7 +39,7 @@ const CertificateForm = ({ onSubmit, isUploading }: CertificateFormProps) => {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="space-y-2">
-        <Label htmlFor="certificate-name" className="text-[13px] text-white/85">
+        <Label htmlFor="certificate-name" className="text-[13px] text-white">
           Certificate name
         </Label>
         <Input
@@ -54,7 +54,7 @@ const CertificateForm = ({ onSubmit, isUploading }: CertificateFormProps) => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label htmlFor="issue-date" className="text-[13px] text-white/85">
+          <Label htmlFor="issue-date" className="text-[13px] text-white">
             Issue date
           </Label>
           <Input
@@ -67,7 +67,7 @@ const CertificateForm = ({ onSubmit, isUploading }: CertificateFormProps) => {
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="expiry-date" className="text-[13px] text-white/85">
+          <Label htmlFor="expiry-date" className="text-[13px] text-white">
             Expiry date (optional)
           </Label>
           <Input
@@ -81,7 +81,7 @@ const CertificateForm = ({ onSubmit, isUploading }: CertificateFormProps) => {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="issued-by" className="text-[13px] text-white/85">
+        <Label htmlFor="issued-by" className="text-[13px] text-white">
           Issued by
         </Label>
         <Input
@@ -95,7 +95,7 @@ const CertificateForm = ({ onSubmit, isUploading }: CertificateFormProps) => {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="certificate-file" className="text-[13px] text-white/85">
+        <Label htmlFor="certificate-file" className="text-[13px] text-white">
           Certificate file
         </Label>
         <Input
@@ -106,7 +106,7 @@ const CertificateForm = ({ onSubmit, isUploading }: CertificateFormProps) => {
           className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
           onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)}
         />
-        <p className="text-[11px] text-white/55">Accepted formats: PDF, JPG, PNG. Max size: 5MB</p>
+        <p className="text-[11px] text-white">Accepted formats: PDF, JPG, PNG. Max size: 5MB</p>
       </div>
 
       <Button

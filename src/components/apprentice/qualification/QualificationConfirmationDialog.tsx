@@ -194,7 +194,7 @@ const QualificationConfirmationDialog = ({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[90vh] rounded-t-3xl p-0 overflow-hidden">
+      <SheetContent side="bottom" className="h-[90vh] rounded-t-2xl p-0 overflow-hidden">
         <div className="flex flex-col h-full">
           {/* Drag handle */}
           <div className="w-12 h-1 bg-muted rounded-full mx-auto mt-3 mb-2 flex-shrink-0" />
@@ -223,12 +223,12 @@ const QualificationConfirmationDialog = ({
               ].map((s) => (
                 <div
                   key={s.label}
-                  className="bg-[hsl(0_0%_10%)] px-2 py-2.5 flex flex-col items-center justify-center gap-0.5"
+                  className="bg-white/[0.06] px-2 py-2.5 flex flex-col items-center justify-center gap-0.5"
                 >
                   <span className="text-[16px] font-semibold tabular-nums leading-none text-white">
                     {s.value}
                   </span>
-                  <span className="text-[9px] font-medium uppercase tracking-[0.14em] text-white/55">
+                  <span className="text-[9px] font-medium uppercase tracking-[0.14em] text-white">
                     {s.label}
                   </span>
                 </div>
@@ -276,7 +276,7 @@ const QualificationConfirmationDialog = ({
                               className={cn(
                                 'p-1.5 rounded-lg mt-0.5 flex-shrink-0',
                                 expandedUnits.has(unit.unitCode)
-                                  ? 'bg-elec-yellow/20'
+                                  ? 'bg-white/[0.08]'
                                   : 'bg-white/[0.06]'
                               )}
                             >
@@ -380,7 +380,7 @@ const QualificationConfirmationDialog = ({
                 type="button"
                 onClick={() => onOpenChange(false)}
                 disabled={isConfirming}
-                className="h-12 px-5 rounded-xl border border-white/[0.10] bg-white/[0.04] text-white/85 text-[14px] font-medium touch-manipulation active:scale-[0.97] transition-transform disabled:opacity-50"
+                className="h-12 px-5 rounded-xl border border-white/[0.10] bg-white/[0.04] text-white text-[14px] font-medium touch-manipulation active:scale-[0.97] transition-transform disabled:text-white/70"
               >
                 Cancel
               </button>

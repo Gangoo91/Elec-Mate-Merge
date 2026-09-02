@@ -144,7 +144,7 @@ const ElectricalInstallationGuides = () => {
             <Shield className="h-4 w-4 flex-shrink-0 text-elec-yellow" aria-hidden />
             <span className={PANEL_LABEL_ACCENT}>Compliance</span>
           </div>
-          <p className="text-[14px] leading-relaxed text-white/85">
+          <p className="text-[14px] leading-relaxed text-white">
             All electrical work must comply with BS 7671:2018+A4:2026, Part P of the Building
             Regulations, and GN3 for inspection and testing. Check for the latest amendments before
             you rely on anything here.

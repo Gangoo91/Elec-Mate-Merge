@@ -99,10 +99,10 @@ const ToolChecklistGenerator = () => {
   return (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
       <div className="space-y-1">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Tool checklist generator
         </span>
-        <p className="text-[13px] text-white/55">
+        <p className="text-[13px] text-white">
           Create customised tool lists for any type of project
         </p>
       </div>
@@ -110,7 +110,7 @@ const ToolChecklistGenerator = () => {
       <div className="space-y-5">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           <div className="space-y-2">
-            <Label htmlFor="project-name" className="text-[13px] text-white/85">
+            <Label htmlFor="project-name" className="text-[13px] text-white">
               Project name
             </Label>
             <Input
@@ -123,14 +123,14 @@ const ToolChecklistGenerator = () => {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="project-type" className="text-[13px] text-white/85">
+            <Label htmlFor="project-type" className="text-[13px] text-white">
               Project type
             </Label>
             <Select value={projectType} onValueChange={setProjectType}>
-              <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow">
+              <SelectTrigger className="h-11 touch-manipulation bg-white/[0.06] border-white/[0.12] focus:border-elec-yellow focus:ring-elec-yellow">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
+              <SelectContent className="z-[100] bg-white/[0.06] border-white/[0.12] text-foreground">
                 <SelectItem value="domestic">Domestic</SelectItem>
                 <SelectItem value="commercial">Commercial</SelectItem>
                 <SelectItem value="industrial">Industrial</SelectItem>
@@ -158,7 +158,7 @@ const ToolChecklistGenerator = () => {
         {checklist.length > 0 && (
           <div className="space-y-3 pt-3 border-t border-white/[0.06]">
             <div className="flex items-center justify-between gap-3 flex-wrap">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Your tool checklist
               </span>
               <div className="flex items-center gap-2">
@@ -168,7 +168,7 @@ const ToolChecklistGenerator = () => {
                     style={{ width: `${(completedCount / checklist.length) * 100}%` }}
                   />
                 </div>
-                <span className="text-[12px] text-white/85 font-mono">
+                <span className="text-[12px] text-white font-mono">
                   {completedCount}/{checklist.length}
                 </span>
               </div>
@@ -189,11 +189,11 @@ const ToolChecklistGenerator = () => {
                     value={item.tool}
                     onChange={(e) => updateTool(item.id, 'tool', e.target.value)}
                     className={`flex-1 text-[14px] bg-transparent border-0 focus-visible:ring-0 ${
-                      item.checked ? 'text-white/55 line-through' : 'text-white/85'
+                      item.checked ? 'text-white line-through' : 'text-white'
                     }`}
                   />
                   {item.essential && (
-                    <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                    <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                       Essential
                     </span>
                   )}
@@ -201,7 +201,7 @@ const ToolChecklistGenerator = () => {
                     onClick={() => removeTool(item.id)}
                     variant="ghost"
                     size="sm"
-                    className="h-8 w-8 p-0 text-white/55 hover:text-white hover:bg-white/[0.05]"
+                    className="h-8 w-8 p-0 text-white hover:text-white hover:bg-white/[0.05]"
                   >
                     <Trash2 className="h-4 w-4" />
                   </Button>

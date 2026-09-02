@@ -9,14 +9,14 @@ const R1R2Step1 = () => {
   return (
     <div className="space-y-3">
       <div className="space-y-1">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Step 1
         </span>
         <h3 className="text-[18px] font-semibold text-white leading-tight">Prepare for testing</h3>
       </div>
       <ul className="space-y-1.5">
         {items.map((item, i) => (
-          <li key={i} className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2">
+          <li key={i} className="text-[14px] text-white leading-relaxed flex items-start gap-2">
             <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
             <span>{item}</span>
           </li>

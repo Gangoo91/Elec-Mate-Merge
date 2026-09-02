@@ -108,13 +108,13 @@ const InspectionDocumentation = () => {
 
       <div className="space-y-6">
         <div className="space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Workplace inspections
           </span>
           <h1 className="text-[24px] sm:text-[28px] font-bold tracking-tight text-white leading-tight">
             Documentation process for workplace inspections
           </h1>
-          <p className="text-[14px] text-white/70 leading-relaxed max-w-2xl">
+          <p className="text-[14px] text-white leading-relaxed max-w-2xl">
             Effective documentation is essential for tracking hazards, ensuring accountability, and
             maintaining a record of safety efforts.
           </p>
@@ -126,15 +126,15 @@ const InspectionDocumentation = () => {
               key={idx}
               className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3"
             >
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 {section.eyebrow}
               </span>
-              <p className="text-[14px] text-white/85 leading-relaxed">{section.lede}</p>
+              <p className="text-[14px] text-white leading-relaxed">{section.lede}</p>
               <ul className="space-y-2">
                 {section.items.map((item, i) => (
                   <li
                     key={i}
-                    className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                    className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                   >
                     <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                     <span>
@@ -149,7 +149,7 @@ const InspectionDocumentation = () => {
         </div>
 
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Documentation best practices
           </span>
           <ul className="space-y-1.5">
@@ -164,7 +164,7 @@ const InspectionDocumentation = () => {
             ].map((item, idx) => (
               <li
                 key={idx}
-                className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                className="text-[14px] text-white leading-relaxed flex items-start gap-2"
               >
                 <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
                 <span>{item}</span>

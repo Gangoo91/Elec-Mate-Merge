@@ -51,14 +51,14 @@ const OJTHeader = ({ handleDownloadReport }: OJTHeaderProps) => {
   return (
     <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Off the job training
         </span>
         <h1 className="text-[24px] sm:text-[28px] font-bold tracking-tight text-white leading-tight">
           Training overview
         </h1>
-        <p className="text-[14px] text-white/70 leading-relaxed max-w-2xl">
-          Track, manage and provide evidence for your 20% off-the-job training requirements
+        <p className="text-[14px] text-white leading-relaxed max-w-2xl">
+          Track, manage and provide evidence for your off-the-job training hours
         </p>
       </div>
       <div className="flex gap-2">

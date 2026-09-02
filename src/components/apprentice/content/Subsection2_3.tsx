@@ -73,7 +73,7 @@ const Subsection2_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 </ul>
               </div>
 
-              <div className="mt-4 bg-elec-yellow/5 p-3 rounded-md border border-elec-yellow/20">
+              <div className="mt-4 bg-white/[0.05] p-3 rounded-md border border-elec-yellow/20">
                 <p className="text-sm font-medium text-elec-yellow">Did you know?</p>
                 <p className="text-sm mt-1">
                   A single fluorescent tube can contaminate 30,000 liters of water with mercury if
@@ -159,7 +159,7 @@ const Subsection2_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                   <li>Microgeneration connections to grid must follow specific regulations</li>
                 </ul>
 
-                <div className="mt-3 bg-elec-yellow/5 p-3 rounded-md border border-elec-yellow/20">
+                <div className="mt-3 bg-white/[0.05] p-3 rounded-md border border-elec-yellow/20">
                   <h4 className="font-medium text-elec-yellow mb-1">Renewable Energy Standards</h4>
                   <p className="text-xs">
                     Key standards for electrical installers working with renewable systems:
@@ -366,7 +366,7 @@ const Subsection2_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 </li>
               </ul>
 
-              <div className="mt-2 bg-elec-yellow/5 p-3 rounded-md border border-elec-yellow/20">
+              <div className="mt-2 bg-white/[0.05] p-3 rounded-md border border-elec-yellow/20">
                 <h4 className="font-medium text-elec-yellow mb-1">
                   Environmental Legislation Updates
                 </h4>
@@ -564,7 +564,7 @@ const Subsection2_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 </div>
               </div>
 
-              <div className="mt-4 bg-elec-yellow/5 p-3 rounded-md border border-elec-yellow/20">
+              <div className="mt-4 bg-white/[0.05] p-3 rounded-md border border-elec-yellow/20">
                 <p className="text-sm">
                   <span className="font-medium text-elec-yellow">Professional Tip:</span> Many
                   industry associations provide freely accessible environmental toolkits
@@ -576,7 +576,7 @@ const Subsection2_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           </div>
         </div>
 
-        <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-md p-4 mb-6">
+        <div className="bg-white/[0.06] border border-elec-yellow/30 rounded-md p-4 mb-6">
           <h3 className="font-semibold text-elec-yellow mb-2 text-center">
             Key Environmental Impact Areas in Electrical Work
           </h3>
@@ -681,7 +681,7 @@ const Subsection2_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           ) : (
             <Button
               onClick={markAsComplete}
-              className="bg-elec-yellow/10 border border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-elec-dark"
+              className="bg-white/[0.06] border border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-elec-dark"
             >
               Mark as Complete
             </Button>

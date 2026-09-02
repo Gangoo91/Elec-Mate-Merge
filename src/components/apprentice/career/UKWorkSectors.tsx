@@ -4,13 +4,13 @@ const UKWorkSectors = () => {
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Work sectors
         </span>
         <h2 className="text-[20px] sm:text-[24px] font-bold tracking-tight text-white leading-tight">
           UK electrical work sectors
         </h2>
-        <p className="text-[14px] text-white/70 leading-relaxed max-w-2xl">
+        <p className="text-[14px] text-white leading-relaxed max-w-2xl">
           Overview of electrical work sectors in the UK, including pay rates, growth prospects and
           career opportunities.
         </p>
@@ -23,7 +23,7 @@ const UKWorkSectors = () => {
             className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 h-full flex flex-col gap-4"
           >
             <div className="space-y-1">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 {sector.growth_outlook}
               </span>
               <h3 className="text-[17px] font-semibold text-white leading-tight">
@@ -31,14 +31,14 @@ const UKWorkSectors = () => {
               </h3>
             </div>
 
-            <p className="text-[14px] text-white/85 leading-relaxed">{sector.description}</p>
+            <p className="text-[14px] text-white leading-relaxed">{sector.description}</p>
 
             <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Typical daily rates
               </span>
               <div className="text-[16px] font-semibold text-white">{sector.typical_pay}</div>
-              <p className="text-[12px] text-white/55">
+              <p className="text-[12px] text-white">
                 {sector.growth_outlook === 'Rapid growth' &&
                   'Premium rates due to high demand'}
                 {sector.growth_outlook === 'Strong' &&
@@ -50,12 +50,12 @@ const UKWorkSectors = () => {
             </div>
 
             <div className="space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Essential skills
               </span>
               <ul className="space-y-1.5">
                 {sector.key_skills.map((skill, idx) => (
-                  <li key={idx} className="flex items-start gap-2 text-[13px] text-white/85">
+                  <li key={idx} className="flex items-start gap-2 text-[13px] text-white">
                     <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                     <span>{skill}</span>
                   </li>
@@ -64,10 +64,10 @@ const UKWorkSectors = () => {
             </div>
 
             <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1.5">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Career opportunities
               </span>
-              <p className="text-[13px] text-white/85 leading-relaxed">
+              <p className="text-[13px] text-white leading-relaxed">
                 {sector.name.includes('Renewable')
                   ? 'Emerging field with rapid expansion.'
                   : sector.name.includes('Industrial')
@@ -84,7 +84,7 @@ const UKWorkSectors = () => {
                               ? 'Critical response, high responsibility.'
                               : 'Specialised technical expertise required.'}
               </p>
-              <p className="text-[12px] text-white/55">
+              <p className="text-[12px] text-white">
                 {sector.growth_outlook === 'Rapid growth'
                   ? 'Excellent long-term prospects'
                   : sector.growth_outlook === 'Strong'
@@ -98,37 +98,37 @@ const UKWorkSectors = () => {
             </div>
 
             <div className="mt-auto pt-3 border-t border-white/[0.06] flex items-baseline justify-between">
-              <span className="text-[12px] text-white/55">Growth outlook</span>
-              <span className="text-[12px] text-white/85">{sector.growth_outlook}</span>
+              <span className="text-[12px] text-white">Growth outlook</span>
+              <span className="text-[12px] text-white">{sector.growth_outlook}</span>
             </div>
           </div>
         ))}
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Sector analysis & career guidance
         </span>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="space-y-2">
-            <p className="text-[12px] text-white/55">Highest growth sectors</p>
-            <ul className="space-y-1 text-[13px] text-white/85">
+            <p className="text-[12px] text-white">Highest growth sectors</p>
+            <ul className="space-y-1 text-[13px] text-white">
               <li>Renewable Energy & EV Charging</li>
               <li>Data Centres & Smart Buildings</li>
               <li>Healthcare & Life Sciences</li>
             </ul>
           </div>
           <div className="space-y-2">
-            <p className="text-[12px] text-white/55">Best for new electricians</p>
-            <ul className="space-y-1 text-[13px] text-white/85">
+            <p className="text-[12px] text-white">Best for new electricians</p>
+            <ul className="space-y-1 text-[13px] text-white">
               <li>Domestic — learn customer skills</li>
               <li>Commercial — varied experience</li>
               <li>Maintenance — diagnostic skills</li>
             </ul>
           </div>
           <div className="space-y-2">
-            <p className="text-[12px] text-white/55">Specialisation tips</p>
-            <ul className="space-y-1 text-[13px] text-white/85">
+            <p className="text-[12px] text-white">Specialisation tips</p>
+            <ul className="space-y-1 text-[13px] text-white">
               <li>Choose growth sectors for future-proofing</li>
               <li>Combine sectors for diverse skill set</li>
               <li>Consider regional sector strengths</li>

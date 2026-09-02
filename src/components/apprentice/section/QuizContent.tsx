@@ -129,7 +129,7 @@ const QuizContent = ({
     <div className="space-y-6">
       <div className="flex items-baseline justify-between gap-3">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Assessment
           </span>
           <h1 className="text-[24px] sm:text-[28px] font-bold tracking-tight text-white leading-tight">
@@ -141,13 +141,13 @@ const QuizContent = ({
 
       {!quizStarted ? (
         <>
-          <p className="text-[14px] text-white/85 leading-relaxed">
+          <p className="text-[14px] text-white leading-relaxed">
             This quiz will test your understanding of the key health and safety concepts covered in
             this unit. Complete the quiz to demonstrate your knowledge.
           </p>
 
           <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Quiz instructions
             </span>
             <ul className="space-y-1.5">
@@ -160,7 +160,7 @@ const QuizContent = ({
               ].map((item, i) => (
                 <li
                   key={i}
-                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                  className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                 >
                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{item}</span>
@@ -194,7 +194,7 @@ const QuizContent = ({
         <>
           <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
             <div className="flex items-baseline justify-between">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Time remaining
               </span>
               <span

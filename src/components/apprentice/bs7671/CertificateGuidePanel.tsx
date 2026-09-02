@@ -28,8 +28,8 @@ const observationToneMap: Record<
   },
   blue: {
     border: 'border-white/[0.08]',
-    text: 'text-white/85',
-    tag: 'bg-white/[0.04] text-white/85 border-white/[0.08]',
+    text: 'text-white',
+    tag: 'bg-white/[0.04] text-white border-white/[0.08]',
   },
 };
 
@@ -59,26 +59,26 @@ const renderCertCard = (cert: CertificateType) => (
           <span className="text-[10px] font-mono uppercase tracking-[0.18em] text-elec-yellow/85">
             {cert.abbreviation}
           </span>
-          <span className="text-[10px] uppercase tracking-[0.18em] text-white/70">·</span>
-          <span className="text-[10px] uppercase tracking-[0.18em] text-white/70">
+          <span className="text-[10px] uppercase tracking-[0.18em] text-white">·</span>
+          <span className="text-[10px] uppercase tracking-[0.18em] text-white">
             Certificate
           </span>
         </div>
         <span className="block text-[15px] font-medium text-white truncate">{cert.title}</span>
       </div>
-      <ChevronDown className="h-4 w-4 text-white/70 flex-shrink-0 transition-transform [[data-state=open]>&]:rotate-180" />
+      <ChevronDown className="h-4 w-4 text-white flex-shrink-0 transition-transform [[data-state=open]>&]:rotate-180" />
     </CollapsibleTrigger>
     <CollapsibleContent>
       <div className="px-4 pb-4 pt-3 mt-1 space-y-5 text-[14px] rounded-b-xl bg-white/[0.06] border-l-2 border-elec-yellow/20 ml-1">
         <div className="space-y-1.5">
-          <h4 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+          <h4 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             When required
           </h4>
-          <p className="text-white/85 leading-relaxed">{cert.whenRequired}</p>
+          <p className="text-white leading-relaxed">{cert.whenRequired}</p>
         </div>
 
         <div className="space-y-2">
-          <h4 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+          <h4 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Key requirements
           </h4>
           <ul className="space-y-1.5">
@@ -87,14 +87,14 @@ const renderCertCard = (cert: CertificateType) => (
                 <span className="w-3.5 h-3.5 rounded-full bg-white/[0.06] border border-elec-yellow/30 flex items-center justify-center flex-shrink-0 mt-0.5">
                   <span className="w-1 h-1 rounded-full bg-elec-yellow" />
                 </span>
-                <span className="text-white/85 leading-relaxed">{req}</span>
+                <span className="text-white leading-relaxed">{req}</span>
               </li>
             ))}
           </ul>
         </div>
 
         <div className="space-y-2">
-          <h4 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+          <h4 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Sections to complete
           </h4>
           <ol className="space-y-1.5">
@@ -106,7 +106,7 @@ const renderCertCard = (cert: CertificateType) => (
                 <span className="text-[11px] font-mono text-elec-yellow/85 min-w-[18px] mt-0.5">
                   {String(idx + 1).padStart(2, '0')}
                 </span>
-                <span className="text-white/85 leading-relaxed">{section}</span>
+                <span className="text-white leading-relaxed">{section}</span>
               </li>
             ))}
           </ol>
@@ -123,21 +123,21 @@ const renderCertCard = (cert: CertificateType) => (
             {cert.commonMistakes.map((mistake, idx) => (
               <li key={idx} className="flex items-start gap-2">
                 <span className="w-1 h-1 rounded-full bg-white/[0.06] mt-2 flex-shrink-0" />
-                <span className="text-[13px] text-white/85 leading-relaxed">{mistake}</span>
+                <span className="text-[13px] text-white leading-relaxed">{mistake}</span>
               </li>
             ))}
           </ul>
         </div>
 
         <div className="space-y-2">
-          <h4 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+          <h4 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Official template sources
           </h4>
           <ul className="space-y-1">
             {cert.templateSources.map((source, idx) => (
               <li key={idx} className="flex items-start gap-2 text-[13px]">
-                <FileSignature className="h-3.5 w-3.5 text-white/70 mt-0.5 flex-shrink-0" />
-                <span className="text-white/85">{source}</span>
+                <FileSignature className="h-3.5 w-3.5 text-white mt-0.5 flex-shrink-0" />
+                <span className="text-white">{source}</span>
               </li>
             ))}
           </ul>
@@ -145,7 +145,7 @@ const renderCertCard = (cert: CertificateType) => (
 
         <div className="flex items-center gap-2 pt-1">
           <span className="h-px flex-1 bg-white/[0.06]" />
-          <p className="text-[11px] text-white/70 font-mono">{cert.regulationReference}</p>
+          <p className="text-[11px] text-white font-mono">{cert.regulationReference}</p>
           <span className="h-px flex-1 bg-white/[0.06]" />
         </div>
       </div>
@@ -159,7 +159,7 @@ const CertificateGuidePanel = () => {
       <div className="space-y-2">{certificateTypes.map(renderCertCard)}</div>
 
       <div className="space-y-3">
-        <h3 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <h3 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           EICR observation codes
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -178,8 +178,8 @@ const CertificateGuidePanel = () => {
                   </span>
                   <span className={`text-[13px] font-medium ${tone.text}`}>{code.label}</span>
                 </div>
-                <p className="text-[12px] text-white/70 leading-relaxed">{code.description}</p>
-                <p className="text-[12px] text-white/85 leading-relaxed">{code.action}</p>
+                <p className="text-[12px] text-white leading-relaxed">{code.description}</p>
+                <p className="text-[12px] text-white leading-relaxed">{code.action}</p>
               </div>
             );
           })}
@@ -187,7 +187,7 @@ const CertificateGuidePanel = () => {
       </div>
 
       <div className="space-y-3">
-        <h3 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <h3 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Legal requirements
         </h3>
         {legalRequirements.map((section, idx) => (
@@ -201,7 +201,7 @@ const CertificateGuidePanel = () => {
               {section.points.map((point, pidx) => (
                 <li key={pidx} className="flex items-start gap-2">
                   <span className="w-1 h-1 rounded-full bg-elec-yellow/70 mt-2 flex-shrink-0" />
-                  <span className="text-[13px] text-white/85 leading-relaxed">{point}</span>
+                  <span className="text-[13px] text-white leading-relaxed">{point}</span>
                 </li>
               ))}
             </ul>

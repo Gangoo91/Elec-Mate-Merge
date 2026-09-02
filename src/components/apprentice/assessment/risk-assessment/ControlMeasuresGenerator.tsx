@@ -97,7 +97,7 @@ const ControlMeasuresGenerator = ({ onControlMeasuresAdded }: ControlMeasuresGen
   return (
     <div className="space-y-5 animate-fade-in">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Control measures generator
         </span>
         <h3 className="text-[16px] sm:text-[18px] font-medium text-white">
@@ -106,10 +106,10 @@ const ControlMeasuresGenerator = ({ onControlMeasuresAdded }: ControlMeasuresGen
       </div>
 
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Hierarchy of controls
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           Select control measures following the hierarchy of controls. Higher-level controls
           (elimination, substitution) are more effective.
         </p>
@@ -121,12 +121,12 @@ const ControlMeasuresGenerator = ({ onControlMeasuresAdded }: ControlMeasuresGen
           className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3"
         >
           <div className="space-y-1">
-            <div className="flex items-baseline gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+            <div className="flex items-baseline gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               <span>Level {category.hierarchy}</span>
-              <span className="text-white/25">·</span>
+              <span className="text-white">·</span>
               <span>{category.category}</span>
             </div>
-            <p className="text-[13px] text-white/70 leading-relaxed">{category.description}</p>
+            <p className="text-[13px] text-white leading-relaxed">{category.description}</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
@@ -154,11 +154,7 @@ const ControlMeasuresGenerator = ({ onControlMeasuresAdded }: ControlMeasuresGen
                   >
                     {isSelected && <CheckCircle className="h-3.5 w-3.5 text-black" />}
                   </div>
-                  <span
-                    className={`text-[14px] leading-relaxed ${isSelected ? 'text-white' : 'text-white/85'}`}
-                  >
-                    {measure}
-                  </span>
+                  <span className={`text-[14px] leading-relaxed text-white`}>{measure}</span>
                 </button>
               );
             })}
@@ -167,7 +163,7 @@ const ControlMeasuresGenerator = ({ onControlMeasuresAdded }: ControlMeasuresGen
       ))}
 
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Custom control measure
         </span>
         <div className="flex gap-2 items-end">
@@ -183,7 +179,7 @@ const ControlMeasuresGenerator = ({ onControlMeasuresAdded }: ControlMeasuresGen
             onClick={addCustomMeasure}
             disabled={!customMeasure.trim()}
             variant="outline"
-            className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation disabled:opacity-30"
+            className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation disabled:text-white/70"
           >
             Add
           </Button>
@@ -196,13 +192,13 @@ const ControlMeasuresGenerator = ({ onControlMeasuresAdded }: ControlMeasuresGen
             <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
               Selected measures
             </span>
-            <span className="text-[12px] text-white/85 font-mono">{selectedMeasures.length}</span>
+            <span className="text-[12px] text-white font-mono">{selectedMeasures.length}</span>
           </div>
           <ul className="space-y-1.5 max-h-32 overflow-y-auto">
             {selectedMeasures.map((measure, index) => (
               <li
                 key={index}
-                className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed"
+                className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
               >
                 <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
                 <span>{measure}</span>

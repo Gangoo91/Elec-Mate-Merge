@@ -12,6 +12,8 @@ import { itemVariants } from '@/components/college/primitives';
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 import { NMW_RATES } from '@/data/nmwRates';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const faqs = [
   {
@@ -27,7 +29,7 @@ const faqs = [
   {
     question: 'What is the funding band for electrical apprenticeships?',
     answer:
-      'The current funding band for Level 3 Installation / Maintenance Electrician (ST0152 v1.2) is £23,000. Increased from £21,000 on 20 July 2025 by Skills England. The band sets the maximum government contribution.',
+      'The current funding band for Level 3 Installation / Maintenance Electrician (ST0152) is £23,000. Increased from £21,000 on 20 July 2025 by Skills England. The band sets the maximum government contribution.',
   },
   {
     question: 'Can my employer claim CITB grants?',
@@ -37,12 +39,12 @@ const faqs = [
   {
     question: 'What if I am over 25?',
     answer:
-      'You can do an apprenticeship at any age. Funding works the same way — co-investment (95% / 5%) applies regardless. The £1,000 age incentive only applies to 16–18 year olds (or 19–25 with EHC plan / care leaver). From August 2026, under-25s at non-levy employers will be 100% funded.',
+      'You can do an apprenticeship at any age. Funding works the same way — co-investment (95% / 5%) applies regardless. The £1,000 employer and provider incentive only applies to 16–18 year olds (or 19–24 with an EHC plan or who have been in care). Full funding for under-25s at smaller employers has been announced — check the current DfE funding rules.',
   },
   {
     question: 'Can I be asked to pay for my training?',
     answer:
-      'No. Under the apprenticeship funding rules (now administered by the Department for Education), apprentices must never be asked to pay. This includes direct payments, wage deductions, or funding any part of the programme. Report it to complaints.esfa@education.gov.uk or call 0800 015 0400.',
+      'No. Under the apprenticeship funding rules (now administered by the Department for Education), apprentices must never be asked to pay. This includes direct payments, wage deductions, or funding any part of the programme. Report it through the apprenticeship service complaints route on GOV.UK, or call 0800 015 0600.',
   },
   {
     question: 'What happens if I change employers?',
@@ -67,7 +69,7 @@ const faqs = [
   {
     question: 'What is the Growth & Skills Levy?',
     answer:
-      'Replacing the Apprenticeship Levy from April 2026. Key changes: levy funds expire after 12 months (not 24), the 10% government top-up ends from 1 August 2026 (existing balances keep it; new contributions are not topped up), shorter fundable "apprenticeship units" are introduced, and the levy will fund non-apprenticeship training too. From August 2026, levy payers who exhaust their levy pay 25% co-investment, but under-25s at non-levy employers will be 100% funded.',
+      "The government's replacement for the Apprenticeship Levy, being introduced in stages. Confirmed so far: an 8-month minimum duration for starts from 1 August 2025, foundation apprenticeships, Level 7 losing funding for new starters aged 22+ from January 2026, and full funding announced for under-25s at smaller employers. Shorter fundable courses are planned. For an electrical apprentice the practical answer is unchanged: you never pay, and your employer's share is at most 5%.",
   },
   {
     question: 'Do I need Functional Skills qualifications?',
@@ -92,12 +94,12 @@ const faqs = [
   {
     question: 'What are my rights if I am made redundant?',
     answer:
-      'Your training provider must help you find a new employer; you get 12 weeks to find one (funded by the Department for Education). If you are made redundant within 6 months of your planned EPA, you may be supported to complete without an employer. Redundancy support helpline: 0800 015 0400; the National Careers Service can also help on 0800 100 900.',
+      'Your training provider must help you find a new employer; you get 12 weeks to find one (funded by the Department for Education). If you are made redundant within 6 months of your planned EPA, you may be supported to complete without an employer. Redundancy support helpline: 0800 015 0600; the National Careers Service can also help on 0800 100 900.',
   },
   {
     question: 'Can I complain about my training provider?',
     answer:
-      "Yes. Raise it directly with the provider first. If unresolved, escalate to the Department for Education at complaints.esfa@education.gov.uk. Check your provider's Ofsted report. If about quality of training, contact Ofsted directly.",
+      "Yes. Raise it directly with the provider first. If unresolved, escalate to the Department for Education through the apprenticeship service complaints route on GOV.UK. Check your provider's Ofsted report. If about quality of training, contact Ofsted directly.",
   },
   {
     question: 'What am I entitled to be paid?',
@@ -174,7 +176,7 @@ const glossary = [
   {
     term: 'Apprenticeship units',
     definition:
-      'Shorter fundable modules (roughly 30–140 hours) introduced under the Growth & Skills Levy from 2026, with up to half of a levy pot spendable on them — a route to fund focused training without a full apprenticeship.',
+      'Shorter fundable courses planned under the Growth & Skills Levy as a route to focused training without a full apprenticeship — the DfE funding rules for the year concerned set the detail.',
   },
   {
     term: 'Levy Transfer',
@@ -271,7 +273,10 @@ const FundingFAQsPage = () => {
             {faqs.map((faq) => (
               <li
                 key={faq.question}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-1.5"
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-1.5',
+                  CARD_SURFACE
+                )}
               >
                 <div className="flex items-start gap-2">
                   <HelpCircle className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
@@ -279,7 +284,7 @@ const FundingFAQsPage = () => {
                     {faq.question}
                   </h3>
                 </div>
-                <p className="text-[12.5px] text-white/85 leading-relaxed pl-5">{faq.answer}</p>
+                <p className="text-[12.5px] text-white leading-relaxed pl-5">{faq.answer}</p>
               </li>
             ))}
           </ul>
@@ -292,7 +297,7 @@ const FundingFAQsPage = () => {
             title={`${glossary.length} funding terms`}
             meta="Bookmark this — apprenticeship admin uses these every day"
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
+          <div className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}>
             <ul className="space-y-2.5">
               {glossary.map((item) => (
                 <li key={item.term} className="flex items-start gap-3">
@@ -301,7 +306,7 @@ const FundingFAQsPage = () => {
                     <span className="text-[12.5px] font-mono font-semibold text-elec-yellow">
                       {item.term}
                     </span>
-                    <p className="text-[12.5px] text-white/85 leading-relaxed">{item.definition}</p>
+                    <p className="text-[12.5px] text-white leading-relaxed">{item.definition}</p>
                   </div>
                 </li>
               ))}

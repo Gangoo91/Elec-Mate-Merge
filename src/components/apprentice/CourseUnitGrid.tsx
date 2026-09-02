@@ -79,7 +79,7 @@ const CourseUnitGrid = ({
                       <span>Progress</span>
                       <span className="font-medium">{progressPercent}%</span>
                     </div>
-                    <Progress value={progressPercent} className="h-2 bg-elec-yellow/20" />
+                    <Progress value={progressPercent} className="h-2 bg-white/[0.08]" />
                   </div>
                 </div>
               </div>

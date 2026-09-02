@@ -1,16 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import {
-  PageFrame,
-  PageHero,
-  SectionHeader,
-  itemVariants,
-  type Tone,
-} from '@/components/college/primitives';
-import { HubToolGrid } from '@/components/hub/HubPrimitives';
+import { itemVariants, type Tone } from '@/components/college/primitives';
+import { HubSubPage } from '@/components/hub/HubSubPage';
+import { HubToolGrid, HubSectionHeading } from '@/components/hub/HubPrimitives';
 import { DEFAULT_OTJ_STANDARD } from '@/data/otjStandards';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 interface Section {
   number: string;
@@ -88,29 +83,13 @@ const SECTIONS: Section[] = [
 const TimeManagement = () => {
   const navigate = useNavigate();
   return (
-    <PageFrame className="px-4 sm:px-6 lg:px-8">
-      <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/apprentice/toolbox')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
-        >
-          <ArrowLeft className="mr-2 h-5 w-5" />
-          Back
-        </Button>
-      </motion.div>
-
-      <motion.div variants={itemVariants}>
-        <PageHero
-          eyebrow="Apprentice · Balance"
-          title="There are 168 hours in a week"
-          description="40 on site. College and off-the-job training (1,066 hours across the apprenticeship for an Installation & Maintenance Electrician). Some study. Some sleep. Some life. The maths only works if you're honest about where the time actually goes — and ruthless about what you protect."
-          tone="yellow"
-        />
-      </motion.div>
-
+    <HubSubPage
+      title="There are 168 hours in a week"
+      backTo="/apprentice/toolbox"
+      description="40 on site. College and off-the-job training (1,066 hours across the apprenticeship for an Installation & Maintenance Electrician). Some study. Some sleep. Some life. The maths only works if you're honest about where the time actually goes — and ruthless about what you protect."
+    >
       <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
-        <SectionHeader eyebrow="Sections" title="Six chapters" />
+        <HubSectionHeading>Six chapters</HubSectionHeading>
         <HubToolGrid
           label=""
           columns="three"
@@ -126,9 +105,14 @@ const TimeManagement = () => {
       </motion.section>
 
       <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
-        <SectionHeader eyebrow="Template" title="A week that actually fits" />
-        <div className="rounded-none sm:rounded-xl border-y sm:border border-white/[0.06] bg-transparent sm:bg-[hsl(0_0%_10%)] -mx-4 px-4 py-4 sm:mx-0 sm:p-5 space-y-3">
-          <p className="text-[12.5px] text-white/70 leading-relaxed">
+        <HubSectionHeading>A week that actually fits</HubSectionHeading>
+        <div
+          className={cn(
+            '-mx-4 rounded-none border-y border-elec-yellow/35 px-4 py-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-5 space-y-3',
+            CARD_SURFACE
+          )}
+        >
+          <p className="text-[12.5px] text-white leading-relaxed">
             A realistic Level 3 week — not a perfect one. Spread across the apprenticeship,{' '}
             {DEFAULT_OTJ_STANDARD.otjHours.toLocaleString()} hours of off-the-job training is
             roughly five to six hours a week on average, but it rarely lands evenly. Block-release
@@ -160,11 +144,11 @@ const TimeManagement = () => {
                 <span className="text-elec-yellow/85 font-medium sm:w-28 flex-shrink-0">
                   {row.day}
                 </span>
-                <span className="text-white/85">{row.plan}</span>
+                <span className="text-white">{row.plan}</span>
               </li>
             ))}
           </ul>
-          <p className="text-[11px] text-white/45 leading-relaxed pt-1">
+          <p className="text-[11px] text-white leading-relaxed pt-1">
             Your exact split depends on your employer and training provider — confirm your
             off-the-job arrangement with them.
           </p>
@@ -172,8 +156,13 @@ const TimeManagement = () => {
       </motion.section>
 
       <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
-        <SectionHeader eyebrow="Your rights" title="Time you're owed" />
-        <div className="rounded-none sm:rounded-xl border-y sm:border border-white/[0.06] bg-transparent sm:bg-[hsl(0_0%_10%)] -mx-4 px-4 py-4 sm:mx-0 sm:p-5 space-y-2.5">
+        <HubSectionHeading>Time you're owed</HubSectionHeading>
+        <div
+          className={cn(
+            '-mx-4 rounded-none border-y border-elec-yellow/35 px-4 py-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-5 space-y-2.5',
+            CARD_SURFACE
+          )}
+        >
           <p className="text-[12px] uppercase tracking-[0.18em] text-elec-yellow/85 font-medium">
             Off-the-job training is paid working time
           </p>
@@ -186,20 +175,20 @@ const TimeManagement = () => {
             ].map((item) => (
               <li
                 key={item}
-                className="flex items-start gap-2.5 text-[12.5px] text-white/85 leading-relaxed"
+                className="flex items-start gap-2.5 text-[12.5px] text-white leading-relaxed"
               >
                 <span className="mt-[7px] h-1 w-1 rounded-full bg-elec-yellow/85 flex-shrink-0" />
                 {item}
               </li>
             ))}
           </ul>
-          <p className="text-[11px] text-white/45 leading-relaxed pt-1">
+          <p className="text-[11px] text-white leading-relaxed pt-1">
             Sources: gov.uk apprenticeship funding rules (off-the-job training), ACAS (working time
             and rest breaks), gov.uk National Minimum Wage rates.
           </p>
         </div>
       </motion.section>
-    </PageFrame>
+    </HubSubPage>
   );
 };
 

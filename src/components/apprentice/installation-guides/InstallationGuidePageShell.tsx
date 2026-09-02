@@ -120,7 +120,7 @@ const InstallationGuidePageShell = ({
                     <p className="text-[13.5px] font-semibold leading-snug text-white">
                       {point.title}
                     </p>
-                    <p className="text-[13px] leading-relaxed text-white/85">{point.content}</p>
+                    <p className="text-[13px] leading-relaxed text-white">{point.content}</p>
                   </li>
                 ))}
               </ul>

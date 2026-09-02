@@ -22,49 +22,49 @@ const CourseCard = ({ course, onViewDetails }: CourseCardProps) => {
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 h-full flex flex-col gap-3">
       <div className="flex items-start justify-between gap-3">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             {course.provider}
           </span>
           <h3 className="text-[17px] font-semibold text-white leading-tight">{course.title}</h3>
         </div>
-        <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
+        <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
           {course.rating}★
         </span>
       </div>
 
-      <p className="text-[14px] text-white/85 leading-relaxed line-clamp-2">{course.description}</p>
+      <p className="text-[14px] text-white leading-relaxed line-clamp-2">{course.description}</p>
 
       <div className="mt-auto space-y-3">
-        <div className="grid grid-cols-2 gap-2 text-[12px] text-white/85">
+        <div className="grid grid-cols-2 gap-2 text-[12px] text-white">
           <div className="rounded-md border border-white/10 bg-white/[0.03] px-2 py-1.5">
-            <span className="text-white/55">Duration: </span>
+            <span className="text-white">Duration: </span>
             {course.duration}
           </div>
           <div className="rounded-md border border-white/10 bg-white/[0.03] px-2 py-1.5">
-            <span className="text-white/55">Level: </span>
+            <span className="text-white">Level: </span>
             {course.level}
           </div>
           <div className="rounded-md border border-white/10 bg-white/[0.03] px-2 py-1.5 col-span-2">
-            <span className="text-white/55">Format: </span>
+            <span className="text-white">Format: </span>
             {course.format}
           </div>
         </div>
 
-        <div className="text-[12px] text-white/70 line-clamp-1">
-          <span className="text-white/55">Locations: </span>
+        <div className="text-[12px] text-white line-clamp-1">
+          <span className="text-white">Locations: </span>
           {course.locations.slice(0, 3).join(', ')}
           {course.locations.length > 3 ? `, +${course.locations.length - 3}` : ''}
         </div>
 
         <div className="border-t border-white/[0.06] pt-3 space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Upcoming dates
           </span>
           <div className="flex flex-wrap gap-1.5">
             {course.nextDates.map((date, idx) => (
               <span
                 key={idx}
-                className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
+                className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
               >
                 {date}
               </span>

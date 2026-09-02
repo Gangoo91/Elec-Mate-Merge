@@ -1,7 +1,8 @@
 import { CheckCircle, FileText, Calculator, ClipboardList } from 'lucide-react';
-import { SectionHeader } from '@/components/college/primitives';
-import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { HubPage, HubBody, HubMasthead, HubSectionHeading } from '@/components/hub/HubPrimitives';
 import { DEFAULT_OTJ_STANDARD } from '@/data/otjStandards';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 interface Checklist {
   title: string;
@@ -76,12 +77,15 @@ const ToolsPage = () => {
         {checklists.map((checklist) => (
           <div
             key={checklist.title}
-            className="border-0 bg-transparent sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]"
+            className={cn(
+              'border-0 bg-transparent -mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+              CARD_SURFACE
+            )}
           >
             <div className="py-4 sm:p-5 space-y-4">
               <div className="flex items-center gap-2">
                 {checklist.icon}
-                <SectionHeader eyebrow={checklist.eyebrow} title={checklist.title} />
+                <HubSectionHeading>{checklist.title}</HubSectionHeading>
               </div>
               <ul className="space-y-2">
                 {checklist.items.map((item) => (
@@ -96,9 +100,14 @@ const ToolsPage = () => {
         ))}
 
         {/* Useful Templates */}
-        <div className="border-0 bg-transparent sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]">
+        <div
+          className={cn(
+            'border-0 bg-transparent -mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+            CARD_SURFACE
+          )}
+        >
           <div className="py-4 sm:p-5 space-y-4">
-            <SectionHeader eyebrow="Templates" title="Useful letter templates" />
+            <HubSectionHeading>Useful letter templates</HubSectionHeading>
             <p className="text-white text-sm leading-relaxed">
               If you need to raise an issue formally, keep it factual, polite, and in writing. Here
               are the key points to include in common situations:
@@ -156,7 +165,7 @@ const ToolsPage = () => {
         </div>
 
         {/* Tip */}
-        <div className="border-0 bg-transparent sm:rounded-xl sm:border sm:border-elec-yellow/25 sm:bg-elec-yellow/[0.04]">
+        <div className="border-0 bg-transparent sm:rounded-xl sm:border sm:border-elec-yellow/25 sm:bg-white/[0.05]">
           <div className="py-4 sm:p-5">
             <p className="text-white text-sm leading-relaxed">
               <strong className="text-elec-yellow">Top tip:</strong> Always keep copies of your

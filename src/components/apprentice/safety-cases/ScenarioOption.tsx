@@ -43,7 +43,7 @@ const ScenarioOption = ({
     }
     if (isCorrect) return 'bg-elec-yellow text-black';
     if (isSelected && !isCorrect) return 'bg-white/[0.06] text-red-300 border border-red-500/30';
-    return 'bg-white/[0.04] text-white/70 border border-white/10';
+    return 'bg-white/[0.04] text-white border border-white/10';
   };
 
   return (
@@ -70,24 +70,24 @@ const ScenarioOption = ({
             optionId
           )}
         </div>
-        <p className="text-[14px] text-white/85 leading-relaxed">{text}</p>
+        <p className="text-[14px] text-white leading-relaxed">{text}</p>
       </div>
 
       {showFeedback && (isCorrect || isSelected) && (
         <div className="mt-4 ml-10 space-y-3">
           <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-3 sm:p-4 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Feedback
             </span>
-            <p className="text-[14px] text-white/85 leading-relaxed">{feedback}</p>
+            <p className="text-[14px] text-white leading-relaxed">{feedback}</p>
           </div>
 
           {regulation && (
             <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-3 sm:p-4 space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Regulation
               </span>
-              <p className="text-[14px] text-white/85 leading-relaxed">{regulation}</p>
+              <p className="text-[14px] text-white leading-relaxed">{regulation}</p>
             </div>
           )}
 
@@ -95,7 +95,7 @@ const ScenarioOption = ({
             <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
               Outcome
             </span>
-            <p className="text-[14px] text-white/85 leading-relaxed">{outcome}</p>
+            <p className="text-[14px] text-white leading-relaxed">{outcome}</p>
           </div>
         </div>
       )}

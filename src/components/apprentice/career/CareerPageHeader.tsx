@@ -11,13 +11,13 @@ const CareerPageHeader = ({ activeSection, onBackToSections }: CareerPageHeaderP
   return (
     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Apprentice
         </span>
         <h1 className="text-[24px] sm:text-[28px] font-bold tracking-tight text-white leading-tight">
           Career progression
         </h1>
-        <p className="text-[14px] text-white/70 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           Resources and guidance for advancing your electrical career.
         </p>
       </div>

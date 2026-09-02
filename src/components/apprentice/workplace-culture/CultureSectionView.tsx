@@ -25,7 +25,7 @@ interface CultureSectionViewProps {
   onBack: () => void;
 }
 
-const eyebrowClass = 'text-[10px] font-medium uppercase tracking-[0.18em] text-white/70';
+const eyebrowClass = 'text-[10px] font-medium uppercase tracking-[0.18em] text-white';
 const sectionCardClass =
   'rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2';
 
@@ -122,7 +122,7 @@ const CultureSectionView = ({ section, progress, onBack }: CultureSectionViewPro
             <h1 className="text-[20px] sm:text-[22px] font-semibold text-white leading-tight truncate">
               {section.title}
             </h1>
-            <p className="text-[14px] text-white/70 leading-relaxed">{section.subtitle}</p>
+            <p className="text-[14px] text-white leading-relaxed">{section.subtitle}</p>
           </div>
         </div>
 
@@ -131,7 +131,7 @@ const CultureSectionView = ({ section, progress, onBack }: CultureSectionViewPro
           <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-2">
             <div className="flex items-baseline justify-between">
               <span className={eyebrowClass}>Progress</span>
-              <span className="text-[12px] text-white/85 font-mono">
+              <span className="text-[12px] text-white font-mono">
                 {sectionProgress.read}/{sectionProgress.total} ·{' '}
                 {sectionProgress.total > 0
                   ? Math.round((sectionProgress.read / sectionProgress.total) * 100)
@@ -180,7 +180,7 @@ const CultureSectionView = ({ section, progress, onBack }: CultureSectionViewPro
                           <CheckCircle className="h-3.5 w-3.5 text-elec-yellow" />
                         )}
                         <ChevronDown
-                          className={`h-4 w-4 text-white/70 transition-transform duration-200 ${
+                          className={`h-4 w-4 text-white transition-transform duration-200 ${
                             isExpanded ? 'rotate-180' : ''
                           }`}
                         />
@@ -190,14 +190,14 @@ const CultureSectionView = ({ section, progress, onBack }: CultureSectionViewPro
 
                   {isExpanded && (
                     <div className="px-4 pb-4 space-y-3 animate-fade-in text-left">
-                      <p className="text-[14px] text-white/85 leading-relaxed">{q.answer}</p>
+                      <p className="text-[14px] text-white leading-relaxed">{q.answer}</p>
 
                       <div className="flex items-center justify-between">
                         <div className="flex flex-wrap gap-1.5">
                           {q.tags.map((tag) => (
                             <span
                               key={tag}
-                              className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07]"
+                              className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07]"
                             >
                               {tag}
                             </span>
@@ -214,7 +214,7 @@ const CultureSectionView = ({ section, progress, onBack }: CultureSectionViewPro
                           {isBookmarked ? (
                             <BookmarkCheck className="h-4 w-4 text-elec-yellow" />
                           ) : (
-                            <Bookmark className="h-4 w-4 text-white/70" />
+                            <Bookmark className="h-4 w-4 text-white" />
                           )}
                         </button>
                       </div>
@@ -252,7 +252,7 @@ const CultureSectionView = ({ section, progress, onBack }: CultureSectionViewPro
                         </p>
                       </div>
                       <ChevronDown
-                        className={`h-4 w-4 text-white/70 flex-shrink-0 transition-transform duration-200 ${
+                        className={`h-4 w-4 text-white flex-shrink-0 transition-transform duration-200 ${
                           isExpanded ? 'rotate-180' : ''
                         }`}
                       />
@@ -265,13 +265,13 @@ const CultureSectionView = ({ section, progress, onBack }: CultureSectionViewPro
                         <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
                           Better approach
                         </span>
-                        <p className="text-[14px] text-white/85 leading-relaxed">
+                        <p className="text-[14px] text-white leading-relaxed">
                           {scenario.rightApproach}
                         </p>
                       </div>
                       <div className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-3 space-y-1">
                         <span className={eyebrowClass}>Avoid this</span>
-                        <p className="text-[14px] text-white/85 leading-relaxed">
+                        <p className="text-[14px] text-white leading-relaxed">
                           {scenario.wrongApproach}
                         </p>
                       </div>
@@ -294,13 +294,13 @@ const CultureSectionView = ({ section, progress, onBack }: CultureSectionViewPro
                 <div className="space-y-2 pt-1">
                   <div className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-3 space-y-1">
                     <span className={eyebrowClass}>Avoid</span>
-                    <p className="text-[14px] text-white/85 italic leading-relaxed">
+                    <p className="text-[14px] text-white italic leading-relaxed">
                       &ldquo;{script.poor}&rdquo;
                     </p>
                   </div>
                   <div className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-3 space-y-1">
                     <span className={eyebrowClass}>Better</span>
-                    <p className="text-[14px] text-white/85 italic leading-relaxed">
+                    <p className="text-[14px] text-white italic leading-relaxed">
                       &ldquo;{script.better}&rdquo;
                     </p>
                   </div>
@@ -308,7 +308,7 @@ const CultureSectionView = ({ section, progress, onBack }: CultureSectionViewPro
                     <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
                       Best
                     </span>
-                    <p className="text-[14px] text-white/85 italic leading-relaxed">
+                    <p className="text-[14px] text-white italic leading-relaxed">
                       &ldquo;{script.best}&rdquo;
                     </p>
                   </div>
@@ -330,12 +330,12 @@ const CultureSectionView = ({ section, progress, onBack }: CultureSectionViewPro
                   {terms.map((t) => (
                     <div key={t.id} className="pl-3 border-l border-white/15 space-y-1">
                       <div className="flex items-baseline gap-2 flex-wrap">
-                        <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07] font-medium">
+                        <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07] font-medium">
                           {t.term}
                         </span>
-                        <span className="text-[14px] text-white/85">{t.meaning}</span>
+                        <span className="text-[14px] text-white">{t.meaning}</span>
                       </div>
-                      <p className="text-[12px] text-white/70 italic">&ldquo;{t.usage}&rdquo;</p>
+                      <p className="text-[12px] text-white italic">&ldquo;{t.usage}&rdquo;</p>
                     </div>
                   ))}
                 </div>
@@ -360,7 +360,7 @@ const CultureSectionView = ({ section, progress, onBack }: CultureSectionViewPro
                       {region.characteristics.map((c, i) => (
                         <li
                           key={i}
-                          className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed"
+                          className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
                         >
                           <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                           <span>{c}</span>
@@ -375,7 +375,7 @@ const CultureSectionView = ({ section, progress, onBack }: CultureSectionViewPro
                       {region.commonPhrases.map((p, i) => (
                         <span
                           key={i}
-                          className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07]"
+                          className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07]"
                         >
                           &ldquo;{p}&rdquo;
                         </span>
@@ -386,11 +386,11 @@ const CultureSectionView = ({ section, progress, onBack }: CultureSectionViewPro
                   <div className="grid grid-cols-2 gap-2">
                     <div className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-3 space-y-1">
                       <span className={eyebrowClass}>Hours</span>
-                      <p className="text-[14px] text-white/85">{region.workingHours}</p>
+                      <p className="text-[14px] text-white">{region.workingHours}</p>
                     </div>
                     <div className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-3 space-y-1">
                       <span className={eyebrowClass}>Breaks</span>
-                      <p className="text-[14px] text-white/85">{region.breakCulture}</p>
+                      <p className="text-[14px] text-white">{region.breakCulture}</p>
                     </div>
                   </div>
 
@@ -402,7 +402,7 @@ const CultureSectionView = ({ section, progress, onBack }: CultureSectionViewPro
                       {region.keyTips.map((tip, i) => (
                         <li
                           key={i}
-                          className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed"
+                          className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
                         >
                           <CheckCircle className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-1" />
                           <span>{tip}</span>
@@ -427,15 +427,15 @@ const CultureSectionView = ({ section, progress, onBack }: CultureSectionViewPro
                 <div className="space-y-2">
                   <div className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-3 space-y-1">
                     <span className={eyebrowClass}>Culture</span>
-                    <p className="text-[14px] text-white/85 leading-relaxed">{ind.culture}</p>
+                    <p className="text-[14px] text-white leading-relaxed">{ind.culture}</p>
                   </div>
                   <div className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-3 space-y-1">
                     <span className={eyebrowClass}>Communication</span>
-                    <p className="text-[14px] text-white/85 leading-relaxed">{ind.communication}</p>
+                    <p className="text-[14px] text-white leading-relaxed">{ind.communication}</p>
                   </div>
                   <div className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-3 space-y-1">
                     <span className={eyebrowClass}>Challenges</span>
-                    <p className="text-[14px] text-white/85 leading-relaxed">{ind.challenges}</p>
+                    <p className="text-[14px] text-white leading-relaxed">{ind.challenges}</p>
                   </div>
                 </div>
               </div>
@@ -453,7 +453,7 @@ const CultureSectionView = ({ section, progress, onBack }: CultureSectionViewPro
               return (
                 <div key={tip.id} className={sectionCardClass}>
                   <h3 className="text-[16px] font-medium text-white">{tip.area}</h3>
-                  <p className="text-[14px] text-white/85 leading-relaxed">{tip.description}</p>
+                  <p className="text-[14px] text-white leading-relaxed">{tip.description}</p>
                   <div className="space-y-1 pt-1">
                     {tip.expectations.map((exp, idx) => {
                       const done = checked.has(idx);
@@ -474,7 +474,7 @@ const CultureSectionView = ({ section, progress, onBack }: CultureSectionViewPro
                           </div>
                           <span
                             className={`text-[14px] text-left leading-relaxed ${
-                              done ? 'text-white/70 line-through' : 'text-white/85'
+                              done ? 'text-white line-through' : 'text-white'
                             }`}
                           >
                             {exp}

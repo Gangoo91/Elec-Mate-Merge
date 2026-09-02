@@ -20,7 +20,7 @@ const Subsection1_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
 
       <div className="bg-white/10 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
         <div className="flex items-start gap-4">
-          <div className="bg-elec-yellow/20 p-3 rounded-full">
+          <div className="bg-white/[0.08] p-3 rounded-full">
             <Shield className="h-6 w-6 text-elec-yellow" />
           </div>
           <div>
@@ -100,7 +100,7 @@ const Subsection1_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             </ul>
           </div>
 
-          <div className="bg-elec-yellow/10 p-4 rounded-md border border-elec-yellow/30 flex items-start gap-3">
+          <div className="bg-white/[0.06] p-4 rounded-md border border-elec-yellow/30 flex items-start gap-3">
             <AlertCircle className="h-5 w-5 text-elec-yellow shrink-0 mt-0.5" />
             <p className="text-sm">
               <span className="font-semibold text-elec-yellow">Important Note:</span> Regulation 4
@@ -239,7 +239,7 @@ const Subsection1_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             imprisonment.
           </p>
 
-          <div className="bg-elec-yellow/10 p-4 rounded-md border border-elec-yellow/30">
+          <div className="bg-white/[0.06] p-4 rounded-md border border-elec-yellow/30">
             <h3 className="text-lg font-semibold text-elec-yellow mb-2">Potential Penalties:</h3>
             <ul className="list-disc pl-5 space-y-1">
               <li>Improvement notices requiring remedial action</li>
@@ -252,7 +252,7 @@ const Subsection1_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           </div>
 
           <div className="flex items-start gap-4 mt-4">
-            <div className="bg-elec-yellow/20 p-3 rounded-full">
+            <div className="bg-white/[0.08] p-3 rounded-full">
               <FileText className="h-6 w-6 text-elec-yellow" />
             </div>
             <div>

@@ -152,7 +152,7 @@ Signature: _________________ Date: _________`,
 
   return (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
         Document templates
       </span>
 
@@ -165,11 +165,11 @@ Signature: _________________ Date: _________`,
             <div className="space-y-1">
               <div className="flex items-center gap-2 flex-wrap">
                 <h4 className="text-[14px] font-semibold text-white">{template.title}</h4>
-                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                   {template.category}
                 </span>
               </div>
-              <p className="text-[14px] text-white/85 leading-relaxed">{template.description}</p>
+              <p className="text-[14px] text-white leading-relaxed">{template.description}</p>
             </div>
 
             <Button
@@ -184,7 +184,7 @@ Signature: _________________ Date: _________`,
         ))}
       </div>
 
-      <div className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-2">
+      <div className="rounded-xl border border-elec-yellow/20 bg-white/[0.05] p-4 sm:p-5 space-y-2">
         <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
           How to use these templates
         </span>
@@ -197,7 +197,7 @@ Signature: _________________ Date: _________`,
           ].map((item, i) => (
             <li
               key={i}
-              className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+              className="text-[14px] text-white leading-relaxed flex items-start gap-2"
             >
               <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
               <span>{item}</span>

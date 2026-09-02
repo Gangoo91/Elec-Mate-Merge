@@ -26,14 +26,14 @@ const IntroSection = ({ subsectionId }: IntroSectionProps) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
         <div className="bg-white/5 border border-elec-yellow/20 rounded-lg p-5 hover:border-elec-yellow/40 transition-colors">
           <div className="flex items-center gap-3 mb-3">
-            <div className="bg-elec-yellow/10 p-2 rounded-md">
+            <div className="bg-white/[0.06] p-2 rounded-md">
               <FileText className="h-5 w-5 text-elec-yellow" />
             </div>
             <h4 className="font-medium text-elec-yellow">Learning Outcomes</h4>
           </div>
           <ul className="space-y-2.5">
             <li className="flex items-start gap-3">
-              <span className="bg-elec-yellow/10 text-elec-yellow px-2 py-1 rounded text-xs font-medium mt-0.5">
+              <span className="bg-white/[0.06] text-elec-yellow px-2 py-1 rounded text-xs font-medium mt-0.5">
                 LO1
               </span>
               <p className="text-sm">
@@ -41,7 +41,7 @@ const IntroSection = ({ subsectionId }: IntroSectionProps) => {
               </p>
             </li>
             <li className="flex items-start gap-3">
-              <span className="bg-elec-yellow/10 text-elec-yellow px-2 py-1 rounded text-xs font-medium mt-0.5">
+              <span className="bg-white/[0.06] text-elec-yellow px-2 py-1 rounded text-xs font-medium mt-0.5">
                 LO2
               </span>
               <p className="text-sm">
@@ -49,7 +49,7 @@ const IntroSection = ({ subsectionId }: IntroSectionProps) => {
               </p>
             </li>
             <li className="flex items-start gap-3">
-              <span className="bg-elec-yellow/10 text-elec-yellow px-2 py-1 rounded text-xs font-medium mt-0.5">
+              <span className="bg-white/[0.06] text-elec-yellow px-2 py-1 rounded text-xs font-medium mt-0.5">
                 LO3
               </span>
               <p className="text-sm">
@@ -57,7 +57,7 @@ const IntroSection = ({ subsectionId }: IntroSectionProps) => {
               </p>
             </li>
             <li className="flex items-start gap-3">
-              <span className="bg-elec-yellow/10 text-elec-yellow px-2 py-1 rounded text-xs font-medium mt-0.5">
+              <span className="bg-white/[0.06] text-elec-yellow px-2 py-1 rounded text-xs font-medium mt-0.5">
                 LO4
               </span>
               <p className="text-sm">
@@ -69,14 +69,14 @@ const IntroSection = ({ subsectionId }: IntroSectionProps) => {
 
         <div className="bg-white/5 border border-elec-yellow/20 rounded-lg p-5 hover:border-elec-yellow/40 transition-colors">
           <div className="flex items-center gap-3 mb-3">
-            <div className="bg-elec-yellow/10 p-2 rounded-md">
+            <div className="bg-white/[0.06] p-2 rounded-md">
               <ExternalLink className="h-5 w-5 text-elec-yellow" />
             </div>
             <h4 className="font-medium text-elec-yellow">Key Resources</h4>
           </div>
           <ul className="space-y-3">
             <li className="flex items-start gap-3 group">
-              <div className="h-6 w-6 rounded bg-elec-yellow/10 flex items-center justify-center group-hover:bg-elec-yellow/20 transition-colors">
+              <div className="h-6 w-6 rounded bg-white/[0.06] flex items-center justify-center group-hover:bg-white/[0.08] transition-colors">
                 <span className="text-xs font-medium text-elec-yellow">01</span>
               </div>
               <div>
@@ -87,7 +87,7 @@ const IntroSection = ({ subsectionId }: IntroSectionProps) => {
               </div>
             </li>
             <li className="flex items-start gap-3 group">
-              <div className="h-6 w-6 rounded bg-elec-yellow/10 flex items-center justify-center group-hover:bg-elec-yellow/20 transition-colors">
+              <div className="h-6 w-6 rounded bg-white/[0.06] flex items-center justify-center group-hover:bg-white/[0.08] transition-colors">
                 <span className="text-xs font-medium text-elec-yellow">02</span>
               </div>
               <div>
@@ -98,7 +98,7 @@ const IntroSection = ({ subsectionId }: IntroSectionProps) => {
               </div>
             </li>
             <li className="flex items-start gap-3 group">
-              <div className="h-6 w-6 rounded bg-elec-yellow/10 flex items-center justify-center group-hover:bg-elec-yellow/20 transition-colors">
+              <div className="h-6 w-6 rounded bg-white/[0.06] flex items-center justify-center group-hover:bg-white/[0.08] transition-colors">
                 <span className="text-xs font-medium text-elec-yellow">03</span>
               </div>
               <div>
@@ -109,7 +109,7 @@ const IntroSection = ({ subsectionId }: IntroSectionProps) => {
               </div>
             </li>
             <li className="flex items-start gap-3 group">
-              <div className="h-6 w-6 rounded bg-elec-yellow/10 flex items-center justify-center group-hover:bg-elec-yellow/20 transition-colors">
+              <div className="h-6 w-6 rounded bg-white/[0.06] flex items-center justify-center group-hover:bg-white/[0.08] transition-colors">
                 <span className="text-xs font-medium text-elec-yellow">04</span>
               </div>
               <div>

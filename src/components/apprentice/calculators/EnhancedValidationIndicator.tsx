@@ -19,7 +19,7 @@ const EnhancedValidationIndicator: React.FC<EnhancedValidationIndicatorProps> = 
     <span
       className={`inline-flex items-center gap-1.5 text-[11px] px-2 py-0.5 rounded-md border justify-center ${
         ok
-          ? 'border-white/10 bg-white/[0.03] text-white/85'
+          ? 'border-white/10 bg-white/[0.03] text-white'
           : 'border-red-500/30 bg-red-500/[0.04] text-red-300'
       }`}
     >
@@ -37,7 +37,7 @@ const EnhancedValidationIndicator: React.FC<EnhancedValidationIndicatorProps> = 
           ok={validation.isValid}
         />
         {validation.safetyFactors.safetyMargin > 0 && (
-          <span className="text-[11px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
+          <span className="text-[11px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
             Safety margin: {validation.safetyFactors.safetyMargin.toFixed(2)}
           </span>
         )}
@@ -60,7 +60,7 @@ const EnhancedValidationIndicator: React.FC<EnhancedValidationIndicatorProps> = 
               </li>
             ))}
           </ul>
-          <p className="text-[13px] text-white/85 leading-relaxed">
+          <p className="text-[13px] text-white leading-relaxed">
             Do not proceed with installation until these issues are resolved. Consult a qualified
             electrician immediately.
           </p>
@@ -77,7 +77,7 @@ const EnhancedValidationIndicator: React.FC<EnhancedValidationIndicatorProps> = 
             {validation.errors.map((error, index) => (
               <li
                 key={index}
-                className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                className="text-[13px] text-white leading-relaxed flex items-start gap-2"
               >
                 <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                 <span>{error}</span>
@@ -90,14 +90,14 @@ const EnhancedValidationIndicator: React.FC<EnhancedValidationIndicatorProps> = 
       {/* Warnings */}
       {validation.warnings.length > 0 && (
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Safety warnings
           </span>
           <ul className="space-y-1.5">
             {validation.warnings.map((warning, index) => (
               <li
                 key={index}
-                className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                className="text-[13px] text-white leading-relaxed flex items-start gap-2"
               >
                 <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                 <span>{warning}</span>
@@ -119,10 +119,10 @@ const EnhancedValidationIndicator: React.FC<EnhancedValidationIndicatorProps> = 
       {(validation.safetyFactors.temperatureDerating < 1.0 ||
         validation.safetyFactors.groupingFactor < 1.0) && (
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Applied safety factors
           </span>
-          <div className="grid grid-cols-2 gap-2 text-[13px] text-white/85 font-mono">
+          <div className="grid grid-cols-2 gap-2 text-[13px] text-white font-mono">
             {validation.safetyFactors.temperatureDerating < 1.0 && (
               <div>
                 Temperature derating:{' '}
@@ -140,10 +140,10 @@ const EnhancedValidationIndicator: React.FC<EnhancedValidationIndicatorProps> = 
 
       {/* Professional Disclaimer */}
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Professional notice
         </span>
-        <p className="text-[13px] text-white/85 leading-relaxed">
+        <p className="text-[13px] text-white leading-relaxed">
           These calculations include safety factors and real-world conditions. However, all
           electrical work must be designed, installed, and certified by qualified personnel. This
           tool is for guidance only and does not replace professional electrical design or

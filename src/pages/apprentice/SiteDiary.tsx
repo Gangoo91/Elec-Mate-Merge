@@ -28,7 +28,9 @@ import {
   Lightbulb,
   Brain,
   AlertTriangle,
-  Briefcase,, Clock } from 'lucide-react';
+  Briefcase,
+  Clock,
+} from 'lucide-react';
 import { useSiteDiaryEntries } from '@/hooks/site-diary/useSiteDiaryEntries';
 import { useDiaryStreak } from '@/hooks/site-diary/useDiaryStreak';
 import { useDiaryCoach } from '@/hooks/site-diary/useDiaryCoach';
@@ -68,7 +70,17 @@ export default function SiteDiary() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { breakdown: otjBreakdown } = useApprenticeOtj(user?.id ?? null);
-  const otjHours = Math.round(otjBreakdown?.total_hours ?? 0);
+  /*
+   * The DIARY's own contribution, not the overall off-the-job total.
+   *
+   * `total_hours` aggregates five sources — videos, study sessions, college,
+   * learning activity and manual time entries — so showing it in the diary's
+   * own stats ribbon read as though the diary had produced all of it. The
+   * manual `time_entry` bucket is the one the diary writes (the automatic
+   * trigger-copies are excluded upstream to avoid double counting).
+   */
+  const diaryOtjHours = Math.round(((otjBreakdown?.by_source?.time_entry?.minutes ?? 0) / 60) * 10) / 10;
+  const otjTotalHours = Math.round(otjBreakdown?.total_hours ?? 0);
   const {
     entries,
     isLoading,
@@ -149,11 +161,17 @@ export default function SiteDiary() {
 
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
+      /* Covers every field the apprentice types into. Issues/questions,
+         supervisor and the skill tags were previously unsearchable, so a term
+         you had definitely written could return nothing. */
       filtered = filtered.filter(
         (e) =>
           e.site_name.toLowerCase().includes(q) ||
           e.tasks_completed.some((t) => t.toLowerCase().includes(q)) ||
-          (e.what_i_learned && e.what_i_learned.toLowerCase().includes(q))
+          e.skills_practised.some((t) => t.toLowerCase().includes(q)) ||
+          (e.what_i_learned ?? '').toLowerCase().includes(q) ||
+          (e.issues_or_questions ?? '').toLowerCase().includes(q) ||
+          (e.supervisor ?? '').toLowerCase().includes(q)
       );
     }
 
@@ -258,7 +276,7 @@ export default function SiteDiary() {
           <div className="flex items-center gap-1 flex-shrink-0">
             <button
               onClick={() => setSearchOpen(!searchOpen)}
-              className={`h-10 w-10 flex items-center justify-center rounded-md touch-manipulation transition-colors ${
+              className={`h-11 w-11 flex items-center justify-center rounded-md touch-manipulation transition-colors ${
                 searchOpen
                   ? 'bg-white/[0.06] text-elec-yellow'
                   : 'active:bg-white/[0.06] text-white/70'
@@ -272,7 +290,7 @@ export default function SiteDiary() {
                 setEditEntry(null);
                 setSheetOpen(true);
               }}
-              className="h-10 inline-flex items-center justify-center gap-1.5 px-3 sm:px-4 rounded-md bg-elec-yellow text-black text-[12.5px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.97] transition-all touch-manipulation"
+              className="h-11 inline-flex items-center justify-center gap-1.5 px-4 rounded-md bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.97] transition-all touch-manipulation"
             >
               <Plus className="h-4 w-4" strokeWidth={2.5} />
               <span className="hidden sm:inline">Log entry</span>
@@ -319,15 +337,15 @@ export default function SiteDiary() {
            * entry a reason beyond the diary itself, and the link goes to where
            * the target for your standard is set out.
            */}
-          {otjHours > 0 && (
+          {diaryOtjHours > 0 && (
             <button
               onClick={() => navigate('/apprentice/toolbox/off-job-training-guide')}
-              title="Hours you log here count towards your off-the-job total"
+              title={`${diaryOtjHours}h logged from your diary, of ${otjTotalHours}h off-the-job in total`}
               className="flex items-center gap-1.5 flex-shrink-0 px-2 h-7 rounded-md border border-elec-yellow/25 touch-manipulation hover:border-elec-yellow/50 transition-colors"
             >
               <Clock className="h-3 w-3 text-elec-yellow" />
               <span className="text-[11px] font-mono tabular-nums text-elec-yellow">
-                {otjHours}h off-the-job
+                {diaryOtjHours}h from this diary
               </span>
             </button>
           )}
@@ -359,7 +377,7 @@ export default function SiteDiary() {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search entries..."
                 autoFocus
-                className="w-full h-11 pl-10 pr-10 rounded-xl bg-white/[0.06] border border-white/[0.12] text-white text-sm placeholder:text-white focus:outline-none focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20 touch-manipulation"
+                className="w-full h-11 pl-10 pr-10 rounded-xl bg-white/[0.06] border border-white/[0.16] text-white text-sm placeholder:text-white/25 caret-elec-yellow focus:outline-none focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 touch-manipulation"
               />
               {searchQuery && (
                 <button
@@ -773,6 +791,7 @@ export default function SiteDiary() {
         onOpenChange={handleSheetClose}
         onSave={handleSave}
         recentSites={recentSites}
+        datesWithEntries={entries.map((e) => e.date)}
         existingEntry={editEntry}
         initialDate={sheetInitialDate}
         qualificationUnits={qualificationUnits}

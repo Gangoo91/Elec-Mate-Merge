@@ -18,6 +18,8 @@ import {
 import { itemVariants } from '@/components/college/primitives';
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const rights = [
   {
@@ -98,7 +100,7 @@ const escalation = [
     step: 4,
     title: 'National Apprenticeship Helpline',
     description:
-      'Call 0800 015 0400 (free, Mon–Fri 8am–8pm). They can advise on your rights and next steps, and escalate your complaint if needed.',
+      'Call 0800 015 0600 (free). They can advise on your rights and next steps, and escalate your complaint if needed.',
   },
   {
     step: 5,
@@ -196,7 +198,7 @@ const YourRightsPage = () => {
             <p className="text-[15px] font-semibold text-red-300 leading-snug">
               You should NEVER be asked to pay for your training.
             </p>
-            <p className="text-[13px] text-white/85 leading-relaxed">
+            <p className="text-[13px] text-white leading-relaxed">
               Apprenticeship training is funded by the government and/or your employer. If anyone
               asks you to pay, this is a breach of the apprenticeship funding rules — and should be
               reported.
@@ -208,7 +210,7 @@ const YourRightsPage = () => {
         <motion.div variants={itemVariants}>
           <button
             onClick={() => navigate('/apprentice/rights-and-pay')}
-            className="w-full flex items-center gap-3 p-4 rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] active:bg-elec-yellow/[0.08] active:scale-[0.99] transition-all touch-manipulation text-left"
+            className="w-full flex items-center gap-3 p-4 rounded-xl border border-elec-yellow/25 bg-white/[0.05] active:bg-white/[0.05] active:scale-[0.99] transition-all touch-manipulation text-left"
           >
             <Scale className="h-4 w-4 text-elec-yellow flex-shrink-0" />
             <div className="flex-1 min-w-0 space-y-0.5">
@@ -217,7 +219,7 @@ const YourRightsPage = () => {
                 Rights & Pay — wages, employment rights, support resources & tools
               </p>
             </div>
-            <ChevronRight className="h-4 w-4 text-white/40 flex-shrink-0" />
+            <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
           </button>
         </motion.div>
 
@@ -232,7 +234,7 @@ const YourRightsPage = () => {
             {rights.map((right) => (
               <li
                 key={right.title}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
+                className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}
               >
                 <div className="flex items-start gap-2.5">
                   <CheckCircle2 className="h-4 w-4 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
@@ -240,7 +242,7 @@ const YourRightsPage = () => {
                     <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
                       {right.title}
                     </h3>
-                    <p className="text-[13px] text-white/85 leading-relaxed">{right.description}</p>
+                    <p className="text-[13px] text-white leading-relaxed">{right.description}</p>
                   </div>
                 </div>
               </li>
@@ -260,7 +262,7 @@ const YourRightsPage = () => {
               {warningSignals.map((item) => (
                 <li
                   key={item}
-                  className="flex items-start gap-2 text-[13px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[13px] text-white leading-relaxed"
                 >
                   <AlertTriangle className="h-3.5 w-3.5 text-red-300 flex-shrink-0 mt-0.5" />
                   <span>{item}</span>
@@ -277,26 +279,31 @@ const YourRightsPage = () => {
             title="10 items for your complaint"
             meta="Build the file before you escalate"
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+          <div
+            className={cn(
+              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
+              CARD_SURFACE
+            )}
+          >
             <ul className="space-y-1.5">
               {complaintTemplate.map((item) => (
                 <li
                   key={item}
-                  className="flex items-start gap-2 text-[13px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[13px] text-white leading-relaxed"
                 >
                   <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                   <span>{item}</span>
                 </li>
               ))}
             </ul>
-            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-1">
-              <p className="text-[12.5px] text-white/85 leading-relaxed">
+            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3 space-y-1">
+              <p className="text-[12.5px] text-white leading-relaxed">
                 <span className="font-semibold text-elec-yellow">Email to:</span>{' '}
                 <span className="font-mono">complaints.esfa@education.gov.uk</span>
               </p>
-              <p className="text-[12.5px] text-white/85 leading-relaxed">
+              <p className="text-[12.5px] text-white leading-relaxed">
                 <span className="font-semibold text-elec-yellow">Or call:</span>{' '}
-                <span className="font-mono">0800 015 0400</span> (free, Mon–Fri 8am–8pm)
+                <span className="font-mono">0800 015 0600</span> (free, Mon–Fri 8am–8pm)
               </p>
             </div>
           </div>
@@ -313,17 +320,17 @@ const YourRightsPage = () => {
             {escalation.map((item) => (
               <li
                 key={item.step}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
+                className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}
               >
                 <div className="flex items-start gap-3">
-                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[12px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
+                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-md border border-elec-yellow/30 bg-white/[0.05] text-[12px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
                     {item.step}
                   </span>
                   <div className="space-y-1">
                     <h3 className="text-[14px] font-semibold text-white tracking-tight">
                       {item.title}
                     </h3>
-                    <p className="text-[13px] text-white/85 leading-relaxed">{item.description}</p>
+                    <p className="text-[13px] text-white leading-relaxed">{item.description}</p>
                   </div>
                 </div>
               </li>
@@ -345,7 +352,10 @@ const YourRightsPage = () => {
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full p-4 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] active:bg-white/[0.04] active:scale-[0.99] transition-all touch-manipulation"
+                  className={cn(
+                    'block w-full p-4 rounded-2xl border border-elec-yellow/35 active:bg-white/[0.04] active:scale-[0.99] transition-all touch-manipulation',
+                    CARD_SURFACE
+                  )}
                 >
                   <div className="flex items-center justify-between gap-3">
                     <div className="flex items-start gap-2.5 min-w-0">
@@ -354,12 +364,12 @@ const YourRightsPage = () => {
                         <p className="text-[14px] font-semibold text-elec-yellow tracking-tight">
                           {link.title}
                         </p>
-                        <p className="text-[12.5px] text-white/70 leading-relaxed">
+                        <p className="text-[12.5px] text-white leading-relaxed">
                           {link.description}
                         </p>
                       </div>
                     </div>
-                    <ChevronRight className="h-4 w-4 text-white/40 flex-shrink-0" />
+                    <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
                   </div>
                 </a>
               </li>

@@ -51,7 +51,7 @@ const BackButton = ({ courseSlug, unitSlug, sectionId }: BackButtonProps) => {
   return (
     <Button
       variant="outline"
-      className="mb-4 border-elec-yellow/30 hover:bg-elec-yellow/10"
+      className="mb-4 border-elec-yellow/30 hover:bg-white/[0.06]"
       onClick={handleBackClick}
     >
       <ArrowLeft className="mr-2 h-4 w-4" />

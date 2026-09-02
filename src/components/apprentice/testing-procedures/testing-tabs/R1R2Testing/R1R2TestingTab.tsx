@@ -32,7 +32,7 @@ const R1R2TestingTab = () => {
           <h2 className="text-[20px] sm:text-[22px] font-semibold text-white leading-tight">
             R₁+R₂ continuity testing
           </h2>
-          <p className="text-[14px] text-white/70 leading-relaxed">
+          <p className="text-[14px] text-white leading-relaxed">
             Verifies that the circuit protective conductor is continuous and correctly sized, and
             gives you the R₁ + R₂ value the circuit's Zs is built from.
           </p>

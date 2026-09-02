@@ -20,10 +20,10 @@ const ProgressCard: React.FC<ProgressCardProps> = ({ completedCount, totalScenar
   return (
     <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3 animate-fade-in">
       <div className="flex items-baseline justify-between">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Progress
         </span>
-        <span className="text-[12px] text-white/85 font-mono">
+        <span className="text-[12px] text-white font-mono">
           {completedCount}/{totalScenarios} · {progressPercentage}%
         </span>
       </div>
@@ -36,15 +36,15 @@ const ProgressCard: React.FC<ProgressCardProps> = ({ completedCount, totalScenar
       </div>
 
       <div className="space-y-1 pt-1">
-        <p className="text-[14px] text-white/85 leading-relaxed">{getProgressMessage()}</p>
+        <p className="text-[14px] text-white leading-relaxed">{getProgressMessage()}</p>
         {progressPercentage < 100 && (
-          <p className="text-[12px] text-white/70">
+          <p className="text-[12px] text-white">
             {totalScenarios - completedCount} scenarios remaining
           </p>
         )}
       </div>
 
-      <p className="text-[12px] text-white/70 leading-relaxed pt-1 border-t border-white/[0.10]">
+      <p className="text-[12px] text-white leading-relaxed pt-1 border-t border-white/[0.10]">
         Complete all scenarios to improve your understanding of electrical safety regulations and
         decision-making in the workplace.
       </p>

@@ -145,10 +145,10 @@ const TemplatesAndExamples = () => {
   return (
     <div className="space-y-6">
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Templates, examples & resources
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           Access our comprehensive collection of templates, examples, and resources to help you
           build a professional portfolio efficiently and effectively.
         </p>
@@ -172,11 +172,11 @@ const TemplatesAndExamples = () => {
                 >
                   <div>
                     <h5 className="text-[14px] font-semibold text-white">{template.name}</h5>
-                    <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] inline-block mt-1">
+                    <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] inline-block mt-1">
                       {template.type}
                     </span>
                   </div>
-                  <p className="text-[14px] text-white/85 leading-relaxed">{template.description}</p>
+                  <p className="text-[14px] text-white leading-relaxed">{template.description}</p>
                   <div className="flex gap-2">
                     <Button
                       variant="outline"
@@ -216,20 +216,20 @@ const TemplatesAndExamples = () => {
                 <h4 className="text-[16px] font-semibold text-white leading-tight">
                   {example.title}
                 </h4>
-                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] inline-block">
+                <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] inline-block">
                   {example.level}
                 </span>
               </div>
-              <p className="text-[14px] text-white/85 leading-relaxed">{example.description}</p>
+              <p className="text-[14px] text-white leading-relaxed">{example.description}</p>
               <div className="space-y-1.5">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Key highlights
                 </span>
                 <ul className="space-y-1">
                   {example.highlights.map((highlight, highlightIndex) => (
                     <li
                       key={highlightIndex}
-                      className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                      className="text-[13px] text-white leading-relaxed flex items-start gap-2"
                     >
                       <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                       <span>{highlight}</span>
@@ -251,22 +251,22 @@ const TemplatesAndExamples = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Quick start guides
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           Step-by-step guides to help you get started and maintain momentum
         </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {quickStartGuides.map((guide, index) => (
             <div key={index} className="space-y-2">
               <h4 className="text-[14px] font-semibold text-white">{guide.title}</h4>
-              <p className="text-[14px] text-white/70 leading-relaxed">{guide.description}</p>
+              <p className="text-[14px] text-white leading-relaxed">{guide.description}</p>
               <ul className="space-y-1.5">
                 {guide.tasks.map((task, taskIndex) => (
                   <li
                     key={taskIndex}
-                    className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                    className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                   >
                     <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                     <span>{task}</span>
@@ -279,7 +279,7 @@ const TemplatesAndExamples = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Additional resources
         </span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -294,7 +294,7 @@ const TemplatesAndExamples = () => {
               ].map((item, i) => (
                 <li
                   key={i}
-                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                  className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                 >
                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{item}</span>
@@ -313,7 +313,7 @@ const TemplatesAndExamples = () => {
               ].map((item, i) => (
                 <li
                   key={i}
-                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                  className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                 >
                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{item}</span>

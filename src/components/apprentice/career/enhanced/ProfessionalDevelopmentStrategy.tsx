@@ -32,13 +32,13 @@ interface DevelopmentCategory {
 }
 
 const Eyebrow = ({ children }: { children: React.ReactNode }) => (
-  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
     {children}
   </span>
 );
 
 const Pill = ({ children }: { children: React.ReactNode }) => (
-  <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+  <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
     {children}
   </span>
 );
@@ -48,7 +48,7 @@ const Bullets = ({ items }: { items: string[] }) => (
     {items.map((item, idx) => (
       <li
         key={idx}
-        className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+        className="text-[14px] text-white leading-relaxed flex items-start gap-2"
       >
         <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
         <span>{item}</span>
@@ -71,14 +71,14 @@ const DevelopmentBlock = ({ categories }: { categories: DevelopmentCategory[] })
               className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
             >
               <h5 className="text-[14px] text-white">{area.skill}</h5>
-              <p className="text-[14px] text-white/85 leading-relaxed">{area.description}</p>
+              <p className="text-[14px] text-white leading-relaxed">{area.description}</p>
               <div className="space-y-1">
                 <Eyebrow>Development path</Eyebrow>
-                <p className="text-[14px] text-white/85 leading-relaxed">{area.developmentPath}</p>
+                <p className="text-[14px] text-white leading-relaxed">{area.developmentPath}</p>
               </div>
               <div className="space-y-1">
                 <Eyebrow>Business impact</Eyebrow>
-                <p className="text-[14px] text-white/85 leading-relaxed">{area.businessImpact}</p>
+                <p className="text-[14px] text-white leading-relaxed">{area.businessImpact}</p>
               </div>
             </div>
           ))}
@@ -496,8 +496,8 @@ const ProfessionalDevelopmentStrategy = () => {
   return (
     <div className="space-y-4">
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 flex items-start gap-3">
-        <Target className="h-4 w-4 text-white/55 mt-1 flex-shrink-0" />
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <Target className="h-4 w-4 text-white mt-1 flex-shrink-0" />
+        <p className="text-[14px] text-white leading-relaxed">
           Strategic professional development supports faster career progression and stronger
           long-term earning potential.
         </p>
@@ -512,14 +512,14 @@ const ProfessionalDevelopmentStrategy = () => {
             className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 space-y-1"
           >
             <Eyebrow>{metric.metric}</Eyebrow>
-            <div className="text-[14px] text-white/85">{metric.data}</div>
+            <div className="text-[14px] text-white">{metric.data}</div>
           </div>
         ))}
       </div>
 
       <MobileAccordion type="single" collapsible className="space-y-2">
         <MobileAccordionItem value="continuing-education">
-          <MobileAccordionTrigger icon={<GraduationCap className="h-5 w-5 text-white/55" />}>
+          <MobileAccordionTrigger icon={<GraduationCap className="h-5 w-5 text-white" />}>
             Continuing education and advanced qualifications
           </MobileAccordionTrigger>
           <MobileAccordionContent>
@@ -530,7 +530,7 @@ const ProfessionalDevelopmentStrategy = () => {
                     <h4 className="text-[16px] text-white">{category.category}</h4>
                     <Pill>{category.timeline}</Pill>
                   </div>
-                  <p className="text-[14px] text-white/85 leading-relaxed">
+                  <p className="text-[14px] text-white leading-relaxed">
                     {category.description}
                   </p>
                   <div className="space-y-3">
@@ -543,25 +543,25 @@ const ProfessionalDevelopmentStrategy = () => {
                           <h5 className="text-[14px] text-white">{programme.qualification}</h5>
                           <Pill>{programme.cost}</Pill>
                         </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-[14px] text-white/85">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-[14px] text-white">
                           <div>
-                            <span className="text-white/55">Provider: </span>
+                            <span className="text-white">Provider: </span>
                             {programme.provider}
                           </div>
                           <div>
-                            <span className="text-white/55">Duration: </span>
+                            <span className="text-white">Duration: </span>
                             {programme.duration}
                           </div>
                         </div>
                         <div className="space-y-1">
                           <Eyebrow>Career impact</Eyebrow>
-                          <p className="text-[14px] text-white/85 leading-relaxed">
+                          <p className="text-[14px] text-white leading-relaxed">
                             {programme.careerImpact}
                           </p>
                         </div>
                         <div className="space-y-1">
                           <Eyebrow>Prerequisites</Eyebrow>
-                          <p className="text-[14px] text-white/85 leading-relaxed">
+                          <p className="text-[14px] text-white leading-relaxed">
                             {programme.prerequisites}
                           </p>
                         </div>
@@ -575,7 +575,7 @@ const ProfessionalDevelopmentStrategy = () => {
         </MobileAccordionItem>
 
         <MobileAccordionItem value="networking-strategy">
-          <MobileAccordionTrigger icon={<Network className="h-5 w-5 text-white/55" />}>
+          <MobileAccordionTrigger icon={<Network className="h-5 w-5 text-white" />}>
             Professional networking and industry engagement
           </MobileAccordionTrigger>
           <MobileAccordionContent>
@@ -589,7 +589,7 @@ const ProfessionalDevelopmentStrategy = () => {
                     <h4 className="text-[16px] text-white">{strategy.strategy}</h4>
                     <Pill>{strategy.timeCommitment}</Pill>
                   </div>
-                  <p className="text-[14px] text-white/85 leading-relaxed">
+                  <p className="text-[14px] text-white leading-relaxed">
                     {strategy.description}
                   </p>
                   <div className="space-y-2">
@@ -599,20 +599,20 @@ const ProfessionalDevelopmentStrategy = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div className="space-y-1">
                       <Eyebrow>Career benefits</Eyebrow>
-                      <p className="text-[14px] text-white/85 leading-relaxed">
+                      <p className="text-[14px] text-white leading-relaxed">
                         {strategy.careerBenefits}
                       </p>
                     </div>
                     <div className="space-y-1">
                       <Eyebrow>Networking value</Eyebrow>
-                      <p className="text-[14px] text-white/85 leading-relaxed">
+                      <p className="text-[14px] text-white leading-relaxed">
                         {strategy.networkingValue}
                       </p>
                     </div>
                   </div>
                   <div className="space-y-1">
                     <Eyebrow>Investment required</Eyebrow>
-                    <p className="text-[14px] text-white/85 leading-relaxed">{strategy.costs}</p>
+                    <p className="text-[14px] text-white leading-relaxed">{strategy.costs}</p>
                   </div>
                 </div>
               ))}
@@ -621,7 +621,7 @@ const ProfessionalDevelopmentStrategy = () => {
         </MobileAccordionItem>
 
         <MobileAccordionItem value="leadership-development">
-          <MobileAccordionTrigger icon={<Users className="h-5 w-5 text-white/55" />}>
+          <MobileAccordionTrigger icon={<Users className="h-5 w-5 text-white" />}>
             Leadership and management development
           </MobileAccordionTrigger>
           <MobileAccordionContent>
@@ -630,7 +630,7 @@ const ProfessionalDevelopmentStrategy = () => {
         </MobileAccordionItem>
 
         <MobileAccordionItem value="development-planning">
-          <MobileAccordionTrigger icon={<Lightbulb className="h-5 w-5 text-white/55" />}>
+          <MobileAccordionTrigger icon={<Lightbulb className="h-5 w-5 text-white" />}>
             Personal development planning
           </MobileAccordionTrigger>
           <MobileAccordionContent>
@@ -676,7 +676,7 @@ const ProfessionalDevelopmentStrategy = () => {
         </MobileAccordionItem>
 
         <MobileAccordionItem value="digital-professionalism">
-          <MobileAccordionTrigger icon={<Smartphone className="h-5 w-5 text-white/55" />}>
+          <MobileAccordionTrigger icon={<Smartphone className="h-5 w-5 text-white" />}>
             Digital professionalism and technology
           </MobileAccordionTrigger>
           <MobileAccordionContent>
@@ -685,7 +685,7 @@ const ProfessionalDevelopmentStrategy = () => {
         </MobileAccordionItem>
 
         <MobileAccordionItem value="innovation-entrepreneurship">
-          <MobileAccordionTrigger icon={<Rocket className="h-5 w-5 text-white/55" />}>
+          <MobileAccordionTrigger icon={<Rocket className="h-5 w-5 text-white" />}>
             Innovation and entrepreneurship
           </MobileAccordionTrigger>
           <MobileAccordionContent>
@@ -694,7 +694,7 @@ const ProfessionalDevelopmentStrategy = () => {
         </MobileAccordionItem>
 
         <MobileAccordionItem value="sustainability-esg">
-          <MobileAccordionTrigger icon={<Lightbulb className="h-5 w-5 text-white/55" />}>
+          <MobileAccordionTrigger icon={<Lightbulb className="h-5 w-5 text-white" />}>
             Sustainability and ESG leadership
           </MobileAccordionTrigger>
           <MobileAccordionContent>
@@ -703,7 +703,7 @@ const ProfessionalDevelopmentStrategy = () => {
         </MobileAccordionItem>
 
         <MobileAccordionItem value="wellbeing-resilience">
-          <MobileAccordionTrigger icon={<Heart className="h-5 w-5 text-white/55" />}>
+          <MobileAccordionTrigger icon={<Heart className="h-5 w-5 text-white" />}>
             Wellbeing and personal resilience
           </MobileAccordionTrigger>
           <MobileAccordionContent>
@@ -712,7 +712,7 @@ const ProfessionalDevelopmentStrategy = () => {
         </MobileAccordionItem>
 
         <MobileAccordionItem value="industry-advocacy">
-          <MobileAccordionTrigger icon={<MessageSquare className="h-5 w-5 text-white/55" />}>
+          <MobileAccordionTrigger icon={<MessageSquare className="h-5 w-5 text-white" />}>
             Industry leadership and advocacy
           </MobileAccordionTrigger>
           <MobileAccordionContent>
@@ -721,7 +721,7 @@ const ProfessionalDevelopmentStrategy = () => {
         </MobileAccordionItem>
 
         <MobileAccordionItem value="international-opportunities">
-          <MobileAccordionTrigger icon={<Globe className="h-5 w-5 text-white/55" />}>
+          <MobileAccordionTrigger icon={<Globe className="h-5 w-5 text-white" />}>
             International and global development
           </MobileAccordionTrigger>
           <MobileAccordionContent>
@@ -730,7 +730,7 @@ const ProfessionalDevelopmentStrategy = () => {
         </MobileAccordionItem>
 
         <MobileAccordionItem value="career-planning-toolkit">
-          <MobileAccordionTrigger icon={<Calendar className="h-5 w-5 text-white/55" />}>
+          <MobileAccordionTrigger icon={<Calendar className="h-5 w-5 text-white" />}>
             Career planning toolkit
           </MobileAccordionTrigger>
           <MobileAccordionContent>
@@ -738,7 +738,7 @@ const ProfessionalDevelopmentStrategy = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
                   <Eyebrow>5-year career plan template</Eyebrow>
-                  <ul className="space-y-1.5 text-[14px] text-white/85 leading-relaxed">
+                  <ul className="space-y-1.5 text-[14px] text-white leading-relaxed">
                     <li>
                       <span className="text-white">Year 1-2: </span>
                       Foundation skills mastery and professional qualification completion
@@ -760,28 +760,28 @@ const ProfessionalDevelopmentStrategy = () => {
 
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
                   <Eyebrow>Personal SWOT analysis</Eyebrow>
-                  <div className="grid grid-cols-2 gap-2 text-[13px] text-white/85 leading-relaxed">
+                  <div className="grid grid-cols-2 gap-2 text-[13px] text-white leading-relaxed">
                     <div>
                       <div className="text-white">Strengths</div>
-                      <div className="text-white/70">
+                      <div className="text-white">
                         Technical skills, work ethic, problem-solving
                       </div>
                     </div>
                     <div>
                       <div className="text-white">Weaknesses</div>
-                      <div className="text-white/70">
+                      <div className="text-white">
                         Business skills, networking, experience
                       </div>
                     </div>
                     <div>
                       <div className="text-white">Opportunities</div>
-                      <div className="text-white/70">
+                      <div className="text-white">
                         Green energy, smart buildings, EV charging
                       </div>
                     </div>
                     <div>
                       <div className="text-white">Threats</div>
-                      <div className="text-white/70">
+                      <div className="text-white">
                         Automation, competition, regulation changes
                       </div>
                     </div>

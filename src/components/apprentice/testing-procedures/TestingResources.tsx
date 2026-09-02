@@ -13,10 +13,10 @@ import { cn } from '@/lib/utils';
 const TestingResources = () => {
   return (
     <div className={cn(PANEL, "space-y-1")}>
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
         Source
       </span>
-      <p className="text-[14px] text-white/85 leading-relaxed">
+      <p className="text-[14px] text-white leading-relaxed">
         These procedures follow BS 7671:2018+A4:2026 and Guidance Note 3: Inspection and Testing.
         They are here to help you understand and prepare for each test — the standards themselves
         remain the definitive guidance, and nothing here replaces training or supervision.

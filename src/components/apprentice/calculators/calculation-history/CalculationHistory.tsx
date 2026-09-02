@@ -104,10 +104,10 @@ const CalculationHistory: React.FC<CalculationHistoryProps> = ({
   if (history.length === 0) {
     return (
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           History
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed mt-2">
+        <p className="text-[14px] text-white leading-relaxed mt-2">
           Your calculation history will appear here as you perform calculations.
         </p>
       </div>
@@ -117,7 +117,7 @@ const CalculationHistory: React.FC<CalculationHistoryProps> = ({
   return (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
       <div className="flex items-center justify-between">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Calculation history
         </span>
         <div className="flex gap-2">
@@ -126,7 +126,7 @@ const CalculationHistory: React.FC<CalculationHistoryProps> = ({
               variant="ghost"
               size="sm"
               onClick={() => setShowAll(!showAll)}
-              className="h-9 text-[12px] text-white/85 hover:bg-white/[0.05] touch-manipulation"
+              className="h-9 text-[12px] text-white hover:bg-white/[0.05] touch-manipulation"
             >
               {showAll ? 'Show less' : `Show all (${history.length})`}
             </Button>
@@ -135,7 +135,7 @@ const CalculationHistory: React.FC<CalculationHistoryProps> = ({
             variant="ghost"
             size="sm"
             onClick={clearHistory}
-            className="h-9 text-white/55 hover:text-white hover:bg-white/[0.05] touch-manipulation"
+            className="h-9 text-white hover:text-white hover:bg-white/[0.05] touch-manipulation"
           >
             <Trash2 className="h-4 w-4" />
           </Button>
@@ -145,7 +145,7 @@ const CalculationHistory: React.FC<CalculationHistoryProps> = ({
       <div className="space-y-4">
         {bookmarkedHistory.length > 0 && (
           <div className="space-y-2">
-            <div className="flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <div className="flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               <Star className="h-3 w-3" />
               <span>Bookmarked</span>
             </div>
@@ -162,7 +162,7 @@ const CalculationHistory: React.FC<CalculationHistoryProps> = ({
         )}
 
         <div className="space-y-2">
-          <div className="flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <div className="flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             <Clock className="h-3 w-3" />
             <span>Recent</span>
           </div>
@@ -191,21 +191,21 @@ const HistoryEntry: React.FC<{
     <div className="flex items-center justify-between gap-3 p-3 rounded-lg border border-white/[0.06] bg-white/[0.02]">
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 mb-1">
-          <span className="text-[11px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+          <span className="text-[11px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
             {entry.isValid ? 'Valid' : 'Invalid'}
           </span>
-          <span className="text-[11px] text-white/55 font-mono">
+          <span className="text-[11px] text-white font-mono">
             {format(entry.timestamp, 'MMM dd, HH:mm')}
           </span>
         </div>
-        <p className="text-[12px] text-white/85 truncate">{formatInputsDisplay(entry.inputs)}</p>
+        <p className="text-[12px] text-white truncate">{formatInputsDisplay(entry.inputs)}</p>
       </div>
       <div className="flex gap-1">
         <Button
           variant="ghost"
           size="sm"
           onClick={onToggleBookmark}
-          className="h-9 w-9 p-0 text-white/55 hover:text-white hover:bg-white/[0.05] touch-manipulation"
+          className="h-9 w-9 p-0 text-white hover:text-white hover:bg-white/[0.05] touch-manipulation"
         >
           {entry.isBookmarked ? (
             <Star className="h-4 w-4 text-elec-yellow fill-current" />
@@ -217,7 +217,7 @@ const HistoryEntry: React.FC<{
           variant="ghost"
           size="sm"
           onClick={onRestore}
-          className="h-9 w-9 p-0 text-white/55 hover:text-white hover:bg-white/[0.05] touch-manipulation"
+          className="h-9 w-9 p-0 text-white hover:text-white hover:bg-white/[0.05] touch-manipulation"
         >
           <RotateCcw className="h-4 w-4" />
         </Button>

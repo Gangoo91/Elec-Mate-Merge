@@ -36,10 +36,10 @@ const AssessmentProgress = ({ tools, completedAssessments }: AssessmentProgressP
   return (
     <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-5">
       <div className="flex items-baseline justify-between">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Your progress
         </span>
-        <span className="text-[12px] text-white/85 font-mono">
+        <span className="text-[12px] text-white font-mono">
           {completedAssessments.length}/{tools.length} · {Math.round(completionRate)}%
         </span>
       </div>
@@ -56,29 +56,29 @@ const AssessmentProgress = ({ tools, completedAssessments }: AssessmentProgressP
           <div className="text-[20px] font-semibold text-white font-mono">
             {completedAssessments.length}
           </div>
-          <div className="text-[10px] uppercase tracking-[0.18em] text-white/70">Completed</div>
+          <div className="text-[10px] uppercase tracking-[0.18em] text-white">Completed</div>
         </div>
         <div className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-3 text-center space-y-1">
           <div className="text-[20px] font-semibold text-white font-mono">
             {essentialCompleted}/{essentialTotal}
           </div>
-          <div className="text-[10px] uppercase tracking-[0.18em] text-white/70">Essential</div>
+          <div className="text-[10px] uppercase tracking-[0.18em] text-white">Essential</div>
         </div>
         <div className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-3 text-center space-y-1">
           <div className="text-[20px] font-semibold text-white font-mono">
             {Math.round(completionRate)}%
           </div>
-          <div className="text-[10px] uppercase tracking-[0.18em] text-white/70">Overall</div>
+          <div className="text-[10px] uppercase tracking-[0.18em] text-white">Overall</div>
         </div>
       </div>
 
       <div className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-4 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Status
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">{getProgressMessage()}</p>
+        <p className="text-[14px] text-white leading-relaxed">{getProgressMessage()}</p>
         {nextTool && completionRate < 100 && (
-          <p className="text-[13px] text-white/70">
+          <p className="text-[13px] text-white">
             Next recommended: <span className="text-elec-yellow">{nextTool.title}</span>
           </p>
         )}
@@ -86,7 +86,7 @@ const AssessmentProgress = ({ tools, completedAssessments }: AssessmentProgressP
 
       {completedAssessments.length > 0 && (
         <div className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-4 space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Recent achievements
           </span>
           <div className="flex flex-wrap gap-1.5">
@@ -95,7 +95,7 @@ const AssessmentProgress = ({ tools, completedAssessments }: AssessmentProgressP
               return tool ? (
                 <span
                   key={id}
-                  className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07]"
+                  className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07]"
                 >
                   {tool.title}
                 </span>

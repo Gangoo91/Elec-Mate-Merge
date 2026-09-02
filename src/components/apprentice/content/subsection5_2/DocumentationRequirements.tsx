@@ -16,7 +16,7 @@ const DocumentationRequirements = () => {
           {/* Left Column */}
           <div className="space-y-4">
             <div className="flex items-center gap-2 mb-2">
-              <div className="p-1.5 bg-elec-yellow/10 rounded">
+              <div className="p-1.5 bg-white/[0.06] rounded">
                 <FileText className="h-5 w-5 text-elec-yellow" />
               </div>
               <h4 className="font-medium text-elec-yellow">Hazard Report Form Contents</h4>
@@ -70,7 +70,7 @@ const DocumentationRequirements = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <div className="flex items-center gap-2 mb-2">
-                  <div className="p-1.5 bg-elec-yellow/10 rounded">
+                  <div className="p-1.5 bg-white/[0.06] rounded">
                     <Eye className="h-5 w-5 text-elec-yellow" />
                   </div>
                   <h4 className="font-medium text-elec-yellow">Record-Keeping</h4>
@@ -96,7 +96,7 @@ const DocumentationRequirements = () => {
 
               <div>
                 <div className="flex items-center gap-2 mb-2">
-                  <div className="p-1.5 bg-elec-yellow/10 rounded">
+                  <div className="p-1.5 bg-white/[0.06] rounded">
                     <Clipboard className="h-5 w-5 text-elec-yellow" />
                   </div>
                   <h4 className="font-medium text-elec-yellow">Management Review</h4>

@@ -1,15 +1,8 @@
 import React, { useState } from 'react';
 import { Plus, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import {
-  ScrollbarFreeSelect,
-  ScrollbarFreeSelectContent,
-  ScrollbarFreeSelectItem,
-  ScrollbarFreeSelectTrigger,
-  ScrollbarFreeSelectValue,
-} from '@/components/ui/scrollbar-free-select';
+import { SelectField } from '@/components/forms/SelectField';
+import { buttonPrimaryCn, chipBase, chipOn, labelCn } from '@/components/forms/fieldStyles';
 
 interface SelectOption {
   value: string;
@@ -59,81 +52,52 @@ export const SingleSelectWithAdd: React.FC<SingleSelectWithAddProps> = ({
   };
 
   return (
-    <div className={cn('space-y-3', className)}>
-      {label && (
-        <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
-          <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
-          {label}
-        </label>
-      )}
+    <div className={cn(className)}>
+      {label && <label className={labelCn}>{label}</label>}
 
-      {/* Selected Items Display */}
+      {/* Selected items — solid chips, tap the cross to remove */}
       {value.length > 0 && (
-        <div className="flex flex-wrap gap-2">
-          {getSelectedLabels().map((label, index) => (
-            <Badge
-              key={index}
-              variant="secondary"
-              className="bg-elec-yellow/20 text-elec-light border-elec-yellow/30 hover:bg-elec-yellow/30 px-3 py-1 text-sm"
+        <div className="mb-2 flex flex-wrap gap-2">
+          {getSelectedLabels().map((itemLabel, index) => (
+            <button
+              key={`${value[index]}-${index}`}
+              type="button"
+              onClick={() => handleRemove(value[index])}
+              aria-label={`Remove ${itemLabel}`}
+              className={cn(chipBase, chipOn, 'inline-flex items-center gap-1.5 px-3.5')}
             >
-              {label}
-              <button
-                type="button"
-                onClick={() => handleRemove(value[index])}
-                className="ml-2 hover:bg-elec-yellow/40 rounded-full p-0.5 transition-colors"
-              >
-                <X className="h-3 w-3" />
-              </button>
-            </Badge>
+              {itemLabel}
+              <X className="h-3.5 w-3.5" />
+            </button>
           ))}
         </div>
       )}
 
-      {/* Add New Section */}
-      <div className="flex gap-2">
-        <div className="flex-1">
-          <ScrollbarFreeSelect
+      {/* Add another */}
+      <div className="flex items-end gap-2">
+        <div className="min-w-0 flex-1">
+          <SelectField
             value={selectedOption}
             onValueChange={setSelectedOption}
+            placeholder={availableOptions.length === 0 ? 'All options selected' : placeholder}
+            title={label}
+            options={availableOptions}
             disabled={disabled || availableOptions.length === 0}
-          >
-            <ScrollbarFreeSelectTrigger className="h-12">
-              <ScrollbarFreeSelectValue
-                placeholder={availableOptions.length === 0 ? 'All options selected' : placeholder}
-              />
-            </ScrollbarFreeSelectTrigger>
-            <ScrollbarFreeSelectContent>
-              {availableOptions.map((option) => (
-                <ScrollbarFreeSelectItem key={option.value} value={option.value}>
-                  {option.label}
-                </ScrollbarFreeSelectItem>
-              ))}
-            </ScrollbarFreeSelectContent>
-          </ScrollbarFreeSelect>
+          />
         </div>
-
-        <Button
+        <button
           type="button"
           onClick={handleAdd}
           disabled={!selectedOption || disabled}
-          className="h-12 px-4 bg-elec-yellow text-black hover:bg-elec-yellow/80 disabled:bg-white/[0.08] disabled:text-white/70 disabled:cursor-not-allowed transition-all duration-200"
+          aria-label="Add"
+          className={cn(buttonPrimaryCn, 'h-11 w-11 shrink-0 p-0')}
         >
-          <Plus className="h-4 w-4" />
-        </Button>
+          <Plus className="mx-auto h-4 w-4" />
+        </button>
       </div>
 
-      {hint && !error && (
-        <p className="text-xs text-elec-light/70 flex items-center gap-1">
-          <span className="w-1 h-1 bg-elec-yellow/60 rounded-full"></span>
-          {hint}
-        </p>
-      )}
-      {error && (
-        <p className="text-xs text-red-400 flex items-center gap-1">
-          <span className="w-1 h-1 bg-red-400 rounded-full"></span>
-          {error}
-        </p>
-      )}
+      {hint && !error && <p className="mt-1.5 text-[11.5px] leading-snug text-white">{hint}</p>}
+      {error && <p className="mt-1.5 text-[11.5px] leading-snug text-red-300">{error}</p>}
     </div>
   );
 };

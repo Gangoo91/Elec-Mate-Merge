@@ -37,14 +37,14 @@ const SectionSubsectionCard = ({
         </div>
 
         <div className="prose prose-invert max-w-none">
-          <p className="text-base text-elec-light/90">{subsection.content}</p>
+          <p className="text-base text-white">{subsection.content}</p>
         </div>
 
         {/* Show key points if available */}
         {subsection.keyPoints && subsection.keyPoints.length > 0 && (
           <div className="mt-4 pt-3 border-t border-elec-yellow/20">
             <h4 className="text-base font-semibold text-elec-yellow mb-2">Key Points</h4>
-            <ul className="list-disc pl-5 space-y-2 text-base text-elec-light/90">
+            <ul className="list-disc pl-5 space-y-2 text-base text-white">
               {subsection.keyPoints.map((point, index) => (
                 <li key={index} className="leading-relaxed">
                   {point}
@@ -90,14 +90,14 @@ const SectionSubsectionCard = ({
 
       <CollapsibleContent className="p-4 pt-0 border-t border-elec-yellow/20">
         <div className="prose prose-invert max-w-none mb-4">
-          <p className="text-base text-elec-light/90">{subsection.content}</p>
+          <p className="text-base text-white">{subsection.content}</p>
         </div>
 
         {/* Show key points if available */}
         {subsection.keyPoints && subsection.keyPoints.length > 0 && (
           <div className="mt-4 pt-3 border-t border-elec-yellow/20">
             <h4 className="text-base font-semibold text-elec-yellow mb-2">Key Points</h4>
-            <ul className="list-disc pl-5 space-y-2 text-sm text-elec-light/90">
+            <ul className="list-disc pl-5 space-y-2 text-sm text-white">
               {subsection.keyPoints.map((point, index) => (
                 <li key={index} className="leading-relaxed">
                   {point}

@@ -24,10 +24,11 @@ import { itemVariants } from '@/components/college/primitives';
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const difficultyTone: Record<string, string> = {
-  basic: 'border-elec-yellow/30 bg-elec-yellow/[0.06] text-elec-yellow',
-  intermediate: 'border-white/[0.10] bg-white/[0.03] text-white/85',
+  basic: 'border-elec-yellow/30 bg-white/[0.05] text-elec-yellow',
+  intermediate: 'border-white/[0.10] bg-white/[0.03] text-white',
   advanced: 'border-red-500/30 bg-red-500/[0.04] text-red-300',
 };
 
@@ -88,18 +89,18 @@ const JargonStudyPage = () => {
         {/* Session header */}
         <div className="flex items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-            <span className="inline-flex items-center h-7 px-2 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[11px] font-mono tabular-nums text-elec-yellow">
+            <span className="inline-flex items-center h-7 px-2 rounded-md border border-elec-yellow/30 bg-white/[0.05] text-[11px] font-mono tabular-nums text-elec-yellow">
               {currentTermIndex + 1} / {shuffledTerms.length}
             </span>
             {studiedCount > 0 && (
-              <span className="inline-flex items-center h-7 px-2 rounded-md border border-white/[0.08] bg-white/[0.02] text-[11px] font-mono tabular-nums text-white/85">
+              <span className="inline-flex items-center h-7 px-2 rounded-md border border-white/[0.08] bg-white/[0.02] text-[11px] font-mono tabular-nums text-white">
                 {studiedCount} studied
               </span>
             )}
           </div>
           <button
             onClick={() => setIsStudying(false)}
-            className="inline-flex items-center gap-1.5 h-9 px-3 rounded-md border border-white/[0.08] bg-white/[0.02] text-[12px] font-medium text-white/85 hover:bg-white/[0.04] touch-manipulation"
+            className="inline-flex items-center gap-1.5 h-9 px-3 rounded-md border border-white/[0.08] bg-white/[0.02] text-[12px] font-medium text-white hover:bg-white/[0.04] touch-manipulation"
             aria-label="Exit session"
           >
             <X className="h-3.5 w-3.5" />
@@ -116,7 +117,12 @@ const JargonStudyPage = () => {
         </div>
 
         {/* Flashcard */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-5 sm:p-6 space-y-5">
+        <div
+          className={cn(
+            'rounded-2xl border border-elec-yellow/35 p-5 sm:p-6 space-y-5',
+            CARD_SURFACE
+          )}
+        >
           <div className="text-center space-y-2">
             <h2 className="text-[22px] sm:text-[26px] font-semibold tracking-tight text-elec-yellow">
               {currentTerm.term}
@@ -142,7 +148,7 @@ const JargonStudyPage = () => {
               </div>
 
               {currentTerm.commonUsage && (
-                <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-1">
+                <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3 space-y-1">
                   <Eyebrow className="text-elec-yellow/85">How it sounds on site</Eyebrow>
                   <p className="text-[13px] text-white italic">"{currentTerm.commonUsage}"</p>
                 </div>
@@ -151,7 +157,7 @@ const JargonStudyPage = () => {
               {currentTerm.context && (
                 <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
                   <Eyebrow>Context</Eyebrow>
-                  <p className="text-[13px] text-white/85">{currentTerm.context}</p>
+                  <p className="text-[13px] text-white">{currentTerm.context}</p>
                 </div>
               )}
 
@@ -162,7 +168,7 @@ const JargonStudyPage = () => {
                     {currentTerm.relatedTerms.map((related, i) => (
                       <span
                         key={i}
-                        className="inline-flex items-center h-7 px-2 rounded-md border border-white/[0.08] bg-white/[0.02] text-[11px] text-white/85"
+                        className="inline-flex items-center h-7 px-2 rounded-md border border-white/[0.08] bg-white/[0.02] text-[11px] text-white"
                       >
                         {related}
                       </span>
@@ -173,7 +179,7 @@ const JargonStudyPage = () => {
             </div>
           ) : (
             <div className="py-8 text-center">
-              <p className="text-[13px] text-white/55 uppercase tracking-[0.14em]">
+              <p className="text-[13px] text-white uppercase tracking-[0.14em]">
                 Tap below to reveal the answer
               </p>
             </div>
@@ -197,7 +203,7 @@ const JargonStudyPage = () => {
                 </button>
                 <button
                   onClick={reshuffleCards}
-                  className="inline-flex items-center justify-center gap-1.5 h-11 px-4 rounded-md border border-white/[0.08] bg-white/[0.02] text-[13px] font-medium text-white/85 hover:bg-white/[0.04] active:scale-[0.98] transition-all touch-manipulation"
+                  className="inline-flex items-center justify-center gap-1.5 h-11 px-4 rounded-md border border-white/[0.08] bg-white/[0.02] text-[13px] font-medium text-white hover:bg-white/[0.04] active:scale-[0.98] transition-all touch-manipulation"
                 >
                   <Shuffle className="h-3.5 w-3.5" />
                   Shuffle
@@ -240,12 +246,15 @@ const JargonStudyPage = () => {
             ].map((step, i) => (
               <li
                 key={step}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 flex items-start gap-3"
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 p-4 flex items-start gap-3',
+                  CARD_SURFACE
+                )}
               >
-                <span className="inline-flex items-center justify-center w-7 h-7 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[12px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
+                <span className="inline-flex items-center justify-center w-7 h-7 rounded-md border border-elec-yellow/30 bg-white/[0.05] text-[12px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
                   {i + 1}
                 </span>
-                <p className="text-[13px] text-white/85 leading-relaxed">{step}</p>
+                <p className="text-[13px] text-white leading-relaxed">{step}</p>
               </li>
             ))}
           </ol>
@@ -258,7 +267,12 @@ const JargonStudyPage = () => {
             title="Filter by category and difficulty"
             meta={`${filteredTerms.length} terms match`}
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+          <div
+            className={cn(
+              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
+              CARD_SURFACE
+            )}
+          >
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="space-y-1.5">
                 <Eyebrow>Category</Eyebrow>
@@ -297,7 +311,7 @@ const JargonStudyPage = () => {
                   setSelectedCategory('all');
                   setSelectedDifficulty('all');
                 }}
-                className="inline-flex items-center h-8 px-2.5 rounded-md text-[11px] font-medium text-white/55 hover:text-white/85 transition-colors touch-manipulation"
+                className="inline-flex items-center h-8 px-2.5 rounded-md text-[11px] font-medium text-white hover:text-white/85 transition-colors touch-manipulation"
               >
                 Clear filters
               </button>
@@ -320,14 +334,14 @@ const JargonStudyPage = () => {
         {/* ── Session results ─────────────────────────────────────── */}
         {studiedCount > 0 && (
           <motion.div variants={itemVariants}>
-            <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-3">
+            <div className="rounded-xl border border-elec-yellow/25 bg-white/[0.05] p-4 sm:p-5 space-y-3">
               <div className="flex items-center gap-3">
-                <span className="inline-flex items-center justify-center w-9 h-9 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[13px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
+                <span className="inline-flex items-center justify-center w-9 h-9 rounded-md border border-elec-yellow/30 bg-white/[0.05] text-[13px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
                   {studiedCount}
                 </span>
                 <div className="space-y-0.5">
                   <Eyebrow className="text-elec-yellow/85">Session complete</Eyebrow>
-                  <p className="text-[13px] text-white/85 leading-relaxed">
+                  <p className="text-[13px] text-white leading-relaxed">
                     {studiedCount} term{studiedCount !== 1 ? 's' : ''} studied. Great work — start
                     again to keep revising.
                   </p>
@@ -335,7 +349,7 @@ const JargonStudyPage = () => {
               </div>
               <button
                 onClick={startFlashcards}
-                className="w-full inline-flex items-center justify-center gap-2 h-11 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[13px] font-medium text-elec-yellow hover:bg-elec-yellow/[0.10] active:scale-[0.98] transition-all touch-manipulation"
+                className="w-full inline-flex items-center justify-center gap-2 h-11 rounded-md border border-elec-yellow/30 bg-white/[0.05] text-[13px] font-medium text-elec-yellow hover:bg-elec-yellow/[0.10] active:scale-[0.98] transition-all touch-manipulation"
               >
                 <RotateCcw className="h-3.5 w-3.5" />
                 Study again
@@ -346,10 +360,10 @@ const JargonStudyPage = () => {
 
         {/* ── Tip ─────────────────────────────────────────────────── */}
         <motion.div variants={itemVariants}>
-          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
+          <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3">
             <div className="flex items-start gap-2">
               <GraduationCap className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-              <p className="text-[12.5px] text-white/85 leading-relaxed">
+              <p className="text-[12.5px] text-white leading-relaxed">
                 <span className="font-semibold text-elec-yellow">Tip:</span> Start with Basic if
                 you're new. Once you can get them all right, step up to Intermediate and then
                 Advanced.

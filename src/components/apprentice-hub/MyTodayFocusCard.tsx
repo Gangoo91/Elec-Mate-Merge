@@ -10,7 +10,7 @@ import { useApprenticeDailyBrief, type ActionKind } from '@/hooks/useApprenticeD
 
    REDESIGNED 2026-08-31. Two things made this the ugliest card in the hub:
 
-   🔴 THE CARD WAS VOLT-TINTED. `bg-elec-yellow/[0.06]` with a volt border.
+   🔴 THE CARD WAS VOLT-TINTED. `bg-white/[0.05]` with a volt border.
       Translucent volt over a near-black ground does not read as a soft
       yellow — it goes KHAKI. Sat next to the neutral "This week" card it
       looked like a rendering fault. Volt on this ground is only ever solid,
@@ -55,12 +55,7 @@ export function MyTodayFocusCard() {
 
   if (loading) {
     return (
-      <div
-        className={cn(
-          'rounded-2xl border border-white/[0.06] p-5 animate-pulse',
-          CARD_SURFACE
-        )}
-      >
+      <div className={cn('rounded-2xl border border-white/[0.06] p-5 animate-pulse', CARD_SURFACE)}>
         <div className="h-3 w-24 rounded-full bg-white/10" />
         <div className="mt-3 h-5 w-2/3 rounded-full bg-white/10" />
         <div className="mt-4 space-y-2">
@@ -95,7 +90,7 @@ export function MyTodayFocusCard() {
           aria-label="Refresh today's focus"
           // -mr-2/-mt-2 keeps a 44px target without pushing the icon off the
           // card's optical edge.
-          className="-mr-2 -mt-2 flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white transition-colors touch-manipulation hover:bg-white/[0.06] disabled:opacity-40"
+          className="-mr-2 -mt-2 flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white transition-colors touch-manipulation hover:bg-white/[0.06] disabled:text-white/70"
         >
           <RefreshCw className={cn('h-4 w-4', refreshing && 'animate-spin')} />
         </button>

@@ -9,7 +9,7 @@ const ElectricalHazards = () => {
         Common Electrical Hazards
       </h3>
 
-      <p className="mb-4 text-elec-light/90">
+      <p className="mb-4 text-white">
         Identifying and understanding electrical hazards is essential for implementing effective
         control measures. The IET Code of Practice for Electrical Safety Management provides
         comprehensive guidance on hazard identification and risk assessment.

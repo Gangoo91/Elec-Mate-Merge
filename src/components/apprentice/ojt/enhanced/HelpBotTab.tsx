@@ -21,6 +21,8 @@ import { useStudentQualification } from '@/hooks/useStudentQualification';
 import { useStudentSnapshot, buildSmartPrompts } from '@/hooks/useStudentSnapshot';
 import { useAIChatHistory } from '@/hooks/useAIChatHistory';
 import { useAuth } from '@/contexts/AuthContext';
+import { cn } from '@/lib/utils';
+import { CARD_BASE, CARD_NEUTRAL } from '@/components/ui/card-recipe';
 
 interface ChatMessage {
   id: string;
@@ -45,7 +47,6 @@ interface PersistedMessage {
   imageUrl?: string;
   imageUrls?: string[];
 }
-
 
 /** Hydrate IDs onto messages loaded from history (the storage layer
  *  doesn't track them; React needs stable keys). */
@@ -104,18 +105,14 @@ const HelpBotTab = () => {
   // fallback + debounce. We only persist completed messages (no half-drawn
   // streaming placeholders).
   useEffect(() => {
-    const persistable = chatMessages.filter(
-      (m) => m.content.trim() !== '' || m.role === 'user'
-    );
+    const persistable = chatMessages.filter((m) => m.content.trim() !== '' || m.role === 'user');
     if (persistable.length === 0) return;
     // Don't save while a stream is still in flight — the hook's debounce
     // would still capture partial state. We let the post-stream useEffect
     // tick handle the save once content is finalised.
     if (isLoading) return;
     // Strip the local-only `id` field; the hook re-creates structure.
-    const stripped: PersistedMessage[] = persistable.map(
-      ({ id: _id, ...rest }) => rest
-    );
+    const stripped: PersistedMessage[] = persistable.map(({ id: _id, ...rest }) => rest);
     chatHistory.saveSession(stripped);
   }, [chatMessages, isLoading, chatHistory]);
 
@@ -136,7 +133,6 @@ const HelpBotTab = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
 
-
   /**
    * Context-aware follow-ups. The old version was a simple keyword check;
    * this one prioritises actions an apprentice actually wants on Dave's
@@ -149,17 +145,20 @@ const HelpBotTab = () => {
     const followUps: string[] = [];
 
     const hasRegs = /\b\d{3}\.\d+/.test(content) || /regulation/.test(lower);
-    const isCalc = /(calculat|equation|formula|adiabatic|csa|mm²|voltage drop|design current|ib\b|in\b|zs|loop)/.test(
+    const isCalc =
+      /(calculat|equation|formula|adiabatic|csa|mm²|voltage drop|design current|ib\b|in\b|zs|loop)/.test(
+        lower
+      );
+    const isTest = /(test|verif|measure|reading|ir |continuity|insulation|polarity|rcd)/.test(
       lower
     );
-    const isTest = /(test|verif|measure|reading|ir |continuity|insulation|polarity|rcd)/.test(lower);
     const isProcedure = /(procedure|sequence|step|isolate|isolation|method|process)/.test(lower);
 
     // 1. Always pull the apprentice into action
     if (hasRegs) followUps.push('Quiz me on what you just covered');
     if (isCalc) followUps.push('Walk me through the calculation step by step');
     if (isTest) followUps.push('What equipment do I need and what readings am I aiming for?');
-    if (isProcedure) followUps.push('What\'s the most common mistake on this?');
+    if (isProcedure) followUps.push("What's the most common mistake on this?");
 
     // 2. Specifics that prompt depth
     if (hasRegs && followUps.length < 3) followUps.push('Show me the exact reg numbers');
@@ -168,7 +167,7 @@ const HelpBotTab = () => {
 
     // 3. Universal closers — always good follow-ups
     const universals = [
-      'Explain that like I\'m new to it',
+      "Explain that like I'm new to it",
       'Give me a real-site example',
       'How does this come up on AM2?',
     ];
@@ -353,7 +352,6 @@ const HelpBotTab = () => {
     setHistoryOpen(false);
   }, [chatHistory, resetStream]);
 
-
   const handleFollowUp = (question: string) => {
     handleSendMessage(question);
   };
@@ -485,10 +483,7 @@ const HelpBotTab = () => {
       tiles.push({
         value: `${snapshot.otjHours30d}h`,
         label: 'OTJ · 30d',
-        sub:
-          snapshot.otjPendingHours > 0
-            ? `${snapshot.otjPendingHours}h pending`
-            : 'All verified',
+        sub: snapshot.otjPendingHours > 0 ? `${snapshot.otjPendingHours}h pending` : 'All verified',
         tone: snapshot.otjPendingHours > 0 ? 'text-amber-300' : 'text-emerald-300',
       });
     }
@@ -532,19 +527,19 @@ const HelpBotTab = () => {
           <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-semibold tracking-tight leading-[1.05] text-white">
             Alright {firstName}.
             <br />
-            <span className="text-white/55">I've already read your file.</span>
+            <span className="text-white">I've already read your file.</span>
           </h2>
-          <p className="text-[13px] sm:text-[14px] text-white/65 leading-relaxed max-w-xl">
+          <p className="text-[13px] sm:text-[14px] text-white leading-relaxed max-w-xl">
             {course ? (
               <>
-                Studying <span className="text-white/85 font-medium">{course}</span>. I see your
-                AM2 scores, your portfolio, your OTJ logs, your ILP goals — and the regs you're
-                quietly getting wrong. Ask me anything.
+                Studying <span className="text-white font-medium">{course}</span>. I see your AM2
+                scores, your portfolio, your OTJ logs, your ILP goals — and the regs you're quietly
+                getting wrong. Ask me anything.
               </>
             ) : (
               <>
-                I see your AM2 scores, your portfolio, your OTJ logs, your ILP goals — and the
-                regs you're quietly getting wrong. Ask me anything.
+                I see your AM2 scores, your portfolio, your OTJ logs, your ILP goals — and the regs
+                you're quietly getting wrong. Ask me anything.
               </>
             )}
           </p>
@@ -553,7 +548,7 @@ const HelpBotTab = () => {
         {/* Stats tiles — proof that Dave actually has the data */}
         {tiles.length > 0 && (
           <div className="space-y-2.5">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/45">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               What I'm looking at
             </div>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-2.5">
@@ -567,10 +562,10 @@ const HelpBotTab = () => {
                   >
                     {t.value}
                   </div>
-                  <div className="mt-2 text-[10.5px] font-semibold uppercase tracking-[0.12em] text-white/85">
+                  <div className="mt-2 text-[10.5px] font-semibold uppercase tracking-[0.12em] text-white">
                     {t.label}
                   </div>
-                  <div className="text-[10.5px] text-white/45 leading-tight mt-0.5">{t.sub}</div>
+                  <div className="text-[10.5px] text-white leading-tight mt-0.5">{t.sub}</div>
                 </div>
               ))}
             </div>
@@ -588,13 +583,13 @@ const HelpBotTab = () => {
               <button
                 key={i}
                 onClick={() => handleSendMessage(p)}
-                className="group text-left rounded-xl border border-white/[0.08] bg-[hsl(0_0%_8%)] hover:border-elec-yellow/45 hover:bg-[hsl(0_0%_15%)] transition-colors px-4 py-3.5 sm:py-4 touch-manipulation active:scale-[0.99]"
+                className={cn(CARD_BASE, CARD_NEUTRAL, 'px-4 py-3.5 sm:py-4')}
               >
                 <div className="flex items-baseline gap-2.5">
                   <span className="text-[10px] font-mono tabular-nums text-elec-yellow/70 shrink-0 mt-0.5">
                     {String(i + 1).padStart(2, '0')}
                   </span>
-                  <span className="text-[13px] text-white/90 leading-snug group-hover:text-white transition-colors">
+                  <span className="text-[13px] text-white leading-snug group-hover:text-white transition-colors">
                     {p}
                   </span>
                 </div>
@@ -605,7 +600,7 @@ const HelpBotTab = () => {
 
         {/* Topic shortcuts — discreet footer, monochrome */}
         <div className="space-y-2">
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/45">
+          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Or jump straight to a topic
           </div>
           <div className="flex flex-wrap gap-1.5">
@@ -622,7 +617,7 @@ const HelpBotTab = () => {
               <button
                 key={topic}
                 onClick={() => handleSendMessage(`Tell me about ${topic.toLowerCase()}`)}
-                className="px-3 py-1.5 text-[11px] bg-white/[0.03] hover:bg-elec-yellow/12 border border-white/[0.10] hover:border-elec-yellow/40 rounded-full transition-colors touch-manipulation text-white/75 hover:text-white"
+                className="px-3 py-1.5 text-[11px] bg-white/[0.03] hover:bg-elec-yellow/12 border border-white/[0.10] hover:border-elec-yellow/40 rounded-full transition-colors touch-manipulation text-white hover:text-white"
               >
                 {topic}
               </button>
@@ -680,72 +675,74 @@ const HelpBotTab = () => {
 
         <ChatInputArea>
           <div className="mx-auto w-full max-w-4xl">
-          {/* Conversation controls — history + new chat. Discreet row,
+            {/* Conversation controls — history + new chat. Discreet row,
               shown only once the apprentice has actually started a chat. */}
-          {chatMessages.length > 0 && (
-            <div className="flex items-center gap-2 mb-2">
-              <button
-                type="button"
-                onClick={() => setHistoryOpen(true)}
-                className="inline-flex items-center gap-1.5 h-8 px-2.5 rounded-full text-[11px] font-medium text-white/70 hover:text-white bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.08] touch-manipulation transition-colors"
-              >
-                <History className="h-3 w-3" />
-                History
-                {chatHistory.sessions.length > 0 && (
-                  <span className="tabular-nums text-white/45">· {chatHistory.sessions.length}</span>
-                )}
-              </button>
-              <button
-                type="button"
-                onClick={handleNewChat}
-                className="inline-flex items-center gap-1.5 h-8 px-2.5 rounded-full text-[11px] font-medium text-white/70 hover:text-elec-yellow bg-white/[0.03] hover:bg-elec-yellow/[0.06] border border-white/[0.08] hover:border-elec-yellow/30 touch-manipulation transition-colors"
-              >
-                <PlusCircle className="h-3 w-3" />
-                New chat
-              </button>
-            </div>
-          )}
-
-          {/* Compact Follow-up chips - horizontal scroll on mobile */}
-          {followUpQuestions.length > 0 && !isLoading && (
-            <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide py-1 mb-2 -mx-1 px-1">
-              <span className="text-[10px] text-muted-foreground shrink-0 hidden sm:inline">
-                Try:
-              </span>
-              {followUpQuestions.slice(0, 2).map((q, i) => (
+            {chatMessages.length > 0 && (
+              <div className="flex items-center gap-2 mb-2">
                 <button
-                  key={i}
-                  onClick={() => handleFollowUp(q)}
-                  className="shrink-0 px-2.5 py-1 text-[11px] bg-elec-yellow/10 hover:bg-elec-yellow/20 border border-elec-yellow/20 rounded-full text-foreground/80 truncate max-w-[160px] touch-manipulation transition-colors"
+                  type="button"
+                  onClick={() => setHistoryOpen(true)}
+                  className="inline-flex items-center gap-1.5 h-8 px-2.5 rounded-full text-[11px] font-medium text-white hover:text-white bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.08] touch-manipulation transition-colors"
                 >
-                  {q.length > 35 ? q.slice(0, 35) + '...' : q}
+                  <History className="h-3 w-3" />
+                  History
+                  {chatHistory.sessions.length > 0 && (
+                    <span className="tabular-nums text-white">· {chatHistory.sessions.length}</span>
+                  )}
                 </button>
-              ))}
-            </div>
-          )}
-
-
-          {/* Attached Image Preview */}
-          <AnimatePresence>
-            {attachedImage && (
-              <div className="mb-1.5">
-                <ImagePreviewBadge imageUrl={attachedImage} onRemove={() => setAttachedImage('')} />
+                <button
+                  type="button"
+                  onClick={handleNewChat}
+                  className="inline-flex items-center gap-1.5 h-8 px-2.5 rounded-full text-[11px] font-medium text-white hover:text-elec-yellow bg-white/[0.03] hover:bg-white/[0.05] border border-white/[0.08] hover:border-elec-yellow/30 touch-manipulation transition-colors"
+                >
+                  <PlusCircle className="h-3 w-3" />
+                  New chat
+                </button>
               </div>
             )}
-          </AnimatePresence>
 
-          {/* Chat Input — camera integrated inside */}
-          <MobileChatInput
-            value={currentMessage}
-            onChange={setCurrentMessage}
-            onSubmit={() => handleSendMessage()}
-            onClear={handleClearConversation}
-            onCameraPress={() => setImageUploadOpen(true)}
-            isStreaming={isLoading}
-            placeholder={attachedImage ? 'What do you see?' : 'Ask Dave anything...'}
-            messageCount={chatMessages.length}
-            showClearButton={chatMessages.length > 0}
-          />
+            {/* Compact Follow-up chips - horizontal scroll on mobile */}
+            {followUpQuestions.length > 0 && !isLoading && (
+              <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide py-1 mb-2 -mx-1 px-1">
+                <span className="text-[10px] text-muted-foreground shrink-0 hidden sm:inline">
+                  Try:
+                </span>
+                {followUpQuestions.slice(0, 2).map((q, i) => (
+                  <button
+                    key={i}
+                    onClick={() => handleFollowUp(q)}
+                    className="shrink-0 px-2.5 py-1 text-[11px] bg-white/[0.06] hover:bg-white/[0.08] border border-elec-yellow/20 rounded-full text-foreground/80 truncate max-w-[160px] touch-manipulation transition-colors"
+                  >
+                    {q.length > 35 ? q.slice(0, 35) + '...' : q}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {/* Attached Image Preview */}
+            <AnimatePresence>
+              {attachedImage && (
+                <div className="mb-1.5">
+                  <ImagePreviewBadge
+                    imageUrl={attachedImage}
+                    onRemove={() => setAttachedImage('')}
+                  />
+                </div>
+              )}
+            </AnimatePresence>
+
+            {/* Chat Input — camera integrated inside */}
+            <MobileChatInput
+              value={currentMessage}
+              onChange={setCurrentMessage}
+              onSubmit={() => handleSendMessage()}
+              onClear={handleClearConversation}
+              onCameraPress={() => setImageUploadOpen(true)}
+              isStreaming={isLoading}
+              placeholder={attachedImage ? 'What do you see?' : 'Ask Dave anything...'}
+              messageCount={chatMessages.length}
+              showClearButton={chatMessages.length > 0}
+            />
           </div>
         </ChatInputArea>
       </ChatContainer>

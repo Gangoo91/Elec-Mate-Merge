@@ -28,11 +28,9 @@ import { cn } from '@/lib/utils';
 import type { SiteDiaryEntry } from '@/hooks/site-diary/useSiteDiaryEntries';
 import { useDiaryInsights } from '@/hooks/apprentice-stats/useDiaryInsights';
 import { RecommendationCard } from './RecommendationCard';
-import {
-  Eyebrow,
-  SectionHeader,
-} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 import { Calendar, Heart as HeartIcon, TrendingUp as TUp } from 'lucide-react';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const moodEmojis: Record<number, string> = {
   1: '\uD83D\uDE22',
@@ -114,17 +112,13 @@ export function DiaryEntriesDetailSheet({
     return buckets;
   })();
   const moodTotal =
-    moodBuckets.great +
-    moodBuckets.good +
-    moodBuckets.okay +
-    moodBuckets.low +
-    moodBuckets.tough;
+    moodBuckets.great + moodBuckets.good + moodBuckets.okay + moodBuckets.low + moodBuckets.tough;
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side="bottom"
-        className="h-[90vh] sm:h-[85vh] p-0 rounded-t-3xl overflow-hidden bg-[hsl(0_0%_8%)] border-white/[0.06]"
+        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_8%)] border-white/[0.06]"
       >
         <div className="flex flex-col h-full">
           <SheetHeader className="flex-shrink-0 relative">
@@ -137,7 +131,7 @@ export function DiaryEntriesDetailSheet({
               className="absolute right-2 top-2 h-11 w-11 flex items-center justify-center rounded-full active:bg-white/10 touch-manipulation z-10"
               aria-label="Close"
             >
-              <X className="h-5 w-5 text-white/70" />
+              <X className="h-5 w-5 text-white" />
             </button>
           </SheetHeader>
 
@@ -155,13 +149,13 @@ export function DiaryEntriesDetailSheet({
                   'Start your diary'
                 ) : (
                   <>
-                    <span className="font-mono tabular-nums">{totalEntries}</span>{' '}
-                    entr{totalEntries === 1 ? 'y' : 'ies'} on the record
+                    <span className="font-mono tabular-nums">{totalEntries}</span> entr
+                    {totalEntries === 1 ? 'y' : 'ies'} on the record
                   </>
                 )}
               </h2>
               {subtitleParts.length > 0 && (
-                <p className="text-[13.5px] text-white/70 leading-relaxed">
+                <p className="text-[13.5px] text-white leading-relaxed">
                   {subtitleParts.join(' · ')}
                 </p>
               )}
@@ -181,36 +175,20 @@ export function DiaryEntriesDetailSheet({
                         : `${weekComparison.delta} vs last`
                   }
                   trend={
-                    weekComparison.delta > 0
-                      ? 'up'
-                      : weekComparison.delta < 0
-                        ? 'down'
-                        : 'flat'
+                    weekComparison.delta > 0 ? 'up' : weekComparison.delta < 0 ? 'down' : 'flat'
                   }
                   highlight={weekComparison.thisWeek > 0}
                 />
-                <KpiCell
-                  label="Last week"
-                  value={weekComparison.lastWeek}
-                  sub="Previous 7 days"
-                />
+                <KpiCell label="Last week" value={weekComparison.lastWeek} sub="Previous 7 days" />
                 <KpiCell
                   label="Avg / week"
                   value={avgEntriesPerWeek}
-                  sub={
-                    mostProductiveDay
-                      ? `Best on ${mostProductiveDay}`
-                      : 'Across all weeks'
-                  }
+                  sub={mostProductiveDay ? `Best on ${mostProductiveDay}` : 'Across all weeks'}
                 />
                 <KpiCell
                   label="Sites"
                   value={uniqueSitesCount}
-                  sub={
-                    topSites[0]
-                      ? `Top: ${topSites[0].name}`
-                      : 'Distinct addresses'
-                  }
+                  sub={topSites[0] ? `Top: ${topSites[0].name}` : 'Distinct addresses'}
                 />
               </div>
             )}
@@ -227,7 +205,12 @@ export function DiaryEntriesDetailSheet({
                       : `Last ${moodTotal} entries`
                   }
                 />
-                <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-4">
+                <div
+                  className={cn(
+                    'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-4',
+                    CARD_SURFACE
+                  )}
+                >
                   <div className="flex items-center gap-3">
                     <span className="text-3xl flex-shrink-0">
                       {moodEmojis[Math.round(averageMood)]}
@@ -237,9 +220,9 @@ export function DiaryEntriesDetailSheet({
                         <span className="text-[26px] font-mono font-semibold tabular-nums leading-none text-white">
                           {averageMood.toFixed(1)}
                         </span>
-                        <span className="text-[13px] text-white/40 font-mono">/ 5</span>
+                        <span className="text-[13px] text-white font-mono">/ 5</span>
                       </div>
-                      <span className="text-[11px] text-white/55 uppercase tracking-[0.14em]">
+                      <span className="text-[11px] text-white uppercase tracking-[0.14em]">
                         {moodLabel(averageMood)}
                         {moodDeclining && ' · declining'}
                       </span>
@@ -250,11 +233,31 @@ export function DiaryEntriesDetailSheet({
                   <div className="space-y-2">
                     <div className="h-3 w-full rounded-full overflow-hidden bg-white/[0.04] flex">
                       {[
-                        { key: 'great', label: 'Great', count: moodBuckets.great, tone: 'bg-elec-yellow' },
-                        { key: 'good', label: 'Good', count: moodBuckets.good, tone: 'bg-elec-yellow/70' },
-                        { key: 'okay', label: 'Okay', count: moodBuckets.okay, tone: 'bg-white/35' },
+                        {
+                          key: 'great',
+                          label: 'Great',
+                          count: moodBuckets.great,
+                          tone: 'bg-elec-yellow',
+                        },
+                        {
+                          key: 'good',
+                          label: 'Good',
+                          count: moodBuckets.good,
+                          tone: 'bg-elec-yellow/70',
+                        },
+                        {
+                          key: 'okay',
+                          label: 'Okay',
+                          count: moodBuckets.okay,
+                          tone: 'bg-white/35',
+                        },
                         { key: 'low', label: 'Low', count: moodBuckets.low, tone: 'bg-red-400/40' },
-                        { key: 'tough', label: 'Tough', count: moodBuckets.tough, tone: 'bg-red-400/70' },
+                        {
+                          key: 'tough',
+                          label: 'Tough',
+                          count: moodBuckets.tough,
+                          tone: 'bg-red-400/70',
+                        },
                       ].map(
                         (s) =>
                           s.count > 0 && (
@@ -281,18 +284,11 @@ export function DiaryEntriesDetailSheet({
                         .map((s) => (
                           <li
                             key={s.label}
-                            className="flex items-center gap-1.5 text-[11.5px] text-white/85"
+                            className="flex items-center gap-1.5 text-[11.5px] text-white"
                           >
-                            <span
-                              className={cn(
-                                'h-1.5 w-1.5 rounded-sm flex-shrink-0',
-                                s.tone
-                              )}
-                            />
+                            <span className={cn('h-1.5 w-1.5 rounded-sm flex-shrink-0', s.tone)} />
                             <span className="flex-1 truncate">{s.label}</span>
-                            <span className="font-mono tabular-nums text-white/55">
-                              {s.count}
-                            </span>
+                            <span className="font-mono tabular-nums text-white">{s.count}</span>
                           </li>
                         ))}
                     </ul>
@@ -303,7 +299,7 @@ export function DiaryEntriesDetailSheet({
                     <div className="pt-2 border-t border-white/[0.04]">
                       <div className="flex items-baseline justify-between gap-2 pb-2">
                         <Eyebrow>Recent timeline</Eyebrow>
-                        <span className="text-[10px] text-white/40 font-mono">
+                        <span className="text-[10px] text-white font-mono">
                           ← oldest · newest →
                         </span>
                       </div>
@@ -317,10 +313,7 @@ export function DiaryEntriesDetailSheet({
                               opacity: 1,
                             }}
                             transition={{ duration: 0.4, delay: 0.05 * i }}
-                            className={cn(
-                              'flex-1 rounded-sm min-w-[6px]',
-                              moodSegmentTone(m.mood)
-                            )}
+                            className={cn('flex-1 rounded-sm min-w-[6px]', moodSegmentTone(m.mood))}
                             title={`Mood ${m.mood}`}
                           />
                         ))}
@@ -339,7 +332,12 @@ export function DiaryEntriesDetailSheet({
                   title="Where you've been"
                   meta={`${uniqueSitesCount} site${uniqueSitesCount === 1 ? '' : 's'} on record`}
                 />
-                <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
+                <div
+                  className={cn(
+                    'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5',
+                    CARD_SURFACE
+                  )}
+                >
                   <ul className="space-y-3">
                     {topSites.map((site, i) => {
                       const maxCount = topSites[0]?.count || 1;
@@ -348,14 +346,12 @@ export function DiaryEntriesDetailSheet({
                         <li key={site.name} className="space-y-1.5">
                           <div className="flex items-baseline justify-between gap-3">
                             <div className="flex items-baseline gap-2 min-w-0 flex-1">
-                              <span className="text-[10px] font-mono text-white/40 flex-shrink-0">
+                              <span className="text-[10px] font-mono text-white flex-shrink-0">
                                 {(i + 1).toString().padStart(2, '0')}
                               </span>
-                              <span className="text-[13.5px] text-white truncate">
-                                {site.name}
-                              </span>
+                              <span className="text-[13.5px] text-white truncate">{site.name}</span>
                             </div>
-                            <span className="text-[12px] font-mono text-white/85 tabular-nums flex-shrink-0">
+                            <span className="text-[12px] font-mono text-white tabular-nums flex-shrink-0">
                               {site.count}
                             </span>
                           </div>
@@ -387,11 +383,16 @@ export function DiaryEntriesDetailSheet({
                   title="Breadth of work"
                   meta={`${skillFrequency.length} of 8 categories · ${skillDiversityPercent}% diversity`}
                 />
-                <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-4">
+                <div
+                  className={cn(
+                    'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-4',
+                    CARD_SURFACE
+                  )}
+                >
                   <div className="space-y-1.5">
                     <div className="flex items-baseline justify-between gap-2">
                       <Eyebrow>Coverage</Eyebrow>
-                      <span className="text-[12px] font-mono text-white/85 tabular-nums">
+                      <span className="text-[12px] font-mono text-white tabular-nums">
                         {skillDiversityPercent}%
                       </span>
                     </div>
@@ -416,12 +417,10 @@ export function DiaryEntriesDetailSheet({
                       <button
                         key={skill}
                         onClick={goToDiary}
-                        className="inline-flex items-center gap-1.5 h-8 px-2.5 rounded-md border border-white/[0.08] bg-white/[0.02] text-white/85 text-[12px] hover:bg-white/[0.04] active:scale-[0.98] transition-all touch-manipulation"
+                        className="inline-flex items-center gap-1.5 h-8 px-2.5 rounded-md border border-white/[0.08] bg-white/[0.02] text-white text-[12px] hover:bg-white/[0.04] active:scale-[0.98] transition-all touch-manipulation"
                       >
                         <span>{skill}</span>
-                        <span className="font-mono text-white/55 tabular-nums">
-                          {count}
-                        </span>
+                        <span className="font-mono text-white tabular-nums">{count}</span>
                       </button>
                     ))}
                   </div>
@@ -442,19 +441,18 @@ export function DiaryEntriesDetailSheet({
                     <li key={i}>
                       <button
                         onClick={goToDiary}
-                        className="w-full text-left rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 active:bg-white/[0.04] active:scale-[0.99] transition-all touch-manipulation"
+                        className={cn(
+                          'w-full text-left rounded-2xl border border-elec-yellow/35 p-4 active:bg-white/[0.04] active:scale-[0.99] transition-all touch-manipulation',
+                          CARD_SURFACE
+                        )}
                       >
-                        <p className="text-[13.5px] text-white leading-relaxed">
-                          {h.text}
-                        </p>
+                        <p className="text-[13.5px] text-white leading-relaxed">{h.text}</p>
                         <div className="flex items-center gap-2 mt-2">
                           <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-elec-yellow">
                             {h.site}
                           </span>
-                          <span className="text-white/30">·</span>
-                          <span className="text-[10px] font-mono text-white/55">
-                            {h.date}
-                          </span>
+                          <span className="text-white">·</span>
+                          <span className="text-[10px] font-mono text-white">{h.date}</span>
                         </div>
                       </button>
                     </li>
@@ -469,22 +467,25 @@ export function DiaryEntriesDetailSheet({
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-1.5"
+                className="rounded-xl border border-elec-yellow/20 bg-white/[0.05] p-4 sm:p-5 space-y-1.5"
               >
                 <Eyebrow className="text-elec-yellow/85">Insight</Eyebrow>
-                <p className="text-[13.5px] text-white/85 leading-relaxed">
-                  {insightText}
-                </p>
+                <p className="text-[13.5px] text-white leading-relaxed">{insightText}</p>
               </motion.div>
             )}
 
             {/* ── Empty state ─────────────────────────────────────── */}
             {totalEntries === 0 && (
-              <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-6 sm:p-7 text-center space-y-3">
+              <div
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 p-6 sm:p-7 text-center space-y-3',
+                  CARD_SURFACE
+                )}
+              >
                 <Eyebrow>Diary is empty</Eyebrow>
-                <p className="text-[14px] text-white/85 leading-relaxed max-w-[300px] mx-auto">
-                  Record what you do on site each day — the stories behind the
-                  hours land here and feed your portfolio.
+                <p className="text-[14px] text-white leading-relaxed max-w-[300px] mx-auto">
+                  Record what you do on site each day — the stories behind the hours land here and
+                  feed your portfolio.
                 </p>
                 <button
                   onClick={goToDiary}
@@ -499,10 +500,7 @@ export function DiaryEntriesDetailSheet({
             {/* ── Recommendations ─────────────────────────────────── */}
             {recommendations.length > 0 && (
               <section className="space-y-3">
-                <SectionHeader
-                  eyebrow="What to do next"
-                  title="Smart suggestions"
-                />
+                <SectionHeader eyebrow="What to do next" title="Smart suggestions" />
                 <div className="space-y-2.5">
                   {recommendations.map((rec) => (
                     <RecommendationCard
@@ -559,10 +557,14 @@ function KpiCell({
   highlight?: boolean;
   trend?: 'up' | 'down' | 'flat';
 }) {
-  const TrendIcon =
-    trend === 'up' ? TrendingUp : trend === 'down' ? TrendingDown : null;
+  const TrendIcon = trend === 'up' ? TrendingUp : trend === 'down' ? TrendingDown : null;
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-3.5 sm:p-5 space-y-1.5">
+    <div
+      className={cn(
+        'rounded-2xl border border-elec-yellow/35 p-3.5 sm:p-5 space-y-1.5',
+        CARD_SURFACE
+      )}
+    >
       <Eyebrow className="text-[9.5px] sm:text-[10px]">{label}</Eyebrow>
       <div className="flex items-baseline gap-1.5">
         <span
@@ -575,17 +577,12 @@ function KpiCell({
         </span>
         {TrendIcon && (
           <TrendIcon
-            className={cn(
-              'h-3.5 w-3.5',
-              trend === 'up' ? 'text-elec-yellow' : 'text-red-300'
-            )}
+            className={cn('h-3.5 w-3.5', trend === 'up' ? 'text-elec-yellow' : 'text-red-300')}
           />
         )}
       </div>
       {sub && (
-        <span className="text-[10.5px] sm:text-[11px] text-white/55 block leading-snug">
-          {sub}
-        </span>
+        <span className="text-[10.5px] sm:text-[11px] text-white block leading-snug">{sub}</span>
       )}
     </div>
   );

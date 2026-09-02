@@ -29,16 +29,16 @@ const AutomatedTrackingCard = () => {
   return (
     <div className="space-y-6">
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Smart portfolio integration
         </span>
 
         <div className="flex items-center justify-between gap-4">
           <div className="flex-1 min-w-0">
-            <Label htmlFor="auto-sync" className="text-[14px] text-white/85">
+            <Label htmlFor="auto-sync" className="text-[14px] text-white">
               Auto-sync to portfolio
             </Label>
-            <p className="text-[12px] text-white/55 mt-0.5 leading-relaxed">
+            <p className="text-[12px] text-white mt-0.5 leading-relaxed">
               Automatically add activities to your portfolio with smart categorisation
             </p>
           </div>
@@ -46,14 +46,14 @@ const AutomatedTrackingCard = () => {
         </div>
 
         {lastSyncTimestamp && (
-          <div className="text-[11px] text-white/55 font-mono">
+          <div className="text-[11px] text-white font-mono">
             Last sync: {formatDate(lastSyncTimestamp)}
           </div>
         )}
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Automated tracking overview
         </span>
 
@@ -62,21 +62,21 @@ const AutomatedTrackingCard = () => {
             <div className="text-2xl font-mono text-white">
               {hours}h {minutes}m
             </div>
-            <div className="text-[11px] text-white/55 mt-1">Total auto-tracked</div>
+            <div className="text-[11px] text-white mt-1">Total auto-tracked</div>
           </div>
           <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3">
             <div className="text-2xl font-mono text-white">{automaticEntries.length}</div>
-            <div className="text-[11px] text-white/55 mt-1">Activities tracked</div>
+            <div className="text-[11px] text-white mt-1">Activities tracked</div>
           </div>
         </div>
 
         <div className="space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Recent automatic activities
           </span>
 
           {recentAutoEntries.length === 0 ? (
-            <p className="text-[14px] text-white/55 leading-relaxed py-4">
+            <p className="text-[14px] text-white leading-relaxed py-4">
               No automatic activities yet. Complete quizzes or study sessions to see them here.
             </p>
           ) : (
@@ -88,15 +88,15 @@ const AutomatedTrackingCard = () => {
                 >
                   <div className="flex-1 min-w-0">
                     <div className="text-[14px] text-white truncate">{entry.activity}</div>
-                    <div className="text-[11px] text-white/55 font-mono mt-0.5">
+                    <div className="text-[11px] text-white font-mono mt-0.5">
                       {formatDate(entry.date)}
                     </div>
                   </div>
                   <div className="text-right flex-shrink-0">
-                    <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                    <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                       {entry.isQuiz ? 'Quiz' : 'Study'}
                     </span>
-                    <div className="text-[11px] text-white/55 font-mono mt-1">
+                    <div className="text-[11px] text-white font-mono mt-1">
                       {Math.floor(entry.duration / 60)}h {entry.duration % 60}m
                     </div>
                   </div>
@@ -108,13 +108,13 @@ const AutomatedTrackingCard = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Integration features
         </span>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Active integrations
             </span>
             <ul className="space-y-1.5">
@@ -126,7 +126,7 @@ const AutomatedTrackingCard = () => {
               ].map((label) => (
                 <li
                   key={label}
-                  className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                  className="text-[13px] text-white leading-relaxed flex items-start gap-2"
                 >
                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{label}</span>
@@ -136,7 +136,7 @@ const AutomatedTrackingCard = () => {
           </div>
 
           <div className="space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Smart features
             </span>
             <ul className="space-y-1.5">
@@ -148,7 +148,7 @@ const AutomatedTrackingCard = () => {
               ].map((label) => (
                 <li
                   key={label}
-                  className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                  className="text-[13px] text-white leading-relaxed flex items-start gap-2"
                 >
                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{label}</span>

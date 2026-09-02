@@ -35,7 +35,7 @@ const SubsectionNavigation = ({
         {prevSubsection && (
           <Button
             variant="outline"
-            className="w-full justify-start border-elec-yellow/30 hover:bg-elec-yellow/10"
+            className="w-full justify-start border-elec-yellow/30 hover:bg-white/[0.06]"
             onClick={() => navigateToSubsection(prevSubsection)}
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
@@ -45,7 +45,7 @@ const SubsectionNavigation = ({
       </div>
 
       <div className="w-full sm:w-1/3 text-center">
-        <Button variant="outline" className="border-elec-yellow/30 hover:bg-elec-yellow/10" asChild>
+        <Button variant="outline" className="border-elec-yellow/30 hover:bg-white/[0.06]" asChild>
           <Link to={allSubsectionsLink}>All Subsections</Link>
         </Button>
       </div>
@@ -54,7 +54,7 @@ const SubsectionNavigation = ({
         {nextSubsection && (
           <Button
             variant="outline"
-            className="w-full justify-end border-elec-yellow/30 hover:bg-elec-yellow/10"
+            className="w-full justify-end border-elec-yellow/30 hover:bg-white/[0.06]"
             onClick={() => navigateToSubsection(nextSubsection)}
           >
             Next: {nextSubsection.title}

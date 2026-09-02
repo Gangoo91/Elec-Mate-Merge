@@ -8,6 +8,7 @@ import {
 } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
+import { labelCn, selectTriggerCn } from '@/components/forms/fieldStyles';
 
 interface SelectOption {
   value: string;
@@ -41,25 +42,13 @@ export function MobileSelectWrapper({
   compact = false,
 }: MobileSelectWrapperProps) {
   return (
-    <div className={cn(compact ? 'space-y-1.5' : 'space-y-3')}>
-      {label && (
-        <Label
-          className={cn(
-            'flex items-center gap-2',
-            compact
-              ? 'text-xs font-medium text-muted-foreground'
-              : 'text-sm font-semibold text-elec-light'
-          )}
-        >
-          {!compact && <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>}
-          {label}
-        </Label>
-      )}
+    <div>
+      {label && <Label className={labelCn}>{label}</Label>}
 
       <div className="relative group">
         <div className="relative">
           {icon && !compact && (
-            <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-elec-yellow/70 z-10">
+            <div className="absolute left-1 top-1/2 z-10 -translate-y-1/2 text-elec-yellow">
               {icon}
             </div>
           )}
@@ -67,29 +56,27 @@ export function MobileSelectWrapper({
           <Select value={value || undefined} onValueChange={onValueChange} disabled={disabled}>
             <SelectTrigger
               className={cn(
-                compact ? 'h-11' : 'h-14',
-                'bg-card border border-primary/30 rounded-xl text-elec-light',
-                'hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200',
-                compact ? 'text-sm' : 'text-base font-medium',
-                icon && !compact ? 'pl-12' : 'pl-4',
-                error ? 'border-destructive focus:border-destructive' : ''
+                selectTriggerCn,
+                'w-full',
+                icon && !compact && 'pl-8',
+                error && '!border-red-400'
               )}
             >
               <SelectValue placeholder={placeholder} />
             </SelectTrigger>
-            <SelectContent className="bg-card border-elec-yellow/30">
+            <SelectContent className="border-white/[0.12] bg-[hsl(0_0%_10%)] text-white">
               {options
                 .filter((option) => option.value !== '')
                 .map((option) => (
                   <SelectItem
                     key={option.value}
                     value={option.value}
-                    className="text-elec-light hover:bg-elec-yellow/10 focus:bg-elec-yellow/10"
+                    className="min-h-11 text-white focus:bg-white/[0.08] focus:text-white"
                   >
                     <div>
                       <div className="font-medium">{option.label}</div>
                       {option.description && !compact && (
-                        <div className="text-xs text-elec-light/60 mt-1">{option.description}</div>
+                        <div className="mt-1 text-xs text-white">{option.description}</div>
                       )}
                     </div>
                   </SelectItem>
@@ -100,16 +87,10 @@ export function MobileSelectWrapper({
       </div>
 
       {!compact && hint && !error && (
-        <p className="text-xs text-elec-light/70 flex items-center gap-1">
-          <span className="w-1 h-1 bg-elec-yellow/60 rounded-full"></span>
-          {hint}
-        </p>
+        <p className="mt-1.5 text-[11.5px] leading-snug text-white">{hint}</p>
       )}
       {error && (
-        <p className="text-xs text-destructive animate-fade-in flex items-center gap-1">
-          <span className="w-1 h-1 bg-destructive rounded-full"></span>
-          {error}
-        </p>
+        <p className="mt-1.5 text-[11.5px] leading-snug text-red-300 animate-fade-in">{error}</p>
       )}
     </div>
   );

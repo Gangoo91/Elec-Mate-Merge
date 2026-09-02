@@ -36,7 +36,7 @@ const ElectricalTheoryHSAWA = ({ subsectionId, isCompleted, markAsComplete }: Su
 
       <div className="bg-white/10 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
         <div className="flex items-start gap-4">
-          <div className="bg-elec-yellow/20 p-3 rounded-full">
+          <div className="bg-white/[0.08] p-3 rounded-full">
             <Shield className="h-6 w-6 text-elec-yellow" />
           </div>
           <div>
@@ -140,7 +140,7 @@ const ElectricalTheoryHSAWA = ({ subsectionId, isCompleted, markAsComplete }: Su
             </ul>
           </div>
 
-          <div className="bg-elec-yellow/10 p-4 rounded-md border border-elec-yellow/30 flex items-start gap-3">
+          <div className="bg-white/[0.06] p-4 rounded-md border border-elec-yellow/30 flex items-start gap-3">
             <AlertCircle className="h-5 w-5 text-elec-yellow shrink-0 mt-0.5" />
             <p className="text-sm">
               <span className="font-semibold text-elec-yellow">Important Note:</span> Employers must
@@ -194,7 +194,7 @@ const ElectricalTheoryHSAWA = ({ subsectionId, isCompleted, markAsComplete }: Su
             </div>
           </div>
 
-          <div className="bg-elec-yellow/10 p-4 rounded-md border border-elec-yellow/30 flex items-start gap-3 mt-4">
+          <div className="bg-white/[0.06] p-4 rounded-md border border-elec-yellow/30 flex items-start gap-3 mt-4">
             <Info className="h-5 w-5 text-elec-yellow shrink-0 mt-0.5" />
             <p className="text-sm">
               <span className="font-semibold text-elec-yellow">For Electrical Workers:</span> Always
@@ -283,7 +283,7 @@ const ElectricalTheoryHSAWA = ({ subsectionId, isCompleted, markAsComplete }: Su
             </TableBody>
           </Table>
 
-          <div className="bg-elec-yellow/10 p-4 rounded-md border border-elec-yellow/30 flex items-start gap-3 mt-4">
+          <div className="bg-white/[0.06] p-4 rounded-md border border-elec-yellow/30 flex items-start gap-3 mt-4">
             <AlertTriangle className="h-5 w-5 text-elec-yellow shrink-0 mt-0.5" />
             <p className="text-sm">
               <span className="font-semibold text-elec-yellow">Electrical Incidents:</span> Due to
@@ -474,7 +474,7 @@ const ElectricalTheoryHSAWA = ({ subsectionId, isCompleted, markAsComplete }: Su
         </CardContent>
       </Card>
 
-      <div className="bg-elec-yellow/10 p-6 rounded-md border border-elec-yellow/30 flex items-start gap-3">
+      <div className="bg-white/[0.06] p-6 rounded-md border border-elec-yellow/30 flex items-start gap-3">
         <FileText className="h-6 w-6 text-elec-yellow shrink-0 mt-0.5" />
         <div>
           <h3 className="text-lg font-semibold text-elec-yellow mb-2">Examination Preparation</h3>

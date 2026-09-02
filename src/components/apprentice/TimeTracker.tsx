@@ -52,7 +52,7 @@ const TimeTracker = () => {
 
         {/* Recent Entries - Traditional time entries */}
         <div className="mb-4">
-          <h3 className="text-lg font-semibold text-elec-light mb-2">Manual Time Entries</h3>
+          <h3 className="text-lg font-semibold text-white mb-2">Manual Time Entries</h3>
           <EntriesList entries={recentEntries} isLoading={isLoading} />
         </div>
 
@@ -106,7 +106,7 @@ const TimeTracker = () => {
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold text-elec-light mb-3">Manual Time Entries</h3>
+            <h3 className="text-lg font-semibold text-white mb-3">Manual Time Entries</h3>
             <EntriesList entries={recentEntries} isLoading={isLoading} />
           </div>
         </div>

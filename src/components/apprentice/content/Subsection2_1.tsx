@@ -162,7 +162,7 @@ const Subsection2_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               <h3 className="text-lg font-medium mb-3 text-elec-yellow/80">Immediate Response</h3>
               <ul className="space-y-3">
                 <li className="flex items-start gap-2">
-                  <span className="bg-elec-yellow/20 text-elec-yellow font-bold rounded-full h-5 w-5 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span className="bg-white/[0.08] text-elec-yellow font-bold rounded-full h-5 w-5 flex items-center justify-center flex-shrink-0 mt-0.5">
                     1
                   </span>
                   <span className="text-sm text-white">
@@ -170,13 +170,13 @@ const Subsection2_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="bg-elec-yellow/20 text-elec-yellow font-bold rounded-full h-5 w-5 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span className="bg-white/[0.08] text-elec-yellow font-bold rounded-full h-5 w-5 flex items-center justify-center flex-shrink-0 mt-0.5">
                     2
                   </span>
                   <span className="text-sm text-white">Call the fire service (999/112)</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="bg-elec-yellow/20 text-elec-yellow font-bold rounded-full h-5 w-5 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span className="bg-white/[0.08] text-elec-yellow font-bold rounded-full h-5 w-5 flex items-center justify-center flex-shrink-0 mt-0.5">
                     3
                   </span>
                   <span className="text-sm text-white">
@@ -185,7 +185,7 @@ const Subsection2_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="bg-elec-yellow/20 text-elec-yellow font-bold rounded-full h-5 w-5 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span className="bg-white/[0.08] text-elec-yellow font-bold rounded-full h-5 w-5 flex items-center justify-center flex-shrink-0 mt-0.5">
                     4
                   </span>
                   <span className="text-sm text-white">
@@ -194,7 +194,7 @@ const Subsection2_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="bg-elec-yellow/20 text-elec-yellow font-bold rounded-full h-5 w-5 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span className="bg-white/[0.08] text-elec-yellow font-bold rounded-full h-5 w-5 flex items-center justify-center flex-shrink-0 mt-0.5">
                     5
                   </span>
                   <span className="text-sm text-white">

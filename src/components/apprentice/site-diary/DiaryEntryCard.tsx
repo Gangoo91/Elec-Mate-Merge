@@ -101,7 +101,7 @@ export function DiaryEntryCard({
 
               <span className="ml-auto flex items-center gap-2.5">
                 {photoCount > 0 && (
-                  <span className="flex items-center gap-1 text-white/70">
+                  <span className="flex items-center gap-1 text-white">
                     <Camera className="h-3.5 w-3.5" aria-hidden />
                     <span className="text-[11px] tabular-nums">{photoCount}</span>
                   </span>
@@ -112,14 +112,14 @@ export function DiaryEntryCard({
                     Portfolio
                   </span>
                 )}
-                <ChevronRight className="h-4 w-4 flex-shrink-0 text-white/70" aria-hidden />
+                <ChevronRight className="h-4 w-4 flex-shrink-0 text-white" aria-hidden />
               </span>
             </div>
 
             {!hideDate && entry.site_name && (
               <div className="flex items-center gap-1.5">
                 <MapPin className="h-3 w-3 flex-shrink-0 text-elec-yellow" aria-hidden />
-                <span className="truncate text-[12px] text-white/85">{entry.site_name}</span>
+                <span className="truncate text-[12px] text-white">{entry.site_name}</span>
               </div>
             )}
 
@@ -134,7 +134,7 @@ export function DiaryEntryCard({
             )}
 
             {!compact && entry.what_i_learned && (
-              <p className="border-l-2 border-elec-yellow/50 pl-2.5 text-[13px] italic leading-relaxed text-white/85">
+              <p className="border-l-2 border-elec-yellow/50 pl-2.5 text-[13px] italic leading-relaxed text-white">
                 &ldquo;{entry.what_i_learned}&rdquo;
               </p>
             )}
@@ -145,7 +145,7 @@ export function DiaryEntryCard({
                 {entry.skills_practised.map((skill) => (
                   <span
                     key={skill}
-                    className="inline-flex items-center rounded-md border border-white/[0.14] px-2 py-0.5 text-[10.5px] font-medium text-white/85"
+                    className="inline-flex items-center rounded-md border border-white/[0.14] px-2 py-0.5 text-[10.5px] font-medium text-white"
                   >
                     {skill}
                   </span>

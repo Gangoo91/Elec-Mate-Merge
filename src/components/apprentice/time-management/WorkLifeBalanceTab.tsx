@@ -66,7 +66,7 @@ const WorkLifeBalanceTab = () => {
   return (
     <div className="space-y-6">
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Work-life balance strategies
         </span>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
@@ -79,19 +79,19 @@ const WorkLifeBalanceTab = () => {
                 <h3 className="text-[16px] font-semibold text-white leading-tight">
                   {strategy.title}
                 </h3>
-                <p className="text-[14px] text-white/70 leading-relaxed mt-1">
+                <p className="text-[14px] text-white leading-relaxed mt-1">
                   {strategy.description}
                 </p>
               </div>
               <div className="space-y-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Key strategies
                 </span>
                 <ul className="space-y-1.5">
                   {strategy.strategies.map((item, itemIndex) => (
                     <li
                       key={itemIndex}
-                      className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                      className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                     >
                       <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                       <span>{item}</span>
@@ -107,7 +107,7 @@ const WorkLifeBalanceTab = () => {
                   {strategy.tips.map((tip, tipIndex) => (
                     <span
                       key={tipIndex}
-                      className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
+                      className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
                     >
                       {tip}
                     </span>
@@ -120,7 +120,7 @@ const WorkLifeBalanceTab = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Warning signs & solutions
         </span>
         <div className="space-y-3">
@@ -130,22 +130,22 @@ const WorkLifeBalanceTab = () => {
               className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 grid grid-cols-1 md:grid-cols-3 gap-4"
             >
               <div className="space-y-1">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Warning sign
                 </span>
-                <p className="text-[14px] text-white/85 leading-relaxed">{item.warning}</p>
+                <p className="text-[14px] text-white leading-relaxed">{item.warning}</p>
               </div>
               <div className="space-y-1">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Solution
                 </span>
-                <p className="text-[14px] text-white/85 leading-relaxed">{item.solution}</p>
+                <p className="text-[14px] text-white leading-relaxed">{item.solution}</p>
               </div>
               <div className="space-y-1">
                 <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
                   Take action now
                 </span>
-                <p className="text-[14px] text-white/85 leading-relaxed">{item.immediateAction}</p>
+                <p className="text-[14px] text-white leading-relaxed">{item.immediateAction}</p>
               </div>
             </div>
           ))}
@@ -153,7 +153,7 @@ const WorkLifeBalanceTab = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Weekly balance check-in
         </span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -168,7 +168,7 @@ const WorkLifeBalanceTab = () => {
               ].map((item, i) => (
                 <li
                   key={i}
-                  className="text-[14px] text-white/85 leading-relaxed flex items-center gap-2"
+                  className="text-[14px] text-white leading-relaxed flex items-center gap-2"
                 >
                   <span className="w-4 h-4 border border-white/15 rounded flex-shrink-0" />
                   <span>{item}</span>
@@ -180,12 +180,12 @@ const WorkLifeBalanceTab = () => {
           <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
             <h4 className="text-[14px] font-semibold text-white">Balance reflection</h4>
             <div className="space-y-1">
-              <p className="text-[13px] text-white/70">Energy levels (1-10):</p>
+              <p className="text-[13px] text-white">Energy levels (1-10):</p>
               <div className="flex gap-1">
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
                   <div
                     key={num}
-                    className="w-6 h-6 border border-white/15 rounded text-[11px] flex items-center justify-center text-white/85"
+                    className="w-6 h-6 border border-white/15 rounded text-[11px] flex items-center justify-center text-white"
                   >
                     {num}
                   </div>
@@ -193,12 +193,12 @@ const WorkLifeBalanceTab = () => {
               </div>
             </div>
             <div className="space-y-1">
-              <p className="text-[13px] text-white/70">Relationship satisfaction (1-10):</p>
+              <p className="text-[13px] text-white">Relationship satisfaction (1-10):</p>
               <div className="flex gap-1">
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
                   <div
                     key={num}
-                    className="w-6 h-6 border border-white/15 rounded text-[11px] flex items-center justify-center text-white/85"
+                    className="w-6 h-6 border border-white/15 rounded text-[11px] flex items-center justify-center text-white"
                   >
                     {num}
                   </div>

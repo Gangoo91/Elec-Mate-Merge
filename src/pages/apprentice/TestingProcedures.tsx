@@ -19,15 +19,7 @@ import IRTestingTab from '@/components/apprentice/testing-procedures/testing-tab
 import ZsTestingTab from '@/components/apprentice/testing-procedures/testing-tabs/EarthFaultLoop/ZsTestingTab';
 import PolarityTestingTab from '@/components/apprentice/testing-procedures/testing-tabs/Polarity/PolarityTestingTab';
 import { Button } from '@/components/ui/button';
-import {
-  ArrowLeft,
-  BookmarkCheck,
-  HelpCircle,
-  Zap,
-  Activity,
-  GitBranch,
-  Check,
-} from 'lucide-react';
+import { BookmarkCheck, HelpCircle, Zap, Activity, GitBranch, Check } from 'lucide-react';
 import { itemVariants } from '@/components/college/primitives';
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 
@@ -94,8 +86,8 @@ const TestingProcedures = () => {
       <HubBody>
         <p className="max-w-3xl text-[13px] leading-relaxed text-white">
           Step-by-step guides for four core BS 7671 tests — R₁+R₂ continuity, insulation resistance
-          and polarity are dead tests; earth fault loop impedance is carried out live. Reflects
-          BS 7671:2018+A4:2026.
+          and polarity are dead tests; earth fault loop impedance is carried out live. Reflects BS
+          7671:2018+A4:2026.
         </p>
 
         {lastVisited && activeTab !== lastVisited && (
@@ -110,8 +102,7 @@ const TestingProcedures = () => {
             <div className="flex items-center gap-2">
               <BookmarkCheck className="h-4 w-4 shrink-0 text-elec-yellow" />
               <span className="text-[14px] text-white">
-                You were last on{' '}
-                <span className="font-medium">{getTabName(lastVisited)}</span>.
+                You were last on <span className="font-medium">{getTabName(lastVisited)}</span>.
               </span>
             </div>
             <Button

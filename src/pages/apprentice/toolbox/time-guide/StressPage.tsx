@@ -1,7 +1,7 @@
 import StressManagementTab from '@/components/apprentice/time-management/StressManagementTab';
 import { motion } from 'framer-motion';
-import { SectionHeader, itemVariants } from '@/components/college/primitives';
-import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { itemVariants } from '@/components/college/primitives';
+import { HubPage, HubBody, HubMasthead, HubSectionHeading } from '@/components/hub/HubPrimitives';
 import GuideIntro from './GuideIntro';
 
 const StressPage = () => {
@@ -30,9 +30,9 @@ const StressPage = () => {
         </motion.div>
 
         <motion.section variants={itemVariants} className="space-y-4 sm:space-y-5">
-          <SectionHeader eyebrow="On the road" title="Fatigue & driving home" />
-          <div className="border-y sm:border sm:rounded-md border-elec-yellow/20 bg-transparent sm:bg-elec-yellow/[0.04] -mx-4 px-4 py-4 sm:mx-0 sm:p-4 space-y-2.5">
-            <p className="text-white/85 text-[12.5px] leading-relaxed">
+          <HubSectionHeading>Fatigue & driving home</HubSectionHeading>
+          <div className="border-y sm:border sm:rounded-md border-elec-yellow/20 bg-transparent sm:bg-white/[0.05] -mx-4 px-4 py-4 sm:mx-0 sm:p-4 space-y-2.5">
+            <p className="text-white text-[12.5px] leading-relaxed">
               After a long physical day and a long commute, tiredness behind the wheel is a real
               trade hazard. Tired driving slows your reactions just like alcohol does.
             </p>
@@ -44,34 +44,34 @@ const StressPage = () => {
               ].map((item) => (
                 <li
                   key={item}
-                  className="flex items-start gap-2.5 text-[12.5px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2.5 text-[12.5px] text-white leading-relaxed"
                 >
                   <span className="mt-[7px] h-1 w-1 rounded-full bg-elec-yellow/85 flex-shrink-0" />
                   {item}
                 </li>
               ))}
             </ul>
-            <p className="text-[11px] text-white/45 leading-relaxed pt-1">
+            <p className="text-[11px] text-white leading-relaxed pt-1">
               Sources: HSE fatigue guidance, NHS sleep and tiredness advice.
             </p>
           </div>
         </motion.section>
 
         <motion.section variants={itemVariants} className="space-y-4 sm:space-y-5">
-          <SectionHeader eyebrow="Trade support" title="Help built for our industry" />
-          <div className="border-y sm:border sm:rounded-md border-elec-yellow/20 bg-transparent sm:bg-elec-yellow/[0.04] -mx-4 px-4 py-4 sm:mx-0 sm:p-4 space-y-2.5">
-            <p className="text-white/85 text-[12.5px] leading-relaxed">
+          <HubSectionHeading>Help built for our industry</HubSectionHeading>
+          <div className="border-y sm:border sm:rounded-md border-elec-yellow/20 bg-transparent sm:bg-white/[0.05] -mx-4 px-4 py-4 sm:mx-0 sm:p-4 space-y-2.5">
+            <p className="text-white text-[12.5px] leading-relaxed">
               The Electrical Industries Charity supports everyone in the electrotechnical trade —
               including apprentices. It offers free, confidential help with mental health, money
               worries, bereavement and legal issues, plus free apprentice mental-health training.
             </p>
             <a
               href="tel:08006521618"
-              className="inline-flex items-center justify-center h-11 w-full sm:w-auto px-4 rounded-md border border-elec-yellow/40 bg-elec-yellow/10 text-elec-yellow text-sm font-medium touch-manipulation hover:bg-elec-yellow/15 transition-colors"
+              className="inline-flex items-center justify-center h-11 w-full sm:w-auto px-4 rounded-md border border-elec-yellow/40 bg-white/[0.06] text-elec-yellow text-sm font-medium touch-manipulation hover:bg-elec-yellow/15 transition-colors"
             >
               Electrical Industries Charity — 0800 652 1618
             </a>
-            <p className="text-[11px] text-white/45 leading-relaxed pt-1">
+            <p className="text-[11px] text-white leading-relaxed pt-1">
               Free support line. More at electricalcharity.org/find-help. In an emergency, always
               call 999.
             </p>

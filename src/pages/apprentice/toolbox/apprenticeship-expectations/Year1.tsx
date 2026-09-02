@@ -35,6 +35,7 @@ import { itemVariants } from '@/components/college/primitives';
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 interface MonthlyPeriod {
   month: string;
@@ -381,7 +382,7 @@ export default function Year1() {
             <div className="h-2 w-12 sm:w-16 rounded-full bg-white/[0.08]" />
             <div className="h-2 w-12 sm:w-16 rounded-full bg-white/[0.08]" />
             <div className="h-2 w-12 sm:w-16 rounded-full bg-white/[0.08]" />
-            <span className="text-[11px] uppercase tracking-[0.18em] text-white/55 ml-2">
+            <span className="text-[11px] uppercase tracking-[0.18em] text-white ml-2">
               Year 1 of 4
             </span>
           </div>
@@ -411,12 +412,15 @@ export default function Year1() {
               return (
                 <li
                   key={item.item}
-                  className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 flex items-start gap-3"
+                  className={cn(
+                    'rounded-2xl border border-elec-yellow/35 p-4 flex items-start gap-3',
+                    CARD_SURFACE
+                  )}
                 >
                   <Icon className="h-4 w-4 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                   <div className="min-w-0 space-y-1">
                     <p className="text-[13.5px] font-medium text-white leading-snug">{item.item}</p>
-                    <p className="text-[12px] text-white/70 leading-relaxed">{item.tip}</p>
+                    <p className="text-[12px] text-white leading-relaxed">{item.tip}</p>
                   </div>
                 </li>
               );
@@ -431,22 +435,27 @@ export default function Year1() {
             title="What to acquire across Year 1"
             meta="Ask your employer what's provided before buying"
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] divide-y divide-white/[0.04]">
+          <div
+            className={cn(
+              'rounded-2xl border border-elec-yellow/35 divide-y divide-white/[0.04]',
+              CARD_SURFACE
+            )}
+          >
             {basicToolkit.map((item) => (
               <div key={item.tool} className="flex items-start justify-between gap-3 p-3.5 sm:p-4">
                 <div className="flex items-start gap-3 min-w-0 flex-1">
-                  <Wrench className="h-3.5 w-3.5 text-white/40 flex-shrink-0 mt-0.5" />
+                  <Wrench className="h-3.5 w-3.5 text-white flex-shrink-0 mt-0.5" />
                   <div className="min-w-0 space-y-0.5">
                     <p className="text-[13px] font-medium text-white leading-snug">{item.tool}</p>
-                    <p className="text-[11.5px] text-white/55 leading-snug">{item.purpose}</p>
+                    <p className="text-[11.5px] text-white leading-snug">{item.purpose}</p>
                   </div>
                 </div>
                 <span
                   className={cn(
                     'inline-flex items-center h-6 px-2 rounded-md border text-[10px] font-medium uppercase tracking-[0.14em] flex-shrink-0',
                     item.priority === 'Essential'
-                      ? 'border-elec-yellow/30 bg-elec-yellow/[0.06] text-elec-yellow'
-                      : 'border-white/[0.10] bg-white/[0.03] text-white/85'
+                      ? 'border-elec-yellow/30 bg-white/[0.05] text-elec-yellow'
+                      : 'border-white/[0.10] bg-white/[0.03] text-white'
                   )}
                 >
                   {item.priority}
@@ -454,8 +463,8 @@ export default function Year1() {
               </div>
             ))}
           </div>
-          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
-            <p className="text-[12.5px] text-white/85 leading-relaxed">
+          <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3">
+            <p className="text-[12.5px] text-white leading-relaxed">
               <span className="font-semibold text-elec-yellow">Buy once, cry once.</span> Quality
               tools last decades — Knipex, Wera, Bahco, Klein. Cheap pliers will fail
               mid-termination and embarrass you in front of a supervisor.
@@ -480,8 +489,8 @@ export default function Year1() {
                   className={cn(
                     'rounded-xl border overflow-hidden transition-colors',
                     isExpanded
-                      ? 'border-elec-yellow/25 bg-elec-yellow/[0.04]'
-                      : 'border-white/[0.06] bg-[hsl(0_0%_10%)]'
+                      ? 'border-elec-yellow/25 bg-white/[0.05]'
+                      : 'border-white/[0.12] bg-white/[0.06]'
                   )}
                 >
                   <button
@@ -492,7 +501,7 @@ export default function Year1() {
                       <Icon
                         className={cn(
                           'h-4 w-4 flex-shrink-0 mt-0.5',
-                          isExpanded ? 'text-elec-yellow' : 'text-white/55'
+                          isExpanded ? 'text-elec-yellow' : 'text-white'
                         )}
                       />
                       <div className="flex-1 min-w-0 space-y-1">
@@ -500,15 +509,15 @@ export default function Year1() {
                           <h3 className="text-[14px] font-semibold text-white leading-snug">
                             {period.title}
                           </h3>
-                          <span className="text-[10.5px] font-mono uppercase tracking-[0.14em] text-white/55">
+                          <span className="text-[10.5px] font-mono uppercase tracking-[0.14em] text-white">
                             {period.month}
                           </span>
                         </div>
-                        <p className="text-[12px] text-white/70 leading-snug">{period.focus}</p>
+                        <p className="text-[12px] text-white leading-snug">{period.focus}</p>
                       </div>
                       <ChevronDown
                         className={cn(
-                          'h-4 w-4 text-white/40 flex-shrink-0 transition-transform mt-0.5',
+                          'h-4 w-4 text-white flex-shrink-0 transition-transform mt-0.5',
                           isExpanded && 'rotate-180'
                         )}
                       />
@@ -517,14 +526,14 @@ export default function Year1() {
                   {isExpanded && (
                     <div className="px-4 sm:px-5 pb-4 sm:pb-5 space-y-3 border-t border-elec-yellow/15 pt-3 animate-fade-in">
                       <div className="pl-7 space-y-3">
-                        <p className="text-[12.5px] text-white/85 italic leading-relaxed">
+                        <p className="text-[12.5px] text-white italic leading-relaxed">
                           "{period.dayInLife}"
                         </p>
                         <ul className="space-y-1.5">
                           {period.activities.map((activity, idx) => (
                             <li
                               key={idx}
-                              className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                              className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                             >
                               <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                               <span>{activity}</span>
@@ -553,7 +562,10 @@ export default function Year1() {
               return (
                 <li
                   key={area.title}
-                  className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3"
+                  className={cn(
+                    'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
+                    CARD_SURFACE
+                  )}
                 >
                   <div className="flex items-center gap-2 min-w-0">
                     <Icon className="h-4 w-4 text-elec-yellow flex-shrink-0" />
@@ -565,7 +577,7 @@ export default function Year1() {
                     {area.topics.map((topic) => (
                       <li
                         key={topic}
-                        className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                        className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                       >
                         <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                         <span>{topic}</span>
@@ -585,7 +597,12 @@ export default function Year1() {
             title="What your schedule might look like"
             meta="Your specifics vary — but the cadence usually doesn't"
           />
-          <ul className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] divide-y divide-white/[0.04] overflow-hidden">
+          <ul
+            className={cn(
+              'rounded-2xl border border-elec-yellow/35 divide-y divide-white/[0.04] overflow-hidden',
+              CARD_SURFACE
+            )}
+          >
             {weeklyScheduleExample.map(({ day, location, activities }) => (
               <li key={day} className="flex items-center gap-2.5 sm:gap-4 p-3.5 sm:p-4">
                 <span className="w-14 sm:w-20 shrink-0 text-[12.5px] font-medium text-white">
@@ -595,13 +612,13 @@ export default function Year1() {
                   className={cn(
                     'inline-flex items-center justify-center h-6 px-2 rounded-md border text-[10px] font-medium uppercase tracking-[0.14em] flex-shrink-0 w-14 sm:w-16',
                     location === 'College'
-                      ? 'border-elec-yellow/30 bg-elec-yellow/[0.06] text-elec-yellow'
-                      : 'border-white/[0.10] bg-white/[0.03] text-white/85'
+                      ? 'border-elec-yellow/30 bg-white/[0.05] text-elec-yellow'
+                      : 'border-white/[0.10] bg-white/[0.03] text-white'
                   )}
                 >
                   {location}
                 </span>
-                <span className="text-[12.5px] text-white/85 flex-1 min-w-0 leading-snug">
+                <span className="text-[12.5px] text-white flex-1 min-w-0 leading-snug">
                   {activities}
                 </span>
               </li>
@@ -626,8 +643,8 @@ export default function Year1() {
                   className={cn(
                     'rounded-xl border overflow-hidden transition-colors',
                     isExpanded
-                      ? 'border-elec-yellow/25 bg-elec-yellow/[0.04]'
-                      : 'border-white/[0.06] bg-[hsl(0_0%_10%)]'
+                      ? 'border-elec-yellow/25 bg-white/[0.05]'
+                      : 'border-white/[0.12] bg-white/[0.06]'
                   )}
                 >
                   <button
@@ -638,20 +655,18 @@ export default function Year1() {
                       <Icon
                         className={cn(
                           'h-4 w-4 flex-shrink-0 mt-0.5',
-                          isExpanded ? 'text-elec-yellow' : 'text-white/55'
+                          isExpanded ? 'text-elec-yellow' : 'text-white'
                         )}
                       />
                       <div className="flex-1 min-w-0 space-y-1">
                         <h3 className="text-[14px] font-semibold text-white leading-snug">
                           {item.challenge}
                         </h3>
-                        <p className="text-[12.5px] text-white/70 leading-snug">
-                          {item.description}
-                        </p>
+                        <p className="text-[12.5px] text-white leading-snug">{item.description}</p>
                       </div>
                       <ChevronDown
                         className={cn(
-                          'h-4 w-4 text-white/40 flex-shrink-0 transition-transform mt-0.5',
+                          'h-4 w-4 text-white flex-shrink-0 transition-transform mt-0.5',
                           isExpanded && 'rotate-180'
                         )}
                       />
@@ -665,7 +680,7 @@ export default function Year1() {
                           {item.solutions.map((solution, idx) => (
                             <li
                               key={idx}
-                              className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                              className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                             >
                               <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                               <span>{solution}</span>
@@ -689,7 +704,7 @@ export default function Year1() {
             meta="The habits that separate apprentices who finish year 1 strong"
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-            <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-3">
+            <div className="rounded-xl border border-elec-yellow/25 bg-white/[0.05] p-4 sm:p-5 space-y-3">
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="h-4 w-4 text-elec-yellow" />
                 <Eyebrow className="text-elec-yellow/85">Do these things</Eyebrow>
@@ -698,7 +713,7 @@ export default function Year1() {
                 {successDos.map((item) => (
                   <li
                     key={item}
-                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                    className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                   >
                     <span className="text-elec-yellow font-mono mt-0.5">+</span>
                     <span>{item}</span>
@@ -708,16 +723,16 @@ export default function Year1() {
             </div>
             <div className="rounded-xl border border-white/[0.10] bg-white/[0.02] p-4 sm:p-5 space-y-3">
               <div className="flex items-center gap-2">
-                <X className="h-4 w-4 text-white/55" />
-                <Eyebrow className="text-white/55">Avoid these mistakes</Eyebrow>
+                <X className="h-4 w-4 text-white" />
+                <Eyebrow className="text-white">Avoid these mistakes</Eyebrow>
               </div>
               <ul className="space-y-1.5">
                 {successDonts.map((item) => (
                   <li
                     key={item}
-                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                    className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                   >
-                    <span className="text-white/40 font-mono mt-0.5">−</span>
+                    <span className="text-white font-mono mt-0.5">−</span>
                     <span>{item}</span>
                   </li>
                 ))}
@@ -734,7 +749,7 @@ export default function Year1() {
             meta="An honest mirror — the difference is habits, not talent"
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-            <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-3">
+            <div className="rounded-xl border border-elec-yellow/25 bg-white/[0.05] p-4 sm:p-5 space-y-3">
               <div className="flex items-center gap-2">
                 <Star className="h-4 w-4 text-elec-yellow" />
                 <Eyebrow className="text-elec-yellow/85">A thriving year 1</Eyebrow>
@@ -743,7 +758,7 @@ export default function Year1() {
                 {thrivingSigns.map((item) => (
                   <li
                     key={item}
-                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                    className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                   >
                     <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                     <span>{item}</span>
@@ -753,24 +768,24 @@ export default function Year1() {
             </div>
             <div className="rounded-xl border border-white/[0.10] bg-white/[0.02] p-4 sm:p-5 space-y-3">
               <div className="flex items-center gap-2">
-                <Heart className="h-4 w-4 text-white/55" />
-                <Eyebrow className="text-white/55">Warning signs</Eyebrow>
+                <Heart className="h-4 w-4 text-white" />
+                <Eyebrow className="text-white">Warning signs</Eyebrow>
               </div>
               <ul className="space-y-1.5">
                 {strugglingSigns.map((item) => (
                   <li
                     key={item}
-                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                    className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                   >
-                    <span className="text-white/40 font-mono mt-0.5">!</span>
+                    <span className="text-white font-mono mt-0.5">!</span>
                     <span>{item}</span>
                   </li>
                 ))}
               </ul>
             </div>
           </div>
-          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
-            <p className="text-[12.5px] text-white/85 leading-relaxed">
+          <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3">
+            <p className="text-[12.5px] text-white leading-relaxed">
               See yourself on the right? It&apos;s fixable, and the earliest fix is the easiest.
               Tell your mentor or training assessor you want to get back on track — they would far
               rather hear it now than at your year-end review.
@@ -780,9 +795,9 @@ export default function Year1() {
 
         {/* ── Closer ───────────────────────────────────────────────── */}
         <motion.section variants={itemVariants}>
-          <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-1.5">
+          <div className="rounded-xl border border-elec-yellow/25 bg-white/[0.05] p-4 sm:p-5 space-y-1.5">
             <Eyebrow className="text-elec-yellow/85">End of year 1</Eyebrow>
-            <p className="text-[13.5px] text-white/85 leading-relaxed">
+            <p className="text-[13.5px] text-white leading-relaxed">
               By the end of year 1 you should have your{' '}
               <span className="font-semibold text-elec-yellow">ECS apprentice card</span>, a
               portfolio populated with photos and tasks completed, the 7-step safe isolation
@@ -810,7 +825,12 @@ function StatCell({
   highlight?: boolean;
 }) {
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-3 sm:p-4 space-y-0.5">
+    <div
+      className={cn(
+        'rounded-2xl border border-elec-yellow/35 p-3 sm:p-4 space-y-0.5',
+        CARD_SURFACE
+      )}
+    >
       <Eyebrow className="text-[9.5px]">{label}</Eyebrow>
       <p
         className={cn(

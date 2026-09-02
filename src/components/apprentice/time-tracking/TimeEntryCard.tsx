@@ -91,11 +91,11 @@ const TimeEntryCard = ({ entry }: TimeEntryCardProps) => {
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
               <h4 className="text-[15px] font-medium text-white">{entry.activity}</h4>
-              <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+              <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                 {badgeLabel}
               </span>
               {isVerified && (
-                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] inline-flex items-center gap-1">
+                <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] inline-flex items-center gap-1">
                   <ShieldCheck className="h-3 w-3" />
                   Verified
                 </span>
@@ -103,7 +103,7 @@ const TimeEntryCard = ({ entry }: TimeEntryCardProps) => {
             </div>
 
             {entry.notes && (
-              <p className="text-[13px] text-white/70 mt-1 line-clamp-2 leading-relaxed">
+              <p className="text-[13px] text-white mt-1 line-clamp-2 leading-relaxed">
                 {entry.notes}
               </p>
             )}
@@ -114,19 +114,19 @@ const TimeEntryCard = ({ entry }: TimeEntryCardProps) => {
               {hours > 0 ? `${hours}h ` : ''}
               {minutes}m
             </div>
-            <div className="text-[11px] text-white/55 mt-0.5">{formatDate(entry.date)}</div>
+            <div className="text-[11px] text-white mt-0.5">{formatDate(entry.date)}</div>
           </div>
         </div>
 
         {entry.notes && entry.notes.includes('activity verification') && (
-          <div className="mt-2 flex items-center text-[11px] text-white/55">
+          <div className="mt-2 flex items-center text-[11px] text-white">
             <Activity className="h-3 w-3 mr-1" />
             Activity verified
           </div>
         )}
 
         {entry.isQuiz && entry.score !== undefined && entry.totalQuestions !== undefined && (
-          <div className="mt-2 text-[11px] text-white/55 font-mono">
+          <div className="mt-2 text-[11px] text-white font-mono">
             Score: {entry.score}/{entry.totalQuestions} (
             {Math.round((entry.score / entry.totalQuestions) * 100)}%)
           </div>

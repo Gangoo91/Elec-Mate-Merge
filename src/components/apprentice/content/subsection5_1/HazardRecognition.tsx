@@ -78,10 +78,10 @@ const HazardRecognition = () => {
               <table className="min-w-full border-collapse text-sm">
                 <thead>
                   <tr>
-                    <th className="bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30 px-3 py-2 text-left">
+                    <th className="bg-white/[0.08] text-elec-yellow border border-elec-yellow/30 px-3 py-2 text-left">
                       Risk Level
                     </th>
-                    <th className="bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30 px-3 py-2 text-left">
+                    <th className="bg-white/[0.08] text-elec-yellow border border-elec-yellow/30 px-3 py-2 text-left">
                       Required Action
                     </th>
                   </tr>

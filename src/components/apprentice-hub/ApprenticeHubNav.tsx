@@ -42,7 +42,7 @@ export function ApprenticeHubNav({ activeTab, onTabChange, onCapture }: Apprenti
           {/* Back */}
           <button
             onClick={() => navigate('/dashboard')}
-            className="flex items-center gap-2 text-[12px] uppercase tracking-[0.18em] text-white/70 hover:text-white transition-colors touch-manipulation flex-shrink-0 h-11 -ml-1"
+            className="flex items-center gap-2 text-[12px] uppercase tracking-[0.18em] text-white hover:text-white transition-colors touch-manipulation flex-shrink-0 h-11 -ml-1"
             aria-label="Back"
           >
             <ArrowLeft className="h-4 w-4" />
@@ -68,7 +68,7 @@ export function ApprenticeHubNav({ activeTab, onTabChange, onCapture }: Apprenti
                      * at a glance — muted is 70% now, and hover/active go to
                      * full white rather than stopping short.
                      */
-                    isActive ? 'text-white' : 'text-white/70 hover:text-white'
+                    isActive ? 'text-white' : 'text-white hover:text-white'
                   )}
                   aria-current={isActive ? 'page' : undefined}
                 >

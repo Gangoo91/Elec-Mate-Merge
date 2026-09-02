@@ -131,10 +131,10 @@ const ToolSelectionTab = () => {
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Quality tool selection
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           Quality tool selection is crucial for your professional development. This guide helps
           you make informed decisions and avoid costly mistakes.
         </p>
@@ -142,10 +142,10 @@ const ToolSelectionTab = () => {
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Quality assessment guide
           </span>
-          <p className="text-[13px] text-white/55">
+          <p className="text-[13px] text-white">
             Learn to identify quality tools and avoid poor purchases
           </p>
         </div>
@@ -158,14 +158,14 @@ const ToolSelectionTab = () => {
               <h3 className="text-[14px] font-semibold text-white">{indicator.category}</h3>
 
               <div className="space-y-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Look for
                 </span>
                 <ul className="space-y-1.5">
                   {indicator.factors.map((factor, idx) => (
                     <li
                       key={idx}
-                      className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                      className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                     >
                       <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
                       <span>{factor}</span>
@@ -182,7 +182,7 @@ const ToolSelectionTab = () => {
                   {indicator.redFlags.map((flag, idx) => (
                     <li
                       key={idx}
-                      className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                      className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                     >
                       <span className="w-1 h-1 rounded-full bg-red-400 mt-2 flex-shrink-0" />
                       <span>{flag}</span>
@@ -203,10 +203,10 @@ const ToolSelectionTab = () => {
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Smart purchasing process
           </span>
-          <p className="text-[13px] text-white/55">
+          <p className="text-[13px] text-white">
             Follow this structured approach to make better tool purchases
           </p>
         </div>
@@ -218,7 +218,7 @@ const ToolSelectionTab = () => {
             >
               <div className="flex items-center justify-between gap-2">
                 <h3 className="text-[14px] font-semibold text-white">{stage.stage}</h3>
-                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
+                <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
                   {stage.duration}
                 </span>
               </div>
@@ -226,7 +226,7 @@ const ToolSelectionTab = () => {
                 {stage.activities.map((activity, idx) => (
                   <li
                     key={idx}
-                    className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                    className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                   >
                     <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                     <span>{activity}</span>
@@ -239,10 +239,10 @@ const ToolSelectionTab = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Investment tip
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           Buy quality tools once rather than cheap tools multiple times. A good tool will last your
           entire career and maintain its resale value.
         </p>

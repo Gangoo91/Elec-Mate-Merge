@@ -24,10 +24,10 @@ const Section = ({
 }) => (
   <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
     <div className="space-y-1">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
         {eyebrow}
       </span>
-      {description && <p className="text-[13px] text-white/70">{description}</p>}
+      {description && <p className="text-[13px] text-white">{description}</p>}
     </div>
     {children}
   </div>
@@ -121,12 +121,12 @@ const SalaryProgressionChart = () => {
   }) => {
     if (active && payload && payload.length) {
       return (
-        <div className="rounded-lg border border-white/[0.06] bg-elec-gray p-3 shadow-lg">
+        <div className="rounded-lg border border-white/[0.06] bg-white/[0.06] p-3 shadow-lg">
           <p className="text-[13px] text-white mb-2">{label}</p>
           {payload.map((entry, index: number) => (
             <div key={index} className="flex items-center gap-2 text-[12px]">
               <div className="w-2 h-2 rounded-full" style={{ backgroundColor: entry.color }} />
-              <span className="text-white/55">{entry.name}:</span>
+              <span className="text-white">{entry.name}:</span>
               <span className="text-white font-mono">£{entry.value.toLocaleString()}</span>
             </div>
           ))}
@@ -201,15 +201,15 @@ const SalaryProgressionChart = () => {
         <div className="flex justify-center gap-4 sm:gap-6 mt-2 text-[12px] flex-wrap">
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 bg-red-500 rounded-full" />
-            <span className="text-white/85">Minimum</span>
+            <span className="text-white">Minimum</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 bg-green-500 rounded-full" />
-            <span className="text-white/85">Average</span>
+            <span className="text-white">Average</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 bg-blue-500 rounded-full" />
-            <span className="text-white/85">Maximum</span>
+            <span className="text-white">Maximum</span>
           </div>
         </div>
 
@@ -224,7 +224,7 @@ const SalaryProgressionChart = () => {
               key={s.label}
               className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1"
             >
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 {s.label}
               </span>
               <div className="text-[16px] font-semibold text-white">{s.value}</div>
@@ -271,20 +271,17 @@ const SalaryProgressionChart = () => {
           ].map((p) => (
             <div key={p.l} className="flex items-center gap-1">
               <div className={`w-2 h-2 ${p.c} rounded`} />
-              <span className="text-white/85">{p.l}</span>
+              <span className="text-white">{p.l}</span>
             </div>
           ))}
         </div>
-        <p className="text-[13px] text-white/70 leading-relaxed pt-2">
+        <p className="text-[13px] text-white leading-relaxed pt-2">
           London salaries are typically higher due to cost of living, but other regions can offer
           better value when accounting for housing costs.
         </p>
       </Section>
 
-      <Section
-        eyebrow="Career path earnings"
-        description="What you could earn after qualifying"
-      >
+      <Section eyebrow="Career path earnings" description="What you could earn after qualifying">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {careerEarnings.map((career, index) => (
             <div
@@ -293,9 +290,9 @@ const SalaryProgressionChart = () => {
             >
               <div className="flex items-baseline justify-between gap-2">
                 <span className="text-[14px] text-white">{career.role}</span>
-                <span className="text-[10px] text-white/55 font-mono">{career.growth}</span>
+                <span className="text-[10px] text-white font-mono">{career.growth}</span>
               </div>
-              <p className="text-[16px] text-white/85 font-semibold">{career.salary}</p>
+              <p className="text-[16px] text-white font-semibold">{career.salary}</p>
             </div>
           ))}
         </div>
@@ -311,11 +308,11 @@ const SalaryProgressionChart = () => {
               key={index}
               className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1"
             >
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 {benefit.title}
               </span>
-              <p className="text-[13px] text-white/85 leading-relaxed">{benefit.description}</p>
-              <p className="text-[12px] text-white/55">{benefit.typical}</p>
+              <p className="text-[13px] text-white leading-relaxed">{benefit.description}</p>
+              <p className="text-[12px] text-white">{benefit.typical}</p>
             </div>
           ))}
         </div>
@@ -327,39 +324,39 @@ const SalaryProgressionChart = () => {
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Scenario: qualified electrician
             </span>
-            <div className="space-y-1.5 text-[14px] text-white/85">
+            <div className="space-y-1.5 text-[14px] text-white">
               <div className="flex justify-between">
-                <span className="text-white/55">Base salary</span>
+                <span className="text-white">Base salary</span>
                 <span>£35,000</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-white/55">Standard week</span>
+                <span className="text-white">Standard week</span>
                 <span>40 hours</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-white/55">Overtime rate</span>
+                <span className="text-white">Overtime rate</span>
                 <span>1.5x</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-white/55">Weekly overtime</span>
+                <span className="text-white">Weekly overtime</span>
                 <span>8 hours average</span>
               </div>
             </div>
           </div>
           <div className="space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Potential total earnings
             </span>
-            <div className="space-y-1.5 text-[14px] text-white/85">
+            <div className="space-y-1.5 text-[14px] text-white">
               <div className="flex justify-between">
-                <span className="text-white/55">Base salary</span>
+                <span className="text-white">Base salary</span>
                 <span>£35,000</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-white/55">Annual overtime</span>
+                <span className="text-white">Annual overtime</span>
                 <span>+£9,700</span>
               </div>
               <div className="flex justify-between pt-2 border-t border-white/[0.06]">
@@ -367,7 +364,7 @@ const SalaryProgressionChart = () => {
                 <span className="font-semibold">£44,700</span>
               </div>
             </div>
-            <p className="text-[11px] text-white/55 font-mono">
+            <p className="text-[11px] text-white font-mono">
               (£35,000 ÷ 52 ÷ 40) × 1.5 × 8 hours × 48 weeks
             </p>
           </div>
@@ -384,7 +381,7 @@ const SalaryProgressionChart = () => {
           ].map((item, idx) => (
             <li
               key={idx}
-              className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+              className="text-[14px] text-white leading-relaxed flex items-start gap-2"
             >
               <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
               <span>{item}</span>

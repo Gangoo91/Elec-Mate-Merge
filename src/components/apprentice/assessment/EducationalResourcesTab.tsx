@@ -9,8 +9,8 @@ const EducationalResourcesTab = () => {
       keyAreas: [
         'Protection against electric shock (Section 411)',
         'Isolation and switching procedures (Section 537)',
-        'Initial verification requirements (Section 611)',
-        'Periodic inspection schedules (Section 651)',
+        'Initial verification requirements (Chapter 64)',
+        'Periodic inspection and testing (Chapter 65)',
       ],
       whatItMeans:
         'These regulations ensure all electrical installations are safe and compliant. They specify minimum safety requirements for design, installation, inspection and testing.',
@@ -134,13 +134,13 @@ const EducationalResourcesTab = () => {
   return (
     <div className="space-y-5 animate-fade-in">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Educational resources
         </span>
         <h2 className="text-[20px] sm:text-[24px] font-semibold tracking-tight text-white leading-tight">
           Regulations, standards & practical guidance
         </h2>
-        <p className="text-[14px] text-white/70 leading-relaxed max-w-2xl">
+        <p className="text-[14px] text-white leading-relaxed max-w-2xl">
           Understanding these regulations helps ensure your assessments meet legal and safety
           requirements.
         </p>
@@ -178,7 +178,7 @@ const EducationalResourcesTab = () => {
                 className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-4"
               >
                 <div className="space-y-1">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     {regulation.category}
                   </span>
                   <h3 className="text-[16px] sm:text-[18px] font-medium text-white">
@@ -187,14 +187,14 @@ const EducationalResourcesTab = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Key areas
                   </span>
                   <ul className="space-y-1.5">
                     {regulation.keyAreas.map((area, index) => (
                       <li
                         key={index}
-                        className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed"
+                        className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
                       >
                         <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                         <span>{area}</span>
@@ -204,19 +204,19 @@ const EducationalResourcesTab = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     What this means
                   </span>
-                  <p className="text-[14px] text-white/85 leading-relaxed">
+                  <p className="text-[14px] text-white leading-relaxed">
                     {regulation.whatItMeans}
                   </p>
                 </div>
 
                 <div className="space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Where to find more
                   </span>
-                  <p className="text-[14px] text-white/85 leading-relaxed">
+                  <p className="text-[14px] text-white leading-relaxed">
                     {regulation.whereToFind}
                   </p>
                 </div>
@@ -236,13 +236,13 @@ const EducationalResourcesTab = () => {
                   <h3 className="text-[16px] sm:text-[18px] font-medium text-white">
                     {guide.title}
                   </h3>
-                  <p className="text-[13px] text-white/70 leading-relaxed">{guide.description}</p>
+                  <p className="text-[13px] text-white leading-relaxed">{guide.description}</p>
                 </div>
                 <ul className="space-y-1.5">
                   {guide.items.map((item, itemIndex) => (
                     <li
                       key={itemIndex}
-                      className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed"
+                      className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
                     >
                       <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                       <span>{item}</span>
@@ -257,14 +257,14 @@ const EducationalResourcesTab = () => {
         <TabsContent value="resources" className="space-y-4 mt-5">
           <div className="grid gap-3 md:grid-cols-2">
             <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Official publications
               </span>
               <div className="space-y-3">
                 {officialPublications.map((pub, index) => (
                   <div key={index} className="space-y-1">
                     <p className="text-[14px] text-white">{pub.title}</p>
-                    <p className="text-[13px] text-white/70 leading-relaxed">{pub.description}</p>
+                    <p className="text-[13px] text-white leading-relaxed">{pub.description}</p>
                   </div>
                 ))}
               </div>
@@ -278,7 +278,7 @@ const EducationalResourcesTab = () => {
                 {emergencyProcedures.map((proc, index) => (
                   <div key={index} className="space-y-1">
                     <p className="text-[14px] text-white">{proc.title}</p>
-                    <p className="text-[13px] text-white/70 leading-relaxed">{proc.description}</p>
+                    <p className="text-[13px] text-white leading-relaxed">{proc.description}</p>
                   </div>
                 ))}
               </div>
@@ -286,10 +286,10 @@ const EducationalResourcesTab = () => {
           </div>
 
           <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Pro tip
             </span>
-            <p className="text-[14px] text-white/85 leading-relaxed">
+            <p className="text-[14px] text-white leading-relaxed">
               Regulations and best practices evolve regularly. Stay updated by subscribing to
               industry publications, attending training courses, and participating in professional
               development activities. Your employer should provide access to the latest versions of

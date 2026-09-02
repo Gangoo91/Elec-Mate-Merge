@@ -28,7 +28,7 @@ const SafeIsolationProcedures = () => {
                 key={index}
                 className="p-3 bg-white/10 border border-elec-yellow/20 rounded-lg flex gap-3 hover:border-elec-yellow/40 transition-colors"
               >
-                <div className="bg-elec-yellow/10 h-8 w-8 rounded-full flex items-center justify-center shrink-0 mt-0.5">
+                <div className="bg-white/[0.06] h-8 w-8 rounded-full flex items-center justify-center shrink-0 mt-0.5">
                   <span className="text-elec-yellow font-medium">{index + 1}</span>
                 </div>
                 <div className="space-y-1">

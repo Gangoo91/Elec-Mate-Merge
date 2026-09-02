@@ -178,7 +178,7 @@ const ElectricalSymbolsDisplay = ({ subsectionId }: ElectricalSymbolsDisplayProp
               className={
                 selectedCategory === category.id
                   ? 'bg-elec-yellow text-elec-dark'
-                  : 'border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10'
+                  : 'border-elec-yellow/30 text-elec-yellow hover:bg-white/[0.06]'
               }
               onClick={() => setSelectedCategory(category.id)}
             >
@@ -198,18 +198,18 @@ const ElectricalSymbolsDisplay = ({ subsectionId }: ElectricalSymbolsDisplayProp
               </div>
               <div>
                 <h4 className="font-medium text-white">{symbol.name}</h4>
-                <p className="text-sm text-elec-light/80">{symbol.description}</p>
+                <p className="text-sm text-white">{symbol.description}</p>
               </div>
             </div>
           </div>
         ))}
       </div>
 
-      <div className="mt-6 text-sm text-elec-light/60 italic bg-white/10 p-3 rounded-lg">
+      <div className="mt-6 text-sm text-white italic bg-white/10 p-3 rounded-lg">
         <p className="flex items-center">
           <ShieldAlert className="h-4 w-4 mr-2 text-elec-yellow/70" />
-          These symbols conform to BS7671 (18th Edition IET Wiring Regulations) and may vary
-          slightly from older installations or specialist applications.
+          These symbols follow IEC 60617 (the graphical-symbol standard BS 7671 drawings use) and
+          may vary slightly from older installations or specialist applications.
         </p>
       </div>
     </div>

@@ -41,8 +41,8 @@ const TrackingStatusIndicator = () => {
     <Alert className="mb-4 rounded-xl border border-white/[0.06] bg-white/[0.02]">
       <Timer className="h-5 w-5 text-elec-yellow animate-pulse" />
       <AlertDescription className="flex items-center justify-between">
-        <div className="text-[13px] text-white/85">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 mr-2">
+        <div className="text-[13px] text-white">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white mr-2">
             Recording
           </span>
           {currentActivity}

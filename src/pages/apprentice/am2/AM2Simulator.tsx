@@ -22,9 +22,7 @@
 
 import { useState, useCallback } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { ArrowLeft } from 'lucide-react';
-import { itemVariants } from '@/components/college/primitives';
+import { HubSubPage } from '@/components/hub/HubSubPage';
 import { cn } from '@/lib/utils';
 import { AM2ReadinessDashboard } from '@/components/am2/AM2ReadinessDashboard';
 import { SafeIsolationAssessment } from '@/components/am2/safe-isolation/SafeIsolationAssessment';
@@ -67,99 +65,75 @@ const AM2Simulator = () => {
   const isImmersive = IMMERSIVE_TABS.includes(activeTab);
   const isReadiness = activeTab === 'readiness';
 
-  // For non-immersive non-readiness tabs (knowledge, history) we still
-  // show a back-to-readiness affordance + an editorial header.
-  return (
+  const content = (
     <div
       className={cn(
-        'animate-fade-in',
-        isImmersive
-          ? 'flex flex-col h-[100dvh]'
-          : 'mx-auto max-w-7xl 2xl:max-w-[1440px] pb-20 px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6'
+        isImmersive ? 'mx-auto flex h-full w-full max-w-4xl flex-col xl:max-w-5xl' : 'w-full'
       )}
     >
-      {!isImmersive && (
-        <motion.div variants={itemVariants} className="mb-4">
-          <button
-            type="button"
-            onClick={() => (isReadiness ? navigate('/apprentice') : setActiveTab('readiness'))}
-            className="inline-flex items-center gap-1.5 h-9 px-2 -ml-2 text-[13px] font-medium text-white hover:text-elec-yellow transition-colors touch-manipulation"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            {isReadiness ? 'Back' : 'AM2 readiness'}
-          </button>
-        </motion.div>
+      {activeTab === 'readiness' && (
+        <AM2ReadinessDashboard key={readinessKey} onNavigateToTab={setActiveTab} />
       )}
 
-      {/* Editorial header — only on the readiness landing. The immersive
-          simulators have their own headers; knowledge + history get a
-          smaller eyebrow row inside their component. */}
-      {isReadiness && (
-        <motion.div variants={itemVariants} className="space-y-1.5 mb-2">
-          <div className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
-            Apprentice · AM2
-          </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight leading-[1.05] text-white">
-            AM2 readiness
-          </h1>
-          <p className="text-[13px] sm:text-sm text-white/70 max-w-2xl leading-relaxed">
-            Practical simulator and knowledge test for the four AM2 components. Identify the gaps
-            before you book.
-          </p>
-        </motion.div>
+      {activeTab === 'safe-isolation' && (
+        <SafeIsolationAssessment onSessionComplete={invalidateReadiness} />
       )}
 
-      {/* Tab Content — immersive simulators get a bounded centred column
-          on desktop so the controls don't span 1920px and look forlorn. */}
-      <div className={cn(isImmersive ? 'flex-1 min-h-0 overflow-hidden' : 'min-h-[60vh]')}>
-        <div
-          className={cn(
-            isImmersive ? 'mx-auto w-full max-w-4xl xl:max-w-5xl h-full flex flex-col' : 'w-full'
-          )}
-        >
-          {activeTab === 'readiness' && (
-            <AM2ReadinessDashboard key={readinessKey} onNavigateToTab={setActiveTab} />
-          )}
+      {activeTab === 'testing' && <TestingSimulator onSessionComplete={invalidateReadiness} />}
 
-          {activeTab === 'safe-isolation' && (
-            <SafeIsolationAssessment onSessionComplete={invalidateReadiness} />
-          )}
+      {activeTab === 'faults' && <FaultFindingSimulator onSessionComplete={invalidateReadiness} />}
 
-          {activeTab === 'testing' && <TestingSimulator onSessionComplete={invalidateReadiness} />}
+      {activeTab === 'knowledge' && <AM2KnowledgeQuiz onSessionComplete={invalidateReadiness} />}
 
-          {activeTab === 'faults' && (
-            <FaultFindingSimulator onSessionComplete={invalidateReadiness} />
-          )}
+      {activeTab === 'history' && <AM2HistoryTab onNavigateToTab={setActiveTab} />}
 
-          {activeTab === 'knowledge' && (
-            <AM2KnowledgeQuiz onSessionComplete={invalidateReadiness} />
-          )}
+      {activeTab === 'mock-day' && (
+        <MockAM2Day
+          onExit={() => setActiveTab('readiness')}
+          onSessionComplete={invalidateReadiness}
+        />
+      )}
 
-          {activeTab === 'history' && <AM2HistoryTab onNavigateToTab={setActiveTab} />}
+      {activeTab === 'bs7671' && (
+        <Bs7671RagQuiz
+          onExit={() => setActiveTab('readiness')}
+          onSessionComplete={invalidateReadiness}
+        />
+      )}
 
-          {activeTab === 'mock-day' && (
-            <MockAM2Day
-              onExit={() => setActiveTab('readiness')}
-              onSessionComplete={invalidateReadiness}
-            />
-          )}
-
-          {activeTab === 'bs7671' && (
-            <Bs7671RagQuiz
-              onExit={() => setActiveTab('readiness')}
-              onSessionComplete={invalidateReadiness}
-            />
-          )}
-
-          {activeTab === 'drill' && (
-            <AM2DrillMode
-              onExit={() => setActiveTab('readiness')}
-              onSessionComplete={invalidateReadiness}
-            />
-          )}
-        </div>
-      </div>
+      {activeTab === 'drill' && (
+        <AM2DrillMode
+          onExit={() => setActiveTab('readiness')}
+          onSessionComplete={invalidateReadiness}
+        />
+      )}
     </div>
+  );
+
+  // The immersive simulators own the whole viewport and carry their own
+  // headers; everything else sits in the shared hub frame, where Back steps
+  // to the readiness landing first and only then out to the hub.
+  if (isImmersive) {
+    return (
+      <div className="flex h-[100dvh] flex-col animate-fade-in">
+        <div className="min-h-0 flex-1 overflow-hidden">{content}</div>
+      </div>
+    );
+  }
+
+  return (
+    <HubSubPage
+      title="AM2 readiness"
+      backTo="/apprentice"
+      onBack={isReadiness ? undefined : () => setActiveTab('readiness')}
+      description={
+        isReadiness
+          ? 'Practical simulator and knowledge test for the four AM2 components. Find the gaps before you book.'
+          : undefined
+      }
+    >
+      <div className="min-h-[60vh]">{content}</div>
+    </HubSubPage>
   );
 };
 

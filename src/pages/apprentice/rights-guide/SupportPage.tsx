@@ -1,5 +1,7 @@
 import { Phone, ExternalLink } from 'lucide-react';
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 interface Helpline {
   name: string;
@@ -89,7 +91,7 @@ const SupportPage = () => {
         <div className="space-y-2">
           <div className="flex items-baseline justify-between gap-3 pb-1">
             <div className="space-y-1 min-w-0">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Workplace & Rights
               </span>
             </div>
@@ -98,7 +100,10 @@ const SupportPage = () => {
           {helplines.map((line) => (
             <div
               key={line.name}
-              className="border-0 bg-transparent sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]"
+              className={cn(
+                'border-0 bg-transparent -mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+                CARD_SURFACE
+              )}
             >
               <div className="py-4 sm:p-5 space-y-2">
                 <h3 className="font-semibold text-sm text-white">{line.name}</h3>
@@ -121,7 +126,7 @@ const SupportPage = () => {
         <div className="space-y-2">
           <div className="flex items-baseline justify-between gap-3 pb-1">
             <div className="space-y-1 min-w-0">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Mental Health & Wellbeing
               </span>
             </div>
@@ -130,7 +135,10 @@ const SupportPage = () => {
           {mentalHealthLines.map((line) => (
             <div
               key={line.name}
-              className="border-0 bg-transparent sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]"
+              className={cn(
+                'border-0 bg-transparent -mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+                CARD_SURFACE
+              )}
             >
               <div className="py-4 sm:p-5 space-y-2">
                 <h3 className="font-semibold text-sm text-white">{line.name}</h3>

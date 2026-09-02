@@ -114,7 +114,7 @@ export function PortfolioStatementCard() {
           This was `bg-[hsl(0_0%_8%)]` — darker than the page itself — sitting
           inside a lit card, which read as a hole punched through it. The
           shared style is a soft white fill that sits ON the card, and it dims
-          the placeholder properly: at `text-white/40` in 13px the prompt text
+          the placeholder properly: at `text-white` in 13px the prompt text
           read as content someone had already written.
         */}
         <Textarea
@@ -139,13 +139,13 @@ export function PortfolioStatementCard() {
             <button
               onClick={draft}
               disabled={drafting}
-              className="inline-flex h-11 items-center rounded-lg border border-white/[0.14] bg-white/[0.05] px-4 text-[13px] font-semibold text-white transition-colors touch-manipulation hover:bg-white/[0.09] active:scale-[0.98] disabled:opacity-50"
+              className="inline-flex h-11 items-center rounded-lg border border-white/[0.14] bg-white/[0.05] px-4 text-[13px] font-semibold text-white transition-colors touch-manipulation hover:bg-white/[0.09] active:scale-[0.98] disabled:text-white/70"
             >
               {drafting ? 'Drafting…' : 'Draft with AI'}
             </button>
             {/*
               A disabled primary must NOT be a faded volt fill.
-              `bg-elec-yellow` under `disabled:opacity-40` is a translucent volt
+              `bg-elec-yellow` under `disabled:text-white/70` is a translucent volt
               across a whole button face, which is the exact thing card-recipe
               warns about — it mixes with the near-black behind it and comes out
               muddy brown. Nothing to save, nothing to press: it goes neutral.
@@ -156,7 +156,7 @@ export function PortfolioStatementCard() {
               className={cn(
                 'inline-flex h-11 items-center rounded-lg px-5 text-[13px] font-semibold transition-colors touch-manipulation',
                 !dirty || saving
-                  ? 'cursor-not-allowed border border-white/[0.10] bg-white/[0.03] text-white/70'
+                  ? 'cursor-not-allowed border border-white/[0.10] bg-white/[0.03] text-white'
                   : 'bg-elec-yellow text-black hover:bg-elec-yellow/90 active:scale-[0.98]'
               )}
             >

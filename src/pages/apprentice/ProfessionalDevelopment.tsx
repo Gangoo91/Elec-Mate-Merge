@@ -1,15 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import {
-  PageFrame,
-  PageHero,
-  SectionHeader,
-  itemVariants,
-  type Tone,
-} from '@/components/college/primitives';
-import { HubToolGrid } from '@/components/hub/HubPrimitives';
+import { itemVariants, type Tone } from '@/components/college/primitives';
+import { HubSubPage } from '@/components/hub/HubSubPage';
+import { HubToolGrid, HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 interface Section {
   number: string;
@@ -78,29 +73,13 @@ export default function ProfessionalDevelopment() {
   const navigate = useNavigate();
 
   return (
-    <PageFrame className="px-4 sm:px-6 lg:px-8">
-      <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/apprentice')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
-        >
-          <ArrowLeft className="mr-2 h-5 w-5" />
-          Back
-        </Button>
-      </motion.div>
-
-      <motion.div variants={itemVariants}>
-        <PageHero
-          eyebrow="Apprentice · Professional Development"
-          title="Build your future"
-          description="Technical skills get you the job — professional skills build the career. Explore pathways, certifications, soft skills and the industry connections that shape what comes next."
-          tone="yellow"
-        />
-      </motion.div>
-
+    <HubSubPage
+      title="Build your future"
+      backTo="/apprentice"
+      description="Pathways, certifications, soft skills and the industry connections that shape what comes after your apprenticeship."
+    >
       <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
-        <SectionHeader eyebrow="Explore" title="Five sections" />
+        <HubSectionHeading>Five sections</HubSectionHeading>
         <HubToolGrid
           label=""
           columns="two"
@@ -117,14 +96,17 @@ export default function ProfessionalDevelopment() {
 
       <motion.div
         variants={itemVariants}
-        className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] px-5 py-4 sm:px-6 sm:py-5"
+        className={cn(
+          'rounded-2xl border border-elec-yellow/35 px-5 py-4 sm:px-6 sm:py-5',
+          CARD_SURFACE
+        )}
       >
-        <p className="text-[11.5px] leading-relaxed text-white/60 max-w-3xl">
-          Based on UK industry data, ESFA guidance and IET / ECA professional standards. Career and
-          salary information reflects current UK averages — may vary by region, employer and
-          experience level.
+        <p className="text-[11.5px] leading-relaxed text-white max-w-3xl">
+          Based on UK industry data, DfE apprenticeship guidance and IET / ECA professional
+          standards. Career and salary information reflects current UK averages — may vary by
+          region, employer and experience level.
         </p>
       </motion.div>
-    </PageFrame>
+    </HubSubPage>
   );
 }

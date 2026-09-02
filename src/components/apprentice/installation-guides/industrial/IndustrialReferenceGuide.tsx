@@ -79,8 +79,8 @@ const IndustrialReferenceGuide = () => {
           scope: 'Industrial fire safety',
         },
         {
-          code: 'BS 6651',
-          title: 'Lightning protection systems',
+          code: 'BS EN 62305',
+          title: 'Protection against lightning (BS 6651 withdrawn 2008)',
           scope: 'Industrial lightning protection',
         },
       ],
@@ -90,7 +90,8 @@ const IndustrialReferenceGuide = () => {
   const emergencySystemRequirements = [
     {
       system: 'Emergency Lighting',
-      requirement: 'Minimum 3 hours duration',
+      requirement:
+        '3 hours duration (1 hour only where the premises are evacuated at once and not reoccupied until recharged)',
       standard: 'BS 5266-1',
       installation: 'Central battery or self-contained systems',
       testing: 'Monthly function test, annual full duration test',
@@ -135,8 +136,8 @@ const IndustrialReferenceGuide = () => {
     },
     {
       test: 'RCD Operation',
-      testCurrent: '½×IΔn, 1×IΔn, 5×IΔn',
-      tripTime: '≤300ms at 1×IΔn, ≤40ms at 5×IΔn',
+      testCurrent: '1×IΔn AC test (5×IΔn deleted at A4:2026)',
+      tripTime: '≤300ms at 1×IΔn (S-type 130–500ms)',
       procedure: 'Test all RCD devices',
       frequency: 'Initial and 6-monthly',
     },
@@ -185,7 +186,9 @@ const IndustrialReferenceGuide = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Industrial Installation Reference</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              Industrial Installation Reference
+            </CardTitle>
           </div>
           <p className="text-white">
             Comprehensive standards, testing procedures, and technical specifications
@@ -206,7 +209,9 @@ const IndustrialReferenceGuide = () => {
             <Card key={index} className="border-white/[0.10] bg-white/5">
               <CardHeader className="p-0 pb-3">
                 <div className="flex items-center gap-2">
-                  <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{category.category}</CardTitle>
+                  <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+                    {category.category}
+                  </CardTitle>
                 </div>
               </CardHeader>
               <CardContent className="space-y-3 p-0">
@@ -233,12 +238,17 @@ const IndustrialReferenceGuide = () => {
           <Card variant="plain">
             <CardHeader className="p-0 pb-3">
               <div className="flex items-center gap-2">
-                <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Emergency System Requirements</CardTitle>
+                <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+                  Emergency System Requirements
+                </CardTitle>
               </div>
             </CardHeader>
             <CardContent className="space-y-4 p-0">
               {emergencySystemRequirements.map((system, index) => (
-                <div key={index} className="p-4 rounded-lg border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]">
+                <div
+                  key={index}
+                  className="p-4 rounded-lg border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]"
+                >
                   <div className="flex items-center justify-between gap-3 mb-3">
                     <h3 className="font-semibold text-red-300">{system.system}</h3>
                     <Badge variant="outline" className="border-red-400 text-red-300 text-xs">
@@ -269,7 +279,9 @@ const IndustrialReferenceGuide = () => {
           <Card variant="plain">
             <CardHeader className="p-0 pb-3">
               <div className="flex items-center gap-2">
-                <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Industrial Testing Procedures</CardTitle>
+                <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+                  Industrial Testing Procedures
+                </CardTitle>
               </div>
             </CardHeader>
             <CardContent className="space-y-4 p-0">
@@ -311,7 +323,9 @@ const IndustrialReferenceGuide = () => {
           <Card variant="plain">
             <CardHeader className="p-0 pb-3">
               <div className="flex items-center gap-2">
-                <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Industrial Protection Devices</CardTitle>
+                <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+                  Industrial Protection Devices
+                </CardTitle>
               </div>
             </CardHeader>
             <CardContent className="space-y-4 p-0">

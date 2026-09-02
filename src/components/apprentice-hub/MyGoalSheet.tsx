@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { Button } from '@/components/ui/button';
 import type { IlpGoal, GoalCategory, GoalStatus } from '@/hooks/useStudentIlp';
+import { textareaCn } from '@/components/forms/fieldStyles';
 
 /* ==========================================================================
    MyGoalSheet — apprentice-side bottom sheet showing one goal in full.
@@ -141,7 +142,7 @@ export function MyGoalSheet({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side="bottom"
-        className="h-[90vh] sm:max-w-2xl sm:mx-auto p-0 rounded-t-2xl overflow-hidden border-white/10 bg-[hsl(0_0%_8%)]"
+        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.06] bg-[hsl(0_0%_8%)]"
       >
         <div className="flex flex-col h-full">
           {/* Drag handle */}
@@ -155,7 +156,8 @@ export function MyGoalSheet({
               College plan goal
             </div>
             <h2
-              className={cn('mt-1.5 text-[20px] font-semibold leading-tight',
+              className={cn(
+                'mt-1.5 text-[20px] font-semibold leading-tight',
                 isComplete ? 'text-white line-through' : 'text-white'
               )}
             >
@@ -174,7 +176,7 @@ export function MyGoalSheet({
                     : goal.status === 'overdue'
                       ? 'text-red-300'
                       : goal.status === 'blocked'
-                        ? 'text-white'
+                        ? 'text-orange-300'
                         : 'text-white'
                 )}
               >
@@ -219,9 +221,10 @@ export function MyGoalSheet({
             {/* Tutor comment */}
             {goal.tutor_comment && (
               <div
-                className={cn('rounded-2xl border px-4 py-3',
+                className={cn(
+                  'rounded-2xl border px-4 py-3',
                   hasNewTutor
-                    ? 'border-white/[0.06] bg-white/[0.02]'
+                    ? 'border-elec-yellow/35 bg-white/[0.04]'
                     : 'border-white/[0.06] bg-white/[0.02]'
                 )}
               >
@@ -277,7 +280,7 @@ export function MyGoalSheet({
                 }}
                 placeholder="Let your tutor know how it's going, ask a question, or share progress."
                 rows={4}
-                className="w-full px-3 py-2.5 text-[13px] text-white bg-white/[0.04] border border-white/[0.1] rounded-xl resize-none touch-manipulation focus:border-white/[0.06] focus:outline-none focus:ring-1 focus:ring-white/10"
+                className={cn(textareaCn, 'w-full resize-none')}
               />
               <div className="mt-1 text-[10.5px] text-white">⌘ + Enter to send</div>
             </div>
@@ -290,7 +293,8 @@ export function MyGoalSheet({
               onClick={handleTick}
               disabled={busy !== null}
               variant="outline"
-              className={cn('flex-1 h-11 rounded-full border touch-manipulation transition-colors',
+              className={cn(
+                'flex-1 h-11 rounded-full border touch-manipulation transition-colors',
                 isComplete
                   ? 'border-white/[0.15] text-white hover:bg-white/[0.06]'
                   : 'border-white/[0.06] bg-white/[0.02] text-white hover:bg-white/[0.02]'

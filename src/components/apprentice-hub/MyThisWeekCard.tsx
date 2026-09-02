@@ -25,7 +25,9 @@ export function MyThisWeekCard() {
   }
   if (!brief) {
     return (
-      <div className={cn('rounded-2xl border border-white/[0.06] px-4 sm:px-5 py-4', CARD_SURFACE)}>
+      <div
+        className={cn('rounded-2xl border border-elec-yellow/35 px-4 sm:px-5 py-4', CARD_SURFACE)}
+      >
         <div className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-white">
           This week
         </div>
@@ -72,7 +74,7 @@ export function MyThisWeekCard() {
             type="button"
             onClick={regenerate}
             disabled={generating}
-            className="-mr-2 -mt-2 inline-flex h-11 shrink-0 items-center gap-1 rounded-full px-2 text-[10.5px] font-medium text-white transition-colors touch-manipulation hover:bg-white/[0.06] disabled:opacity-50"
+            className="-mr-2 -mt-2 inline-flex h-11 shrink-0 items-center gap-1 rounded-full px-2 text-[10.5px] font-medium text-white transition-colors touch-manipulation hover:bg-white/[0.06] disabled:text-white/70"
             title="Regenerate this week's brief"
           >
             <RefreshCw className={cn('h-3 w-3', generating && 'animate-spin')} />
@@ -131,7 +133,9 @@ function ThisWeekBulletRow({ bullet, index }: { bullet: ThisWeekBullet; index: n
             {bullet.title}
           </span>
           {bullet.why && (
-            <span className="mt-1 block text-[12.5px] leading-relaxed text-white">{bullet.why}</span>
+            <span className="mt-1 block text-[12.5px] leading-relaxed text-white">
+              {bullet.why}
+            </span>
           )}
           <span className="mt-1.5 block text-[12px] font-medium text-elec-yellow">
             {bullet.action_label}
@@ -145,7 +149,12 @@ function ThisWeekBulletRow({ bullet, index }: { bullet: ThisWeekBullet; index: n
 
 function SkeletonCard() {
   return (
-    <div className={cn('rounded-2xl border border-white/[0.06] px-4 sm:px-5 py-4 animate-pulse', CARD_SURFACE)}>
+    <div
+      className={cn(
+        'rounded-2xl border border-white/[0.06] px-4 sm:px-5 py-4 animate-pulse',
+        CARD_SURFACE
+      )}
+    >
       <div className="h-3 w-20 rounded-full bg-white/10" />
       <div className="mt-3 h-4 w-2/3 rounded-full bg-white/10" />
       <div className="mt-2 h-5 w-3/4 rounded-full bg-white/12" />

@@ -20,6 +20,8 @@ import type { LucideIcon } from 'lucide-react';
 import { itemVariants } from '@/components/college/primitives';
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const knowledgeTips = [
   'Start with BS 7671 — Part 4 (Protection for Safety) and Part 6 (Inspection & Testing) are heavily tested. Know where to find key regs quickly',
@@ -27,7 +29,7 @@ const knowledgeTips = [
   'Study Guidance Note 3 (Inspection & Testing, 9th edition) for detailed testing procedures and expected results',
   'Practice cable sizing — voltage drop (Table 4Ab), current-carrying capacity (Section 523), correction factors',
   'Learn the fault current formulas — Zs = Ze + (R1+R2), PFC, max Zs from Tables 41.2 / 41.3',
-  'Flashcards for key reg numbers — 411.3.3 (max disconnection), 411.3.4 (socket RCD), 415.1.1 (additional protection), 643.1 (testing sequence)',
+  'Flashcards for key reg numbers — 411.3.2 (max disconnection times), 411.3.3 (socket-outlet RCDs ≤32 A), 411.3.4 (luminaire RCDs in dwellings), 415.1.1 (additional protection), 643.1 (testing sequence)',
   'Practice past papers or mock exams under timed conditions — use the EPA Simulator in this app',
 ];
 
@@ -140,7 +142,7 @@ const calculations = [
     title: 'Earth fault loop impedance',
     formula: 'Zs = Ze + (R1 + R2)',
     explanation:
-      'Must not exceed max Zs in Table 41.2 (BS MCBs) or Table 41.3 (fuses) for the relevant disconnection time.',
+      'Must not exceed max Zs in Table 41.3 (circuit-breakers, 0.4 s and 5 s), Table 41.2 (fuses, 0.4 s) or Table 41.4 (fuses, 5 s) — all with Cmin 0.95.',
   },
   {
     title: 'Prospective fault current',
@@ -167,8 +169,12 @@ const calculations = [
 ];
 
 const regs = [
-  { reg: '411.3.3', topic: 'Maximum disconnection times for final circuits (0.4s TN, 0.2s TT)' },
-  { reg: '411.3.4', topic: 'Socket outlets and luminaires — 30mA RCD additional protection' },
+  { reg: '411.3.2', topic: 'Maximum disconnection times for final circuits (0.4s TN, 0.2s TT)' },
+  {
+    reg: '411.3.3',
+    topic: 'Socket-outlets ≤32A — 30mA RCD additional protection (scope revised at A4:2026)',
+  },
+  { reg: '411.3.4', topic: 'Luminaire circuits in dwellings — 30mA RCD additional protection' },
   { reg: '415.1.1', topic: 'Additional protection by RCD — requirements and applications' },
   { reg: '421.1.7', topic: 'Arc fault detection devices (AFDDs) — where required (A4:2026)' },
   { reg: '421.1.201', topic: 'Protection against fire — cable selection in escape routes' },
@@ -294,13 +300,13 @@ const PreparationPage = () => {
           icon={BookOpen}
           tips={knowledgeTips}
           extra={
-            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-2">
+            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3 space-y-2">
               <Eyebrow className="text-elec-yellow/85">Key areas to revise</Eyebrow>
               <ul className="space-y-1.5">
                 {knowledgeAreas.map((area) => (
                   <li
                     key={area}
-                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                    className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                   >
                     <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                     <span>{area}</span>
@@ -320,16 +326,16 @@ const PreparationPage = () => {
           tips={practicalTips}
           extra={
             <>
-              <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-2">
+              <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3 space-y-2">
                 <Eyebrow className="text-elec-yellow/85">Instrument checklist</Eyebrow>
-                <p className="text-[12.5px] text-white/85 leading-relaxed">
+                <p className="text-[12.5px] text-white leading-relaxed">
                   Make sure you're proficient with all of these:
                 </p>
                 <ul className="space-y-1.5">
                   {instruments.map((item) => (
                     <li
                       key={item}
-                      className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                      className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                     >
                       <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                       <span>{item}</span>
@@ -340,7 +346,7 @@ const PreparationPage = () => {
               <div className="rounded-md border border-red-500/30 bg-red-500/[0.04] p-3">
                 <div className="flex items-start gap-2">
                   <AlertTriangle className="h-3.5 w-3.5 text-red-300 flex-shrink-0 mt-0.5" />
-                  <p className="text-[12.5px] text-white/85 leading-relaxed">
+                  <p className="text-[12.5px] text-white leading-relaxed">
                     <span className="font-semibold text-red-300">Calibration:</span> All test
                     instruments must be in calibration (within the last 12 months). Check the
                     calibration sticker before the day. Out-of-cal = invalid results.
@@ -359,14 +365,14 @@ const PreparationPage = () => {
           icon={MessageSquare}
           tips={discussionTips}
           extra={
-            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-2">
+            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3 space-y-2">
               <Eyebrow className="text-elec-yellow/85">Talking through your work — STAR</Eyebrow>
               {starExample.map((s) => (
                 <div key={s.label} className="space-y-0.5">
                   <span className="text-[10.5px] font-medium uppercase tracking-[0.14em] text-elec-yellow/85">
                     {s.label}
                   </span>
-                  <p className="text-[12.5px] text-white/85 leading-relaxed">{s.text}</p>
+                  <p className="text-[12.5px] text-white leading-relaxed">{s.text}</p>
                 </div>
               ))}
             </div>
@@ -384,16 +390,19 @@ const PreparationPage = () => {
             {timeline.map((phase) => (
               <li
                 key={phase.period}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2.5"
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-2.5',
+                  CARD_SURFACE
+                )}
               >
-                <span className="inline-flex items-center h-6 px-2 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[10.5px] font-medium uppercase tracking-[0.14em] text-elec-yellow">
+                <span className="inline-flex items-center h-6 px-2 rounded-md border border-elec-yellow/30 bg-white/[0.05] text-[10.5px] font-medium uppercase tracking-[0.14em] text-elec-yellow">
                   {phase.period}
                 </span>
                 <ul className="space-y-1.5">
                   {phase.tasks.map((task) => (
                     <li
                       key={task}
-                      className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                      className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                     >
                       <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                       <span>{task}</span>
@@ -416,7 +425,10 @@ const PreparationPage = () => {
             {calculations.map((calc) => (
               <li
                 key={calc.title}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-1.5"
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-1.5',
+                  CARD_SURFACE
+                )}
               >
                 <div className="flex items-center gap-2">
                   <Calculator className="h-3.5 w-3.5 text-elec-yellow/85" />
@@ -425,7 +437,7 @@ const PreparationPage = () => {
                   </h3>
                 </div>
                 <p className="text-[12.5px] font-mono text-elec-yellow">{calc.formula}</p>
-                <p className="text-[12.5px] text-white/85 leading-relaxed">{calc.explanation}</p>
+                <p className="text-[12.5px] text-white leading-relaxed">{calc.explanation}</p>
               </li>
             ))}
           </ul>
@@ -438,14 +450,14 @@ const PreparationPage = () => {
             title={`${regs.length} to know where to find quickly`}
             meta="Bookmark these pages in your Regs book (BS 7671:2018+A4:2026)"
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
+          <div className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}>
             <ul className="space-y-2">
               {regs.map((item) => (
                 <li key={item.reg} className="flex items-start gap-3">
                   <span className="text-[12px] font-mono font-semibold text-elec-yellow tabular-nums min-w-[60px] flex-shrink-0">
                     {item.reg}
                   </span>
-                  <span className="text-[12.5px] text-white/85 leading-relaxed">{item.topic}</span>
+                  <span className="text-[12.5px] text-white leading-relaxed">{item.topic}</span>
                 </li>
               ))}
             </ul>
@@ -463,7 +475,7 @@ const PreparationPage = () => {
             {mentalPrep.map((item) => (
               <li
                 key={item.title}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
+                className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}
               >
                 <div className="flex items-start gap-2.5">
                   <CheckCircle2 className="h-4 w-4 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
@@ -471,7 +483,7 @@ const PreparationPage = () => {
                     <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
                       {item.title}
                     </h3>
-                    <p className="text-[13px] text-white/85 leading-relaxed">{item.description}</p>
+                    <p className="text-[13px] text-white leading-relaxed">{item.description}</p>
                   </div>
                 </div>
               </li>
@@ -490,7 +502,7 @@ const PreparationPage = () => {
             {resources.map((resource) => (
               <li
                 key={resource.title}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
+                className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}
               >
                 <div className="flex items-start gap-2.5">
                   <Library className="h-4 w-4 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
@@ -498,7 +510,7 @@ const PreparationPage = () => {
                     <h3 className="text-[14px] font-semibold text-white tracking-tight">
                       {resource.title}
                     </h3>
-                    <p className="text-[13px] text-white/85 leading-relaxed">
+                    <p className="text-[13px] text-white leading-relaxed">
                       {resource.description}
                     </p>
                   </div>
@@ -526,19 +538,24 @@ function ComponentBlock({ eyebrow, title, meta, icon: Icon, tips, extra }: Compo
         title={title}
         meta={meta}
         action={
-          <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06]">
+          <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-white/[0.05]">
             <Icon className="h-4 w-4 text-elec-yellow" />
           </span>
         }
       />
-      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-4">
+      <div
+        className={cn(
+          'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-4',
+          CARD_SURFACE
+        )}
+      >
         <ol className="space-y-2">
           {tips.map((tip, i) => (
             <li key={i} className="flex items-start gap-3">
-              <span className="inline-flex items-center justify-center w-6 h-6 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06] text-[11px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
+              <span className="inline-flex items-center justify-center w-6 h-6 rounded-md border border-elec-yellow/25 bg-white/[0.05] text-[11px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
                 {i + 1}
               </span>
-              <span className="text-[12.5px] text-white/85 leading-relaxed">{tip}</span>
+              <span className="text-[12.5px] text-white leading-relaxed">{tip}</span>
             </li>
           ))}
         </ol>

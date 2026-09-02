@@ -142,8 +142,8 @@ const WeeklyOverview = () => {
       return (
         <div className="rounded-lg border border-white/[0.06] bg-background p-3 shadow-lg">
           <p className="text-[12px] text-white">{`${label} (${payload[0]?.payload.date})`}</p>
-          <p className="text-[12px] text-white/85 font-mono mt-1">{`Manual: ${payload[0]?.value} hrs`}</p>
-          <p className="text-[12px] text-white/55 font-mono">{`Automatic: ${payload[1]?.value} hrs`}</p>
+          <p className="text-[12px] text-white font-mono mt-1">{`Manual: ${payload[0]?.value} hrs`}</p>
+          <p className="text-[12px] text-white font-mono">{`Automatic: ${payload[1]?.value} hrs`}</p>
           <p className="text-[12px] text-white font-mono mt-1">{`Total: ${(payload[0]?.value + payload[1]?.value).toFixed(1)} hrs`}</p>
         </div>
       );
@@ -154,11 +154,11 @@ const WeeklyOverview = () => {
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Weekly time overview
         </span>
         <div className="flex items-center gap-2">
-          <span className="text-[12px] text-white/55 whitespace-nowrap">Select week:</span>
+          <span className="text-[12px] text-white whitespace-nowrap">Select week:</span>
           <Select value={selectedWeek} onValueChange={handleWeekChange}>
             <SelectTrigger className="w-[220px] h-11 touch-manipulation">
               <SelectValue placeholder="Select week" />
@@ -197,7 +197,7 @@ const WeeklyOverview = () => {
           </ResponsiveContainer>
         </div>
 
-        <div className="mt-4 text-[12px] text-white/55 text-center">
+        <div className="mt-4 text-[12px] text-white text-center">
           Weekly summary for {formatDateRange(selectedWeek)}
         </div>
       </div>
@@ -207,21 +207,21 @@ const WeeklyOverview = () => {
           <div className="text-2xl font-mono text-white">
             {chartData.reduce((sum, day) => sum + day.manual + day.automatic, 0).toFixed(1)}
           </div>
-          <p className="text-[11px] text-white/55 mt-1">Total hours this week</p>
+          <p className="text-[11px] text-white mt-1">Total hours this week</p>
         </div>
 
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4">
           <div className="text-2xl font-mono text-white">
             {chartData.reduce((sum, day) => sum + day.manual, 0).toFixed(1)}
           </div>
-          <p className="text-[11px] text-white/55 mt-1">Manual hours</p>
+          <p className="text-[11px] text-white mt-1">Manual hours</p>
         </div>
 
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4">
           <div className="text-2xl font-mono text-white">
             {chartData.reduce((sum, day) => sum + day.automatic, 0).toFixed(1)}
           </div>
-          <p className="text-[11px] text-white/55 mt-1">Automatic hours</p>
+          <p className="text-[11px] text-white mt-1">Automatic hours</p>
         </div>
       </div>
     </div>

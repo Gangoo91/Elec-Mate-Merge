@@ -24,10 +24,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import { Eyebrow } from './PortfolioPrimitives';
 import type { PortfolioEntry } from '@/types/portfolio';
 import type { QualificationACTree } from '@/hooks/qualification/useQualificationACs';
-import type {
-  ACComplianceState,
-  ACSignoffRecord,
-} from '@/hooks/portfolio/useACSignoffs';
+import type { ACComplianceState, ACSignoffRecord } from '@/hooks/portfolio/useACSignoffs';
 
 interface ACHeatmapProps {
   tree: QualificationACTree;
@@ -42,15 +39,11 @@ const STATE_TILE: Record<ACComplianceState | 'claimed_only', string> = {
   iqa_confirmed:
     'bg-elec-yellow ring-1 ring-elec-yellow/60 ring-offset-1 ring-offset-[hsl(0_0%_10%)] hover:bg-elec-yellow/90',
   signed_off: 'bg-elec-yellow hover:bg-elec-yellow/90',
-  evidenced:
-    'border border-elec-yellow/70 bg-elec-yellow/[0.18] hover:bg-elec-yellow/[0.30]',
-  not_yet:
-    'border border-orange-400/70 bg-orange-400/[0.16] hover:bg-orange-400/[0.28]',
+  evidenced: 'border border-elec-yellow/70 bg-elec-yellow/[0.18] hover:bg-elec-yellow/[0.30]',
+  not_yet: 'border border-orange-400/70 bg-orange-400/[0.16] hover:bg-orange-400/[0.28]',
   referred: 'border border-red-400/70 bg-red-500/[0.18] hover:bg-red-500/[0.30]',
-  in_progress:
-    'border border-white/20 bg-white/[0.06] hover:bg-white/[0.12]',
-  claimed_only:
-    'border border-elec-yellow/40 bg-elec-yellow/[0.07] hover:bg-elec-yellow/[0.16]',
+  in_progress: 'border border-white/20 bg-white/[0.06] hover:bg-white/[0.12]',
+  claimed_only: 'border border-elec-yellow/40 bg-white/[0.05] hover:bg-elec-yellow/[0.16]',
   not_started: 'bg-white/[0.08] hover:bg-white/[0.14]',
 };
 
@@ -272,9 +265,7 @@ function Stat({
       >
         {value}
       </div>
-      <div className="text-[9px] font-medium uppercase tracking-[0.18em] text-white">
-        {label}
-      </div>
+      <div className="text-[9px] font-medium uppercase tracking-[0.18em] text-white">{label}</div>
     </div>
   );
 }

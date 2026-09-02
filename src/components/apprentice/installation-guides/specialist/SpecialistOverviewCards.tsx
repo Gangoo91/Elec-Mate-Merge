@@ -174,7 +174,7 @@ const SpecialistOverviewCards = () => {
       ],
     },
     {
-      name: 'NAPIT / NICEIC / ELECSA',
+      name: 'NAPIT / NICEIC',
       icon: FileCheck,
       color: 'purple',
       purpose: 'Competent Person Schemes for self-certification of electrical work',
@@ -222,7 +222,7 @@ const SpecialistOverviewCards = () => {
     {
       step: 2,
       title: 'Join Competent Person Scheme',
-      description: 'Register with NAPIT, NICEIC, ELECSA or similar',
+      description: 'Register with NAPIT, NICEIC or similar',
       duration: '2-3 months application',
     },
     {
@@ -275,7 +275,7 @@ const SpecialistOverviewCards = () => {
     },
   ];
 
-  const getGrowthColor = (_growth: string) => 'border-white/15 text-white/85';
+  const getGrowthColor = (_growth: string) => 'border-white/15 text-white';
 
   return (
     <div className="space-y-6">
@@ -295,10 +295,10 @@ const SpecialistOverviewCards = () => {
                 key={idx}
                 className="p-3 rounded-lg border border-white/[0.10] bg-white/[0.06] space-y-2"
               >
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Section {section.section}
                 </span>
-                <p className="text-[12px] text-white/85 leading-relaxed">{section.title}</p>
+                <p className="text-[12px] text-white leading-relaxed">{section.title}</p>
               </div>
             ))}
           </div>
@@ -308,7 +308,9 @@ const SpecialistOverviewCards = () => {
       {/* Why Additional Requirements */}
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
-                      <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Why Additional Requirements Exist</CardTitle>
+          <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+            Why Additional Requirements Exist
+          </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4 p-0 p-0">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -327,8 +329,8 @@ const SpecialistOverviewCards = () => {
           </div>
 
           <Alert className="border-white/[0.10] bg-white/[0.06]">
-            <Shield className="h-4 w-4 text-white/70" />
-            <AlertDescription className="text-white/85 text-sm">
+            <Shield className="h-4 w-4 text-white" />
+            <AlertDescription className="text-white text-sm">
               <strong>Key Principle:</strong> Special locations require reduced touch voltages,
               enhanced RCD protection, specific IP ratings, and often SELV (Safety Extra Low
               Voltage) systems to protect users from electric shock.
@@ -340,14 +342,14 @@ const SpecialistOverviewCards = () => {
       {/* Career Opportunities */}
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
-                      <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
-              Career Opportunities in Specialist Installations
-            </CardTitle>
+          <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+            Career Opportunities in Specialist Installations
+          </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4 p-0 p-0">
           <Alert className="border-white/[0.10] bg-white/[0.06]">
-            <Lightbulb className="h-4 w-4 text-white/70" />
-            <AlertDescription className="text-white/85 text-sm">
+            <Lightbulb className="h-4 w-4 text-white" />
+            <AlertDescription className="text-white text-sm">
               The UK's commitment to Net Zero by 2050 is creating unprecedented demand for
               electricians with specialist skills in renewable energy, electric vehicles, and
               low-carbon heating technologies.
@@ -366,7 +368,7 @@ const SpecialistOverviewCards = () => {
                     <Badge variant="outline" className={getGrowthColor(career.growth)}>
                       {career.growth} Growth
                     </Badge>
-                    <Badge variant="outline" className="border-white/10 text-white/70">
+                    <Badge variant="outline" className="border-white/10 text-white">
                       <BadgePoundSterling className="h-3 w-3 mr-1" />
                       {career.avgSalary}
                     </Badge>
@@ -387,7 +389,7 @@ const SpecialistOverviewCards = () => {
                     <Badge
                       key={certIdx}
                       variant="secondary"
-                      className="text-xs bg-white/[0.06] text-white/85"
+                      className="text-xs bg-white/[0.06] text-white"
                     >
                       {cert}
                     </Badge>
@@ -402,15 +404,17 @@ const SpecialistOverviewCards = () => {
       {/* Market Trends */}
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
-                      <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Industry Trends Driving Demand</CardTitle>
+          <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+            Industry Trends Driving Demand
+          </CardTitle>
         </CardHeader>
         <CardContent className="p-0 p-0">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {marketTrends.map((trend, idx) => (
               <div key={idx} className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
                 <div className="flex items-center gap-2 mb-2">
-                  <trend.icon className="h-5 w-5 text-white/70" />
-                  <h4 className="font-medium text-white/85">{trend.trend}</h4>
+                  <trend.icon className="h-5 w-5 text-white" />
+                  <h4 className="font-medium text-white">{trend.trend}</h4>
                 </div>
                 <p className="text-sm text-white">{trend.impact}</p>
               </div>
@@ -422,20 +426,19 @@ const SpecialistOverviewCards = () => {
       {/* Certification Requirements */}
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
-                      <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Key Certifications & Schemes</CardTitle>
+          <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+            Key Certifications & Schemes
+          </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4 p-0 p-0">
           {certificationRequirements.map((cert, idx) => (
-            <div
-              key={idx}
-              className="p-4 rounded-lg border border-elec-yellow/30 bg-white/[0.06]"
-            >
+            <div key={idx} className="p-4 rounded-lg border border-elec-yellow/30 bg-white/[0.06]">
               <div className="flex items-center gap-2 mb-3">
                 <cert.icon className="h-6 w-6 text-elec-yellow" />
                 <h4 className="font-medium text-white text-lg">{cert.name}</h4>
               </div>
 
-              <p className="text-sm text-white/85 mb-4">{cert.purpose}</p>
+              <p className="text-sm text-white mb-4">{cert.purpose}</p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
@@ -443,9 +446,7 @@ const SpecialistOverviewCards = () => {
                   <ul className="space-y-1">
                     {cert.requirements.map((req, reqIdx) => (
                       <li key={reqIdx} className="text-xs text-white flex items-start gap-2">
-                        <CheckCircle
-                          className="h-3 w-3 text-elec-yellow mt-0.5 flex-shrink-0"
-                        />
+                        <CheckCircle className="h-3 w-3 text-elec-yellow mt-0.5 flex-shrink-0" />
                         {req}
                       </li>
                     ))}
@@ -456,9 +457,7 @@ const SpecialistOverviewCards = () => {
                   <ul className="space-y-1">
                     {cert.benefits.map((benefit, benefitIdx) => (
                       <li key={benefitIdx} className="text-xs text-white flex items-start gap-2">
-                        <TrendingUp
-                          className="h-3 w-3 text-elec-yellow mt-0.5 flex-shrink-0"
-                        />
+                        <TrendingUp className="h-3 w-3 text-elec-yellow mt-0.5 flex-shrink-0" />
                         {benefit}
                       </li>
                     ))}
@@ -473,14 +472,16 @@ const SpecialistOverviewCards = () => {
       {/* Getting Started Roadmap */}
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
-                      <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Your Path to Specialisation</CardTitle>
+          <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+            Your Path to Specialisation
+          </CardTitle>
         </CardHeader>
         <CardContent className="p-0 p-0">
           <div className="space-y-4">
             {gettingStarted.map((step, idx) => (
               <div key={idx} className="flex items-start gap-4">
                 <div className="flex-shrink-0">
-                  <div className="w-10 h-10 rounded-full bg-white/[0.06] border border-white/[0.10] flex items-center justify-center text-white/70 font-bold">
+                  <div className="w-10 h-10 rounded-full bg-white/[0.06] border border-white/[0.10] flex items-center justify-center text-white font-bold">
                     {step.step}
                   </div>
                 </div>
@@ -522,8 +523,8 @@ const SpecialistOverviewCards = () => {
             </div>
 
             <div className="bg-white/[0.06] p-6 rounded-lg border border-white/[0.10] hover:border-white/[0.10] transition-colors">
-              <Car className="h-10 w-10 text-white/70 mb-3" />
-              <h4 className="font-medium text-white/85 text-lg mb-2">EV Charging</h4>
+              <Car className="h-10 w-10 text-white mb-3" />
+              <h4 className="font-medium text-white text-lg mb-2">EV Charging</h4>
               <p className="text-sm text-white mb-3">
                 Master charging modes, protection requirements, O-PEN devices, and OZEV grant
                 installations.
@@ -534,8 +535,8 @@ const SpecialistOverviewCards = () => {
             </div>
 
             <div className="bg-white/[0.06] p-6 rounded-lg border border-white/[0.10] hover:border-white/[0.10] transition-colors">
-              <Waves className="h-10 w-10 text-white/70 mb-3" />
-              <h4 className="font-medium text-white/85 text-lg mb-2">Swimming Pools</h4>
+              <Waves className="h-10 w-10 text-white mb-3" />
+              <h4 className="font-medium text-white text-lg mb-2">Swimming Pools</h4>
               <p className="text-sm text-white mb-3">
                 Understand zone definitions, IP ratings, SELV requirements, and supplementary
                 bonding.
@@ -550,8 +551,8 @@ const SpecialistOverviewCards = () => {
 
       {/* Important Notice */}
       <Alert className="border-white/[0.10] bg-white/[0.06]">
-        <AlertTriangle className="h-5 w-5 text-white/70" />
-        <AlertDescription className="text-white/85">
+        <AlertTriangle className="h-5 w-5 text-white" />
+        <AlertDescription className="text-white">
           <strong className="text-white">Important:</strong> Specialist installations require
           additional training and certification beyond standard electrical qualifications. Always
           ensure you have the correct competencies, insurance, and scheme memberships before

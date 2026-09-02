@@ -31,14 +31,14 @@ const WeeklyProgressCard = ({
 
   return (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4 lg:col-span-1">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
         Weekly progress
       </span>
 
       <div className="space-y-2">
         <div className="flex justify-between text-[12px]">
-          <span className="text-white/55">This week</span>
-          <span className="text-white/85 font-mono">
+          <span className="text-white">This week</span>
+          <span className="text-white font-mono">
             {weeklyHours} / {targetHours} hours
           </span>
         </div>
@@ -52,16 +52,16 @@ const WeeklyProgressCard = ({
 
       <div className="space-y-1">
         <div className="flex justify-between text-[13px]">
-          <span className="text-white/85">Course learning</span>
+          <span className="text-white">Course learning</span>
           <span className="text-white font-mono">{courseHours} hours</span>
         </div>
-        <p className="text-[11px] text-white/55">
+        <p className="text-[11px] text-white">
           Time automatically tracked from online learning
         </p>
       </div>
 
       <div className="flex justify-between text-[13px]">
-        <span className="text-white/85">Total recorded time</span>
+        <span className="text-white">Total recorded time</span>
         <span className="text-white font-mono">
           {totalTime.hours}h {totalTime.minutes}m
         </span>

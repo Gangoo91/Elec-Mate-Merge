@@ -739,7 +739,7 @@ const TouchStepVoltageCalculator = () => {
                   <p className="text-sm font-medium text-white">Standards References</p>
                   <ul className="space-y-1">
                     {[
-                      'BS 7671:2018+A2:2022 Sections 411 & 412 — Protection against electric shock',
+                      'BS 7671:2018+A4:2026 Sections 411 & 412 — Protection against electric shock',
                       'BS EN 50522 — Earthing of power installations exceeding 1 kV AC',
                       'ENA TS 41-24 — Guidelines for main earthing systems in substations',
                       'IEC 60479-1 — Effects of current on human beings and livestock',

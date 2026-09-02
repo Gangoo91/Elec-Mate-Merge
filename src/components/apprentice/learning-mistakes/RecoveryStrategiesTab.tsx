@@ -72,7 +72,7 @@ const RecoveryStrategiesTab = () => {
   return (
     <div className="space-y-6">
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Mistake recovery framework
         </span>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
@@ -83,22 +83,22 @@ const RecoveryStrategiesTab = () => {
             >
               <div className="space-y-1">
                 <h3 className="text-[16px] font-semibold text-white">{step.title}</h3>
-                <span className="inline-block text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                <span className="inline-block text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                   {step.timeframe}
                 </span>
               </div>
 
-              <p className="text-[14px] text-white/85 leading-relaxed">{step.description}</p>
+              <p className="text-[14px] text-white leading-relaxed">{step.description}</p>
 
               <div className="space-y-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Key steps
                 </span>
                 <ol className="space-y-1.5">
                   {step.steps.map((stepItem, stepIndex) => (
                     <li
                       key={stepIndex}
-                      className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                      className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                     >
                       <span className="text-elec-yellow font-mono text-[12px] mt-0.5 flex-shrink-0">
                         {stepIndex + 1}.
@@ -110,14 +110,14 @@ const RecoveryStrategiesTab = () => {
               </div>
 
               <div className="space-y-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Remember
                 </span>
                 <div className="flex flex-wrap gap-1.5">
                   {step.tips.map((tip, tipIndex) => (
                     <span
                       key={tipIndex}
-                      className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
+                      className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
                     >
                       {tip}
                     </span>
@@ -130,7 +130,7 @@ const RecoveryStrategiesTab = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Recovery success stories
         </span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -140,13 +140,13 @@ const RecoveryStrategiesTab = () => {
               className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
             >
               <h4 className="text-[16px] font-semibold text-white">{story.title}</h4>
-              <p className="text-[14px] text-white/85 leading-relaxed">{story.description}</p>
+              <p className="text-[14px] text-white leading-relaxed">{story.description}</p>
               <div className="flex flex-col gap-1.5 pt-1">
-                <span className="inline-block w-fit text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                <span className="inline-block w-fit text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                   {story.outcome}
                 </span>
-                <div className="text-[13px] text-white/85">
-                  <span className="text-white/55">Key lesson: </span>
+                <div className="text-[13px] text-white">
+                  <span className="text-white">Key lesson: </span>
                   {story.lesson}
                 </div>
               </div>
@@ -156,10 +156,10 @@ const RecoveryStrategiesTab = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Why honest reporting is safe
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           A just culture separates honest mistakes from genuine recklessness. Reporting an error
           early lets it be put right before anyone is hurt — that is exactly what a good employer
           wants from an apprentice. Covering up a fault is what creates real danger and real
@@ -174,7 +174,7 @@ const RecoveryStrategiesTab = () => {
           ].map((point, idx) => (
             <li
               key={idx}
-              className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+              className="text-[14px] text-white leading-relaxed flex items-start gap-2"
             >
               <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
               <span>{point}</span>

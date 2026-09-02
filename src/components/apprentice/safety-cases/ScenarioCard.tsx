@@ -22,14 +22,14 @@ const ScenarioCard: React.FC<ScenarioCardProps> = ({ scenario, onClick, isComple
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1 min-w-0 space-y-2">
           <h3 className="text-white font-medium text-[15px] leading-snug">{scenario.title}</h3>
-          <div className="flex items-center gap-3 text-[12px] text-white/70">
+          <div className="flex items-center gap-3 text-[12px] text-white">
             <span>{scenario.difficulty}</span>
-            <span className="text-white/25">·</span>
+            <span className="text-white">·</span>
             <span className="flex items-center gap-1">
               <Clock className="h-3 w-3" />
               {scenario.estimatedMinutes} min
             </span>
-            <span className="text-white/25">·</span>
+            <span className="text-white">·</span>
             <span className="flex items-center gap-1">
               <MapPin className="h-3 w-3" />
               {scenario.location.split(',')[1]?.trim() || scenario.location}
@@ -40,7 +40,7 @@ const ScenarioCard: React.FC<ScenarioCardProps> = ({ scenario, onClick, isComple
           {isCompleted ? (
             <CheckCircle className="h-5 w-5 text-elec-yellow" />
           ) : (
-            <ChevronRight className="h-5 w-5 text-white/70" />
+            <ChevronRight className="h-5 w-5 text-white" />
           )}
         </div>
       </div>

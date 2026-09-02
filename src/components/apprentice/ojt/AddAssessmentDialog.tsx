@@ -1,21 +1,16 @@
 import { useState } from 'react';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetDescription,
-} from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+import { FormSheet } from '@/components/forms/FormSheet';
+import { SelectField } from '@/components/forms/SelectField';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { Eyebrow } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  grid2Cn,
+  inputCn,
+  labelCn,
+  textareaCn,
+} from '@/components/forms/fieldStyles';
+import { cn } from '@/lib/utils';
 
 interface AddAssessmentDialogProps {
   open: boolean;
@@ -26,11 +21,19 @@ interface AddAssessmentDialogProps {
 
 // Common electrical assessments — quick-fill templates.
 const REAL_ASSESSMENTS = [
-  { title: 'BS 7671 18th Edition Wiring Regulations', unitCode: 'C&G 2382-18', type: 'Written' },
-  { title: 'Inspection & Testing of Electrical Installations', unitCode: 'C&G 2391-52', type: 'Practical' },
+  { title: 'BS 7671 18th Edition Wiring Regulations', unitCode: 'C&G 2382-22', type: 'Written' },
+  {
+    title: 'Inspection & Testing of Electrical Installations',
+    unitCode: 'C&G 2391-52',
+    type: 'Practical',
+  },
   { title: 'Initial Verification and Certification', unitCode: 'C&G 2391-10', type: 'Written' },
   { title: 'Safe Isolation of Electrical Circuits', unitCode: 'C&G 2391-50', type: 'Practical' },
-  { title: 'Electrical Installation Work (Construction)', unitCode: 'BTEC Unit 1', type: 'Portfolio' },
+  {
+    title: 'Electrical Installation Work (Construction)',
+    unitCode: 'BTEC Unit 1',
+    type: 'Portfolio',
+  },
   { title: 'Electrical Systems Design', unitCode: 'BTEC Unit 5', type: 'Written' },
   { title: 'Motor Control Circuits', unitCode: 'NVQ Unit 3.1', type: 'Practical' },
   { title: 'Emergency Lighting Systems', unitCode: 'C&G 2391-651', type: 'Written' },
@@ -94,130 +97,111 @@ const AddAssessmentDialog = ({ open, onOpenChange, onAddAssessment }: AddAssessm
     reset();
   };
 
+  const footer = (
+    <div className="grid grid-cols-2 gap-2.5">
+      <button type="button" onClick={() => onOpenChange(false)} className={buttonSecondaryCn}>
+        Cancel
+      </button>
+      <button type="button" onClick={handleSubmit} disabled={!valid} className={buttonPrimaryCn}>
+        Add assessment
+      </button>
+    </div>
+  );
+
   return (
-    <Sheet
+    <FormSheet
       open={open}
       onOpenChange={(v) => {
         onOpenChange(v);
         if (!v) reset();
       }}
+      eyebrow="New assessment"
+      title="Track an assessment"
+      description="Add an upcoming assessment so its deadline doesn't sneak up on you."
+      footer={footer}
     >
-      <SheetContent
-        side="bottom"
-        className="h-[90vh] sm:h-[84vh] rounded-t-3xl bg-[hsl(0_0%_8%)] border-white/[0.06] p-0"
-      >
-        <div className="w-12 h-1 bg-white/15 rounded-full mx-auto mt-3 mb-2" />
-        <div className="flex flex-col h-full">
-          <SheetHeader className="px-4 sm:px-6 pb-4">
-            <SheetTitle className="text-left">
-              <Eyebrow>New assessment</Eyebrow>
-              <h2 className="text-[20px] sm:text-[24px] font-semibold tracking-tight text-white mt-1">
-                Track an assessment
-              </h2>
-            </SheetTitle>
-            <SheetDescription className="text-left text-[13px] text-white/70 leading-snug">
-              Add an upcoming assessment so its deadline doesn't sneak up on you.
-            </SheetDescription>
-          </SheetHeader>
+      <div>
+        <label className={labelCn}>Quick fill (common assessments)</label>
+        <SelectField
+          value={template}
+          onValueChange={applyTemplate}
+          placeholder="Pick a common assessment, or enter your own"
+          title="Common assessments"
+          options={[
+            ...REAL_ASSESSMENTS.map((a) => ({
+              value: a.title,
+              label: `${a.title} · ${a.unitCode}`,
+            })),
+            { value: CUSTOM, label: 'Enter my own' },
+          ]}
+        />
+      </div>
 
-          <div className="flex-1 overflow-y-auto px-4 sm:px-6 pb-32 space-y-4">
-            <div className="space-y-2">
-              <Eyebrow>Quick fill (common assessments)</Eyebrow>
-              <Select value={template} onValueChange={applyTemplate}>
-                <SelectTrigger className="h-11 touch-manipulation bg-[hsl(0_0%_10%)] border-white/[0.08] text-[13px] text-white">
-                  <SelectValue placeholder="Pick a common assessment, or enter your own" />
-                </SelectTrigger>
-                <SelectContent className="max-h-[300px]">
-                  {REAL_ASSESSMENTS.map((a) => (
-                    <SelectItem key={a.title} value={a.title}>
-                      {a.title} · {a.unitCode}
-                    </SelectItem>
-                  ))}
-                  <SelectItem value={CUSTOM}>Enter my own</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+      <div>
+        <label className={labelCn} htmlFor="assessment-title">
+          Assessment title
+        </label>
+        <Input
+          id="assessment-title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="e.g. BS 7671 18th Edition"
+          className={inputCn}
+        />
+      </div>
 
-            <div className="space-y-2">
-              <Eyebrow>Assessment title</Eyebrow>
-              <Input
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="e.g. BS 7671 18th Edition"
-                className="h-11 touch-manipulation bg-[hsl(0_0%_10%)] border-white/[0.08] text-[13px] text-white placeholder:text-white/40 focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20"
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-2.5">
-              <div className="space-y-2">
-                <Eyebrow>Unit / course code</Eyebrow>
-                <Input
-                  value={unitCode}
-                  onChange={(e) => setUnitCode(e.target.value)}
-                  placeholder="e.g. C&G 2382-18"
-                  className="h-11 touch-manipulation bg-[hsl(0_0%_10%)] border-white/[0.08] text-[13px] text-white placeholder:text-white/40 focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20"
-                />
-              </div>
-              <div className="space-y-2">
-                <Eyebrow>Type</Eyebrow>
-                <Select value={type} onValueChange={setType}>
-                  <SelectTrigger className="h-11 touch-manipulation bg-[hsl(0_0%_10%)] border-white/[0.08] text-[13px] text-white">
-                    <SelectValue placeholder="Type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {ASSESSMENT_TYPES.map((t) => (
-                      <SelectItem key={t.value} value={t.value}>
-                        {t.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <Eyebrow>Description (optional)</Eyebrow>
-              <textarea
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                placeholder="What this assessment covers."
-                rows={3}
-                className="w-full px-3 py-2.5 rounded-lg bg-[hsl(0_0%_10%)] border border-white/[0.08] text-[13px] text-white placeholder:text-white/40 leading-snug focus:outline-none focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20 touch-manipulation resize-none"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Eyebrow>Due date</Eyebrow>
-              <Input
-                type="date"
-                value={dueDate}
-                onChange={(e) => setDueDate(e.target.value)}
-                className="h-11 touch-manipulation bg-[hsl(0_0%_10%)] border-white/[0.08] text-[13px] text-white"
-              />
-            </div>
-          </div>
-
-          <div className="px-4 sm:px-6 py-3 border-t border-white/[0.06] bg-[hsl(0_0%_8%)] pb-20 sm:pb-3">
-            <div className="grid grid-cols-2 gap-2">
-              <Button
-                variant="outline"
-                onClick={() => onOpenChange(false)}
-                className="h-12 rounded-xl border border-white/[0.08] bg-[hsl(0_0%_10%)] text-white text-[13px] font-semibold hover:bg-white/[0.04]"
-              >
-                Cancel
-              </Button>
-              <Button
-                onClick={handleSubmit}
-                disabled={!valid}
-                className="h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70"
-              >
-                Add assessment
-              </Button>
-            </div>
-          </div>
+      <div className={grid2Cn}>
+        <div>
+          <label className={labelCn} htmlFor="assessment-code">
+            Unit / course code
+          </label>
+          <Input
+            id="assessment-code"
+            value={unitCode}
+            onChange={(e) => setUnitCode(e.target.value)}
+            placeholder="e.g. C&G 2382-22"
+            className={inputCn}
+          />
         </div>
-      </SheetContent>
-    </Sheet>
+        <div>
+          <label className={labelCn}>Type</label>
+          <SelectField
+            value={type}
+            onValueChange={setType}
+            placeholder="Type"
+            title="Assessment type"
+            options={ASSESSMENT_TYPES.map((t) => ({ value: t.value, label: t.label }))}
+          />
+        </div>
+      </div>
+
+      <div>
+        <label className={labelCn} htmlFor="assessment-description">
+          Description (optional)
+        </label>
+        <textarea
+          id="assessment-description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder="What this assessment covers."
+          rows={3}
+          className={cn(textareaCn, 'w-full resize-none')}
+        />
+      </div>
+
+      <div>
+        <label className={labelCn} htmlFor="assessment-due">
+          Due date
+        </label>
+        <Input
+          id="assessment-due"
+          type="date"
+          value={dueDate}
+          onChange={(e) => setDueDate(e.target.value)}
+          className={inputCn}
+        />
+      </div>
+    </FormSheet>
   );
 };
 

@@ -80,9 +80,9 @@ export function VideoCard({
         >
           {video.title}
         </h4>
-        <div className="flex items-baseline gap-2 text-[11px] text-white/55">
+        <div className="flex items-baseline gap-2 text-[11px] text-white">
           <span>{video.channel}</span>
-          <span className="text-white/25">·</span>
+          <span className="text-white">·</span>
           <span className="uppercase tracking-[0.18em] text-[10px]">{video.level}</span>
         </div>
       </button>

@@ -11,7 +11,7 @@ const QuizControls = ({
 }: QuizControlsProps) => {
   return (
     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-      <span className="text-[12px] text-white/85 font-mono">
+      <span className="text-[12px] text-white font-mono">
         {answeredCount}/{totalQuestions} answered
       </span>
       <div className="flex flex-col sm:flex-row gap-2">

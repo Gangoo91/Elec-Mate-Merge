@@ -413,7 +413,7 @@ const WagoConnectionMethods = () => {
                     variant="outline"
                     onClick={() => setActiveStep(Math.max(0, activeStep - 1))}
                     disabled={activeStep === 0}
-                    className="h-11 border-white/20 text-white hover:bg-white/10 disabled:opacity-50 touch-manipulation"
+                    className="h-11 border-white/20 text-white hover:bg-white/10 disabled:text-white/70 touch-manipulation"
                   >
                     Previous Step
                   </Button>
@@ -424,7 +424,7 @@ const WagoConnectionMethods = () => {
                       )
                     }
                     disabled={activeStep === selectedConnector.connectionSteps.length - 1}
-                    className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-95 transition-all disabled:opacity-50"
+                    className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-95 transition-all disabled:bg-white/[0.08] disabled:text-white/70"
                   >
                     Next Step
                   </Button>

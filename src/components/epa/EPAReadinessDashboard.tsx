@@ -51,10 +51,7 @@ const PRIORITY_LABELS = {
 function Eyebrow({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
     <span
-      className={cn(
-        'text-[10px] font-medium uppercase tracking-[0.18em] text-white/70',
-        className
-      )}
+      className={cn('text-[10px] font-medium uppercase tracking-[0.18em] text-white', className)}
     >
       {children}
     </span>
@@ -69,7 +66,7 @@ function ComponentBar({ component }: { component: ReadinessComponent }) {
     <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
       <div className="flex items-baseline justify-between gap-3">
         <Eyebrow>{component.label}</Eyebrow>
-        <span className="text-[10px] uppercase tracking-[0.18em] text-white/70 font-mono">
+        <span className="text-[10px] uppercase tracking-[0.18em] text-white font-mono">
           {Math.round(component.weight * 100)}%
         </span>
       </div>
@@ -78,9 +75,7 @@ function ComponentBar({ component }: { component: ReadinessComponent }) {
           {score}
         </span>
         {component.detail && (
-          <span className="text-[12px] text-white/70 leading-snug text-right">
-            {component.detail}
-          </span>
+          <span className="text-[12px] text-white leading-snug text-right">{component.detail}</span>
         )}
       </div>
       <div className="h-1 w-full bg-white/[0.04] rounded-full overflow-hidden">
@@ -220,7 +215,7 @@ function WeakACsPanel({
   if (loading) {
     return (
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 flex items-center gap-3">
-        <Loader2 className="h-4 w-4 animate-spin text-white/70" />
+        <Loader2 className="h-4 w-4 animate-spin text-white" />
         <Eyebrow>Loading weak ACs…</Eyebrow>
       </div>
     );
@@ -230,7 +225,7 @@ function WeakACsPanel({
     return (
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
         <Eyebrow>Where to focus</Eyebrow>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           Every assessment criterion in your course has at least one piece of evidence — strong
           coverage. Keep adding depth and quality.
         </p>
@@ -242,7 +237,7 @@ function WeakACsPanel({
     <div className="space-y-3">
       <div className="flex items-baseline justify-between gap-3">
         <Eyebrow>Where to focus · top {weak.length}</Eyebrow>
-        <span className="text-[11px] text-white/70 font-mono">
+        <span className="text-[11px] text-white font-mono">
           weakest ACs · uncovered or claimed-only
         </span>
       </div>
@@ -258,9 +253,9 @@ function WeakACsPanel({
               </span>
               <div className="flex-1 min-w-0 space-y-1">
                 <div className="flex items-baseline gap-2 flex-wrap">
-                  <span className="text-[11px] font-mono text-white/85">{w.acRef}</span>
+                  <span className="text-[11px] font-mono text-white">{w.acRef}</span>
                   {w.unitCode && (
-                    <span className="text-[10px] uppercase tracking-[0.14em] text-white/70">
+                    <span className="text-[10px] uppercase tracking-[0.14em] text-white">
                       Unit {w.unitCode}
                     </span>
                   )}
@@ -268,14 +263,14 @@ function WeakACsPanel({
                     className={cn(
                       'text-[10px] font-medium uppercase tracking-[0.14em] px-1.5 py-0 rounded-md border',
                       w.status === 'no-evidence'
-                        ? 'border-white/[0.08] text-white/70'
+                        ? 'border-white/[0.08] text-white'
                         : 'border-elec-yellow/30 text-elec-yellow'
                     )}
                   >
                     {w.status === 'no-evidence' ? 'No evidence' : 'Claimed only'}
                   </span>
                 </div>
-                <p className="text-[13px] text-white/85 leading-snug">{w.acText}</p>
+                <p className="text-[13px] text-white leading-snug">{w.acText}</p>
               </div>
             </div>
             {onTargetAC && (
@@ -325,7 +320,7 @@ export function EPAReadinessDashboard({
   if (isLoading && !data) {
     return (
       <div className="px-4 sm:px-6 py-12 flex items-center gap-3">
-        <Loader2 className="h-4 w-4 animate-spin text-white/70" />
+        <Loader2 className="h-4 w-4 animate-spin text-white" />
         <Eyebrow>Calculating readiness — analysing portfolio &amp; mocks</Eyebrow>
       </div>
     );
@@ -335,7 +330,7 @@ export function EPAReadinessDashboard({
     return (
       <div className="px-4 sm:px-6 py-12 space-y-4">
         <Eyebrow>EPA readiness</Eyebrow>
-        <p className="text-[14px] text-white/85 leading-relaxed max-w-md">
+        <p className="text-[14px] text-white leading-relaxed max-w-md">
           Start building your portfolio and taking mock assessments to see your readiness score.
         </p>
         <button
@@ -357,7 +352,7 @@ export function EPAReadinessDashboard({
           <button
             onClick={handleRecalc}
             disabled={recalcing}
-            className="inline-flex items-center gap-1.5 h-7 px-2 rounded-md text-[11px] text-white/70 hover:text-white/85 hover:bg-white/[0.04] transition-colors touch-manipulation disabled:opacity-50"
+            className="inline-flex items-center gap-1.5 h-7 px-2 rounded-md text-[11px] text-white hover:text-white/85 hover:bg-white/[0.04] transition-colors touch-manipulation disabled:text-white/70"
           >
             <RefreshCw className={cn('h-3 w-3', recalcing && 'animate-spin')} />
             Recalculate
@@ -367,7 +362,7 @@ export function EPAReadinessDashboard({
           <span className="text-[64px] sm:text-[80px] font-mono font-semibold text-white leading-none tabular-nums">
             {data.overallScore}
           </span>
-          <span className="text-[20px] text-white/70 font-mono">/ 100</span>
+          <span className="text-[20px] text-white font-mono">/ 100</span>
         </div>
         {/*
          * This score is Elec-Mate's own estimate, not a verdict on the gateway.
@@ -379,7 +374,7 @@ export function EPAReadinessDashboard({
          * and two mock scores) is an official gateway criterion, and the 70 %
          * is this model's own target rather than a published rule.
          */}
-        <p className="text-[14px] text-white/85 leading-relaxed max-w-xl">
+        <p className="text-[14px] text-white leading-relaxed max-w-xl">
           {data.overallScore >= 70
             ? 'You are tracking well across everything this simulator can measure. Take it to your tutor as evidence you are ready to have the gateway conversation.'
             : 'Some areas are still light. The focus list below is sorted by how much each one would move this score.'}
@@ -388,7 +383,7 @@ export function EPAReadinessDashboard({
         {!allGood && (
           <div className="rounded-xl border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06] p-4 sm:p-5 space-y-1.5">
             <Eyebrow className="text-red-400">More preparation needed</Eyebrow>
-            <p className="text-[14px] text-white/85 leading-relaxed">
+            <p className="text-[14px] text-white leading-relaxed">
               At least one area is below 70 %. The bars below show where you stand and the focus
               list is ordered by impact.
             </p>
@@ -397,7 +392,7 @@ export function EPAReadinessDashboard({
         {allGood && (
           <div className="rounded-xl border border-white/[0.12] border-l-[3px] border-l-elec-yellow bg-white/[0.06] p-4 sm:p-5 space-y-1.5">
             <Eyebrow className="text-elec-yellow">Ready to have the conversation</Eyebrow>
-            <p className="text-[14px] text-white/85 leading-relaxed">
+            <p className="text-[14px] text-white leading-relaxed">
               Every area sits at 70 % or above. Speak to your tutor or employer about the gateway —
               they decide when you go through it.
             </p>
@@ -408,12 +403,12 @@ export function EPAReadinessDashboard({
             measures. Sourced from the electrotechnical assessment plan. */}
         <div className="rounded-xl border border-white/[0.12] bg-white/[0.06] p-4 sm:p-5 space-y-1.5">
           <Eyebrow>What the gateway actually needs</Eyebrow>
-          <p className="text-[14px] text-white/85 leading-relaxed">
+          <p className="text-[14px] text-white leading-relaxed">
             Your employer and training provider put you through the gateway, not this score. For the
             electrotechnical standard you apply for the AM2 once the training making up your
             qualification is complete, and the apprenticeship certificate also needs Level 2 English
-            and maths. Your portfolio evidences the performance outcomes inside the qualification and
-            is assessed by your centre.
+            and maths. Your portfolio evidences the performance outcomes inside the qualification
+            and is assessed by your centre.
           </p>
         </div>
       </section>
@@ -452,14 +447,14 @@ export function EPAReadinessDashboard({
                             ? 'border-red-500/30 text-red-400 bg-white/[0.06]'
                             : gap.priority === 'medium'
                               ? 'border-elec-yellow/30 text-elec-yellow bg-white/[0.06]'
-                              : 'border-white/[0.08] text-white/70'
+                              : 'border-white/[0.08] text-white'
                         )}
                       >
                         {PRIORITY_LABELS[gap.priority]}
                       </span>
                     </div>
-                    <p className="text-[13px] text-white/85 leading-relaxed">{gap.description}</p>
-                    <p className="text-[13px] text-white/85 leading-relaxed">{gap.action}</p>
+                    <p className="text-[13px] text-white leading-relaxed">{gap.description}</p>
+                    <p className="text-[13px] text-white leading-relaxed">{gap.action}</p>
                   </div>
                 </div>
               </li>
@@ -489,7 +484,7 @@ export function EPAReadinessDashboard({
         </button>
       </section>
 
-      <p className="text-[10px] text-white/70 font-mono">
+      <p className="text-[10px] text-white font-mono">
         Last calculated{' '}
         {data.calculatedAt.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}
       </p>

@@ -54,7 +54,7 @@ const RiskCalculationMatrix = ({ onRiskCalculated }: RiskCalculationMatrixProps)
   return (
     <div className="space-y-5 animate-fade-in">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Risk calculation matrix
         </span>
         <h3 className="text-[16px] sm:text-[18px] font-medium text-white">
@@ -63,7 +63,7 @@ const RiskCalculationMatrix = ({ onRiskCalculated }: RiskCalculationMatrixProps)
       </div>
 
       <div className="space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Likelihood of occurrence
         </span>
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
@@ -85,7 +85,7 @@ const RiskCalculationMatrix = ({ onRiskCalculated }: RiskCalculationMatrixProps)
                   {level.value}
                 </div>
                 <div className="text-[12px] text-white">{level.label}</div>
-                <div className="text-[10px] text-white/70 mt-1 leading-relaxed">
+                <div className="text-[10px] text-white mt-1 leading-relaxed">
                   {level.description}
                 </div>
               </button>
@@ -95,7 +95,7 @@ const RiskCalculationMatrix = ({ onRiskCalculated }: RiskCalculationMatrixProps)
       </div>
 
       <div className="space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Severity of consequences
         </span>
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
@@ -117,7 +117,7 @@ const RiskCalculationMatrix = ({ onRiskCalculated }: RiskCalculationMatrixProps)
                   {level.value}
                 </div>
                 <div className="text-[12px] text-white">{level.label}</div>
-                <div className="text-[10px] text-white/70 mt-1 leading-relaxed">
+                <div className="text-[10px] text-white mt-1 leading-relaxed">
                   {level.description}
                 </div>
               </button>
@@ -134,15 +134,15 @@ const RiskCalculationMatrix = ({ onRiskCalculated }: RiskCalculationMatrixProps)
         >
           <div className="flex items-baseline justify-between">
             <span
-              className={`text-[10px] font-medium uppercase tracking-[0.18em] ${isDanger ? 'text-red-300' : 'text-white/70'}`}
+              className={`text-[10px] font-medium uppercase tracking-[0.18em] ${isDanger ? 'text-red-300' : 'text-white'}`}
             >
               Risk calculation
             </span>
-            <span className="text-[12px] text-white/85 font-mono">{riskLabel}</span>
+            <span className="text-[12px] text-white font-mono">{riskLabel}</span>
           </div>
           <div className="grid grid-cols-3 gap-2">
             <div className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-3 text-center space-y-1">
-              <div className="text-[10px] uppercase tracking-[0.18em] text-white/70">
+              <div className="text-[10px] uppercase tracking-[0.18em] text-white">
                 Likelihood
               </div>
               <div className="text-[20px] font-semibold text-white font-mono">
@@ -150,13 +150,13 @@ const RiskCalculationMatrix = ({ onRiskCalculated }: RiskCalculationMatrixProps)
               </div>
             </div>
             <div className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-3 text-center space-y-1">
-              <div className="text-[10px] uppercase tracking-[0.18em] text-white/70">Severity</div>
+              <div className="text-[10px] uppercase tracking-[0.18em] text-white">Severity</div>
               <div className="text-[20px] font-semibold text-white font-mono">
                 {selectedSeverity}
               </div>
             </div>
             <div className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-3 text-center space-y-1">
-              <div className="text-[10px] uppercase tracking-[0.18em] text-white/70">Score</div>
+              <div className="text-[10px] uppercase tracking-[0.18em] text-white">Score</div>
               <div
                 className={`text-[20px] font-semibold font-mono ${isDanger ? 'text-red-300' : 'text-elec-yellow'}`}
               >

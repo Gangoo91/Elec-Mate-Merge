@@ -6,6 +6,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useToast } from '@/hooks/use-toast';
 import { SubmitWorkOtjSheet } from './SubmitWorkOtjSheet';
+import { textareaCn } from '@/components/forms/fieldStyles';
 
 interface AiPrefill {
   title: string;
@@ -230,7 +231,9 @@ export function MyOtjSubmitCard() {
 
   return (
     <>
-      <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
+      <section
+        className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
+      >
         <div className="px-4 sm:px-5 py-4 sm:py-5">
           {/* Eyebrow */}
           <div className="flex items-baseline justify-between gap-3 flex-wrap">
@@ -252,8 +255,8 @@ export function MyOtjSubmitCard() {
           </div>
 
           <p className="mt-3 text-[11.5px] sm:text-[12px] text-white leading-snug">
-            Your apprenticeship has a set number of off-the-job training hours to reach by
-            gateway. Submit work activities here and your tutor signs them off.
+            Your apprenticeship has a set number of off-the-job training hours to reach by gateway.
+            Submit work activities here and your tutor signs them off.
           </p>
 
           {/* CTA row — primary submit, secondary AI write-up shortcut. The
@@ -315,7 +318,7 @@ export function MyOtjSubmitCard() {
                 placeholder="e.g. rewired a kitchen consumer unit with my supervisor, took 4 hours, learned how to terminate the SWA properly"
                 rows={3}
                 disabled={aiPromptLoading}
-                className="w-full px-3 py-2 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[12.5px] text-white placeholder:text-white leading-snug focus:outline-none focus:border-white/[0.06] focus:ring-1 focus:ring-white/10 touch-manipulation resize-none disabled:opacity-60"
+                className={cn(textareaCn, 'w-full resize-none')}
               />
               <div className="flex items-center justify-between gap-2">
                 <p className="text-[10.5px] text-white leading-snug">
@@ -330,7 +333,7 @@ export function MyOtjSubmitCard() {
                     aiPromptLoading
                       ? // 🔴 Faded volt over near-black goes muddy brown. A
                         // disabled primary must go NEUTRAL, not translucent volt.
-                        'bg-white/[0.08] text-white/70 cursor-not-allowed'
+                        'bg-white/[0.08] text-white cursor-not-allowed'
                       : aiPromptText.trim().length < 8
                         ? 'bg-white/[0.05] text-white'
                         : 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
@@ -444,7 +447,9 @@ function RowItem({ row }: { row: OtjRow }) {
 
 function Skeleton() {
   return (
-    <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
+    <section
+      className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
+    >
       <div className="px-4 sm:px-5 py-4 sm:py-5 space-y-4">
         <div className="h-3 w-32 rounded-full bg-white/[0.05]" />
         <div className="grid grid-cols-3 gap-3">

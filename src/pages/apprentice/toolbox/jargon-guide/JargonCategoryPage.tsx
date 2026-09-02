@@ -9,13 +9,15 @@ import { useState, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Input } from '@/components/ui/input';
-import { ArrowLeft, Search, X } from 'lucide-react';
+import { Search, X } from 'lucide-react';
 import { siteJargonTerms, siteJargonCategories } from '@/data/apprentice/siteJargonData';
-import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
-import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
-import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { itemVariants } from '@/components/college/primitives';
+import { HubSubPage } from '@/components/hub/HubSubPage';
+import { HubPage, HubBody, HubMasthead, HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { Eyebrow } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 import JargonTermCard from '@/components/apprentice/site-jargon/JargonTermCard';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const categoryEmoji: Record<string, string> = {
   'electrical-terms': '⚡',
@@ -64,25 +66,14 @@ const JargonCategoryPage = () => {
 
   if (!category) {
     return (
-      <PageFrame className="px-4 sm:px-6 lg:px-8">
-        <motion.div variants={itemVariants}>
-          <button
-            onClick={() => navigate('/apprentice/toolbox/site-jargon')}
-            className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back
-          </button>
-        </motion.div>
-        <motion.div variants={itemVariants}>
-          <PageHero
-            eyebrow="Apprentice · Jargon"
-            title="Category not found"
-            description="This jargon category doesn't exist."
-            tone="yellow"
-          />
-        </motion.div>
-      </PageFrame>
+      <HubSubPage
+        section="Jargon"
+        title="Category not found"
+        backTo="/apprentice/toolbox/site-jargon"
+        description="This jargon category doesn't exist."
+      >
+        <div />
+      </HubSubPage>
     );
   }
 
@@ -98,7 +89,12 @@ const JargonCategoryPage = () => {
 
         {/* ── Stats ───────────────────────────────────────────────── */}
         <motion.div variants={itemVariants}>
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+          <div
+            className={cn(
+              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
+              CARD_SURFACE
+            )}
+          >
             <div className="flex items-baseline justify-between gap-3 flex-wrap">
               <Eyebrow>Category overview</Eyebrow>
               <span className="text-[12px] font-mono tabular-nums text-elec-yellow">
@@ -107,12 +103,12 @@ const JargonCategoryPage = () => {
             </div>
             <div className="flex flex-wrap gap-1.5">
               {basicCount > 0 && (
-                <span className="inline-flex items-center h-7 px-2 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[11px] font-medium text-elec-yellow">
+                <span className="inline-flex items-center h-7 px-2 rounded-md border border-elec-yellow/30 bg-white/[0.05] text-[11px] font-medium text-elec-yellow">
                   <span className="font-mono tabular-nums mr-1">{basicCount}</span> basic
                 </span>
               )}
               {intermediateCount > 0 && (
-                <span className="inline-flex items-center h-7 px-2 rounded-md border border-white/[0.10] bg-white/[0.03] text-[11px] font-medium text-white/85">
+                <span className="inline-flex items-center h-7 px-2 rounded-md border border-white/[0.10] bg-white/[0.03] text-[11px] font-medium text-white">
                   <span className="font-mono tabular-nums mr-1">{intermediateCount}</span>{' '}
                   intermediate
                 </span>
@@ -129,12 +125,12 @@ const JargonCategoryPage = () => {
         {/* ── Search ──────────────────────────────────────────────── */}
         <motion.div variants={itemVariants}>
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40 pointer-events-none" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
             <Input
               placeholder={`Search ${category.name.toLowerCase()}…`}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="h-11 pl-10 pr-10 touch-manipulation bg-[hsl(0_0%_10%)] border border-white/[0.08] text-[13px] focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20 placeholder:text-white/40"
+              className="h-11 rounded-xl border border-white/[0.12] bg-white/[0.06] pl-10 pr-10 text-base text-white placeholder:text-white/40 caret-elec-yellow focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation"
             />
             {searchTerm && (
               <button
@@ -142,7 +138,7 @@ const JargonCategoryPage = () => {
                 className="absolute right-2 top-1/2 -translate-y-1/2 h-9 w-9 flex items-center justify-center rounded-full active:bg-white/[0.06] touch-manipulation"
                 aria-label="Clear search"
               >
-                <X className="h-4 w-4 text-white/55" />
+                <X className="h-4 w-4 text-white" />
               </button>
             )}
           </div>
@@ -174,8 +170,8 @@ const JargonCategoryPage = () => {
                 className={cn(
                   'inline-flex items-center gap-1.5 h-8 px-3 rounded-md border text-[11.5px] font-medium touch-manipulation active:scale-[0.98] transition-all',
                   isActive
-                    ? 'border-elec-yellow/30 bg-elec-yellow/[0.06] text-elec-yellow'
-                    : 'border-white/[0.08] bg-white/[0.02] text-white/85 hover:bg-white/[0.04]'
+                    ? 'border-elec-yellow/30 bg-white/[0.05] text-elec-yellow'
+                    : 'border-white/[0.08] bg-white/[0.02] text-white hover:bg-white/[0.04]'
                 )}
               >
                 <span>{labelMap[level]}</span>
@@ -196,7 +192,7 @@ const JargonCategoryPage = () => {
 
         {/* ── Terms ───────────────────────────────────────────────── */}
         <motion.section variants={itemVariants} className="space-y-3">
-          <SectionHeader eyebrow="Terms" title={`${filteredTerms.length} on screen`} />
+          <HubSectionHeading>{`${filteredTerms.length} on screen`}</HubSectionHeading>
           {filteredTerms.length > 0 ? (
             <div className="space-y-2.5">
               {filteredTerms.map((term, i) => (
@@ -204,9 +200,14 @@ const JargonCategoryPage = () => {
               ))}
             </div>
           ) : (
-            <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-6 text-center space-y-2">
-              <Search className="h-5 w-5 text-white/40 mx-auto" />
-              <p className="text-[13px] text-white/55">
+            <div
+              className={cn(
+                'rounded-2xl border border-elec-yellow/35 p-6 text-center space-y-2',
+                CARD_SURFACE
+              )}
+            >
+              <Search className="h-5 w-5 text-white mx-auto" />
+              <p className="text-[13px] text-white">
                 No terms match your filters. Try adjusting your search.
               </p>
             </div>

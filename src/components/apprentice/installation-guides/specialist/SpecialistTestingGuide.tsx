@@ -80,7 +80,7 @@ const SpecialistTestingGuide = () => {
       criticalValues: [
         { parameter: 'SELV Voltage', value: 'Max 12V AC' },
         { parameter: 'Bonding Resistance', value: 'Less than 0.05 ohms' },
-        { parameter: 'RCD Trip', value: '30mA in less than 40ms' },
+        { parameter: 'RCD Trip', value: '30mA in less than 300ms at IΔn' },
       ],
     },
     {
@@ -147,7 +147,7 @@ const SpecialistTestingGuide = () => {
       ],
       criticalValues: [
         { parameter: '110V to Earth', value: 'Max 55V per phase' },
-        { parameter: 'RCD Trip (socket outlets)', value: '30mA in less than 40ms' },
+        { parameter: 'RCD Trip (socket outlets)', value: '30mA in less than 300ms at IΔn' },
         { parameter: 'Earth Electrode', value: 'Appropriate for RCD rating' },
       ],
     },
@@ -784,17 +784,19 @@ const SpecialistTestingGuide = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Documentation Requirements</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              Documentation Requirements
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4 p-0">
           {documentationRequirements.map((doc, idx) => (
             <div key={idx} className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
-              <h4 className="font-medium text-white/85 mb-3">{doc.location}</h4>
+              <h4 className="font-medium text-white mb-3">{doc.location}</h4>
               <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
                 {doc.requiredDocs.map((item, docIdx) => (
                   <li key={docIdx} className="flex items-start gap-2 text-sm">
-                    <ClipboardCheck className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
+                    <ClipboardCheck className="h-4 w-4 text-white mt-0.5 flex-shrink-0" />
                     <span className="text-white">{item}</span>
                   </li>
                 ))}
@@ -808,13 +810,15 @@ const SpecialistTestingGuide = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Periodic Inspection Frequencies</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              Periodic Inspection Frequencies
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4 p-0">
           <Alert className="border-white/[0.10] bg-white/[0.06]">
-            <Info className="h-4 w-4 text-white/70" />
-            <AlertDescription className="text-white/85 text-sm">
+            <Info className="h-4 w-4 text-white" />
+            <AlertDescription className="text-white text-sm">
               These are MAXIMUM recommended intervals from IET Guidance Note 3. More frequent
               inspection may be required based on use, environmental conditions, or previous
               findings.
@@ -825,10 +829,10 @@ const SpecialistTestingGuide = () => {
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-white/[0.10]">
-                  <th className="text-left py-2 text-white/85">Location Type</th>
-                  <th className="text-left py-2 text-white/85">Max Interval</th>
-                  <th className="text-left py-2 text-white/85">Notes</th>
-                  <th className="text-left py-2 text-white/85">Focus Areas</th>
+                  <th className="text-left py-2 text-white">Location Type</th>
+                  <th className="text-left py-2 text-white">Max Interval</th>
+                  <th className="text-left py-2 text-white">Notes</th>
+                  <th className="text-left py-2 text-white">Focus Areas</th>
                 </tr>
               </thead>
               <tbody>
@@ -846,7 +850,7 @@ const SpecialistTestingGuide = () => {
                         {freq.focus.map((f, fIdx) => (
                           <span
                             key={fIdx}
-                            className="text-xs bg-white/[0.06] text-white/85 px-2 py-0.5 rounded"
+                            className="text-xs bg-white/[0.06] text-white px-2 py-0.5 rounded"
                           >
                             {f}
                           </span>
@@ -872,7 +876,10 @@ const SpecialistTestingGuide = () => {
         </CardHeader>
         <CardContent className="space-y-4 p-0">
           {commonFailures.map((loc, idx) => (
-            <div key={idx} className="p-4 rounded-lg border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]">
+            <div
+              key={idx}
+              className="p-4 rounded-lg border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]"
+            >
               <h4 className="font-medium text-red-200 mb-3">{loc.location}</h4>
               <div className="space-y-3">
                 {loc.failures.map((failure, fIdx) => (
@@ -903,7 +910,9 @@ const SpecialistTestingGuide = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Specialist Test Equipment</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              Specialist Test Equipment
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4 p-0">
@@ -912,21 +921,21 @@ const SpecialistTestingGuide = () => {
               <h4 className="font-medium text-white mb-3">Standard MFT Plus:</h4>
               <ul className="space-y-2 text-sm">
                 <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-white/70 mt-0.5" />
+                  <CheckCircle className="h-4 w-4 text-white mt-0.5" />
                   <span className="text-white">
                     Low resistance ohmmeter (less than 0.01 ohm resolution)
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-white/70 mt-0.5" />
+                  <CheckCircle className="h-4 w-4 text-white mt-0.5" />
                   <span className="text-white">Earth electrode tester</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-white/70 mt-0.5" />
+                  <CheckCircle className="h-4 w-4 text-white mt-0.5" />
                   <span className="text-white">High current bonding tester</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-white/70 mt-0.5" />
+                  <CheckCircle className="h-4 w-4 text-white mt-0.5" />
                   <span className="text-white">RCD tester with Type A/B capability</span>
                 </li>
               </ul>
@@ -936,19 +945,19 @@ const SpecialistTestingGuide = () => {
               <h4 className="font-medium text-white mb-3">Specialist Equipment:</h4>
               <ul className="space-y-2 text-sm">
                 <li className="flex items-start gap-2">
-                  <Sun className="h-4 w-4 text-white/70 mt-0.5" />
+                  <Sun className="h-4 w-4 text-white mt-0.5" />
                   <span className="text-white">DC insulation tester (1000V+) for PV</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Car className="h-4 w-4 text-white/70 mt-0.5" />
+                  <Car className="h-4 w-4 text-white mt-0.5" />
                   <span className="text-white">EV charging point tester</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Heart className="h-4 w-4 text-white/70 mt-0.5" />
+                  <Heart className="h-4 w-4 text-white mt-0.5" />
                   <span className="text-white">IMD tester for medical IT systems</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Waves className="h-4 w-4 text-white/70 mt-0.5" />
+                  <Waves className="h-4 w-4 text-white mt-0.5" />
                   <span className="text-white">SELV transformer output tester</span>
                 </li>
               </ul>
@@ -956,8 +965,8 @@ const SpecialistTestingGuide = () => {
           </div>
 
           <Alert className="border-white/[0.10] bg-white/[0.06]">
-            <Shield className="h-4 w-4 text-white/70" />
-            <AlertDescription className="text-white/85 text-sm">
+            <Shield className="h-4 w-4 text-white" />
+            <AlertDescription className="text-white text-sm">
               All test equipment must comply with GS38 and be calibrated within manufacturer's
               recommended intervals. Calibration certificates should be available on request.
             </AlertDescription>
@@ -999,7 +1008,7 @@ const SpecialistTestingGuide = () => {
 
             <div className="space-y-3">
               <div className="bg-white/[0.06] p-3 rounded-lg border border-white/[0.10]">
-                <h4 className="font-medium text-white/85 mb-2">Medical Locations</h4>
+                <h4 className="font-medium text-white mb-2">Medical Locations</h4>
                 <ul className="space-y-1 text-white">
                   <li>Coordinate with clinical staff</li>
                   <li>Never interrupt life support supplies</li>
@@ -1009,7 +1018,7 @@ const SpecialistTestingGuide = () => {
               </div>
 
               <div className="bg-white/[0.06] p-3 rounded-lg border border-white/[0.10]">
-                <h4 className="font-medium text-white/85 mb-2">Construction Sites</h4>
+                <h4 className="font-medium text-white mb-2">Construction Sites</h4>
                 <ul className="space-y-1 text-white">
                   <li>Multiple supplies may be present</li>
                   <li>Generators may not have standard earthing</li>

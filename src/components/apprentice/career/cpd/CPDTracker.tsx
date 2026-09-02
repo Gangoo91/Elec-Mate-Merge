@@ -61,7 +61,7 @@ const CPDTracker = () => {
       <div className="min-h-screen bg-elec-dark animate-fade-in">
         <div className="sticky top-0 z-20 bg-elec-dark/95 backdrop-blur-sm border-b border-white/[0.06] p-4">
           <div className="space-y-1">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Professional development
             </span>
             <h1 className="text-[18px] font-semibold text-white leading-tight">CPD tracker</h1>
@@ -168,13 +168,13 @@ const CPDTracker = () => {
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Professional development
         </span>
         <h1 className="text-[24px] sm:text-[28px] font-bold tracking-tight text-white leading-tight">
           CPD tracker
         </h1>
-        <p className="text-[14px] text-white/70 leading-relaxed max-w-2xl">
+        <p className="text-[14px] text-white leading-relaxed max-w-2xl">
           Track your Continuing Professional Development activities and maintain compliance with
           professional body requirements. Set goals, log activities and monitor your progress.
         </p>

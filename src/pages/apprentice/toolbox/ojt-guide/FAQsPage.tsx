@@ -157,8 +157,9 @@ const glossary = [
       'English and Maths qualifications at Level 2 — required for apprenticeship completion if you do not already have GCSEs grade 4+',
   },
 ];
-import { SectionHeader } from '@/components/college/primitives';
-import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { HubPage, HubBody, HubMasthead, HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const FAQsPage = () => {
   return (
@@ -171,12 +172,12 @@ const FAQsPage = () => {
       <HubBody>
         {/* FAQs */}
         <div className="space-y-3">
-          <SectionHeader eyebrow="Reference" title="Frequently asked questions" />
+          <HubSectionHeading>Frequently asked questions</HubSectionHeading>
 
           {faqs.map((faq) => (
             <div
               key={faq.question}
-              className="sm:rounded-xl sm:border sm:border-elec-yellow/25 sm:bg-elec-yellow/[0.04]"
+              className="sm:rounded-xl sm:border sm:border-elec-yellow/25 sm:bg-white/[0.05]"
             >
               <div className="sm:p-5 py-4 space-y-2">
                 <h3 className="font-medium text-elec-yellow text-sm">{faq.question}</h3>
@@ -190,13 +191,18 @@ const FAQsPage = () => {
         <div className="space-y-3">
           <div className="flex items-baseline justify-between gap-3 pb-1">
             <div className="space-y-1 min-w-0">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Glossary of Terms
               </span>
             </div>
           </div>
 
-          <div className="sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]">
+          <div
+            className={cn(
+              '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+              CARD_SURFACE
+            )}
+          >
             <div className="sm:p-5 space-y-3">
               {glossary.map((item) => (
                 <div key={item.term} className="flex items-start gap-2">

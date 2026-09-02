@@ -4,7 +4,7 @@
  * The ST0152 EPA is the integrated AM2S, run by NET: Safe Isolation & Risk
  * Assessment, Composite Installation, Inspection/Testing/Certification, Safe
  * Isolation of circuits, Fault Diagnosis, and an online Assessment of Applied
- * Knowledge — around 16.75 hours in total.
+ * Knowledge — run over about 2½–3 days.
  */
 
 import { motion } from 'framer-motion';
@@ -190,28 +190,33 @@ const ComponentsPage = () => {
       <HubBody>
         <p className="max-w-3xl text-[13px] leading-relaxed text-white">
           {
-            "For ST0152 the end-point assessment is the integrated AM2S, run by NET — around 16.75 hours of practical work plus an online applied-knowledge test. Here is every section, what you'll be assessed on, and how to prepare."
+            "For ST0152 the end-point assessment is the integrated AM2S, run by NET — about 2½–3 days of practical work plus an online applied-knowledge test. Here is every section, what you'll be assessed on, and how to prepare."
           }
         </p>
 
         {/* ── Overview ────────────────────────────────────────────── */}
         <motion.div variants={itemVariants}>
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+          <div
+            className={cn(
+              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
+              CARD_SURFACE
+            )}
+          >
             <Eyebrow>Overview</Eyebrow>
             <h2 className="text-[18px] sm:text-[20px] font-semibold text-white tracking-tight">
               One integrated assessment
             </h2>
-            <p className="text-[13.5px] text-white/85 leading-relaxed">
+            <p className="text-[13.5px] text-white leading-relaxed">
               The AM2S is a single, integrated end-point assessment run by NET at an approved
               assessment centre. It brings together safe isolation, installation, inspection and
               testing, fault diagnosis, and an online applied-knowledge test. There is no separate
               professional discussion component for this standard — the AM2S is the EPA.
             </p>
-            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
-              <p className="text-[12.5px] text-white/85 leading-relaxed">
+            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3">
+              <p className="text-[12.5px] text-white leading-relaxed">
                 <span className="font-semibold text-elec-yellow">After Gateway:</span> your training
                 provider registers you with NET, who schedule the AM2S at an approved centre. The
-                sections are taken across the assessment, totalling around 16.75 hours.
+                sections are taken across the assessment, run over about 2½–3 days.
               </p>
             </div>
           </div>
@@ -221,14 +226,17 @@ const ComponentsPage = () => {
         <motion.section variants={itemVariants} className="space-y-3">
           <SectionHeader
             eyebrow="The AM2S sections"
-            title="Six sections, ~16.75 hours"
+            title="Six sections, 2½–3 days"
             meta="Composite installation carries the most time"
           />
           <ul className="space-y-2">
             {am2sSections.map((s) => (
               <li
                 key={s.ref}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-1.5"
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-1.5',
+                  CARD_SURFACE
+                )}
               >
                 <div className="flex items-center justify-between gap-3">
                   <span className="text-[11px] font-mono uppercase tracking-[0.14em] text-elec-yellow/85">
@@ -239,12 +247,12 @@ const ComponentsPage = () => {
                   </span>
                 </div>
                 <h3 className="text-[14px] font-semibold text-white tracking-tight">{s.title}</h3>
-                <p className="text-[12.5px] text-white/85 leading-relaxed">{s.text}</p>
+                <p className="text-[12.5px] text-white leading-relaxed">{s.text}</p>
               </li>
             ))}
           </ul>
-          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
-            <p className="text-[12.5px] text-white/85 leading-relaxed">
+          <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3">
+            <p className="text-[12.5px] text-white leading-relaxed">
               <span className="font-semibold text-elec-yellow">Note:</span> section timings are
               indicative. NET confirms the exact schedule and any permitted reference material on
               the day.
@@ -260,8 +268,13 @@ const ComponentsPage = () => {
             meta="~1 hour · online multiple choice · supervised"
             action={<ComponentChip icon={FileText} />}
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-4">
-            <p className="text-[13px] text-white/85 leading-relaxed">
+          <div
+            className={cn(
+              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-4',
+              CARD_SURFACE
+            )}
+          >
+            <p className="text-[13px] text-white leading-relaxed">
               The applied-knowledge test checks your understanding of electrical theory, BS 7671,
               and safe working applied to realistic installation scenarios. An online
               multiple-choice test of around 30 questions, taken under supervised conditions at the
@@ -273,7 +286,7 @@ const ComponentsPage = () => {
                 {knowledgeTopics.map((t) => (
                   <li
                     key={t}
-                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                    className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                   >
                     <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                     <span>{t}</span>
@@ -287,7 +300,7 @@ const ComponentsPage = () => {
                 {knowledgeOnDay.map((t) => (
                   <li
                     key={t}
-                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                    className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                   >
                     <span className="text-elec-yellow font-mono mt-0.5">—</span>
                     <span>{t}</span>
@@ -295,8 +308,8 @@ const ComponentsPage = () => {
                 ))}
               </ul>
             </div>
-            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
-              <p className="text-[12.5px] text-white/85 leading-relaxed">
+            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3">
+              <p className="text-[12.5px] text-white leading-relaxed">
                 <span className="font-semibold text-elec-yellow">Grading:</span> the
                 applied-knowledge test is multiple-choice and assessed on a competence basis. NET
                 confirms the required standard — there is no separate published percentage grade
@@ -311,11 +324,16 @@ const ComponentsPage = () => {
           <SectionHeader
             eyebrow="Sections A–D"
             title="The practical sections"
-            meta="~15 hours · observed at a NET assessment centre"
+            meta="Observed at a NET assessment centre"
             action={<ComponentChip icon={ClipboardCheck} />}
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-4">
-            <p className="text-[13px] text-white/85 leading-relaxed">
+          <div
+            className={cn(
+              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-4',
+              CARD_SURFACE
+            )}
+          >
+            <p className="text-[13px] text-white leading-relaxed">
               The bulk of the AM2S. An independent NET assessor observes you completing a composite
               installation, then inspecting, testing and certifying it, and diagnosing introduced
               faults — all under standardised conditions at an approved assessment centre. The
@@ -327,7 +345,7 @@ const ComponentsPage = () => {
                 {practicalAssessed.map((t) => (
                   <li
                     key={t}
-                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                    className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                   >
                     <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                     <span>{t}</span>
@@ -337,15 +355,15 @@ const ComponentsPage = () => {
             </div>
 
             {/* Safe isolation procedure */}
-            <div className="rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.04] p-3 space-y-2">
+            <div className="rounded-md border border-elec-yellow/25 bg-white/[0.05] p-3 space-y-2">
               <Eyebrow className="text-elec-yellow/85">Safe isolation — 5 steps</Eyebrow>
               <ol className="space-y-2">
                 {safeIsolationSteps.map((item) => (
                   <li key={item.step} className="flex items-start gap-3">
-                    <span className="inline-flex items-center justify-center w-6 h-6 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[11px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
+                    <span className="inline-flex items-center justify-center w-6 h-6 rounded-md border border-elec-yellow/30 bg-white/[0.05] text-[11px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
                       {item.step}
                     </span>
-                    <span className="text-[12.5px] text-white/85 leading-relaxed">{item.text}</span>
+                    <span className="text-[12.5px] text-white leading-relaxed">{item.text}</span>
                   </li>
                 ))}
               </ol>
@@ -354,7 +372,7 @@ const ComponentsPage = () => {
             <div className="rounded-md border border-red-500/30 bg-red-500/[0.04] p-3">
               <div className="flex items-start gap-2">
                 <AlertTriangle className="h-3.5 w-3.5 text-red-300 flex-shrink-0 mt-0.5" />
-                <p className="text-[12.5px] text-white/85 leading-relaxed">
+                <p className="text-[12.5px] text-white leading-relaxed">
                   <span className="font-semibold text-red-300">Critical:</span> Failure to follow
                   safe isolation correctly can result in an immediate fail of the practical,
                   regardless of the quality of other work. Practise it until it&rsquo;s second
@@ -369,7 +387,7 @@ const ComponentsPage = () => {
                 {practicalOnDay.map((t) => (
                   <li
                     key={t}
-                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                    className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                   >
                     <span className="text-elec-yellow font-mono mt-0.5">—</span>
                     <span>{t}</span>
@@ -387,8 +405,13 @@ const ComponentsPage = () => {
             title="No separate professional discussion"
             meta="A common point of confusion — clear it up early"
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
-            <p className="text-[13px] text-white/85 leading-relaxed">
+          <div
+            className={cn(
+              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
+              CARD_SURFACE
+            )}
+          >
+            <p className="text-[13px] text-white leading-relaxed">
               Many generic EPA guides describe a stand-alone professional discussion. For the ST0152
               AM2S there is no separate professional discussion component, and there is no 25 / 50 /
               25 weighting. Your competence is assessed through the practical sections and the
@@ -396,7 +419,7 @@ const ComponentsPage = () => {
               doing during the practical — that is part of the observation, not a separate
               interview.
             </p>
-            <p className="text-[12.5px] text-white/85 leading-relaxed">
+            <p className="text-[12.5px] text-white leading-relaxed">
               Your portfolio of evidence remains important for Gateway, but the end-point assessment
               itself is the AM2S.
             </p>
@@ -428,8 +451,8 @@ const ComponentsPage = () => {
               ]}
             />
           </div>
-          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
-            <p className="text-[12.5px] text-white/85 leading-relaxed">
+          <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3">
+            <p className="text-[12.5px] text-white leading-relaxed">
               <span className="font-semibold text-elec-yellow">Note:</span> The core KSBs are the
               same for both pathways. The AM2S itself is the same assessment — the difference is the
               emphasis of your on-programme experience. Discuss your pathway with your training
@@ -449,7 +472,7 @@ const ComponentsPage = () => {
             {assessorsLookFor.map((item) => (
               <li
                 key={item.title}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
+                className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}
               >
                 <div className="flex items-start gap-2.5">
                   <CheckCircle2 className="h-4 w-4 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
@@ -457,7 +480,7 @@ const ComponentsPage = () => {
                     <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
                       {item.title}
                     </h3>
-                    <p className="text-[13px] text-white/85 leading-relaxed">{item.description}</p>
+                    <p className="text-[13px] text-white leading-relaxed">{item.description}</p>
                   </div>
                 </div>
               </li>
@@ -472,12 +495,12 @@ const ComponentsPage = () => {
             title="One assessment — connected sections"
             meta="Prepare across all sections together"
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
+          <div className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}>
             <ul className="space-y-1.5">
               {componentLinks.map((t) => (
                 <li
                   key={t}
-                  className="flex items-start gap-2 text-[13px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[13px] text-white leading-relaxed"
                 >
                   <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                   <span>{t}</span>
@@ -498,7 +521,10 @@ const ComponentsPage = () => {
             {dayChecklists.map((c) => (
               <li
                 key={c.component}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2"
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-2',
+                  CARD_SURFACE
+                )}
               >
                 <div className="flex items-center gap-2">
                   <Clock className="h-4 w-4 text-elec-yellow/85 flex-shrink-0" />
@@ -510,7 +536,7 @@ const ComponentsPage = () => {
                   {c.items.map((item) => (
                     <li
                       key={item}
-                      className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                      className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                     >
                       <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                       <span>{item}</span>
@@ -558,24 +584,24 @@ const ComponentsPage = () => {
             ].map((item) => (
               <li
                 key={item.step}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
+                className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}
               >
                 <div className="flex items-start gap-3">
-                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[12px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
+                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-md border border-elec-yellow/30 bg-white/[0.05] text-[12px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
                     {item.step}
                   </span>
                   <div className="space-y-1">
                     <h3 className="text-[14px] font-semibold text-white tracking-tight">
                       {item.title}
                     </h3>
-                    <p className="text-[13px] text-white/85 leading-relaxed">{item.description}</p>
+                    <p className="text-[13px] text-white leading-relaxed">{item.description}</p>
                   </div>
                 </div>
               </li>
             ))}
           </ol>
-          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
-            <p className="text-[12.5px] text-white/85 leading-relaxed">
+          <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3">
+            <p className="text-[12.5px] text-white leading-relaxed">
               <span className="font-semibold text-elec-yellow">Note:</span> the exact order and
               timing are set by NET. Your training provider will confirm the schedule once your
               assessment centre and dates are arranged.
@@ -590,10 +616,12 @@ const ComponentsPage = () => {
 /* ─────────────────── small helpers ─────────────────── */
 
 import type { LucideIcon } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 function ComponentChip({ icon: Icon }: { icon: LucideIcon }) {
   return (
-    <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06]">
+    <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-white/[0.05]">
       <Icon className="h-4 w-4 text-elec-yellow" />
     </span>
   );
@@ -601,13 +629,15 @@ function ComponentChip({ icon: Icon }: { icon: LucideIcon }) {
 
 function PathwayCard({ title, items }: { title: string; items: string[] }) {
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2">
+    <div
+      className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-2', CARD_SURFACE)}
+    >
       <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">{title}</h3>
       <ul className="space-y-1.5">
         {items.map((item) => (
           <li
             key={item}
-            className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+            className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
           >
             <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
             <span>{item}</span>

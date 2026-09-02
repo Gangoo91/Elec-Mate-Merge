@@ -1,12 +1,10 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { CARD_BASE, CARD_NEUTRAL } from '@/components/ui/card-recipe';
-import { HubKpi, HubKpiRow } from '@/components/hub/HubPrimitives';
-import { PageFrame, PageHero, SectionHeader, itemVariants } from '@/components/college/primitives';
+import { CARD_BASE, CARD_NEUTRAL, CARD_SURFACE } from '@/components/ui/card-recipe';
+import { HubKpi, HubKpiRow, HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { itemVariants } from '@/components/college/primitives';
+import { HubSubPage } from '@/components/hub/HubSubPage';
 import type { ActiveCategory } from '@/data/professional-tools/types';
 import FixingsHardwarePanel from '@/components/apprentice/professional-tools-v2/FixingsHardwarePanel';
 import HandToolsPanel from '@/components/apprentice/professional-tools-v2/HandToolsPanel';
@@ -69,7 +67,6 @@ const CATEGORIES: CategoryCard[] = [
 ];
 
 const ProfessionalToolGuide = () => {
-  const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState<ActiveCategory>(null);
 
   const toggleCategory = (category: NonNullable<ActiveCategory>) => {
@@ -77,27 +74,11 @@ const ProfessionalToolGuide = () => {
   };
 
   return (
-    <PageFrame className="px-4 sm:px-6 lg:px-8">
-      <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/apprentice/toolbox')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
-        >
-          <ArrowLeft className="mr-2 h-5 w-5" />
-          Back
-        </Button>
-      </motion.div>
-
-      <motion.div variants={itemVariants}>
-        <PageHero
-          eyebrow="Apprentice · Tools"
-          title="Professional tool guide"
-          description="131 tools across 6 categories — what each one is for, what to look for, and where UK electricians actually buy theirs. Built from years of supplier and trade feedback."
-          tone="yellow"
-        />
-      </motion.div>
-
+    <HubSubPage
+      title="Professional tool guide"
+      backTo="/apprentice/toolbox"
+      description="131 tools across 6 categories — what each one is for, what to look for, and where UK electricians actually buy theirs. Built from years of supplier and trade feedback."
+    >
       <motion.div variants={itemVariants}>
         <HubKpiRow>
           <HubKpi label="Tools" value="131" accent />
@@ -107,7 +88,7 @@ const ProfessionalToolGuide = () => {
       </motion.div>
 
       <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
-        <SectionHeader eyebrow="Categories" title="Six chapters" />
+        <HubSectionHeading>Six chapters</HubSectionHeading>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
           {CATEGORIES.map((card) => {
             const isActive = activeCategory === card.id;
@@ -159,24 +140,27 @@ const ProfessionalToolGuide = () => {
       {/* Compliance note — editorial */}
       <motion.div
         variants={itemVariants}
-        className={cn('rounded-2xl border border-elec-yellow/35 px-5 py-4 sm:px-6 sm:py-5', CARD_SURFACE)}
+        className={cn(
+          'rounded-2xl border border-elec-yellow/35 px-5 py-4 sm:px-6 sm:py-5',
+          CARD_SURFACE
+        )}
       >
         <div className="flex items-baseline gap-2 mb-2">
           <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
             Compliance
           </span>
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             · Standards
           </span>
         </div>
-        <p className="text-[13px] leading-relaxed text-white/80 max-w-3xl">
+        <p className="text-[13px] leading-relaxed text-white max-w-3xl">
           Hand tools used on or near live equipment must be{' '}
           <span className="text-amber-200">VDE certified to BS EN 60900</span>. Test equipment must
           comply with <span className="text-amber-200">GS38</span> and be calibrated annually.
           Voltage indicators must meet <span className="text-amber-200">BS EN 61243-3</span>.
         </p>
       </motion.div>
-    </PageFrame>
+    </HubSubPage>
   );
 };
 

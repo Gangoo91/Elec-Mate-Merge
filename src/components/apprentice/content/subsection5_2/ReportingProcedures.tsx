@@ -17,7 +17,7 @@ const ReportingProcedures = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
           <div className="space-y-3">
             <div className="flex items-center gap-2 mb-2">
-              <div className="p-1.5 bg-elec-yellow/10 rounded">
+              <div className="p-1.5 bg-white/[0.06] rounded">
                 <AlertTriangle className="h-5 w-5 text-elec-yellow" />
               </div>
               <h4 className="font-medium text-elec-yellow">Initial Reporting</h4>
@@ -49,7 +49,7 @@ const ReportingProcedures = () => {
 
           <div className="space-y-3">
             <div className="flex items-center gap-2 mb-2">
-              <div className="p-1.5 bg-elec-yellow/10 rounded">
+              <div className="p-1.5 bg-white/[0.06] rounded">
                 <Users className="h-5 w-5 text-elec-yellow" />
               </div>
               <h4 className="font-medium text-elec-yellow">Reporting Chain</h4>
@@ -89,7 +89,7 @@ const ReportingProcedures = () => {
 
           <div className="space-y-3">
             <div className="flex items-center gap-2 mb-2">
-              <div className="p-1.5 bg-elec-yellow/10 rounded">
+              <div className="p-1.5 bg-white/[0.06] rounded">
                 <MessageSquare className="h-5 w-5 text-elec-yellow" />
               </div>
               <h4 className="font-medium text-elec-yellow">Follow-Up Process</h4>

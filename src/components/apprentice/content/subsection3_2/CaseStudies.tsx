@@ -9,7 +9,7 @@ const CaseStudies = () => {
         UK Case Studies: Learning from Incidents
       </h3>
 
-      <p className="mb-4 text-elec-light/90">
+      <p className="mb-4 text-white">
         Examining real incidents provides valuable learning opportunities for preventing similar
         accidents. The HSE regularly publishes case studies of electrical incidents and
         prosecutions.
@@ -18,7 +18,7 @@ const CaseStudies = () => {
       <div className="space-y-6">
         <div>
           <h4 className="font-semibold text-white mb-2">Case 1: Fatal Shock During Maintenance</h4>
-          <p className="text-elec-light/80">
+          <p className="text-white">
             In 2019, an electrician in Manchester received a fatal electric shock while working on a
             distribution board that had not been properly isolated. Investigation revealed that the
             isolation procedure had not been followed, and testing was not performed to verify the
@@ -29,7 +29,7 @@ const CaseStudies = () => {
 
         <div>
           <h4 className="font-semibold text-white mb-2">Case 2: Arc Flash Injury</h4>
-          <p className="text-elec-light/80">
+          <p className="text-white">
             A maintenance technician in Birmingham suffered severe burns when an arc flash occurred
             during panel work. The technician was wearing inappropriate PPE and using non-insulated
             tools. The investigation found inadequate risk assessment and training. The employer was

@@ -170,7 +170,7 @@ const IncidentStats = () => {
 
   const summaryCard = (label: string, value: number | string) => (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
         {label}
       </span>
       <p className="text-2xl font-mono text-white">{value}</p>
@@ -186,7 +186,7 @@ const IncidentStats = () => {
 
   const chartCard = (title: string, children: React.ReactNode) => (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
         {title}
       </span>
       <div>{children}</div>
@@ -229,7 +229,7 @@ const IncidentStats = () => {
               </PieChart>
             </ResponsiveContainer>
           ) : (
-            <div className="h-[300px] flex items-center justify-center text-[14px] text-white/55">
+            <div className="h-[300px] flex items-center justify-center text-[14px] text-white">
               No data available
             </div>
           )
@@ -254,7 +254,7 @@ const IncidentStats = () => {
               </BarChart>
             </ResponsiveContainer>
           ) : (
-            <div className="h-[300px] flex items-center justify-center text-[14px] text-white/55">
+            <div className="h-[300px] flex items-center justify-center text-[14px] text-white">
               No data available
             </div>
           )
@@ -283,7 +283,7 @@ const IncidentStats = () => {
               </PieChart>
             </ResponsiveContainer>
           ) : (
-            <div className="h-[300px] flex items-center justify-center text-[14px] text-white/55">
+            <div className="h-[300px] flex items-center justify-center text-[14px] text-white">
               No data available
             </div>
           )
@@ -308,7 +308,7 @@ const IncidentStats = () => {
               </LineChart>
             </ResponsiveContainer>
           ) : (
-            <div className="h-[300px] flex items-center justify-center text-[14px] text-white/55">
+            <div className="h-[300px] flex items-center justify-center text-[14px] text-white">
               No data available
             </div>
           )

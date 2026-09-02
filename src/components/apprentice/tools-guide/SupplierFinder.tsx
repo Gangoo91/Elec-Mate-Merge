@@ -129,32 +129,32 @@ const SupplierFinder = () => {
                   <h3 className="text-[18px] font-semibold text-white leading-tight">
                     {supplier.name}
                   </h3>
-                  <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] flex-shrink-0">
+                  <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] flex-shrink-0">
                     {supplier.type}
                   </span>
                 </div>
-                <p className="text-[14px] text-white/85 leading-relaxed">{supplier.speciality}</p>
+                <p className="text-[14px] text-white leading-relaxed">{supplier.speciality}</p>
 
-                <div className="space-y-1.5 text-[13px] text-white/85">
+                <div className="space-y-1.5 text-[13px] text-white">
                   <div className="flex justify-between gap-3">
-                    <span className="text-white/55">Discount</span>
+                    <span className="text-white">Discount</span>
                     <span className="text-right">{supplier.apprenticeDiscount}</span>
                   </div>
                   <div className="flex justify-between gap-3">
-                    <span className="text-white/55">Locations</span>
+                    <span className="text-white">Locations</span>
                     <span className="text-right">{supplier.locations}</span>
                   </div>
                   <div className="flex justify-between gap-3">
-                    <span className="text-white/55">Delivery</span>
+                    <span className="text-white">Delivery</span>
                     <span className="text-right">{supplier.delivery}</span>
                   </div>
                 </div>
 
                 <div className="space-y-1">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Key strengths
                   </span>
-                  <ul className="text-[13px] text-white/85 space-y-1">
+                  <ul className="text-[13px] text-white space-y-1">
                     {supplier.strengths.map((strength, i) => (
                       <li key={i} className="flex items-start gap-2">
                         <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
@@ -164,7 +164,7 @@ const SupplierFinder = () => {
                   </ul>
                 </div>
 
-                <div className="pt-2 border-t border-white/[0.06] space-y-1 text-[12px] text-white/55">
+                <div className="pt-2 border-t border-white/[0.06] space-y-1 text-[12px] text-white">
                   <p>{supplier.contact}</p>
                   <p>{supplier.website}</p>
                 </div>
@@ -183,13 +183,13 @@ const SupplierFinder = () => {
                 <h3 className="text-[18px] font-semibold text-white leading-tight">
                   {supplier.type}
                 </h3>
-                <p className="text-[14px] text-white/85 leading-relaxed">{supplier.description}</p>
+                <p className="text-[14px] text-white leading-relaxed">{supplier.description}</p>
 
                 <div className="space-y-1">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Benefits
                   </span>
-                  <ul className="grid grid-cols-1 md:grid-cols-2 gap-1 text-[13px] text-white/85">
+                  <ul className="grid grid-cols-1 md:grid-cols-2 gap-1 text-[13px] text-white">
                     {supplier.benefits.map((benefit, i) => (
                       <li key={i} className="flex items-start gap-2">
                         <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
@@ -200,10 +200,10 @@ const SupplierFinder = () => {
                 </div>
 
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     How to find
                   </span>
-                  <p className="text-[13px] text-white/85 leading-relaxed">{supplier.howToFind}</p>
+                  <p className="text-[13px] text-white leading-relaxed">{supplier.howToFind}</p>
                 </div>
               </div>
             ))}
@@ -213,10 +213,10 @@ const SupplierFinder = () => {
         <TabsContent value="cost-planning">
           <div className="space-y-4">
             <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Total investment
               </span>
-              <p className="text-[14px] text-white/85 leading-relaxed">
+              <p className="text-[14px] text-white leading-relaxed">
                 Total toolkit investment over 2-3 years: £750-2000. Quality tools are a career
                 investment that can last decades.
               </p>
@@ -233,25 +233,25 @@ const SupplierFinder = () => {
                   </h3>
                   <div className="grid grid-cols-2 gap-3">
                     <div className="space-y-0.5">
-                      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                         Essential
                       </span>
                       <p className="text-[16px] font-semibold text-white">{category.essentialCost}</p>
                     </div>
                     <div className="space-y-0.5">
-                      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                         Quality
                       </span>
                       <p className="text-[16px] font-semibold text-white">{category.qualityCost}</p>
                     </div>
                   </div>
-                  <div className="space-y-1.5 text-[13px] text-white/85">
+                  <div className="space-y-1.5 text-[13px] text-white">
                     <div className="flex justify-between">
-                      <span className="text-white/55">Timeframe</span>
+                      <span className="text-white">Timeframe</span>
                       <span>{category.timeframe}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-white/55">Priority</span>
+                      <span className="text-white">Priority</span>
                       <span>{category.priority}</span>
                     </div>
                   </div>
@@ -265,7 +265,7 @@ const SupplierFinder = () => {
           <div className="space-y-4">
             <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
               <div className="space-y-1">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Money-saving strategies
                 </span>
                 <h3 className="text-[18px] font-semibold text-white leading-tight">
@@ -278,20 +278,20 @@ const SupplierFinder = () => {
                     key={index}
                     className="flex items-start gap-3 rounded-lg border border-white/[0.06] bg-white/[0.02] p-3"
                   >
-                    <span className="text-[12px] text-white/55 font-mono mt-0.5">
+                    <span className="text-[12px] text-white font-mono mt-0.5">
                       {String(index + 1).padStart(2, '0')}
                     </span>
-                    <span className="text-[13px] text-white/85 leading-relaxed">{tip}</span>
+                    <span className="text-[13px] text-white leading-relaxed">{tip}</span>
                   </div>
                 ))}
               </div>
             </div>
 
             <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Apprentice schemes
               </span>
-              <p className="text-[14px] text-white/85 leading-relaxed">
+              <p className="text-[14px] text-white leading-relaxed">
                 Many suppliers offer special apprentice pricing. Always ask about discounts and
                 bring your apprenticeship agreement as proof of status.
               </p>

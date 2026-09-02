@@ -105,14 +105,14 @@ const EnhancedFurtherEducation = () => {
         </Button>
 
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             {selectedOption.institution}
           </span>
           <h2 className="text-[20px] font-bold text-white leading-tight">
             {selectedOption.title}
           </h2>
-          <p className="text-[14px] text-white/85 leading-relaxed">{selectedOption.description}</p>
-          <p className="text-[13px] text-white/55">
+          <p className="text-[14px] text-white leading-relaxed">{selectedOption.description}</p>
+          <p className="text-[13px] text-white">
             Detailed view continues here with comprehensive information, application forms and
             funding calculators.
           </p>
@@ -124,13 +124,13 @@ const EnhancedFurtherEducation = () => {
   return (
     <div className="space-y-6">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Further education
         </span>
         <h2 className="text-[20px] sm:text-[24px] font-bold tracking-tight text-white leading-tight">
           Advance your qualifications
         </h2>
-        <p className="text-[14px] text-white/70 leading-relaxed max-w-2xl">
+        <p className="text-[14px] text-white leading-relaxed max-w-2xl">
           Educational pathways to advance your career in the electrical industry — from HNC
           certificates to master&apos;s degrees.
         </p>
@@ -152,10 +152,10 @@ const EnhancedFurtherEducation = () => {
       <EducationSearchForm onSearch={handleSearch} onReset={handleReset} />
 
       <div className="flex items-baseline justify-between">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Available programmes
         </span>
-        <span className="text-[12px] text-white/55">
+        <span className="text-[12px] text-white">
           {filteredOptions.length} {filteredOptions.length === 1 ? 'result' : 'results'}
         </span>
       </div>
@@ -173,7 +173,7 @@ const EnhancedFurtherEducation = () => {
       {filteredOptions.length === 0 && (
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-6 sm:p-8 text-center space-y-3">
           <h3 className="text-[16px] font-semibold text-white">No programmes found</h3>
-          <p className="text-[14px] text-white/70 leading-relaxed">
+          <p className="text-[14px] text-white leading-relaxed">
             Try adjusting your search criteria or explore different categories.
           </p>
           <Button
@@ -187,7 +187,7 @@ const EnhancedFurtherEducation = () => {
       )}
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           UK education funding support
         </span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -195,22 +195,22 @@ const EnhancedFurtherEducation = () => {
             <p className="text-[13px] text-white">Government support</p>
             <div className="space-y-2">
               <div className="space-y-1">
-                <p className="text-[13px] text-white/85">Advanced Learner Loan (19+)</p>
-                <p className="text-[12px] text-white/70 leading-relaxed">
+                <p className="text-[13px] text-white">Advanced Learner Loan (19+)</p>
+                <p className="text-[12px] text-white leading-relaxed">
                   Available for Level 3-6 qualifications. No upfront fees, only repay when earning
                   £25,000+. 9% of income above threshold.
                 </p>
               </div>
               <div className="space-y-1">
-                <p className="text-[13px] text-white/85">Student Finance England</p>
-                <p className="text-[12px] text-white/70 leading-relaxed">
+                <p className="text-[13px] text-white">Student Finance England</p>
+                <p className="text-[12px] text-white leading-relaxed">
                   Tuition fee loans up to £9,250 for degrees. Maintenance loans available based on
                   household income. Repayment at 9% above £27,295.
                 </p>
               </div>
               <div className="space-y-1">
-                <p className="text-[13px] text-white/85">Postgraduate Loan</p>
-                <p className="text-[12px] text-white/70 leading-relaxed">
+                <p className="text-[13px] text-white">Postgraduate Loan</p>
+                <p className="text-[12px] text-white leading-relaxed">
                   Up to £12,167 for Master&apos;s study. 6% interest rate. Same repayment terms as
                   undergraduate loans.
                 </p>
@@ -221,22 +221,22 @@ const EnhancedFurtherEducation = () => {
             <p className="text-[13px] text-white">Industry & employer support</p>
             <div className="space-y-2">
               <div className="space-y-1">
-                <p className="text-[13px] text-white/85">Apprenticeship Levy</p>
-                <p className="text-[12px] text-white/70 leading-relaxed">
+                <p className="text-[13px] text-white">Apprenticeship Levy</p>
+                <p className="text-[12px] text-white leading-relaxed">
                   Large employers (£3M+ payroll) contribute 0.5% to apprenticeship levy. Can fund
                   degree apprenticeships.
                 </p>
               </div>
               <div className="space-y-1">
-                <p className="text-[13px] text-white/85">Professional body grants</p>
-                <p className="text-[12px] text-white/70 leading-relaxed">
+                <p className="text-[13px] text-white">Professional body grants</p>
+                <p className="text-[12px] text-white leading-relaxed">
                   IET scholarships, ECA Educational Trust grants, NECA bursaries for electrical
                   study.
                 </p>
               </div>
               <div className="space-y-1">
-                <p className="text-[13px] text-white/85">Career Development Loans</p>
-                <p className="text-[12px] text-white/70 leading-relaxed">
+                <p className="text-[13px] text-white">Career Development Loans</p>
+                <p className="text-[12px] text-white leading-relaxed">
                   Bank loans for vocational training. Government pays interest during study and one
                   month after.
                 </p>

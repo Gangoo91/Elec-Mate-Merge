@@ -142,7 +142,10 @@ export function MyAcCoverageCard() {
           .eq('qualification_code', qualificationCode)
       : null;
 
-    const [{ data }, titlesRes] = await Promise.all([q, titlesQ ?? Promise.resolve({ data: null })]);
+    const [{ data }, titlesRes] = await Promise.all([
+      q,
+      titlesQ ?? Promise.resolve({ data: null }),
+    ]);
     setRows((data ?? []) as CoverageRow[]);
     if (titlesRes?.data) {
       setUnitTitles(
@@ -348,7 +351,9 @@ export function MyAcCoverageCard() {
     const gapUnits = units.filter((x) => x.claimed < x.total).slice(0, 3);
 
     return (
-      <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
+      <section
+        className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
+      >
         <div className="px-4 sm:px-5 py-4 sm:py-5">
           <div className="flex items-baseline justify-between gap-3 flex-wrap">
             <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
@@ -410,7 +415,9 @@ export function MyAcCoverageCard() {
 
   if (summary.total === 0) {
     return (
-      <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
+      <section
+        className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
+      >
         <div className="px-4 sm:px-5 py-4 sm:py-5">
           <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
             Qualification progress
@@ -433,7 +440,9 @@ export function MyAcCoverageCard() {
   ];
 
   return (
-    <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
+    <section
+      className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
+    >
       <div className="px-4 sm:px-5 py-4 sm:py-5">
         <div className="flex items-baseline justify-between gap-3 flex-wrap">
           <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
@@ -469,9 +478,11 @@ export function MyAcCoverageCard() {
               s.pct > 0 && (
                 <div
                   key={s.status}
-                  className={cn('h-full',
+                  className={cn(
+                    'h-full',
                     STATUS_TONE[s.status],
-                    i === 0 ? 'rounded-l-full' : '', i === segments.length - 1 ?'' : ''
+                    i === 0 ? 'rounded-l-full' : '',
+                    i === segments.length - 1 ? '' : ''
                   )}
                   style={{ width: `${s.pct}%` }}
                   title={`${STATUS_LABEL[s.status]} · ${summary.buckets[s.status]}`}
@@ -520,7 +531,9 @@ export function MyAcCoverageCard() {
             tailored to the apprentice's current gaps. Only show when the
             student has unfinished ACs. */}
         {studentId && summary.buckets.not_started + summary.buckets.in_progress > 0 && (
-          <div className={cn('mt-5 rounded-xl border border-elec-yellow/35 px-4 py-3.5', CARD_SURFACE)}>
+          <div
+            className={cn('mt-5 rounded-xl border border-elec-yellow/35 px-4 py-3.5', CARD_SURFACE)}
+          >
             <div className="flex items-start justify-between gap-3 flex-wrap">
               <div className="min-w-0 flex-1">
                 <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
@@ -548,7 +561,12 @@ export function MyAcCoverageCard() {
 
       {/* Job ideas dialog */}
       <Dialog open={ideasOpen} onOpenChange={setIdeasOpen}>
-        <DialogContent className={cn('sm:max-w-[640px] max-h-[90vh] overflow-y-auto border-white/[0.08] text-white', CARD_SURFACE)}>
+        <DialogContent
+          className={cn(
+            'sm:max-w-[640px] max-h-[90vh] overflow-y-auto border-white/[0.08] text-white',
+            CARD_SURFACE
+          )}
+        >
           <DialogTitle className="text-[16px] font-semibold tracking-tight text-white">
             Job ideas for your gaps
           </DialogTitle>
@@ -619,9 +637,7 @@ function UnitGapRow({
       <div className="flex items-baseline justify-between gap-3">
         <span className="min-w-0 flex-1">
           <span className="text-[12px] font-medium text-white">{unitCode}</span>
-          {unitTitle && (
-            <span className="ml-2 text-[11.5px] text-white">{unitTitle}</span>
-          )}
+          {unitTitle && <span className="ml-2 text-[11.5px] text-white">{unitTitle}</span>}
         </span>
         <span className="shrink-0 text-[10.5px] tabular-nums text-white">
           {done} / {total} evidenced
@@ -670,7 +686,9 @@ function UnitGapRow({
 
 function Skeleton() {
   return (
-    <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
+    <section
+      className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
+    >
       <div className="px-4 sm:px-5 py-4 sm:py-5 space-y-4">
         <div className="h-3 w-32 rounded-full bg-white/[0.05]" />
         <div className="h-8 w-20 rounded-md bg-white/[0.05]" />

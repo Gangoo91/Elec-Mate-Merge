@@ -103,7 +103,7 @@ const AccreditationSearchForm = ({
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">
           {!filters.searchTerm && (
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/55 pointer-events-none" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
           )}
           <Input
             placeholder="Search accreditations, providers, or specialities..."
@@ -133,7 +133,7 @@ const AccreditationSearchForm = ({
           <SelectTrigger className="h-11 touch-manipulation bg-white/[0.03] border-white/10 text-white">
             <SelectValue />
           </SelectTrigger>
-          <SelectContent className="bg-elec-gray border-white/10">
+          <SelectContent className="bg-white/[0.06] border-white/10">
             {accreditationCategories.map((category) => (
               <SelectItem key={category} value={category}>
                 {category}
@@ -149,7 +149,7 @@ const AccreditationSearchForm = ({
           <SelectTrigger className="h-11 touch-manipulation bg-white/[0.03] border-white/10 text-white">
             <SelectValue />
           </SelectTrigger>
-          <SelectContent className="bg-elec-gray border-white/10">
+          <SelectContent className="bg-white/[0.06] border-white/10">
             {accreditationLevels.map((level) => (
               <SelectItem key={level} value={level}>
                 {level}
@@ -165,7 +165,7 @@ const AccreditationSearchForm = ({
           <SelectTrigger className="h-11 touch-manipulation bg-white/[0.03] border-white/10 text-white">
             <SelectValue placeholder="Cost range" />
           </SelectTrigger>
-          <SelectContent className="bg-elec-gray border-white/10">
+          <SelectContent className="bg-white/[0.06] border-white/10">
             {costRanges.map((range) => (
               <SelectItem key={range} value={range}>
                 {range}
@@ -181,7 +181,7 @@ const AccreditationSearchForm = ({
           <SelectTrigger className="h-11 touch-manipulation bg-white/[0.03] border-white/10 text-white">
             <SelectValue placeholder="Provider" />
           </SelectTrigger>
-          <SelectContent className="bg-elec-gray border-white/10">
+          <SelectContent className="bg-white/[0.06] border-white/10">
             {providers.map((provider) => (
               <SelectItem key={provider} value={provider}>
                 {provider}
@@ -192,7 +192,7 @@ const AccreditationSearchForm = ({
       </div>
 
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-        <label className="flex items-center gap-2 text-[14px] text-white/85 cursor-pointer touch-manipulation">
+        <label className="flex items-center gap-2 text-[14px] text-white cursor-pointer touch-manipulation">
           <input
             type="checkbox"
             checked={filters.onlineOnly}
@@ -203,7 +203,7 @@ const AccreditationSearchForm = ({
         </label>
 
         <div className="flex items-center gap-3">
-          <span className="text-[12px] text-white/55 font-mono">
+          <span className="text-[12px] text-white font-mono">
             {resultsCount} {resultsCount === 1 ? 'result' : 'results'}
           </span>
           <Button
@@ -220,19 +220,16 @@ const AccreditationSearchForm = ({
 
       {activeFilters.length > 0 && (
         <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-white/[0.06]">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Active filters
           </span>
           {activeFilters.map((filter, idx) => (
             <span
               key={idx}
-              className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] flex items-center gap-1.5"
+              className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] flex items-center gap-1.5"
             >
               {filter}
-              <button
-                onClick={() => removeFilter(filter)}
-                className="hover:text-white text-white/55"
-              >
+              <button onClick={() => removeFilter(filter)} className="hover:text-white text-white">
                 <X className="h-3 w-3" />
               </button>
             </span>

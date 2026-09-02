@@ -15,8 +15,9 @@ const JIBGradingScheme = () => {
   const jibGrades = [
     {
       grade: 'Apprentice',
-      hourlyRate: '£8.00/hr minimum (April 2026)',
-      dayRate: '£60-65/day typical',
+      hourlyRate:
+        'JIB 2026: Stage 1 £8.16 · Stage 2 £10.60 · Stage 3 £13.05 · Stage 4 £14.03 (London higher)',
+      dayRate: 'Legal floor: £8.00/hr apprentice NMW from April 2026',
       requirements: [
         'Enrolled on approved Level 3 apprenticeship programme',
         'Working towards 2357/5357 NVQ Diploma',
@@ -26,12 +27,11 @@ const JIBGradingScheme = () => {
         'DBS check (Basic level) for some sites',
       ],
       benefits: [
-        'Apprentice minimum wage protection (£8.00/hr minimum)',
+        'JIB apprentice rates sit above the £8.00/hr apprentice minimum wage, with one rate for all hours including off-the-job',
         'Structured 4-year training pathway with portfolio building',
         'Industry recognition and ECS Apprentice card eligibility',
         'Government funding support for employers',
         'Clear progression route to Improver status',
-        'Access to JTL/NICEIC/ECA apprentice support networks',
         'Career development guidance and mentorship',
       ],
       responsibilities: [
@@ -57,11 +57,11 @@ const JIBGradingScheme = () => {
     },
     {
       grade: 'Improver',
-      hourlyRate: '£16-22/hr typical',
-      dayRate: '£160-220/day London premium',
+      hourlyRate: 'JIB 2026 trainee stages: £14.60 (Stage 1) · £16.54 (Stage 2) · £17.51 (Stage 3)',
+      dayRate: 'Transport Provided national rates; London Zone is higher',
       requirements: [
         'Level 3 NVQ Diploma (2357/5357) completed',
-        '18th Edition BS 7671 (2382-22) certificate current',
+        '18th Edition BS 7671 (C&G 2382, current amendment) certificate current',
         'Working towards AM2/AM2S practical assessment',
         'Minimum 6 months post-qualification experience',
         'ECS Health & Safety test passed',
@@ -99,14 +99,13 @@ const JIBGradingScheme = () => {
     },
     {
       grade: 'Electrician (Gold Card)',
-      hourlyRate: '£24-30/hr base',
-      dayRate: '£200-320/day + regional premiums',
+      hourlyRate: '£18.38/hr (JIB national standard rate, 2026)',
+      dayRate: 'About £138 a day on a 7.5-hour day; London Zone £20.58/hr',
       requirements: [
         'Level 3 NVQ Diploma (2357/5357) completed',
         'AM2/AM2S practical assessment passed',
-        '18th Edition BS 7671 (2382-22) current certificate',
-        'ECS Health & Safety test valid (renewed every 3 years)',
-        'Minimum 2 years post-qualification experience',
+        '18th Edition BS 7671 (C&G 2382, current amendment) certificate',
+        'ECS Health, Safety & Environmental assessment passed within the last two years',
         'Evidence of competent person status',
       ],
       benefits: [
@@ -140,7 +139,7 @@ const JIBGradingScheme = () => {
     },
     {
       grade: 'Approved Electrician (JIB)',
-      hourlyRate: '£25-32/hr enhanced',
+      hourlyRate: '£20.08/hr (JIB national standard rate, 2026)',
       requirements: [
         'All Electrician (Gold Card) requirements met',
         '2391-52 Inspection & Testing qualification',
@@ -173,7 +172,7 @@ const JIBGradingScheme = () => {
     },
     {
       grade: 'Technician Electrician (JIB)',
-      hourlyRate: '£28-36/hr premium',
+      hourlyRate: '£22.70/hr (JIB national standard rate, 2026)',
       requirements: [
         'Approved Electrician status established',
         'HNC/HND Electrical Engineering preferred',
@@ -243,48 +242,51 @@ const JIBGradingScheme = () => {
     <div className="space-y-6">
       <section aria-labelledby="jib-heading" className="space-y-4">
         <header className="space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             JIB grading
           </span>
-          <h2 id="jib-heading" className="text-[20px] sm:text-[24px] font-bold text-white leading-tight">
+          <h2
+            id="jib-heading"
+            className="text-[20px] sm:text-[24px] font-bold text-white leading-tight"
+          >
             JIB grading scheme & ECS cards
           </h2>
-          <p className="text-[14px] text-white/70 leading-relaxed">
+          <p className="text-[14px] text-white leading-relaxed">
             The Joint Industry Board (JIB) grading scheme is the UK standard for electrical worker
             classification and pay scales.
           </p>
         </header>
 
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Industry update
           </span>
-          <p className="text-[14px] text-white/85 leading-relaxed">
+          <p className="text-[14px] text-white leading-relaxed">
             Skills shortages continue to push rates upward year-on-year. Net Zero targets are
             driving demand for EV charging, heat pump and data centre specialists.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 High demand
               </span>
-              <p className="text-[13px] text-white/85">
+              <p className="text-[13px] text-white">
                 EV charging · Data centres · Heat pumps · Smart buildings
               </p>
             </div>
             <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Rate premiums
               </span>
-              <p className="text-[13px] text-white/85">
+              <p className="text-[13px] text-white">
                 Specialists earn meaningful premiums over base rates
               </p>
             </div>
             <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Skills gap
               </span>
-              <p className="text-[13px] text-white/85">
+              <p className="text-[13px] text-white">
                 Strong demand for qualified electricians across the UK
               </p>
             </div>
@@ -293,32 +295,32 @@ const JIBGradingScheme = () => {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Grades
             </span>
             <div className="text-[16px] font-semibold text-white">6</div>
-            <p className="text-[12px] text-white/55">Progression pathway</p>
+            <p className="text-[12px] text-white">Progression pathway</p>
           </div>
           <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               To Gold Card
             </span>
             <div className="text-[16px] font-semibold text-white">4-5 yrs</div>
-            <p className="text-[12px] text-white/55">Typical pathway</p>
+            <p className="text-[12px] text-white">Typical pathway</p>
           </div>
           <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               ECS renewal
             </span>
             <div className="text-[16px] font-semibold text-white">3-year</div>
-            <p className="text-[12px] text-white/55">Card validity</p>
+            <p className="text-[12px] text-white">Card validity</p>
           </div>
           <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Coverage
             </span>
             <div className="text-[16px] font-semibold text-white">UK-wide</div>
-            <p className="text-[12px] text-white/55">Employer recognition</p>
+            <p className="text-[12px] text-white">Employer recognition</p>
           </div>
         </div>
 
@@ -330,12 +332,12 @@ const JIBGradingScheme = () => {
             <MobileAccordionContent className="bg-white/[0.02] border-x border-b border-white/[0.06] rounded-b-lg p-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Estimate your day rate
                   </span>
                   <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
                     <p className="text-[13px] text-white">Gold Card Electrician (base)</p>
-                    <div className="space-y-1 text-[12px] text-white/85">
+                    <div className="space-y-1 text-[12px] text-white">
                       <div className="flex justify-between">
                         <span>Regional</span>
                         <span className="font-mono">£200-280/day</span>
@@ -356,16 +358,16 @@ const JIBGradingScheme = () => {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Progression target
                   </span>
-                  <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1 text-[13px] text-white/85">
+                  <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1 text-[13px] text-white">
                     <div>Current: Improver (£180/day)</div>
                     <div>Next: Gold Card (+£40-80/day)</div>
                     <div>Required: AM2 + 2 years experience</div>
                     <div className="text-white">Potential increase: £8,000-16,000/year</div>
                   </div>
-                  <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 text-[12px] text-white/85">
+                  <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 text-[12px] text-white">
                     Self-employment bonus: add 25-40% to employee rates to cover benefits, tax and
                     profit margin.
                   </div>
@@ -381,41 +383,43 @@ const JIBGradingScheme = () => {
             <MobileAccordionContent className="bg-white/[0.02] border-x border-b border-white/[0.06] rounded-b-lg p-4">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1.5">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Net Zero impact
                   </span>
-                  <ul className="text-[13px] text-white/85 space-y-1">
+                  <ul className="text-[13px] text-white space-y-1">
                     <li>Strong growth in green jobs through 2030</li>
                     <li>Heat pump installations scaling up</li>
                     <li>EV charging infrastructure expanding</li>
                     <li>Solar PV growth across domestic and commercial</li>
                   </ul>
-                  <p className="text-[12px] text-white/55 pt-1">
+                  <p className="text-[12px] text-white pt-1">
                     Skills premium for certified specialists
                   </p>
                 </div>
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1.5">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     AI & data infrastructure
                   </span>
-                  <ul className="text-[13px] text-white/85 space-y-1">
+                  <ul className="text-[13px] text-white space-y-1">
                     <li>Data centre investment growing</li>
                     <li>Smart building integration expanding</li>
                     <li>IoT and BMS specialists in demand</li>
                     <li>Critical power systems growth</li>
                   </ul>
-                  <p className="text-[12px] text-white/55 pt-1">Specialist roles command premium rates</p>
+                  <p className="text-[12px] text-white pt-1">
+                    Specialist roles command premium rates
+                  </p>
                 </div>
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1.5">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Skills gap
                   </span>
-                  <ul className="text-[13px] text-white/85 space-y-1">
+                  <ul className="text-[13px] text-white space-y-1">
                     <li>Strong demand across the country</li>
                     <li>Aging workforce in many regions</li>
                     <li>Regional shortages acute in South East</li>
                   </ul>
-                  <p className="text-[12px] text-white/55 pt-1">
+                  <p className="text-[12px] text-white pt-1">
                     Fast progression opportunities available
                   </p>
                 </div>
@@ -439,11 +443,11 @@ const JIBGradingScheme = () => {
                           onClick={() => setSelectedGradeIndex(index)}
                           className={`rounded-xl border p-3 flex flex-col items-center justify-center text-center touch-manipulation min-h-[88px] transition-colors ${
                             isSelected
-                              ? 'border-elec-yellow/40 bg-elec-yellow/[0.04]'
+                              ? 'border-elec-yellow/40 bg-white/[0.05]'
                               : 'border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04]'
                           }`}
                         >
-                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                             Grade {index + 1}
                           </span>
                           <span className="text-[14px] font-semibold text-white mt-1">
@@ -461,22 +465,22 @@ const JIBGradingScheme = () => {
                         <div className="mt-4 rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-4">
                           <div className="flex items-baseline justify-between gap-2">
                             <h4 className="text-[16px] font-semibold text-white">{grade.grade}</h4>
-                            <span className="text-[12px] text-white/85 font-mono">
+                            <span className="text-[12px] text-white font-mono">
                               {grade.hourlyRate}
                             </span>
                           </div>
 
                           <div className="space-y-2">
-                            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                               Requirements
                             </span>
                             <ul className="space-y-1.5">
                               {grade.requirements.map((req, idx) => (
                                 <li
                                   key={idx}
-                                  className="flex items-start gap-2 text-[13px] text-white/85"
+                                  className="flex items-start gap-2 text-[13px] text-white"
                                 >
-                                  <CheckCircle className="h-3.5 w-3.5 text-white/55 mt-0.5 flex-shrink-0" />
+                                  <CheckCircle className="h-3.5 w-3.5 text-white mt-0.5 flex-shrink-0" />
                                   <span>{req}</span>
                                 </li>
                               ))}
@@ -484,14 +488,14 @@ const JIBGradingScheme = () => {
                           </div>
 
                           <div className="space-y-2">
-                            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                               Benefits
                             </span>
                             <ul className="space-y-1.5">
                               {grade.benefits.map((benefit, idx) => (
                                 <li
                                   key={idx}
-                                  className="flex items-start gap-2 text-[13px] text-white/85"
+                                  className="flex items-start gap-2 text-[13px] text-white"
                                 >
                                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                                   <span>{benefit}</span>
@@ -501,26 +505,26 @@ const JIBGradingScheme = () => {
                           </div>
 
                           <div className="space-y-2">
-                            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                               Duration
                             </span>
-                            <p className="text-[13px] text-white/85">{grade.duration}</p>
+                            <p className="text-[13px] text-white">{grade.duration}</p>
                             {grade.fastTrack && (
-                              <p className="text-[13px] text-white/70">
+                              <p className="text-[13px] text-white">
                                 <span className="text-white">Fast track:</span> {grade.fastTrack}
                               </p>
                             )}
                           </div>
 
                           <div className="space-y-2">
-                            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                               Typical responsibilities
                             </span>
                             <ul className="space-y-1.5">
                               {grade.responsibilities.map((resp, idx) => (
                                 <li
                                   key={idx}
-                                  className="flex items-start gap-2 text-[13px] text-white/85"
+                                  className="flex items-start gap-2 text-[13px] text-white"
                                 >
                                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                                   <span>{resp}</span>
@@ -530,14 +534,14 @@ const JIBGradingScheme = () => {
                           </div>
 
                           <div className="space-y-2">
-                            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                               Recommended CPD
                             </span>
                             <ul className="space-y-1.5">
                               {grade.cpd.map((course, idx) => (
                                 <li
                                   key={idx}
-                                  className="flex items-start gap-2 text-[13px] text-white/85"
+                                  className="flex items-start gap-2 text-[13px] text-white"
                                 >
                                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                                   <span>{course}</span>
@@ -558,30 +562,30 @@ const JIBGradingScheme = () => {
                     >
                       <div className="flex items-baseline justify-between gap-2">
                         <div>
-                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                             Grade {index + 1}
                           </span>
                           <h4 className="text-[16px] font-semibold text-white mt-1">
                             {grade.grade}
                           </h4>
                         </div>
-                        <span className="text-[13px] text-white/85 font-mono">
+                        <span className="text-[13px] text-white font-mono">
                           {grade.hourlyRate}
                         </span>
                       </div>
 
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         <div className="space-y-2">
-                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                             Requirements
                           </span>
                           <ul className="space-y-1.5">
                             {grade.requirements.map((req, idx) => (
                               <li
                                 key={idx}
-                                className="flex items-start gap-2 text-[13px] text-white/85"
+                                className="flex items-start gap-2 text-[13px] text-white"
                               >
-                                <CheckCircle className="h-3.5 w-3.5 text-white/55 mt-0.5 flex-shrink-0" />
+                                <CheckCircle className="h-3.5 w-3.5 text-white mt-0.5 flex-shrink-0" />
                                 <span>{req}</span>
                               </li>
                             ))}
@@ -589,14 +593,14 @@ const JIBGradingScheme = () => {
                         </div>
 
                         <div className="space-y-2">
-                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                             Benefits
                           </span>
                           <ul className="space-y-1.5">
                             {grade.benefits.map((benefit, idx) => (
                               <li
                                 key={idx}
-                                className="flex items-start gap-2 text-[13px] text-white/85"
+                                className="flex items-start gap-2 text-[13px] text-white"
                               >
                                 <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                                 <span>{benefit}</span>
@@ -606,12 +610,12 @@ const JIBGradingScheme = () => {
                         </div>
 
                         <div className="space-y-2">
-                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                             Duration
                           </span>
-                          <p className="text-[13px] text-white/85">{grade.duration}</p>
+                          <p className="text-[13px] text-white">{grade.duration}</p>
                           {grade.fastTrack && (
-                            <p className="text-[13px] text-white/70">
+                            <p className="text-[13px] text-white">
                               <span className="text-white">Fast track:</span> {grade.fastTrack}
                             </p>
                           )}
@@ -620,14 +624,14 @@ const JIBGradingScheme = () => {
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-2">
-                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                             Typical responsibilities
                           </span>
                           <ul className="space-y-1.5">
                             {grade.responsibilities.map((resp, idx) => (
                               <li
                                 key={idx}
-                                className="flex items-start gap-2 text-[13px] text-white/85"
+                                className="flex items-start gap-2 text-[13px] text-white"
                               >
                                 <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                                 <span>{resp}</span>
@@ -637,14 +641,14 @@ const JIBGradingScheme = () => {
                         </div>
 
                         <div className="space-y-2">
-                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                             Recommended CPD
                           </span>
                           <ul className="space-y-1.5">
                             {grade.cpd.map((course, idx) => (
                               <li
                                 key={idx}
-                                className="flex items-start gap-2 text-[13px] text-white/85"
+                                className="flex items-start gap-2 text-[13px] text-white"
                               >
                                 <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                                 <span>{course}</span>
@@ -666,16 +670,13 @@ const JIBGradingScheme = () => {
             </MobileAccordionTrigger>
             <MobileAccordionContent className="bg-white/[0.02] border-x border-b border-white/[0.06] rounded-b-lg p-4">
               <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2 mb-4">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Application fees (current)
                 </span>
-                <div className="grid grid-cols-2 gap-2 text-[13px] text-white/85">
-                  <div>Apprentice: £36</div>
-                  <div>Gold Card: £42</div>
-                  <div>Approved: £70</div>
-                  <div>Supervisor: £126</div>
-                </div>
-                <p className="text-[12px] text-white/55">
+                <p className="text-[13px] text-white">
+                  One card fee across the grades — see ecscard.org.uk for the current amount.
+                </p>
+                <p className="text-[12px] text-white">
                   3-year validity · digital cards issued immediately · physical cards posted within
                   5 working days.
                 </p>
@@ -683,7 +684,7 @@ const JIBGradingScheme = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Core electrical
                   </span>
                   <div className="flex flex-wrap gap-1.5">
@@ -697,18 +698,18 @@ const JIBGradingScheme = () => {
                     ].map((t) => (
                       <span
                         key={t}
-                        className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
+                        className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
                       >
                         {t}
                       </span>
                     ))}
                   </div>
-                  <p className="text-[12px] text-white/55">
+                  <p className="text-[12px] text-white">
                     Cards verify competence, qualifications and health & safety knowledge.
                   </p>
                 </div>
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Specialist categories
                   </span>
                   <div className="flex flex-wrap gap-1.5">
@@ -725,40 +726,40 @@ const JIBGradingScheme = () => {
                     ].map((t) => (
                       <span
                         key={t}
-                        className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
+                        className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
                       >
                         {t}
                       </span>
                     ))}
                   </div>
-                  <p className="text-[12px] text-white/55">
-                    High-demand specialisations requiring additional certifications and
-                    manufacturer approvals.
+                  <p className="text-[12px] text-white">
+                    High-demand specialisations requiring additional certifications and manufacturer
+                    approvals.
                   </p>
                 </div>
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Application process
                   </span>
-                  <ul className="text-[13px] text-white/85 space-y-1.5">
+                  <ul className="text-[13px] text-white space-y-1.5">
                     <li className="flex items-start gap-2">
-                      <CheckCircle className="h-3.5 w-3.5 text-white/55 mt-0.5 flex-shrink-0" />
+                      <CheckCircle className="h-3.5 w-3.5 text-white mt-0.5 flex-shrink-0" />
                       <span>Create MyECS account</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle className="h-3.5 w-3.5 text-white/55 mt-0.5 flex-shrink-0" />
+                      <CheckCircle className="h-3.5 w-3.5 text-white mt-0.5 flex-shrink-0" />
                       <span>Upload qualifications (PDF)</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle className="h-3.5 w-3.5 text-white/55 mt-0.5 flex-shrink-0" />
+                      <CheckCircle className="h-3.5 w-3.5 text-white mt-0.5 flex-shrink-0" />
                       <span>Passport-style photo (mobile upload)</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle className="h-3.5 w-3.5 text-white/55 mt-0.5 flex-shrink-0" />
+                      <CheckCircle className="h-3.5 w-3.5 text-white mt-0.5 flex-shrink-0" />
                       <span>Book H&S test online (if required)</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle className="h-3.5 w-3.5 text-white/55 mt-0.5 flex-shrink-0" />
+                      <CheckCircle className="h-3.5 w-3.5 text-white mt-0.5 flex-shrink-0" />
                       <span>Instant digital card upon approval</span>
                     </li>
                   </ul>
@@ -774,10 +775,10 @@ const JIBGradingScheme = () => {
             <MobileAccordionContent className="bg-white/[0.02] border-x border-b border-white/[0.06] rounded-b-lg p-4">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Day rates by region
                   </span>
-                  <div className="space-y-2 text-[13px] text-white/85">
+                  <div className="space-y-2 text-[13px] text-white">
                     <div>
                       <p className="text-white">London & M25</p>
                       <p>Electrician: £220-340/day</p>
@@ -798,10 +799,10 @@ const JIBGradingScheme = () => {
                 </div>
 
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Project type premiums
                   </span>
-                  <div className="text-[13px] text-white/85 space-y-1">
+                  <div className="text-[13px] text-white space-y-1">
                     <div className="flex justify-between">
                       <span>Data centres</span>
                       <span className="font-mono">+20-25%</span>
@@ -823,16 +824,16 @@ const JIBGradingScheme = () => {
                       <span className="font-mono">Base</span>
                     </div>
                   </div>
-                  <p className="text-[12px] text-white/55 pt-1 border-t border-white/[0.06]">
+                  <p className="text-[12px] text-white pt-1 border-t border-white/[0.06]">
                     Overtime rates: 1.5x after 8hrs weekdays, 2x Sundays/bank holidays.
                   </p>
                 </div>
 
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Allowances & benefits
                   </span>
-                  <div className="text-[13px] text-white/85 space-y-1.5">
+                  <div className="text-[13px] text-white space-y-1.5">
                     <div>
                       <p className="text-white">Travel & accommodation</p>
                       <p>Mileage: £0.45-0.65/mile</p>
@@ -846,7 +847,7 @@ const JIBGradingScheme = () => {
                       <p>Sick pay: statutory + enhanced</p>
                     </div>
                   </div>
-                  <p className="text-[12px] text-white/55 pt-1 border-t border-white/[0.06]">
+                  <p className="text-[12px] text-white pt-1 border-t border-white/[0.06]">
                     Self-employed rates typically 25-40% higher to cover benefits/pension.
                   </p>
                 </div>
@@ -861,35 +862,35 @@ const JIBGradingScheme = () => {
             <MobileAccordionContent className="bg-white/[0.02] border-x border-b border-white/[0.06] rounded-b-lg p-4">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Standard route
                   </span>
-                  <p className="text-[13px] text-white/85 leading-relaxed">
+                  <p className="text-[13px] text-white leading-relaxed">
                     Apprentice → Improver → Electrician (Gold) → Approved → Technician
                   </p>
-                  <p className="text-[12px] text-white/55">
+                  <p className="text-[12px] text-white">
                     Typical 6-10 years to Technician depending on experience and qualifications.
                   </p>
                 </div>
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Supervisor/Manager route
                   </span>
-                  <p className="text-[13px] text-white/85 leading-relaxed">
+                  <p className="text-[13px] text-white leading-relaxed">
                     Approved/Technician → Chargehand → Site Supervisor → Manager
                   </p>
-                  <p className="text-[12px] text-white/55">
+                  <p className="text-[12px] text-white">
                     Add leadership (SSSTS/SMSTS/IOSH) and project delivery experience.
                   </p>
                 </div>
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Fast-track / APL
                   </span>
-                  <p className="text-[13px] text-white/85 leading-relaxed">
+                  <p className="text-[13px] text-white leading-relaxed">
                     Experienced workers scheme with evidence portfolio.
                   </p>
-                  <p className="text-[12px] text-white/55">
+                  <p className="text-[12px] text-white">
                     Recognition of prior learning can reduce time to Gold/Approved.
                   </p>
                 </div>
@@ -904,39 +905,39 @@ const JIBGradingScheme = () => {
             <MobileAccordionContent className="bg-white/[0.02] border-x border-b border-white/[0.06] rounded-b-lg p-4">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     ECS renewal
                   </span>
-                  <ul className="text-[13px] text-white/85 space-y-1">
+                  <ul className="text-[13px] text-white space-y-1">
                     <li>Renew every 3 years</li>
                     <li>Current H&S assessment</li>
                     <li>Up-to-date qualifications</li>
                   </ul>
-                  <p className="text-[12px] text-white/55">
+                  <p className="text-[12px] text-white">
                     Digital card updates first; physical card follows by post.
                   </p>
                 </div>
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     BS 7671 updates
                   </span>
-                  <ul className="text-[13px] text-white/85 space-y-1">
+                  <ul className="text-[13px] text-white space-y-1">
                     <li>Current standard: BS 7671:2018 + A4:2026</li>
                     <li>CPD on changes and application</li>
                   </ul>
-                  <p className="text-[12px] text-white/55">
+                  <p className="text-[12px] text-white">
                     Amendments typically every 2-3 years. Stay subscribed.
                   </p>
                 </div>
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Professional CPD
                   </span>
-                  <ul className="text-[13px] text-white/85 space-y-1">
+                  <ul className="text-[13px] text-white space-y-1">
                     <li>Testing (2391), EV, Solar, Fire/Alarm, BMS</li>
                     <li>Scheme assessments (NICEIC/NAPIT) if contracting</li>
                   </ul>
-                  <p className="text-[12px] text-white/55">
+                  <p className="text-[12px] text-white">
                     Recommended: 20-30 hours CPD per year logged in the CPD Tracker.
                   </p>
                 </div>
@@ -949,11 +950,11 @@ const JIBGradingScheme = () => {
               Evidence checklist (upgrades)
             </MobileAccordionTrigger>
             <MobileAccordionContent className="bg-white/[0.02] border-x border-b border-white/[0.06] rounded-b-lg p-4">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-[13px] text-white/85">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-[13px] text-white">
                 <ul className="space-y-1">
                   <li>Level 3 NVQ Diploma (2357/5357)</li>
                   <li>AM2/AM2S certificate</li>
-                  <li>BS 7671:2018 + A4:2026 (2382-22)</li>
+                  <li>BS 7671:2018+A4:2026 (C&G 2382)</li>
                   <li>Inspection & Testing (2391-52) for Approved/Technician</li>
                 </ul>
                 <ul className="space-y-1">
@@ -976,7 +977,7 @@ const JIBGradingScheme = () => {
               Application process (typical)
             </MobileAccordionTrigger>
             <MobileAccordionContent className="bg-white/[0.02] border-x border-b border-white/[0.06] rounded-b-lg p-4">
-              <ol className="list-decimal pl-5 space-y-2 text-[13px] text-white/85">
+              <ol className="list-decimal pl-5 space-y-2 text-[13px] text-white">
                 <li>Confirm eligibility and gather evidence (NVQ, AM2, 18th, references)</li>
                 <li>Create or log into your MyECS account and start a new application</li>
                 <li>Upload documents and pay the applicable fee</li>
@@ -985,7 +986,7 @@ const JIBGradingScheme = () => {
                   Await verification; your digital ECS card updates first, physical card follows
                 </li>
               </ol>
-              <p className="mt-3 text-[12px] text-white/55">
+              <p className="mt-3 text-[12px] text-white">
                 Typical timeframe: 3-10 working days depending on volume and checks. Fees vary by
                 card type and renewal vs upgrade.
               </p>
@@ -997,7 +998,7 @@ const JIBGradingScheme = () => {
               ECS Health & Safety test topics
             </MobileAccordionTrigger>
             <MobileAccordionContent className="bg-white/[0.02] border-x border-b border-white/[0.06] rounded-b-lg p-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-[13px] text-white/85">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-[13px] text-white">
                 <ul className="space-y-1">
                   <li>Site access, permits to work</li>
                   <li>Safe isolation and lock-off</li>
@@ -1011,8 +1012,8 @@ const JIBGradingScheme = () => {
                   <li>Reporting near misses and incidents</li>
                 </ul>
               </div>
-              <p className="mt-3 text-[12px] text-white/55">
-                Pass mark typically ~85%. Focus on safe isolation, permits and emergency
+              <p className="mt-3 text-[12px] text-white">
+                Pass mark is 36 out of 50 (72%). Focus on safe isolation, permits and emergency
                 procedures.
               </p>
             </MobileAccordionContent>
@@ -1023,20 +1024,20 @@ const JIBGradingScheme = () => {
               SJIB equivalence (Scotland)
             </MobileAccordionTrigger>
             <MobileAccordionContent className="bg-white/[0.02] border-x border-b border-white/[0.06] rounded-b-lg p-4">
-              <p className="text-[13px] text-white/85 mb-3">
+              <p className="text-[13px] text-white mb-3">
                 SJIB mirrors JIB grading for Scotland. Typical mappings:
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
                   <p className="text-[13px] text-white">JIB Electrician ⇄ SJIB Electrician</p>
-                  <p className="text-[12px] text-white/85">NVQ3 + AM2 + BS 7671</p>
+                  <p className="text-[12px] text-white">NVQ3 + AM2 + BS 7671</p>
                 </div>
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
                   <p className="text-[13px] text-white">JIB Approved ⇄ SJIB Approved</p>
-                  <p className="text-[12px] text-white/85">Add 2391 and experience</p>
+                  <p className="text-[12px] text-white">Add 2391 and experience</p>
                 </div>
               </div>
-              <p className="mt-3 text-[12px] text-white/55">
+              <p className="mt-3 text-[12px] text-white">
                 Check SJIB for local rules, evidence and rates which can differ from JIB.
               </p>
             </MobileAccordionContent>
@@ -1050,33 +1051,32 @@ const JIBGradingScheme = () => {
               <div className="space-y-3">
                 <div className="space-y-1">
                   <p className="text-[13px] text-white">Is JIB grading mandatory?</p>
-                  <p className="text-[12px] text-white/70">
-                    Not legally, but widely required by employers and sites for proof of
-                    competence.
+                  <p className="text-[12px] text-white">
+                    Not legally, but widely required by employers and sites for proof of competence.
                   </p>
                 </div>
                 <div className="space-y-1">
                   <p className="text-[13px] text-white">Do I need 2391 for Approved?</p>
-                  <p className="text-[12px] text-white/70">
+                  <p className="text-[12px] text-white">
                     Yes — Inspection & Testing (2391-52) is typically required for JIB Approved
                     Electrician status.
                   </p>
                 </div>
                 <div className="space-y-1">
                   <p className="text-[13px] text-white">What about Scotland?</p>
-                  <p className="text-[12px] text-white/70">
+                  <p className="text-[12px] text-white">
                     Scotland follows SJIB which mirrors JIB; check SJIB for local details and rates.
                   </p>
                 </div>
                 <div className="space-y-1">
                   <p className="text-[13px] text-white">How long does verification take?</p>
-                  <p className="text-[12px] text-white/70">
+                  <p className="text-[12px] text-white">
                     Usually 3-10 working days once all evidence is uploaded and validated.
                   </p>
                 </div>
                 <div className="space-y-1">
                   <p className="text-[13px] text-white">Do I need a physical card?</p>
-                  <p className="text-[12px] text-white/70">
+                  <p className="text-[12px] text-white">
                     The digital card is available immediately after approval; physical cards are
                     posted and may take a few days.
                   </p>

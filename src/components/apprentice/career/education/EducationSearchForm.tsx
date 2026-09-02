@@ -66,7 +66,7 @@ const EducationSearchForm = ({ onSearch, onReset }: EducationSearchFormProps) =>
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
       <div className="relative">
         {!filters.searchTerm && (
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/55 pointer-events-none" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
         )}
         <Input
           placeholder="Search courses, institutions, or qualifications..."
@@ -87,7 +87,7 @@ const EducationSearchForm = ({ onSearch, onReset }: EducationSearchFormProps) =>
           <SelectTrigger className="h-11 touch-manipulation bg-white/[0.03] border-white/10 text-white">
             <SelectValue placeholder="Select category" />
           </SelectTrigger>
-          <SelectContent className="bg-elec-gray border-white/10">
+          <SelectContent className="bg-white/[0.06] border-white/10">
             {educationCategories.map((category) => (
               <SelectItem key={category} value={category}>
                 {category}
@@ -103,7 +103,7 @@ const EducationSearchForm = ({ onSearch, onReset }: EducationSearchFormProps) =>
           <SelectTrigger className="h-11 touch-manipulation bg-white/[0.03] border-white/10 text-white">
             <SelectValue placeholder="Study mode" />
           </SelectTrigger>
-          <SelectContent className="bg-elec-gray border-white/10">
+          <SelectContent className="bg-white/[0.06] border-white/10">
             {studyModes.map((mode) => (
               <SelectItem key={mode} value={mode}>
                 {mode}
@@ -113,7 +113,7 @@ const EducationSearchForm = ({ onSearch, onReset }: EducationSearchFormProps) =>
         </Select>
 
         <div className="relative">
-          <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/55" />
+          <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
           <Input
             placeholder="Location or region"
             value={filters.location}
@@ -128,7 +128,7 @@ const EducationSearchForm = ({ onSearch, onReset }: EducationSearchFormProps) =>
           variant="ghost"
           size="sm"
           onClick={() => setShowAdvanced(!showAdvanced)}
-          className="text-white/85 hover:text-white hover:bg-white/[0.05] h-9"
+          className="text-white hover:text-white hover:bg-white/[0.05] h-9"
         >
           <Filter className="mr-2 h-4 w-4" />
           Advanced filters {showAdvanced ? '▲' : '▼'}
@@ -136,14 +136,14 @@ const EducationSearchForm = ({ onSearch, onReset }: EducationSearchFormProps) =>
 
         {activeFilterCount > 0 && (
           <div className="flex items-center gap-2">
-            <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+            <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
               {activeFilterCount} active filter{activeFilterCount !== 1 ? 's' : ''}
             </span>
             <Button
               variant="ghost"
               size="sm"
               onClick={handleReset}
-              className="text-white/55 hover:text-white hover:bg-white/[0.05] h-9"
+              className="text-white hover:text-white hover:bg-white/[0.05] h-9"
             >
               <X className="h-4 w-4 mr-1" />
               Clear all
@@ -161,7 +161,7 @@ const EducationSearchForm = ({ onSearch, onReset }: EducationSearchFormProps) =>
             <SelectTrigger className="h-11 touch-manipulation bg-white/[0.03] border-white/10 text-white">
               <SelectValue placeholder="Education level" />
             </SelectTrigger>
-            <SelectContent className="bg-elec-gray border-white/10">
+            <SelectContent className="bg-white/[0.06] border-white/10">
               <SelectItem value="Level 4">Level 4 (HNC)</SelectItem>
               <SelectItem value="Level 5">Level 5 (HND / Foundation)</SelectItem>
               <SelectItem value="Level 6">Level 6 (Bachelor's)</SelectItem>
@@ -176,7 +176,7 @@ const EducationSearchForm = ({ onSearch, onReset }: EducationSearchFormProps) =>
             <SelectTrigger className="h-11 touch-manipulation bg-white/[0.03] border-white/10 text-white">
               <SelectValue placeholder="Funding type" />
             </SelectTrigger>
-            <SelectContent className="bg-elec-gray border-white/10">
+            <SelectContent className="bg-white/[0.06] border-white/10">
               <SelectItem value="Student Finance">Student finance</SelectItem>
               <SelectItem value="Advanced Learner Loan">Advanced learner loan</SelectItem>
               <SelectItem value="Employer Sponsorship">Employer sponsorship</SelectItem>
@@ -191,7 +191,7 @@ const EducationSearchForm = ({ onSearch, onReset }: EducationSearchFormProps) =>
             <SelectTrigger className="h-11 touch-manipulation bg-white/[0.03] border-white/10 text-white">
               <SelectValue placeholder="Maximum cost" />
             </SelectTrigger>
-            <SelectContent className="bg-elec-gray border-white/10">
+            <SelectContent className="bg-white/[0.06] border-white/10">
               <SelectItem value="£3000">Under £3,000</SelectItem>
               <SelectItem value="£6000">Under £6,000</SelectItem>
               <SelectItem value="£10000">Under £10,000</SelectItem>

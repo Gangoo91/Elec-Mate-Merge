@@ -14,6 +14,7 @@ import {
   ResultsGrid,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { selectTriggerCn } from '@/components/forms/fieldStyles';
 
 function round(value: number, dp: number) {
   const p = Math.pow(10, dp);
@@ -281,7 +282,7 @@ const ResistanceCalculator: React.FC = () => {
               <select
                 value={dp}
                 onChange={(e) => setDp(e.target.value)}
-                className="bg-white/5 border border-white/10 rounded-lg px-2 py-1 text-sm text-white focus:outline-none focus:border-amber-500/50"
+                className={cn(selectTriggerCn, '[color-scheme:dark]')}
               >
                 <option value="0">0</option>
                 <option value="1">1</option>

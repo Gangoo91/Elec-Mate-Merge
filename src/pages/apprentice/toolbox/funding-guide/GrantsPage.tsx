@@ -12,6 +12,8 @@ import type { LucideIcon } from 'lucide-react';
 import { itemVariants } from '@/components/college/primitives';
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const citbBreakdown = [
   'Year 1 attendance grant: £2,500 (paid quarterly every 13 weeks)',
@@ -150,12 +152,12 @@ const GrantsPage = () => {
 
         {/* ── Headline number ─────────────────────────────────────── */}
         <motion.div variants={itemVariants}>
-          <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-2">
+          <div className="rounded-xl border border-elec-yellow/25 bg-white/[0.05] p-4 sm:p-5 space-y-2">
             <Eyebrow className="text-elec-yellow/85">Total potential funding</Eyebrow>
             <p className="text-[36px] sm:text-[42px] font-mono font-semibold tabular-nums text-elec-yellow leading-none">
               £14,500+
             </p>
-            <p className="text-[13px] text-white/85 leading-relaxed">
+            <p className="text-[13px] text-white leading-relaxed">
               Available to eligible employers on top of the £23,000 apprenticeship training fund —
               CITB grants, age incentives, and tax savings combined.
             </p>
@@ -169,12 +171,12 @@ const GrantsPage = () => {
             title="Support aimed at you, not the employer"
             meta="Most grants on this page go to the employer — these are yours"
             action={
-              <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06]">
+              <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-white/[0.05]">
                 <PiggyBank className="h-4 w-4 text-elec-yellow" />
               </span>
             }
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
+          <div className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}>
             <ul className="space-y-1.5">
               {[
                 'Care leaver bursary — £1,000 paid directly to you if you are a care leaver aged 16–24 (see below)',
@@ -184,7 +186,7 @@ const GrantsPage = () => {
               ].map((item) => (
                 <li
                   key={item}
-                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                 >
                   <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                   <span>{item}</span>
@@ -201,28 +203,33 @@ const GrantsPage = () => {
             title="£13,500 over 4 years"
             meta="Construction Industry Training Board attendance + completion"
             action={
-              <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06]">
+              <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-white/[0.05]">
                 <Banknote className="h-4 w-4 text-elec-yellow" />
               </span>
             }
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-4">
+          <div
+            className={cn(
+              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-4',
+              CARD_SURFACE
+            )}
+          >
             <ul className="space-y-1.5">
               {citbBreakdown.map((item) => (
                 <li
                   key={item}
-                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                 >
                   <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                   <span>{item}</span>
                 </li>
               ))}
             </ul>
-            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-1">
+            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3 space-y-1">
               <Eyebrow className="text-elec-yellow/85">
                 Quarterly payment schedule (per year)
               </Eyebrow>
-              <ul className="text-[12.5px] font-mono tabular-nums text-white/85 space-y-0.5">
+              <ul className="text-[12.5px] font-mono tabular-nums text-white space-y-0.5">
                 <li>Q1 (weeks 1–13): £625</li>
                 <li>Q2 (weeks 14–26): £625</li>
                 <li>Q3 (weeks 27–39): £625</li>
@@ -231,7 +238,7 @@ const GrantsPage = () => {
                   Annual total: £2,500
                 </li>
               </ul>
-              <p className="text-[11.5px] text-white/70 leading-relaxed pt-1">
+              <p className="text-[11.5px] text-white leading-relaxed pt-1">
                 Payments made after each 13-week period, subject to attendance requirements and a
                 valid claim.
               </p>
@@ -242,7 +249,7 @@ const GrantsPage = () => {
                 {citbEligibility.map((item) => (
                   <li
                     key={item}
-                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                    className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                   >
                     <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                     <span>{item}</span>
@@ -256,7 +263,7 @@ const GrantsPage = () => {
                 {citbClaimSteps.map((step, i) => (
                   <li
                     key={step}
-                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                    className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                   >
                     <span className="text-elec-yellow font-mono tabular-nums mt-0.5">{i + 1}.</span>
                     <span>{step}</span>
@@ -270,7 +277,7 @@ const GrantsPage = () => {
                 {citbMistakes.map((item) => (
                   <li
                     key={item}
-                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                    className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                   >
                     <AlertTriangle className="h-3.5 w-3.5 text-red-300 flex-shrink-0 mt-0.5" />
                     <span>{item}</span>
@@ -333,7 +340,7 @@ const GrantsPage = () => {
             {otherGrants.map((grant) => (
               <li
                 key={grant.title}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
+                className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}
               >
                 <div className="flex items-start gap-2.5">
                   <Award className="h-4 w-4 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
@@ -341,7 +348,7 @@ const GrantsPage = () => {
                     <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
                       {grant.title}
                     </h3>
-                    <p className="text-[13px] text-white/85 leading-relaxed">{grant.description}</p>
+                    <p className="text-[13px] text-white leading-relaxed">{grant.description}</p>
                   </div>
                 </div>
               </li>
@@ -356,14 +363,19 @@ const GrantsPage = () => {
             title="4-year Level 3 electrical — the maths"
             meta="What the employer receives vs what the employer pays"
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-4">
+          <div
+            className={cn(
+              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-4',
+              CARD_SURFACE
+            )}
+          >
             <div className="space-y-2">
               <Eyebrow className="text-elec-yellow/85">Employer receives</Eyebrow>
               <ul className="space-y-1.5">
                 {employerReceives.map((row) => (
                   <li
                     key={row.label}
-                    className="flex items-start justify-between gap-3 text-[12.5px] text-white/85"
+                    className="flex items-start justify-between gap-3 text-[12.5px] text-white"
                   >
                     <span className="min-w-0">{row.label}</span>
                     <span className="font-mono tabular-nums text-elec-yellow font-semibold flex-shrink-0">
@@ -385,7 +397,7 @@ const GrantsPage = () => {
                 {employerPays.map((row) => (
                   <li
                     key={row.label}
-                    className="flex items-start justify-between gap-3 text-[12.5px] text-white/85"
+                    className="flex items-start justify-between gap-3 text-[12.5px] text-white"
                   >
                     <span className="min-w-0">{row.label}</span>
                     <span className="font-mono tabular-nums text-white font-semibold flex-shrink-0">
@@ -399,8 +411,8 @@ const GrantsPage = () => {
                 </li>
               </ul>
             </div>
-            <div className="rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.04] p-3">
-              <p className="text-[12.5px] text-white/85 leading-relaxed">
+            <div className="rounded-md border border-elec-yellow/25 bg-white/[0.05] p-3">
+              <p className="text-[12.5px] text-white leading-relaxed">
                 <span className="font-semibold text-elec-yellow">Net result:</span> After grants and
                 tax relief, the true cost of a 4-year apprentice is approximately{' '}
                 <span className="font-mono text-elec-yellow">£20,000</span> — and you gain a fully
@@ -437,17 +449,17 @@ function FundingCard({
         title={title}
         meta={meta}
         action={
-          <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06]">
+          <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-white/[0.05]">
             <Icon className="h-4 w-4 text-elec-yellow" />
           </span>
         }
       />
-      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
+      <div className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}>
         <ul className="space-y-1.5">
           {items.map((item) => (
             <li
               key={item}
-              className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+              className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
             >
               <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
               <span>{item}</span>

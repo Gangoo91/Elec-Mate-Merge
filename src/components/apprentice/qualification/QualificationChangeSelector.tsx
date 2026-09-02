@@ -132,7 +132,7 @@ const QualificationChangeSelector = ({
               <Button
                 onClick={onCancel}
                 variant="outline"
-                className="flex-1 border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow/10"
+                className="flex-1 border-elec-yellow/50 text-elec-yellow hover:bg-white/[0.06]"
               >
                 Cancel
               </Button>

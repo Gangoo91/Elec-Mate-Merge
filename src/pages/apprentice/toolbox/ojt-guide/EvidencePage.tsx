@@ -99,6 +99,8 @@ const photoTips = [
   },
 ];
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const EvidencePage = () => {
   return (
@@ -110,7 +112,12 @@ const EvidencePage = () => {
       />
       <HubBody>
         {/* Intro */}
-        <div className="sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]">
+        <div
+          className={cn(
+            '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+            CARD_SURFACE
+          )}
+        >
           <div className="sm:p-5">
             <h2 className="text-lg font-semibold text-white mb-2">Evidence Requirements</h2>
             <p className="text-white text-sm leading-relaxed">
@@ -126,13 +133,13 @@ const EvidencePage = () => {
         <div className="space-y-3">
           <div className="flex items-baseline justify-between gap-3 pb-1">
             <div className="space-y-1 min-w-0">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Example Evidence Log Entry
               </span>
             </div>
           </div>
 
-          <div className="sm:rounded-xl sm:border sm:border-elec-yellow/25 sm:bg-elec-yellow/[0.04]">
+          <div className="sm:rounded-xl sm:border sm:border-elec-yellow/25 sm:bg-white/[0.05]">
             <div className="sm:p-5 space-y-2">
               <p className="text-white text-sm font-medium">
                 This is what a good log entry looks like:
@@ -176,13 +183,18 @@ const EvidencePage = () => {
         <div className="space-y-3">
           <div className="flex items-baseline justify-between gap-3 pb-1">
             <div className="space-y-1 min-w-0">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Essential Documentation
               </span>
             </div>
           </div>
 
-          <div className="sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]">
+          <div
+            className={cn(
+              '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+              CARD_SURFACE
+            )}
+          >
             <div className="sm:p-5">
               <ul className="space-y-2">
                 {essentialDocs.map((doc) => (
@@ -233,13 +245,13 @@ const EvidencePage = () => {
         <div className="space-y-3">
           <div className="flex items-baseline justify-between gap-3 pb-1">
             <div className="space-y-1 min-w-0">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 What Auditors Look For
               </span>
             </div>
           </div>
 
-          <div className="sm:rounded-xl sm:border sm:border-elec-yellow/25 sm:bg-elec-yellow/[0.04]">
+          <div className="sm:rounded-xl sm:border sm:border-elec-yellow/25 sm:bg-white/[0.05]">
             <div className="sm:p-5 space-y-3">
               <div className="flex items-center gap-2 mb-1">
                 <Search className="h-4 w-4 text-amber-400" />
@@ -263,13 +275,18 @@ const EvidencePage = () => {
         <div className="space-y-3">
           <div className="flex items-baseline justify-between gap-3 pb-1">
             <div className="space-y-1 min-w-0">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Quality Standards
               </span>
             </div>
           </div>
 
-          <div className="sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]">
+          <div
+            className={cn(
+              '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+              CARD_SURFACE
+            )}
+          >
             <div className="sm:p-5">
               <ul className="space-y-2">
                 {qualityStandards.map((std) => (
@@ -287,7 +304,7 @@ const EvidencePage = () => {
         <div className="space-y-3">
           <div className="flex items-baseline justify-between gap-3 pb-1">
             <div className="space-y-1 min-w-0">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Photo Evidence Tips
               </span>
             </div>
@@ -296,7 +313,10 @@ const EvidencePage = () => {
           {photoTips.map((section) => (
             <div
               key={section.title}
-              className="sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]"
+              className={cn(
+                '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+                CARD_SURFACE
+              )}
             >
               <div className="sm:p-5">
                 <h3 className="text-[13.5px] font-semibold text-elec-yellow tracking-tight mb-2">
@@ -319,13 +339,13 @@ const EvidencePage = () => {
         <div className="space-y-3">
           <div className="flex items-baseline justify-between gap-3 pb-1">
             <div className="space-y-1 min-w-0">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Digital Portfolio Best Practices
               </span>
             </div>
           </div>
 
-          <div className="sm:rounded-xl sm:border sm:border-elec-yellow/25 sm:bg-elec-yellow/[0.04]">
+          <div className="sm:rounded-xl sm:border sm:border-elec-yellow/25 sm:bg-white/[0.05]">
             <div className="sm:p-5 space-y-3">
               <p className="text-white text-sm">
                 Modern apprentices benefit from digital evidence management:

@@ -107,10 +107,10 @@ const EvidenceCollectionGuide = () => {
   return (
     <div className="space-y-6">
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Evidence collection guide
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           Comprehensive guidance on collecting, organising, and presenting evidence for your
           electrical apprenticeship portfolio. Quality evidence demonstrates your competency and
           learning journey effectively.
@@ -124,17 +124,17 @@ const EvidenceCollectionGuide = () => {
             className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3"
           >
             <h3 className="text-[16px] font-semibold text-white leading-tight">{evidence.type}</h3>
-            <p className="text-[14px] text-white/85 leading-relaxed">{evidence.description}</p>
+            <p className="text-[14px] text-white leading-relaxed">{evidence.description}</p>
 
             <div className="space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Examples
               </span>
               <ul className="space-y-1.5">
                 {evidence.examples.map((example, index) => (
                   <li
                     key={index}
-                    className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                    className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                   >
                     <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                     <span>{example}</span>
@@ -151,7 +151,7 @@ const EvidenceCollectionGuide = () => {
                 {evidence.tips.map((tip, index) => (
                   <li
                     key={index}
-                    className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                    className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                   >
                     <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
                     <span>{tip}</span>
@@ -164,7 +164,7 @@ const EvidenceCollectionGuide = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Evidence quality checklist
         </span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -180,14 +180,14 @@ const EvidenceCollectionGuide = () => {
                 'Recent and relevant',
                 'Properly dated and witnessed',
               ].map((item) => (
-                <li key={item} className="text-[14px] text-white/85 leading-relaxed">
+                <li key={item} className="text-[14px] text-white leading-relaxed">
                   {item}
                 </li>
               ))}
             </ul>
           </div>
           <div className="space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Common evidence mistakes
             </span>
             <ul className="space-y-1">
@@ -198,7 +198,7 @@ const EvidenceCollectionGuide = () => {
                 'Insufficient evidence quantity',
                 'Poor organisation and filing',
               ].map((item) => (
-                <li key={item} className="text-[14px] text-white/70 leading-relaxed">
+                <li key={item} className="text-[14px] text-white leading-relaxed">
                   {item}
                 </li>
               ))}

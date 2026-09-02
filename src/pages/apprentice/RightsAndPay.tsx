@@ -1,16 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, CheckCircle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { CheckCircle } from 'lucide-react';
 import { DEFAULT_OTJ_STANDARD, OTJ_HOURS_FLOOR } from '@/data/otjStandards';
-import {
-  PageFrame,
-  PageHero,
-  SectionHeader,
-  itemVariants,
-  type Tone,
-} from '@/components/college/primitives';
-import { HubToolGrid } from '@/components/hub/HubPrimitives';
+import { itemVariants, type Tone } from '@/components/college/primitives';
+import { HubSubPage } from '@/components/hub/HubSubPage';
+import { HubToolGrid, HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 interface Section {
   number: string;
@@ -76,33 +72,20 @@ const KEY_FACTS = [
 export default function RightsAndPay() {
   const navigate = useNavigate();
   return (
-    <PageFrame className="px-4 sm:px-6 lg:px-8">
-      <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/apprentice')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
-        >
-          <ArrowLeft className="mr-2 h-5 w-5" />
-          Back
-        </Button>
-      </motion.div>
-
-      <motion.div variants={itemVariants}>
-        <PageHero
-          eyebrow="Apprentice · Rights & Pay"
-          title="Know your rights"
-          description="Your apprenticeship should be a positive learning experience. Understanding your legal rights, wage entitlements and where to get help keeps you treated fairly across all four years."
-          tone="yellow"
-        />
-      </motion.div>
-
+    <HubSubPage
+      title="Know your rights"
+      backTo="/apprentice"
+      description="Your apprenticeship should be a positive learning experience. Understanding your legal rights, wage entitlements and where to get help keeps you treated fairly across all four years."
+    >
       <motion.div
         variants={itemVariants}
-        className="border-0 bg-transparent px-0 py-0 sm:rounded-2xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)] sm:px-5 sm:py-5"
+        className={cn(
+          'border-0 bg-transparent px-0 py-0 -mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x sm:px-5 sm:py-5 px-4 py-4 sm:p-5',
+          CARD_SURFACE
+        )}
       >
         <div className="flex items-baseline gap-2 mb-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Key facts
           </span>
         </div>
@@ -110,7 +93,7 @@ export default function RightsAndPay() {
           {KEY_FACTS.map((item) => (
             <li
               key={item}
-              className="flex items-start gap-2.5 text-[13px] text-white/85 leading-relaxed"
+              className="flex items-start gap-2.5 text-[13px] text-white leading-relaxed"
             >
               <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
               {item}
@@ -121,17 +104,17 @@ export default function RightsAndPay() {
 
       <motion.div
         variants={itemVariants}
-        className="border-0 bg-transparent px-0 py-0 sm:rounded-2xl sm:border sm:border-elec-yellow/25 sm:bg-elec-yellow/[0.04] sm:px-5 sm:py-5"
+        className="border-0 bg-transparent px-0 py-0 sm:rounded-2xl sm:border sm:border-elec-yellow/25 sm:bg-white/[0.05] sm:px-5 sm:py-5"
       >
         <div className="flex items-baseline gap-2 mb-2">
           <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
             Off-the-job training
           </span>
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             · Fixed hours, not 20%
           </span>
         </div>
-        <p className="text-[13px] leading-relaxed text-white/85 max-w-3xl">
+        <p className="text-[13px] leading-relaxed text-white max-w-3xl">
           Since 1 August 2025, off-the-job training is a fixed number of hours set by your
           apprenticeship standard — not 20% of your working hours. The {DEFAULT_OTJ_STANDARD.name} (
           {DEFAULT_OTJ_STANDARD.code}) carries{' '}
@@ -145,10 +128,13 @@ export default function RightsAndPay() {
 
       <motion.div
         variants={itemVariants}
-        className="border-0 bg-transparent px-0 py-0 sm:rounded-2xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)] sm:px-5 sm:py-5 space-y-4"
+        className={cn(
+          'border-0 bg-transparent px-0 py-0 -mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x sm:px-5 sm:py-5 space-y-4 px-4 py-4 sm:p-5',
+          CARD_SURFACE
+        )}
       >
         <div className="flex items-baseline gap-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Essentials
           </span>
           <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
@@ -158,7 +144,7 @@ export default function RightsAndPay() {
         <dl className="space-y-3.5">
           <div>
             <dt className="text-[12px] font-semibold text-elec-yellow mb-0.5">Holiday pay</dt>
-            <dd className="text-[13px] leading-relaxed text-white/80 max-w-3xl">
+            <dd className="text-[13px] leading-relaxed text-white max-w-3xl">
               You build up paid holiday from your first day. The statutory minimum is 5.6 weeks a
               year — 28 days for a five-day week, which your employer can count bank holidays
               towards. Holiday is paid at your normal rate, not a reduced one.
@@ -166,7 +152,7 @@ export default function RightsAndPay() {
           </div>
           <div>
             <dt className="text-[12px] font-semibold text-elec-yellow mb-0.5">Sick pay</dt>
-            <dd className="text-[13px] leading-relaxed text-white/80 max-w-3xl">
+            <dd className="text-[13px] leading-relaxed text-white max-w-3xl">
               If you're off sick and meet the earnings threshold, you're entitled to Statutory Sick
               Pay from the fourth qualifying day, for up to 28 weeks. Many employers pay more than
               the statutory minimum — check your contract. Report sickness the way your contract
@@ -177,7 +163,7 @@ export default function RightsAndPay() {
             <dt className="text-[12px] font-semibold text-elec-yellow mb-0.5">
               If you're not being trained
             </dt>
-            <dd className="text-[13px] leading-relaxed text-white/80 max-w-3xl">
+            <dd className="text-[13px] leading-relaxed text-white max-w-3xl">
               Being used as cheap labour instead of being taught is a genuine problem, not just bad
               luck. Raise it first with your training provider — they're responsible for the quality
               of your on-the-job learning and can speak to your employer. Keep your own dated notes
@@ -187,7 +173,7 @@ export default function RightsAndPay() {
           </div>
           <div>
             <dt className="text-[12px] font-semibold text-elec-yellow mb-0.5">Unions & ACAS</dt>
-            <dd className="text-[13px] leading-relaxed text-white/80 max-w-3xl">
+            <dd className="text-[13px] leading-relaxed text-white max-w-3xl">
               You have the right to join a trade union — Unite the Union represents many electrical
               workers and can advise and represent you. For free, impartial guidance on any
               workplace issue before it escalates, ACAS is on{' '}
@@ -204,7 +190,7 @@ export default function RightsAndPay() {
       </motion.div>
 
       <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
-        <SectionHeader eyebrow="Sections" title="Four chapters" />
+        <HubSectionHeading>Four chapters</HubSectionHeading>
         <HubToolGrid
           label=""
           columns="two"
@@ -227,11 +213,11 @@ export default function RightsAndPay() {
           <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300/85">
             Emergency
           </span>
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             · Immediate help
           </span>
         </div>
-        <p className="text-[13px] leading-relaxed text-white/80 max-w-3xl">
+        <p className="text-[13px] leading-relaxed text-white max-w-3xl">
           In immediate danger? Call{' '}
           <a
             href="tel:999"
@@ -250,6 +236,6 @@ export default function RightsAndPay() {
           strength, not weakness.
         </p>
       </motion.div>
-    </PageFrame>
+    </HubSubPage>
   );
 }

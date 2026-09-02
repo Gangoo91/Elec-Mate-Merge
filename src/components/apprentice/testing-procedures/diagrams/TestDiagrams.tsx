@@ -20,7 +20,7 @@ import type { ReactNode } from 'react';
 const Figure = ({ caption, children }: { caption: string; children: ReactNode }) => (
   <figure className={cn(PANEL_INSET)}>
     <div className="w-full overflow-x-auto">{children}</div>
-    <figcaption className="mt-3 text-center text-[12px] leading-relaxed text-white/70">
+    <figcaption className="mt-3 text-center text-[12px] leading-relaxed text-white">
       {caption}
     </figcaption>
   </figure>

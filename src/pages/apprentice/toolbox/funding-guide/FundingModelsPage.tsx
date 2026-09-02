@@ -19,6 +19,8 @@ import {
 import { itemVariants } from '@/components/college/primitives';
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const dasFlow = [
   'Employer creates a DAS account and adds their PAYE scheme',
@@ -41,8 +43,7 @@ const levyFacts = [
 
 const coInvestmentFacts = [
   'Current split for non-levy SMEs: 95% government / 5% employer',
-  '100% funded for under-25s at non-levy employers (from August 2026)',
-  'From August 2026 the 25% co-investment applies to levy payers once their levy is exhausted — non-levy SMEs stay at 95% / 5%',
+  'Government has announced full funding for under-25s at small and medium employers — check the DfE funding rules for whether it applies to your start date',
   'Max employer contribution for Level 3 Electrical: £1,150 (5% of £23,000)',
   'Employer uses the apprenticeship service to reserve funding',
   'Employer co-investment paid directly to the training provider',
@@ -127,33 +128,30 @@ const endOfProgramme = [
 ];
 
 const growthLevyChanges = [
-  'Levy funds will expire after 12 months (currently 24 months)',
-  'The 10% government top-up ends from 1 August 2026 (existing balances keep it)',
-  'New fundable "apprenticeship units" — short modules of roughly 30–140 hours, up to half of a levy pot',
-  'Levy will also fund non-apprenticeship training for the first time',
-  'Skills England will decide which non-apprenticeship courses qualify',
-  'From August 2026, levy payers who exhaust their levy pay 25% co-investment (non-levy SMEs stay at 95% / 5%)',
-  '100% funding for under-25s at non-levy employers (from August 2026)',
-  'From April 2026, Level 7 apprenticeships are unfunded for new starters aged 22 and over',
-  'Existing apprentices already on programme will not be affected mid-way',
-  'New starts from April 2026 will be under the new rules',
+  'Announced in 2024 to replace the Apprenticeship Levy, and being introduced in stages rather than on one date',
+  'Minimum apprenticeship duration cut from 12 months to 8 months for starts from 1 August 2025',
+  'Foundation apprenticeships for young people introduced from August 2025',
+  'Level 7 apprenticeships lose public funding for new starters aged 22 and over from January 2026',
+  'Full funding announced for under-25s at small and medium employers — check the current rules for the start date and conditions',
+  'Shorter fundable courses are planned alongside full apprenticeships — Skills England is working through what qualifies',
+  'Apprentices already on programme are not moved onto new rules mid-way',
+  'The DfE apprenticeship funding rules for the year you start are the authoritative text — everything here is a summary',
 ];
 
 const keyDates = [
   {
-    date: 'Apr 2026',
+    date: 'Aug 2025',
     event:
-      'Growth & Skills Levy replaces Apprenticeship Levy. 12-month fund expiry begins. Level 7 apprenticeships become unfunded for new starters aged 22+.',
+      'Minimum apprenticeship duration drops to 8 months. Foundation apprenticeships launch. Off-the-job training becomes a fixed number of hours set by each standard.',
   },
   {
-    date: 'Aug 2026',
-    event:
-      '10% top-up ends for new contributions. Levy payers who exhaust their levy pay 25% co-investment; non-levy SMEs stay at 95% / 5% and under-25s become 100% funded.',
+    date: 'Jan 2026',
+    event: 'Level 7 apprenticeships lose public funding for new starters aged 22 and over.',
   },
   {
     date: '2026–27',
     event:
-      'Skills England to publish list of approved non-apprenticeship courses fundable under Growth & Skills Levy.',
+      'Further Growth & Skills Levy changes roll out — the DfE apprenticeship funding rules 2026 to 2027 set the detail, including support for under-25s at smaller employers.',
   },
 ];
 
@@ -174,15 +172,20 @@ const FundingModelsPage = () => {
 
         {/* ── Intro ───────────────────────────────────────────────── */}
         <motion.div variants={itemVariants}>
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2">
+          <div
+            className={cn(
+              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-2',
+              CARD_SURFACE
+            )}
+          >
             <Eyebrow>How it works</Eyebrow>
-            <p className="text-[13.5px] text-white/85 leading-relaxed">
+            <p className="text-[13.5px] text-white leading-relaxed">
               Apprenticeship training in England is funded by the Department for Education (DfE) —
               which absorbed the former Education and Skills Funding Agency when it closed in March
               2025. Skills England — which replaced IfATE in June 2025 — sets the standards and
               funding bands. Three main models determine how training costs are paid.
             </p>
-            <p className="text-[12px] text-white/65 leading-relaxed pt-2 border-t border-white/[0.06]">
+            <p className="text-[12px] text-white leading-relaxed pt-2 border-t border-white/[0.06]">
               This is the England system. Wales, Scotland and Northern Ireland fund apprenticeships
               differently — there's no Digital Apprenticeship Service or £23,000 band, so check your
               nation's scheme if you're outside England.
@@ -197,24 +200,29 @@ const FundingModelsPage = () => {
             title="The Digital Apprenticeship Service"
             meta="All funding flows through apprenticeships.education.gov.uk"
             action={
-              <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06]">
+              <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-white/[0.05]">
                 <Workflow className="h-4 w-4 text-elec-yellow" />
               </span>
             }
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+          <div
+            className={cn(
+              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
+              CARD_SURFACE
+            )}
+          >
             <ol className="space-y-2">
               {dasFlow.map((step, i) => (
                 <li key={step} className="flex items-start gap-3">
-                  <span className="inline-flex items-center justify-center w-6 h-6 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06] text-[11px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
+                  <span className="inline-flex items-center justify-center w-6 h-6 rounded-md border border-elec-yellow/25 bg-white/[0.05] text-[11px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
                     {i + 1}
                   </span>
-                  <span className="text-[12.5px] text-white/85 leading-relaxed">{step}</span>
+                  <span className="text-[12.5px] text-white leading-relaxed">{step}</span>
                 </li>
               ))}
             </ol>
-            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
-              <p className="text-[12.5px] text-white/85 leading-relaxed">
+            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3">
+              <p className="text-[12.5px] text-white leading-relaxed">
                 <span className="font-semibold text-elec-yellow">Key point:</span> money never
                 passes through the apprentice. The Department for Education pays the training
                 provider directly, and the employer pays any co-investment share directly to the
@@ -231,26 +239,31 @@ const FundingModelsPage = () => {
             title="For large employers (>£3m payroll)"
             meta="0.5% of payroll, sits in a DAS account, funds training"
             action={
-              <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06]">
+              <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-white/[0.05]">
                 <Coins className="h-4 w-4 text-elec-yellow" />
               </span>
             }
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+          <div
+            className={cn(
+              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
+              CARD_SURFACE
+            )}
+          >
             <ul className="space-y-1.5">
               {levyFacts.map((fact) => (
                 <li
                   key={fact}
-                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                 >
                   <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                   <span>{fact}</span>
                 </li>
               ))}
             </ul>
-            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-1.5">
+            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3 space-y-1.5">
               <Eyebrow className="text-elec-yellow/85">Worked example · £5m payroll</Eyebrow>
-              <ul className="space-y-0.5 text-[11.5px] sm:text-[12.5px] text-white/85 font-mono tabular-nums">
+              <ul className="space-y-0.5 text-[11.5px] sm:text-[12.5px] text-white font-mono tabular-nums">
                 <li>Annual payroll: £5,000,000</li>
                 <li>Levy charge (0.5%): £25,000</li>
                 <li>− £15,000 allowance = £10,000 actual levy paid</li>
@@ -259,7 +272,7 @@ const FundingModelsPage = () => {
                   Total available for training: £11,000/year
                 </li>
               </ul>
-              <p className="text-[11.5px] text-white/70 leading-relaxed pt-1">
+              <p className="text-[11.5px] text-white leading-relaxed pt-1">
                 Enough to fund approximately one Level 3 electrical apprentice every two years at
                 the £23,000 band.
               </p>
@@ -274,28 +287,33 @@ const FundingModelsPage = () => {
             title="For SMEs under £3m payroll"
             meta="Most common model for small electrical contractors"
             action={
-              <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06]">
+              <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-white/[0.05]">
                 <HandCoins className="h-4 w-4 text-elec-yellow" />
               </span>
             }
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+          <div
+            className={cn(
+              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
+              CARD_SURFACE
+            )}
+          >
             <ul className="space-y-1.5">
               {coInvestmentFacts.map((fact) => (
                 <li
                   key={fact}
-                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                 >
                   <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                   <span>{fact}</span>
                 </li>
               ))}
             </ul>
-            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-1.5">
+            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3 space-y-1.5">
               <Eyebrow className="text-elec-yellow/85">
                 Worked example · SME taking on L3 apprentice
               </Eyebrow>
-              <ul className="space-y-0.5 text-[11.5px] sm:text-[12.5px] text-white/85 font-mono tabular-nums">
+              <ul className="space-y-0.5 text-[11.5px] sm:text-[12.5px] text-white font-mono tabular-nums">
                 <li>Agreed training price: £23,000 (full funding band)</li>
                 <li>Government pays (95%): £21,850</li>
                 <li>Employer pays (5%): £1,150</li>
@@ -304,10 +322,10 @@ const FundingModelsPage = () => {
                   Apprentice pays: £0
                 </li>
               </ul>
-              <p className="text-[11.5px] text-white/70 leading-relaxed pt-1">
-                The 25% co-investment coming in August 2026 applies to levy payers once their levy
-                is exhausted — most small electrical contractors are non-levy and stay at 5%
-                (£1,150), with under-25s 100% funded.
+              <p className="text-[11.5px] text-white leading-relaxed pt-1">
+                Most small electrical contractors are non-levy and pay the 5% co-investment (a
+                maximum of £1,150 on the £23,000 band). Full funding for under-25s at smaller
+                employers has been announced — the DfE funding rules confirm when it applies.
               </p>
             </div>
           </div>
@@ -320,30 +338,35 @@ const FundingModelsPage = () => {
             title="The best deal for small employers"
             meta="100% funded — receiving employer pays nothing"
             action={
-              <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06]">
+              <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-white/[0.05]">
                 <ArrowRightLeft className="h-4 w-4 text-elec-yellow" />
               </span>
             }
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+          <div
+            className={cn(
+              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
+              CARD_SURFACE
+            )}
+          >
             <ul className="space-y-1.5">
               {levyTransferFacts.map((fact) => (
                 <li
                   key={fact}
-                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                 >
                   <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                   <span>{fact}</span>
                 </li>
               ))}
             </ul>
-            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-2">
+            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3 space-y-2">
               <Eyebrow className="text-elec-yellow/85">How to find a levy transfer</Eyebrow>
               <ol className="space-y-1.5">
                 {findTransfer.map((tip, i) => (
                   <li
                     key={tip}
-                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                    className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                   >
                     <span className="text-elec-yellow font-mono tabular-nums mt-0.5">{i + 1}.</span>
                     <span>{tip}</span>
@@ -361,18 +384,23 @@ const FundingModelsPage = () => {
             title="£23,000 for Level 3"
             meta="Increased from £21,000 on 20 July 2025"
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-4">
+          <div
+            className={cn(
+              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-4',
+              CARD_SURFACE
+            )}
+          >
             <div className="space-y-1">
               <p className="text-[32px] sm:text-[36px] font-mono font-semibold tabular-nums text-elec-yellow leading-none">
                 £23,000
               </p>
-              <p className="text-[12.5px] text-white/70 leading-relaxed">
+              <p className="text-[12.5px] text-white leading-relaxed">
                 Maximum funding for Level 3 Installation / Maintenance Electrician (ST0152 v1.2)
               </p>
             </div>
-            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-1">
+            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3 space-y-1">
               <Eyebrow className="text-elec-yellow/85">What's a funding band?</Eyebrow>
-              <p className="text-[12.5px] text-white/85 leading-relaxed">
+              <p className="text-[12.5px] text-white leading-relaxed">
                 The maximum amount the government will contribute towards training. Employers and
                 providers can agree a price below the band, but never above. If a provider charges
                 more, the employer pays the difference from their own funds — rare for standard L3
@@ -385,7 +413,7 @@ const FundingModelsPage = () => {
                 {fundingCovers.map((item) => (
                   <li
                     key={item}
-                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                    className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                   >
                     <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                     <span>{item}</span>
@@ -399,9 +427,9 @@ const FundingModelsPage = () => {
                 {fundingDoesntCover.map((item) => (
                   <li
                     key={item}
-                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                    className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                   >
-                    <AlertTriangle className="h-3.5 w-3.5 text-white/55 flex-shrink-0 mt-0.5" />
+                    <AlertTriangle className="h-3.5 w-3.5 text-white flex-shrink-0 mt-0.5" />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -417,12 +445,12 @@ const FundingModelsPage = () => {
             title="80 / 20 split, monthly in arrears"
             meta="When and how funding is paid to your provider"
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
+          <div className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}>
             <ul className="space-y-1.5">
               {paymentTimeline.map((item) => (
                 <li
                   key={item}
-                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                 >
                   <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                   <span>{item}</span>
@@ -443,24 +471,24 @@ const FundingModelsPage = () => {
             {endOfProgramme.map((item) => (
               <li
                 key={item.step}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
+                className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}
               >
                 <div className="flex items-start gap-3">
-                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[12px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
+                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-md border border-elec-yellow/30 bg-white/[0.05] text-[12px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
                     {item.step}
                   </span>
                   <div className="space-y-1">
                     <h3 className="text-[14px] font-semibold text-white tracking-tight">
                       {item.title}
                     </h3>
-                    <p className="text-[13px] text-white/85 leading-relaxed">{item.description}</p>
+                    <p className="text-[13px] text-white leading-relaxed">{item.description}</p>
                   </div>
                 </div>
               </li>
             ))}
           </ol>
-          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
-            <p className="text-[12.5px] text-white/85 leading-relaxed">
+          <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3">
+            <p className="text-[12.5px] text-white leading-relaxed">
               <span className="font-semibold text-elec-yellow">Important:</span> If your
               apprenticeship takes longer than planned (common for L3 electrical), funding continues
               as long as you remain on programme. Total paid won't exceed the funding band, but
@@ -472,16 +500,16 @@ const FundingModelsPage = () => {
         {/* ── Growth & Skills Levy ────────────────────────────────── */}
         <motion.section variants={itemVariants} className="space-y-3">
           <SectionHeader
-            eyebrow="Upcoming changes"
-            title="Growth & Skills Levy — April 2026"
-            meta="Biggest change to apprenticeship funding in a decade"
+            eyebrow="What changed in 2026"
+            title="Growth & Skills Levy — what is changing"
+            meta="The biggest change to apprenticeship funding in a decade"
           />
           <div className="rounded-xl border border-red-500/25 bg-red-500/[0.04] p-4 sm:p-5">
             <ul className="space-y-1.5">
               {growthLevyChanges.map((item) => (
                 <li
                   key={item}
-                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                 >
                   <AlertTriangle className="h-3.5 w-3.5 text-red-300 flex-shrink-0 mt-0.5" />
                   <span>{item}</span>
@@ -489,7 +517,12 @@ const FundingModelsPage = () => {
               ))}
             </ul>
           </div>
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+          <div
+            className={cn(
+              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
+              CARD_SURFACE
+            )}
+          >
             <Eyebrow>Key dates to watch</Eyebrow>
             <ul className="space-y-2">
               {keyDates.map((item) => (
@@ -498,7 +531,7 @@ const FundingModelsPage = () => {
                   <span className="text-[12px] font-mono uppercase tracking-[0.14em] text-elec-yellow min-w-[80px] flex-shrink-0">
                     {item.date}
                   </span>
-                  <span className="text-[12.5px] text-white/85 leading-relaxed">{item.event}</span>
+                  <span className="text-[12.5px] text-white leading-relaxed">{item.event}</span>
                 </li>
               ))}
             </ul>

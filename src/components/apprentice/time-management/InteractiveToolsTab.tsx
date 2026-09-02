@@ -4,6 +4,8 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { CheckCircle, Circle, Plus, Trash2 } from 'lucide-react';
+import { selectTriggerCn } from '@/components/forms/fieldStyles';
+import { cn } from '@/lib/utils';
 
 const InteractiveToolsTab = () => {
   const [tasks, setTasks] = useState([
@@ -87,10 +89,10 @@ const InteractiveToolsTab = () => {
     <div className="space-y-6">
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Task manager
           </span>
-          <p className="text-[14px] text-white/85 leading-relaxed">
+          <p className="text-[14px] text-white leading-relaxed">
             Keep track of work and study tasks with priority levels
           </p>
         </div>
@@ -106,7 +108,7 @@ const InteractiveToolsTab = () => {
           <select
             value={newPriority}
             onChange={(e) => setNewPriority(e.target.value)}
-            className="px-3 py-2 border border-white/15 rounded-md bg-white/[0.02] text-white touch-manipulation"
+            className={cn(selectTriggerCn, '[color-scheme:dark]')}
           >
             <option value="low">Low</option>
             <option value="medium">Medium</option>
@@ -131,24 +133,24 @@ const InteractiveToolsTab = () => {
                 {task.completed ? (
                   <CheckCircle className="h-5 w-5 text-elec-yellow" />
                 ) : (
-                  <Circle className="h-5 w-5 text-white/55" />
+                  <Circle className="h-5 w-5 text-white" />
                 )}
               </button>
               <span
                 className={`flex-1 text-[14px] ${
-                  task.completed ? 'line-through text-white/55' : 'text-white/85'
+                  task.completed ? 'line-through text-white' : 'text-white'
                 }`}
               >
                 {task.text}
               </span>
-              <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+              <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                 {task.priority}
               </span>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => deleteTask(task.id)}
-                className="text-white/55 hover:text-white hover:bg-white/[0.05] touch-manipulation"
+                className="text-white hover:text-white hover:bg-white/[0.05] touch-manipulation"
               >
                 <Trash2 className="h-4 w-4" />
               </Button>
@@ -156,28 +158,28 @@ const InteractiveToolsTab = () => {
           ))}
         </div>
 
-        <div className="text-[13px] text-white/55">
+        <div className="text-[13px] text-white">
           {tasks.filter((t) => !t.completed).length} of {tasks.length} tasks remaining
         </div>
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Weekly schedule planner
           </span>
-          <p className="text-[14px] text-white/85 leading-relaxed">
+          <p className="text-[14px] text-white leading-relaxed">
             Plan your weekly activities including work, college, and personal time
           </p>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
           <div>
-            <Label className="text-[12px] text-white/55">Day</Label>
+            <Label className="text-[12px] text-white">Day</Label>
             <select
               value={newEntry.day}
               onChange={(e) => setNewEntry({ ...newEntry, day: e.target.value })}
-              className="w-full px-2 py-1 border border-white/15 rounded bg-white/[0.02] text-white text-[13px] touch-manipulation"
+              className={cn(selectTriggerCn, 'w-full [color-scheme:dark]')}
             >
               <option>Monday</option>
               <option>Tuesday</option>
@@ -190,7 +192,7 @@ const InteractiveToolsTab = () => {
           </div>
 
           <div>
-            <Label className="text-[12px] text-white/55">Time</Label>
+            <Label className="text-[12px] text-white">Time</Label>
             <Input
               type="time"
               value={newEntry.time}
@@ -200,7 +202,7 @@ const InteractiveToolsTab = () => {
           </div>
 
           <div>
-            <Label className="text-[12px] text-white/55">Activity</Label>
+            <Label className="text-[12px] text-white">Activity</Label>
             <Input
               placeholder="e.g., Site work"
               value={newEntry.activity}
@@ -211,7 +213,7 @@ const InteractiveToolsTab = () => {
 
           <div className="flex items-end gap-2">
             <div className="flex-1">
-              <Label className="text-[12px] text-white/55">Duration</Label>
+              <Label className="text-[12px] text-white">Duration</Label>
               <Input
                 placeholder="e.g., 2 hours"
                 value={newEntry.duration}
@@ -232,27 +234,21 @@ const InteractiveToolsTab = () => {
         <div className="space-y-2">
           {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(
             (day) => (
-              <div
-                key={day}
-                className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3"
-              >
+              <div key={day} className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3">
                 <h4 className="text-[14px] font-semibold text-white mb-2">{day}</h4>
                 <div className="space-y-1">
                   {scheduleEntries
                     .filter((entry) => entry.day === day)
                     .sort((a, b) => a.time.localeCompare(b.time))
                     .map((entry) => (
-                      <div
-                        key={entry.id}
-                        className="flex items-center gap-3 text-[13px]"
-                      >
+                      <div key={entry.id} className="flex items-center gap-3 text-[13px]">
                         <span className="text-elec-yellow font-mono">{entry.time}</span>
-                        <span className="text-white/85">{entry.activity}</span>
-                        <span className="text-white/55">({entry.duration})</span>
+                        <span className="text-white">{entry.activity}</span>
+                        <span className="text-white">({entry.duration})</span>
                       </div>
                     ))}
                   {scheduleEntries.filter((entry) => entry.day === day).length === 0 && (
-                    <span className="text-white/55 text-[13px]">No activities planned</span>
+                    <span className="text-white text-[13px]">No activities planned</span>
                   )}
                 </div>
               </div>
@@ -263,19 +259,19 @@ const InteractiveToolsTab = () => {
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Daily stress level tracker
           </span>
-          <p className="text-[14px] text-white/85 leading-relaxed">
+          <p className="text-[14px] text-white leading-relaxed">
             Monitor your daily stress levels and identify patterns
           </p>
         </div>
 
         <div className="space-y-3">
           <div>
-            <Label className="text-[13px] text-white/85">Today's stress level (1-10)</Label>
+            <Label className="text-[13px] text-white">Today's stress level (1-10)</Label>
             <div className="flex items-center gap-2 mt-1">
-              <span className="text-[13px] text-white/55">1</span>
+              <span className="text-[13px] text-white">1</span>
               <input
                 type="range"
                 min="1"
@@ -286,7 +282,7 @@ const InteractiveToolsTab = () => {
                 }
                 className="flex-1 touch-manipulation"
               />
-              <span className="text-[13px] text-white/55">10</span>
+              <span className="text-[13px] text-white">10</span>
               <span className="text-[18px] font-semibold text-elec-yellow">
                 {newStressEntry.level}
               </span>
@@ -294,7 +290,7 @@ const InteractiveToolsTab = () => {
           </div>
 
           <div>
-            <Label className="text-[13px] text-white/85">Notes about today</Label>
+            <Label className="text-[13px] text-white">Notes about today</Label>
             <Textarea
               placeholder="What contributed to your stress level today?"
               value={newStressEntry.notes}
@@ -323,12 +319,12 @@ const InteractiveToolsTab = () => {
                 className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 space-y-1"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-[13px] text-white/55">{entry.date}</span>
+                  <span className="text-[13px] text-white">{entry.date}</span>
                   <span className="text-[16px] font-semibold text-elec-yellow">
                     {entry.level}/10
                   </span>
                 </div>
-                <p className="text-[14px] text-white/85 leading-relaxed">{entry.notes}</p>
+                <p className="text-[14px] text-white leading-relaxed">{entry.notes}</p>
               </div>
             ))}
         </div>

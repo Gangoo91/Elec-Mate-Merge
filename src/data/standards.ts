@@ -87,7 +87,7 @@ export const ukElectricalStandards: Standard[] = [
     notes: 'Critical for earth fault protection and safety',
   },
   {
-    code: 'BS EN 60439-3:2004',
+    code: 'BS EN 61439-3:2012',
     title: 'Low-voltage switchgear and controlgear assemblies',
     description: 'Distribution boards and consumer units',
     scope:
@@ -118,30 +118,23 @@ export const voltageDropLimits = [
   {
     circuit: 'Lighting circuits',
     limit: '3%',
-    reference: 'BS 7671 - 525.201',
+    reference: 'BS 7671 - 525.202 / Appendix 4 Table 4Ab',
     application: 'All lighting installations',
     calculation: 'At design current under normal conditions',
   },
   {
     circuit: 'Power circuits',
     limit: '5%',
-    reference: 'BS 7671 - 525.201',
+    reference: 'BS 7671 - 525.202 / Appendix 4 Table 4Ab',
     application: 'Socket outlets and fixed equipment',
     calculation: 'At design current under normal conditions',
   },
   {
     circuit: 'Fixed heating',
     limit: '5%',
-    reference: 'BS 7671 - 525.201',
+    reference: 'BS 7671 - 525.202 / Appendix 4 Table 4Ab',
     application: 'Electric heating installations',
     calculation: 'At design current including diversity',
-  },
-  {
-    circuit: 'Motor circuits (starting)',
-    limit: '10%',
-    reference: 'BS 7671 - 525.202',
-    application: 'Motor starting conditions only',
-    calculation: 'During starting period with starting current',
   },
 ];
 

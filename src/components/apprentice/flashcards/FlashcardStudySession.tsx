@@ -24,7 +24,7 @@
  * Built from `@/components/shared/surfaceStyles` so it reads as the same
  * product as the rest of the app: full-bleed cards on a phone, hierarchy from
  * type rather than icons, and every piece of text full white — de-emphasis is
- * `opacity` on a whole element, never a `text-white/55` that renders as grey.
+ * `opacity` on a whole element, never a `text-white` that renders as grey.
  */
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { ArrowLeft, RotateCcw, CheckCircle, XCircle, Sparkles } from 'lucide-react';
@@ -291,7 +291,12 @@ const FlashcardStudySession = ({
           )}
         </div>
 
-        <div className={cn('grid grid-cols-3 divide-x divide-white/[0.14] overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
+        <div
+          className={cn(
+            'grid grid-cols-3 divide-x divide-white/[0.14] overflow-hidden rounded-2xl border border-elec-yellow/35',
+            CARD_SURFACE
+          )}
+        >
           {[
             { label: 'Cards', value: String(flashcards.length) },
             { label: 'Accuracy', value: `${successRate}%` },
@@ -359,7 +364,7 @@ const FlashcardStudySession = ({
             className={cn(
               'pointer-events-none absolute inset-0 z-20 rounded-2xl border-2 transition-opacity',
               swipeFeedback === 'correct'
-                ? 'border-elec-yellow/50 bg-elec-yellow/[0.06]'
+                ? 'border-elec-yellow/50 bg-white/[0.05]'
                 : 'border-red-500/50 bg-red-500/[0.06]'
             )}
           />

@@ -16,7 +16,7 @@ const FirstAidResponse = () => {
           {/* First Column */}
           <div className="space-y-4">
             <div className="flex items-center gap-2 mb-2">
-              <div className="p-1.5 bg-elec-yellow/10 rounded">
+              <div className="p-1.5 bg-white/[0.06] rounded">
                 <Zap className="h-5 w-5 text-elec-yellow" />
               </div>
               <h4 className="font-medium text-elec-yellow text-lg">Electric Shock Response</h4>
@@ -51,7 +51,7 @@ const FirstAidResponse = () => {
           {/* Second Column */}
           <div className="space-y-4">
             <div className="flex items-center gap-2 mb-2">
-              <div className="p-1.5 bg-elec-yellow/10 rounded">
+              <div className="p-1.5 bg-white/[0.06] rounded">
                 <Heart className="h-5 w-5 text-elec-yellow" />
               </div>
               <h4 className="font-medium text-elec-yellow text-lg">Treating Electrical Burns</h4>
@@ -95,7 +95,7 @@ const FirstAidResponse = () => {
           {/* Third Column */}
           <div className="space-y-4">
             <div className="flex items-center gap-2 mb-2">
-              <div className="p-1.5 bg-elec-yellow/10 rounded">
+              <div className="p-1.5 bg-white/[0.06] rounded">
                 <AlertCircle className="h-5 w-5 text-elec-yellow" />
               </div>
               <h4 className="font-medium text-elec-yellow text-lg">Monitoring & Complications</h4>

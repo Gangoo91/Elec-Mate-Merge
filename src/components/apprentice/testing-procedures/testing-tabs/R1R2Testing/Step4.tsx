@@ -38,7 +38,7 @@ const R1R2Step4 = () => {
       <p className="text-[14px] font-medium text-white">{label}</p>
       <ul className="space-y-1.5">
         {items.map((item, i) => (
-          <li key={i} className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2">
+          <li key={i} className="text-[14px] text-white leading-relaxed flex items-start gap-2">
             <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
             <span>{item}</span>
           </li>
@@ -50,13 +50,13 @@ const R1R2Step4 = () => {
   return (
     <div className="space-y-4">
       <div className="space-y-1">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Step 4
         </span>
         <h3 className="text-[18px] font-semibold text-white leading-tight">
           Ring final circuits
         </h3>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           A ring needs more than R₁ + R₂. Because the two legs form parallel paths, a ring wired as
           a long spur, or broken and back-fed, can still show continuity everywhere — so the live
           conductors have to be proved as well.
@@ -70,16 +70,16 @@ const R1R2Step4 = () => {
       <RingFinalDiagram />
 
       <div className={cn(PANEL_INSET, "space-y-2")}>
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Reading the results
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           On 2.5/1.5 mm² twin and earth, expect r₁ and rₙ to be close to each other and r₂ to be
           noticeably higher — the cpc is the smaller conductor, so it has more resistance per metre.
           For the same reason the step 3 readings sit above the step 2 readings. What matters is
           that within each step the sockets agree with one another.
         </p>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           One socket reading high in both steps is usually a spur — legitimate if it was designed
           in, a fault if it was not. Readings that climb steadily as you work round the ring point
           to it being wired as a radial rather than a ring. Both ends of the cpc must land on the

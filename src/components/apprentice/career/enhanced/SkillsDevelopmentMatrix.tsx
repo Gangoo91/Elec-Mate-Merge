@@ -34,13 +34,13 @@ interface SkillCategory {
 }
 
 const Eyebrow = ({ children }: { children: React.ReactNode }) => (
-  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
     {children}
   </span>
 );
 
 const Pill = ({ children }: { children: React.ReactNode }) => (
-  <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+  <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
     {children}
   </span>
 );
@@ -50,7 +50,7 @@ const Bullets = ({ items }: { items: string[] }) => (
     {items.map((item, idx) => (
       <li
         key={idx}
-        className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+        className="text-[14px] text-white leading-relaxed flex items-start gap-2"
       >
         <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
         <span>{item}</span>
@@ -77,10 +77,10 @@ const SkillsBlock = ({ categories }: { categories: SkillCategory[] }) => (
                 <h5 className="text-[14px] text-white">{skill.skill}</h5>
                 <Pill>{skill.competencyLevel}</Pill>
               </div>
-              <p className="text-[14px] text-white/85 leading-relaxed">{skill.description}</p>
+              <p className="text-[14px] text-white leading-relaxed">{skill.description}</p>
               <div className="space-y-1">
                 <Eyebrow>Learning path</Eyebrow>
-                <p className="text-[14px] text-white/85 leading-relaxed">{skill.learningPath}</p>
+                <p className="text-[14px] text-white leading-relaxed">{skill.learningPath}</p>
               </div>
               <div className="space-y-1">
                 <Eyebrow>Assessment criteria</Eyebrow>
@@ -420,7 +420,7 @@ const SkillsDevelopmentMatrix = () => {
       {items.map((item, idx) => (
         <li
           key={idx}
-          className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+          className="text-[14px] text-white leading-relaxed flex items-start gap-2"
         >
           <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
           <span>
@@ -435,8 +435,8 @@ const SkillsDevelopmentMatrix = () => {
   return (
     <div className="space-y-4">
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 flex items-start gap-3">
-        <Brain className="h-4 w-4 text-white/55 mt-1 flex-shrink-0" />
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <Brain className="h-4 w-4 text-white mt-1 flex-shrink-0" />
+        <p className="text-[14px] text-white leading-relaxed">
           Structured skills development supports stronger earning potential and faster career
           progression.
         </p>
@@ -451,14 +451,14 @@ const SkillsDevelopmentMatrix = () => {
             className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 space-y-1"
           >
             <Eyebrow>{metric.metric}</Eyebrow>
-            <div className="text-[14px] text-white/85">{metric.data}</div>
+            <div className="text-[14px] text-white">{metric.data}</div>
           </div>
         ))}
       </div>
 
       <MobileAccordion type="single" collapsible className="space-y-2">
         <MobileAccordionItem value="foundation-skills">
-          <MobileAccordionTrigger icon={<BookOpen className="h-5 w-5 text-white/55" />}>
+          <MobileAccordionTrigger icon={<BookOpen className="h-5 w-5 text-white" />}>
             Foundation skills (Years 1-2)
           </MobileAccordionTrigger>
           <MobileAccordionContent>
@@ -467,7 +467,7 @@ const SkillsDevelopmentMatrix = () => {
         </MobileAccordionItem>
 
         <MobileAccordionItem value="intermediate-skills">
-          <MobileAccordionTrigger icon={<Target className="h-5 w-5 text-white/55" />}>
+          <MobileAccordionTrigger icon={<Target className="h-5 w-5 text-white" />}>
             Intermediate skills (Years 2-4)
           </MobileAccordionTrigger>
           <MobileAccordionContent>
@@ -476,7 +476,7 @@ const SkillsDevelopmentMatrix = () => {
         </MobileAccordionItem>
 
         <MobileAccordionItem value="specialist-skills">
-          <MobileAccordionTrigger icon={<Award className="h-5 w-5 text-white/55" />}>
+          <MobileAccordionTrigger icon={<Award className="h-5 w-5 text-white" />}>
             Specialist skills (Years 3-5)
           </MobileAccordionTrigger>
           <MobileAccordionContent>
@@ -485,7 +485,7 @@ const SkillsDevelopmentMatrix = () => {
         </MobileAccordionItem>
 
         <MobileAccordionItem value="digital-tech-skills">
-          <MobileAccordionTrigger icon={<Smartphone className="h-5 w-5 text-white/55" />}>
+          <MobileAccordionTrigger icon={<Smartphone className="h-5 w-5 text-white" />}>
             Digital and technology skills
           </MobileAccordionTrigger>
           <MobileAccordionContent>
@@ -494,7 +494,7 @@ const SkillsDevelopmentMatrix = () => {
         </MobileAccordionItem>
 
         <MobileAccordionItem value="business-soft-skills">
-          <MobileAccordionTrigger icon={<Briefcase className="h-5 w-5 text-white/55" />}>
+          <MobileAccordionTrigger icon={<Briefcase className="h-5 w-5 text-white" />}>
             Business and soft skills
           </MobileAccordionTrigger>
           <MobileAccordionContent>
@@ -503,7 +503,7 @@ const SkillsDevelopmentMatrix = () => {
         </MobileAccordionItem>
 
         <MobileAccordionItem value="emerging-tech-skills">
-          <MobileAccordionTrigger icon={<Rocket className="h-5 w-5 text-white/55" />}>
+          <MobileAccordionTrigger icon={<Rocket className="h-5 w-5 text-white" />}>
             Emerging technologies
           </MobileAccordionTrigger>
           <MobileAccordionContent>
@@ -512,7 +512,7 @@ const SkillsDevelopmentMatrix = () => {
         </MobileAccordionItem>
 
         <MobileAccordionItem value="professional-framework">
-          <MobileAccordionTrigger icon={<GraduationCap className="h-5 w-5 text-white/55" />}>
+          <MobileAccordionTrigger icon={<GraduationCap className="h-5 w-5 text-white" />}>
             Professional development framework
           </MobileAccordionTrigger>
           <MobileAccordionContent>
@@ -521,7 +521,7 @@ const SkillsDevelopmentMatrix = () => {
         </MobileAccordionItem>
 
         <MobileAccordionItem value="regional-skills">
-          <MobileAccordionTrigger icon={<MapPin className="h-5 w-5 text-white/55" />}>
+          <MobileAccordionTrigger icon={<MapPin className="h-5 w-5 text-white" />}>
             Regional skills intelligence
           </MobileAccordionTrigger>
           <MobileAccordionContent>
@@ -553,7 +553,7 @@ const SkillsDevelopmentMatrix = () => {
         </MobileAccordionItem>
 
         <MobileAccordionItem value="skills-marketplace">
-          <MobileAccordionTrigger icon={<BarChart className="h-5 w-5 text-white/55" />}>
+          <MobileAccordionTrigger icon={<BarChart className="h-5 w-5 text-white" />}>
             Skills marketplace analysis
           </MobileAccordionTrigger>
           <MobileAccordionContent>
@@ -585,7 +585,7 @@ const SkillsDevelopmentMatrix = () => {
         </MobileAccordionItem>
 
         <MobileAccordionItem value="learning-resources">
-          <MobileAccordionTrigger icon={<Library className="h-5 w-5 text-white/55" />}>
+          <MobileAccordionTrigger icon={<Library className="h-5 w-5 text-white" />}>
             Learning resources hub
           </MobileAccordionTrigger>
           <MobileAccordionContent>

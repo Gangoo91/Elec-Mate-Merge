@@ -50,13 +50,13 @@ const CommunicationStructures = () => {
 
       <div className="space-y-6">
         <div className="space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Safety communication
           </span>
           <h1 className="text-[24px] sm:text-[28px] font-bold tracking-tight text-white leading-tight">
             Communication structures in electrical safety
           </h1>
-          <p className="text-[14px] text-white/70 leading-relaxed max-w-2xl">
+          <p className="text-[14px] text-white leading-relaxed max-w-2xl">
             Effective communication structures ensure safety information flows efficiently
             throughout an organisation.
           </p>
@@ -68,15 +68,15 @@ const CommunicationStructures = () => {
               key={idx}
               className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2"
             >
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 {section.eyebrow}
               </span>
-              <p className="text-[14px] text-white/85 leading-relaxed">{section.lede}</p>
+              <p className="text-[14px] text-white leading-relaxed">{section.lede}</p>
               <ul className="space-y-1.5 pt-1">
                 {section.items.map((item, i) => (
                   <li
                     key={i}
-                    className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                    className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                   >
                     <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                     <span>{item}</span>
@@ -87,25 +87,25 @@ const CommunicationStructures = () => {
           ))}
 
           <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Communication flow charts
             </span>
-            <p className="text-[14px] text-white/85 leading-relaxed">
+            <p className="text-[14px] text-white leading-relaxed">
               Visual representations help clarify who to contact in different situations:
             </p>
             <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4 text-center">
-              <p className="text-[13px] text-white/55 italic">
+              <p className="text-[13px] text-white italic">
                 Flow chart visualisation would be displayed here
               </p>
             </div>
-            <p className="text-[14px] text-white/85 leading-relaxed">
+            <p className="text-[14px] text-white leading-relaxed">
               Flow charts should be posted in visible locations and included in safety manuals for
               quick reference.
             </p>
           </div>
 
           <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Best practices
             </span>
             <ul className="space-y-1.5">
@@ -118,7 +118,7 @@ const CommunicationStructures = () => {
               ].map((item, idx) => (
                 <li
                   key={idx}
-                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                  className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                 >
                   <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
                   <span>{item}</span>
@@ -129,7 +129,7 @@ const CommunicationStructures = () => {
         </div>
 
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Additional resources
           </span>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
@@ -143,8 +143,8 @@ const CommunicationStructures = () => {
                 key={idx}
                 className="flex items-center gap-3 p-3 rounded-md border border-white/[0.06] bg-white/[0.02]"
               >
-                <FileText className="h-4 w-4 text-white/55" />
-                <span className="text-[13px] text-white/85">{item}</span>
+                <FileText className="h-4 w-4 text-white" />
+                <span className="text-[13px] text-white">{item}</span>
               </div>
             ))}
           </div>

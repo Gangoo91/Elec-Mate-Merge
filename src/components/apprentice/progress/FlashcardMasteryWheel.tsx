@@ -44,12 +44,14 @@ export function FlashcardMasteryWheel({
   // Started sets first, strongest at the top — the ordering a learner
   // deciding what to revise actually wants.
   const { started, untouched } = useMemo(() => {
-    const s = sets.filter((x) => x.progressPercent > 0).sort((a, b) => b.progressPercent - a.progressPercent);
+    const s = sets
+      .filter((x) => x.progressPercent > 0)
+      .sort((a, b) => b.progressPercent - a.progressPercent);
     return { started: s, untouched: sets.filter((x) => x.progressPercent === 0) };
   }, [sets]);
 
   return (
-    <div className={cn('rounded-2xl border border-white/[0.06] p-4 space-y-3', CARD_SURFACE)}>
+    <div className={cn('rounded-2xl border border-elec-yellow/35 p-4 space-y-3', CARD_SURFACE)}>
       <div className="flex items-center justify-between gap-3">
         <Eyebrow>Flashcard mastery</Eyebrow>
         <span className="text-[12px] text-white font-mono tabular-nums shrink-0">
@@ -84,7 +86,10 @@ export function FlashcardMasteryWheel({
                 : `${untouched.length} ${untouched.length === 1 ? 'set' : 'sets'} not started`}
             </span>
             <ChevronDown
-              className={cn('h-4 w-4 shrink-0 text-white transition-transform', showUntouched && 'rotate-180')}
+              className={cn(
+                'h-4 w-4 shrink-0 text-white transition-transform',
+                showUntouched && 'rotate-180'
+              )}
               strokeWidth={2}
             />
           </button>
@@ -100,7 +105,9 @@ export function FlashcardMasteryWheel({
 
       <div className="pt-3 border-t border-white/[0.06] flex items-center justify-between gap-3">
         <span className="text-[12px] text-white">Overall mastery</span>
-        <span className="text-[14px] text-elec-yellow font-mono tabular-nums">{overallPercent}%</span>
+        <span className="text-[14px] text-elec-yellow font-mono tabular-nums">
+          {overallPercent}%
+        </span>
       </div>
     </div>
   );

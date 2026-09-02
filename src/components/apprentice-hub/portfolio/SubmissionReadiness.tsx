@@ -23,10 +23,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { Eyebrow, SectionHeader } from './PortfolioPrimitives';
 import type { PortfolioEntry } from '@/types/portfolio';
-import type {
-  ACSignoffRecord,
-  ACComplianceState,
-} from '@/hooks/portfolio/useACSignoffs';
+import type { ACSignoffRecord, ACComplianceState } from '@/hooks/portfolio/useACSignoffs';
 
 const IQA_TARGET_PCT = 25; // typical sampling rate for distinction-grade EPAOs
 const CURRENCY_DAYS = 365;
@@ -91,8 +88,7 @@ export function SubmissionReadiness({
     const gateList: Gate[] = [];
 
     // 1. Coverage
-    const coveragePct =
-      totalACs > 0 ? Math.round((evidencedCount / totalACs) * 100) : 0;
+    const coveragePct = totalACs > 0 ? Math.round((evidencedCount / totalACs) * 100) : 0;
     gateList.push({
       key: 'coverage',
       label: 'Every AC evidenced',
@@ -134,13 +130,7 @@ export function SubmissionReadiness({
               : 'Assessor still working through your evidence.',
       metric: `${signedCount}/${totalACs} · ${signedPct}%`,
       verdict:
-        referredCount > 0
-          ? 'red'
-          : signedPct >= 100
-            ? 'green'
-            : signedPct >= 70
-              ? 'amber'
-              : 'red',
+        referredCount > 0 ? 'red' : signedPct >= 100 ? 'green' : signedPct >= 70 ? 'amber' : 'red',
     });
 
     // 3. IQA
@@ -149,8 +139,7 @@ export function SubmissionReadiness({
       if (!key.includes(':')) continue;
       if (r.status === 'iqa_confirmed') iqaCount++;
     }
-    const iqaPct =
-      signedCount > 0 ? Math.round((iqaCount / signedCount) * 100) : 0;
+    const iqaPct = signedCount > 0 ? Math.round((iqaCount / signedCount) * 100) : 0;
     gateList.push({
       key: 'iqa',
       label: 'IQA sample',
@@ -160,10 +149,7 @@ export function SubmissionReadiness({
           : iqaPct >= IQA_TARGET_PCT
             ? `IQA has confirmed ${iqaPct}% of your signed-off work.`
             : `IQA usually samples at least ${IQA_TARGET_PCT}% of signed-off ACs before gateway.`,
-      metric:
-        signedCount > 0
-          ? `${iqaCount}/${signedCount} · ${iqaPct}%`
-          : '—',
+      metric: signedCount > 0 ? `${iqaCount}/${signedCount} · ${iqaPct}%` : '—',
       verdict:
         signedCount === 0
           ? 'amber'
@@ -201,8 +187,9 @@ export function SubmissionReadiness({
     });
 
     // 5. Quality
-    const scored = validations.filter((v): v is { overall_score: number; overall_grade: string | null } =>
-      typeof v.overall_score === 'number'
+    const scored = validations.filter(
+      (v): v is { overall_score: number; overall_grade: string | null } =>
+        typeof v.overall_score === 'number'
     );
     const avg =
       scored.length > 0
@@ -219,13 +206,7 @@ export function SubmissionReadiness({
             : `Average ${avg}/100 — assessors expect ≥ ${QUALITY_PASS_SCORE}.`,
       metric: avg === null ? '—' : `${avg}/100 · ${scored.length} graded`,
       verdict:
-        avg === null
-          ? 'amber'
-          : avg >= QUALITY_PASS_SCORE
-            ? 'green'
-            : avg >= 50
-              ? 'amber'
-              : 'red',
+        avg === null ? 'amber' : avg >= QUALITY_PASS_SCORE ? 'green' : avg >= 50 ? 'amber' : 'red',
     });
 
     return gateList;
@@ -254,7 +235,7 @@ export function SubmissionReadiness({
         className={cn(
           'rounded-xl border p-4 sm:p-5 flex items-center gap-4',
           allGreen
-            ? 'border-elec-yellow/50 bg-elec-yellow/[0.10]'
+            ? 'border-elec-yellow/50 bg-white/[0.06]'
             : 'border-white/[0.10] bg-gradient-to-br from-white/[0.19] via-white/[0.105] to-white/[0.065]'
         )}
       >
@@ -300,7 +281,7 @@ export function SubmissionReadiness({
            * So: everything is the same card, and the accent says how close it
            * is. Passed carries the solid volt pill; the gate you are on
            * carries the brighter volt edge; gates waiting on somebody else sit
-           * quiet. The translucent fills are gone too — `bg-elec-yellow/[0.07]`
+           * quiet. The translucent fills are gone too — `bg-white/[0.05]`
            * across a card face is the muddy-brown case card-recipe warns about.
            */
           const tone =

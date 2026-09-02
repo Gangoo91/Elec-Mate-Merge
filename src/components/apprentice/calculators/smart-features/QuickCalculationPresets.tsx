@@ -148,7 +148,7 @@ const QuickCalculationPresets: React.FC<QuickCalculationPresetsProps> = ({
 
   return (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
         Quick start scenarios
       </span>
       <div className="grid gap-3">
@@ -161,12 +161,12 @@ const QuickCalculationPresets: React.FC<QuickCalculationPresetsProps> = ({
           >
             <div className="flex items-start justify-between mb-2">
               <h4 className="text-[14px] text-white font-medium">{preset.name}</h4>
-              <span className="text-[10px] uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] uppercase tracking-[0.18em] text-white">
                 {preset.category}
               </span>
             </div>
 
-            <p className="text-[12px] text-white/55 mb-2">{preset.description}</p>
+            <p className="text-[12px] text-white mb-2">{preset.description}</p>
 
             <div className="flex flex-wrap gap-1.5 mb-2">
               {Object.entries(preset.inputs)
@@ -174,14 +174,14 @@ const QuickCalculationPresets: React.FC<QuickCalculationPresetsProps> = ({
                 .map(([key, value]) => (
                   <span
                     key={key}
-                    className="text-[11px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono"
+                    className="text-[11px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono"
                   >
                     {key}: {value}
                   </span>
                 ))}
             </div>
 
-            <p className="text-[11px] text-white/55 italic">{preset.explanation}</p>
+            <p className="text-[11px] text-white italic">{preset.explanation}</p>
           </button>
         ))}
       </div>

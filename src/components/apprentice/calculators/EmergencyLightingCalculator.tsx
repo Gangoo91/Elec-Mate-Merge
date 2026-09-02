@@ -46,9 +46,11 @@ const fixtureOptions = Object.entries(fixtureProfiles).map(([key, fixture]) => (
 }));
 
 const durationOptions = [
-  { value: '1', label: '1 Hour (Occupied premises)' },
-  { value: '3', label: '3 Hours (Unoccupied premises)' },
-  { value: '24', label: '24 Hours (High risk areas)' },
+  { value: '3', label: '3 hours (standard — premises occupied, or reoccupied before recharge)' },
+  {
+    value: '1',
+    label: '1 hour (only where premises are evacuated at once and not reoccupied until recharged)',
+  },
 ];
 
 const batteryOptions = Object.entries(batteryChemistries).map(([key, chem]) => ({

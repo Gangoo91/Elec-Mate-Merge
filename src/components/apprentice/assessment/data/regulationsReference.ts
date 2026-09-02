@@ -135,7 +135,7 @@ export const referenceCards: ReferenceCard[] = [
         { label: 'Extra Low Voltage', value: '\u226450V AC / \u2264120V DC' },
         { label: 'Low Voltage', value: '50V - 1000V AC' },
         { label: 'High Voltage', value: '>1000V AC' },
-        { label: 'UK Mains', value: '230V \u00B110%' },
+        { label: 'UK Mains', value: '230V +10% / \u22126% (ESQCR)' },
         { label: 'Three Phase', value: '400V between phases' },
       ],
     },

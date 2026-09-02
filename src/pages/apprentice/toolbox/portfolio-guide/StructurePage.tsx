@@ -12,6 +12,8 @@ import { itemVariants } from '@/components/college/primitives';
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 import { DEFAULT_OTJ_STANDARD, OTJ_HOURS_FLOOR } from '@/data/otjStandards';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const portfolioSections = [
   {
@@ -213,9 +215,14 @@ const StructurePage = () => {
 
         {/* ── Intro ───────────────────────────────────────────────── */}
         <motion.div variants={itemVariants}>
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2">
+          <div
+            className={cn(
+              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-2',
+              CARD_SURFACE
+            )}
+          >
             <Eyebrow>Why structure matters</Eyebrow>
-            <p className="text-[13.5px] text-white/85 leading-relaxed">
+            <p className="text-[13.5px] text-white leading-relaxed">
               A well-structured portfolio makes it easy for assessors to find evidence, demonstrates
               your organisational skills, and ensures you cover all required KSBs. Plan your
               structure early and stick to it.
@@ -230,7 +237,7 @@ const StructurePage = () => {
             title="Eight sections that work"
             meta="Your training provider may have their own template — follow theirs first"
             action={
-              <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06]">
+              <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-white/[0.05]">
                 <FolderTree className="h-4 w-4 text-elec-yellow" />
               </span>
             }
@@ -239,7 +246,10 @@ const StructurePage = () => {
             {portfolioSections.map((item) => (
               <li
                 key={item.section}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2"
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-2',
+                  CARD_SURFACE
+                )}
               >
                 <h3 className="text-[13.5px] font-semibold text-elec-yellow tracking-tight">
                   {item.section}
@@ -248,7 +258,7 @@ const StructurePage = () => {
                   {item.contents.map((content) => (
                     <li
                       key={content}
-                      className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                      className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                     >
                       <span className="text-elec-yellow/70 mt-0.5">·</span>
                       <span>{content}</span>
@@ -267,8 +277,8 @@ const StructurePage = () => {
             title="Off-the-job training hours"
             meta="Your portfolio sits behind your gateway sign-off — not a percentage"
           />
-          <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-3">
-            <p className="text-[13.5px] text-white/85 leading-relaxed">
+          <div className="rounded-xl border border-elec-yellow/25 bg-white/[0.05] p-4 sm:p-5 space-y-3">
+            <p className="text-[13.5px] text-white leading-relaxed">
               Off-the-job (OTJ) training is now a fixed number of hours per standard, not a
               percentage of your working week. For {DEFAULT_OTJ_STANDARD.name} (
               {DEFAULT_OTJ_STANDARD.code}) the requirement is{' '}
@@ -291,7 +301,7 @@ const StructurePage = () => {
                 ].map((item) => (
                   <li
                     key={item}
-                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                    className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                   >
                     <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                     <span>{item}</span>
@@ -299,7 +309,7 @@ const StructurePage = () => {
                 ))}
               </ul>
             </div>
-            <p className="text-[12px] text-white/70 leading-relaxed pt-2 border-t border-elec-yellow/15">
+            <p className="text-[12px] text-white leading-relaxed pt-2 border-t border-elec-yellow/15">
               Gateway is your provider confirming you are ready for End-Point Assessment. The EPA
               itself is the AM2S practical assessment, not a portfolio review.
             </p>
@@ -317,10 +327,13 @@ const StructurePage = () => {
             {planningSteps.map((item) => (
               <li
                 key={item.step}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3"
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
+                  CARD_SURFACE
+                )}
               >
                 <div className="flex items-start gap-3">
-                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[12px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
+                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-md border border-elec-yellow/30 bg-white/[0.05] text-[12px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
                     {item.step}
                   </span>
                   <h3 className="text-[14px] font-semibold text-white tracking-tight pt-0.5">
@@ -331,7 +344,7 @@ const StructurePage = () => {
                   {item.tasks.map((task) => (
                     <li
                       key={task}
-                      className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                      className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                     >
                       <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                       <span>{task}</span>
@@ -350,8 +363,13 @@ const StructurePage = () => {
             title="A 7-column tracker"
             meta="Simple spreadsheet or table — review monthly"
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
-            <p className="text-[13px] text-white/85 leading-relaxed">
+          <div
+            className={cn(
+              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
+              CARD_SURFACE
+            )}
+          >
+            <p className="text-[13px] text-white leading-relaxed">
               Create a simple spreadsheet with these columns to track your evidence against each
               KSB:
             </p>
@@ -359,14 +377,14 @@ const StructurePage = () => {
               {ksbColumns.map((item) => (
                 <li
                   key={item}
-                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                 >
                   <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                   <span>{item}</span>
                 </li>
               ))}
             </ul>
-            <p className="text-[12.5px] text-white/70 leading-relaxed pt-2 border-t border-white/[0.04]">
+            <p className="text-[12.5px] text-white leading-relaxed pt-2 border-t border-white/[0.04]">
               Review this tracker monthly. Aim for 2–3 pieces of evidence per KSB by gateway.
               Quality over quantity.
             </p>
@@ -380,8 +398,13 @@ const StructurePage = () => {
             title="Saves hours when searching for evidence"
             meta="Use a consistent format throughout"
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
-            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-1">
+          <div
+            className={cn(
+              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
+              CARD_SURFACE
+            )}
+          >
+            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3 space-y-1">
               <Eyebrow className="text-elec-yellow/85">Format</Eyebrow>
               <p className="text-[13px] font-mono text-elec-yellow">
                 YYYY-MM-DD_KSB-ref_description.ext
@@ -393,7 +416,7 @@ const StructurePage = () => {
                 {namingExamples.map((example) => (
                   <li
                     key={example}
-                    className="text-[12px] font-mono text-white/85 leading-relaxed break-all"
+                    className="text-[12px] font-mono text-white leading-relaxed break-all"
                   >
                     {example}
                   </li>
@@ -415,7 +438,7 @@ const StructurePage = () => {
               {pitfalls.map((item) => (
                 <li
                   key={item}
-                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                 >
                   <AlertTriangle className="h-3.5 w-3.5 text-red-300 flex-shrink-0 mt-0.5" />
                   <span>{item}</span>
@@ -432,12 +455,12 @@ const StructurePage = () => {
             title="Ten questions to ask yourself"
             meta="Run this at the start of every month"
           />
-          <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5">
+          <div className="rounded-xl border border-elec-yellow/25 bg-white/[0.05] p-4 sm:p-5">
             <ul className="space-y-1.5">
               {monthlyChecklist.map((item) => (
                 <li
                   key={item}
-                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                 >
                   <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
                   <span>{item}</span>

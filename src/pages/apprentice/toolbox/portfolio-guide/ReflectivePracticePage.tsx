@@ -10,6 +10,8 @@ import { CheckCircle2, Quote } from 'lucide-react';
 import { itemVariants } from '@/components/college/primitives';
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const starSteps = [
   {
@@ -176,15 +178,20 @@ const ReflectivePracticePage = () => {
 
         {/* ── Why reflection matters ──────────────────────────────── */}
         <motion.div variants={itemVariants}>
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2">
+          <div
+            className={cn(
+              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-2',
+              CARD_SURFACE
+            )}
+          >
             <Eyebrow>Why reflection matters</Eyebrow>
-            <p className="text-[13.5px] text-white/85 leading-relaxed">
+            <p className="text-[13.5px] text-white leading-relaxed">
               Reflective practice is the process of thinking about what you did, why you did it,
               what went well, what could be better, and what you’ll do differently next time. It’s a
               critical part of your portfolio because it shows assessors that you understand your
               work.
             </p>
-            <p className="text-[13px] text-white/85 leading-relaxed">
+            <p className="text-[13px] text-white leading-relaxed">
               Strong reflective accounts make your on-programme portfolio evidence and gateway
               sign-off far more convincing, and the same thinking underpins the applied-knowledge
               questions in your AM2S End-Point Assessment. Practising reflection throughout your
@@ -204,22 +211,25 @@ const ReflectivePracticePage = () => {
             {starSteps.map((step) => (
               <li
                 key={step.letter}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3"
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
+                  CARD_SURFACE
+                )}
               >
                 <div className="flex items-center gap-3">
-                  <span className="inline-flex items-center justify-center w-9 h-9 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[16px] font-mono font-semibold text-elec-yellow flex-shrink-0">
+                  <span className="inline-flex items-center justify-center w-9 h-9 rounded-md border border-elec-yellow/30 bg-white/[0.05] text-[16px] font-mono font-semibold text-elec-yellow flex-shrink-0">
                     {step.letter}
                   </span>
                   <h3 className="text-[15px] font-semibold text-elec-yellow tracking-tight">
                     {step.title}
                   </h3>
                 </div>
-                <p className="text-[13px] text-white/85 leading-relaxed pl-3 sm:pl-12">
+                <p className="text-[13px] text-white leading-relaxed pl-3 sm:pl-12">
                   {step.description}
                 </p>
                 <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 ml-3 sm:ml-12">
                   <Eyebrow>Example</Eyebrow>
-                  <p className="text-[12.5px] text-white/85 italic leading-relaxed mt-1">
+                  <p className="text-[12.5px] text-white italic leading-relaxed mt-1">
                     {step.example}
                   </p>
                 </div>
@@ -235,12 +245,12 @@ const ReflectivePracticePage = () => {
             title="Ten rules for stronger reflections"
             meta="What turns a thin account into convincing evidence"
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
+          <div className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}>
             <ul className="space-y-1.5">
               {writingTips.map((tip) => (
                 <li
                   key={tip}
-                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                 >
                   <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                   <span>{tip}</span>
@@ -261,12 +271,12 @@ const ReflectivePracticePage = () => {
             {gibbsStages.map((item) => (
               <li
                 key={item.stage}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
+                className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}
               >
                 <h3 className="text-[13.5px] font-semibold text-elec-yellow tracking-tight">
                   {item.stage}
                 </h3>
-                <p className="text-[12.5px] text-white/85 leading-relaxed mt-1">
+                <p className="text-[12.5px] text-white leading-relaxed mt-1">
                   {item.description}
                 </p>
               </li>
@@ -285,7 +295,10 @@ const ReflectivePracticePage = () => {
             {reflectionTopics.map((section) => (
               <li
                 key={section.category}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2"
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-2',
+                  CARD_SURFACE
+                )}
               >
                 <h3 className="text-[13.5px] font-semibold text-elec-yellow tracking-tight">
                   {section.category}
@@ -294,7 +307,7 @@ const ReflectivePracticePage = () => {
                   {section.topics.map((topic) => (
                     <li
                       key={topic}
-                      className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                      className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                     >
                       <span className="text-elec-yellow/70 mt-0.5">·</span>
                       <span>{topic}</span>
@@ -313,8 +326,13 @@ const ReflectivePracticePage = () => {
             title="How reflection feeds your assessment"
             meta="Strong on-programme reflection = a smoother gateway and AM2S"
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
-            <p className="text-[13px] text-white/85 leading-relaxed">
+          <div
+            className={cn(
+              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
+              CARD_SURFACE
+            )}
+          >
+            <p className="text-[13px] text-white leading-relaxed">
               Your reflective accounts strengthen your on-programme portfolio and help your provider
               sign you off at gateway. There is no portfolio interview in the AM2S End-Point
               Assessment, but the same habit of explaining your decisions and the regulations behind
@@ -326,7 +344,7 @@ const ReflectivePracticePage = () => {
               {assessorUse.map((item) => (
                 <li
                   key={item}
-                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                 >
                   <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                   <span>{item}</span>
@@ -343,19 +361,19 @@ const ReflectivePracticePage = () => {
             title="A complete STAR reflective account"
             meta="KSBs covered: S5 (Install wiring), K3 (BS 7671), B1 (Safe working)"
             action={
-              <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06]">
+              <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-white/[0.05]">
                 <Quote className="h-4 w-4 text-elec-yellow" />
               </span>
             }
           />
-          <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-3">
+          <div className="rounded-xl border border-elec-yellow/25 bg-white/[0.05] p-4 sm:p-5 space-y-3">
             {fullExample.map((part) => (
               <div key={part.label} className="space-y-0.5">
                 <Eyebrow className="text-elec-yellow/85">{part.label}</Eyebrow>
-                <p className="text-[12.5px] text-white/85 leading-relaxed">{part.text}</p>
+                <p className="text-[12.5px] text-white leading-relaxed">{part.text}</p>
               </div>
             ))}
-            <p className="text-[12px] text-white/70 leading-relaxed pt-2 border-t border-elec-yellow/15 italic">
+            <p className="text-[12px] text-white leading-relaxed pt-2 border-t border-elec-yellow/15 italic">
               This single account covers installation skills, BS 7671 knowledge, and safe working
               behaviours — three KSBs with one piece of evidence. Test values shown (R1+R2, Zs, IR)
               are illustrative — record your own measured results.
@@ -370,12 +388,12 @@ const ReflectivePracticePage = () => {
             title="A cadence that works"
             meta="Monthly minimum; more around major events"
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
+          <div className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}>
             <ul className="space-y-1.5">
               {frequencyGuide.map((item) => (
                 <li
                   key={item}
-                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                 >
                   <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                   <span>{item}</span>

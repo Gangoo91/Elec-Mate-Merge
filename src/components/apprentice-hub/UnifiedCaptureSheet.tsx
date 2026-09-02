@@ -12,13 +12,17 @@
  */
 
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { FormSheet } from '@/components/forms/FormSheet';
 import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetDescription,
-} from '@/components/ui/sheet';
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  chipBase,
+  chipOff,
+  chipOn,
+  inputCn,
+  textareaCn,
+  selectTriggerCn,
+} from '@/components/forms/fieldStyles';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -32,21 +36,11 @@ import {
   AlertDialogAction,
   AlertDialogCancel,
 } from '@/components/ui/alert-dialog';
-import {
-  Camera,
-  Upload,
-  X,
-  Sparkles,
-  Loader2,
-  Check,
-  Mic,
-  MicOff,
-  FileCheck,
-} from 'lucide-react';
+import { Camera, Upload, X, Sparkles, Loader2, Check, Mic, MicOff, FileCheck } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useEvidenceTypes } from '@/hooks/portfolio/useEvidenceTypes';
 import type { EvidenceTypeCode } from '@/types/evidence';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { CARD_BASE, CARD_NEUTRAL, CARD_SURFACE } from '@/components/ui/card-recipe';
 import { Checkbox } from '@/components/ui/checkbox';
 import { supabase } from '@/integrations/supabase/client';
 import { usePortfolioData } from '@/hooks/portfolio/usePortfolioData';
@@ -62,17 +56,8 @@ import { useSpeechToText } from '@/hooks/useSpeechToText';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
 import { useHaptic } from '@/hooks/useHaptic';
-import {
-  saveDraft,
-  loadDraft,
-  clearDraft,
-  type CaptureDraft,
-} from '@/lib/captureDrafts';
-import {
-  Eyebrow,
-  PrimaryAction,
-  SecondaryAction,
-} from './portfolio/PortfolioPrimitives';
+import { saveDraft, loadDraft, clearDraft, type CaptureDraft } from '@/lib/captureDrafts';
+import { Eyebrow } from './portfolio/PortfolioPrimitives';
 
 export interface CaptureSeed {
   /** Pre-filled evidence title. */
@@ -96,7 +81,7 @@ interface UnifiedCaptureSheetProps {
 type CaptureStep = 'capture' | 'details';
 
 interface UploadedFile {
-  id: string;          // local synthetic id used for keying + SSE correlation
+  id: string; // local synthetic id used for keying + SSE correlation
   file: File;
   previewUrl: string;
   storageUrl?: string;
@@ -117,8 +102,8 @@ interface UploadedFile {
 }
 
 const GRADE_TONE: Record<'A' | 'B' | 'C' | 'D', string> = {
-  A: 'border-elec-yellow/40 text-elec-yellow bg-elec-yellow/[0.06]',
-  B: 'border-elec-yellow/25 text-elec-yellow/85 bg-elec-yellow/[0.04]',
+  A: 'border-elec-yellow text-elec-yellow',
+  B: 'border-elec-yellow/50 text-elec-yellow',
   C: 'border-orange-400/30 text-orange-200 bg-orange-400/[0.06]',
   D: 'border-red-500/30 text-red-300 bg-red-500/[0.05]',
 };
@@ -158,7 +143,10 @@ function formatReflection(r: ReflectionDraft): string {
 }
 
 // VACSR readiness chips, in order.
-const READINESS_META: { k: 'valid' | 'authentic' | 'current' | 'sufficient' | 'reliable'; label: string }[] = [
+const READINESS_META: {
+  k: 'valid' | 'authentic' | 'current' | 'sufficient' | 'reliable';
+  label: string;
+}[] = [
   { k: 'valid', label: 'Valid' },
   { k: 'authentic', label: 'Authentic' },
   { k: 'current', label: 'Current' },
@@ -175,8 +163,10 @@ const READINESS_FIX: Record<string, string> = {
   reliable: 'Attach a file and pick an evidence type',
 };
 
-const FIELD_CLS =
-  'h-11 touch-manipulation bg-[hsl(0_0%_10%)] border-white/[0.08] text-[13px] text-white placeholder:text-white/40 focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20';
+// Fields are the house underline (`components/forms/fieldStyles`), not a
+// local boxed dialect: 16px so iOS doesn't zoom on focus, no ring.
+const FIELD_CLS = inputCn;
+const AREA_CLS = cn(textareaCn, 'w-full');
 
 /* ─── Coverage moment ──────────────────────────────────────────────────
    After a save that claimed ≥1 AC, work out where the claimed unit now
@@ -375,6 +365,7 @@ export function UnifiedCaptureSheet({
         offers Resume/Discard. Cleared ONLY on a successful save or an
         explicit discard — never on mere sheet close. ──────────────────── */
   const [pendingDraft, setPendingDraft] = useState<CaptureDraft | null>(null);
+  const [draftSavedAt, setDraftSavedAt] = useState<number | null>(null);
   const draftCheckedRef = useRef(false);
   // Warn once per mount if the backup can't be written (IDB missing/quota).
   const draftWarnedRef = useRef(false);
@@ -489,6 +480,7 @@ export function UnifiedCaptureSheet({
     const timer = window.setTimeout(() => {
       const epoch = draftEpochRef.current;
       void saveDraft(uid, draftSnapshotRef.current()).then((ok) => {
+        if (ok) setDraftSavedAt(Date.now());
         // A clear/discard/save happened while this write was in flight —
         // its delete may have lost the IDB race, so re-clear.
         if (ok && draftEpochRef.current !== epoch) {
@@ -640,6 +632,7 @@ export function UnifiedCaptureSheet({
   /* ─── Reset ───────────────────────────────────────────────────────── */
   const resetForm = () => {
     setStep('capture');
+    setDraftSavedAt(null);
     // Release blob: preview URLs — they otherwise live until page unload.
     for (const f of filesRef.current) {
       if (f.previewUrl) URL.revokeObjectURL(f.previewUrl);
@@ -679,9 +672,7 @@ export function UnifiedCaptureSheet({
         .from('portfolio-evidence')
         .upload(fileName, file, { cacheControl: '3600', upsert: false });
       if (error) return null;
-      const { data: urlData } = supabase.storage
-        .from('portfolio-evidence')
-        .getPublicUrl(data.path);
+      const { data: urlData } = supabase.storage.from('portfolio-evidence').getPublicUrl(data.path);
       return urlData.publicUrl;
     } catch {
       return null;
@@ -927,9 +918,7 @@ export function UnifiedCaptureSheet({
       {
         onMeta: (m) => setMeta(m),
         onFileResult: (fileId, analysis) => {
-          setFiles((prev) =>
-            prev.map((f) => (f.id === fileId ? { ...f, analysis } : f))
-          );
+          setFiles((prev) => prev.map((f) => (f.id === fileId ? { ...f, analysis } : f)));
           // Auto-select high-confidence ACs — only ones verified against the
           // real qualification, so we never auto-claim a hallucinated AC.
           const auto = analysis.matchedCriteria
@@ -996,7 +985,10 @@ export function UnifiedCaptureSheet({
     if (failedFiles.length > 0) {
       haptic.warning();
       toast({
-        title: failedFiles.length === 1 ? 'A file failed to upload' : `${failedFiles.length} files failed to upload`,
+        title:
+          failedFiles.length === 1
+            ? 'A file failed to upload'
+            : `${failedFiles.length} files failed to upload`,
         description: 'Retry or remove the failed files before saving.',
         variant: 'destructive',
       });
@@ -1143,9 +1135,7 @@ export function UnifiedCaptureSheet({
   /* ─── AC selection helpers ───────────────────────────────────────── */
   const toggleAC = (ref: string) => {
     haptic.light();
-    setSelectedACs((prev) =>
-      prev.includes(ref) ? prev.filter((r) => r !== ref) : [...prev, ref]
-    );
+    setSelectedACs((prev) => (prev.includes(ref) ? prev.filter((r) => r !== ref) : [...prev, ref]));
   };
 
   const removeFile = (id: string) => {
@@ -1159,208 +1149,217 @@ export function UnifiedCaptureSheet({
 
   const filesUploadingCount = files.filter((f) => f.uploading).length;
   const analysedCount = files.filter((f) => f.analysis).length;
-  const canAnalyse =
-    !streaming && (files.some((f) => f.storageUrl) || voiceText.trim().length > 0);
+  const canAnalyse = !streaming && (files.some((f) => f.storageUrl) || voiceText.trim().length > 0);
 
   /* ─── Render ─────────────────────────────────────────────────────── */
   return (
     <>
-    <Sheet
-      open={open}
-      onOpenChange={(v) => {
-        if (!v) handleSheetClose();
-        onOpenChange(v);
-      }}
-    >
-      {/*
-        h-[85vh] is the house standard (CLAUDE.md), and overflow-hidden so the
-        rounded top actually clips the scroll area.
-      */}
-      <SheetContent
-        side="bottom"
-        className="h-[85vh] overflow-hidden rounded-t-2xl border-white/[0.06] bg-[hsl(0_0%_8%)] p-0"
+      <FormSheet
+        open={open}
+        onOpenChange={(v) => {
+          if (!v) handleSheetClose();
+          onOpenChange(v);
+        }}
+        width="lg"
+        eyebrow="Capture · Evidence"
+        title={step === 'capture' ? 'Capture on site' : 'Review & tag'}
+        description={
+          step === 'capture'
+            ? 'Snap photos, speak a quick description, AI will suggest the ACs and draft a STAR reflection in seconds.'
+            : meta
+              ? `Streaming analysis — ${analysedCount} of ${meta.totalFiles} files ready.`
+              : 'Add a few details and tap Analyse — questions ground in BS 7671.'
+        }
+        headerTrailing={
+          draftSavedAt && draftHasContent ? (
+            <span className="text-[12px] font-medium tabular-nums text-green-400">Draft saved</span>
+          ) : undefined
+        }
+        bodyClassName="space-y-0"
+        footer={
+          step === 'details' ? (
+            <div className="grid grid-cols-2 gap-2.5">
+              <button
+                type="button"
+                onClick={() => setStep('capture')}
+                className={buttonSecondaryCn}
+              >
+                Back
+              </button>
+              <button
+                type="button"
+                onClick={handleSave}
+                className={cn(buttonPrimaryCn, 'inline-flex items-center justify-center gap-2')}
+              >
+                <Check className="h-4 w-4" />
+                Save evidence
+              </button>
+            </div>
+          ) : undefined
+        }
       >
-        {/*
-          ONE column, and the grab handle is INSIDE it.
-          It used to sit above a sibling `h-full` div, so the column measured
-          100% of the sheet PLUS the handle and its margins — and the footer,
-          being the last child, was pushed clean off the bottom edge. That is
-          why Cancel / Save were cut off. `pb-20` on the footer compounded it.
-          Same defect the programme sheet had.
-        */}
-        <div className="flex h-full flex-col">
-          <div className="mx-auto mt-3 h-1 w-12 shrink-0 rounded-full bg-white/15" />
-          {/* Header shares the body's max-width, or the title hangs left of
-              content that is centred — the sheet reads as two columns. */}
-          <SheetHeader className="mx-auto w-full max-w-3xl shrink-0 px-4 pb-4 sm:px-6">
-            {/* SheetTitle already renders an <h2> — inner heading must not
-                nest another one (validateDOMNesting). */}
-            <SheetTitle className="text-left">
-              <Eyebrow>Capture · Evidence</Eyebrow>
-              <span className="block text-[22px] sm:text-[26px] font-semibold tracking-tight text-white mt-1 leading-none">
-                {step === 'capture' ? 'Capture on site' : 'Review & tag'}
+        {/* Unfinished-entry banner — restoring is always explicit */}
+        {pendingDraft && step === 'capture' && (
+          <div
+            className={cn(
+              'mt-2 space-y-3 rounded-2xl border border-elec-yellow/35 p-4',
+              CARD_SURFACE
+            )}
+          >
+            <div className="space-y-1">
+              <Eyebrow>Unfinished entry</Eyebrow>
+              <p className="text-[13px] text-white leading-snug">
+                From {relativeTime(pendingDraft.savedAt)}
+                {pendingDraft.files.length > 0 &&
+                  ` — ${pendingDraft.files.length} ${
+                    pendingDraft.files.length === 1 ? 'photo' : 'photos'
+                  }`}
+                . Pick up where you left off?
+              </p>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={handleDiscardDraft}
+                className={cn(buttonSecondaryCn, 'h-11 text-[13px]')}
+              >
+                Discard
+              </button>
+              <button
+                type="button"
+                onClick={handleResumeDraft}
+                className={cn(buttonPrimaryCn, 'h-11 text-[13px]')}
+              >
+                Resume
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Step 1: Capture */}
+        {step === 'capture' && (
+          <div className="space-y-5 py-2">
+            <div className="grid grid-cols-2 gap-2.5">
+              <button
+                onClick={() => cameraInputRef.current?.click()}
+                className={cn(CARD_BASE, CARD_NEUTRAL, 'items-center gap-2 p-5')}
+              >
+                <Camera className="h-6 w-6 text-elec-yellow" />
+                <span className="text-[13px] font-medium text-white">Camera</span>
+              </button>
+              <button
+                onClick={() => fileInputRef.current?.click()}
+                className={cn(CARD_BASE, CARD_NEUTRAL, 'items-center gap-2 p-5')}
+              >
+                <Upload className="h-6 w-6 text-white" />
+                <span className="text-[13px] font-medium text-white">Upload files</span>
+              </button>
+            </div>
+
+            <button
+              onClick={() => setStep('details')}
+              className={cn(
+                CARD_BASE,
+                CARD_NEUTRAL,
+                'w-full flex-row items-center justify-center gap-2 p-4'
+              )}
+            >
+              <Mic className="h-4 w-4 text-elec-yellow" />
+              <span className="text-[13px] font-medium text-white">
+                Voice-only — describe a job without files
               </span>
-            </SheetTitle>
-            <SheetDescription className="text-left text-[13px] leading-snug text-white">
-              {step === 'capture'
-                ? 'Snap photos, speak a quick description, AI will suggest the ACs and draft a STAR reflection in seconds.'
-                : meta
-                  ? `Streaming analysis — ${analysedCount} of ${meta.totalFiles} files ready.`
-                  : 'Add a few details and tap Analyse — questions ground in BS 7671.'}
-            </SheetDescription>
-          </SheetHeader>
+            </button>
 
-          <div className="flex-1 overflow-y-auto px-4 pb-6 sm:px-6">
-            <div className="mx-auto w-full max-w-3xl">
-            {/* Unfinished-entry banner — restoring is always explicit */}
-            {pendingDraft && step === 'capture' && (
-              <div className="mt-2 rounded-xl border border-elec-yellow/30 bg-elec-yellow/[0.05] p-4 space-y-3">
-                <div className="space-y-1">
-                  <Eyebrow>Unfinished entry</Eyebrow>
-                  <p className="text-[13px] text-white/85 leading-snug">
-                    From {relativeTime(pendingDraft.savedAt)}
-                    {pendingDraft.files.length > 0 &&
-                      ` — ${pendingDraft.files.length} ${
-                        pendingDraft.files.length === 1 ? 'photo' : 'photos'
-                      }`}
-                    . Pick up where you left off?
-                  </p>
-                </div>
-                <div className="grid grid-cols-2 gap-2">
-                  <button
-                    type="button"
-                    onClick={handleDiscardDraft}
-                    className="h-11 rounded-xl border border-white/[0.08] bg-[hsl(0_0%_10%)] text-[13px] font-medium text-white/70 hover:bg-white/[0.04] transition-colors touch-manipulation"
-                  >
-                    Discard
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handleResumeDraft}
-                    className="h-11 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation"
-                  >
-                    Resume
-                  </button>
-                </div>
-              </div>
-            )}
+            <input
+              ref={cameraInputRef}
+              type="file"
+              accept="image/*"
+              capture="environment"
+              multiple
+              onChange={handleFileSelect}
+              className="hidden"
+            />
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept={acceptAttr}
+              multiple
+              onChange={handleFileSelect}
+              className="hidden"
+            />
 
-            {/* Step 1: Capture */}
-            {step === 'capture' && (
-              <div className="space-y-5 py-2">
-                <div className="grid grid-cols-2 gap-2.5">
-                  <button
-                    onClick={() => cameraInputRef.current?.click()}
-                    className="flex flex-col items-center gap-2 p-5 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] hover:bg-white/[0.04] transition-colors touch-manipulation"
-                  >
-                    <Camera className="h-6 w-6 text-elec-yellow" />
-                    <span className="text-[13px] font-medium text-white">Camera</span>
-                  </button>
-                  <button
-                    onClick={() => fileInputRef.current?.click()}
-                    className="flex flex-col items-center gap-2 p-5 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] hover:bg-white/[0.04] transition-colors touch-manipulation"
-                  >
-                    <Upload className="h-6 w-6 text-white/85" />
-                    <span className="text-[13px] font-medium text-white">Upload files</span>
-                  </button>
-                </div>
+            <p className="text-[11px] text-white text-center">
+              Photos and documents up to 10MB · video up to 50MB · we work out what kind of evidence
+              each file is
+            </p>
+          </div>
+        )}
 
-                <button
-                  onClick={() => setStep('details')}
-                  className="w-full flex items-center justify-center gap-2 p-4 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] hover:bg-white/[0.04] transition-colors touch-manipulation"
-                >
-                  <Mic className="h-4 w-4 text-elec-yellow" />
-                  <span className="text-[13px] font-medium text-white">
-                    Voice-only — describe a job without files
-                  </span>
-                </button>
-
-                <input
-                  ref={cameraInputRef}
-                  type="file"
-                  accept="image/*"
-                  capture="environment"
-                  multiple
-                  onChange={handleFileSelect}
-                  className="hidden"
-                />
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept={acceptAttr}
-                  multiple
-                  onChange={handleFileSelect}
-                  className="hidden"
-                />
-
-                <p className="text-[11px] text-white/55 text-center">
-                  Photos and documents up to 10MB · video up to 50MB · we work out
-                  what kind of evidence each file is
-                </p>
-              </div>
-            )}
-
-            {/* Step 2: Details */}
-            {step === 'details' && (
-              <div className="space-y-6 py-2">
-                {/* Capture brief — seeded from a job idea */}
-                {(briefItems.length > 0 || briefACs.length > 0) && (
-                  <div className="rounded-xl border border-elec-yellow/30 bg-elec-yellow/[0.05] p-4 space-y-3">
-                    <Eyebrow>Capture brief · from your job idea</Eyebrow>
-                    {briefACs.length > 0 && (
-                      <div className="space-y-1.5">
-                        <p className="text-[11px] text-white/55">
-                          Criteria this covers — tap to remove any
-                        </p>
-                        <div className="flex flex-wrap gap-1.5">
-                          {briefACs.map((ref, refIdx) => {
-                            const on = selectedACs.includes(ref);
-                            return (
-                              <button
-                                key={`${ref}-${refIdx}`}
-                                type="button"
-                                onClick={() => toggleAC(ref)}
-                                className={cn(
-                                  'inline-flex items-center px-2 h-7 rounded-full text-[11px] font-mono font-medium border transition-colors touch-manipulation',
-                                  on
-                                    ? 'border-elec-yellow/50 bg-elec-yellow/[0.10] text-elec-yellow'
-                                    : 'border-white/[0.10] bg-white/[0.02] text-white/40 line-through'
-                                )}
-                              >
-                                {ref.replace(' AC ', ' ')}
-                              </button>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    )}
-                    {briefItems.length > 0 && (
-                      <div className="space-y-1.5">
-                        <p className="text-[11px] text-white/55">Evidence to get on site</p>
-                        <ul className="space-y-1.5">
-                          {briefItems.map((c, i) => (
-                            <li
-                              key={i}
-                              className="flex items-start gap-2 text-[12.5px] text-white/85 leading-snug"
-                            >
-                              <span className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-1.5 shrink-0" />
-                              <span>
-                                {c.label}
-                                {c.required && <span className="text-rose-300"> · required</span>}
-                              </span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
+        {/* Step 2: Details */}
+        {step === 'details' && (
+          <div className="space-y-6 py-2">
+            {/* Capture brief — seeded from a job idea */}
+            {(briefItems.length > 0 || briefACs.length > 0) && (
+              <div
+                className={cn(
+                  'space-y-3 rounded-2xl border border-elec-yellow/35 p-4',
+                  CARD_SURFACE
+                )}
+              >
+                <Eyebrow>Capture brief · from your job idea</Eyebrow>
+                {briefACs.length > 0 && (
+                  <div className="space-y-1.5">
+                    <p className="text-[11px] text-white">
+                      Criteria this covers — tap to remove any
+                    </p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {briefACs.map((ref, refIdx) => {
+                        const on = selectedACs.includes(ref);
+                        return (
+                          <button
+                            key={`${ref}-${refIdx}`}
+                            type="button"
+                            onClick={() => toggleAC(ref)}
+                            className={cn(
+                              chipBase,
+                              'inline-flex items-center px-3 font-mono text-[12px]',
+                              on ? chipOn : cn(chipOff, 'line-through')
+                            )}
+                          >
+                            {ref.replace(' AC ', ' ')}
+                          </button>
+                        );
+                      })}
+                    </div>
                   </div>
                 )}
+                {briefItems.length > 0 && (
+                  <div className="space-y-1.5">
+                    <p className="text-[11px] text-white">Evidence to get on site</p>
+                    <ul className="space-y-1.5">
+                      {briefItems.map((c, i) => (
+                        <li
+                          key={i}
+                          className="flex items-start gap-2 text-[12.5px] text-white leading-snug"
+                        >
+                          <span className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-1.5 shrink-0" />
+                          <span>
+                            {c.label}
+                            {c.required && <span className="text-rose-300"> · required</span>}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            )}
 
-                {/* File grid */}
-                {files.length > 0 && (
-                  <div className="space-y-2">
-                    <Eyebrow>Files · {files.length}</Eyebrow>
-                    {/*
+            {/* File grid */}
+            {files.length > 0 && (
+              <div className="space-y-2">
+                <Eyebrow>Files · {files.length}</Eyebrow>
+                {/*
                       Fixed-height previews, not aspect-square.
                       A square tile in a 3-column grid is ~620px tall on a
                       full-width desktop sheet — so a PDF, which has no
@@ -1368,40 +1367,36 @@ export function UnifiedCaptureSheet({
                       small icon floating in the middle of it. A preview only
                       needs to be big enough to recognise.
                     */}
-                    <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
-                      {files.map((f) => (
-                        <div
-                          key={f.id}
-                          className={cn(
-                            'relative overflow-hidden rounded-xl border border-elec-yellow/35',
-                            CARD_SURFACE
-                          )}
-                        >
-                          {f.previewUrl ? (
-                            <div className="h-28 sm:h-32">
-                              <img
-                                src={f.previewUrl}
-                                alt=""
-                                className="h-full w-full object-cover"
-                              />
-                            </div>
-                          ) : (
-                            <div className="flex h-28 flex-col items-center justify-center gap-1.5 bg-white/[0.03] sm:h-32">
-                              <FileCheck className="h-7 w-7 text-white" />
-                              {/* Say what it is — the icon alone doesn't. */}
-                              <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-white">
-                                {(f.file.name.split('.').pop() || 'file').slice(0, 4)}
-                              </span>
-                            </div>
-                          )}
-                          <button
-                            onClick={() => removeFile(f.id)}
-                            aria-label={`Remove ${f.file.name}`}
-                            className="absolute right-1.5 top-1.5 grid h-8 w-8 place-items-center rounded-full bg-black/70 text-white transition-colors touch-manipulation hover:bg-black/85"
-                          >
-                            <X className="h-3 w-3" />
-                          </button>
-                          {/*
+                <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
+                  {files.map((f) => (
+                    <div
+                      key={f.id}
+                      className={cn(
+                        'relative overflow-hidden rounded-xl border border-elec-yellow/35',
+                        CARD_SURFACE
+                      )}
+                    >
+                      {f.previewUrl ? (
+                        <div className="h-28 sm:h-32">
+                          <img src={f.previewUrl} alt="" className="h-full w-full object-cover" />
+                        </div>
+                      ) : (
+                        <div className="flex h-28 flex-col items-center justify-center gap-1.5 bg-white/[0.03] sm:h-32">
+                          <FileCheck className="h-7 w-7 text-white" />
+                          {/* Say what it is — the icon alone doesn't. */}
+                          <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-white">
+                            {(f.file.name.split('.').pop() || 'file').slice(0, 4)}
+                          </span>
+                        </div>
+                      )}
+                      <button
+                        onClick={() => removeFile(f.id)}
+                        aria-label={`Remove ${f.file.name}`}
+                        className="absolute right-1.5 top-1.5 grid h-8 w-8 place-items-center rounded-full bg-black/70 text-white transition-colors touch-manipulation hover:bg-black/85"
+                      >
+                        <X className="h-3 w-3" />
+                      </button>
+                      {/*
                             What KIND of evidence this is.
                             Guessed from the MIME type and the filename, but the
                             learner has the last word — an assessor reading the
@@ -1409,608 +1404,575 @@ export function UnifiedCaptureSheet({
                             photo of a board, and `requires_witness` cannot be
                             enforced on an untyped file.
                           */}
-                          <div className="border-t border-white/[0.10] px-2 py-1.5">
-                            <label className="sr-only" htmlFor={`evtype-${f.id}`}>
-                              Evidence type for {f.file.name}
-                            </label>
-                            <select
-                              id={`evtype-${f.id}`}
-                              value={f.evidenceType ?? 'photo'}
-                              onChange={(e) =>
-                                setFiles((prev) =>
-                                  prev.map((x) =>
-                                    x.id === f.id
-                                      ? { ...x, evidenceType: e.target.value as EvidenceTypeCode }
-                                      : x
-                                  )
-                                )
-                              }
-                              className="h-9 w-full rounded-md border border-white/[0.14] bg-white/[0.05] px-2 text-[11.5px] font-medium text-white [color-scheme:dark] touch-manipulation focus:border-elec-yellow focus:outline-none"
-                            >
-                              {(evidenceTypes.length > 0
-                                ? evidenceTypes
-                                : [{ code: 'photo', name: 'Photograph' }]
-                              ).map((t) => (
-                                <option key={t.code} value={t.code}>
-                                  {t.name}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
+                      <div className="border-t border-white/[0.10] px-2 py-1.5">
+                        <label className="sr-only" htmlFor={`evtype-${f.id}`}>
+                          Evidence type for {f.file.name}
+                        </label>
+                        <select
+                          id={`evtype-${f.id}`}
+                          value={f.evidenceType ?? 'photo'}
+                          onChange={(e) =>
+                            setFiles((prev) =>
+                              prev.map((x) =>
+                                x.id === f.id
+                                  ? { ...x, evidenceType: e.target.value as EvidenceTypeCode }
+                                  : x
+                              )
+                            )
+                          }
+                          className={cn(selectTriggerCn, 'w-full [color-scheme:dark]')}
+                        >
+                          {(evidenceTypes.length > 0
+                            ? evidenceTypes
+                            : [{ code: 'photo', name: 'Photograph' }]
+                          ).map((t) => (
+                            <option key={t.code} value={t.code}>
+                              {t.name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
 
-                          <div className="px-2 py-1.5 space-y-0.5">
-                            <p className="text-[11px] text-white truncate" title={f.file.name}>
-                              {f.file.name}
-                            </p>
-                            <div className="flex items-center gap-1.5">
-                              {f.uploading && (
-                                <span className="text-[10px] text-white/55 flex items-center gap-1">
-                                  <Loader2 className="h-2.5 w-2.5 animate-spin" />
-                                  Uploading
-                                </span>
+                      <div className="px-2 py-1.5 space-y-0.5">
+                        <p className="text-[11px] text-white truncate" title={f.file.name}>
+                          {f.file.name}
+                        </p>
+                        <div className="flex items-center gap-1.5">
+                          {f.uploading && (
+                            <span className="text-[10px] text-white flex items-center gap-1">
+                              <Loader2 className="h-2.5 w-2.5 animate-spin" />
+                              Uploading
+                            </span>
+                          )}
+                          {f.analysis && (
+                            <span
+                              className={cn(
+                                'text-[10px] font-mono px-1.5 py-0 rounded-md border',
+                                GRADE_TONE[f.analysis.qualityGrade]
                               )}
-                              {f.analysis && (
-                                <span
-                                  className={cn(
-                                    'text-[10px] font-mono px-1.5 py-0 rounded-md border',
-                                    GRADE_TONE[f.analysis.qualityGrade]
-                                  )}
-                                >
-                                  {f.analysis.qualityGrade} · {f.analysis.qualityScore}
-                                </span>
-                              )}
-                              {f.error && (
-                                <button
-                                  onClick={() => retryUpload(f.id)}
-                                  className="text-[10px] text-red-300 underline underline-offset-2 touch-manipulation"
-                                  aria-label={`Retry upload of ${f.file.name}`}
-                                >
-                                  Failed — retry
-                                </button>
-                              )}
-                              {!f.error && f.analysisError && (
-                                <span className="text-[10px] text-amber-200/80">
-                                  Stored — AI check didn't run
+                            >
+                              {f.analysis.qualityGrade} · {f.analysis.qualityScore}
+                            </span>
+                          )}
+                          {f.error && (
+                            <button
+                              onClick={() => retryUpload(f.id)}
+                              className="text-[10px] text-red-300 underline underline-offset-2 touch-manipulation"
+                              aria-label={`Retry upload of ${f.file.name}`}
+                            >
+                              Failed — retry
+                            </button>
+                          )}
+                          {!f.error && f.analysisError && (
+                            <span className="text-[10px] text-amber-200/80">
+                              Stored — AI check didn't run
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <button
+                  onClick={() => fileInputRef.current?.click()}
+                  className="w-full text-center py-2 rounded-lg border border-dashed border-white/[0.08] text-[12px] text-white hover:bg-white/[0.04] transition-colors touch-manipulation"
+                >
+                  + Add more files
+                </button>
+              </div>
+            )}
+
+            {/* Voice transcript */}
+            <div className="space-y-2">
+              <div className="flex items-baseline justify-between gap-3">
+                <Eyebrow>Describe the job</Eyebrow>
+                <span className="text-[11px] text-white font-mono">{voiceText.length} chars</span>
+              </div>
+              <Textarea
+                value={voiceText}
+                onChange={(e) => setVoiceText(e.target.value)}
+                placeholder="Speak or type — what was the job, what did you do, what did you measure, what did you learn?"
+                rows={4}
+                className={AREA_CLS}
+              />
+              {speechSupported && (
+                <button
+                  type="button"
+                  onClick={isListening ? stopListening : startListening}
+                  disabled={streaming}
+                  className={cn(
+                    chipBase,
+                    'inline-flex items-center gap-2 px-3.5',
+                    isListening ? 'border-red-500/40 bg-red-500/[0.06] text-red-300' : chipOff
+                  )}
+                >
+                  {isListening ? (
+                    <>
+                      <MicOff className="h-3.5 w-3.5" />
+                      Stop listening
+                    </>
+                  ) : (
+                    <>
+                      <Mic className="h-3.5 w-3.5" />
+                      Tap to speak
+                    </>
+                  )}
+                </button>
+              )}
+            </div>
+
+            {/* Analyse trigger / progress */}
+            {!streaming && analysedCount === 0 && !reflection && (
+              <Button
+                onClick={handleAnalyse}
+                disabled={!canAnalyse || filesUploadingCount > 0}
+                className={cn(
+                  buttonPrimaryCn,
+                  'inline-flex w-full items-center justify-center gap-2'
+                )}
+              >
+                {filesUploadingCount > 0 ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    Uploading {filesUploadingCount} {filesUploadingCount === 1 ? 'file' : 'files'}…
+                  </>
+                ) : (
+                  <>
+                    <Sparkles className="h-4 w-4" />
+                    Analyse with AI
+                  </>
+                )}
+              </Button>
+            )}
+
+            {/* Streaming progress */}
+            {(streaming || meta) && (
+              <div
+                className={cn(
+                  'space-y-3 rounded-2xl border border-elec-yellow/35 p-4',
+                  CARD_SURFACE
+                )}
+              >
+                <div className="flex items-baseline justify-between gap-3">
+                  <Eyebrow>
+                    {streaming ? 'Analysing · BS 7671 grounded' : 'Analysis complete'}
+                  </Eyebrow>
+                  <span className="text-[12px] font-mono text-white tabular-nums">
+                    {analysedCount} / {meta?.totalFiles || files.length} files
+                    {meta?.hasTranscript ? ` · ${reflection ? '✓' : '·'} reflection` : ''}
+                  </span>
+                </div>
+                <div className="h-1 w-full bg-white/[0.04] rounded-full overflow-hidden">
+                  <div
+                    className="h-full rounded-full bg-elec-yellow transition-all duration-300"
+                    style={{
+                      width: `${
+                        meta && meta.totalTasks > 0
+                          ? ((analysedCount + (reflection ? 1 : 0)) / meta.totalTasks) * 100
+                          : 0
+                      }%`,
+                    }}
+                  />
+                </div>
+                {meta && meta.regNumbers.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5">
+                    <span className="text-[10px] uppercase tracking-[0.18em] text-white">
+                      Reg sources
+                    </span>
+                    {/* reg numbers can repeat across files — index the key */}
+                    {meta.regNumbers.slice(0, 6).map((r, rIdx) => (
+                      <span
+                        key={`${r}-${rIdx}`}
+                        className="rounded-md border border-elec-yellow/50 px-1.5 py-0 font-mono text-[10px] text-elec-yellow"
+                      >
+                        {r}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* STAR reflection — editable, in the apprentice's own words */}
+            {(reflection || reflectionText) && (
+              <div className="space-y-2">
+                <Eyebrow>STAR reflection · drafted from your voice</Eyebrow>
+                <Textarea
+                  value={reflectionText}
+                  onChange={(e) => setReflectionText(e.target.value)}
+                  rows={7}
+                  className={AREA_CLS}
+                />
+                <p className="text-[11px] text-white italic">
+                  Reword this into your own voice — assessors look for an authentic, first-hand
+                  reflection.
+                </p>
+              </div>
+            )}
+
+            {/* Aggregated AC matches */}
+            {allMatches.length > 0 && (
+              <div className="space-y-3">
+                <div className="flex items-baseline justify-between gap-3">
+                  <Eyebrow>Suggested ACs · {allMatches.length}</Eyebrow>
+                  <span className="text-[11px] text-white">
+                    Tap to confirm — high-confidence matches auto-selected.
+                  </span>
+                </div>
+                <ul className="space-y-1.5">
+                  {/* same AC can be matched by two files — index the key */}
+                  {allMatches.map((m, i) => {
+                    const ref = `${m.unitCode} AC ${m.acCode}`;
+                    const selected = selectedACs.includes(ref);
+                    const recommended = m.confidence >= 80;
+                    return (
+                      <li key={`${ref}-${i}`}>
+                        <button
+                          type="button"
+                          onClick={() => toggleAC(ref)}
+                          className={cn(
+                            'w-full flex items-start gap-3 px-4 py-3 rounded-xl border text-left transition-colors touch-manipulation',
+                            CARD_SURFACE,
+                            selected ? 'border-elec-yellow' : 'border-elec-yellow/35'
+                          )}
+                        >
+                          <span
+                            className={cn(
+                              'h-3.5 w-3.5 rounded-full border-2 flex-shrink-0 mt-0.5',
+                              selected
+                                ? 'bg-elec-yellow border-elec-yellow'
+                                : 'bg-transparent border-white/40'
+                            )}
+                          />
+                          <div className="flex-1 min-w-0 space-y-0.5">
+                            <div className="flex items-baseline gap-2 flex-wrap">
+                              <span className="text-[11px] font-mono text-elec-yellow">
+                                {m.unitCode} {m.acCode}
+                              </span>
+                              <span className="text-[10px] uppercase tracking-[0.14em] text-white">
+                                {m.confidence}% match
+                              </span>
+                              {recommended && (
+                                <span className="text-[10px] uppercase tracking-[0.14em] text-elec-yellow">
+                                  Recommended
                                 </span>
                               )}
                             </div>
+                            <p className="text-[13px] text-white leading-snug">{m.acText}</p>
+                            <p className="text-[11px] text-white leading-snug italic">
+                              {m.reasons[0]}
+                            </p>
+                            {m.toComplete && (
+                              <p className="text-[11px] text-elec-yellow/85 leading-snug">
+                                To complete: {m.toComplete}
+                              </p>
+                            )}
                           </div>
-                        </div>
-                      ))}
-                    </div>
-                    <button
-                      onClick={() => fileInputRef.current?.click()}
-                      className="w-full text-center py-2 rounded-lg border border-dashed border-white/[0.08] text-[12px] text-white/55 hover:bg-white/[0.04] transition-colors touch-manipulation"
-                    >
-                      + Add more files
-                    </button>
-                  </div>
-                )}
-
-                {/* Voice transcript */}
-                <div className="space-y-2">
-                  <div className="flex items-baseline justify-between gap-3">
-                    <Eyebrow>Describe the job</Eyebrow>
-                    <span className="text-[11px] text-white/40 font-mono">
-                      {voiceText.length} chars
-                    </span>
-                  </div>
-                  <Textarea
-                    value={voiceText}
-                    onChange={(e) => setVoiceText(e.target.value)}
-                    placeholder="Speak or type — what was the job, what did you do, what did you measure, what did you learn?"
-                    rows={4}
-                    className="touch-manipulation bg-[hsl(0_0%_10%)] border-white/[0.08] text-[13px] text-white placeholder:text-white/40 focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20"
-                  />
-                  {speechSupported && (
-                    <button
-                      type="button"
-                      onClick={isListening ? stopListening : startListening}
-                      disabled={streaming}
-                      className={cn(
-                        'inline-flex items-center gap-2 h-9 px-3 rounded-lg border text-[12px] font-medium transition-colors touch-manipulation',
-                        isListening
-                          ? 'border-red-500/40 bg-red-500/[0.06] text-red-300'
-                          : 'border-white/[0.08] bg-[hsl(0_0%_10%)] text-white/85 hover:bg-white/[0.04]'
-                      )}
-                    >
-                      {isListening ? (
-                        <>
-                          <MicOff className="h-3.5 w-3.5" />
-                          Stop listening
-                        </>
-                      ) : (
-                        <>
-                          <Mic className="h-3.5 w-3.5" />
-                          Tap to speak
-                        </>
-                      )}
-                    </button>
-                  )}
-                </div>
-
-                {/* Analyse trigger / progress */}
-                {!streaming && analysedCount === 0 && !reflection && (
-                  <Button
-                    onClick={handleAnalyse}
-                    disabled={!canAnalyse || filesUploadingCount > 0}
-                    className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:opacity-50 inline-flex items-center justify-center gap-2"
-                  >
-                    {filesUploadingCount > 0 ? (
-                      <>
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                        Uploading {filesUploadingCount}{' '}
-                        {filesUploadingCount === 1 ? 'file' : 'files'}…
-                      </>
-                    ) : (
-                      <>
-                        <Sparkles className="h-4 w-4" />
-                        Analyse with AI
-                      </>
-                    )}
-                  </Button>
-                )}
-
-                {/* Streaming progress */}
-                {(streaming || meta) && (
-                  <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 space-y-3">
-                    <div className="flex items-baseline justify-between gap-3">
-                      <Eyebrow>
-                        {streaming ? 'Analysing · BS 7671 grounded' : 'Analysis complete'}
-                      </Eyebrow>
-                      <span className="text-[12px] font-mono text-white/85 tabular-nums">
-                        {analysedCount} / {meta?.totalFiles || files.length} files
-                        {meta?.hasTranscript ? ` · ${reflection ? '✓' : '·'} reflection` : ''}
-                      </span>
-                    </div>
-                    <div className="h-1 w-full bg-white/[0.04] rounded-full overflow-hidden">
-                      <div
-                        className="h-full rounded-full bg-elec-yellow transition-all duration-300"
-                        style={{
-                          width: `${
-                            meta && meta.totalTasks > 0
-                              ? ((analysedCount + (reflection ? 1 : 0)) / meta.totalTasks) * 100
-                              : 0
-                          }%`,
-                        }}
-                      />
-                    </div>
-                    {meta && meta.regNumbers.length > 0 && (
-                      <div className="flex flex-wrap gap-1.5">
-                        <span className="text-[10px] uppercase tracking-[0.18em] text-white/40">
-                          Reg sources
-                        </span>
-                        {/* reg numbers can repeat across files — index the key */}
-                        {meta.regNumbers.slice(0, 6).map((r, rIdx) => (
-                          <span
-                            key={`${r}-${rIdx}`}
-                            className="text-[10px] font-mono text-elec-yellow/85 px-1.5 py-0 rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04]"
-                          >
-                            {r}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                {/* STAR reflection — editable, in the apprentice's own words */}
-                {(reflection || reflectionText) && (
-                  <div className="space-y-2">
-                    <Eyebrow>STAR reflection · drafted from your voice</Eyebrow>
-                    <Textarea
-                      value={reflectionText}
-                      onChange={(e) => setReflectionText(e.target.value)}
-                      rows={7}
-                      className="touch-manipulation bg-[hsl(0_0%_10%)] border-white/[0.08] text-[13px] text-white leading-relaxed placeholder:text-white/40 focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20"
-                    />
-                    <p className="text-[11px] text-white/55 italic">
-                      Reword this into your own voice — assessors look for an authentic, first-hand
-                      reflection.
-                    </p>
-                  </div>
-                )}
-
-                {/* Aggregated AC matches */}
-                {allMatches.length > 0 && (
-                  <div className="space-y-3">
-                    <div className="flex items-baseline justify-between gap-3">
-                      <Eyebrow>Suggested ACs · {allMatches.length}</Eyebrow>
-                      <span className="text-[11px] text-white/55">
-                        Tap to confirm — high-confidence matches auto-selected.
-                      </span>
-                    </div>
-                    <ul className="space-y-1.5">
-                      {/* same AC can be matched by two files — index the key */}
-                      {allMatches.map((m, i) => {
-                        const ref = `${m.unitCode} AC ${m.acCode}`;
-                        const selected = selectedACs.includes(ref);
-                        const recommended = m.confidence >= 80;
-                        return (
-                          <li key={`${ref}-${i}`}>
-                            <button
-                              type="button"
-                              onClick={() => toggleAC(ref)}
-                              className={cn(
-                                'w-full flex items-start gap-3 px-4 py-3 rounded-xl border text-left transition-colors touch-manipulation',
-                                selected
-                                  ? 'border-elec-yellow/40 bg-elec-yellow/[0.05]'
-                                  : 'border-white/[0.06] bg-[hsl(0_0%_10%)] hover:bg-white/[0.04]'
-                              )}
-                            >
-                              <span
-                                className={cn(
-                                  'h-3.5 w-3.5 rounded-full border-2 flex-shrink-0 mt-0.5',
-                                  selected
-                                    ? 'bg-elec-yellow border-elec-yellow'
-                                    : 'bg-transparent border-white/40'
-                                )}
-                              />
-                              <div className="flex-1 min-w-0 space-y-0.5">
-                                <div className="flex items-baseline gap-2 flex-wrap">
-                                  <span className="text-[11px] font-mono text-elec-yellow">
-                                    {m.unitCode} {m.acCode}
-                                  </span>
-                                  <span className="text-[10px] uppercase tracking-[0.14em] text-white/40">
-                                    {m.confidence}% match
-                                  </span>
-                                  {recommended && (
-                                    <span className="text-[10px] uppercase tracking-[0.14em] text-elec-yellow">
-                                      Recommended
-                                    </span>
-                                  )}
-                                </div>
-                                <p className="text-[13px] text-white leading-snug">{m.acText}</p>
-                                <p className="text-[11px] text-white/55 leading-snug italic">
-                                  {m.reasons[0]}
-                                </p>
-                                {m.toComplete && (
-                                  <p className="text-[11px] text-elec-yellow/85 leading-snug">
-                                    To complete: {m.toComplete}
-                                  </p>
-                                )}
-                              </div>
-                            </button>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </div>
-                )}
-
-                {/* Quality tips per file */}
-                {files.some((f) => f.analysis?.qualityTips?.length) && (
-                  <div className="space-y-2">
-                    <Eyebrow>Strengthen this evidence</Eyebrow>
-                    <ul className="space-y-1.5">
-                      {files
-                        .filter((f) => f.analysis?.qualityTips?.length)
-                        .flatMap((f) =>
-                          (f.analysis!.qualityTips || []).map((tip, i) => (
-                            <li
-                              key={`${f.id}-tip-${i}`}
-                              className="flex items-start gap-2 text-[13px] text-white/85 leading-relaxed"
-                            >
-                              <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
-                              <span>{tip}</span>
-                            </li>
-                          ))
-                        )}
-                    </ul>
-                  </div>
-                )}
-
-                {/* Vision-grounded insights — image quality, what's missing,
-                    the single grade-lifting fix, and authenticity flags. */}
-                {aiInsights.worstQuality && aiInsights.worstQuality !== 'clear' && (
-                  <div
-                    className={cn(
-                      'flex items-start gap-2 rounded-lg border p-3 text-[12.5px] leading-relaxed',
-                      aiInsights.worstQuality === 'unusable'
-                        ? 'border-red-500/30 bg-red-500/[0.05] text-red-200'
-                        : 'border-orange-400/30 bg-orange-400/[0.05] text-orange-200'
-                    )}
-                  >
-                    <Camera className="h-4 w-4 mt-0.5 flex-shrink-0" />
-                    <span>
-                      {aiInsights.worstQuality === 'unusable'
-                        ? 'This photo is hard to read as evidence — retake it clearer and closer before relying on it.'
-                        : 'Part of this evidence is unclear — a sharper or closer photo would strengthen it.'}
-                    </span>
-                  </div>
-                )}
-
-                {aiInsights.missing.length > 0 && (
-                  <div className="space-y-2">
-                    <Eyebrow>What an assessor will look for</Eyebrow>
-                    <ul className="space-y-1.5">
-                      {aiInsights.missing.map((x, i) => (
-                        <li
-                          key={`missing-${i}`}
-                          className="flex items-start gap-2 text-[13px] text-white/85 leading-relaxed"
-                        >
-                          <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
-                          <span>{x}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                {aiInsights.vacsrFixes.length > 0 && (
-                  <div className="space-y-1.5">
-                    <Eyebrow>One change that lifts the grade</Eyebrow>
-                    {aiInsights.vacsrFixes.map((x, i) => (
-                      <p
-                        key={`vacsr-${i}`}
-                        className="flex items-start gap-2 text-[13px] text-white/85 leading-relaxed"
-                      >
-                        <Sparkles className="h-3.5 w-3.5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                        <span>{x}</span>
-                      </p>
-                    ))}
-                  </div>
-                )}
-
-                {aiInsights.authenticity.length > 0 && (
-                  <div className="rounded-lg border border-orange-400/30 bg-orange-400/[0.05] p-3 space-y-1">
-                    <div className="text-[10px] uppercase tracking-[0.14em] text-orange-200/80">
-                      An assessor may query
-                    </div>
-                    {aiInsights.authenticity.map((x, i) => (
-                      <p key={`auth-${i}`} className="text-[12.5px] text-orange-100/90 leading-relaxed">
-                        {x}
-                      </p>
-                    ))}
-                  </div>
-                )}
-
-                {/* Title */}
-                <div className="space-y-2">
-                  <Eyebrow>Title</Eyebrow>
-                  <Input
-                    placeholder="What is this evidence?"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    className="h-11 touch-manipulation bg-[hsl(0_0%_10%)] border-white/[0.08] text-[13px] text-white placeholder:text-white/40 focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20"
-                  />
-                </div>
-
-                {/* Description */}
-                <div className="space-y-2">
-                  <Eyebrow>Description (optional)</Eyebrow>
-                  <Textarea
-                    placeholder="Anything extra you want to add about this entry…"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    rows={3}
-                    className="touch-manipulation bg-[hsl(0_0%_10%)] border-white/[0.08] text-[13px] text-white placeholder:text-white/40 focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20"
-                  />
-                </div>
-
-                {/* Make this assessor-ready — optional fields that pass VACSR */}
-                <div
-                  id="capture-assessor-ready"
-                  className="rounded-xl border border-white/[0.06] bg-white/[0.015] p-4 space-y-4 scroll-mt-4"
-                >
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between gap-2">
-                      <Eyebrow>Make this assessor-ready</Eyebrow>
-                      {readiness.ready ? (
-                        <span className="text-[10px] uppercase tracking-[0.14em] text-elec-yellow">
-                          Assessor-ready
-                        </span>
-                      ) : (
-                        <span className="text-[10px] uppercase tracking-[0.14em] text-white/40">
-                          {readiness.score}/5
-                        </span>
-                      )}
-                    </div>
-                    <div className="flex flex-wrap items-center gap-1.5">
-                      {READINESS_META.map(({ k, label }) => {
-                        const on = readiness.checks[k];
-                        return (
-                          <span
-                            key={k}
-                            className={cn(
-                              'inline-flex items-center gap-1 px-2 h-6 rounded-full text-[10px] font-medium border',
-                              on
-                                ? 'border-elec-yellow/40 bg-elec-yellow/[0.08] text-elec-yellow'
-                                : 'border-white/[0.08] text-white/40'
-                            )}
-                          >
-                            <span
-                              className={cn(
-                                'h-1.5 w-1.5 rounded-full',
-                                on ? 'bg-elec-yellow' : 'bg-white/20'
-                              )}
-                            />
-                            {label}
-                          </span>
-                        );
-                      })}
-                    </div>
-                    <p className="text-[11px] text-white/45 leading-relaxed">
-                      Optional — but each one helps your portfolio pass first time.
-                    </p>
-                  </div>
-
-                  {/* Date of work + site reference */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div className="space-y-1.5">
-                      <Eyebrow>Date of work</Eyebrow>
-                      <Input
-                        type="date"
-                        value={workDate}
-                        onChange={(e) => setWorkDate(e.target.value)}
-                        className={FIELD_CLS}
-                      />
-                    </div>
-                    <div className="space-y-1.5">
-                      <Eyebrow>Site / job reference</Eyebrow>
-                      <Input
-                        placeholder="e.g. 14 Mill Lane rewire"
-                        value={siteRef}
-                        onChange={(e) => setSiteRef(e.target.value)}
-                        className={FIELD_CLS}
-                      />
-                    </div>
-                  </div>
-
-                  {/* Your role */}
-                  <div className="space-y-1.5">
-                    <Eyebrow>What you personally did</Eyebrow>
-                    <Textarea
-                      placeholder="Your own role on this job — what you carried out, not the team's…"
-                      value={role}
-                      onChange={(e) => setRole(e.target.value)}
-                      rows={2}
-                      className="touch-manipulation bg-[hsl(0_0%_10%)] border-white/[0.08] text-[13px] text-white placeholder:text-white/40 focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20"
-                    />
-                  </div>
-
-                  {/* Evidence type */}
-                  <div className="space-y-1.5">
-                    <Eyebrow>Type of evidence</Eyebrow>
-                    <div className="flex flex-wrap gap-1.5">
-                      {EVIDENCE_TYPES.map((opt) => {
-                        const active = evidenceType === opt.v;
-                        return (
-                          <button
-                            key={opt.v}
-                            type="button"
-                            onClick={() => setEvidenceType(active ? '' : opt.v)}
-                            className={cn(
-                              'px-3 h-9 rounded-full text-[11.5px] font-medium border transition-colors touch-manipulation',
-                              active
-                                ? 'border-elec-yellow/50 bg-elec-yellow/[0.08] text-elec-yellow'
-                                : 'border-white/[0.08] bg-[hsl(0_0%_10%)] text-white/70 hover:bg-white/[0.04]'
-                            )}
-                          >
-                            {opt.label}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  {/* Witness / supervisor */}
-                  <div className="space-y-1.5">
-                    <Eyebrow>Witness / supervisor (who saw the work)</Eyebrow>
-                    <div className="grid grid-cols-1 sm:grid-cols-[1fr_1fr_auto] gap-2">
-                      <Input
-                        placeholder="Name"
-                        value={witnessName}
-                        onChange={(e) => setWitnessName(e.target.value)}
-                        className={FIELD_CLS}
-                      />
-                      <Input
-                        placeholder="Role (e.g. supervisor)"
-                        value={witnessRole}
-                        onChange={(e) => setWitnessRole(e.target.value)}
-                        className={FIELD_CLS}
-                      />
-                      <Input
-                        type="date"
-                        value={witnessDate}
-                        onChange={(e) => setWitnessDate(e.target.value)}
-                        className={cn(FIELD_CLS, 'sm:w-[150px]')}
-                      />
-                    </div>
-                  </div>
-
-                  {/* Authenticity declaration */}
-                  <label className="flex items-start gap-2.5 cursor-pointer touch-manipulation">
-                    <Checkbox
-                      checked={authenticityConfirmed}
-                      onCheckedChange={(v) => setAuthenticityConfirmed(v === true)}
-                      className="mt-0.5 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
-                    />
-                    <span className="text-[12px] text-white/85 leading-relaxed">
-                      I confirm this is my own work and an accurate record of what I did.
-                    </span>
-                  </label>
-                </div>
-
-                {/* Link to */}
+                        </button>
+                      </li>
+                    );
+                  })}
+                </ul>
               </div>
             )}
-            </div>
-          </div>
 
-          {/* Footer actions */}
-          {step === 'details' && (
+            {/* Quality tips per file */}
+            {files.some((f) => f.analysis?.qualityTips?.length) && (
+              <div className="space-y-2">
+                <Eyebrow>Strengthen this evidence</Eyebrow>
+                <ul className="space-y-1.5">
+                  {files
+                    .filter((f) => f.analysis?.qualityTips?.length)
+                    .flatMap((f) =>
+                      (f.analysis!.qualityTips || []).map((tip, i) => (
+                        <li
+                          key={`${f.id}-tip-${i}`}
+                          className="flex items-start gap-2 text-[13px] text-white leading-relaxed"
+                        >
+                          <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+                          <span>{tip}</span>
+                        </li>
+                      ))
+                    )}
+                </ul>
+              </div>
+            )}
+
+            {/* Vision-grounded insights — image quality, what's missing,
+                    the single grade-lifting fix, and authenticity flags. */}
+            {aiInsights.worstQuality && aiInsights.worstQuality !== 'clear' && (
+              <div
+                className={cn(
+                  'flex items-start gap-2 rounded-lg border p-3 text-[12.5px] leading-relaxed',
+                  aiInsights.worstQuality === 'unusable'
+                    ? 'border-red-500/30 bg-red-500/[0.05] text-red-200'
+                    : 'border-orange-400/30 bg-orange-400/[0.05] text-orange-200'
+                )}
+              >
+                <Camera className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                <span>
+                  {aiInsights.worstQuality === 'unusable'
+                    ? 'This photo is hard to read as evidence — retake it clearer and closer before relying on it.'
+                    : 'Part of this evidence is unclear — a sharper or closer photo would strengthen it.'}
+                </span>
+              </div>
+            )}
+
+            {aiInsights.missing.length > 0 && (
+              <div className="space-y-2">
+                <Eyebrow>What an assessor will look for</Eyebrow>
+                <ul className="space-y-1.5">
+                  {aiInsights.missing.map((x, i) => (
+                    <li
+                      key={`missing-${i}`}
+                      className="flex items-start gap-2 text-[13px] text-white leading-relaxed"
+                    >
+                      <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+                      <span>{x}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {aiInsights.vacsrFixes.length > 0 && (
+              <div className="space-y-1.5">
+                <Eyebrow>One change that lifts the grade</Eyebrow>
+                {aiInsights.vacsrFixes.map((x, i) => (
+                  <p
+                    key={`vacsr-${i}`}
+                    className="flex items-start gap-2 text-[13px] text-white leading-relaxed"
+                  >
+                    <Sparkles className="h-3.5 w-3.5 text-elec-yellow mt-0.5 flex-shrink-0" />
+                    <span>{x}</span>
+                  </p>
+                ))}
+              </div>
+            )}
+
+            {aiInsights.authenticity.length > 0 && (
+              <div className="rounded-lg border border-orange-400/30 bg-orange-400/[0.05] p-3 space-y-1">
+                <div className="text-[10px] uppercase tracking-[0.14em] text-orange-200/80">
+                  An assessor may query
+                </div>
+                {aiInsights.authenticity.map((x, i) => (
+                  <p key={`auth-${i}`} className="text-[12.5px] text-orange-100/90 leading-relaxed">
+                    {x}
+                  </p>
+                ))}
+              </div>
+            )}
+
+            {/* Title */}
+            <div className="space-y-2">
+              <Eyebrow>Title</Eyebrow>
+              <Input
+                placeholder="What is this evidence?"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                className={FIELD_CLS}
+              />
+            </div>
+
+            {/* Description */}
+            <div className="space-y-2">
+              <Eyebrow>Description (optional)</Eyebrow>
+              <Textarea
+                placeholder="Anything extra you want to add about this entry…"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                rows={3}
+                className={AREA_CLS}
+              />
+            </div>
+
+            {/* Make this assessor-ready — optional fields that pass VACSR */}
             <div
-              className="shrink-0 border-t border-white/[0.08] bg-[hsl(0_0%_8%)] px-4 py-3 sm:px-6"
-              style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
+              id="capture-assessor-ready"
+              className="rounded-xl border border-white/[0.06] bg-white/[0.015] p-4 space-y-4 scroll-mt-4"
             >
-              <div className="grid grid-cols-2 gap-2">
-                <SecondaryAction
-                  label="Cancel"
-                  onClick={() => {
-                    handleSheetClose();
-                    onOpenChange(false);
-                  }}
-                />
-                <PrimaryAction
-                  label={
-                    <>
-                      <Check className="h-4 w-4" />
-                      Save evidence
-                    </>
-                  }
-                  onClick={handleSave}
+              <div className="space-y-2">
+                <div className="flex items-center justify-between gap-2">
+                  <Eyebrow>Make this assessor-ready</Eyebrow>
+                  {readiness.ready ? (
+                    <span className="text-[10px] uppercase tracking-[0.14em] text-elec-yellow">
+                      Assessor-ready
+                    </span>
+                  ) : (
+                    <span className="text-[10px] uppercase tracking-[0.14em] text-white">
+                      {readiness.score}/5
+                    </span>
+                  )}
+                </div>
+                <div className="flex flex-wrap items-center gap-1.5">
+                  {READINESS_META.map(({ k, label }) => {
+                    const on = readiness.checks[k];
+                    return (
+                      <span
+                        key={k}
+                        className={cn(
+                          'inline-flex items-center gap-1 px-2 h-6 rounded-full text-[10px] font-medium border',
+                          on
+                            ? 'border-elec-yellow text-elec-yellow'
+                            : 'border-white/[0.12] text-white'
+                        )}
+                      >
+                        <span
+                          className={cn(
+                            'h-1.5 w-1.5 rounded-full',
+                            on ? 'bg-elec-yellow' : 'bg-white/20'
+                          )}
+                        />
+                        {label}
+                      </span>
+                    );
+                  })}
+                </div>
+                <p className="text-[11px] text-white leading-relaxed">
+                  Optional — but each one helps your portfolio pass first time.
+                </p>
+              </div>
+
+              {/* Date of work + site reference */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="space-y-1.5">
+                  <Eyebrow>Date of work</Eyebrow>
+                  <Input
+                    type="date"
+                    value={workDate}
+                    onChange={(e) => setWorkDate(e.target.value)}
+                    className={FIELD_CLS}
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Eyebrow>Site / job reference</Eyebrow>
+                  <Input
+                    placeholder="e.g. 14 Mill Lane rewire"
+                    value={siteRef}
+                    onChange={(e) => setSiteRef(e.target.value)}
+                    className={FIELD_CLS}
+                  />
+                </div>
+              </div>
+
+              {/* Your role */}
+              <div className="space-y-1.5">
+                <Eyebrow>What you personally did</Eyebrow>
+                <Textarea
+                  placeholder="Your own role on this job — what you carried out, not the team's…"
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                  rows={2}
+                  className={AREA_CLS}
                 />
               </div>
-            </div>
-          )}
-        </div>
-      </SheetContent>
-    </Sheet>
 
-    {/* Soft assessor-ready nudge — encourages, never blocks */}
-    <AlertDialog open={showReadinessNudge} onOpenChange={setShowReadinessNudge}>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Make it assessor-ready?</AlertDialogTitle>
-          <AlertDialogDescription>
-            This is {readiness.score}/5 on assessor checks. Adding these takes about 10 seconds
-            and stops it being referred back:
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <ul className="space-y-1.5 py-1">
-          {READINESS_META.filter(({ k }) => !readiness.checks[k]).map(({ k, label }) => (
-            <li key={k} className="flex items-start gap-2 text-[13px] text-white/85 leading-snug">
-              <span className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-1.5 shrink-0" />
-              <span>{READINESS_FIX[k] ?? label}</span>
-            </li>
-          ))}
-        </ul>
-        <AlertDialogFooter>
-          <AlertDialogCancel
-            onClick={() => {
-              readinessAck.current = true;
-              setShowReadinessNudge(false);
-              void handleSave();
-            }}
-          >
-            Save anyway
-          </AlertDialogCancel>
-          <AlertDialogAction
-            onClick={() => {
-              setShowReadinessNudge(false);
-              requestAnimationFrame(() =>
-                document
-                  .getElementById('capture-assessor-ready')
-                  ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-              );
-            }}
-          >
-            Add details
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+              {/* Evidence type */}
+              <div className="space-y-1.5">
+                <Eyebrow>Type of evidence</Eyebrow>
+                <div className="flex flex-wrap gap-1.5">
+                  {EVIDENCE_TYPES.map((opt) => {
+                    const active = evidenceType === opt.v;
+                    return (
+                      <button
+                        key={opt.v}
+                        type="button"
+                        onClick={() => setEvidenceType(active ? '' : opt.v)}
+                        className={cn(chipBase, 'px-3.5', active ? chipOn : chipOff)}
+                      >
+                        {opt.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Witness / supervisor */}
+              <div className="space-y-1.5">
+                <Eyebrow>Witness / supervisor (who saw the work)</Eyebrow>
+                <div className="grid grid-cols-1 sm:grid-cols-[1fr_1fr_auto] gap-2">
+                  <Input
+                    placeholder="Name"
+                    value={witnessName}
+                    onChange={(e) => setWitnessName(e.target.value)}
+                    className={FIELD_CLS}
+                  />
+                  <Input
+                    placeholder="Role (e.g. supervisor)"
+                    value={witnessRole}
+                    onChange={(e) => setWitnessRole(e.target.value)}
+                    className={FIELD_CLS}
+                  />
+                  <Input
+                    type="date"
+                    value={witnessDate}
+                    onChange={(e) => setWitnessDate(e.target.value)}
+                    className={cn(FIELD_CLS, 'sm:w-[150px]')}
+                  />
+                </div>
+              </div>
+
+              {/* Authenticity declaration */}
+              <label className="flex items-start gap-2.5 cursor-pointer touch-manipulation">
+                <Checkbox
+                  checked={authenticityConfirmed}
+                  onCheckedChange={(v) => setAuthenticityConfirmed(v === true)}
+                  className="mt-0.5 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
+                />
+                <span className="text-[12px] text-white leading-relaxed">
+                  I confirm this is my own work and an accurate record of what I did.
+                </span>
+              </label>
+            </div>
+
+            {/* Link to */}
+          </div>
+        )}
+      </FormSheet>
+
+      {/* Soft assessor-ready nudge — encourages, never blocks */}
+      <AlertDialog open={showReadinessNudge} onOpenChange={setShowReadinessNudge}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Make it assessor-ready?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This is {readiness.score}/5 on assessor checks. Adding these takes about 10 seconds
+              and stops it being referred back:
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <ul className="space-y-1.5 py-1">
+            {READINESS_META.filter(({ k }) => !readiness.checks[k]).map(({ k, label }) => (
+              <li key={k} className="flex items-start gap-2 text-[13px] text-white leading-snug">
+                <span className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-1.5 shrink-0" />
+                <span>{READINESS_FIX[k] ?? label}</span>
+              </li>
+            ))}
+          </ul>
+          <AlertDialogFooter>
+            <AlertDialogCancel
+              onClick={() => {
+                readinessAck.current = true;
+                setShowReadinessNudge(false);
+                void handleSave();
+              }}
+            >
+              Save anyway
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                setShowReadinessNudge(false);
+                requestAnimationFrame(() =>
+                  document
+                    .getElementById('capture-assessor-ready')
+                    ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                );
+              }}
+            >
+              Add details
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 }

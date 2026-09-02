@@ -129,7 +129,7 @@ const RiskOutcomeGuidance = ({ riskLevel, riskScore }: RiskOutcomeGuidanceProps)
   return (
     <div className="space-y-5 animate-fade-in">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Risk management guidance
         </span>
         <h3 className="text-[16px] sm:text-[18px] font-medium text-white">{guidance.action}</h3>
@@ -144,11 +144,11 @@ const RiskOutcomeGuidance = ({ riskLevel, riskScore }: RiskOutcomeGuidanceProps)
       >
         <div className="flex items-baseline justify-between">
           <span
-            className={`text-[10px] font-medium uppercase tracking-[0.18em] ${guidance.isDanger ? 'text-red-300' : 'text-white/70'}`}
+            className={`text-[10px] font-medium uppercase tracking-[0.18em] ${guidance.isDanger ? 'text-red-300' : 'text-white'}`}
           >
             {riskLevel}
           </span>
-          <span className="text-[12px] text-white/85 font-mono">Score: {riskScore}</span>
+          <span className="text-[12px] text-white font-mono">Score: {riskScore}</span>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
@@ -162,24 +162,24 @@ const RiskOutcomeGuidance = ({ riskLevel, riskScore }: RiskOutcomeGuidanceProps)
               key={item.label}
               className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-3 space-y-1"
             >
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 {item.label}
               </span>
-              <p className="text-[13px] text-white/85 leading-relaxed">{item.value}</p>
+              <p className="text-[13px] text-white leading-relaxed">{item.value}</p>
             </div>
           ))}
         </div>
       </div>
 
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Required actions
         </span>
         <ul className="space-y-1.5">
           {guidance.recommendations.map((recommendation, index) => (
             <li
               key={index}
-              className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed"
+              className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
             >
               <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
               <span>{recommendation}</span>
@@ -189,26 +189,26 @@ const RiskOutcomeGuidance = ({ riskLevel, riskScore }: RiskOutcomeGuidanceProps)
       </div>
 
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Risk matrix reference
         </span>
         <div className="overflow-x-auto -mx-2 px-2">
           <table className="w-full text-[12px] min-w-[500px]">
             <thead>
               <tr className="border-b border-white/[0.10]">
-                <th className="text-left py-2 px-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+                <th className="text-left py-2 px-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Level
                 </th>
-                <th className="text-left py-2 px-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+                <th className="text-left py-2 px-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Score
                 </th>
-                <th className="text-left py-2 px-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+                <th className="text-left py-2 px-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Action
                 </th>
-                <th className="text-left py-2 px-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+                <th className="text-left py-2 px-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Authority
                 </th>
-                <th className="text-left py-2 px-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+                <th className="text-left py-2 px-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Monitor
                 </th>
               </tr>
@@ -222,10 +222,10 @@ const RiskOutcomeGuidance = ({ riskLevel, riskScore }: RiskOutcomeGuidanceProps)
                     className={`border-b border-white/[0.04] ${isCurrent ? 'bg-white/[0.06]' : ''}`}
                   >
                     <td className="py-2 px-2 text-white">{row.level}</td>
-                    <td className="py-2 px-2 text-white/85 font-mono">{row.score}</td>
-                    <td className="py-2 px-2 text-white/85">{row.action}</td>
-                    <td className="py-2 px-2 text-white/85">{row.authority}</td>
-                    <td className="py-2 px-2 text-white/85">{row.monitor}</td>
+                    <td className="py-2 px-2 text-white font-mono">{row.score}</td>
+                    <td className="py-2 px-2 text-white">{row.action}</td>
+                    <td className="py-2 px-2 text-white">{row.authority}</td>
+                    <td className="py-2 px-2 text-white">{row.monitor}</td>
                   </tr>
                 );
               })}

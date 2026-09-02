@@ -89,8 +89,9 @@ const seasonalTips = [
     tip: 'Construction slows down — ideal for extra OJT. Use quieter periods for online learning, portfolio work, and mock assessments.',
   },
 ];
-import { SectionHeader } from '@/components/college/primitives';
-import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { HubPage, HubBody, HubMasthead, HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const PlanningPage = () => {
   return (
@@ -103,7 +104,7 @@ const PlanningPage = () => {
       <HubBody>
         {/* Annual Approach */}
         <div className="space-y-3">
-          <SectionHeader eyebrow="Plan" title="Annual planning approach" />
+          <HubSectionHeading>Annual planning approach</HubSectionHeading>
 
           <p className="text-white text-sm">
             Your duration is set by your training plan (typically around 4 years, but it varies).
@@ -113,7 +114,10 @@ const PlanningPage = () => {
           {yearPhases.map((phase) => (
             <div
               key={phase.label}
-              className="sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]"
+              className={cn(
+                '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+                CARD_SURFACE
+              )}
             >
               <div className="sm:p-5 py-4 space-y-2">
                 <h3 className="font-medium text-sm text-white">{phase.label}</h3>
@@ -133,9 +137,14 @@ const PlanningPage = () => {
 
         {/* Sample Weekly Schedule */}
         <div className="space-y-3">
-          <SectionHeader eyebrow="Example" title="Sample weekly schedule" />
+          <HubSectionHeading>Sample weekly schedule</HubSectionHeading>
 
-          <div className="sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]">
+          <div
+            className={cn(
+              '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+              CARD_SURFACE
+            )}
+          >
             <div className="sm:p-5 space-y-2">
               <p className="text-white text-sm mb-3">
                 A typical week for a day-release apprentice:
@@ -144,7 +153,7 @@ const PlanningPage = () => {
                 <div
                   key={row.day}
                   className={`flex flex-col sm:flex-row sm:justify-between sm:items-center gap-0.5 sm:gap-3 p-2 rounded ${
-                    row.type === 'ojt' ? 'bg-elec-yellow/[0.08]' : 'bg-white/5'
+                    row.type === 'ojt' ? 'bg-white/[0.05]' : 'bg-white/5'
                   }`}
                 >
                   <span className="text-sm text-white font-medium shrink-0">{row.day}</span>
@@ -165,9 +174,14 @@ const PlanningPage = () => {
 
         {/* Monthly Allocation */}
         <div className="space-y-3">
-          <SectionHeader eyebrow="Breakdown" title="Monthly allocation" />
+          <HubSectionHeading>Monthly allocation</HubSectionHeading>
 
-          <div className="sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]">
+          <div
+            className={cn(
+              '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+              CARD_SURFACE
+            )}
+          >
             <div className="sm:p-5 space-y-3">
               <p className="text-white text-sm mb-2">
                 How your OJT hours are typically split across activities:
@@ -207,7 +221,7 @@ const PlanningPage = () => {
 
         {/* Seasonal Considerations */}
         <div className="space-y-3">
-          <SectionHeader eyebrow="Timing" title="Seasonal considerations" />
+          <HubSectionHeading>Seasonal considerations</HubSectionHeading>
 
           <p className="text-white text-sm">
             Construction work follows seasonal patterns — plan your OJT around them:
@@ -216,7 +230,10 @@ const PlanningPage = () => {
           {seasonalTips.map((item) => (
             <div
               key={item.season}
-              className="sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]"
+              className={cn(
+                '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+                CARD_SURFACE
+              )}
             >
               <div className="sm:p-5 py-4">
                 <h3 className="font-medium text-sm text-white">{item.season}</h3>
@@ -227,7 +244,7 @@ const PlanningPage = () => {
         </div>
 
         {/* Planning Tip */}
-        <div className="sm:rounded-xl sm:border sm:border-elec-yellow/25 sm:bg-elec-yellow/[0.04]">
+        <div className="sm:rounded-xl sm:border sm:border-elec-yellow/25 sm:bg-white/[0.05]">
           <div className="sm:p-5">
             <h3 className="text-[13.5px] font-semibold text-elec-yellow tracking-tight mb-2">
               Planning Tip

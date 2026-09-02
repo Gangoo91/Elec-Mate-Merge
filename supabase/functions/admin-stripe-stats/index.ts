@@ -11,6 +11,13 @@ import { captureException } from '../_shared/sentry.ts';
 // Supabase edge runtime global — lets work continue after the response is sent.
 declare const EdgeRuntime: { waitUntil(p: Promise<unknown>): void };
 
+// The overview reports days in UK time, so snapshot rows are keyed by the
+// Europe/London date rather than UTC (an hour out for half the year).
+const ukDay = (secOrDate: number | Date = new Date()) =>
+  new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/London' }).format(
+    typeof secOrDate === 'number' ? new Date(secOrDate * 1000) : secOrDate
+  );
+
 // Known price IDs and their tiers - ACTUAL STRIPE PRICES
 const PRICE_TIER_MAP: Record<string, { tier: string; amount: number }> = {
   // Founder pricing (£3.99/mo) - MAIN PRICE USED BY ALL REAL USERS
@@ -82,28 +89,35 @@ serve(async (req) => {
     }
 
     const token = authHeader.replace('Bearer ', '');
-    const {
-      data: { user },
-      error: authError,
-    } = await supabase.auth.getUser(token);
+    /*
+      The nightly snapshot job (pg_cron → net.http_post) calls with the
+      service-role key and has no user. Everything else must be an admin.
+    */
+    const scheduled = token === supabaseServiceKey;
+    if (!scheduled) {
+      const {
+        data: { user },
+        error: authError,
+      } = await supabase.auth.getUser(token);
 
-    if (authError || !user) {
-      throw new Error('Authentication failed');
+      if (authError || !user) {
+        throw new Error('Authentication failed');
+      }
+
+      // Check if user has admin access via admin_role (consistent with admin-get-users)
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('admin_role')
+        .eq('id', user.id)
+        .single();
+
+      if (!profile?.admin_role) {
+        console.log('[ADMIN-STRIPE-STATS] Access denied for user:', user.id);
+        throw new Error('Admin access required');
+      }
     }
 
-    // Check if user has admin access via admin_role (consistent with admin-get-users)
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('admin_role')
-      .eq('id', user.id)
-      .single();
-
-    if (!profile?.admin_role) {
-      console.log('[ADMIN-STRIPE-STATS] Access denied for user:', user.id);
-      throw new Error('Admin access required');
-    }
-
-    console.log('[ADMIN-STRIPE-STATS] Access granted for user:', user.id);
+    console.log('[ADMIN-STRIPE-STATS] Access granted:', scheduled ? 'scheduled snapshot' : 'admin');
 
     // Initialize Stripe
     const stripeKey = Deno.env.get('STRIPE_SECRET_KEY');
@@ -251,6 +265,8 @@ serve(async (req) => {
 
     const computeTrialConversion = async () => {
       const paidSubscriptionIds = new Set<string>();
+      // When each subscription first paid real money — the start of its MRR.
+      const firstPaidAt = new Map<string, number>();
       let invoiceCursor: string | undefined;
       for (let guard = 0; guard < 200; guard++) {
         const page = await stripe.invoices.list({
@@ -261,13 +277,126 @@ serve(async (req) => {
         for (const inv of page.data) {
           const subId =
             typeof inv.subscription === 'string' ? inv.subscription : inv.subscription?.id;
-          if (subId && (inv.amount_paid || 0) > 0) paidSubscriptionIds.add(subId);
+          if (subId && (inv.amount_paid || 0) > 0) {
+            paidSubscriptionIds.add(subId);
+            const paidAt = inv.status_transitions?.paid_at ?? inv.created;
+            const prev = firstPaidAt.get(subId);
+            if (prev == null || paidAt < prev) firstPaidAt.set(subId, paidAt);
+          }
         }
         if (!page.has_more || page.data.length === 0) break;
         invoiceCursor = page.data[page.data.length - 1].id;
       }
       const billed = trialsEnded.filter((s) => paidSubscriptionIds.has(s.id));
       const stillPaying = billed.filter((s) => s.status === 'active');
+
+      /*
+        Real churn, from the same invoice walk.
+
+        "Churn" elsewhere in this function is any subscription that ended,
+        which is mostly trials that never paid. The overview wants the other
+        thing: people who settled at least one real invoice and then left.
+        Trial leavers are a different problem with a different fix and are
+        counted nowhere in `churn`. Months are UTC calendar months; the
+        current month is flagged incomplete so the page can say so.
+      */
+      const monthlyAmountOf = (s: Stripe.Subscription) => {
+        const item = s.items?.data?.[0];
+        const unit = (item?.price?.unit_amount || 0) / 100;
+        return item?.price?.recurring?.interval === 'year' ? unit / 12 : unit;
+      };
+      const endedPaid = canceledAll.filter((s) => s.ended_at && paidSubscriptionIds.has(s.id));
+      const monthStartSec = (y: number, m: number) => Math.floor(Date.UTC(y, m, 1) / 1000);
+      const today = new Date();
+      const tierOf = (s: Stripe.Subscription) =>
+        PRICE_TIER_MAP[s.items?.data?.[0]?.price?.id ?? '']?.tier ?? 'unknown';
+      const churnMonths: Array<{
+        month: string;
+        payingAtStart: number;
+        churned: number;
+        mrrLost: number;
+        complete: boolean;
+        /** Who left, by plan — the leak is rarely where the headcount is. */
+        byPlan: Record<string, { count: number; mrrLost: number }>;
+        /** MRR that started paying in the month (first real invoice), so the
+         *  page can say why MRR moved, not just that it did. */
+        newMrr: number;
+        newCount: number;
+      }> = [];
+      for (let back = 3; back >= 0; back--) {
+        const a = monthStartSec(today.getUTCFullYear(), today.getUTCMonth() - back);
+        const b = monthStartSec(today.getUTCFullYear(), today.getUTCMonth() - back + 1);
+        const payingAtStart = allSubs.filter(
+          (s) =>
+            s.created < a &&
+            !(s.ended_at && s.ended_at <= a) &&
+            !(s.trial_end && s.trial_end > a) &&
+            paidSubscriptionIds.has(s.id)
+        ).length;
+        const churned = endedPaid.filter((s) => (s.ended_at as number) >= a && (s.ended_at as number) < b);
+        const byPlan: Record<string, { count: number; mrrLost: number }> = {};
+        for (const s of churned) {
+          const k = tierOf(s);
+          byPlan[k] ??= { count: 0, mrrLost: 0 };
+          byPlan[k].count++;
+          byPlan[k].mrrLost = Math.round((byPlan[k].mrrLost + monthlyAmountOf(s)) * 100) / 100;
+        }
+        const started = allSubs.filter((s) => {
+          const t = firstPaidAt.get(s.id);
+          return t != null && t >= a && t < b;
+        });
+        churnMonths.push({
+          month: new Date(a * 1000).toISOString().slice(0, 7),
+          payingAtStart,
+          churned: churned.length,
+          mrrLost: Math.round(churned.reduce((t, s) => t + monthlyAmountOf(s), 0) * 100) / 100,
+          complete: b <= nowSec,
+          byPlan,
+          newMrr: Math.round(started.reduce((t, s) => t + monthlyAmountOf(s), 0) * 100) / 100,
+          newCount: started.length,
+        });
+      }
+      const churnByDay: Record<string, number> = {};
+      for (let i = 30; i >= 0; i--) churnByDay[ukDay(nowSec - i * 86400)] = 0;
+      for (const s of endedPaid) {
+        const k = ukDay(s.ended_at as number);
+        if (k in churnByDay) churnByDay[k]++;
+      }
+      const churnDaily = Object.entries(churnByDay).map(([day, n]) => ({ day, n }));
+      const thirtyAgo = nowSec - 30 * 86400;
+      const churned30 = endedPaid.filter((s) => (s.ended_at as number) > thirtyAgo);
+
+      // Conversion by the month the trial ENDED, and over the last 90 days.
+      const convByMonth: Record<string, { ended: number; billed: number }> = {};
+      for (const s of trialsEnded) {
+        const k = new Date((s.trial_end as number) * 1000).toISOString().slice(0, 7);
+        convByMonth[k] ??= { ended: 0, billed: 0 };
+        convByMonth[k].ended++;
+        if (paidSubscriptionIds.has(s.id)) convByMonth[k].billed++;
+      }
+      const ended90 = trialsEnded.filter((s) => (s.trial_end as number) > nowSec - 90 * 86400);
+      const conversion = {
+        d90: {
+          ended: ended90.length,
+          billed: ended90.filter((s) => paidSubscriptionIds.has(s.id)).length,
+        },
+        months: Object.entries(convByMonth)
+          .sort(([x], [y]) => x.localeCompare(y))
+          .slice(-4)
+          .map(([month, v]) => ({ month, ...v })),
+      };
+
+      // Snapshot the last 31 days of paid churn so the overview's history
+      // heals itself on every refresh rather than trusting a single write.
+      const { error: snapErr } = await supabase.from('admin_metric_daily').upsert(
+        churnDaily.map((r) => ({
+          day: r.day,
+          stripe_churned_paid: r.n,
+          updated_at: new Date().toISOString(),
+        })),
+        { onConflict: 'day' }
+      );
+      if (snapErr) console.warn('[ADMIN-STRIPE-STATS] churn snapshot failed', snapErr.message);
 
       /*
         Behaviour for the SAME cohort as the headline.
@@ -314,6 +443,15 @@ serve(async (req) => {
         neverBilled: trialsEnded.length - billed.length,
         conversionRate: trialsEnded.length ? (billed.length / trialsEnded.length) * 100 : 0,
         retainedRate: trialsEnded.length ? (stillPaying.length / trialsEnded.length) * 100 : 0,
+        conversion,
+        churn: {
+          months: churnMonths,
+          daily: churnDaily,
+          last30: {
+            count: churned30.length,
+            mrrLost: Math.round(churned30.reduce((t, s) => t + monthlyAmountOf(s), 0) * 100) / 100,
+          },
+        },
       };
     };
 
@@ -548,6 +686,25 @@ serve(async (req) => {
         !stripeCustomerIds.has(u.stripe_customer_id) &&
         !u.free_access_granted &&
         !STORE_BILLED.has(u.subscription_source ?? '')
+    );
+
+    // Today's row of the overview's history line — Stripe's half. The
+    // RevenueCat function writes the store half of the same row.
+    EdgeRuntime.waitUntil(
+      Promise.resolve(
+        supabase.from('admin_metric_daily').upsert(
+          {
+            day: ukDay(),
+            stripe_mrr: Math.round(mrr * 100) / 100,
+            stripe_paying: activeSubscriptions.length,
+            stripe_trialing: trialingSubscriptions.length,
+            updated_at: new Date().toISOString(),
+          },
+          { onConflict: 'day' }
+        )
+      ).then(({ error }) => {
+        if (error) console.warn('[ADMIN-STRIPE-STATS] snapshot failed', error.message);
+      })
     );
 
     const response = {

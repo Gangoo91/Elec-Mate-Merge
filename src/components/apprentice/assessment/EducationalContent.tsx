@@ -99,16 +99,16 @@ const EducationalContent = () => {
         <TabsContent value="regulations" className="space-y-3">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 BS 7671 requirements
               </span>
               <ul className="space-y-1.5">
                 {regulations.bs7671.map((item, index) => (
                   <li
                     key={index}
-                    className="flex items-baseline gap-2 text-[14px] text-white/85 leading-relaxed"
+                    className="flex items-baseline gap-2 text-[14px] text-white leading-relaxed"
                   >
-                    <span className="text-[11px] font-mono text-white/70 min-w-[36px]">
+                    <span className="text-[11px] font-mono text-white min-w-[36px]">
                       {item.section}
                     </span>
                     <span>{item.title}</span>
@@ -118,14 +118,14 @@ const EducationalContent = () => {
             </div>
 
             <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Health & safety regulations
               </span>
               <ul className="space-y-1.5">
                 {regulations.healthSafety.map((item, index) => (
                   <li
                     key={index}
-                    className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed"
+                    className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
                   >
                     <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                     <span>{item}</span>
@@ -145,7 +145,7 @@ const EducationalContent = () => {
               {highRiskHazards.map((item, index) => (
                 <li
                   key={index}
-                  className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
                 >
                   <span className="w-1 h-1 rounded-full bg-red-300 mt-2 flex-shrink-0" />
                   <span>{item}</span>
@@ -155,14 +155,14 @@ const EducationalContent = () => {
           </div>
 
           <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Medium risk hazards
             </span>
             <ul className="space-y-1.5">
               {mediumRiskHazards.map((item, index) => (
                 <li
                   key={index}
-                  className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
                 >
                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{item}</span>
@@ -175,28 +175,28 @@ const EducationalContent = () => {
         <TabsContent value="ppe" className="space-y-3">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Essential PPE
               </span>
               <ul className="space-y-2">
                 {essentialPPE.map((item, index) => (
                   <li key={index} className="text-[14px] leading-relaxed">
                     <span className="text-white">{item.item}: </span>
-                    <span className="text-white/70">{item.spec}</span>
+                    <span className="text-white">{item.spec}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
             <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 PPE inspection
               </span>
               <ul className="space-y-1.5">
                 {ppeInspectionTips.map((item, index) => (
                   <li
                     key={index}
-                    className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed"
+                    className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
                   >
                     <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                     <span>{item}</span>
@@ -209,14 +209,14 @@ const EducationalContent = () => {
 
         <TabsContent value="tips" className="space-y-3">
           <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Assessment best practices
             </span>
             <ul className="space-y-1.5">
               {assessmentTips.map((item, index) => (
                 <li
                   key={index}
-                  className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
                 >
                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{item}</span>
@@ -226,14 +226,14 @@ const EducationalContent = () => {
           </div>
 
           <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Documentation tips
             </span>
             <ul className="space-y-1.5">
               {documentationTips.map((item, index) => (
                 <li
                   key={index}
-                  className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
                 >
                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{item}</span>

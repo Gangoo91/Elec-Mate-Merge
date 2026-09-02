@@ -34043,6 +34043,7 @@ export type Database = {
           issues_or_questions: string | null;
           job_id: string | null;
           linked_portfolio_id: string | null;
+          linked_time_entry_id: string | null;
           mood_rating: number | null;
           permit_ids: string[] | null;
           photos: string[] | null;
@@ -34062,6 +34063,7 @@ export type Database = {
           issues_or_questions?: string | null;
           job_id?: string | null;
           linked_portfolio_id?: string | null;
+          linked_time_entry_id?: string | null;
           mood_rating?: number | null;
           permit_ids?: string[] | null;
           photos?: string[] | null;
@@ -34081,6 +34083,7 @@ export type Database = {
           issues_or_questions?: string | null;
           job_id?: string | null;
           linked_portfolio_id?: string | null;
+          linked_time_entry_id?: string | null;
           mood_rating?: number | null;
           permit_ids?: string[] | null;
           photos?: string[] | null;

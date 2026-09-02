@@ -74,11 +74,11 @@ const OnTheJobToolsBox = ({ tools }: OnTheJobToolsBoxProps) => {
         return {
           icon: 'text-elec-yellow',
           iconGlow: 'shadow-yellow-500/30',
-          bg: 'bg-elec-yellow/10',
-          bgStrong: 'bg-elec-yellow/20',
+          bg: 'bg-white/[0.06]',
+          bgStrong: 'bg-white/[0.08]',
           border: 'border-elec-yellow/20 hover:border-elec-yellow/50',
           card: 'from-elec-yellow/[0.07] via-transparent to-transparent',
-          badge: 'bg-elec-yellow/20 text-yellow-300 ring-1 ring-elec-yellow/30',
+          badge: 'bg-white/[0.08] text-yellow-300 ring-1 ring-elec-yellow/30',
         };
     }
   };

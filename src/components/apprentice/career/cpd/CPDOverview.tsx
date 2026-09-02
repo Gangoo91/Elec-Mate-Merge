@@ -28,41 +28,41 @@ const CPDOverview = () => {
     <div className="space-y-6 animate-fade-in">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Hours this year
           </span>
           <div className="text-[20px] font-semibold text-white">{hoursCompleted}</div>
-          <p className="text-[12px] text-white/55">of {hoursTarget} target</p>
+          <p className="text-[12px] text-white">of {hoursTarget} target</p>
         </div>
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Progress
           </span>
           <div className="text-[20px] font-semibold text-white">{progressPercentage}%</div>
-          <p className="text-[12px] text-white/55">Target completion</p>
+          <p className="text-[12px] text-white">Target completion</p>
         </div>
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Days remaining
           </span>
           <div className="text-[20px] font-semibold text-white">187</div>
-          <p className="text-[12px] text-white/55">Until year end</p>
+          <p className="text-[12px] text-white">Until year end</p>
         </div>
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Compliance
           </span>
           <div className="text-[20px] font-semibold text-white">On track</div>
-          <p className="text-[12px] text-white/55">Professional bodies</p>
+          <p className="text-[12px] text-white">Professional bodies</p>
         </div>
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           {currentYear} CPD progress
         </span>
         <div className="space-y-2">
-          <div className="flex justify-between text-[13px] text-white/85">
+          <div className="flex justify-between text-[13px] text-white">
             <span>Annual progress</span>
             <span className="font-mono">
               {hoursCompleted} / {hoursTarget} hours
@@ -70,20 +70,20 @@ const CPDOverview = () => {
           </div>
           <Progress value={progressPercentage} className="h-2" />
         </div>
-        <p className="text-[13px] text-white/70">
+        <p className="text-[13px] text-white">
           You need {hoursTarget - hoursCompleted} more hours to meet your annual target.
         </p>
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Hours by category
         </span>
         <div className="space-y-3">
           {categoryBreakdown.map((category, index) => (
             <div key={index} className="space-y-1.5">
               <div className="flex justify-between items-baseline">
-                <span className="text-[13px] text-white/85">{category.category}</span>
+                <span className="text-[13px] text-white">{category.category}</span>
                 <span className="text-[12px] text-white font-mono">{category.hours} hrs</span>
               </div>
               <div className="w-full bg-white/[0.04] rounded-full h-1">
@@ -98,7 +98,7 @@ const CPDOverview = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Recent activities
         </span>
         <div className="space-y-2">
@@ -109,11 +109,11 @@ const CPDOverview = () => {
             >
               <div className="space-y-0.5">
                 <div className="text-[13px] text-white">{activity.activity}</div>
-                <div className="text-[11px] text-white/55">{activity.date}</div>
+                <div className="text-[11px] text-white">{activity.date}</div>
               </div>
               <div className="text-right space-y-0.5">
                 <div className="text-[13px] text-white font-mono">{activity.hours}h</div>
-                <span className="text-[11px] text-white/55">{activity.type}</span>
+                <span className="text-[11px] text-white">{activity.type}</span>
               </div>
             </div>
           ))}

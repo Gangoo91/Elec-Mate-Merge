@@ -5,7 +5,7 @@ import { ChevronDown } from 'lucide-react';
 const QuickReferenceSection = () => {
   const sectionTriggerClass =
     'w-full flex items-center justify-between p-4 rounded-xl bg-white/[0.06] border border-white/[0.10] touch-manipulation h-auto min-h-[44px]';
-  const eyebrowClass = 'text-[10px] font-medium uppercase tracking-[0.18em] text-white/70';
+  const eyebrowClass = 'text-[10px] font-medium uppercase tracking-[0.18em] text-white';
 
   return (
     <div className="space-y-3">
@@ -17,10 +17,10 @@ const QuickReferenceSection = () => {
           <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
             Emergency numbers
           </span>
-          <ChevronDown className="h-4 w-4 text-white/70 transition-transform [[data-state=open]>&]:rotate-180" />
+          <ChevronDown className="h-4 w-4 text-white transition-transform [[data-state=open]>&]:rotate-180" />
         </CollapsibleTrigger>
         <CollapsibleContent>
-          <div className="px-4 pb-4 pt-2 space-y-2 text-[14px] text-white/85">
+          <div className="px-4 pb-4 pt-2 space-y-2 text-[14px] text-white">
             <div className="flex justify-between">
               <span>Emergency Services</span>
               <span className="font-mono text-white">999</span>
@@ -49,10 +49,10 @@ const QuickReferenceSection = () => {
       <Collapsible>
         <CollapsibleTrigger className={sectionTriggerClass}>
           <span className={eyebrowClass}>Safe isolation (7 steps)</span>
-          <ChevronDown className="h-4 w-4 text-white/70 transition-transform [[data-state=open]>&]:rotate-180" />
+          <ChevronDown className="h-4 w-4 text-white transition-transform [[data-state=open]>&]:rotate-180" />
         </CollapsibleTrigger>
         <CollapsibleContent>
-          <div className="px-4 pb-4 pt-2 space-y-2 text-[14px] text-white/85">
+          <div className="px-4 pb-4 pt-2 space-y-2 text-[14px] text-white">
             {[
               'Identify the circuit',
               'Switch off the supply',
@@ -63,7 +63,7 @@ const QuickReferenceSection = () => {
               'Re-prove the voltage indicator on the known live source',
             ].map((step, idx) => (
               <div key={idx} className="flex items-start gap-2">
-                <span className="text-[12px] text-white/70 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07] font-mono min-w-[28px] text-center">
+                <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07] font-mono min-w-[28px] text-center">
                   {idx + 1}
                 </span>
                 <span className="leading-relaxed">{step}</span>
@@ -77,10 +77,10 @@ const QuickReferenceSection = () => {
       <Collapsible>
         <CollapsibleTrigger className={sectionTriggerClass}>
           <span className={eyebrowClass}>Voltage classifications</span>
-          <ChevronDown className="h-4 w-4 text-white/70 transition-transform [[data-state=open]>&]:rotate-180" />
+          <ChevronDown className="h-4 w-4 text-white transition-transform [[data-state=open]>&]:rotate-180" />
         </CollapsibleTrigger>
         <CollapsibleContent>
-          <div className="px-4 pb-4 pt-2 space-y-2 text-[14px] text-white/85">
+          <div className="px-4 pb-4 pt-2 space-y-2 text-[14px] text-white">
             <div className="flex justify-between">
               <span>Extra Low Voltage</span>
               <span className="font-mono text-white">
@@ -111,10 +111,10 @@ const QuickReferenceSection = () => {
       <Collapsible>
         <CollapsibleTrigger className={sectionTriggerClass}>
           <span className={eyebrowClass}>Electric shock effects</span>
-          <ChevronDown className="h-4 w-4 text-white/70 transition-transform [[data-state=open]>&]:rotate-180" />
+          <ChevronDown className="h-4 w-4 text-white transition-transform [[data-state=open]>&]:rotate-180" />
         </CollapsibleTrigger>
         <CollapsibleContent>
-          <div className="px-4 pb-4 pt-2 space-y-2 text-[14px] text-white/85">
+          <div className="px-4 pb-4 pt-2 space-y-2 text-[14px] text-white">
             <div className="flex justify-between">
               <span>1mA</span>
               <span className="text-white">Perception threshold</span>

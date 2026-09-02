@@ -44,8 +44,7 @@ export interface StepContent {
 
 export const STEP_CONTENT: Record<string, StepContent> = {
   'safe-isolation': {
-    regulation:
-      'Not a BS 7671 test — this is HSE GS38 and the Electricity at Work Regulations',
+    regulation: 'Not a BS 7671 test — this is HSE GS38 and the Electricity at Work Regulations',
     why: 'Every year electricians are killed or badly burned working on circuits they believed were dead. Almost always the circuit was switched off but never proved dead, or the wrong way was switched off.',
     how: [
       'Identify the circuit, and get permission to isolate it.',
@@ -349,14 +348,10 @@ export const STEP_CONTENT: Record<string, StepContent> = {
       },
       {
         q: 'What is the prospective fault current compared against?',
-        options: [
-          "The device's breaking capacity",
-          'The circuit design current',
-          'The maximum Zs',
-        ],
+        options: ["The device's breaking capacity", 'The circuit design current', 'The maximum Zs'],
         answer: 0,
         explain:
-          "It is compared against the breaking capacity marked on the protective device — the largest current it can interrupt safely.",
+          'It is compared against the breaking capacity marked on the protective device — the largest current it can interrupt safely.',
       },
     ],
   },
@@ -368,7 +363,7 @@ export const STEP_CONTENT: Record<string, StepContent> = {
     how: [
       'Test with the load disconnected where practicable.',
       'At 1× rated residual current, it must trip within 300 ms for a general non-delay type. A Type S must trip between 130 ms and 500 ms.',
-      'At 5× rated residual current, it must trip within 40 ms.',
+      'The old 5× IΔn / 40 ms step was deleted from BS 7671 at A4:2026 — 40 ms is the BS EN 61008/61009 product figure, not a pass mark. Do not record it.',
       'Test on both polarities (0° and 180°) and record the longer time.',
       'A half-current check (no trip at ½× IΔn) is standard practice from the device standard rather than a BS 7671 requirement — useful, because tripping there points to a faulty device or high standing leakage.',
       'Finally, operate the integral test button to prove the mechanism.',
@@ -378,7 +373,6 @@ export const STEP_CONTENT: Record<string, StepContent> = {
       lines: [
         '½× (15 mA): no trip ✓',
         '1× (30 mA): 24 ms and 27 ms — worst case 27 ms, limit 300 ms ✓',
-        '5× (150 mA): 18 ms and 21 ms — worst case 21 ms, limit 40 ms ✓',
       ],
       verdict: 'Passes on both polarities with a good margin.',
     },
@@ -392,7 +386,7 @@ export const STEP_CONTENT: Record<string, StepContent> = {
         ],
         answer: 1,
         explain:
-          'At 1× IΔn a general non-delay type must operate within 300 ms, so 240 ms passes. The 40 ms figure belongs to the 5× test. A Type S is different again — it must trip between 130 ms and 500 ms, because it is deliberately delayed to discriminate with RCDs downstream.',
+          'At 1× IΔn a general non-delay type must operate within 300 ms, so 240 ms passes. The 40 ms figure came from the old 5× IΔn test, deleted at A4:2026. A Type S is different again — it must trip between 130 ms and 500 ms, because it is deliberately delayed to discriminate with RCDs downstream.',
       },
       {
         q: 'Is the integral test button sufficient evidence the RCD is working?',

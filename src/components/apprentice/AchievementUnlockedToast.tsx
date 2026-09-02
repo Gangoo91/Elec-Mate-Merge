@@ -51,7 +51,7 @@ export function AchievementUnlockedToast({
           transition={{ type: 'spring', damping: 20, stiffness: 300 }}
           className="fixed top-4 left-4 right-4 z-[200] max-w-md mx-auto"
         >
-          <div className="bg-elec-gray/95 backdrop-blur-xl border border-elec-yellow/30 rounded-2xl p-4 shadow-2xl shadow-elec-yellow/10">
+          <div className="bg-white/[0.06] backdrop-blur-xl border border-elec-yellow/30 rounded-2xl p-4 shadow-2xl shadow-elec-yellow/10">
             <div className="flex items-start gap-3">
               {/* Icon */}
               <div className={`p-2.5 rounded-xl ${rarityBg} flex-shrink-0`}>

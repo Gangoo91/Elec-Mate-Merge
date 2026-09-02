@@ -167,7 +167,7 @@ const IncidentList = ({
   if (filteredIncidents.length === 0) {
     return (
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-8 text-center">
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           {incidents.length === 0
             ? "No incidents reported yet. Click 'New Incident' to create your first report."
             : 'No incidents match your current filters.'}
@@ -188,17 +188,17 @@ const IncidentList = ({
           <div key={incident.id} className={containerClass}>
             <div className="flex items-start justify-between gap-3 flex-wrap">
               <div className="space-y-2 flex-1 min-w-0">
-                <div className="flex items-baseline gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 flex-wrap">
+                <div className="flex items-baseline gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white flex-wrap">
                   <span>{getStatusLabel(incident.status)}</span>
-                  <span className="text-white/25">·</span>
+                  <span className="text-white">·</span>
                   <span>{getSeverityLabel(incident.severity)}</span>
-                  <span className="text-white/25">·</span>
+                  <span className="text-white">·</span>
                   <span>{getIncidentTypeLabel(incident.incident_type)}</span>
                 </div>
                 <h3 className="text-[16px] font-semibold text-white leading-snug">
                   {incident.title}
                 </h3>
-                <div className="flex items-baseline gap-3 text-[12px] text-white/55 font-mono flex-wrap">
+                <div className="flex items-baseline gap-3 text-[12px] text-white font-mono flex-wrap">
                   <span className="flex items-center gap-1">
                     <Calendar className="h-3 w-3" />
                     {format(new Date(incident.date_occurred), 'MMM dd, yyyy HH:mm')}
@@ -242,11 +242,11 @@ const IncidentList = ({
               </div>
             </div>
 
-            <p className="text-[14px] text-white/85 leading-relaxed line-clamp-2">
+            <p className="text-[14px] text-white leading-relaxed line-clamp-2">
               {incident.description}
             </p>
 
-            <div className="text-[11px] text-white/55 font-mono pt-2 border-t border-white/[0.06]">
+            <div className="text-[11px] text-white font-mono pt-2 border-t border-white/[0.06]">
               Created {format(new Date(incident.created_at), 'MMM dd, yyyy')}
               {incident.submitted_at && (
                 <span className="ml-3">

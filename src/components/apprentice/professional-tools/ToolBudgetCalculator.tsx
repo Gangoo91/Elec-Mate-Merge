@@ -58,10 +58,10 @@ const ToolBudgetCalculator = () => {
   return (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
       <div className="space-y-1">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Tool budget calculator
         </span>
-        <p className="text-[13px] text-white/55">
+        <p className="text-[13px] text-white">
           Plan your tool investments and see how your budget allocates
         </p>
       </div>
@@ -69,7 +69,7 @@ const ToolBudgetCalculator = () => {
       <div className="space-y-5">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           <div className="space-y-2">
-            <Label htmlFor="monthly-budget" className="text-[13px] text-white/85">
+            <Label htmlFor="monthly-budget" className="text-[13px] text-white">
               Monthly budget (£)
             </Label>
             <Input
@@ -83,14 +83,14 @@ const ToolBudgetCalculator = () => {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="timeframe" className="text-[13px] text-white/85">
+            <Label htmlFor="timeframe" className="text-[13px] text-white">
               Timeframe (months)
             </Label>
             <Select value={timeframe} onValueChange={setTimeframe}>
-              <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow">
+              <SelectTrigger className="h-11 touch-manipulation bg-white/[0.06] border-white/[0.12] focus:border-elec-yellow focus:ring-elec-yellow">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
+              <SelectContent className="z-[100] bg-white/[0.06] border-white/[0.12] text-foreground">
                 <SelectItem value="6">6 months</SelectItem>
                 <SelectItem value="12">12 months</SelectItem>
                 <SelectItem value="18">18 months</SelectItem>
@@ -100,14 +100,14 @@ const ToolBudgetCalculator = () => {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="priority" className="text-[13px] text-white/85">
+            <Label htmlFor="priority" className="text-[13px] text-white">
               Priority level
             </Label>
             <Select value={priority} onValueChange={setPriority}>
-              <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow">
+              <SelectTrigger className="h-11 touch-manipulation bg-white/[0.06] border-white/[0.12] focus:border-elec-yellow focus:ring-elec-yellow">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
+              <SelectContent className="z-[100] bg-white/[0.06] border-white/[0.12] text-foreground">
                 <SelectItem value="essential">Essential only</SelectItem>
                 <SelectItem value="recommended">Recommended</SelectItem>
                 <SelectItem value="advanced">Advanced</SelectItem>
@@ -126,14 +126,14 @@ const ToolBudgetCalculator = () => {
         {totalBudget > 0 && (
           <div className="space-y-4 pt-3 border-t border-white/[0.06]">
             <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 flex items-baseline justify-between">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Total budget
               </span>
               <span className="text-2xl font-mono text-white">£{totalBudget.toFixed(0)}</span>
             </div>
 
             <div className="space-y-3">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Recommended allocation
               </span>
               {Object.entries(breakdown).map(([tool, amount]) => (
@@ -142,7 +142,7 @@ const ToolBudgetCalculator = () => {
                   className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 space-y-2"
                 >
                   <div className="flex justify-between text-[14px]">
-                    <span className="text-white/85">{tool}</span>
+                    <span className="text-white">{tool}</span>
                     <span className="text-white font-mono">£{amount.toFixed(0)}</span>
                   </div>
                   <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">

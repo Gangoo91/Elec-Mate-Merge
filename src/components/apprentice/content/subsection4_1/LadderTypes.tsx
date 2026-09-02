@@ -4,14 +4,14 @@ import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from '@/componen
 
 const LadderTypes = () => {
   return (
-    <Card className="border border-elec-yellow/30 bg-elec-card rounded-xl overflow-hidden">
+    <Card className="border border-elec-yellow/30 bg-white/[0.06] rounded-xl overflow-hidden">
       <CardHeader className="pb-3">
         <CardTitle className="text-xl font-bold text-elec-yellow">
           Types of Ladders for Electrical Work
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <p className="text-elec-light/90">
+        <p className="text-white">
           For electrical work, selecting the appropriate ladder type is crucial not only for access
           but also for electrical safety. Different materials and designs offer various advantages
           and safety features.

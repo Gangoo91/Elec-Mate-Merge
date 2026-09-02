@@ -34,12 +34,12 @@ const QuizNavigation = ({
           size="sm"
           onClick={handlePrevious}
           disabled={activeQuestion === 0}
-          className="h-9 border-white/15 text-white hover:bg-white/[0.05] disabled:opacity-40 touch-manipulation"
+          className="h-9 border-white/15 text-white hover:bg-white/[0.05] disabled:text-white/70 touch-manipulation"
         >
           <ChevronLeft className="h-4 w-4 mr-1" /> Previous
         </Button>
 
-        <span className="text-[12px] text-white/85 font-mono">
+        <span className="text-[12px] text-white font-mono">
           {activeQuestion + 1}/{questionsCount}
           {userAnswers[activeQuestion] !== null && ' answered'}
         </span>
@@ -49,7 +49,7 @@ const QuizNavigation = ({
           size="sm"
           onClick={handleNext}
           disabled={activeQuestion === questionsCount - 1}
-          className="h-9 border-white/15 text-white hover:bg-white/[0.05] disabled:opacity-40 touch-manipulation"
+          className="h-9 border-white/15 text-white hover:bg-white/[0.05] disabled:text-white/70 touch-manipulation"
         >
           Next <ChevronRight className="h-4 w-4 ml-1" />
         </Button>
@@ -66,7 +66,7 @@ const QuizNavigation = ({
                 ? 'bg-elec-yellow text-black font-semibold'
                 : isAnswered
                   ? 'bg-white/[0.06] text-white'
-                  : 'bg-transparent text-white/55 hover:bg-white/[0.04]';
+                  : 'bg-transparent text-white hover:bg-white/[0.04]';
 
               return (
                 <button

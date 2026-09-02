@@ -209,9 +209,9 @@ export function QualificationRequirements({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side="bottom"
-        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden [&>button.absolute]:hidden sm:max-w-[640px] sm:mx-auto sm:rounded-t-2xl"
+        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.06] bg-[hsl(0_0%_8%)] [&>button.absolute]:hidden"
       >
-        <div className="flex flex-col h-full bg-[hsl(240,5.9%,10%)]">
+        <div className="flex flex-col h-full">
           {/* Header */}
           <SheetHeader className="flex-shrink-0 border-b border-white/[0.06]">
             <div className="flex justify-center pt-2.5 pb-1">
@@ -233,7 +233,7 @@ export function QualificationRequirements({
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search units, outcomes, criteria..."
-                  className="w-full h-11 pl-10 pr-10 rounded-xl bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white focus:outline-none focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20 touch-manipulation"
+                  className="h-11 w-full rounded-xl border border-white/[0.12] bg-white/[0.06] pl-10 pr-10 text-base text-white placeholder:text-white/40 caret-elec-yellow focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation"
                 />
                 {searchQuery && (
                   <button
@@ -354,7 +354,7 @@ export function QualificationRequirements({
                                               e.stopPropagation();
                                               onCaptureForAC(ac.unit_code, ac.ac_code, ac.ac_text);
                                             }}
-                                            className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-elec-yellow/10 border border-elec-yellow/25 text-elec-yellow text-xs font-semibold touch-manipulation active:scale-[0.95] transition-all flex-shrink-0 h-11"
+                                            className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-white/[0.06] border border-elec-yellow/25 text-elec-yellow text-xs font-semibold touch-manipulation active:scale-[0.95] transition-all flex-shrink-0 h-11"
                                           >
                                             <Camera className="h-3 w-3" />
                                             Capture

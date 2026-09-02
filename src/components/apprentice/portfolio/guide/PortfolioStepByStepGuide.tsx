@@ -62,10 +62,10 @@ const PortfolioStepByStepGuide = () => {
   return (
     <div className="space-y-6">
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Step-by-step portfolio guide
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           Follow this systematic approach to build a comprehensive portfolio that demonstrates your
           competency and learning throughout your electrical apprenticeship.
         </p>
@@ -78,24 +78,24 @@ const PortfolioStepByStepGuide = () => {
             className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3"
           >
             <div className="flex items-center gap-3">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Step {step.number}
               </span>
             </div>
             <h3 className="text-[18px] sm:text-[20px] font-semibold text-white leading-tight">
               {step.title}
             </h3>
-            <p className="text-[14px] text-white/85 leading-relaxed">{step.description}</p>
+            <p className="text-[14px] text-white leading-relaxed">{step.description}</p>
 
             <div className="space-y-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Key tasks
               </span>
               <ul className="space-y-1.5">
                 {step.tasks.map((task, index) => (
                   <li
                     key={index}
-                    className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                    className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                   >
                     <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                     <span>{task}</span>
@@ -107,7 +107,7 @@ const PortfolioStepByStepGuide = () => {
         ))}
       </div>
 
-      <div className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-2">
+      <div className="rounded-xl border border-elec-yellow/20 bg-white/[0.05] p-4 sm:p-5 space-y-2">
         <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
           Portfolio success tips
         </span>
@@ -122,7 +122,7 @@ const PortfolioStepByStepGuide = () => {
           ].map((tip, index) => (
             <li
               key={index}
-              className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+              className="text-[14px] text-white leading-relaxed flex items-start gap-2"
             >
               <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
               <span>{tip}</span>

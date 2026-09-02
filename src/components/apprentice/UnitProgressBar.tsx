@@ -11,7 +11,7 @@ const UnitProgressBar = ({ progressPercent }: UnitProgressBarProps) => {
         <span className="text-sm font-medium">Unit Progress</span>
         <span className="text-sm font-medium">{progressPercent}%</span>
       </div>
-      <Progress value={progressPercent} className="h-2 bg-elec-yellow/20" />
+      <Progress value={progressPercent} className="h-2 bg-white/[0.08]" />
     </div>
   );
 };

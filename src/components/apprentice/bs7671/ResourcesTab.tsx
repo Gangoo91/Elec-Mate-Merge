@@ -386,7 +386,7 @@ const ResourcesTab = () => {
 
                         <Button
                           size="sm"
-                          className="h-9 bg-white/[0.06] hover:bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30 touch-manipulation"
+                          className="h-9 bg-white/[0.06] hover:bg-white/[0.08] text-elec-yellow border border-elec-yellow/30 touch-manipulation"
                         >
                           {resource.downloadUrl ? (
                             <>

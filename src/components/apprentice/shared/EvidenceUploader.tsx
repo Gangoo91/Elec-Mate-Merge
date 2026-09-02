@@ -53,12 +53,12 @@ const ACCEPTED_TYPES = [
 const MAX_FILE_SIZE_MB = 10;
 
 const getFileIcon = (type: string) => {
-  if (type.startsWith('image/')) return <Image className="h-4 w-4 text-white/70" />;
-  if (type.startsWith('video/')) return <Video className="h-4 w-4 text-white/70" />;
-  if (type.includes('pdf')) return <FileText className="h-4 w-4 text-white/70" />;
+  if (type.startsWith('image/')) return <Image className="h-4 w-4 text-white" />;
+  if (type.startsWith('video/')) return <Video className="h-4 w-4 text-white" />;
+  if (type.includes('pdf')) return <FileText className="h-4 w-4 text-white" />;
   if (type.includes('word') || type.includes('document'))
-    return <FileText className="h-4 w-4 text-white/70" />;
-  return <File className="h-4 w-4 text-white/70" />;
+    return <FileText className="h-4 w-4 text-white" />;
+  return <File className="h-4 w-4 text-white" />;
 };
 
 const formatFileSize = (bytes: number) => {
@@ -296,11 +296,7 @@ export const EvidenceUploader = ({
         onDragLeave={handleDragLeave}
         className={`
           relative border border-dashed rounded-xl p-5 text-center transition-colors duration-200
-          ${
-            isDragging
-              ? 'border-elec-yellow bg-elec-yellow/[0.04]'
-              : 'border-white/15 bg-white/[0.02]'
-          }
+          ${isDragging ? 'border-elec-yellow bg-white/[0.05]' : 'border-white/15 bg-white/[0.02]'}
         `}
       >
         <input
@@ -313,7 +309,7 @@ export const EvidenceUploader = ({
         />
 
         <div className="space-y-3">
-          <p className="text-[14px] text-white/85 leading-relaxed">
+          <p className="text-[14px] text-white leading-relaxed">
             {isDragging ? 'Drop files here' : 'Drag and drop files, or browse'}
           </p>
 
@@ -340,7 +336,7 @@ export const EvidenceUploader = ({
             </Button>
           </div>
 
-          <p className="text-[12px] text-white/55">
+          <p className="text-[12px] text-white">
             Max {maxFileSize}MB per file. Supports images, PDFs, Word docs, and videos.
           </p>
         </div>
@@ -350,19 +346,16 @@ export const EvidenceUploader = ({
       {uploadingFiles.length > 0 && (
         <div className="space-y-2">
           {uploadingFiles.map((uf) => (
-            <div
-              key={uf.id}
-              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3"
-            >
+            <div key={uf.id} className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3">
               <div className="flex items-center gap-3">
                 {uf.status === 'uploading' && (
-                  <Loader2 className="h-4 w-4 text-white/55 animate-spin" />
+                  <Loader2 className="h-4 w-4 text-white animate-spin" />
                 )}
                 {uf.status === 'success' && <CheckCircle className="h-4 w-4 text-elec-yellow" />}
                 {uf.status === 'error' && <AlertCircle className="h-4 w-4 text-red-300" />}
 
                 <div className="flex-1 min-w-0">
-                  <p className="text-[13px] text-white/85 truncate">{uf.file.name}</p>
+                  <p className="text-[13px] text-white truncate">{uf.file.name}</p>
                   {uf.status === 'uploading' && (
                     <Progress value={uf.progress} className="h-1 mt-1.5" />
                   )}
@@ -380,10 +373,10 @@ export const EvidenceUploader = ({
       {files.length > 0 && (
         <div className="space-y-2">
           <div className="flex items-baseline justify-between">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Uploaded files
             </span>
-            <span className="text-[12px] text-white/55 font-mono">
+            <span className="text-[12px] text-white font-mono">
               {files.length}/{maxFiles}
             </span>
           </div>
@@ -397,7 +390,11 @@ export const EvidenceUploader = ({
                 <div className="flex items-center gap-3">
                   {file.type.startsWith('image/') && file.url ? (
                     <div className="w-10 h-10 rounded overflow-hidden bg-white/[0.03] shrink-0">
-                      <EvidenceImage src={file.url} alt={file.name} className="w-full h-full object-cover" />
+                      <EvidenceImage
+                        src={file.url}
+                        alt={file.name}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                   ) : (
                     <div className="w-10 h-10 rounded bg-white/[0.03] flex items-center justify-center shrink-0">
@@ -406,8 +403,8 @@ export const EvidenceUploader = ({
                   )}
 
                   <div className="flex-1 min-w-0">
-                    <p className="text-[13px] text-white/85 truncate">{file.name}</p>
-                    <p className="text-[12px] text-white/55">{formatFileSize(file.size)}</p>
+                    <p className="text-[13px] text-white truncate">{file.name}</p>
+                    <p className="text-[12px] text-white">{formatFileSize(file.size)}</p>
                   </div>
 
                   <div className="flex items-center gap-1 shrink-0">
@@ -419,7 +416,7 @@ export const EvidenceUploader = ({
                         onClick={() => handlePreview(file)}
                         className="h-9 w-9 p-0 hover:bg-white/[0.05] touch-manipulation"
                       >
-                        <Eye className="h-4 w-4 text-white/55" />
+                        <Eye className="h-4 w-4 text-white" />
                       </Button>
                     )}
                     <Button

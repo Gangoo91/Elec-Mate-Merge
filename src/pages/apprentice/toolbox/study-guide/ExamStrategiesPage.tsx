@@ -1,8 +1,10 @@
 import { CheckCircle2 } from 'lucide-react';
 import ExamStrategiesTab from '@/components/apprentice/study-tips/ExamStrategiesTab';
 import { motion } from 'framer-motion';
-import { SectionHeader, itemVariants } from '@/components/college/primitives';
-import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { itemVariants } from '@/components/college/primitives';
+import { HubPage, HubBody, HubMasthead, HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const ExamStrategiesPage = () => {
   return (
@@ -13,7 +15,12 @@ const ExamStrategiesPage = () => {
         backTo="/apprentice/toolbox/study-tips"
       />
       <HubBody>
-        <div className="sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)] sm:p-5 space-y-4">
+        <div
+          className={cn(
+            '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5 space-y-4',
+            CARD_SURFACE
+          )}
+        >
           <h2 className="text-lg font-semibold text-white">Exam Day Success</h2>
           <p className="text-white text-sm leading-relaxed">
             Passing your electrical exams requires more than just knowledge — you need a strategy.
@@ -22,7 +29,7 @@ const ExamStrategiesPage = () => {
             Guilds, EAL, and the AM2S end-point assessment.
           </p>
 
-          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 sm:p-4 space-y-2">
+          <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3 sm:p-4 space-y-2">
             <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
               What You Will Learn
             </span>
@@ -36,7 +43,7 @@ const ExamStrategiesPage = () => {
               ].map((item) => (
                 <li
                   key={item}
-                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                 >
                   <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                   {item}
@@ -49,8 +56,13 @@ const ExamStrategiesPage = () => {
         <ExamStrategiesTab />
 
         <motion.section variants={itemVariants} className="space-y-4">
-          <SectionHeader eyebrow="Your rights" title="If you have dyslexia or a disability" />
-          <div className="sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)] sm:p-5 space-y-3">
+          <HubSectionHeading>If you have dyslexia or a disability</HubSectionHeading>
+          <div
+            className={cn(
+              '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5 space-y-3',
+              CARD_SURFACE
+            )}
+          >
             <p className="text-white text-sm leading-relaxed">
               A large share of electrical apprentices are dyslexic. Awarding bodies such as City
               &amp; Guilds and EAL must make reasonable adjustments so an assessment measures your
@@ -64,14 +76,14 @@ const ExamStrategiesPage = () => {
               ].map((item) => (
                 <li
                   key={item}
-                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                 >
                   <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                   {item}
                 </li>
               ))}
             </ul>
-            <p className="text-white/65 text-[12.5px] leading-relaxed">
+            <p className="text-white text-[12.5px] leading-relaxed">
               Tell your tutor or assessment centre as early as possible — adjustments need a
               diagnosis or evidence of need and must be arranged before exam day. It is your
               entitlement, not a favour.

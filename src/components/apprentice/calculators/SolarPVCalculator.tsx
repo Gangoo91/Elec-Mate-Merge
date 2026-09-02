@@ -270,8 +270,10 @@ const SolarPVCalculator = () => {
     const annualSavings = savingsFromSelfConsumption + incomeFromExport;
 
     const paybackPeriod = costEstimate.totalCost / annualSavings;
-    // CO2 factor: 0.207 kg CO2/kWh — BEIS 2024 UK grid average
+    // CO2 factor: 0.207 kg CO2e/kWh — DESNZ 2024 UK grid electricity conversion factor. Update from the current year's published factors.
     const co2Savings = annualGeneration * 0.207;
+    // G98 applies to an inverter AC output of ≤16 A per phase (3.68 kW), not the
+    // array kWp — this estimate assumes the inverter is sized to the array.
     const dnoConnectionType = size <= 3.68 ? 'G98' : 'G99';
 
     // 25-year degradation curve (NREL: ~2% year 1, then 0.5%/yr)

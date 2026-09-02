@@ -34,10 +34,7 @@ import { useQuizResults } from '@/hooks/useQuizResults';
 import { useFlashcardProgress } from '@/hooks/useFlashcardProgress';
 import { flashcardSetMeta } from '@/data/flashcards';
 import { getFlashcardsForCategory } from '@/data/contentMapping';
-import {
-  Eyebrow,
-  SectionHeader,
-} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 
 export function ProgressDashboard() {
   const {
@@ -264,7 +261,12 @@ function Cell({
   highlight?: boolean;
 }) {
   return (
-    <div className={cn('rounded-2xl border border-white/[0.06] p-3 sm:p-4 space-y-1.5', CARD_SURFACE)}>
+    <div
+      className={cn(
+        'rounded-2xl border border-elec-yellow/35 p-3 sm:p-4 space-y-1.5',
+        CARD_SURFACE
+      )}
+    >
       <Eyebrow>{label}</Eyebrow>
       <div
         className={`text-[22px] sm:text-[26px] font-mono font-semibold tabular-nums leading-none ${highlight ? 'text-elec-yellow' : 'text-white'}`}

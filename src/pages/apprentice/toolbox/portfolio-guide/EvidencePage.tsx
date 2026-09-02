@@ -10,6 +10,8 @@ import { CheckCircle2, AlertTriangle, Camera } from 'lucide-react';
 import { itemVariants } from '@/components/college/primitives';
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const whatToPhotograph = [
   'Consumer unit installations — before removing old unit, during wiring, after completion',
@@ -158,9 +160,14 @@ const EvidencePage = () => {
 
         {/* ── Intro ───────────────────────────────────────────────── */}
         <motion.div variants={itemVariants}>
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2">
+          <div
+            className={cn(
+              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-2',
+              CARD_SURFACE
+            )}
+          >
             <Eyebrow>The principle</Eyebrow>
-            <p className="text-[13.5px] text-white/85 leading-relaxed">
+            <p className="text-[13.5px] text-white leading-relaxed">
               The quality of your evidence matters far more than the quantity. Each piece should
               clearly demonstrate competence against one or more KSBs. This section covers each
               evidence type in detail.
@@ -175,19 +182,24 @@ const EvidencePage = () => {
             title="Often your strongest evidence"
             meta="Before, during, after — every install, every time"
             action={
-              <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06]">
+              <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-white/[0.05]">
                 <Camera className="h-4 w-4 text-elec-yellow" />
               </span>
             }
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-4">
+          <div
+            className={cn(
+              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-4',
+              CARD_SURFACE
+            )}
+          >
             <div className="space-y-2">
               <Eyebrow>What to photograph</Eyebrow>
               <ul className="space-y-1.5">
                 {whatToPhotograph.map((item) => (
                   <li
                     key={item}
-                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                    className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                   >
                     <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                     <span>{item}</span>
@@ -201,7 +213,7 @@ const EvidencePage = () => {
                 {photoTips.map((item) => (
                   <li
                     key={item}
-                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                    className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                   >
                     <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                     <span>{item}</span>
@@ -209,9 +221,9 @@ const EvidencePage = () => {
                 ))}
               </ul>
             </div>
-            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-1">
+            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3 space-y-1">
               <Eyebrow className="text-elec-yellow/85">Annotating photos</Eyebrow>
-              <p className="text-[12.5px] text-white/85 leading-relaxed">
+              <p className="text-[12.5px] text-white leading-relaxed">
                 Always add a brief annotation to each photo explaining what it shows, what KSB it
                 maps to, the date, and the location. Without annotation a photo is just a picture —
                 with annotation, it becomes evidence.
@@ -231,7 +243,10 @@ const EvidencePage = () => {
             {writtenDocs.map((section) => (
               <li
                 key={section.title}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2"
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-2',
+                  CARD_SURFACE
+                )}
               >
                 <h3 className="text-[13.5px] font-semibold text-elec-yellow tracking-tight">
                   {section.title}
@@ -240,7 +255,7 @@ const EvidencePage = () => {
                   {section.items.map((item) => (
                     <li
                       key={item}
-                      className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                      className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                     >
                       <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                       <span>{item}</span>
@@ -259,14 +274,19 @@ const EvidencePage = () => {
             title="Particularly valuable for Behaviours"
             meta="Statements from people who have observed your work"
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-4">
+          <div
+            className={cn(
+              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-4',
+              CARD_SURFACE
+            )}
+          >
             <div className="space-y-2">
               <Eyebrow>Who can provide testimonies?</Eyebrow>
               <ul className="space-y-1.5">
                 {witnessProviders.map((item) => (
                   <li
                     key={item}
-                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                    className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                   >
                     <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                     <span>{item}</span>
@@ -280,7 +300,7 @@ const EvidencePage = () => {
                 {goodWitnessTips.map((item) => (
                   <li
                     key={item}
-                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                    className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                   >
                     <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                     <span>{item}</span>
@@ -288,9 +308,9 @@ const EvidencePage = () => {
                 ))}
               </ul>
             </div>
-            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-1">
+            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3 space-y-1">
               <Eyebrow className="text-elec-yellow/85">Template for requesting</Eyebrow>
-              <p className="text-[12.5px] text-white/85 leading-relaxed">
+              <p className="text-[12.5px] text-white leading-relaxed">
                 Make it easy: provide a simple form with date of observation, task performed, what
                 they observed, standard of your work, KSB references covered, and their name / role
                 / signature. The easier you make it, the more likely they’ll complete it.
@@ -306,21 +326,26 @@ const EvidencePage = () => {
             title="Skills observed and evaluated"
             meta="Formal and informal assessment records"
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+          <div
+            className={cn(
+              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
+              CARD_SURFACE
+            )}
+          >
             <ul className="space-y-1.5">
               {practicalRecords.map((item) => (
                 <li
                   key={item}
-                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                 >
                   <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                   <span>{item}</span>
                 </li>
               ))}
             </ul>
-            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-1">
+            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3 space-y-1">
               <Eyebrow className="text-elec-yellow/85">Document your process</Eyebrow>
-              <p className="text-[12.5px] text-white/85 leading-relaxed">
+              <p className="text-[12.5px] text-white leading-relaxed">
                 Don’t just record the result. Explain what you did, why you chose that approach,
                 what regulations applied, and what you would do differently next time. Shows
                 understanding, not just ability.
@@ -336,12 +361,12 @@ const EvidencePage = () => {
             title="Essential for Behaviours KSBs"
             meta="Demonstrates your awareness and compliance"
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
+          <div className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}>
             <ul className="space-y-1.5">
               {safetyDocs.map((item) => (
                 <li
                   key={item}
-                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                 >
                   <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                   <span>{item}</span>
@@ -359,13 +384,13 @@ const EvidencePage = () => {
             meta="Check before adding any evidence to your portfolio"
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-            <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-3">
+            <div className="rounded-xl border border-elec-yellow/25 bg-white/[0.05] p-4 sm:p-5 space-y-3">
               <Eyebrow className="text-elec-yellow/85">Good evidence is</Eyebrow>
               <ul className="space-y-1.5">
                 {goodEvidence.map((item) => (
                   <li
                     key={item}
-                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                    className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                   >
                     <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
                     <span>{item}</span>
@@ -379,7 +404,7 @@ const EvidencePage = () => {
                 {evidenceMistakes.map((item) => (
                   <li
                     key={item}
-                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                    className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                   >
                     <AlertTriangle className="h-3.5 w-3.5 text-red-300 flex-shrink-0 mt-0.5" />
                     <span>{item}</span>
@@ -397,12 +422,12 @@ const EvidencePage = () => {
             title="One piece can cover multiple KSBs"
             meta="Reduces total evidence needed and shows holistic competence"
           />
-          <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-2">
-            <p className="text-[13.5px] text-white/85 leading-relaxed">
+          <div className="rounded-xl border border-elec-yellow/25 bg-white/[0.05] p-4 sm:p-5 space-y-2">
+            <p className="text-[13.5px] text-white leading-relaxed">
               A photo of you installing a consumer unit with proper PPE could cover Skills
               (installation), Knowledge (BS 7671), and Behaviours (safe working).
             </p>
-            <p className="text-[13px] text-white/85 leading-relaxed">
+            <p className="text-[13px] text-white leading-relaxed">
               When you add evidence, list ALL the KSBs it covers — not just the most obvious one.
               Your KSB tracker should show these cross-references so you can see overall coverage.
             </p>

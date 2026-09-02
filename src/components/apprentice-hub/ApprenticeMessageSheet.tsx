@@ -1,6 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { MessageCircle } from 'lucide-react';
-import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
+import { FormSheet } from '@/components/forms/FormSheet';
+import { Input } from '@/components/ui/input';
+import {
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  inputCn,
+  textareaCn,
+} from '@/components/forms/fieldStyles';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
@@ -214,8 +222,9 @@ export function ApprenticeMessageSheet({ open, onOpenChange }: Props) {
 
   // Auto-scroll on new messages
   useEffect(() => {
-    if (!scrollRef.current) return;
-    scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    // The scrolling element is FormSheet's body, not this div — ask the
+    // browser to bring the end of the thread into view instead.
+    scrollRef.current?.scrollIntoView({ block: 'end' });
   }, [messages]);
 
   const handleSend = async () => {
@@ -298,125 +307,97 @@ export function ApprenticeMessageSheet({ open, onOpenChange }: Props) {
   const tutor = team.find((m) => m.role === 'Tutor') ?? null;
   const others = team.filter((m) => m !== tutor);
 
-  return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        side="bottom"
-        className="h-[92vh] sm:max-w-2xl sm:mx-auto p-0 rounded-t-2xl overflow-hidden border-white/[0.08] bg-[hsl(0_0%_10%)]"
+  const headerAction =
+    mode === 'thread' && threads.length > 1 ? (
+      <button
+        type="button"
+        onClick={() => setMode('list')}
+        className="h-11 px-2 text-[12.5px] font-semibold text-elec-yellow touch-manipulation"
       >
-        <SheetTitle className="sr-only">Messages — college team</SheetTitle>
-        <div className="flex h-full flex-col">
-          <header className="px-4 sm:px-5 pt-5 pb-4 border-b border-white/[0.06] flex items-start justify-between gap-3">
-            <div className="min-w-0">
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
-                Messages · College team
-              </div>
-              <h2 className="mt-1 text-[18px] font-semibold text-white leading-tight truncate">
-                {tutor ? (
-                  <>
-                    {tutor.name}
-                    <span className="ml-2 align-middle inline-block text-[9px] font-medium uppercase tracking-[0.14em] border border-elec-yellow/30 bg-elec-yellow/10 text-elec-yellow px-1.5 py-0.5 rounded">
-                      Tutor
-                    </span>
-                  </>
-                ) : (
-                  'Your college team'
-                )}
-              </h2>
-              {others.length > 0 && (
-                <p className="mt-1 text-[11px] text-white/45 truncate">
-                  Also sees this: {others.map((m) => `${m.name} · ${m.role}`).join(', ')}
-                </p>
-              )}
-              {team.length === 0 && (
-                <p className="mt-1 text-[11px] text-white/45 leading-snug">
-                  Messages go to your college — a tutor will be assigned soon.
-                </p>
-              )}
+        All threads
+      </button>
+    ) : mode === 'list' ? (
+      <button
+        type="button"
+        onClick={() => {
+          setActiveThreadId(null);
+          setMode('new');
+        }}
+        className={cn(buttonSecondaryCn, 'h-11 px-3.5 text-[12.5px] font-semibold')}
+      >
+        New thread
+      </button>
+    ) : undefined;
+
+  const composer = (
+    <div className="flex items-end gap-2">
+      <textarea
+        value={draft}
+        onChange={(e) => setDraft(e.target.value)}
+        rows={2}
+        placeholder="Write a message…"
+        // ELE-1419 — the OS capitalises the first letter otherwise.
+        autoCapitalize="none"
+        autoCorrect="off"
+        spellCheck={false}
+        className={cn(textareaCn, 'min-h-[44px] flex-1 resize-none')}
+      />
+      <button
+        type="button"
+        onClick={handleSend}
+        disabled={!draft.trim() || sending}
+        className={cn(buttonPrimaryCn, 'h-11 shrink-0 px-5 text-[13px]')}
+      >
+        {sending ? '…' : 'Send'}
+      </button>
+    </div>
+  );
+
+  return (
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      eyebrow="Messages · College team"
+      title={tutor ? tutor.name : 'Your college team'}
+      description={
+        others.length > 0
+          ? `Also sees this: ${others.map((m) => `${m.name} · ${m.role}`).join(', ')}`
+          : team.length === 0
+            ? 'Messages go to your college — a tutor will be assigned soon.'
+            : undefined
+      }
+      headerTrailing={headerAction}
+      footer={mode === 'thread' || mode === 'new' ? composer : undefined}
+      bodyClassName="space-y-0"
+    >
+      <div ref={scrollRef} className="py-2">
+        {mode === 'list' && (
+          <ThreadList
+            threads={threads}
+            loading={loadingThreads}
+            onPick={(id) => {
+              setActiveThreadId(id);
+              setMode('thread');
+            }}
+          />
+        )}
+        {mode === 'thread' && <MessageList messages={messages} />}
+        {mode === 'new' && (
+          <div className="flex flex-col gap-4">
+            <Input
+              type="text"
+              value={newSubject}
+              onChange={(e) => setNewSubject(e.target.value)}
+              placeholder="Subject (optional)"
+              className={inputCn}
+            />
+            <div className="flex items-center justify-center py-10">
+              <EmptyThreadState />
             </div>
-            {mode === 'thread' && threads.length > 1 && (
-              <button
-                type="button"
-                onClick={() => setMode('list')}
-                className="shrink-0 h-11 px-2 text-[11.5px] font-medium text-white/60 hover:text-white transition-colors touch-manipulation"
-              >
-                ← All threads
-              </button>
-            )}
-            {mode === 'list' && (
-              <button
-                type="button"
-                onClick={() => {
-                  setActiveThreadId(null);
-                  setMode('new');
-                }}
-                className="shrink-0 h-11 px-3.5 rounded-xl border border-white/[0.08] bg-white/[0.04] text-white/85 text-[12px] font-semibold hover:bg-white/[0.08] transition-colors touch-manipulation"
-              >
-                New thread
-              </button>
-            )}
-          </header>
-
-          <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 sm:px-5 py-4">
-            {mode === 'list' && (
-              <ThreadList
-                threads={threads}
-                loading={loadingThreads}
-                onPick={(id) => {
-                  setActiveThreadId(id);
-                  setMode('thread');
-                }}
-              />
-            )}
-            {mode === 'thread' && <MessageList messages={messages} />}
-            {mode === 'new' && (
-              <div className="flex h-full flex-col gap-3">
-                <input
-                  type="text"
-                  value={newSubject}
-                  onChange={(e) => setNewSubject(e.target.value)}
-                  placeholder="Subject (optional)"
-                  className="w-full h-11 px-3.5 rounded-xl bg-[hsl(0_0%_8%)] border border-white/[0.10] text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-elec-yellow/40 touch-manipulation"
-                />
-                <div className="flex-1 flex items-center justify-center">
-                  <EmptyThreadState />
-                </div>
-              </div>
-            )}
           </div>
-
-          {(mode === 'thread' || mode === 'new') && (
-            <footer className="border-t border-white/[0.06] px-4 sm:px-5 py-3 bg-[hsl(0_0%_8%)]">
-              <div className="flex items-end gap-2">
-                <textarea
-                  value={draft}
-                  onChange={(e) => setDraft(e.target.value)}
-                  rows={2}
-                  placeholder="Write a message…"
-                  // ELE-1419 — the OS capitalises the first letter otherwise.
-                  autoCapitalize="none"
-                  autoCorrect="off"
-                  spellCheck={false}
-                  className="flex-1 px-3.5 py-2.5 rounded-xl bg-[hsl(0_0%_8%)] border border-white/[0.10] text-[14px] text-white placeholder:text-white/40 leading-relaxed focus:outline-none focus:border-elec-yellow/40 touch-manipulation resize-none"
-                />
-                <button
-                  type="button"
-                  onClick={handleSend}
-                  disabled={!draft.trim() || sending}
-                  className={cn('shrink-0 h-11 px-5 rounded-xl text-[13px] font-semibold transition-colors touch-manipulation',
-                    draft.trim() && !sending
-                      ? 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
-                      : 'bg-white/[0.08] text-white/35'
-                  )}
-                >
-                  {sending ? '…' : 'Send'}
-                </button>
-              </div>
-            </footer>
-          )}
-        </div>
-      </SheetContent>
-    </Sheet>
+        )}
+      </div>
+    </FormSheet>
   );
 }
 
@@ -429,10 +410,10 @@ function ThreadList({
   loading: boolean;
   onPick: (id: string) => void;
 }) {
-  if (loading) return <div className="text-[12px] text-white/50">Loading…</div>;
+  if (loading) return <div className="text-[12px] text-white">Loading…</div>;
   if (threads.length === 0)
     return (
-      <p className="text-[12px] text-white/50 leading-snug">
+      <p className="text-[12px] text-white leading-snug">
         No conversations yet. Start one — your college team sees it instantly.
       </p>
     );
@@ -443,7 +424,7 @@ function ThreadList({
           <button
             type="button"
             onClick={() => onPick(t.id)}
-            className="w-full px-1 py-3 flex items-baseline justify-between gap-3 text-left hover:bg-white/[0.02] transition-colors touch-manipulation"
+            className="flex min-h-11 w-full items-baseline justify-between gap-3 px-1 py-3 text-left transition-colors hover:bg-white/[0.04] touch-manipulation"
           >
             <div className="min-w-0 flex-1">
               <div className="text-[13px] font-medium text-white truncate">
@@ -455,7 +436,7 @@ function ThreadList({
                 </div>
               )}
             </div>
-            <span className="text-[10px] text-white/40 tabular-nums whitespace-nowrap">
+            <span className="text-[10px] text-white tabular-nums whitespace-nowrap">
               {new Date(t.last_message_at).toLocaleDateString('en-GB', {
                 day: 'numeric',
                 month: 'short',
@@ -471,9 +452,9 @@ function ThreadList({
 function EmptyThreadState() {
   return (
     <div className="flex flex-col items-center gap-2 px-6 text-center">
-      <MessageCircle className="h-6 w-6 text-white/25" strokeWidth={1.5} />
-      <p className="text-[14px] font-medium text-white/85">Start the conversation</p>
-      <p className="text-[12px] text-white/50 leading-snug">
+      <MessageCircle className="h-6 w-6 text-white" strokeWidth={1.5} />
+      <p className="text-[14px] font-medium text-white">Start the conversation</p>
+      <p className="text-[12px] text-white leading-snug">
         Your college team sees this instantly — replies land right here.
       </p>
     </div>
@@ -494,16 +475,18 @@ function MessageList({ messages }: { messages: Message[] }) {
         return (
           <div key={m.id} className={cn('flex', isMe ? 'justify-end' : 'justify-start')}>
             <div
-              className={cn('max-w-[78%] rounded-2xl px-3.5 py-2.5 text-[13.5px] leading-snug text-white',
+              className={cn(
+                'max-w-[78%] rounded-2xl px-3.5 py-2.5 text-[13.5px] leading-snug',
                 isMe
-                  ? 'bg-elec-yellow/[0.08] border border-elec-yellow/20 rounded-br-md'
-                  : 'bg-white/[0.06] border border-white/[0.06] rounded-bl-md'
+                  ? 'rounded-br-md bg-elec-yellow text-black'
+                  : cn('rounded-bl-md border border-white/[0.10] text-white', CARD_SURFACE)
               )}
             >
               <div className="whitespace-pre-wrap break-words">{m.body}</div>
               <div
-                className={cn('mt-1 text-[10px] text-white/40 tabular-nums',
-                  isMe ? 'text-right' : 'text-left'
+                className={cn(
+                  'mt-1 text-[10px] tabular-nums',
+                  isMe ? 'text-right text-black/70' : 'text-left text-white'
                 )}
               >
                 {new Date(m.created_at).toLocaleTimeString('en-GB', {

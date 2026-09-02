@@ -1,15 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import {
-  PageFrame,
-  PageHero,
-  SectionHeader,
-  itemVariants,
-  type Tone,
-} from '@/components/college/primitives';
-import { HubToolGrid } from '@/components/hub/HubPrimitives';
+import { itemVariants, type Tone } from '@/components/college/primitives';
+import { HubSubPage } from '@/components/hub/HubSubPage';
+import { HubToolGrid, HubSectionHeading } from '@/components/hub/HubPrimitives';
 
 interface Section {
   number: string;
@@ -67,29 +60,13 @@ const SECTIONS: Section[] = [
 const CommunicationSkills = () => {
   const navigate = useNavigate();
   return (
-    <PageFrame className="px-4 sm:px-6 lg:px-8">
-      <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/apprentice/toolbox')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
-        >
-          <ArrowLeft className="mr-2 h-5 w-5" />
-          Back
-        </Button>
-      </motion.div>
-
-      <motion.div variants={itemVariants}>
-        <PageHero
-          eyebrow="Apprentice · Communication"
-          title="The other half of the job"
-          description="Technical ability gets you on site — communication keeps you there. Talking to supervisors, clients, mates and the difficult-conversation people who turn up on every job."
-          tone="yellow"
-        />
-      </motion.div>
-
+    <HubSubPage
+      title="The other half of the job"
+      backTo="/apprentice/toolbox"
+      description="Technical ability gets you on site — communication keeps you there. Talking to supervisors, clients, mates and the difficult-conversation people who turn up on every job."
+    >
       <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
-        <SectionHeader eyebrow="Sections" title="Four chapters" />
+        <HubSectionHeading>Four chapters</HubSectionHeading>
         <HubToolGrid
           label=""
           columns="two"
@@ -103,7 +80,7 @@ const CommunicationSkills = () => {
           }))}
         />
       </motion.section>
-    </PageFrame>
+    </HubSubPage>
   );
 };
 

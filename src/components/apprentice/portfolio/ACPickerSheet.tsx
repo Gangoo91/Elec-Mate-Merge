@@ -114,9 +114,9 @@ export function ACPickerSheet({
     <Sheet open={open} onOpenChange={handleOpenChange}>
       <SheetContent
         side="bottom"
-        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden [&>button.absolute]:hidden sm:max-w-[640px] sm:mx-auto sm:rounded-t-2xl"
+        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.06] bg-[hsl(0_0%_8%)] [&>button.absolute]:hidden"
       >
-        <div className="flex flex-col h-full bg-[hsl(240,5.9%,10%)]">
+        <div className="flex flex-col h-full">
           {/* Header */}
           <SheetHeader className="flex-shrink-0 border-b border-white/[0.06]">
             <div className="flex justify-center pt-2.5 pb-1">
@@ -147,7 +147,7 @@ export function ACPickerSheet({
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search criteria..."
-                  className="w-full h-11 pl-10 pr-10 rounded-xl bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white focus:outline-none focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20 touch-manipulation"
+                  className="h-11 w-full rounded-xl border border-white/[0.12] bg-white/[0.06] pl-10 pr-10 text-base text-white placeholder:text-white/40 caret-elec-yellow focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation"
                 />
                 {searchQuery && (
                   <button
@@ -312,7 +312,7 @@ function UnitAccordion({
                           onClick={() => onToggleAC(ac.acFullRef)}
                           className={cn(
                             'w-full flex items-start gap-2.5 text-left py-1.5 touch-manipulation rounded-lg px-1 -mx-1',
-                            isSelected && 'bg-elec-yellow/10',
+                            isSelected && 'bg-white/[0.06]',
                             isEvidenced && !isSelected && 'bg-green-500/5'
                           )}
                         >

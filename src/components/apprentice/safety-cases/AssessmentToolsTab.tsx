@@ -140,13 +140,13 @@ const AssessmentToolsTab = () => {
     <div className="space-y-6 animate-fade-in text-left">
       {/* Header */}
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Assessment centre
         </span>
         <h2 className="text-[24px] sm:text-[28px] font-bold tracking-tight text-white leading-tight">
           Assessment tools
         </h2>
-        <p className="text-[14px] text-white/70 leading-relaxed max-w-2xl">
+        <p className="text-[14px] text-white leading-relaxed max-w-2xl">
           Test and validate your electrical safety knowledge through comprehensive assessments,
           interactive simulations, and practical workshops.
         </p>
@@ -155,25 +155,25 @@ const AssessmentToolsTab = () => {
       {/* Stats strip */}
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 grid grid-cols-2 sm:grid-cols-4 gap-4">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Tools
           </span>
           <p className="text-[20px] font-semibold text-white">{assessmentTools.length}</p>
         </div>
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Completed
           </span>
           <p className="text-[20px] font-semibold text-white">{completedCount}</p>
         </div>
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Average
           </span>
           <p className="text-[20px] font-semibold text-white">{Math.round(averageScore)}%</p>
         </div>
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Certificates
           </span>
           <p className="text-[20px] font-semibold text-white">{certificatesEarned}</p>
@@ -192,11 +192,11 @@ const AssessmentToolsTab = () => {
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex-1 space-y-2">
-                  <div className="flex items-baseline gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+                  <div className="flex items-baseline gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     <span>{tool.difficulty}</span>
-                    <span className="text-white/25">·</span>
+                    <span className="text-white">·</span>
                     <span>{tool.type}</span>
-                    <span className="text-white/25">·</span>
+                    <span className="text-white">·</span>
                     <span className="flex items-center gap-1">
                       <Clock className="h-3 w-3" />
                       {tool.duration}
@@ -209,24 +209,24 @@ const AssessmentToolsTab = () => {
                 {isCompleted && <CheckCircle className="h-5 w-5 text-elec-yellow flex-shrink-0" />}
               </div>
 
-              <p className="text-[14px] text-white/85 leading-relaxed">{tool.description}</p>
+              <p className="text-[14px] text-white leading-relaxed">{tool.description}</p>
 
               {/* Stats */}
               <div className="grid grid-cols-3 gap-3 pt-2 border-t border-white/[0.10]">
                 <div>
-                  <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+                  <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Questions
                   </p>
                   <p className="text-[14px] text-white font-mono">{tool.questions}</p>
                 </div>
                 <div>
-                  <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+                  <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Pass score
                   </p>
                   <p className="text-[14px] text-white font-mono">{tool.passingScore}%</p>
                 </div>
                 <div>
-                  <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+                  <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Attempts
                   </p>
                   <p className="text-[14px] text-white font-mono">{tool.attempts}</p>
@@ -237,10 +237,10 @@ const AssessmentToolsTab = () => {
               {tool.bestScore > 0 && (
                 <div className="space-y-2">
                   <div className="flex items-baseline justify-between">
-                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                       Best score
                     </span>
-                    <span className="text-[12px] text-white/85 font-mono">{tool.bestScore}%</span>
+                    <span className="text-[12px] text-white font-mono">{tool.bestScore}%</span>
                   </div>
                   <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
                     <div
@@ -253,16 +253,16 @@ const AssessmentToolsTab = () => {
 
               {/* Topics */}
               <div className="space-y-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Topics
                 </span>
                 <div className="flex flex-wrap gap-1.5">
                   {tool.topics.map((topic, topicIndex) => (
                     <span
                       key={topicIndex}
-                      className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07] inline-flex items-center gap-1"
+                      className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07] inline-flex items-center gap-1"
                     >
-                      <CheckSquare className="h-3 w-3 text-white/70" />
+                      <CheckSquare className="h-3 w-3 text-white" />
                       {topic}
                     </span>
                   ))}
@@ -288,7 +288,7 @@ const AssessmentToolsTab = () => {
                   </Button>
                 )}
                 {tool.certificate && (
-                  <span className="inline-flex items-center gap-1 text-[12px] text-white/70 px-2 rounded-md border border-white/10 bg-white/[0.07]">
+                  <span className="inline-flex items-center gap-1 text-[12px] text-white px-2 rounded-md border border-white/10 bg-white/[0.07]">
                     <Award className="h-3 w-3" />
                     Cert
                   </span>
@@ -301,10 +301,10 @@ const AssessmentToolsTab = () => {
 
       {/* Performance summary */}
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-4 pt-4">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Performance
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           Track your assessment performance over time and identify areas for improvement. Regular
           assessment helps reinforce learning and ensures knowledge retention.
         </p>
@@ -332,10 +332,10 @@ const AssessmentToolsTab = () => {
               className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-2"
             >
               <div className="flex items-baseline justify-between">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   {metric.label}
                 </span>
-                <span className="text-[12px] text-white/85 font-mono">{metric.value}</span>
+                <span className="text-[12px] text-white font-mono">{metric.value}</span>
               </div>
               <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
                 <div

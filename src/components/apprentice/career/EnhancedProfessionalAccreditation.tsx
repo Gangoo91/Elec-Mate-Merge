@@ -118,13 +118,13 @@ const EnhancedProfessionalAccreditation = () => {
   return (
     <div className="space-y-6">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Professional accreditation
         </span>
         <h2 className="text-[20px] sm:text-[24px] font-bold tracking-tight text-white leading-tight">
           Professional accreditations
         </h2>
-        <p className="text-[14px] text-white/70 leading-relaxed max-w-2xl">
+        <p className="text-[14px] text-white leading-relaxed max-w-2xl">
           Recognised professional accreditations to enhance your standing and open new
           opportunities — from industry memberships to specialist certifications.
         </p>
@@ -140,7 +140,7 @@ const EnhancedProfessionalAccreditation = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Why get accredited?
           </span>
           <ul className="space-y-2">
@@ -164,14 +164,14 @@ const EnhancedProfessionalAccreditation = () => {
             ].map((item) => (
               <li key={item.title} className="space-y-0.5">
                 <p className="text-[13px] text-white">{item.title}</p>
-                <p className="text-[12px] text-white/70 leading-relaxed">{item.body}</p>
+                <p className="text-[12px] text-white leading-relaxed">{item.body}</p>
               </li>
             ))}
           </ul>
         </div>
 
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Getting started
           </span>
           <ul className="space-y-2">
@@ -195,7 +195,7 @@ const EnhancedProfessionalAccreditation = () => {
             ].map((item) => (
               <li key={item.title} className="space-y-0.5">
                 <p className="text-[13px] text-white">{item.title}</p>
-                <p className="text-[12px] text-white/70 leading-relaxed">{item.body}</p>
+                <p className="text-[12px] text-white leading-relaxed">{item.body}</p>
               </li>
             ))}
           </ul>
@@ -203,10 +203,10 @@ const EnhancedProfessionalAccreditation = () => {
       </div>
 
       <div className="flex items-baseline justify-between">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Available accreditations
         </span>
-        <span className="text-[12px] text-white/55">
+        <span className="text-[12px] text-white">
           {filteredOptions.length} {filteredOptions.length === 1 ? 'option' : 'options'}
         </span>
       </div>
@@ -224,7 +224,7 @@ const EnhancedProfessionalAccreditation = () => {
       {filteredOptions.length === 0 && (
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-6 sm:p-8 text-center space-y-3">
           <h3 className="text-[16px] font-semibold text-white">No accreditations found</h3>
-          <p className="text-[14px] text-white/70 leading-relaxed">
+          <p className="text-[14px] text-white leading-relaxed">
             Try adjusting your search criteria or explore different categories.
           </p>
           <Button
@@ -238,7 +238,7 @@ const EnhancedProfessionalAccreditation = () => {
       )}
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Professional development resources
         </span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -253,10 +253,10 @@ const EnhancedProfessionalAccreditation = () => {
                 key={item.name}
                 type="button"
                 onClick={() => openExternalUrl(item.url)}
-                className="w-full flex items-center justify-between gap-2 text-left text-[13px] text-white/85 hover:text-white touch-manipulation min-h-[44px] py-1"
+                className="w-full flex items-center justify-between gap-2 text-left text-[13px] text-white hover:text-white touch-manipulation min-h-[44px] py-1"
               >
                 <span>{item.name}</span>
-                <ExternalLink className="h-3.5 w-3.5 text-white/40" />
+                <ExternalLink className="h-3.5 w-3.5 text-white" />
               </button>
             ))}
           </div>
@@ -271,13 +271,13 @@ const EnhancedProfessionalAccreditation = () => {
                 key={item.name}
                 type="button"
                 onClick={() => openExternalUrl(item.url)}
-                className="w-full flex items-center justify-between gap-2 text-left text-[13px] text-white/85 hover:text-white touch-manipulation min-h-[44px] py-1"
+                className="w-full flex items-center justify-between gap-2 text-left text-[13px] text-white hover:text-white touch-manipulation min-h-[44px] py-1"
               >
                 <span>{item.name}</span>
-                <ExternalLink className="h-3.5 w-3.5 text-white/40" />
+                <ExternalLink className="h-3.5 w-3.5 text-white" />
               </button>
             ))}
-            <div className="flex items-center justify-between gap-2 text-[13px] text-white/55 py-1">
+            <div className="flex items-center justify-between gap-2 text-[13px] text-white py-1">
               <span>Local training centres</span>
             </div>
           </div>

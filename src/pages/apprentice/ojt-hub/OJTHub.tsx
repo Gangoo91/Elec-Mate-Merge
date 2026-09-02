@@ -99,7 +99,6 @@ const SOURCE_LABEL: Record<SourceKind, string> = {
   employer_attested: 'Employer',
 };
 
-
 const STATUS_LABEL: Record<VerificationStatus, string> = {
   verified: 'Verified',
   verified_by_employer: 'Employer verified',
@@ -322,59 +321,65 @@ export default function OJTHub() {
   /* ─── Employer attestation link ─────────────────────────────────── */
   // useCallback because the "Needs you" list memoises on it; without a stable
   // identity that list rebuilds on every render.
-  const handleEmployerLink = useCallback(async (row: OtjEntryRow) => {
-    const url = `${window.location.origin}/attest-ojt/${row.id}`;
-    try {
-      // Prefer native share on mobile when available
-      const nav = navigator as Navigator & {
-        share?: (data: { title?: string; text?: string; url?: string }) => Promise<void>;
-      };
-      if (typeof nav.share === 'function') {
-        await nav.share({
-          title: 'Confirm my training hours',
-          text: `${(row.duration_minutes / 60).toFixed(1)}h of off-the-job training — ${row.title}. Tap to attest:`,
-          url,
+  const handleEmployerLink = useCallback(
+    async (row: OtjEntryRow) => {
+      const url = `${window.location.origin}/attest-ojt/${row.id}`;
+      try {
+        // Prefer native share on mobile when available
+        const nav = navigator as Navigator & {
+          share?: (data: { title?: string; text?: string; url?: string }) => Promise<void>;
+        };
+        if (typeof nav.share === 'function') {
+          await nav.share({
+            title: 'Confirm my training hours',
+            text: `${(row.duration_minutes / 60).toFixed(1)}h of off-the-job training — ${row.title}. Tap to attest:`,
+            url,
+          });
+          return;
+        }
+        await navigator.clipboard.writeText(url);
+        toast({
+          title: 'Attestation link copied',
+          description:
+            'Send it to your supervisor. They open it, type their name + email, and these hours flip to employer-attested.',
         });
-        return;
+      } catch (err) {
+        // user cancelled share or clipboard rejected
+        toast({
+          title: 'Link ready',
+          description: url,
+        });
+        void err;
       }
-      await navigator.clipboard.writeText(url);
-      toast({
-        title: 'Attestation link copied',
-        description:
-          'Send it to your supervisor. They open it, type their name + email, and these hours flip to employer-attested.',
-      });
-    } catch (err) {
-      // user cancelled share or clipboard rejected
-      toast({
-        title: 'Link ready',
-        description: url,
-      });
-      void err;
-    }
-  }, [toast]);
+    },
+    [toast]
+  );
 
   /* ─── Verification actions ─────────────────────────────────────── */
-  const editAndResubmit = useCallback(async (row: OtjEntryRow) => {
-    if (!user?.id) return;
-    try {
-      const { error } = await supabase
-        .from('college_otj_entries')
-        .update({
-          verification_status: 'pending',
-          verification_rationale: null,
-        })
-        .eq('id', row.id);
-      if (error) throw error;
-      toast({ title: 'Resubmitted', description: 'Sent back to your tutor for review.' });
-      await refreshVerify();
-    } catch (err) {
-      toast({
-        title: 'Could not resubmit',
-        description: (err as Error).message,
-        variant: 'destructive',
-      });
-    }
-  }, [user?.id, toast, refreshVerify]);
+  const editAndResubmit = useCallback(
+    async (row: OtjEntryRow) => {
+      if (!user?.id) return;
+      try {
+        const { error } = await supabase
+          .from('college_otj_entries')
+          .update({
+            verification_status: 'pending',
+            verification_rationale: null,
+          })
+          .eq('id', row.id);
+        if (error) throw error;
+        toast({ title: 'Resubmitted', description: 'Sent back to your tutor for review.' });
+        await refreshVerify();
+      } catch (err) {
+        toast({
+          title: 'Could not resubmit',
+          description: (err as Error).message,
+          variant: 'destructive',
+        });
+      }
+    },
+    [user?.id, toast, refreshVerify]
+  );
 
   /* ─── Export evidence pack ──────────────────────────────────────── */
   const buildExportData = useCallback(async (): Promise<OtjExportData> => {
@@ -770,13 +775,7 @@ export default function OJTHub() {
         'Site diary hours are self-reported, so they never count on their own. The same work logged as an activity, with a verifier, does.',
       action: { label: 'Log time', onClick: () => setShowLogSheet(true) },
     };
-  }, [
-    yearPendingHours,
-    unverifiedHours,
-    awaitingOthersHours,
-    totalPendingMin,
-    yearTargetHours,
-  ]);
+  }, [yearPendingHours, unverifiedHours, awaitingOthersHours, totalPendingMin, yearTargetHours]);
 
   /*
    * "Needs you" — ranked by what actually costs the apprentice their gateway.
@@ -1078,7 +1077,6 @@ export default function OJTHub() {
 
 /* ────────────────────────── Sub-components ────────────────────────── */
 
-
 function SourceMixBar({
   autoTrackedMin,
   manualVerifiedMin,
@@ -1143,7 +1141,12 @@ function SourceMixBar({
         title="Where your hours come from"
         meta="Defensibility at a glance — yellow = verified & counts, grey = pending"
       />
-      <div className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3', CARD_SURFACE)}>
+      <div
+        className={cn(
+          'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
+          CARD_SURFACE
+        )}
+      >
         {total === 0 ? (
           <p className="text-[13px] text-white leading-relaxed">
             No hours logged yet. Tap "Log time" to send your first entry to your tutor.
@@ -1170,9 +1173,7 @@ function SourceMixBar({
                   <li key={s.label} className="flex items-center gap-2 text-[12px] text-white">
                     <span className={cn('h-2 w-2 rounded-sm flex-shrink-0', s.tone)} />
                     <span className="flex-1 truncate">{s.label}</span>
-                    <span className="text-white tabular-nums">
-                      {(s.minutes / 60).toFixed(1)}h
-                    </span>
+                    <span className="text-white tabular-nums">{(s.minutes / 60).toFixed(1)}h</span>
                   </li>
                 ))}
             </ul>
@@ -1219,7 +1220,7 @@ function ComplianceForecast({
           title="Hours complete"
           meta={`All ${yearTarget}h banked — you can stop logging off-the-job hours`}
         />
-        <div className="rounded-xl border border-elec-yellow/30 bg-elec-yellow/[0.06] p-4 sm:p-5 space-y-3">
+        <div className="rounded-xl border border-elec-yellow/30 bg-white/[0.05] p-4 sm:p-5 space-y-3">
           <div className="flex items-baseline gap-1.5 flex-wrap">
             <span className="text-[26px] sm:text-[30px] lg:text-[32px] font-semibold text-elec-yellow tracking-tight tabular-nums leading-none">
               {fmtHours(yearHours)}h
@@ -1510,7 +1511,12 @@ function RecentEntries({
           <Eyebrow>Loading…</Eyebrow>
         </div>
       ) : recent.length === 0 ? (
-        <div className={cn('rounded-2xl border border-elec-yellow/35 p-6 text-center space-y-2', CARD_SURFACE)}>
+        <div
+          className={cn(
+            'rounded-2xl border border-elec-yellow/35 p-6 text-center space-y-2',
+            CARD_SURFACE
+          )}
+        >
           <Eyebrow>No college-recorded entries yet</Eyebrow>
           <p className="text-[13px] text-white leading-relaxed">
             In-app activity (videos, study sessions) auto-counts but tutor-verified hours start when
@@ -1588,4 +1594,3 @@ function RecentEntries({
     </section>
   );
 }
-

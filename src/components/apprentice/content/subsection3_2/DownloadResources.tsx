@@ -77,7 +77,7 @@ const DownloadResources = () => {
         Electrical Safety Resources
       </h3>
 
-      <p className="mb-4 text-elec-light/90">
+      <p className="mb-4 text-white">
         Access and download valuable resources for working safely with electrical systems. These
         documents provide additional guidance and templates to help implement the safety procedures
         described in this section.
@@ -87,7 +87,7 @@ const DownloadResources = () => {
         <DialogTrigger asChild>
           <Button
             variant="outline"
-            className="border-elec-yellow/30 hover:bg-elec-yellow/10 flex items-center gap-2"
+            className="border-elec-yellow/30 hover:bg-white/[0.06] flex items-center gap-2"
           >
             <Download className="h-4 w-4" />
             Download Resources
@@ -105,14 +105,14 @@ const DownloadResources = () => {
                 className="flex items-start p-3 border border-elec-yellow/10 rounded-md bg-white/10 hover:bg-white/20 active:bg-white/30 cursor-pointer transition-all touch-manipulation"
                 onClick={() => setSelectedResource(resource)}
               >
-                <div className="p-2 rounded bg-elec-yellow/10 mr-3">
+                <div className="p-2 rounded bg-white/[0.06] mr-3">
                   <FileText className="h-6 w-6 text-elec-yellow" />
                 </div>
                 <div className="flex-1">
                   <h4 className="font-medium text-sm">{resource.title}</h4>
                   <p className="text-xs text-white line-clamp-2">{resource.description}</p>
                   <div className="flex items-center text-xs text-white mt-1">
-                    <span className="bg-elec-yellow/20 text-elec-yellow px-2 py-0.5 rounded text-[10px] font-medium">
+                    <span className="bg-white/[0.08] text-elec-yellow px-2 py-0.5 rounded text-[10px] font-medium">
                       {resource.fileType}
                     </span>
                     <span className="ml-2">{resource.fileSize}</span>

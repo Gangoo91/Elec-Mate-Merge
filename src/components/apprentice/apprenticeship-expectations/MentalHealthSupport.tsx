@@ -123,7 +123,7 @@ const MentalHealthSupport = () => {
             Crisis support — get help now
           </span>
         </div>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           If you&apos;re in crisis, reach out immediately.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -139,8 +139,8 @@ const MentalHealthSupport = () => {
                   {resource.contact}
                 </span>
               </div>
-              <p className="text-[13px] text-white/85 leading-relaxed">{resource.description}</p>
-              <span className="inline-block text-[11px] text-white/85 px-2 py-0.5 rounded-md border border-red-500/30 bg-red-500/[0.04]">
+              <p className="text-[13px] text-white leading-relaxed">{resource.description}</p>
+              <span className="inline-block text-[11px] text-white px-2 py-0.5 rounded-md border border-red-500/30 bg-red-500/[0.04]">
                 {resource.availability}
               </span>
             </div>
@@ -155,7 +155,7 @@ const MentalHealthSupport = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Common apprentice mental health challenges
         </span>
         <div className="space-y-3">
@@ -167,14 +167,14 @@ const MentalHealthSupport = () => {
               <h4 className="text-[14px] font-semibold text-white">{item.stressor}</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div className="space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Common symptoms
                   </span>
                   <ul className="space-y-1">
                     {item.symptoms.map((symptom, idx) => (
                       <li
                         key={idx}
-                        className="flex items-start gap-2 text-[13px] text-white/85"
+                        className="flex items-start gap-2 text-[13px] text-white"
                       >
                         <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                         <span>{symptom}</span>
@@ -183,16 +183,16 @@ const MentalHealthSupport = () => {
                   </ul>
                 </div>
                 <div className="space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Helpful solutions
                   </span>
                   <ul className="space-y-1">
                     {item.solutions.map((solution, idx) => (
                       <li
                         key={idx}
-                        className="flex items-start gap-2 text-[13px] text-white/85"
+                        className="flex items-start gap-2 text-[13px] text-white"
                       >
-                        <CheckCircle className="h-3.5 w-3.5 text-white/55 mt-0.5 flex-shrink-0" />
+                        <CheckCircle className="h-3.5 w-3.5 text-white mt-0.5 flex-shrink-0" />
                         <span>{solution}</span>
                       </li>
                     ))}
@@ -205,7 +205,7 @@ const MentalHealthSupport = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Healthy coping strategies
         </span>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -219,7 +219,7 @@ const MentalHealthSupport = () => {
                 {strategy.techniques.map((technique, idx) => (
                   <li
                     key={idx}
-                    className="flex items-start gap-2 text-[13px] text-white/85"
+                    className="flex items-start gap-2 text-[13px] text-white"
                   >
                     <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                     <span>{technique}</span>
@@ -232,10 +232,10 @@ const MentalHealthSupport = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Warning signs to watch for
         </span>
-        <p className="text-[13px] text-white/70 leading-relaxed">
+        <p className="text-[13px] text-white leading-relaxed">
           If you notice these signs in yourself or others, it may be time to seek support.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -247,7 +247,7 @@ const MentalHealthSupport = () => {
               <h4 className="text-[14px] font-semibold text-white">{category.category}</h4>
               <ul className="space-y-1.5">
                 {category.signs.map((sign, idx) => (
-                  <li key={idx} className="flex items-start gap-2 text-[13px] text-white/85">
+                  <li key={idx} className="flex items-start gap-2 text-[13px] text-white">
                     <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                     <span>{sign}</span>
                   </li>
@@ -259,13 +259,13 @@ const MentalHealthSupport = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Additional mental health resources
         </span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
             <h4 className="text-[14px] font-semibold text-white">Elec-Mate mental health hub</h4>
-            <p className="text-[13px] text-white/85 leading-relaxed">
+            <p className="text-[13px] text-white leading-relaxed">
               Access mental health resources designed specifically for electrical apprentices.
             </p>
             <Link to="/apprentice/mental-health">
@@ -283,7 +283,7 @@ const MentalHealthSupport = () => {
                 'ACAS helpline for workplace issues',
                 'Union support and advocacy',
               ].map((item) => (
-                <li key={item} className="flex items-start gap-2 text-[13px] text-white/85">
+                <li key={item} className="flex items-start gap-2 text-[13px] text-white">
                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{item}</span>
                 </li>

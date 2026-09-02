@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { CheckCircle2, ChevronDown, ChevronUp } from 'lucide-react';
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const skillCategories = [
   {
@@ -214,7 +216,7 @@ const ProfessionalSkills = () => {
         {/* Skill Categories */}
         <div className="flex items-baseline justify-between gap-3 pb-1">
           <div className="space-y-1 min-w-0">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Skill Categories
             </span>
           </div>
@@ -224,7 +226,7 @@ const ProfessionalSkills = () => {
           {skillCategories.map((category, index) => (
             <div
               key={category.title}
-              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]"
+              className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}
             >
               <button
                 onClick={() => toggleExpanded(index)}
@@ -265,7 +267,7 @@ const ProfessionalSkills = () => {
         {/* Development Activities */}
         <div className="flex items-baseline justify-between gap-3 pb-1">
           <div className="space-y-1 min-w-0">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Development Activities
             </span>
           </div>
@@ -275,7 +277,7 @@ const ProfessionalSkills = () => {
           {developmentActivities.map((activity) => (
             <div
               key={activity.title}
-              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]"
+              className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}
             >
               <div className="p-4 space-y-1">
                 <h3 className="font-semibold text-white text-sm">{activity.title}</h3>
@@ -288,7 +290,7 @@ const ProfessionalSkills = () => {
         {/* Why Professional Skills Matter */}
         <div className="flex items-baseline justify-between gap-3 pb-1">
           <div className="space-y-1 min-w-0">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Why Professional Skills Matter
             </span>
           </div>
@@ -314,7 +316,7 @@ const ProfessionalSkills = () => {
           ].map((benefit) => (
             <div
               key={benefit.title}
-              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]"
+              className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}
             >
               <div className="p-4 space-y-1">
                 <h3 className="font-semibold text-white text-sm">{benefit.title}</h3>
@@ -327,7 +329,7 @@ const ProfessionalSkills = () => {
         {/* Recommended Resources */}
         <div className="flex items-baseline justify-between gap-3 pb-1">
           <div className="space-y-1 min-w-0">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Recommended Resources
             </span>
           </div>
@@ -337,7 +339,7 @@ const ProfessionalSkills = () => {
           {recommendedResources.map((resource) => (
             <div
               key={resource.title}
-              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]"
+              className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}
             >
               <div className="p-4 space-y-1">
                 <div className="flex items-center justify-between">
@@ -358,7 +360,7 @@ const ProfessionalSkills = () => {
           <h2 className="text-base font-semibold text-white">Getting Started This Week</h2>
         </div>
 
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 space-y-3">
             <p className="text-white text-sm leading-relaxed">
               Professional skills improve with practice, not just reading. Pick one action from this
@@ -382,7 +384,7 @@ const ProfessionalSkills = () => {
         </div>
 
         {/* Development Strategy */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 space-y-2">
             <h3 className="font-semibold text-white text-sm">Development Strategy</h3>
             <p className="text-white text-sm leading-relaxed">
@@ -395,7 +397,7 @@ const ProfessionalSkills = () => {
         </div>
 
         {/* Footer */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4">
             <p className="text-white text-xs leading-relaxed">
               Professional skills guidance based on IET professional standards, ECA industry

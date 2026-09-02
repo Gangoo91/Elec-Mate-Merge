@@ -4,7 +4,9 @@
  * with real activity (the hook gates a flat week out entirely).
  */
 
-import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
+import { FormSheet } from '@/components/forms/FormSheet';
+import { buttonPrimaryCn } from '@/components/forms/fieldStyles';
+import { cn } from '@/lib/utils';
 import { Flame } from 'lucide-react';
 import type { WeeklyRecap } from '@/hooks/useWeeklyRecap';
 
@@ -49,58 +51,39 @@ export function WeeklyRecapSheet({ open, onClose, recap }: Props) {
   ];
 
   return (
-    <Sheet open={open} onOpenChange={(v) => !v && onClose()}>
-      <SheetContent
-        side="bottom"
-        className="rounded-t-2xl p-0 h-auto max-h-[80vh] overflow-y-auto border-white/[0.08] bg-[hsl(0_0%_10%)]"
-      >
-        <div className="w-12 h-1 bg-white/15 rounded-full mx-auto mt-3 mb-1" />
-        <SheetTitle className="sr-only">Your week in review</SheetTitle>
-
-        <div className="relative px-5 pt-4 pb-6">
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none" />
-
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
-            Your week
-          </span>
-          <h2 className="mt-1 text-[22px] font-semibold tracking-tight leading-snug">
-            {headline(recap)}
-          </h2>
-
-          <div className="mt-5 grid grid-cols-4 gap-[2px] bg-black border border-white/[0.08] rounded-2xl overflow-hidden">
-            {cells.map((c) => (
-              <div
-                key={c.label}
-                className="bg-[hsl(0_0%_10%)] px-2 py-4 flex flex-col items-center justify-center gap-1 text-center"
-              >
-                <span className="text-[20px] font-semibold tabular-nums leading-none text-white">
-                  {c.value}
-                </span>
-                <span className="text-[9px] font-medium uppercase tracking-[0.14em] text-white/55">
-                  {c.label}
-                </span>
-              </div>
-            ))}
-          </div>
-
-          {recap.flashcards > 0 && (
-            <p className="mt-3 text-[12px] text-white/45 text-center">
-              + {recap.flashcards} flashcard {recap.flashcards === 1 ? 'session' : 'sessions'} along
-              the way.
-            </p>
-          )}
-
-          <button
-            type="button"
-            onClick={onClose}
-            className="mt-5 w-full h-11 rounded-xl bg-elec-yellow text-black text-[14px] font-semibold touch-manipulation active:scale-[0.98] transition-transform"
+    <FormSheet
+      open={open}
+      onOpenChange={(v) => !v && onClose()}
+      eyebrow="Your week"
+      title={headline(recap)}
+      footer={
+        <button type="button" onClick={onClose} className={cn(buttonPrimaryCn, 'w-full')}>
+          Crack on
+        </button>
+      }
+    >
+      <div className="grid grid-cols-4 gap-[2px] overflow-hidden rounded-2xl border border-white/[0.08] bg-black">
+        {cells.map((c) => (
+          <div
+            key={c.label}
+            className="flex flex-col items-center justify-center gap-1 bg-white/[0.06] px-2 py-4 text-center"
           >
-            Crack on
-          </button>
-        </div>
-      </SheetContent>
-    </Sheet>
+            <span className="text-[20px] font-semibold leading-none tabular-nums text-white">
+              {c.value}
+            </span>
+            <span className="text-[9px] font-medium uppercase tracking-[0.14em] text-white">
+              {c.label}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      {recap.flashcards > 0 && (
+        <p className="text-center text-[12px] text-white">
+          + {recap.flashcards} flashcard {recap.flashcards === 1 ? 'session' : 'sessions'} along the
+          way.
+        </p>
+      )}
+    </FormSheet>
   );
 }
-
-export default WeeklyRecapSheet;

@@ -3,51 +3,52 @@ const ZsLookupStandards = () => {
     <div className="space-y-6">
       {/* BS7671 Regulatory References */}
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           BS 7671 regulatory references
         </span>
 
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-3">
             <div className="space-y-1">
-              <span className="text-[11px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] inline-block font-mono">
-                Regulation 411.4.5
+              <span className="text-[11px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] inline-block font-mono">
+                Regulation 411.4.4
               </span>
-              <p className="text-[13px] text-white/85 leading-relaxed">
-                <strong>Automatic disconnection requirement:</strong> Protective devices must
-                disconnect supply within specified time when earth fault occurs.
+              <p className="text-[13px] text-white leading-relaxed">
+                <strong>Automatic disconnection condition:</strong> Zs × Ia ≤ U0 × Cmin — the
+                protective device must operate within the required time on an earth fault.
               </p>
             </div>
 
             <div className="space-y-1">
-              <span className="text-[11px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] inline-block font-mono">
-                Table 41.2
+              <span className="text-[11px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] inline-block font-mono">
+                Table 41.1 / Reg 411.3.2
               </span>
-              <p className="text-[13px] text-white/85 leading-relaxed">
-                <strong>Maximum disconnection times:</strong> 0.4s for final circuits ≤32A, 5s for
-                distribution circuits.
+              <p className="text-[13px] text-white leading-relaxed">
+                <strong>Maximum disconnection times:</strong> 0.4s (TN) / 0.2s (TT) for final
+                circuits up to 63A with socket-outlets or 32A fixed equipment; 5s (TN) / 1s (TT) for
+                distribution and other circuits.
               </p>
             </div>
           </div>
 
           <div className="space-y-3">
             <div className="space-y-1">
-              <span className="text-[11px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] inline-block font-mono">
+              <span className="text-[11px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] inline-block font-mono">
                 Table 41.3
               </span>
-              <p className="text-[13px] text-white/85 leading-relaxed">
+              <p className="text-[13px] text-white leading-relaxed">
                 <strong>MCB / RCBO values:</strong> Maximum earth fault loop impedance for circuit
                 breakers to BS EN 60898 and BS EN 61009.
               </p>
             </div>
 
             <div className="space-y-1">
-              <span className="text-[11px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] inline-block font-mono">
+              <span className="text-[11px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] inline-block font-mono">
                 Table 41.4
               </span>
-              <p className="text-[13px] text-white/85 leading-relaxed">
-                <strong>Fuse values:</strong> Maximum earth fault loop impedance for general purpose
-                and HRC fuses.
+              <p className="text-[13px] text-white leading-relaxed">
+                <strong>Fuses at 5 s:</strong> Maximum Zs for gG/gM fuses on distribution circuits.
+                Table 41.2 covers fuses at 0.4 s and Table 41.5 covers RCD fault protection on TT.
               </p>
             </div>
           </div>
@@ -56,7 +57,7 @@ const ZsLookupStandards = () => {
 
       {/* Disconnection Time Requirements */}
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Disconnection time requirements
         </span>
 
@@ -70,11 +71,11 @@ const ZsLookupStandards = () => {
                 'Prevents dangerous electric shock',
                 'Based on body impedance studies',
                 'Critical for socket outlets, hand-held equipment',
-                'Applies to circuits ≤32A serving final distribution',
+                'Applies to final circuits up to 63A with socket-outlets, or 32A fixed equipment',
               ].map((item, i) => (
                 <li
                   key={i}
-                  className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                  className="text-[13px] text-white leading-relaxed flex items-start gap-2"
                 >
                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{item}</span>
@@ -94,7 +95,7 @@ const ZsLookupStandards = () => {
               ].map((item, i) => (
                 <li
                   key={i}
-                  className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                  className="text-[13px] text-white leading-relaxed flex items-start gap-2"
                 >
                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{item}</span>
@@ -104,7 +105,7 @@ const ZsLookupStandards = () => {
           </div>
         </div>
 
-        <p className="text-[13px] text-white/85 leading-relaxed">
+        <p className="text-[13px] text-white leading-relaxed">
           <strong>International basis:</strong> These requirements align with IEC 60364
           international standards and extensive research into electrical safety thresholds.
         </p>
@@ -112,40 +113,43 @@ const ZsLookupStandards = () => {
 
       {/* Origin of Zs Values */}
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Origin of BS 7671 Zs values
         </span>
 
         <div className="grid gap-4 lg:grid-cols-2">
           <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Calculation method
             </span>
-            <p className="text-[13px] text-white/85 leading-relaxed font-mono">Zs = Uo / Ia</p>
-            <ul className="space-y-1 text-[13px] text-white/85">
+            <p className="text-[13px] text-white leading-relaxed font-mono">
+              Zs ≤ (U0 × Cmin) / Ia
+            </p>
+            <ul className="space-y-1 text-[13px] text-white">
               <li>
-                <strong>Uo:</strong> Nominal voltage to earth (230V)
+                <strong>U0:</strong> Nominal voltage to earth (230V), Cmin = 0.95
               </li>
               <li>
                 <strong>Ia:</strong> Current causing automatic operation in specified time
               </li>
             </ul>
-            <p className="text-[12px] text-white/55">
-              Values derived from device manufacturer test data and BS / EN standards.
+            <p className="text-[12px] text-white">
+              Tabulated values are U0 × Cmin ÷ Ia, with Ia from the device product standard.
             </p>
           </div>
 
           <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Temperature considerations
             </span>
-            <ul className="space-y-1 text-[13px] text-white/85">
-              <li>Conductor at 70°C (normal operating temp)</li>
-              <li>Ambient temperature: 20°C</li>
-              <li>No derating factors applied</li>
+            <ul className="space-y-1 text-[13px] text-white">
+              <li>Table values assume the conductor at its normal operating temperature</li>
+              <li>A site measurement is usually taken cold (around 20°C)</li>
+              <li>Cmin 0.95 is already inside the tabulated figures</li>
             </ul>
-            <p className="text-[12px] text-white/55">
-              80% test factor accounts for temperature rise under fault conditions.
+            <p className="text-[12px] text-white">
+              The 0.8 rule of thumb (GN3) allows for the conductor warming from ambient to its
+              operating temperature — compare a cold reading against 0.8 × the table value.
             </p>
           </div>
         </div>
@@ -153,17 +157,17 @@ const ZsLookupStandards = () => {
 
       {/* TT System Considerations */}
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           TT system special requirements
         </span>
 
         <h4 className="text-[14px] text-white font-medium">TT system RCD verification</h4>
 
         <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-          <p className="text-[13px] text-white/85 leading-relaxed">
+          <p className="text-[13px] text-white leading-relaxed">
             <strong>Key requirement:</strong> RA × IΔn ≤ 50V
           </p>
-          <div className="grid gap-2 sm:grid-cols-2 text-[13px] text-white/85">
+          <div className="grid gap-2 sm:grid-cols-2 text-[13px] text-white">
             <div className="space-y-0.5">
               <p>
                 <strong>RA:</strong> Earth electrode resistance (Ω)
@@ -183,7 +187,7 @@ const ZsLookupStandards = () => {
           </div>
         </div>
 
-        <p className="text-[13px] text-white/85 leading-relaxed">
+        <p className="text-[13px] text-white leading-relaxed">
           <strong>Why this matters:</strong> In TT systems, fault current may be limited by earth
           electrode resistance. Standard Zs tables don't apply — RCD must operate before dangerous
           voltages develop.
@@ -192,7 +196,7 @@ const ZsLookupStandards = () => {
 
       {/* Voltage Factors */}
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Voltage factor considerations
         </span>
 
@@ -200,7 +204,7 @@ const ZsLookupStandards = () => {
 
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-2">
-            <h5 className="text-[13px] text-white/85 font-medium">BS 7671 standard values</h5>
+            <h5 className="text-[13px] text-white font-medium">BS 7671 standard values</h5>
             <ul className="space-y-1.5">
               {[
                 'Single phase: 230V nominal',
@@ -210,7 +214,7 @@ const ZsLookupStandards = () => {
               ].map((item, i) => (
                 <li
                   key={i}
-                  className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                  className="text-[13px] text-white leading-relaxed flex items-start gap-2"
                 >
                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{item}</span>
@@ -220,7 +224,7 @@ const ZsLookupStandards = () => {
           </div>
 
           <div className="space-y-2">
-            <h5 className="text-[13px] text-white/85 font-medium">UK supply reality</h5>
+            <h5 className="text-[13px] text-white font-medium">UK supply reality</h5>
             <ul className="space-y-1.5">
               {[
                 'Declared voltage: 230V ±10%',
@@ -230,7 +234,7 @@ const ZsLookupStandards = () => {
               ].map((item, i) => (
                 <li
                   key={i}
-                  className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                  className="text-[13px] text-white leading-relaxed flex items-start gap-2"
                 >
                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{item}</span>
@@ -240,7 +244,7 @@ const ZsLookupStandards = () => {
           </div>
         </div>
 
-        <p className="text-[13px] text-white/85 leading-relaxed">
+        <p className="text-[13px] text-white leading-relaxed">
           <strong>Practical impact:</strong> UK supply voltages typically provide additional safety
           margin over BS 7671 calculated values, but design should still use standard 230V figures.
         </p>
@@ -248,13 +252,13 @@ const ZsLookupStandards = () => {
 
       {/* Related Standards */}
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Related standards & documents
         </span>
 
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-2">
-            <h5 className="text-[13px] text-white/85 font-medium">Device standards</h5>
+            <h5 className="text-[13px] text-white font-medium">Device standards</h5>
             <ul className="space-y-1.5">
               {[
                 'BS EN 60898: MCBs for household use',
@@ -264,7 +268,7 @@ const ZsLookupStandards = () => {
               ].map((item, i) => (
                 <li
                   key={i}
-                  className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                  className="text-[13px] text-white leading-relaxed flex items-start gap-2"
                 >
                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{item}</span>
@@ -274,7 +278,7 @@ const ZsLookupStandards = () => {
           </div>
 
           <div className="space-y-2">
-            <h5 className="text-[13px] text-white/85 font-medium">Test standards</h5>
+            <h5 className="text-[13px] text-white font-medium">Test standards</h5>
             <ul className="space-y-1.5">
               {[
                 'GS 38: Test equipment safety',
@@ -284,7 +288,7 @@ const ZsLookupStandards = () => {
               ].map((item, i) => (
                 <li
                   key={i}
-                  className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                  className="text-[13px] text-white leading-relaxed flex items-start gap-2"
                 >
                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{item}</span>
@@ -294,7 +298,7 @@ const ZsLookupStandards = () => {
           </div>
         </div>
 
-        <p className="text-[12px] text-white/55 leading-relaxed">
+        <p className="text-[12px] text-white leading-relaxed">
           <strong>Note:</strong> This tool provides guidance based on BS 7671:2018+A4:2026. Always
           refer to the latest edition of BS 7671 and relevant standards for authoritative
           requirements.

@@ -118,7 +118,7 @@ const OnJobWorkplaceCulture = () => {
         {/* ── Search bar ────────────────────────────────────────────── */}
         <motion.div variants={itemVariants}>
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/70" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
             <Input
               placeholder="Search questions, topics, advice…"
               value={searchQuery}
@@ -126,7 +126,7 @@ const OnJobWorkplaceCulture = () => {
                 setSearchQuery(e.target.value);
                 setExpandedSearchId(null);
               }}
-              className="h-11 pl-10 pr-10 text-[13px] touch-manipulation bg-[hsl(0_0%_10%)] border border-white/[0.08] focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20 placeholder:text-white/70"
+              className="h-11 rounded-xl border border-white/[0.12] bg-white/[0.06] pl-10 pr-10 text-base text-white placeholder:text-white/40 caret-elec-yellow focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation"
             />
             {searchQuery.length > 0 && (
               <button
@@ -134,9 +134,9 @@ const OnJobWorkplaceCulture = () => {
                   setSearchQuery('');
                   setExpandedSearchId(null);
                 }}
-                className="absolute right-2 top-1/2 -translate-y-1/2 h-9 w-9 flex items-center justify-center rounded-full active:bg-white/[0.06] touch-manipulation"
+                className="absolute right-2 top-1/2 -translate-y-1/2 h-11 w-11 flex items-center justify-center rounded-full active:bg-white/[0.06] touch-manipulation"
               >
-                <X className="h-4 w-4 text-white/70" />
+                <X className="h-4 w-4 text-white" />
               </button>
             )}
           </div>
@@ -150,9 +150,14 @@ const OnJobWorkplaceCulture = () => {
             </Eyebrow>
 
             {searchResults.length === 0 ? (
-              <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-6 text-center space-y-2">
-                <Search className="h-5 w-5 text-white/70 mx-auto" />
-                <p className="text-[13px] text-white/70">No matches. Try different keywords.</p>
+              <div
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 p-6 text-center space-y-2',
+                  CARD_SURFACE
+                )}
+              >
+                <Search className="h-5 w-5 text-white mx-auto" />
+                <p className="text-[13px] text-white">No matches. Try different keywords.</p>
               </div>
             ) : (
               <ul className="space-y-2">
@@ -166,9 +171,7 @@ const OnJobWorkplaceCulture = () => {
                       key={q.id}
                       className={cn(
                         'rounded-xl border overflow-hidden transition-colors',
-                        isExpanded
-                          ? 'border-elec-yellow/70'
-                          : 'border-white/[0.06] bg-[hsl(0_0%_10%)]'
+                        isExpanded ? 'border-elec-yellow/70' : 'border-white/[0.12] bg-white/[0.06]'
                       )}
                     >
                       <button
@@ -189,7 +192,7 @@ const OnJobWorkplaceCulture = () => {
                           </div>
                           <ChevronDown
                             className={cn(
-                              'h-4 w-4 text-white/70 flex-shrink-0 transition-transform mt-0.5',
+                              'h-4 w-4 text-white flex-shrink-0 transition-transform mt-0.5',
                               isExpanded && 'rotate-180'
                             )}
                           />
@@ -197,13 +200,13 @@ const OnJobWorkplaceCulture = () => {
                       </button>
                       {isExpanded && (
                         <div className="px-4 pb-4 space-y-3 animate-fade-in border-t border-white/[0.04] pt-3">
-                          <p className="text-[13px] text-white/85 leading-relaxed">{q.answer}</p>
+                          <p className="text-[13px] text-white leading-relaxed">{q.answer}</p>
                           <div className="flex items-center justify-between gap-2 flex-wrap">
                             <div className="flex flex-wrap gap-1">
                               {q.tags.map((tag) => (
                                 <span
                                   key={tag}
-                                  className="inline-flex items-center h-6 px-2 rounded-md border border-white/[0.14] bg-white/[0.06] text-[10.5px] text-white/85"
+                                  className="inline-flex items-center h-6 px-2 rounded-md border border-white/[0.14] bg-white/[0.06] text-[10.5px] text-white"
                                 >
                                   {tag}
                                 </span>
@@ -214,13 +217,13 @@ const OnJobWorkplaceCulture = () => {
                                 e.stopPropagation();
                                 progress.toggleBookmark(q.id);
                               }}
-                              className="h-9 w-9 flex items-center justify-center rounded-md active:bg-white/[0.06] touch-manipulation"
+                              className="h-11 w-11 flex items-center justify-center rounded-md active:bg-white/[0.06] touch-manipulation"
                               aria-label={isBookmarked ? 'Remove bookmark' : 'Bookmark'}
                             >
                               {isBookmarked ? (
                                 <BookmarkCheck className="h-4 w-4 text-elec-yellow" />
                               ) : (
-                                <Bookmark className="h-4 w-4 text-white/70" />
+                                <Bookmark className="h-4 w-4 text-white" />
                               )}
                             </button>
                           </div>
@@ -236,12 +239,17 @@ const OnJobWorkplaceCulture = () => {
           <>
             {/* ── Progress strip ─────────────────────────────────── */}
             <motion.div variants={itemVariants}>
-              <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2.5">
+              <div
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-2.5',
+                  CARD_SURFACE
+                )}
+              >
                 <div className="flex items-baseline justify-between gap-3 flex-wrap">
                   <Eyebrow>Coverage</Eyebrow>
                   <span className="text-[12px] font-mono tabular-nums text-white">
                     {overall.read} / {overall.total}
-                    <span className="text-white/70 ml-1.5">· {overall.percentage}%</span>
+                    <span className="text-white ml-1.5">· {overall.percentage}%</span>
                   </span>
                 </div>
                 <div className="h-1.5 rounded-full bg-white/[0.04] overflow-hidden">
@@ -252,7 +260,7 @@ const OnJobWorkplaceCulture = () => {
                     className="h-full bg-elec-yellow rounded-full"
                   />
                 </div>
-                <p className="text-[11.5px] text-white/70 leading-snug">
+                <p className="text-[11.5px] text-white leading-snug">
                   {overall.percentage === 100
                     ? 'All topics explored — brilliant.'
                     : 'Tap a topic below to dig in.'}
@@ -271,7 +279,12 @@ const OnJobWorkplaceCulture = () => {
 
             {/* ── Daily tip ──────────────────────────────────────── */}
             <motion.div variants={itemVariants}>
-              <div className={cn('rounded-xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}>
+              <div
+                className={cn(
+                  'rounded-xl border border-elec-yellow/35 overflow-hidden',
+                  CARD_SURFACE
+                )}
+              >
                 <button
                   onClick={() => setDailyExpanded(!dailyExpanded)}
                   className="w-full text-left p-4 sm:p-5 touch-manipulation"
@@ -286,7 +299,7 @@ const OnJobWorkplaceCulture = () => {
                     </div>
                     <ChevronDown
                       className={cn(
-                        'h-4 w-4 text-white/70 flex-shrink-0 transition-transform mt-0.5',
+                        'h-4 w-4 text-white flex-shrink-0 transition-transform mt-0.5',
                         dailyExpanded && 'rotate-180'
                       )}
                     />
@@ -294,7 +307,7 @@ const OnJobWorkplaceCulture = () => {
                 </button>
                 {dailyExpanded && (
                   <div className="px-4 sm:px-5 pb-4 border-t border-elec-yellow/15 pt-3 animate-fade-in">
-                    <p className="text-[13px] text-white/85 leading-relaxed pl-7">
+                    <p className="text-[13px] text-white leading-relaxed pl-7">
                       Small, consistent habits build your professional reputation. Focus on this one
                       area today and notice the difference in how colleagues and supervisors respond
                       to you.
@@ -352,16 +365,19 @@ const OnJobWorkplaceCulture = () => {
                     <button
                       key={section.id}
                       onClick={() => setActiveSection(section.id)}
-                      className="p-4 sm:p-5 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] active:bg-white/[0.04] active:scale-[0.99] transition-all touch-manipulation text-left space-y-2.5"
+                      className={cn(
+                        'p-4 sm:p-5 rounded-2xl border border-elec-yellow/35 active:bg-white/[0.04] active:scale-[0.99] transition-all touch-manipulation text-left space-y-2.5',
+                        CARD_SURFACE
+                      )}
                     >
                       <div className="flex items-start justify-between gap-2">
                         <Icon
                           className={cn(
                             'h-4 w-4 flex-shrink-0',
-                            complete ? 'text-elec-yellow' : 'text-white/70'
+                            complete ? 'text-elec-yellow' : 'text-white'
                           )}
                         />
-                        <span className="text-[10.5px] font-mono tabular-nums text-white/70 flex-shrink-0">
+                        <span className="text-[10.5px] font-mono tabular-nums text-white flex-shrink-0">
                           {sProgress.read}/{sProgress.total}
                         </span>
                       </div>
@@ -369,7 +385,7 @@ const OnJobWorkplaceCulture = () => {
                         <p className="text-[14px] font-semibold text-white leading-snug">
                           {section.title}
                         </p>
-                        <p className="text-[12px] text-white/70 leading-snug line-clamp-2">
+                        <p className="text-[12px] text-white leading-snug line-clamp-2">
                           {section.subtitle}
                         </p>
                       </div>
@@ -410,7 +426,7 @@ const OnJobWorkplaceCulture = () => {
                     <p className="text-[13px] font-mono font-semibold tabular-nums text-elec-yellow">
                       {progress.quizResult.score}/{progress.quizResult.total}
                     </p>
-                    <p className="text-[10px] uppercase tracking-[0.14em] text-white/70">Best</p>
+                    <p className="text-[10px] uppercase tracking-[0.14em] text-white">Best</p>
                   </div>
                 )}
               </button>
@@ -418,10 +434,12 @@ const OnJobWorkplaceCulture = () => {
 
             {/* ── Footnote tip ───────────────────────────────────── */}
             <motion.div variants={itemVariants}>
-              <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
+              <div
+                className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}
+              >
                 <div className="flex items-start gap-2.5">
                   <MessageSquare className="h-4 w-4 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                  <p className="text-[13px] text-white/85 leading-relaxed">
+                  <p className="text-[13px] text-white leading-relaxed">
                     One of the easiest ways to fit into any UK site is to{' '}
                     <span className="font-semibold text-elec-yellow">offer to make the tea</span>.
                     It's not just about the drink — it's about showing you're part of the team.
@@ -448,7 +466,7 @@ const OnJobWorkplaceCulture = () => {
         <Sheet open={showContactsSheet} onOpenChange={setShowContactsSheet}>
           <SheetContent
             side="bottom"
-            className="h-[80vh] sm:h-[70vh] rounded-t-3xl p-0 overflow-hidden bg-[hsl(0_0%_8%)] border-white/[0.06]"
+            className="h-[85vh] rounded-t-2xl p-0 overflow-hidden bg-[hsl(0_0%_8%)] border-white/[0.06]"
           >
             <div className="flex flex-col h-full">
               <div className="flex justify-center pt-2.5 pb-1">
@@ -465,24 +483,22 @@ const OnJobWorkplaceCulture = () => {
 
               <div className="flex-1 overflow-y-auto px-5 pb-6 space-y-2.5">
                 {contacts.map((contact) => (
-                  <Card key={contact.id} className="border-white/[0.06] bg-[hsl(0_0%_10%)]">
+                  <Card key={contact.id} className={cn('border-elec-yellow/35', CARD_SURFACE)}>
                     <CardContent className="p-4 space-y-2 text-left">
                       <h3 className="text-[14px] font-semibold text-white leading-snug">
                         {contact.name}
                       </h3>
-                      <p className="text-[12.5px] text-white/85 leading-relaxed">
+                      <p className="text-[12.5px] text-white leading-relaxed">
                         {contact.description}
                       </p>
                       {contact.availability && (
-                        <p className="text-[11px] text-white/70 font-mono">
-                          {contact.availability}
-                        </p>
+                        <p className="text-[11px] text-white font-mono">{contact.availability}</p>
                       )}
                       <div className="flex gap-2 pt-1 flex-wrap">
                         {contact.phone && (
                           <a
                             href={`tel:${contact.phone.replace(/\s/g, '')}`}
-                            className="inline-flex items-center gap-1.5 h-10 px-3 rounded-md border border-elec-yellow/40 text-[12.5px] font-medium text-elec-yellow touch-manipulation active:scale-95 transition-all"
+                            className="inline-flex items-center gap-1.5 h-11 px-3 rounded-md border border-elec-yellow/40 text-[12.5px] font-medium text-elec-yellow touch-manipulation active:scale-95 transition-all"
                           >
                             <Phone className="h-3.5 w-3.5" />
                             {contact.phone}
@@ -493,7 +509,7 @@ const OnJobWorkplaceCulture = () => {
                             href={contact.website}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 h-10 px-3 rounded-md border border-white/[0.14] bg-white/[0.06] text-[12.5px] font-medium text-white/85 touch-manipulation active:scale-95 transition-all"
+                            className="inline-flex items-center gap-1.5 h-11 px-3 rounded-md border border-white/[0.14] bg-white/[0.06] text-[12.5px] font-medium text-white touch-manipulation active:scale-95 transition-all"
                           >
                             <ExternalLink className="h-3.5 w-3.5" />
                             Website

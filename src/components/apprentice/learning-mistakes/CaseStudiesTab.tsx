@@ -88,7 +88,7 @@ const CaseStudiesTab = () => {
   return (
     <div className="space-y-6">
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Real apprentice case studies
         </span>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
@@ -114,18 +114,18 @@ const CaseStudiesTab = () => {
                     className={
                       caseStudy.isSafety
                         ? 'text-[10px] font-medium uppercase tracking-[0.18em] text-red-300 flex-shrink-0'
-                        : 'text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 flex-shrink-0'
+                        : 'text-[10px] font-medium uppercase tracking-[0.18em] text-white flex-shrink-0'
                     }
                   >
                     {caseStudy.severity}
                   </span>
                 </div>
 
-                <span className="inline-block text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                <span className="inline-block text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                   {caseStudy.category}
                 </span>
 
-                <p className="text-[13px] text-white/85 leading-relaxed line-clamp-3">
+                <p className="text-[13px] text-white leading-relaxed line-clamp-3">
                   {caseStudy.scenario}
                 </p>
 
@@ -147,7 +147,7 @@ const CaseStudiesTab = () => {
             return (
               <>
                 <div className="space-y-1">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Case study
                   </span>
                   <h2 className="text-[20px] font-semibold text-white leading-tight">
@@ -156,33 +156,33 @@ const CaseStudiesTab = () => {
                 </div>
 
                 <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     The scenario
                   </span>
-                  <p className="text-[14px] text-white/85 leading-relaxed">
+                  <p className="text-[14px] text-white leading-relaxed">
                     {currentCase.scenario}
                   </p>
                 </div>
 
                 <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     How it was discovered
                   </span>
-                  <p className="text-[14px] text-white/85 leading-relaxed">
+                  <p className="text-[14px] text-white leading-relaxed">
                     {currentCase.discovery}
                   </p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                       Consequences
                     </span>
                     <ul className="space-y-1.5">
                       {currentCase.consequences.map((consequence, index) => (
                         <li
                           key={index}
-                          className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                          className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                         >
                           <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                           <span>{consequence}</span>
@@ -192,14 +192,14 @@ const CaseStudiesTab = () => {
                   </div>
 
                   <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                       Lessons learned
                     </span>
                     <ul className="space-y-1.5">
                       {currentCase.lessons.map((lesson, index) => (
                         <li
                           key={index}
-                          className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                          className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                         >
                           <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
                           <span>{lesson}</span>
@@ -210,17 +210,17 @@ const CaseStudiesTab = () => {
                 </div>
 
                 <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Final outcome
                   </span>
-                  <p className="text-[14px] text-white/85 leading-relaxed">{currentCase.outcome}</p>
+                  <p className="text-[14px] text-white leading-relaxed">{currentCase.outcome}</p>
                 </div>
 
                 <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Prevention strategy
                   </span>
-                  <p className="text-[14px] text-white/85 leading-relaxed">
+                  <p className="text-[14px] text-white leading-relaxed">
                     {currentCase.prevention}
                   </p>
                 </div>
@@ -230,7 +230,7 @@ const CaseStudiesTab = () => {
                     <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
                       Reporting honestly is safe
                     </span>
-                    <p className="text-[14px] text-white/85 leading-relaxed">
+                    <p className="text-[14px] text-white leading-relaxed">
                       A near miss like this must be reported straight away — owning up early
                       protects you and your colleagues. Good employers run a just culture: honest
                       reporting of a genuine mistake is encouraged, not punished, because it lets

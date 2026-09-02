@@ -374,7 +374,7 @@ const TrainingProviderMap: React.FC<TrainingProviderMapProps> = ({ onClose }) =>
                     key={provider.id}
                     className={`p-3 rounded-md cursor-pointer transition-all touch-manipulation ${
                       selectedProvider?.id === provider.id
-                        ? 'bg-elec-yellow/20'
+                        ? 'bg-white/[0.08]'
                         : 'hover:bg-white/10 active:bg-white/20'
                     }`}
                     onClick={() => handleProviderClick(provider)}
@@ -469,7 +469,7 @@ const TrainingProviderMap: React.FC<TrainingProviderMapProps> = ({ onClose }) =>
                   <Button
                     variant="outline"
                     size="sm"
-                    className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                    className="border-elec-yellow/30 text-elec-yellow hover:bg-white/[0.06]"
                   >
                     Enquire About Apprenticeships
                   </Button>
@@ -487,7 +487,7 @@ const TrainingProviderMap: React.FC<TrainingProviderMapProps> = ({ onClose }) =>
                       </Button>
                       <Button
                         variant="outline"
-                        className="w-full border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                        className="w-full border-elec-yellow/30 text-elec-yellow hover:bg-white/[0.06]"
                       >
                         Save Contact Information
                       </Button>

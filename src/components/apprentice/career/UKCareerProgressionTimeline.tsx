@@ -4,13 +4,13 @@ const UKCareerProgressionTimeline = () => {
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Career timeline
         </span>
         <h2 className="text-[20px] sm:text-[24px] font-bold tracking-tight text-white leading-tight">
           UK electrical career progression
         </h2>
-        <p className="text-[14px] text-white/70 leading-relaxed max-w-2xl">
+        <p className="text-[14px] text-white leading-relaxed max-w-2xl">
           Progression path for UK electricians following the JIB grading scheme with regional
           salary data.
         </p>
@@ -24,7 +24,7 @@ const UKCareerProgressionTimeline = () => {
           >
             <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2">
               <div className="space-y-1">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   {level.jib_grade} · {level.typical_experience}
                 </span>
                 <h3 className="text-[18px] font-semibold text-white leading-tight">
@@ -32,11 +32,11 @@ const UKCareerProgressionTimeline = () => {
                 </h3>
               </div>
               <div className="flex flex-wrap gap-1.5">
-                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                   {level.progression_timeline}
                 </span>
                 {level.time_to_achieve && (
-                  <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                  <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                     {level.time_to_achieve}
                   </span>
                 )}
@@ -45,10 +45,10 @@ const UKCareerProgressionTimeline = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Regional salaries (annual)
                 </span>
-                <div className="space-y-1 text-[13px] text-white/85">
+                <div className="space-y-1 text-[13px] text-white">
                   <div className="flex justify-between">
                     <span>London</span>
                     <span className="text-white font-mono">{level.salary_ranges.london}</span>
@@ -66,13 +66,13 @@ const UKCareerProgressionTimeline = () => {
                     <span className="text-white font-mono">{level.salary_ranges.north}</span>
                   </div>
                 </div>
-                <p className="text-[11px] text-white/55 pt-1 border-t border-white/[0.06]">
+                <p className="text-[11px] text-white pt-1 border-t border-white/[0.06]">
                   Rates vary by experience and specialisation.
                 </p>
               </div>
 
               <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Essential qualifications
                 </span>
                 <div className="space-y-2">
@@ -82,18 +82,18 @@ const UKCareerProgressionTimeline = () => {
                       className="flex items-baseline justify-between gap-2 text-[13px]"
                     >
                       <div>
-                        <span className="text-white/55">{qual.level}</span>
-                        <div className="text-white/85">{qual.name}</div>
+                        <span className="text-white">{qual.level}</span>
+                        <div className="text-white">{qual.name}</div>
                       </div>
                       {qual.code && (
-                        <span className="text-[11px] text-white/85 px-1.5 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
+                        <span className="text-[11px] text-white px-1.5 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
                           {qual.code}
                         </span>
                       )}
                     </div>
                   ))}
                   {level.key_qualifications.length > 4 && (
-                    <div className="text-[12px] text-white/55">
+                    <div className="text-[12px] text-white">
                       +{level.key_qualifications.length - 4} more qualifications
                     </div>
                   )}
@@ -102,23 +102,23 @@ const UKCareerProgressionTimeline = () => {
 
               {(level.prerequisites || level.day_rates || level.cpd) && (
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Requirements & CPD
                   </span>
                   {level.prerequisites && level.prerequisites.length > 0 && (
                     <div className="space-y-1">
-                      <p className="text-[12px] text-white/55">Prerequisites</p>
+                      <p className="text-[12px] text-white">Prerequisites</p>
                       <ul className="space-y-1.5">
                         {level.prerequisites.map((p, i) => (
                           <li
                             key={i}
-                            className="flex items-start gap-2 text-[13px] text-white/85"
+                            className="flex items-start gap-2 text-[13px] text-white"
                           >
                             <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                             <span>
                               {p.name}
                               {p.code && (
-                                <span className="ml-1 text-[11px] text-white/85 px-1.5 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
+                                <span className="ml-1 text-[11px] text-white px-1.5 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
                                   {p.code}
                                 </span>
                               )}
@@ -132,12 +132,12 @@ const UKCareerProgressionTimeline = () => {
                   {level.day_rates && (
                     <div className="flex flex-wrap gap-1.5">
                       {level.day_rates.employed && (
-                        <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                        <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                           Employed: {level.day_rates.employed}
                         </span>
                       )}
                       {level.day_rates.contractor && (
-                        <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                        <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                           Contractor: {level.day_rates.contractor}
                         </span>
                       )}
@@ -145,14 +145,14 @@ const UKCareerProgressionTimeline = () => {
                   )}
                   {level.cpd && (
                     <div className="space-y-1">
-                      <p className="text-[12px] text-white/55">CPD</p>
-                      <p className="text-[13px] text-white/85">{level.cpd.interval}</p>
+                      <p className="text-[12px] text-white">CPD</p>
+                      <p className="text-[13px] text-white">{level.cpd.interval}</p>
                       {level.cpd.requirements && (
                         <ul className="space-y-1.5">
                           {level.cpd.requirements.map((r, i) => (
                             <li
                               key={i}
-                              className="flex items-start gap-2 text-[13px] text-white/85"
+                              className="flex items-start gap-2 text-[13px] text-white"
                             >
                               <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                               <span>{r}</span>
@@ -166,16 +166,16 @@ const UKCareerProgressionTimeline = () => {
               )}
 
               <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Work opportunities
                 </span>
                 <div>
-                  <p className="text-[12px] text-white/55 mb-1.5">Key sectors</p>
+                  <p className="text-[12px] text-white mb-1.5">Key sectors</p>
                   <div className="flex flex-wrap gap-1.5">
                     {level.work_sectors.slice(0, 3).map((sector, idx) => (
                       <span
                         key={idx}
-                        className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
+                        className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
                       >
                         {sector}
                       </span>
@@ -183,8 +183,8 @@ const UKCareerProgressionTimeline = () => {
                   </div>
                 </div>
                 <div>
-                  <p className="text-[12px] text-white/55 mb-1">Career prospects</p>
-                  <p className="text-[13px] text-white/85 leading-relaxed">
+                  <p className="text-[12px] text-white mb-1">Career prospects</p>
+                  <p className="text-[13px] text-white leading-relaxed">
                     {level.title.includes('Apprentice')
                       ? 'Foundation level with structured learning pathway.'
                       : level.title.includes('Improver')
@@ -200,17 +200,17 @@ const UKCareerProgressionTimeline = () => {
 
               {(level.branches || level.portfolio_evidence || level.regional_notes) && (
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Progress options & evidence
                   </span>
                   {level.branches && level.branches.length > 0 && (
                     <div>
-                      <p className="text-[12px] text-white/55 mb-1.5">Branching paths</p>
+                      <p className="text-[12px] text-white mb-1.5">Branching paths</p>
                       <div className="flex flex-wrap gap-1.5">
                         {level.branches.map((b) => (
                           <span
                             key={b.id}
-                            className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
+                            className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
                           >
                             {b.title}
                           </span>
@@ -220,12 +220,12 @@ const UKCareerProgressionTimeline = () => {
                   )}
                   {level.portfolio_evidence && level.portfolio_evidence.length > 0 && (
                     <div className="space-y-1">
-                      <p className="text-[12px] text-white/55">Portfolio evidence</p>
+                      <p className="text-[12px] text-white">Portfolio evidence</p>
                       <ul className="space-y-1.5">
                         {level.portfolio_evidence.map((e, i) => (
                           <li
                             key={i}
-                            className="flex items-start gap-2 text-[13px] text-white/85"
+                            className="flex items-start gap-2 text-[13px] text-white"
                           >
                             <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                             <span>{e}</span>
@@ -235,20 +235,20 @@ const UKCareerProgressionTimeline = () => {
                     </div>
                   )}
                   {level.regional_notes && (
-                    <p className="text-[13px] text-white/70">{level.regional_notes}</p>
+                    <p className="text-[13px] text-white">{level.regional_notes}</p>
                   )}
                 </div>
               )}
 
               <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4 space-y-2 lg:col-span-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Next steps to progress
                 </span>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {level.next_steps.slice(0, 6).map((step, idx) => (
                     <div
                       key={idx}
-                      className="flex items-start gap-2 text-[13px] text-white/85"
+                      className="flex items-start gap-2 text-[13px] text-white"
                     >
                       <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                       <span>{step}</span>
@@ -256,7 +256,7 @@ const UKCareerProgressionTimeline = () => {
                   ))}
                 </div>
                 {level.next_steps.length > 6 && (
-                  <p className="text-[12px] text-white/55">
+                  <p className="text-[12px] text-white">
                     +{level.next_steps.length - 6} additional requirements
                   </p>
                 )}
@@ -267,13 +267,13 @@ const UKCareerProgressionTimeline = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Career notes
         </span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <p className="text-[12px] text-white/55">Progression timeline</p>
-            <ul className="space-y-1 text-[13px] text-white/85">
+            <p className="text-[12px] text-white">Progression timeline</p>
+            <ul className="space-y-1 text-[13px] text-white">
               <li>Apprentice to Improver: 3-4 years (apprenticeship)</li>
               <li>Improver to Electrician: 0.5-2 years (NVQ3 + AM2)</li>
               <li>Electrician to Approved: 1-3 years (with 2391 + experience)</li>
@@ -281,8 +281,8 @@ const UKCareerProgressionTimeline = () => {
             </ul>
           </div>
           <div className="space-y-2">
-            <p className="text-[12px] text-white/55">Salary factors</p>
-            <ul className="space-y-1 text-[13px] text-white/85">
+            <p className="text-[12px] text-white">Salary factors</p>
+            <ul className="space-y-1 text-[13px] text-white">
               <li>Location significantly affects rates</li>
               <li>Specialisations command premium rates</li>
               <li>Contractor rates typically 20-40% higher</li>

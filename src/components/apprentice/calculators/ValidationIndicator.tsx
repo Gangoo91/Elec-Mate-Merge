@@ -19,7 +19,7 @@ const ValidationIndicator: React.FC<ValidationIndicatorProps> = ({
     <span
       className={`inline-flex items-center gap-1.5 text-[11px] px-2 py-0.5 rounded-md border ${
         ok
-          ? 'border-white/10 bg-white/[0.03] text-white/85'
+          ? 'border-white/10 bg-white/[0.03] text-white'
           : 'border-red-500/30 bg-red-500/[0.04] text-red-300'
       }`}
     >
@@ -39,7 +39,7 @@ const ValidationIndicator: React.FC<ValidationIndicatorProps> = ({
 
       {/* Validation Status */}
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           {validation.isValid ? 'Calculation valid' : 'Validation issues detected'}
         </span>
       </div>
@@ -54,7 +54,7 @@ const ValidationIndicator: React.FC<ValidationIndicatorProps> = ({
             {validation.errors.map((error, index) => (
               <li
                 key={index}
-                className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                className="text-[13px] text-white leading-relaxed flex items-start gap-2"
               >
                 <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                 <span>{error}</span>
@@ -67,14 +67,14 @@ const ValidationIndicator: React.FC<ValidationIndicatorProps> = ({
       {/* Warnings */}
       {validation.warnings.length > 0 && (
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Warnings
           </span>
           <ul className="space-y-1.5">
             {validation.warnings.map((warning, index) => (
               <li
                 key={index}
-                className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                className="text-[13px] text-white leading-relaxed flex items-start gap-2"
               >
                 <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                 <span>{warning}</span>
@@ -86,10 +86,10 @@ const ValidationIndicator: React.FC<ValidationIndicatorProps> = ({
 
       {/* Professional Notice */}
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Professional notice
         </span>
-        <p className="text-[13px] text-white/85 leading-relaxed">
+        <p className="text-[13px] text-white leading-relaxed">
           This {calculationType} calculation has been validated against BS 7671 and IET standards.
           Always verify critical calculations with a qualified electrician before implementation.
         </p>

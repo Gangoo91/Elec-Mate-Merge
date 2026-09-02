@@ -8,16 +8,10 @@
  */
 
 import { useState, useMemo } from 'react';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetDescription,
-} from '@/components/ui/sheet';
+import { FormSheet } from '@/components/forms/FormSheet';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   Brain,
@@ -75,9 +69,7 @@ export function KSBCoverageMap({ open, onOpenChange }: KSBCoverageMapProps) {
       const evidenceSubmitted = items.filter(
         (ksb) => getDerivedStatus(ksb.id) === 'evidence_submitted'
       ).length;
-      const inProgress = items.filter(
-        (ksb) => getDerivedStatus(ksb.id) === 'in_progress'
-      ).length;
+      const inProgress = items.filter((ksb) => getDerivedStatus(ksb.id) === 'in_progress').length;
       return {
         total: items.length,
         completed,
@@ -105,11 +97,11 @@ export function KSBCoverageMap({ open, onOpenChange }: KSBCoverageMapProps) {
     switch (status) {
       case 'completed':
       case 'verified':
-        return <CheckCircle2 className="h-4 w-4 text-white/85" />;
+        return <CheckCircle2 className="h-4 w-4 text-white" />;
       case 'evidence_submitted':
-        return <FileText className="h-4 w-4 text-white/85" />;
+        return <FileText className="h-4 w-4 text-white" />;
       case 'in_progress':
-        return <Clock className="h-4 w-4 text-white/85" />;
+        return <Clock className="h-4 w-4 text-white" />;
       default:
         return <AlertCircle className="h-4 w-4 text-white" />;
     }
@@ -119,25 +111,19 @@ export function KSBCoverageMap({ open, onOpenChange }: KSBCoverageMapProps) {
     switch (status) {
       case 'completed':
         return (
-          <Badge className="bg-white/[0.02] text-white/85 border-white/[0.06] text-xs">
-            Complete
-          </Badge>
+          <Badge className="bg-white/[0.02] text-white border-white/[0.06] text-xs">Complete</Badge>
         );
       case 'verified':
         return (
-          <Badge className="bg-white/[0.02] text-white/85 border-white/[0.06] text-xs">
-            Verified
-          </Badge>
+          <Badge className="bg-white/[0.02] text-white border-white/[0.06] text-xs">Verified</Badge>
         );
       case 'evidence_submitted':
         return (
-          <Badge className="bg-white/[0.02] text-white/85 border-white/[0.06] text-xs">
-            Evidence
-          </Badge>
+          <Badge className="bg-white/[0.02] text-white border-white/[0.06] text-xs">Evidence</Badge>
         );
       case 'in_progress':
         return (
-          <Badge className="bg-white/[0.02] text-white/85 border-white/[0.06] text-xs">
+          <Badge className="bg-white/[0.02] text-white border-white/[0.06] text-xs">
             In Progress
           </Badge>
         );
@@ -153,14 +139,14 @@ export function KSBCoverageMap({ open, onOpenChange }: KSBCoverageMapProps) {
   const getRouteBadge = (route: string) => {
     if (route === 'installation') {
       return (
-        <Badge className="bg-white/[0.02] text-white/85 border-white/[0.06] text-xs">
+        <Badge className="bg-white/[0.02] text-white border-white/[0.06] text-xs">
           Installation
         </Badge>
       );
     }
     if (route === 'maintenance') {
       return (
-        <Badge className="bg-white/[0.02] text-white/85 border-white/[0.06] text-xs">
+        <Badge className="bg-white/[0.02] text-white border-white/[0.06] text-xs">
           Maintenance
         </Badge>
       );
@@ -172,7 +158,7 @@ export function KSBCoverageMap({ open, onOpenChange }: KSBCoverageMapProps) {
     knowledge: {
       icon: Brain,
       label: 'Knowledge',
-      color: 'text-white/85',
+      color: 'text-white',
       bgColor: 'bg-white/[0.02]',
       items: knowledge,
       stats: stats.knowledge,
@@ -180,7 +166,7 @@ export function KSBCoverageMap({ open, onOpenChange }: KSBCoverageMapProps) {
     behaviour: {
       icon: Heart,
       label: 'Behaviours',
-      color: 'text-white/85',
+      color: 'text-white',
       bgColor: 'bg-white/[0.02]',
       items: behaviours,
       stats: stats.behaviours,
@@ -204,7 +190,7 @@ export function KSBCoverageMap({ open, onOpenChange }: KSBCoverageMapProps) {
     return (
       <button
         onClick={() => setExpandedKSB(isExpanded ? null : ksb.id)}
-        className="w-full text-left p-3 rounded-xl bg-muted/30 border border-border hover:bg-muted/50 transition-colors touch-manipulation"
+        className="w-full text-left p-3 rounded-xl bg-white/[0.04] border border-white/[0.10] hover:bg-white/[0.06] transition-colors touch-manipulation"
       >
         <div className="flex items-start gap-3">
           <div className="shrink-0 mt-0.5">{getStatusIcon(effectiveStatus)}</div>
@@ -215,16 +201,16 @@ export function KSBCoverageMap({ open, onOpenChange }: KSBCoverageMapProps) {
               </Badge>
               {getStatusBadge(effectiveStatus)}
               {autoEvidenced && (
-                <Badge className="bg-elec-yellow/[0.08] text-elec-yellow border-elec-yellow/30 text-xs">
+                <Badge className="border-elec-yellow/60 bg-transparent text-xs text-elec-yellow">
                   Auto from portfolio
                 </Badge>
               )}
               {getRouteBadge(ksb.route)}
             </div>
-            <p className="text-sm font-medium mt-1 text-foreground">{ksb.title}</p>
+            <p className="text-sm font-medium mt-1 text-white">{ksb.title}</p>
 
             {isExpanded && (
-              <div className="mt-3 pt-3 border-t border-border space-y-2">
+              <div className="mt-3 pt-3 border-t border-white/[0.10] space-y-2">
                 {ksb.description && <p className="text-xs text-white">{ksb.description}</p>}
 
                 {/* Delivering Units */}
@@ -275,7 +261,7 @@ export function KSBCoverageMap({ open, onOpenChange }: KSBCoverageMapProps) {
                     </div>
                   )}
                 {ksbProgress?.notes && (
-                  <div className="p-2 rounded-lg bg-muted/50 text-xs text-white">
+                  <div className="p-2 rounded-lg bg-white/[0.06] text-xs text-white">
                     <span className="font-medium">Notes:</span> {ksbProgress.notes}
                   </div>
                 )}
@@ -304,156 +290,146 @@ export function KSBCoverageMap({ open, onOpenChange }: KSBCoverageMapProps) {
   };
 
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] rounded-t-3xl p-0">
-        <div className="w-12 h-1 bg-muted rounded-full mx-auto mt-3 mb-2" />
-
-        <SheetHeader className="px-4 pb-4">
-          <SheetTitle className="flex items-center gap-2">
-            <Target className="h-5 w-5 text-elec-yellow" />
-            KSB Coverage Map
-          </SheetTitle>
-          <SheetDescription>Track your Knowledge & Behaviours progress</SheetDescription>
-        </SheetHeader>
-
-        {isLoading ? (
-          <div className="flex flex-col items-center justify-center py-12">
-            <Loader2 className="h-8 w-8 animate-spin text-white" />
-            <p className="text-sm text-white mt-2">Loading KSBs...</p>
-          </div>
-        ) : ksbs.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-12 px-4 text-center">
-            <div className="p-4 rounded-full bg-muted mb-4">
-              <Target className="h-8 w-8 text-white" />
-            </div>
-            <p className="font-medium text-foreground">No KSBs Found</p>
-            <p className="text-sm text-white mt-1">
-              KSBs will appear once you select a qualification with mapped standards.
-            </p>
-          </div>
-        ) : (
-          <>
-            {/* Overall Progress Summary */}
-            <div className="px-4 mb-4">
-              <div className="p-4 rounded-xl bg-white/[0.02] border border-elec-yellow/20">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium">Overall Progress</span>
-                  <span className="text-sm text-white">
-                    {stats.overall.completed}/{stats.overall.total} completed
-                  </span>
-                </div>
-                <Progress
-                  value={
-                    stats.overall.total > 0
-                      ? (stats.overall.completed / stats.overall.total) * 100
-                      : 0
-                  }
-                  className="h-2"
-                />
-              </div>
-            </div>
-
-            {/* Skills integrated note */}
-            <div className="px-4 mb-3">
-              <div className="flex items-start gap-2 p-2.5 rounded-lg bg-white/[0.02] text-xs text-white">
-                <Info className="h-3.5 w-3.5 shrink-0 mt-0.5 text-white/85" />
-                <span>
-                  Skills are integrated into knowledge units. Each knowledge KSB includes both
-                  theory and practical competence delivered through 5357-23 qualification units.
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      eyebrow="Apprenticeship standard"
+      title="Knowledge, skills & behaviours"
+      description="How much of the standard your evidence already covers."
+      bodyClassName="space-y-0"
+    >
+      {isLoading ? (
+        <div className="flex flex-col items-center justify-center py-12">
+          <Loader2 className="h-8 w-8 animate-spin text-white" />
+          <p className="text-sm text-white mt-2">Loading KSBs...</p>
+        </div>
+      ) : ksbs.length === 0 ? (
+        <div className="flex flex-col items-center justify-center px-4 py-12 text-center">
+          <Target className="mb-3 h-8 w-8 text-white" />
+          <p className="font-medium text-white">No KSBs found</p>
+          <p className="text-sm text-white mt-1">
+            KSBs will appear once you select a qualification with mapped standards.
+          </p>
+        </div>
+      ) : (
+        <>
+          {/* Overall Progress Summary */}
+          <div className="mb-4">
+            <div className={cn('rounded-2xl border border-elec-yellow/35 p-4', CARD_SURFACE)}>
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm font-medium">Overall Progress</span>
+                <span className="text-sm text-white">
+                  {stats.overall.completed}/{stats.overall.total} completed
                 </span>
               </div>
+              <Progress
+                value={
+                  stats.overall.total > 0
+                    ? (stats.overall.completed / stats.overall.total) * 100
+                    : 0
+                }
+                className="h-2"
+              />
             </div>
+          </div>
 
-            {/* Tabs */}
-            <Tabs
-              value={activeTab}
-              onValueChange={(v) => setActiveTab(v as TabType)}
-              className="flex-1 flex flex-col"
-            >
-              <TabsList className="mx-4 mb-2 grid grid-cols-2 h-12 bg-muted/30">
-                {(Object.keys(tabConfig) as TabType[]).map((type) => {
-                  const config = tabConfig[type];
-                  const Icon = config.icon;
-                  return (
-                    <TabsTrigger
-                      key={type}
-                      value={type}
-                      className="flex flex-col gap-0.5 h-11 data-[state=active]:bg-background"
+          {/* Skills integrated note */}
+          <div className="mb-3">
+            <div className="flex items-start gap-2 rounded-xl border border-white/[0.12] bg-white/[0.05] px-3.5 py-3 text-xs text-white">
+              <Info className="mt-0.5 h-3.5 w-3.5 shrink-0 text-white" />
+              <span>
+                Skills are integrated into knowledge units. Each knowledge KSB includes both theory
+                and practical competence delivered through 5357-23 qualification units.
+              </span>
+            </div>
+          </div>
+
+          {/* Tabs */}
+          <Tabs
+            value={activeTab}
+            onValueChange={(v) => setActiveTab(v as TabType)}
+            className="flex-1 flex flex-col"
+          >
+            <TabsList className="mb-2 grid h-12 grid-cols-2 bg-white/[0.06]">
+              {(Object.keys(tabConfig) as TabType[]).map((type) => {
+                const config = tabConfig[type];
+                const Icon = config.icon;
+                return (
+                  <TabsTrigger
+                    key={type}
+                    value={type}
+                    className="flex h-11 flex-col gap-0.5 text-white data-[state=active]:bg-elec-yellow data-[state=active]:text-black"
+                  >
+                    <Icon className={cn('h-4 w-4', config.color)} />
+                    <span className="text-xs">
+                      {config.stats.completed}/{config.stats.total}
+                    </span>
+                  </TabsTrigger>
+                );
+              })}
+            </TabsList>
+
+            <div className="pb-4">
+              {(Object.keys(tabConfig) as TabType[]).map((type) => {
+                const config = tabConfig[type];
+                const Icon = config.icon;
+                return (
+                  <TabsContent key={type} value={type} className="mt-0 space-y-4">
+                    {/* Type Summary */}
+                    <div
+                      className={cn('p-3 rounded-xl border', config.bgColor, 'border-transparent')}
                     >
-                      <Icon className={cn('h-4 w-4', config.color)} />
-                      <span className="text-xs">
-                        {config.stats.completed}/{config.stats.total}
-                      </span>
-                    </TabsTrigger>
-                  );
-                })}
-              </TabsList>
-
-              <ScrollArea className="flex-1 px-4 pb-8">
-                {(Object.keys(tabConfig) as TabType[]).map((type) => {
-                  const config = tabConfig[type];
-                  const Icon = config.icon;
-                  return (
-                    <TabsContent key={type} value={type} className="mt-0 space-y-4">
-                      {/* Type Summary */}
-                      <div
-                        className={cn('p-3 rounded-xl border',
-                          config.bgColor,
-                          'border-transparent'
-                        )}
-                      >
-                        <div className="flex items-center gap-3">
-                          <div className={cn('p-2 rounded-lg', config.bgColor)}>
-                            <Icon className={cn('h-5 w-5', config.color)} />
-                          </div>
-                          <div className="flex-1">
-                            <div className="flex items-center justify-between">
-                              <span className="font-medium text-sm">{config.label}</span>
-                              <span className="text-xs text-white">
-                                {config.stats.percentage}% complete
-                              </span>
-                            </div>
-                            <Progress value={config.stats.percentage} className="h-1.5 mt-1" />
-                          </div>
+                      <div className="flex items-center gap-3">
+                        <div className={cn('p-2 rounded-lg', config.bgColor)}>
+                          <Icon className={cn('h-5 w-5', config.color)} />
                         </div>
-                        <div className="flex gap-4 mt-3 text-xs text-white">
-                          <span className="flex items-center gap-1">
-                            <CheckCircle2 className="h-3 w-3 text-white/85" />
-                            {config.stats.completed} done
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <FileText className="h-3 w-3 text-white/85" />
-                            {config.stats.evidenceSubmitted} evidence
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <Clock className="h-3 w-3 text-white/85" />
-                            {config.stats.inProgress} active
-                          </span>
+                        <div className="flex-1">
+                          <div className="flex items-center justify-between">
+                            <span className="font-medium text-sm">{config.label}</span>
+                            <span className="text-xs text-white">
+                              {config.stats.percentage}% complete
+                            </span>
+                          </div>
+                          <Progress value={config.stats.percentage} className="h-1.5 mt-1" />
                         </div>
                       </div>
-
-                      {/* KSB List */}
-                      <div className="space-y-2">
-                        {config.items.map((ksb) => (
-                          <KSBItem key={ksb.id} ksb={ksb} />
-                        ))}
-                        {config.items.length === 0 && (
-                          <div className="text-center py-8">
-                            <p className="text-sm text-white">
-                              No {config.label.toLowerCase()} mapped for this qualification yet.
-                            </p>
-                          </div>
-                        )}
+                      <div className="flex gap-4 mt-3 text-xs text-white">
+                        <span className="flex items-center gap-1">
+                          <CheckCircle2 className="h-3 w-3 text-white" />
+                          {config.stats.completed} done
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <FileText className="h-3 w-3 text-white" />
+                          {config.stats.evidenceSubmitted} evidence
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Clock className="h-3 w-3 text-white" />
+                          {config.stats.inProgress} active
+                        </span>
                       </div>
-                    </TabsContent>
-                  );
-                })}
-              </ScrollArea>
-            </Tabs>
-          </>
-        )}
-      </SheetContent>
-    </Sheet>
+                    </div>
+
+                    {/* KSB List */}
+                    <div className="space-y-2">
+                      {config.items.map((ksb) => (
+                        <KSBItem key={ksb.id} ksb={ksb} />
+                      ))}
+                      {config.items.length === 0 && (
+                        <div className="text-center py-8">
+                          <p className="text-sm text-white">
+                            No {config.label.toLowerCase()} mapped for this qualification yet.
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  </TabsContent>
+                );
+              })}
+            </div>
+          </Tabs>
+        </>
+      )}
+    </FormSheet>
   );
 }
 

@@ -96,7 +96,7 @@ const InteractivePracticeTab = () => {
   return (
     <div className="space-y-6">
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Interactive communication scenarios
         </span>
         <div className="space-y-3">
@@ -110,7 +110,7 @@ const InteractivePracticeTab = () => {
               >
                 <div className="flex items-start justify-between gap-3 mb-3">
                   <div className="space-y-1">
-                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                       {scenario.difficulty}
                       {isComplete && ' · completed'}
                     </span>
@@ -129,19 +129,19 @@ const InteractivePracticeTab = () => {
                   </Button>
                 </div>
 
-                <p className="text-[13px] text-white/85 leading-relaxed">{scenario.situation}</p>
+                <p className="text-[13px] text-white leading-relaxed">{scenario.situation}</p>
 
                 {isOpen && (
                   <div className="space-y-3 mt-3 pt-3 border-t border-white/[0.06]">
                     <div className="space-y-2">
-                      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                         Your objectives
                       </span>
                       <ul className="space-y-1">
                         {scenario.objectives.map((objective, index) => (
                           <li
                             key={index}
-                            className="flex items-start gap-2 text-[13px] text-white/85"
+                            className="flex items-start gap-2 text-[13px] text-white"
                           >
                             <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                             <span>{objective}</span>
@@ -151,14 +151,14 @@ const InteractivePracticeTab = () => {
                     </div>
 
                     <div className="space-y-2">
-                      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                         Communication tips
                       </span>
                       <ul className="space-y-1">
                         {scenario.tips.map((tip, index) => (
                           <li
                             key={index}
-                            className="flex items-start gap-2 text-[13px] text-white/85"
+                            className="flex items-start gap-2 text-[13px] text-white"
                           >
                             <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                             <span>{tip}</span>
@@ -187,7 +187,7 @@ const InteractivePracticeTab = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Communication skills exercises
         </span>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
@@ -199,15 +199,15 @@ const InteractivePracticeTab = () => {
               <h3 className="text-[14px] font-semibold text-white leading-tight">
                 {exercise.exercise}
               </h3>
-              <p className="text-[13px] text-white/85 leading-relaxed">{exercise.description}</p>
+              <p className="text-[13px] text-white leading-relaxed">{exercise.description}</p>
 
-              <div className="space-y-2 text-[12px] text-white/85">
+              <div className="space-y-2 text-[12px] text-white">
                 <div>
-                  <span className="text-white/55">Time: </span>
+                  <span className="text-white">Time: </span>
                   {exercise.timeRequired}
                 </div>
                 <div className="space-y-1">
-                  <span className="text-white/55">Materials needed:</span>
+                  <span className="text-white">Materials needed:</span>
                   <ul className="space-y-0.5">
                     {exercise.materials.map((material, materialIndex) => (
                       <li key={materialIndex} className="flex items-start gap-2">
@@ -224,7 +224,7 @@ const InteractivePracticeTab = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Practice tips
         </span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -251,7 +251,7 @@ const InteractivePracticeTab = () => {
               className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1"
             >
               <h4 className="text-[13px] text-white">{item.title}</h4>
-              <p className="text-[12px] text-white/70 leading-relaxed">{item.body}</p>
+              <p className="text-[12px] text-white leading-relaxed">{item.body}</p>
             </div>
           ))}
         </div>

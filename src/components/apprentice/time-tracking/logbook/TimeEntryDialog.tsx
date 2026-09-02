@@ -19,7 +19,7 @@ export const TimeEntryDialog = ({ isOpen, onClose, onSubmit }: TimeEntryDialogPr
       <ResponsiveDialogContent className="sm:max-w-2xl bg-background border-white/[0.06]">
         <ResponsiveDialogHeader className="pb-4 border-b border-white/[0.06]">
           <ResponsiveDialogTitle className="text-white">Log training hours</ResponsiveDialogTitle>
-          <p className="text-[13px] text-white/70 mt-2 leading-relaxed">
+          <p className="text-[13px] text-white mt-2 leading-relaxed">
             Record your off-the-job training activities and hours
           </p>
         </ResponsiveDialogHeader>

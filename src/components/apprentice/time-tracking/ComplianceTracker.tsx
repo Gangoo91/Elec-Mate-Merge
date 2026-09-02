@@ -19,11 +19,11 @@ const ComplianceTracker = () => {
   if (!otjGoal) {
     return (
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Compliance tracking
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">
-          No compliance goals set. Setting up default 20% off-the-job learning requirement...
+        <p className="text-[14px] text-white leading-relaxed">
+          No off-the-job goal set yet. Setting up your off-the-job training goal…
         </p>
       </div>
     );
@@ -42,17 +42,17 @@ const ComplianceTracker = () => {
   return (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
       <div className="space-y-1">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-          20% off-the-job learning
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+          Off-the-job training
         </span>
       </div>
 
       <div className="space-y-2">
         <div className="flex items-baseline justify-between">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Progress
           </span>
-          <span className="text-[12px] text-white/85 font-mono">
+          <span className="text-[12px] text-white font-mono">
             {otjGoal.compliance_percentage}%
           </span>
         </div>
@@ -62,7 +62,7 @@ const ComplianceTracker = () => {
             style={{ width: `${Math.min(otjGoal.compliance_percentage, 100)}%` }}
           />
         </div>
-        <div className="flex justify-between text-[11px] text-white/55 font-mono">
+        <div className="flex justify-between text-[11px] text-white font-mono">
           <span>{otjGoal.current_hours}h completed</span>
           <span>{otjGoal.target_hours}h target</span>
         </div>
@@ -75,7 +75,7 @@ const ComplianceTracker = () => {
       >
         <span
           className={`text-[10px] font-medium uppercase tracking-[0.18em] ${
-            isBehind ? 'text-red-300' : 'text-white/55'
+            isBehind ? 'text-red-300' : 'text-white'
           }`}
         >
           {complianceStatus.message}
@@ -85,36 +85,36 @@ const ComplianceTracker = () => {
       <div className="grid grid-cols-2 gap-3">
         <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3">
           <div className="text-2xl font-mono text-white">{remainingHours}h</div>
-          <div className="text-[11px] text-white/55 mt-1">Remaining</div>
+          <div className="text-[11px] text-white mt-1">Remaining</div>
         </div>
         {daysRemaining !== null && (
           <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3">
             <div className="text-2xl font-mono text-white">
               {daysRemaining > 0 ? daysRemaining : 0}
             </div>
-            <div className="text-[11px] text-white/55 mt-1">Days left</div>
+            <div className="text-[11px] text-white mt-1">Days left</div>
           </div>
         )}
       </div>
 
       {complianceStatus.status !== 'compliant' && (
         <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Recommendation
           </span>
           {complianceStatus.status === 'behind' && remainingHours > 0 && daysRemaining && (
-            <p className="text-[14px] text-white/85 leading-relaxed">
+            <p className="text-[14px] text-white leading-relaxed">
               Track {Math.ceil(remainingHours / (daysRemaining / 7))} hours per week to meet your
               target.
             </p>
           )}
           {complianceStatus.status === 'at-risk' && (
-            <p className="text-[14px] text-white/85 leading-relaxed">
+            <p className="text-[14px] text-white leading-relaxed">
               Increase your weekly learning hours to stay on track.
             </p>
           )}
           {complianceStatus.status === 'on-track' && (
-            <p className="text-[14px] text-white/85 leading-relaxed">
+            <p className="text-[14px] text-white leading-relaxed">
               Keep up the good work. Maintain your current pace.
             </p>
           )}

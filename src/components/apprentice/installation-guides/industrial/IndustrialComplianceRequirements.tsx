@@ -25,13 +25,13 @@ const IndustrialComplianceRequirements = () => {
   return (
     <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-4">
       <div className="space-y-1">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Compliance
         </span>
         <h3 className="text-[18px] font-semibold text-white leading-tight">
           Essential compliance standards
         </h3>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           Mandatory standards for industrial installations.
         </p>
       </div>
@@ -42,8 +42,8 @@ const IndustrialComplianceRequirements = () => {
             className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-3 space-y-1.5"
           >
             <h4 className="text-[14px] font-medium text-white">{req.standard}</h4>
-            <p className="text-[13px] text-white/85 leading-relaxed">{req.description}</p>
-            <p className="text-[12px] text-white/70">Application: {req.application}</p>
+            <p className="text-[13px] text-white leading-relaxed">{req.description}</p>
+            <p className="text-[12px] text-white">Application: {req.application}</p>
           </div>
         ))}
       </div>

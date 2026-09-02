@@ -49,10 +49,7 @@ export function CourseRequirementsList({
         for (const ac of lo.assessmentCriteria) {
           if (acEvidenceMap.has(ac.acRef) || acEvidenceMap.has(ac.acFullRef)) {
             done++;
-          } else if (
-            claimedOnlyRefs.has(ac.acRef) ||
-            claimedOnlyRefs.has(ac.acFullRef)
-          ) {
+          } else if (claimedOnlyRefs.has(ac.acRef) || claimedOnlyRefs.has(ac.acFullRef)) {
             claimed++;
           } else {
             open++;
@@ -70,13 +67,14 @@ export function CourseRequirementsList({
     setExpanded(next);
   };
 
-  const matchAC = (
-    ac: { acRef: string; acFullRef: string; acText: string }
-  ): { include: boolean; isDone: boolean; isClaimed: boolean } => {
+  const matchAC = (ac: {
+    acRef: string;
+    acFullRef: string;
+    acText: string;
+  }): { include: boolean; isDone: boolean; isClaimed: boolean } => {
     const isDone = acEvidenceMap.has(ac.acRef) || acEvidenceMap.has(ac.acFullRef);
     const isClaimed =
-      !isDone &&
-      (claimedOnlyRefs.has(ac.acRef) || claimedOnlyRefs.has(ac.acFullRef));
+      !isDone && (claimedOnlyRefs.has(ac.acRef) || claimedOnlyRefs.has(ac.acFullRef));
     let include = true;
     if (filter === 'done') include = isDone;
     else if (filter === 'claimed') include = isClaimed;
@@ -105,7 +103,7 @@ export function CourseRequirementsList({
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search ACs by reference or text…"
-            className="w-full h-11 pl-10 pr-3 rounded-lg bg-white/[0.02] border border-white/[0.08] text-[13px] text-white placeholder:text-white/40 focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20 outline-none touch-manipulation"
+            className="h-11 w-full rounded-xl border border-white/[0.12] bg-white/[0.06] pl-10 pr-3 text-base text-white placeholder:text-white/40 caret-elec-yellow focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation"
           />
         </div>
         <div className="flex flex-wrap gap-1.5">
@@ -153,10 +151,12 @@ export function CourseRequirementsList({
           const visibleLOs = unit.learningOutcomes
             .map((lo) => ({
               ...lo,
-              filteredACs: lo.assessmentCriteria.map((ac) => ({
-                ac,
-                ...matchAC(ac),
-              })).filter((x) => x.include),
+              filteredACs: lo.assessmentCriteria
+                .map((ac) => ({
+                  ac,
+                  ...matchAC(ac),
+                }))
+                .filter((x) => x.include),
             }))
             .filter((lo) => lo.filteredACs.length > 0);
 
@@ -223,7 +223,7 @@ export function CourseRequirementsList({
                     >
                       {/* LO band */}
                       <div className="flex items-start gap-2.5 px-3.5 py-2.5 border-b border-white/[0.06] bg-white/[0.02]">
-                        <span className="text-[10px] font-bold uppercase tracking-[0.10em] text-elec-yellow bg-elec-yellow/[0.10] border border-elec-yellow/25 rounded-md px-2 py-0.5 shrink-0">
+                        <span className="text-[10px] font-bold uppercase tracking-[0.10em] text-elec-yellow bg-white/[0.06] border border-elec-yellow/35 rounded-md px-2 py-0.5 shrink-0">
                           LO{lo.loNumber}
                         </span>
                         <p className="text-[12.5px] font-medium text-white leading-snug">
@@ -235,7 +235,9 @@ export function CourseRequirementsList({
                       <div className="p-1.5 space-y-0.5">
                         {lo.filteredACs.map(({ ac, isDone, isClaimed }) => {
                           const evidenceCount = (
-                            acEvidenceMap.get(ac.acRef) || acEvidenceMap.get(ac.acFullRef) || []
+                            acEvidenceMap.get(ac.acRef) ||
+                            acEvidenceMap.get(ac.acFullRef) ||
+                            []
                           ).length;
                           return (
                             <button
@@ -253,7 +255,7 @@ export function CourseRequirementsList({
                               {isDone ? (
                                 <span className="w-4 h-4 rounded-full bg-elec-yellow flex-shrink-0 mt-0.5" />
                               ) : isClaimed ? (
-                                <span className="w-4 h-4 rounded-full border-2 border-elec-yellow/70 bg-elec-yellow/[0.12] flex-shrink-0 mt-0.5" />
+                                <span className="w-4 h-4 rounded-full border-2 border-elec-yellow/70 bg-transparent flex-shrink-0 mt-0.5" />
                               ) : (
                                 <span className="w-4 h-4 rounded-full border-2 border-white/25 flex-shrink-0 mt-0.5" />
                               )}
@@ -263,7 +265,7 @@ export function CourseRequirementsList({
                                   isDone
                                     ? 'text-black bg-elec-yellow'
                                     : isClaimed
-                                      ? 'text-elec-yellow bg-elec-yellow/[0.10] border border-elec-yellow/30'
+                                      ? 'text-elec-yellow bg-white/[0.06] border border-elec-yellow/50'
                                       : 'text-white bg-white/[0.05] border border-white/[0.08]'
                                 )}
                               >
@@ -273,7 +275,7 @@ export function CourseRequirementsList({
                                 {ac.acText.replace(`${ac.acRef} `, '')}
                               </span>
                               {evidenceCount > 0 && (
-                                <span className="text-[10px] font-mono text-elec-yellow px-1.5 py-0.5 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.08] shrink-0 mt-px">
+                                <span className="text-[10px] font-mono text-elec-yellow px-1.5 py-0.5 rounded-md border border-elec-yellow/25 bg-white/[0.05] shrink-0 mt-px">
                                   {evidenceCount}
                                 </span>
                               )}

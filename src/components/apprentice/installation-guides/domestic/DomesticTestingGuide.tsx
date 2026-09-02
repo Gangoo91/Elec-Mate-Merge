@@ -46,18 +46,26 @@ const DomesticTestingGuide = () => {
         'Record highest value for each circuit',
       ],
       expectedValues: [
-        { circuit: 'Ring (2.5mm²)', typicalR1R2: '0.4 - 1.2 ohm', maxZs: '1.09 ohm (32A Type B)' },
+        {
+          circuit: 'Ring (2.5mm²)',
+          typicalR1R2: '0.4 - 1.2 ohm',
+          maxZs: '1.37 ohm (32A Type B, Table 41.3)',
+        },
         {
           circuit: 'Radial (2.5mm²)',
           typicalR1R2: '0.3 - 0.8 ohm',
-          maxZs: '1.37 ohm (20A Type B)',
+          maxZs: '2.19 ohm (20A Type B, Table 41.3)',
         },
         {
           circuit: 'Lighting (1.5mm²)',
           typicalR1R2: '0.5 - 1.5 ohm',
-          maxZs: '7.28 ohm (6A Type B)',
+          maxZs: '7.28 ohm (6A Type B, Table 41.3)',
         },
-        { circuit: 'Shower (6mm²)', typicalR1R2: '0.2 - 0.5 ohm', maxZs: '0.55 ohm (40A Type B)' },
+        {
+          circuit: 'Shower (6mm²)',
+          typicalR1R2: '0.2 - 0.5 ohm',
+          maxZs: '1.09 ohm (40A Type B, Table 41.3)',
+        },
       ],
       equipment: 'Low resistance ohmmeter (continuity function), test leads, wandering lead',
       tips: [
@@ -172,17 +180,25 @@ const DomesticTestingGuide = () => {
         'Record highest reading for each circuit',
       ],
       expectedValues: [
-        { device: '32A Type B MCB/RCBO', maxZs: '1.09 ohm', notes: 'Ring circuits' },
-        { device: '20A Type B MCB', maxZs: '1.37 ohm', notes: '20A radials' },
-        { device: '16A Type B MCB', maxZs: '1.71 ohm', notes: '16A radials' },
+        {
+          device: '32A Type B MCB/RCBO',
+          maxZs: '1.37 ohm',
+          notes: 'Ring circuits (Table 41.3, 0.4 s)',
+        },
+        { device: '20A Type B MCB', maxZs: '2.19 ohm', notes: '20A radials' },
+        { device: '16A Type B MCB', maxZs: '2.73 ohm', notes: '16A radials' },
         { device: '6A Type B MCB', maxZs: '7.28 ohm', notes: 'Lighting' },
-        { device: '40A Type B MCB', maxZs: '0.55 ohm', notes: 'Showers' },
-        { device: '30mA RCD', maxZs: '1667 ohm', notes: 'Supplementary protection' },
+        { device: '40A Type B MCB', maxZs: '1.09 ohm', notes: 'Showers' },
+        {
+          device: '30mA RCD (TT fault protection)',
+          maxZs: '1667 ohm',
+          notes: 'Table 41.5 — Zs limit where the RCD provides fault protection',
+        },
       ],
       equipment: 'Earth fault loop impedance tester',
       calculation: 'Zs = Ze + (R1+R2) - verify against tables',
       tips: [
-        'Apply temperature correction factor (0.8 x Zs max)',
+        'Compare a cold-conductor measurement against 0.8 × the tabulated maximum (GN3 rule of thumb) — the table values already include Cmin 0.95',
         'Compare measured Zs with calculated (Ze + R1+R2)',
         'High Zs may indicate poor earth connection',
       ],
@@ -192,14 +208,22 @@ const DomesticTestingGuide = () => {
       testNumber: 8,
       purpose: 'Confirm RCD provides required protection within specified time',
       method: [
-        'Test at rated residual current (I delta n)',
-        'Test at 5 x I delta n for general RCDs',
-        'Test positive and negative half-cycles',
-        'Record trip time at rated current',
+        'Test with an AC test current at rated residual current (I delta n) — the single test A4:2026 requires',
+        'Test positive and negative half-cycles (0° and 180°)',
+        'Record the slower trip time',
+        'Press the integral test button as a functional check',
       ],
       expectedValues: [
-        { rcdType: 'General (Type AC/A)', atIdn: 'Trip within 300ms', at5Idn: 'Trip within 40ms' },
-        { rcdType: 'Time-delayed (Type S)', atIdn: 'Trip 130-500ms', at5Idn: 'Trip 50ms' },
+        {
+          rcdType: 'General (Type AC/A/F/B)',
+          atIdn: 'Trip within 300ms',
+          at5Idn: '5× test deleted at A4:2026',
+        },
+        {
+          rcdType: 'Time-delayed (Type S)',
+          atIdn: 'Trip 130-500ms',
+          at5Idn: '5× test deleted at A4:2026',
+        },
         { rcdType: '30mA RCD', testCurrent: '30mA', maxTime: '300ms' },
         { rcdType: '100mA RCD', testCurrent: '100mA', maxTime: '300ms' },
         { rcdType: 'At 50% Idn', testCurrent: '15mA for 30mA RCD', expected: 'Should NOT trip' },
@@ -208,7 +232,7 @@ const DomesticTestingGuide = () => {
       tips: [
         'Test both polarities',
         'Test ramp function if available',
-        'Check 5x Idn for 40ms requirement',
+        'The 5×IΔn / 40 ms test and Appendix 3 Table 3A were deleted at A4:2026 — do not record one',
         'Use test button regularly between instrument tests',
       ],
     },
@@ -457,13 +481,15 @@ const DomesticTestingGuide = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{testSequenceOrder.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              {testSequenceOrder.title}
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4 p-0">
           <Alert className="border-white/[0.10] bg-white/[0.06]">
-            <Info className="h-4 w-4 text-white/70" />
-            <AlertDescription className="text-white/85 text-sm">
+            <Info className="h-4 w-4 text-white" />
+            <AlertDescription className="text-white text-sm">
               <strong>Important:</strong> {testSequenceOrder.note}
             </AlertDescription>
           </Alert>
@@ -479,7 +505,7 @@ const DomesticTestingGuide = () => {
                   >
                     {item.order}
                   </Badge>
-                  <span className="text-white/85">{item.test}</span>
+                  <span className="text-white">{item.test}</span>
                 </div>
               ))}
             </div>
@@ -491,7 +517,9 @@ const DomesticTestingGuide = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Detailed Test Procedures & Expected Values</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              Detailed Test Procedures & Expected Values
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4 p-0">
@@ -504,15 +532,15 @@ const DomesticTestingGuide = () => {
                 <h4 className="font-medium text-white text-sm">{test.test}</h4>
               </div>
 
-              <p className="text-sm text-white/85 mb-4">{test.purpose}</p>
+              <p className="text-sm text-white mb-4">{test.purpose}</p>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <div>
-                  <h5 className="font-medium text-white/85 mb-2 text-sm">Method</h5>
+                  <h5 className="font-medium text-white mb-2 text-sm">Method</h5>
                   <ul className="space-y-1">
                     {test.method.map((step, idx) => (
                       <li key={idx} className="text-xs text-white flex items-start gap-2">
-                        <span className="text-white/70 font-medium">{idx + 1}.</span>
+                        <span className="text-white font-medium">{idx + 1}.</span>
                         {step}
                       </li>
                     ))}
@@ -520,7 +548,7 @@ const DomesticTestingGuide = () => {
                 </div>
 
                 <div>
-                  <h5 className="font-medium text-white/85 mb-2 text-sm">Expected Values</h5>
+                  <h5 className="font-medium text-white mb-2 text-sm">Expected Values</h5>
                   {test.expectedValues && (
                     <div className="space-y-1">
                       {test.expectedValues.map((val, idx) => (
@@ -570,7 +598,7 @@ const DomesticTestingGuide = () => {
                     <ul className="space-y-1">
                       {test.checkpoints.map((checkpoint, idx) => (
                         <li key={idx} className="text-xs text-white flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-white/70 mt-0.5 flex-shrink-0" />
+                          <CheckCircle className="h-3 w-3 text-white mt-0.5 flex-shrink-0" />
                           {checkpoint}
                         </li>
                       ))}
@@ -620,12 +648,17 @@ const DomesticTestingGuide = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Common Faults and Solutions</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              Common Faults and Solutions
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4 p-0">
           {commonFaultsAndSolutions.map((item, index) => (
-            <div key={index} className="p-4 rounded-lg border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]">
+            <div
+              key={index}
+              className="p-4 rounded-lg border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]"
+            >
               <h4 className="font-medium text-white mb-3">{item.fault}</h4>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
@@ -633,7 +666,7 @@ const DomesticTestingGuide = () => {
                   <h5 className="font-medium text-white mb-2">Symptoms</h5>
                   <ul className="space-y-1">
                     {item.symptoms.map((symptom, idx) => (
-                      <li key={idx} className="text-xs text-white/85 flex items-start gap-2">
+                      <li key={idx} className="text-xs text-white flex items-start gap-2">
                         <span className="w-1.5 h-1.5 bg-white/55 rounded-full mt-1.5 flex-shrink-0"></span>
                         {symptom}
                       </li>
@@ -657,8 +690,8 @@ const DomesticTestingGuide = () => {
                   <h5 className="font-medium text-white mb-2">Solutions</h5>
                   <ul className="space-y-1">
                     {item.solutions.map((solution, idx) => (
-                      <li key={idx} className="text-xs text-white/85 flex items-start gap-2">
-                        <CheckCircle className="h-3 w-3 text-white/70 mt-0.5 flex-shrink-0" />
+                      <li key={idx} className="text-xs text-white flex items-start gap-2">
+                        <CheckCircle className="h-3 w-3 text-white mt-0.5 flex-shrink-0" />
                         {solution}
                       </li>
                     ))}
@@ -680,13 +713,15 @@ const DomesticTestingGuide = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{documentationRequirements.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              {documentationRequirements.title}
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4 p-0">
           <Alert className="border-white/[0.10] bg-white/[0.06]">
-            <Info className="h-4 w-4 text-white/70" />
-            <AlertDescription className="text-white/85 text-sm">
+            <Info className="h-4 w-4 text-white" />
+            <AlertDescription className="text-white text-sm">
               <strong>Retention:</strong> {documentationRequirements.retention}
             </AlertDescription>
           </Alert>
@@ -694,13 +729,13 @@ const DomesticTestingGuide = () => {
           {documentationRequirements.certificates.map((cert, index) => (
             <div key={index} className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <h4 className="font-medium text-white mb-2">{cert.name}</h4>
-              <p className="text-sm text-white/85 mb-3">
+              <p className="text-sm text-white mb-3">
                 <strong>When:</strong> {cert.when}
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <h5 className="font-medium text-white/85 mb-2 text-sm">Sections</h5>
+                  <h5 className="font-medium text-white mb-2 text-sm">Sections</h5>
                   <div className="space-y-1">
                     {cert.sections.map((section, idx) => (
                       <div key={idx} className="text-xs">
@@ -714,7 +749,7 @@ const DomesticTestingGuide = () => {
                 <div>
                   {'classifications' in cert && cert.classifications && (
                     <>
-                      <h5 className="font-medium text-white/85 mb-2 text-sm">
+                      <h5 className="font-medium text-white mb-2 text-sm">
                         Classification Codes
                       </h5>
                       <div className="space-y-1">
@@ -754,8 +789,8 @@ const DomesticTestingGuide = () => {
             <h4 className="font-medium text-white mb-3">Record Keeping</h4>
             <ul className="space-y-1">
               {documentationRequirements.recordKeeping.map((item, idx) => (
-                <li key={idx} className="text-sm text-white/85 flex items-start gap-2">
-                  <ClipboardList className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
+                <li key={idx} className="text-sm text-white flex items-start gap-2">
+                  <ClipboardList className="h-4 w-4 text-white mt-0.5 flex-shrink-0" />
                   {item}
                 </li>
               ))}
@@ -768,7 +803,9 @@ const DomesticTestingGuide = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{testEquipmentCalibration.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              {testEquipmentCalibration.title}
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4 p-0">
@@ -778,7 +815,7 @@ const DomesticTestingGuide = () => {
                 key={index}
                 className="bg-white/[0.06] p-3 rounded-lg border border-white/[0.10]"
               >
-                <h4 className="font-medium text-white/85 text-sm mb-2">{equip.instrument}</h4>
+                <h4 className="font-medium text-white text-sm mb-2">{equip.instrument}</h4>
                 <p className="text-xs text-white mb-1">
                   <strong>Function:</strong> {equip.function}
                 </p>
@@ -798,7 +835,7 @@ const DomesticTestingGuide = () => {
                   </p>
                 )}
                 {'calibration' in equip && (
-                  <p className="text-xs text-white/85">
+                  <p className="text-xs text-white">
                     <strong>Calibration:</strong> {equip.calibration}
                   </p>
                 )}
@@ -810,8 +847,8 @@ const DomesticTestingGuide = () => {
             <h4 className="font-medium text-white mb-3">General Requirements</h4>
             <ul className="space-y-1">
               {testEquipmentCalibration.generalRequirements.map((req, idx) => (
-                <li key={idx} className="text-sm text-white/85 flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
+                <li key={idx} className="text-sm text-white flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-white mt-0.5 flex-shrink-0" />
                   {req}
                 </li>
               ))}

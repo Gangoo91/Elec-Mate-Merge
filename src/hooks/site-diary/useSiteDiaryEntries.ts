@@ -69,8 +69,10 @@ export interface SiteDiaryEntry {
   updated_at: string;
 }
 
-export interface NewDiaryEntry
-  extends Omit<SiteDiaryEntry, 'id' | 'user_id' | 'created_at' | 'updated_at' | 'linked_time_entry_id'> {
+export interface NewDiaryEntry extends Omit<
+  SiteDiaryEntry,
+  'id' | 'user_id' | 'created_at' | 'updated_at' | 'linked_time_entry_id'
+> {
   /** Optional hours spent on site — creates a linked OJT time entry */
   hours_spent?: number | null;
 }
@@ -167,9 +169,11 @@ export function useSiteDiaryEntries() {
             .select('id')
             .single();
 
-          if (!timeError && timeData) {
-            linkedTimeEntryId = timeData.id;
-          }
+          // A failed time entry used to be swallowed here while the toast below
+          // still read "+3h OJT logged" — the hours silently never existed.
+          // Abort before the diary insert so nothing half-saves.
+          if (timeError) throw timeError;
+          linkedTimeEntryId = timeData?.id ?? null;
         }
 
         const { data, error } = await supabase
@@ -191,8 +195,7 @@ export function useSiteDiaryEntries() {
           return next;
         });
 
-        const hoursMsg =
-          hours_spent && hours_spent > 0 ? ` + ${hours_spent}h OJT logged` : '';
+        const hoursMsg = linkedTimeEntryId ? ` + ${hours_spent}h OJT logged` : '';
         toast.success(`Diary entry saved${hoursMsg}`);
 
         // Log XP for diary entry
@@ -224,9 +227,12 @@ export function useSiteDiaryEntries() {
       if (!user) return null;
 
       try {
+        // hours_spent is not a column (it becomes a linked time entry on
+        // create); sending it here made PostgREST reject the whole update.
+        const { hours_spent: _hours, ...diaryUpdates } = updates;
         const { data, error } = await supabase
           .from('site_diary_entries')
-          .update(updates)
+          .update(diaryUpdates)
           .eq('id', id)
           .eq('user_id', user.id)
           .select()

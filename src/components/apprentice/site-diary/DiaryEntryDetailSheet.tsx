@@ -750,9 +750,36 @@ export function DiaryEntryDetailSheet({
                     <h4 className="text-sm font-semibold text-white">Link assessment criteria</h4>
                   </div>
                   <p className="text-[11px] text-white/85 mt-0.5">
-                    Suggested from what you wrote. Tick only the ones you actually met — your
-                    assessor checks each claim.
+                    {entryAnalysis
+                      ? 'Checked against your entry — the ticked ones matched with reasonable confidence. Confirm each before you claim it.'
+                      : 'Word matches from what you wrote — nothing has checked them yet. Tick only what you actually did.'}
                   </p>
+                  {/*
+                   * The hook deliberately does not auto-run (one AI call per
+                   * entry viewed adds up), so without this the picker silently
+                   * showed unchecked keyword hits and left the apprentice to
+                   * guess how much to trust them. Offering the check makes the
+                   * difference explicit and keeps the cost opt-in.
+                   */}
+                  {!entryAnalysis && (
+                    <button
+                      onClick={() => refreshAnalysis()}
+                      disabled={analysisLoading}
+                      className="mt-2 inline-flex h-11 items-center gap-1.5 rounded-lg border border-elec-yellow/50 px-3 text-[12px] font-medium text-elec-yellow touch-manipulation transition-colors hover:border-elec-yellow disabled:opacity-50"
+                    >
+                      {analysisLoading ? (
+                        <>
+                          <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                          Checking your entry…
+                        </>
+                      ) : (
+                        <>
+                          <Sparkles className="h-3.5 w-3.5" />
+                          Check these against my entry
+                        </>
+                      )}
+                    </button>
+                  )}
                 </div>
 
                 <div className="px-4 py-3 space-y-1.5 max-h-48 overflow-y-auto overscroll-contain">

@@ -693,11 +693,11 @@ const IndustrialRiskManagement = () => {
               <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
                 <h3 className="font-bold text-white mb-2">{atexDsearBasics.dsear.title}</h3>
                 <p className="text-white text-sm mb-3">{atexDsearBasics.dsear.description}</p>
-                <h4 className="text-white/85 font-medium text-sm mb-2">Key Requirements:</h4>
+                <h4 className="text-white font-medium text-sm mb-2">Key Requirements:</h4>
                 <ul className="space-y-1">
                   {atexDsearBasics.dsear.requirements.map((req, i) => (
                     <li key={i} className="flex items-start gap-2 text-sm text-white">
-                      <CheckCircle className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
+                      <CheckCircle className="h-4 w-4 text-white mt-0.5 flex-shrink-0" />
                       {req}
                     </li>
                   ))}
@@ -731,7 +731,7 @@ const IndustrialRiskManagement = () => {
                     <tbody className="text-white">
                       {exMarkings.protectionTypes.map((type, i) => (
                         <tr key={i} className="border-b border-white/[0.10]">
-                          <td className="py-2 px-2 font-medium text-white/85">{type.code}</td>
+                          <td className="py-2 px-2 font-medium text-white">{type.code}</td>
                           <td className="py-2 px-2">{type.name}</td>
                           <td className="py-2 px-2">{type.zones}</td>
                           <td className="py-2 px-2 text-xs">{type.applications}</td>
@@ -752,7 +752,7 @@ const IndustrialRiskManagement = () => {
                       className="bg-white/[0.06] p-3 rounded border border-white/[0.10] flex items-center justify-between"
                     >
                       <div>
-                        <span className="text-white/85 font-medium">Group {group.group}: </span>
+                        <span className="text-white font-medium">Group {group.group}: </span>
                         <span className="text-white text-sm">{group.substances}</span>
                       </div>
                       <Badge variant="outline" className="border-white/10 text-white">
@@ -781,7 +781,7 @@ const IndustrialRiskManagement = () => {
                     <tbody className="text-white">
                       {exMarkings.temperatureClasses.map((temp, i) => (
                         <tr key={i} className="border-b border-white/[0.10]">
-                          <td className="py-2 px-2 font-medium text-white/85">{temp.class}</td>
+                          <td className="py-2 px-2 font-medium text-white">{temp.class}</td>
                           <td className="py-2 px-2">{temp.maxSurface}</td>
                           <td className="py-2 px-2">{temp.typicalSubstances}</td>
                         </tr>
@@ -959,19 +959,19 @@ const IndustrialRiskManagement = () => {
                   <h3 className="font-bold text-white mb-3">Factors Increasing Zone Extent</h3>
                   <ul className="space-y-2 text-sm text-white">
                     <li className="flex items-start gap-2">
-                      <AlertTriangle className="h-4 w-4 text-white/70 mt-0.5" />
+                      <AlertTriangle className="h-4 w-4 text-white mt-0.5" />
                       High volatility / low flash point
                     </li>
                     <li className="flex items-start gap-2">
-                      <AlertTriangle className="h-4 w-4 text-white/70 mt-0.5" />
+                      <AlertTriangle className="h-4 w-4 text-white mt-0.5" />
                       Poor ventilation
                     </li>
                     <li className="flex items-start gap-2">
-                      <AlertTriangle className="h-4 w-4 text-white/70 mt-0.5" />
+                      <AlertTriangle className="h-4 w-4 text-white mt-0.5" />
                       Large release rate
                     </li>
                     <li className="flex items-start gap-2">
-                      <AlertTriangle className="h-4 w-4 text-white/70 mt-0.5" />
+                      <AlertTriangle className="h-4 w-4 text-white mt-0.5" />
                       Enclosed or semi-enclosed areas
                     </li>
                   </ul>
@@ -980,19 +980,19 @@ const IndustrialRiskManagement = () => {
                   <h3 className="font-bold text-white mb-3">Factors Reducing Zone Extent</h3>
                   <ul className="space-y-2 text-sm text-white">
                     <li className="flex items-start gap-2">
-                      <CheckCircle className="h-4 w-4 text-white/70 mt-0.5" />
+                      <CheckCircle className="h-4 w-4 text-white mt-0.5" />
                       Good natural/forced ventilation
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle className="h-4 w-4 text-white/70 mt-0.5" />
+                      <CheckCircle className="h-4 w-4 text-white mt-0.5" />
                       Low volatility substances
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle className="h-4 w-4 text-white/70 mt-0.5" />
+                      <CheckCircle className="h-4 w-4 text-white mt-0.5" />
                       Small release quantities
                     </li>
                     <li className="flex items-start gap-2">
-                      <CheckCircle className="h-4 w-4 text-white/70 mt-0.5" />
+                      <CheckCircle className="h-4 w-4 text-white mt-0.5" />
                       Open outdoor locations
                     </li>
                   </ul>
@@ -1021,11 +1021,11 @@ const IndustrialRiskManagement = () => {
                   <h3 className="font-bold text-white mb-2">{permit.type}</h3>
                   <p className="text-white text-sm mb-3">{permit.purpose}</p>
                   <div className="bg-white/[0.06] p-3 rounded mb-3">
-                    <h4 className="text-white/85 font-medium text-sm mb-2">Essential Elements:</h4>
+                    <h4 className="text-white font-medium text-sm mb-2">Essential Elements:</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
                       {permit.essentialElements.map((element, i) => (
                         <div key={i} className="flex items-start gap-2 text-sm text-white">
-                          <CheckCircle className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
+                          <CheckCircle className="h-4 w-4 text-white mt-0.5 flex-shrink-0" />
                           {element}
                         </div>
                       ))}
@@ -1062,7 +1062,7 @@ const IndustrialRiskManagement = () => {
                   <ul className="space-y-1 ml-11">
                     {stage.actions.map((action, i) => (
                       <li key={i} className="flex items-start gap-2 text-sm text-white">
-                        <CheckCircle className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
+                        <CheckCircle className="h-4 w-4 text-white mt-0.5 flex-shrink-0" />
                         {action}
                       </li>
                     ))}
@@ -1097,7 +1097,7 @@ const IndustrialRiskManagement = () => {
                   <ul className="space-y-1 ml-13">
                     {step.details.map((detail, i) => (
                       <li key={i} className="flex items-start gap-2 text-sm text-white">
-                        <CheckCircle className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
+                        <CheckCircle className="h-4 w-4 text-white mt-0.5 flex-shrink-0" />
                         {detail}
                       </li>
                     ))}
@@ -1149,11 +1149,11 @@ const IndustrialRiskManagement = () => {
                     </ul>
                   </div>
                   <div>
-                    <h4 className="text-white/85 font-medium text-sm mb-2">Common Causes:</h4>
+                    <h4 className="text-white font-medium text-sm mb-2">Common Causes:</h4>
                     <ul className="space-y-1">
                       {arcFlash.basics.causes.map((cause, i) => (
                         <li key={i} className="flex items-start gap-2 text-sm text-white">
-                          <AlertTriangle className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
+                          <AlertTriangle className="h-4 w-4 text-white mt-0.5 flex-shrink-0" />
                           {cause}
                         </li>
                       ))}
@@ -1195,7 +1195,7 @@ const IndustrialRiskManagement = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   {arcFlash.protection.map((measure, i) => (
                     <div key={i} className="flex items-start gap-2 text-sm text-white">
-                      <Shield className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
+                      <Shield className="h-4 w-4 text-white mt-0.5 flex-shrink-0" />
                       {measure}
                     </div>
                   ))}
@@ -1254,7 +1254,7 @@ const IndustrialRiskManagement = () => {
                   <ul className="space-y-1">
                     {item.considerations.map((consideration, i) => (
                       <li key={i} className="flex items-start gap-2 text-sm text-white">
-                        <CheckCircle className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
+                        <CheckCircle className="h-4 w-4 text-white mt-0.5 flex-shrink-0" />
                         {consideration}
                       </li>
                     ))}
@@ -1279,7 +1279,7 @@ const IndustrialRiskManagement = () => {
                       {workingAtHeight.minimumClearances.map((item, i) => (
                         <tr key={i} className="border-b border-white/[0.10]">
                           <td className="py-2 px-3">{item.voltage}</td>
-                          <td className="py-2 px-3 font-medium text-white/85">{item.clearance}</td>
+                          <td className="py-2 px-3 font-medium text-white">{item.clearance}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -1303,7 +1303,7 @@ const IndustrialRiskManagement = () => {
                         <span className="text-white font-bold text-sm">{level.level}</span>
                       </div>
                       <div>
-                        <span className="text-white/85 font-medium text-sm">{level.method}</span>
+                        <span className="text-white font-medium text-sm">{level.method}</span>
                         <span className="text-white text-sm ml-2">- {level.description}</span>
                       </div>
                     </div>
@@ -1328,7 +1328,7 @@ const IndustrialRiskManagement = () => {
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                   {confinedSpaces.examples.map((example, i) => (
                     <div key={i} className="flex items-center gap-2 text-sm text-white">
-                      <MapPin className="h-4 w-4 text-white/70" />
+                      <MapPin className="h-4 w-4 text-white" />
                       {example}
                     </div>
                   ))}
@@ -1341,7 +1341,7 @@ const IndustrialRiskManagement = () => {
                 <div className="space-y-3">
                   {confinedSpaces.hazards.map((hazard, i) => (
                     <div key={i} className="bg-white/[0.06] p-3 rounded border border-white/[0.10]">
-                      <h4 className="text-white/85 font-medium mb-1">{hazard.hazard}</h4>
+                      <h4 className="text-white font-medium mb-1">{hazard.hazard}</h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
                         <div>
                           <span className="text-white font-medium">Causes: </span>

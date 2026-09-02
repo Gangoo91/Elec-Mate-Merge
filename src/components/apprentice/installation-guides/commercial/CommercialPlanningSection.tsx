@@ -825,8 +825,8 @@ const CommercialPlanningSection = () => {
         </CardHeader>
         <CardContent className="space-y-4 p-0">
           <Alert className="border-white/[0.10] bg-white/[0.06]">
-            <Info className="h-4 w-4 text-white/70" />
-            <AlertDescription className="text-white/85 text-sm">
+            <Info className="h-4 w-4 text-white" />
+            <AlertDescription className="text-white text-sm">
               {siteSurveyRequirements.description}
             </AlertDescription>
           </Alert>
@@ -834,15 +834,15 @@ const CommercialPlanningSection = () => {
           {siteSurveyRequirements.categories.map((category, index) => (
             <div key={index} className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <div className="flex items-center gap-2 mb-3">
-                <category.icon className="h-5 w-5 text-white/70" />
+                <category.icon className="h-5 w-5 text-white" />
                 <h4 className="font-medium text-white">{category.category}</h4>
               </div>
               <div className="space-y-2">
                 {category.items.map((item, idx) => (
                   <div key={idx} className="flex items-start justify-between gap-3 text-sm">
                     <div className="flex items-start gap-2 flex-1">
-                      <CheckCircle className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
-                      <span className="text-white/85">{item.check}</span>
+                      <CheckCircle className="h-4 w-4 text-white mt-0.5 flex-shrink-0" />
+                      <span className="text-white">{item.check}</span>
                     </div>
                     <Badge
                       variant="outline"
@@ -870,8 +870,8 @@ const CommercialPlanningSection = () => {
             <h4 className="font-medium text-white mb-3">Survey Outputs</h4>
             <ul className="space-y-2">
               {siteSurveyRequirements.surveyOutputs.map((output, idx) => (
-                <li key={idx} className="text-sm text-white/85 flex items-start gap-2">
-                  <FileText className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
+                <li key={idx} className="text-sm text-white flex items-start gap-2">
+                  <FileText className="h-4 w-4 text-white mt-0.5 flex-shrink-0" />
                   {output}
                 </li>
               ))}
@@ -895,10 +895,10 @@ const CommercialPlanningSection = () => {
               <h4 className="font-medium text-white mb-3">{trade.trade}</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <h5 className="text-sm font-medium text-white/85 mb-2">Coordination Points:</h5>
+                  <h5 className="text-sm font-medium text-white mb-2">Coordination Points:</h5>
                   <ul className="space-y-1">
                     {trade.coordination.map((point, idx) => (
-                      <li key={idx} className="text-xs text-white/85 flex items-start gap-2">
+                      <li key={idx} className="text-xs text-white flex items-start gap-2">
                         <span className="w-1 h-1 bg-white/55 rounded-full mt-1.5 flex-shrink-0"></span>
                         {point}
                       </li>
@@ -906,11 +906,11 @@ const CommercialPlanningSection = () => {
                   </ul>
                 </div>
                 <div>
-                  <h5 className="text-sm font-medium text-white/85 mb-2">Critical Points:</h5>
+                  <h5 className="text-sm font-medium text-white mb-2">Critical Points:</h5>
                   <ul className="space-y-1">
                     {trade.criticalPoints.map((point, idx) => (
-                      <li key={idx} className="text-xs text-white/85 flex items-start gap-2">
-                        <AlertTriangle className="h-3 w-3 text-white/70 mt-0.5 flex-shrink-0" />
+                      <li key={idx} className="text-xs text-white flex items-start gap-2">
+                        <AlertTriangle className="h-3 w-3 text-white mt-0.5 flex-shrink-0" />
                         {point}
                       </li>
                     ))}
@@ -929,9 +929,9 @@ const CommercialPlanningSection = () => {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/[0.10]">
-                    <th className="text-left py-2 text-white/85">Stage</th>
-                    <th className="text-left py-2 text-white/85">Frequency</th>
-                    <th className="text-left py-2 text-white/85">Attendees</th>
+                    <th className="text-left py-2 text-white">Stage</th>
+                    <th className="text-left py-2 text-white">Frequency</th>
+                    <th className="text-left py-2 text-white">Attendees</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -971,10 +971,10 @@ const CommercialPlanningSection = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                  <h5 className="text-sm font-medium text-white/85 mb-2">Activities:</h5>
+                  <h5 className="text-sm font-medium text-white mb-2">Activities:</h5>
                   <ul className="space-y-1">
                     {phase.activities.map((activity, idx) => (
-                      <li key={idx} className="text-xs text-white/85 flex items-start gap-2">
+                      <li key={idx} className="text-xs text-white flex items-start gap-2">
                         <span className="w-1 h-1 bg-white/55 rounded-full mt-1.5 flex-shrink-0"></span>
                         {activity}
                       </li>
@@ -982,10 +982,10 @@ const CommercialPlanningSection = () => {
                   </ul>
                 </div>
                 <div>
-                  <h5 className="text-sm font-medium text-white/85 mb-2">Prerequisites:</h5>
+                  <h5 className="text-sm font-medium text-white mb-2">Prerequisites:</h5>
                   <ul className="space-y-1">
                     {phase.prerequisites.map((prereq, idx) => (
-                      <li key={idx} className="text-xs text-white/85 flex items-start gap-2">
+                      <li key={idx} className="text-xs text-white flex items-start gap-2">
                         <span className="w-1 h-1 bg-white/55 rounded-full mt-1.5 flex-shrink-0"></span>
                         {prereq}
                       </li>
@@ -993,8 +993,8 @@ const CommercialPlanningSection = () => {
                   </ul>
                 </div>
                 <div>
-                  <h5 className="text-sm font-medium text-white/85 mb-2">Handover:</h5>
-                  <p className="text-xs text-white/85">{phase.handover}</p>
+                  <h5 className="text-sm font-medium text-white mb-2">Handover:</h5>
+                  <p className="text-xs text-white">{phase.handover}</p>
                 </div>
               </div>
             </div>
@@ -1007,7 +1007,7 @@ const CommercialPlanningSection = () => {
             </h4>
             <ul className="space-y-2">
               {phasedInstallation.sectoralCompletion.considerations.map((item, idx) => (
-                <li key={idx} className="text-sm text-white/85 flex items-start gap-2">
+                <li key={idx} className="text-sm text-white flex items-start gap-2">
                   <span className="w-1.5 h-1.5 bg-white/55 rounded-full mt-2 flex-shrink-0"></span>
                   {item}
                 </li>
@@ -1031,11 +1031,11 @@ const CommercialPlanningSection = () => {
             <div key={index} className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <h4 className="font-medium text-white mb-2">{item.area}</h4>
               <div className="mb-3">
-                <h5 className="text-sm font-medium text-white/85 mb-2">Requirements:</h5>
+                <h5 className="text-sm font-medium text-white mb-2">Requirements:</h5>
                 <ul className="space-y-1">
                   {item.requirements.map((req, idx) => (
-                    <li key={idx} className="text-xs text-white/85 flex items-start gap-2">
-                      <CheckCircle className="h-3 w-3 text-white/70 mt-0.5 flex-shrink-0" />
+                    <li key={idx} className="text-xs text-white flex items-start gap-2">
+                      <CheckCircle className="h-3 w-3 text-white mt-0.5 flex-shrink-0" />
                       {req}
                     </li>
                   ))}
@@ -1050,7 +1050,7 @@ const CommercialPlanningSection = () => {
           {/* Communication Plan */}
           <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
             <div className="flex items-center gap-2 mb-3">
-              <Phone className="h-4 w-4 text-white/70" />
+              <Phone className="h-4 w-4 text-white" />
               <h4 className="font-medium text-white">
                 {businessContinuity.communicationPlan.title}
               </h4>
@@ -1059,8 +1059,8 @@ const CommercialPlanningSection = () => {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/[0.10]">
-                    <th className="text-left py-2 text-white/85">Stakeholder</th>
-                    <th className="text-left py-2 text-white/85">Communication Method</th>
+                    <th className="text-left py-2 text-white">Stakeholder</th>
+                    <th className="text-left py-2 text-white">Communication Method</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -1096,7 +1096,7 @@ const CommercialPlanningSection = () => {
                 <h4 className="font-medium text-white mb-2">{req.requirement}</h4>
                 <ul className="space-y-1">
                   {req.details.map((detail, idx) => (
-                    <li key={idx} className="text-xs text-white/85 flex items-start gap-2">
+                    <li key={idx} className="text-xs text-white flex items-start gap-2">
                       <span className="w-1 h-1 bg-white/55 rounded-full mt-1.5 flex-shrink-0"></span>
                       {detail}
                     </li>
@@ -1115,8 +1115,8 @@ const CommercialPlanningSection = () => {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/[0.10]">
-                    <th className="text-left py-2 text-white/85">Area</th>
-                    <th className="text-left py-2 text-white/85">Escort Requirement</th>
+                    <th className="text-left py-2 text-white">Area</th>
+                    <th className="text-left py-2 text-white">Escort Requirement</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -1228,11 +1228,11 @@ const CommercialPlanningSection = () => {
                 key={index}
                 className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]"
               >
-                <h4 className="font-medium text-white/85 mb-2">{req.category}</h4>
+                <h4 className="font-medium text-white mb-2">{req.category}</h4>
                 <ul className="space-y-1">
                   {req.items.map((item, idx) => (
-                    <li key={idx} className="text-xs text-white/85 flex items-start gap-2">
-                      <CheckCircle className="h-3 w-3 text-white/70 mt-0.5 flex-shrink-0" />
+                    <li key={idx} className="text-xs text-white flex items-start gap-2">
+                      <CheckCircle className="h-3 w-3 text-white mt-0.5 flex-shrink-0" />
                       {item}
                     </li>
                   ))}
@@ -1248,7 +1248,7 @@ const CommercialPlanningSection = () => {
               {healthAndSafety.siteRules.rules.map((rule, idx) => (
                 <div
                   key={idx}
-                  className="text-xs text-white/85 flex items-center gap-2 bg-white/[0.06] p-2 rounded"
+                  className="text-xs text-white flex items-center gap-2 bg-white/[0.06] p-2 rounded"
                 >
                   <span className="w-1.5 h-1.5 bg-white/55 rounded-full flex-shrink-0"></span>
                   {rule}
@@ -1272,27 +1272,27 @@ const CommercialPlanningSection = () => {
           {permitsToWork.types.map((permit, index) => (
             <div key={index} className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <h4 className="font-medium text-white mb-2">{permit.type}</h4>
-              <p className="text-sm text-white/85 mb-3">
+              <p className="text-sm text-white mb-3">
                 <strong>Purpose:</strong> {permit.purpose}
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <h5 className="text-sm font-medium text-white/85 mb-2">Process:</h5>
+                  <h5 className="text-sm font-medium text-white mb-2">Process:</h5>
                   <ol className="space-y-1">
                     {permit.process.map((step, idx) => (
-                      <li key={idx} className="text-xs text-white/85 flex items-start gap-2">
-                        <span className="text-white/70 font-medium">{idx + 1}.</span>
+                      <li key={idx} className="text-xs text-white flex items-start gap-2">
+                        <span className="text-white font-medium">{idx + 1}.</span>
                         {step}
                       </li>
                     ))}
                   </ol>
                 </div>
                 <div>
-                  <h5 className="text-sm font-medium text-white/85 mb-2">Key Information:</h5>
+                  <h5 className="text-sm font-medium text-white mb-2">Key Information:</h5>
                   <ul className="space-y-1">
                     {permit.keyInformation.map((info, idx) => (
-                      <li key={idx} className="text-xs text-white/85 flex items-start gap-2">
+                      <li key={idx} className="text-xs text-white flex items-start gap-2">
                         <span className="w-1 h-1 bg-white/55 rounded-full mt-1.5 flex-shrink-0"></span>
                         {info}
                       </li>
@@ -1315,7 +1315,7 @@ const CommercialPlanningSection = () => {
                   >
                     {step.step}
                   </Badge>
-                  <span className="text-sm text-white/85">{step.action}</span>
+                  <span className="text-sm text-white">{step.action}</span>
                 </div>
               ))}
             </div>
@@ -1334,12 +1334,12 @@ const CommercialPlanningSection = () => {
           {planningPhases.map((phase, index) => (
             <div key={index} className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
               <div className="flex items-center gap-2 mb-3">
-                <phase.icon className="h-5 w-5 text-white/70" />
+                <phase.icon className="h-5 w-5 text-white" />
                 <h4 className="font-medium text-white">{phase.phase}</h4>
               </div>
               <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
                 {phase.activities.map((activity, idx) => (
-                  <li key={idx} className="text-sm text-white/85 flex items-start gap-2">
+                  <li key={idx} className="text-sm text-white flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-white/55 rounded-full mt-2 flex-shrink-0"></span>
                     {activity}
                   </li>
@@ -1365,12 +1365,12 @@ const CommercialPlanningSection = () => {
                 className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]"
               >
                 <div className="flex items-center gap-2 mb-3">
-                  <consideration.icon className="h-5 w-5 text-white/70" />
+                  <consideration.icon className="h-5 w-5 text-white" />
                   <h4 className="font-medium text-white">{consideration.area}</h4>
                 </div>
                 <ul className="space-y-1">
                   {consideration.requirements.map((requirement, idx) => (
-                    <li key={idx} className="text-xs text-white/85 flex items-start gap-2">
+                    <li key={idx} className="text-xs text-white flex items-start gap-2">
                       <span className="w-1 h-1 bg-white/55 rounded-full mt-1.5 flex-shrink-0"></span>
                       {requirement}
                     </li>

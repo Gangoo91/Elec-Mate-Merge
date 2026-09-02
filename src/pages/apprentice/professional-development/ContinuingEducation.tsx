@@ -11,6 +11,8 @@ import { CheckCircle2 } from 'lucide-react';
 import { itemVariants } from '@/components/college/primitives';
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const courseCategories = [
   {
@@ -318,8 +320,8 @@ const whyContinue = [
 ];
 
 const fundingPoints = [
-  'Apprenticeship Levy — up to £18,000 for Level 3 Electrical Installation, ST0152 (funding band). Employers with a pay bill over £3m pay into the levy; smaller employers get 95% government co-investment.',
-  'Advanced Learner Loans — cover full course fees for Level 3–6 qualifications including degree top-ups. Repay only when earning over £25,000/yr.',
+  'Apprenticeship funding — the ST0152 Installation & Maintenance Electrician funding band is £23,000 (raised from £21,000 on 20 July 2025). Employers with a pay bill over £3m pay into the levy; smaller employers get 95% government co-investment.',
+  'Advanced Learner Loans — cover full course fees for Level 3–6 qualifications including degree top-ups. Repayments start above the Plan 2 threshold, which is uprated each April — check GOV.UK.',
   'Employer sponsorship — many larger contractors fund training as part of staff development. Always ask before paying yourself.',
   'IET Education Grants — £500–£2,000 for IET members pursuing further education.',
   'Skills Bootcamps — free government-funded intensive courses in specific technical areas.',
@@ -380,10 +382,13 @@ const ContinuingEducation = () => {
             {whyContinue.map((b) => (
               <li
                 key={b.title}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-1.5"
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-1.5',
+                  CARD_SURFACE
+                )}
               >
                 <Eyebrow>{b.title}</Eyebrow>
-                <p className="text-[13px] text-white/85 leading-relaxed">{b.detail}</p>
+                <p className="text-[13px] text-white leading-relaxed">{b.detail}</p>
               </li>
             ))}
           </ul>
@@ -400,10 +405,13 @@ const ContinuingEducation = () => {
             {a4Changes.map((c) => (
               <li
                 key={c.change}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-1.5"
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-1.5',
+                  CARD_SURFACE
+                )}
               >
                 <Eyebrow>{c.change}</Eyebrow>
-                <p className="text-[13px] text-white/85 leading-relaxed">{c.detail}</p>
+                <p className="text-[13px] text-white leading-relaxed">{c.detail}</p>
               </li>
             ))}
           </ul>
@@ -420,18 +428,21 @@ const ContinuingEducation = () => {
             {courseCategories.map((cat) => (
               <li
                 key={cat.title}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3"
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
+                  CARD_SURFACE
+                )}
               >
                 <div className="flex items-baseline justify-between gap-3 flex-wrap">
                   <h3 className="text-[15px] font-semibold text-white tracking-tight">
                     {cat.title}
                   </h3>
-                  <span className="inline-flex items-center h-6 px-2 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[10px] font-medium uppercase tracking-[0.14em] text-elec-yellow">
+                  <span className="inline-flex items-center h-6 px-2 rounded-md border border-elec-yellow/30 bg-white/[0.05] text-[10px] font-medium uppercase tracking-[0.14em] text-elec-yellow">
                     {cat.level}
                   </span>
                 </div>
-                <p className="text-[13px] text-white/85 leading-relaxed">{cat.description}</p>
-                <div className="flex items-center gap-2 text-[11.5px] font-mono tabular-nums text-white/55">
+                <p className="text-[13px] text-white leading-relaxed">{cat.description}</p>
+                <div className="flex items-center gap-2 text-[11.5px] font-mono tabular-nums text-white">
                   <span>{cat.duration}</span>
                   <span>·</span>
                   <span>{cat.cost}</span>
@@ -440,7 +451,7 @@ const ContinuingEducation = () => {
                   {cat.courses.map((course) => (
                     <span
                       key={course}
-                      className="inline-flex items-center h-7 px-2 rounded-md border border-white/[0.08] bg-white/[0.02] text-[11px] text-white/85"
+                      className="inline-flex items-center h-7 px-2 rounded-md border border-white/[0.08] bg-white/[0.02] text-[11px] text-white"
                     >
                       {course}
                     </span>
@@ -462,10 +473,10 @@ const ContinuingEducation = () => {
             {planningSteps.map((item) => (
               <li
                 key={item.step}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
+                className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}
               >
                 <div className="flex items-start gap-3">
-                  <div className="h-8 w-8 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] flex items-center justify-center flex-shrink-0">
+                  <div className="h-8 w-8 rounded-md border border-elec-yellow/30 bg-white/[0.05] flex items-center justify-center flex-shrink-0">
                     <span className="text-[13px] font-mono font-semibold text-elec-yellow tabular-nums">
                       {item.step}
                     </span>
@@ -474,7 +485,7 @@ const ContinuingEducation = () => {
                     <h3 className="text-[14px] font-semibold text-white tracking-tight">
                       {item.title}
                     </h3>
-                    <p className="text-[13px] text-white/85 leading-relaxed">{item.description}</p>
+                    <p className="text-[13px] text-white leading-relaxed">{item.description}</p>
                   </div>
                 </div>
               </li>
@@ -489,12 +500,12 @@ const ContinuingEducation = () => {
             title="Six routes to lower the bill"
             meta="Many courses are partially or fully funded — understand your options"
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
+          <div className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}>
             <ul className="space-y-2">
               {fundingPoints.map((point) => (
                 <li
                   key={point}
-                  className="flex items-start gap-2 text-[13px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[13px] text-white leading-relaxed"
                 >
                   <CheckCircle2 className="h-4 w-4 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                   <span>{point}</span>
@@ -515,12 +526,15 @@ const ContinuingEducation = () => {
             {keyTrends.map((item) => (
               <li
                 key={item.trend}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-1.5"
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-1.5',
+                  CARD_SURFACE
+                )}
               >
                 <h3 className="text-[14px] font-semibold text-white tracking-tight">
                   {item.trend}
                 </h3>
-                <p className="text-[13px] text-white/85 leading-relaxed">{item.detail}</p>
+                <p className="text-[13px] text-white leading-relaxed">{item.detail}</p>
               </li>
             ))}
           </ul>
@@ -537,7 +551,10 @@ const ContinuingEducation = () => {
             {regionalInsights.map((region) => (
               <li
                 key={region.region}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3"
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
+                  CARD_SURFACE
+                )}
               >
                 <h3 className="text-[15px] font-semibold text-white tracking-tight">
                   {region.region}
@@ -546,14 +563,14 @@ const ContinuingEducation = () => {
                   {region.projects.map((project) => (
                     <li
                       key={project}
-                      className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                      className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                     >
                       <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                       <span>{project}</span>
                     </li>
                   ))}
                 </ul>
-                <p className="text-[12px] text-white/70 leading-relaxed pt-1 border-t border-white/[0.04]">
+                <p className="text-[12px] text-white leading-relaxed pt-1 border-t border-white/[0.04]">
                   {region.outlook}
                 </p>
               </li>
@@ -572,29 +589,32 @@ const ContinuingEducation = () => {
             {successStories.map((story) => (
               <li
                 key={story.name}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2.5"
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-2.5',
+                  CARD_SURFACE
+                )}
               >
                 <div className="flex items-baseline justify-between gap-3 flex-wrap">
                   <div className="min-w-0">
                     <h3 className="text-[14px] font-semibold text-white tracking-tight">
                       {story.name}
                     </h3>
-                    <p className="text-[11.5px] text-white/55 mt-0.5">
+                    <p className="text-[11.5px] text-white mt-0.5">
                       {story.role} · {story.location}
                     </p>
                   </div>
-                  <span className="inline-flex items-center h-6 px-2 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[11px] font-mono tabular-nums text-elec-yellow">
+                  <span className="inline-flex items-center h-6 px-2 rounded-md border border-elec-yellow/30 bg-white/[0.05] text-[11px] font-mono tabular-nums text-elec-yellow">
                     {story.change}
                   </span>
                 </div>
-                <p className="text-[13px] text-white/85 leading-relaxed">{story.detail}</p>
+                <p className="text-[13px] text-white leading-relaxed">{story.detail}</p>
                 <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
                   <Eyebrow>Education path</Eyebrow>
-                  <p className="text-[12.5px] text-white/85 leading-relaxed">{story.path}</p>
+                  <p className="text-[12.5px] text-white leading-relaxed">{story.path}</p>
                 </div>
                 <div className="flex items-start gap-2 pt-1">
                   <Eyebrow>Top tip</Eyebrow>
-                  <span className="text-[12.5px] text-white/85 leading-relaxed italic">
+                  <span className="text-[12.5px] text-white leading-relaxed italic">
                     "{story.tip}"
                   </span>
                 </div>
@@ -605,10 +625,10 @@ const ContinuingEducation = () => {
 
         {/* ── Footnote ─────────────────────────────────────────────── */}
         <motion.section variants={itemVariants}>
-          <p className="text-[11px] text-white/40 leading-relaxed">
-            Course information and funding details based on ESFA guidance, IET professional
-            standards, and current UK electrical industry data. Costs and availability vary by
-            provider and region. Check with individual providers for current pricing.
+          <p className="text-[11px] text-white leading-relaxed">
+            Course information and funding details based on DfE apprenticeship funding rules, IET
+            professional standards, and current UK electrical industry data. Costs and availability
+            vary by provider and region. Check with individual providers for current pricing.
           </p>
         </motion.section>
       </HubBody>

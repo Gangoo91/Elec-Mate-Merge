@@ -38,7 +38,7 @@ const InteractiveLightDemo = ({ subsectionId }: InteractiveLightDemoProps) => {
         <div className="text-center">
           <div
             className={`w-20 h-20 rounded-md flex items-center justify-center cursor-pointer
-              ${circuitComplete ? 'bg-elec-yellow/20 border-2 border-elec-yellow' : 'bg-white/10 border-2 border-elec-yellow/30'}`}
+              ${circuitComplete ? 'bg-white/[0.08] border-2 border-elec-yellow' : 'bg-white/10 border-2 border-elec-yellow/30'}`}
             onClick={toggleCircuit}
           >
             <span className="text-sm font-medium">
@@ -53,7 +53,7 @@ const InteractiveLightDemo = ({ subsectionId }: InteractiveLightDemoProps) => {
         <div className="text-center">
           <div
             className={`w-16 h-16 rounded-md flex items-center justify-center cursor-pointer
-              ${circuitComplete ? 'bg-elec-yellow/20 border-2 border-elec-yellow hover:bg-elec-yellow/40' : 'bg-white/10 border-2 border-elec-yellow/30'}`}
+              ${circuitComplete ? 'bg-white/[0.08] border-2 border-elec-yellow hover:bg-elec-yellow/40' : 'bg-white/10 border-2 border-elec-yellow/30'}`}
             onClick={toggleLight}
           >
             <span className="text-sm font-medium">Switch</span>

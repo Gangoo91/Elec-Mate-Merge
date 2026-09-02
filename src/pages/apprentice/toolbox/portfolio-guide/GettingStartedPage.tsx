@@ -10,6 +10,8 @@ import { CheckCircle2, AlertTriangle } from 'lucide-react';
 import { itemVariants } from '@/components/college/primitives';
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const whyMatters = [
   'Required for gateway sign-off — without it your provider can’t put you forward for End-Point Assessment',
@@ -140,14 +142,19 @@ const GettingStartedPage = () => {
             title="A structured record of your competence"
             meta="Not a folder of paperwork — a living document"
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2">
-            <p className="text-[13.5px] text-white/85 leading-relaxed">
+          <div
+            className={cn(
+              'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-2',
+              CARD_SURFACE
+            )}
+          >
+            <p className="text-[13.5px] text-white leading-relaxed">
               Your apprenticeship portfolio is a structured collection of evidence proving you're
               competent against the Level 3 Installation / Maintenance Electrician standard (ST0152
               v1.2). It tells the story of your development from day one to gateway readiness,
               typically across 3.5–4 years (42–48 months).
             </p>
-            <p className="text-[13px] text-white/85 leading-relaxed">
+            <p className="text-[13px] text-white leading-relaxed">
               It's an on-programme record. Your training provider and assessor use it to confirm
               your NVQ competence and sign you off at gateway. The End-Point Assessment itself is
               the AM2S practical assessment — a synoptic test of safe isolation, installation,
@@ -164,12 +171,12 @@ const GettingStartedPage = () => {
             title="Six reasons it's non-negotiable"
             meta="From EPA gateway to lifetime CV asset"
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
+          <div className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}>
             <ul className="space-y-1.5">
               {whyMatters.map((item) => (
                 <li
                   key={item}
-                  className="flex items-start gap-2 text-[13px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[13px] text-white leading-relaxed"
                 >
                   <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                   <span>{item}</span>
@@ -190,12 +197,15 @@ const GettingStartedPage = () => {
             {evidenceTypes.map((item) => (
               <li
                 key={item.title}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-1.5"
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-1.5',
+                  CARD_SURFACE
+                )}
               >
                 <h3 className="text-[13.5px] font-semibold text-elec-yellow tracking-tight">
                   {item.title}
                 </h3>
-                <p className="text-[12.5px] text-white/85 leading-relaxed">{item.desc}</p>
+                <p className="text-[12.5px] text-white leading-relaxed">{item.desc}</p>
               </li>
             ))}
           </ul>
@@ -212,7 +222,10 @@ const GettingStartedPage = () => {
             {ksbAreas.map((area) => (
               <li
                 key={area.code}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2"
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-2',
+                  CARD_SURFACE
+                )}
               >
                 <div className="flex items-baseline justify-between gap-3 flex-wrap">
                   <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
@@ -222,7 +235,7 @@ const GettingStartedPage = () => {
                     {area.code}
                   </span>
                 </div>
-                <p className="text-[13px] text-white/85 leading-relaxed">{area.description}</p>
+                <p className="text-[13px] text-white leading-relaxed">{area.description}</p>
               </li>
             ))}
           </ul>
@@ -235,8 +248,8 @@ const GettingStartedPage = () => {
             title="Right now — not Year 3"
             meta="The biggest mistake is leaving it until the end"
           />
-          <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-3">
-            <p className="text-[13.5px] text-white/85 leading-relaxed">
+          <div className="rounded-xl border border-elec-yellow/25 bg-white/[0.05] p-4 sm:p-5 space-y-3">
+            <p className="text-[13.5px] text-white leading-relaxed">
               By Year 3 or 4 you've forgotten details, lost photos, and can't get witness statements
               for work done years ago. Start now.
             </p>
@@ -246,7 +259,7 @@ const GettingStartedPage = () => {
                 {timeline.map((item) => (
                   <li
                     key={item}
-                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                    className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                   >
                     <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                     <span>{item}</span>
@@ -265,13 +278,18 @@ const GettingStartedPage = () => {
             meta="Check what your provider requires"
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-            <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+            <div
+              className={cn(
+                'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
+                CARD_SURFACE
+              )}
+            >
               <Eyebrow>Digital portfolio</Eyebrow>
               <ul className="space-y-1.5">
                 {digitalPros.map((item) => (
                   <li
                     key={item}
-                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                    className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                   >
                     <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                     <span>{item}</span>
@@ -279,13 +297,18 @@ const GettingStartedPage = () => {
                 ))}
               </ul>
             </div>
-            <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+            <div
+              className={cn(
+                'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
+                CARD_SURFACE
+              )}
+            >
               <Eyebrow>Physical portfolio</Eyebrow>
               <ul className="space-y-1.5">
                 {physicalPros.map((item) => (
                   <li
                     key={item}
-                    className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                    className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                   >
                     <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                     <span>{item}</span>
@@ -308,7 +331,7 @@ const GettingStartedPage = () => {
               {commonMistakes.map((item) => (
                 <li
                   key={item}
-                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                 >
                   <AlertTriangle className="h-3.5 w-3.5 text-red-300 flex-shrink-0 mt-0.5" />
                   <span>{item}</span>
@@ -325,12 +348,12 @@ const GettingStartedPage = () => {
             title="Eight habits that compound"
             meta="The ones distinction-grade apprentices recommend"
           />
-          <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5">
+          <div className="rounded-xl border border-elec-yellow/25 bg-white/[0.05] p-4 sm:p-5">
             <ul className="space-y-1.5">
               {topTips.map((item) => (
                 <li
                   key={item}
-                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                 >
                   <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-0.5" />
                   <span>{item}</span>

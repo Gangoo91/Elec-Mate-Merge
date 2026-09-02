@@ -886,8 +886,8 @@ export const siteAssessmentChecklist: ChecklistCategory[] = [
         id: 'ss-rcd-testing',
         text: 'RCD testing and operation within limits',
         whyItMatters:
-          'RCDs must trip within 300ms at rated current and 40ms at 5x rated current. Slow RCDs do not protect.',
-        regulation: 'BS 7671:2018+A4:2026 Reg 411.3',
+          'A general RCD must trip within 300 ms at its rated residual current (S-type 130–500 ms). A4:2026 replaced the old ½×/1×/5× sequence with a single AC test at IΔn. Slow RCDs do not protect.',
+        regulation: 'BS 7671:2018+A4:2026 Reg 643.10 / 411.3.3',
         riskLevel: 'critical',
       },
       {

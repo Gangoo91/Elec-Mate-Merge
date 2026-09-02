@@ -1,8 +1,10 @@
 import { motion } from 'framer-motion';
 import { CheckCircle, AlertTriangle } from 'lucide-react';
-import { SectionHeader, itemVariants } from '@/components/college/primitives';
-import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { itemVariants } from '@/components/college/primitives';
+import { HubPage, HubBody, HubMasthead, HubSectionHeading } from '@/components/hub/HubPrimitives';
 import { DEFAULT_OTJ_STANDARD } from '@/data/otjStandards';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const WagesPage = () => {
   return (
@@ -20,8 +22,13 @@ const WagesPage = () => {
         </p>
 
         <motion.section variants={itemVariants} className="space-y-4">
-          <SectionHeader eyebrow="Current rates" title="From April 2026" />
-          <div className="border-0 bg-transparent sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]">
+          <HubSectionHeading>From April 2026</HubSectionHeading>
+          <div
+            className={cn(
+              'border-0 bg-transparent -mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+              CARD_SURFACE
+            )}
+          >
             <div className="py-4 sm:p-5 space-y-3">
               {[
                 { age: 'Apprentice rate (Year 1, any age)', rate: '£8.00/hr' },
@@ -39,7 +46,7 @@ const WagesPage = () => {
                   </span>
                 </div>
               ))}
-              <p className="text-[11.5px] text-white/60 leading-relaxed">
+              <p className="text-[11.5px] text-white leading-relaxed">
                 The apprentice rate (£8.00/hr from 1 April 2026) applies in Year 1 at any age. After
                 that you move to the National Minimum Wage for your age band, and apprentices aged
                 21 and over must be paid at least the National Living Wage. Rates change each April
@@ -50,8 +57,13 @@ const WagesPage = () => {
         </motion.section>
 
         <motion.section variants={itemVariants} className="space-y-4">
-          <SectionHeader eyebrow="Entitlements" title="What you should be paid for" />
-          <div className="border-0 bg-transparent sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]">
+          <HubSectionHeading>What you should be paid for</HubSectionHeading>
+          <div
+            className={cn(
+              'border-0 bg-transparent -mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+              CARD_SURFACE
+            )}
+          >
             <div className="py-4 sm:p-5 space-y-2">
               <ul className="space-y-2.5">
                 {[
@@ -63,7 +75,7 @@ const WagesPage = () => {
                 ].map((item) => (
                   <li
                     key={item}
-                    className="flex items-start gap-2.5 text-[13px] text-white/85 leading-relaxed"
+                    className="flex items-start gap-2.5 text-[13px] text-white leading-relaxed"
                   >
                     <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
                     {item}
@@ -75,7 +87,7 @@ const WagesPage = () => {
         </motion.section>
 
         <motion.section variants={itemVariants} className="space-y-4">
-          <SectionHeader eyebrow="Red Flags" title="When something is wrong" />
+          <HubSectionHeading>When something is wrong</HubSectionHeading>
           <div className="border-0 bg-transparent sm:rounded-xl sm:border sm:border-red-500/25 sm:bg-red-500/[0.04]">
             <div className="py-4 sm:p-5 space-y-2">
               <ul className="space-y-2.5">
@@ -89,7 +101,7 @@ const WagesPage = () => {
                 ].map((item) => (
                   <li
                     key={item}
-                    className="flex items-start gap-2.5 text-[13px] text-white/85 leading-relaxed"
+                    className="flex items-start gap-2.5 text-[13px] text-white leading-relaxed"
                   >
                     <AlertTriangle className="h-4 w-4 text-red-400 flex-shrink-0 mt-0.5" />
                     {item}
@@ -108,10 +120,10 @@ const WagesPage = () => {
         </motion.section>
 
         <motion.section variants={itemVariants} className="space-y-4">
-          <SectionHeader eyebrow="JIB rates" title="The industry-standard scale" />
-          <div className="border-0 bg-transparent sm:rounded-xl sm:border sm:border-elec-yellow/25 sm:bg-elec-yellow/[0.04]">
+          <HubSectionHeading>The industry-standard scale</HubSectionHeading>
+          <div className="border-0 bg-transparent sm:rounded-xl sm:border sm:border-elec-yellow/25 sm:bg-white/[0.05]">
             <div className="py-4 sm:p-5 space-y-3">
-              <p className="text-[13px] text-white/80 leading-relaxed">
+              <p className="text-[13px] text-white leading-relaxed">
                 The Joint Industry Board (JIB) sets the national pay rates for the UK electrical
                 industry — a single rate per stage, not an employer-dependent range. Many employers
                 follow JIB grading, which is typically above the legal minimum. Ask your employer
@@ -135,7 +147,7 @@ const WagesPage = () => {
                   </div>
                 ))}
               </div>
-              <p className="text-[11.5px] text-white/60 leading-relaxed">
+              <p className="text-[11.5px] text-white leading-relaxed">
                 National rates effective 5 January 2026. A London premium adds roughly £0.98 to
                 £1.69/hr depending on stage. Whatever the JIB stage rate, an apprentice aged 21 or
                 over must receive at least the National Living Wage (£12.71/hr from April 2026)

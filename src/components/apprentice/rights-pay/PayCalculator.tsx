@@ -20,7 +20,7 @@ const PayCalculator = () => {
   const [results, setResults] = useState<any>(null);
 
   const calculateTax = (annualGross: number) => {
-    // 2025 UK tax thresholds
+    // 2026/27 UK tax thresholds (personal allowance and NI thresholds are frozen)
     const personalAllowance = 12570;
     const basicRateThreshold = 50270;
     const higherRateThreshold = 125140;
@@ -129,183 +129,188 @@ const PayCalculator = () => {
 
   return (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
         Pay calculator
       </span>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="space-y-4">
-            <div>
-              <Label htmlFor="apprentice-year">Apprenticeship Stage</Label>
-              <Select value={apprenticeYear} onValueChange={handleYearChange}>
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="first">
-                    Year 1 / Under 19 (£{UK_MINIMUM_WAGE.apprentice.toFixed(2)}/hr minimum)
-                  </SelectItem>
-                  <SelectItem value="second">
-                    Year 2+ aged 21+ (£{UK_MINIMUM_WAGE.nlw21Plus.toFixed(2)}/hr minimum)
-                  </SelectItem>
-                  <SelectItem value="qualified">Newly Qualified</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div>
-              <Label htmlFor="hourly-rate">Hourly Rate (£)</Label>
-              <Input
-                id="hourly-rate"
-                type="number"
-                step="0.01"
-                value={hourlyRate}
-                onChange={(e) => setHourlyRate(e.target.value)}
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="hours-per-week">Hours per Week</Label>
-              <Input
-                id="hours-per-week"
-                type="number"
-                step="0.5"
-                value={hoursPerWeek}
-                onChange={(e) => setHoursPerWeek(e.target.value)}
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="pension">Pension Contribution (%)</Label>
-              <Input
-                id="pension"
-                type="number"
-                step="0.1"
-                min="0"
-                max="40"
-                value={pensionContribution}
-                onChange={(e) => setPensionContribution(e.target.value)}
-              />
-            </div>
-
-            <div className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                id="student-loan"
-                checked={hasStudentLoan}
-                onChange={(e) => setHasStudentLoan(e.target.checked)}
-                className="w-4 h-4 text-elec-yellow bg-white/5 border-white/20 rounded focus:ring-elec-yellow"
-              />
-              <Label htmlFor="student-loan" className="text-sm">
-                I have a student loan (Plan 2)
-              </Label>
-            </div>
-
-            <Button onClick={calculatePay} className="w-full h-11 touch-manipulation">
-              Calculate Take-Home Pay
-            </Button>
+        <div className="space-y-4">
+          <div>
+            <Label htmlFor="apprentice-year">Apprenticeship Stage</Label>
+            <Select value={apprenticeYear} onValueChange={handleYearChange}>
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="first">
+                  Year 1 / Under 19 (£{UK_MINIMUM_WAGE.apprentice.toFixed(2)}/hr minimum)
+                </SelectItem>
+                <SelectItem value="second">
+                  Year 2+ aged 21+ (£{UK_MINIMUM_WAGE.nlw21Plus.toFixed(2)}/hr minimum)
+                </SelectItem>
+                <SelectItem value="qualified">Newly Qualified</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
 
-          {results && (
-            <div className="space-y-4">
-              <h4 className="text-[14px] font-semibold text-white">Your pay breakdown</h4>
+          <div>
+            <Label htmlFor="hourly-rate">Hourly Rate (£)</Label>
+            <Input
+              id="hourly-rate"
+              type="number"
+              step="0.01"
+              value={hourlyRate}
+              onChange={(e) => setHourlyRate(e.target.value)}
+            />
+          </div>
 
-              <div className="space-y-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-                  Gross pay (before tax)
+          <div>
+            <Label htmlFor="hours-per-week">Hours per Week</Label>
+            <Input
+              id="hours-per-week"
+              type="number"
+              step="0.5"
+              value={hoursPerWeek}
+              onChange={(e) => setHoursPerWeek(e.target.value)}
+            />
+          </div>
+
+          <div>
+            <Label htmlFor="pension">Pension Contribution (%)</Label>
+            <Input
+              id="pension"
+              type="number"
+              step="0.1"
+              min="0"
+              max="40"
+              value={pensionContribution}
+              onChange={(e) => setPensionContribution(e.target.value)}
+            />
+          </div>
+
+          <div className="flex items-center space-x-2">
+            <input
+              type="checkbox"
+              id="student-loan"
+              checked={hasStudentLoan}
+              onChange={(e) => setHasStudentLoan(e.target.checked)}
+              className="w-4 h-4 text-elec-yellow bg-white/5 border-white/20 rounded focus:ring-elec-yellow"
+            />
+            <Label htmlFor="student-loan" className="text-sm">
+              I have a student loan (Plan 2)
+            </Label>
+          </div>
+
+          <Button onClick={calculatePay} className="w-full h-11 touch-manipulation">
+            Calculate Take-Home Pay
+          </Button>
+        </div>
+
+        {results && (
+          <div className="space-y-4">
+            <h4 className="text-[14px] font-semibold text-white">Your pay breakdown</h4>
+
+            <div className="space-y-2">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                Gross pay (before tax)
+              </span>
+
+              <div className="flex justify-between items-center p-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
+                <span className="text-[13px] text-white">Hourly rate</span>
+                <span className="font-mono text-elec-yellow text-[13px]">
+                  £{results.hourlyRate}
                 </span>
-
-                <div className="flex justify-between items-center p-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
-                  <span className="text-[13px] text-white/85">Hourly rate</span>
-                  <span className="font-mono text-elec-yellow text-[13px]">£{results.hourlyRate}</span>
-                </div>
-
-                <div className="flex justify-between items-center p-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
-                  <span className="text-[13px] text-white/85">Monthly gross</span>
-                  <span className="font-mono text-white text-[13px]">£{results.monthlyGross}</span>
-                </div>
-
-                <div className="flex justify-between items-center p-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
-                  <span className="text-[13px] text-white/85">Annual gross</span>
-                  <span className="font-mono text-white text-[13px]">£{results.annualGross}</span>
-                </div>
               </div>
 
-              <div className="space-y-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-                  Monthly deductions
-                </span>
-
-                <div className="flex justify-between items-center p-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
-                  <span className="text-[13px] text-white/85">Income tax</span>
-                  <span className="font-mono text-white/85 text-[13px]">-£{results.incomeTax}</span>
-                </div>
-
-                <div className="flex justify-between items-center p-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
-                  <span className="text-[13px] text-white/85">National Insurance</span>
-                  <span className="font-mono text-white/85 text-[13px]">
-                    -£{results.nationalInsurance}
-                  </span>
-                </div>
-
-                <div className="flex justify-between items-center p-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
-                  <span className="text-[13px] text-white/85">Pension ({pensionContribution}%)</span>
-                  <span className="font-mono text-white/85 text-[13px]">-£{results.pension}</span>
-                </div>
-
-                {hasStudentLoan && (
-                  <div className="flex justify-between items-center p-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
-                    <span className="text-[13px] text-white/85">Student loan</span>
-                    <span className="font-mono text-white/85 text-[13px]">
-                      -£{results.studentLoan}
-                    </span>
-                  </div>
-                )}
-
-                <div className="flex justify-between items-center p-2 rounded-lg border border-white/[0.06] bg-white/[0.04]">
-                  <span className="text-[13px] font-semibold text-white">Total deductions</span>
-                  <span className="font-mono text-white text-[13px] font-semibold">
-                    -£{results.totalDeductions}
-                  </span>
-                </div>
+              <div className="flex justify-between items-center p-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
+                <span className="text-[13px] text-white">Monthly gross</span>
+                <span className="font-mono text-white text-[13px]">£{results.monthlyGross}</span>
               </div>
 
-              <div className="space-y-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
-                  Take-home pay (after tax)
-                </span>
-
-                <div className="flex justify-between items-center p-3 rounded-lg border border-elec-yellow/20 bg-elec-yellow/[0.04]">
-                  <span className="text-[14px] font-semibold text-white">Monthly net pay</span>
-                  <span className="font-mono text-elec-yellow text-[18px] font-semibold">
-                    £{results.monthlyNet}
-                  </span>
-                </div>
-
-                <div className="flex justify-between items-center p-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
-                  <span className="text-[13px] text-white/85">Weekly net pay</span>
-                  <span className="font-mono text-white text-[13px]">£{results.weeklyNet}</span>
-                </div>
-
-                <div className="flex justify-between items-center p-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
-                  <span className="text-[13px] text-white/85">With overtime (net)</span>
-                  <span className="font-mono text-white text-[13px]">
-                    £{results.monthlyNetWithOvertime}/month
-                  </span>
-                </div>
-              </div>
-
-              <div className="text-[12px] text-white/55 leading-relaxed space-y-1">
-                <p>
-                  Tax and NI based on 2025/26 UK rates (8% employee NI). Wage defaults are current
-                  2025/26 minimums.
-                </p>
-                <p>Overtime assumes 5 hours/week at time-and-a-half rate.</p>
-                <p>Student loan deduction applies to Plan 2 (earnings over £27,295).</p>
+              <div className="flex justify-between items-center p-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
+                <span className="text-[13px] text-white">Annual gross</span>
+                <span className="font-mono text-white text-[13px]">£{results.annualGross}</span>
               </div>
             </div>
-          )}
-        </div>
+
+            <div className="space-y-2">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                Monthly deductions
+              </span>
+
+              <div className="flex justify-between items-center p-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
+                <span className="text-[13px] text-white">Income tax</span>
+                <span className="font-mono text-white text-[13px]">-£{results.incomeTax}</span>
+              </div>
+
+              <div className="flex justify-between items-center p-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
+                <span className="text-[13px] text-white">National Insurance</span>
+                <span className="font-mono text-white text-[13px]">
+                  -£{results.nationalInsurance}
+                </span>
+              </div>
+
+              <div className="flex justify-between items-center p-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
+                <span className="text-[13px] text-white">Pension ({pensionContribution}%)</span>
+                <span className="font-mono text-white text-[13px]">-£{results.pension}</span>
+              </div>
+
+              {hasStudentLoan && (
+                <div className="flex justify-between items-center p-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
+                  <span className="text-[13px] text-white">Student loan</span>
+                  <span className="font-mono text-white text-[13px]">
+                    -£{results.studentLoan}
+                  </span>
+                </div>
+              )}
+
+              <div className="flex justify-between items-center p-2 rounded-lg border border-white/[0.06] bg-white/[0.04]">
+                <span className="text-[13px] font-semibold text-white">Total deductions</span>
+                <span className="font-mono text-white text-[13px] font-semibold">
+                  -£{results.totalDeductions}
+                </span>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
+                Take-home pay (after tax)
+              </span>
+
+              <div className="flex justify-between items-center p-3 rounded-lg border border-elec-yellow/20 bg-white/[0.05]">
+                <span className="text-[14px] font-semibold text-white">Monthly net pay</span>
+                <span className="font-mono text-elec-yellow text-[18px] font-semibold">
+                  £{results.monthlyNet}
+                </span>
+              </div>
+
+              <div className="flex justify-between items-center p-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
+                <span className="text-[13px] text-white">Weekly net pay</span>
+                <span className="font-mono text-white text-[13px]">£{results.weeklyNet}</span>
+              </div>
+
+              <div className="flex justify-between items-center p-2 rounded-lg border border-white/[0.06] bg-white/[0.02]">
+                <span className="text-[13px] text-white">With overtime (net)</span>
+                <span className="font-mono text-white text-[13px]">
+                  £{results.monthlyNetWithOvertime}/month
+                </span>
+              </div>
+            </div>
+
+            <div className="text-[12px] text-white leading-relaxed space-y-1">
+              <p>
+                Tax and NI based on 2026/27 UK rates (8% employee NI). Wage defaults are the
+                minimums in force from 1 April 2026.
+              </p>
+              <p>Overtime assumes 5 hours/week at time-and-a-half rate.</p>
+              <p>
+                Student loan deduction applies above the current Plan 2 threshold (uprated each
+                April — check GOV.UK).
+              </p>
+            </div>
+          </div>
+        )}
       </div>
+    </div>
   );
 };
 

@@ -52,7 +52,7 @@ const LearningFeatures = ({ terms }: LearningFeaturesProps) => {
     return (
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             {currentTermIndex + 1} of {shuffledTerms.length}
           </span>
           <Button
@@ -73,7 +73,7 @@ const LearningFeatures = ({ terms }: LearningFeaturesProps) => {
               {currentTerm.term}
             </h3>
             {currentTerm.difficulty && (
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 {currentTerm.difficulty}
               </span>
             )}
@@ -81,16 +81,16 @@ const LearningFeatures = ({ terms }: LearningFeaturesProps) => {
 
           {showAnswer && (
             <div className="space-y-3 animate-fade-in">
-              <p className="text-[14px] text-white/85 leading-relaxed text-center">
+              <p className="text-[14px] text-white leading-relaxed text-center">
                 {currentTerm.definition}
               </p>
 
               {currentTerm.commonUsage && (
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Common usage
                   </span>
-                  <p className="text-[13px] text-white/85 italic leading-relaxed">
+                  <p className="text-[13px] text-white italic leading-relaxed">
                     "{currentTerm.commonUsage}"
                   </p>
                 </div>
@@ -98,10 +98,10 @@ const LearningFeatures = ({ terms }: LearningFeaturesProps) => {
 
               {currentTerm.context && (
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Context
                   </span>
-                  <p className="text-[13px] text-white/85 leading-relaxed">{currentTerm.context}</p>
+                  <p className="text-[13px] text-white leading-relaxed">{currentTerm.context}</p>
                 </div>
               )}
 
@@ -110,7 +110,7 @@ const LearningFeatures = ({ terms }: LearningFeaturesProps) => {
                   {currentTerm.relatedTerms.map((related, i) => (
                     <span
                       key={i}
-                      className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
+                      className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
                     >
                       {related}
                     </span>
@@ -149,7 +149,7 @@ const LearningFeatures = ({ terms }: LearningFeaturesProps) => {
           </div>
         </div>
 
-        <p className="text-[12px] text-white/55 text-center">
+        <p className="text-[12px] text-white text-center">
           {studiedCount} term{studiedCount !== 1 ? 's' : ''} studied this session
         </p>
       </div>
@@ -159,19 +159,19 @@ const LearningFeatures = ({ terms }: LearningFeaturesProps) => {
   return (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
       <div className="space-y-1">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Study mode
         </span>
         <h3 className="text-[18px] font-semibold text-white leading-tight">Flashcards</h3>
       </div>
 
-      <p className="text-[14px] text-white/85 leading-relaxed">
+      <p className="text-[14px] text-white leading-relaxed">
         Test your knowledge with interactive flashcards. Cards are shuffled randomly and show the
         term first — tap to reveal the definition, context, and usage examples.
       </p>
 
       <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           {terms.length} terms available based on your current filters. Cards are shuffled each time
           you start.
         </p>
@@ -187,10 +187,10 @@ const LearningFeatures = ({ terms }: LearningFeaturesProps) => {
 
       {studiedCount > 0 && (
         <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Last session
           </span>
-          <p className="text-[14px] text-white/85 leading-relaxed">
+          <p className="text-[14px] text-white leading-relaxed">
             You studied <strong className="text-elec-yellow">{studiedCount} terms</strong> in your
             last session. Keep it up.
           </p>
@@ -198,10 +198,10 @@ const LearningFeatures = ({ terms }: LearningFeaturesProps) => {
       )}
 
       <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Tip
         </span>
-        <p className="text-[13px] text-white/85 leading-relaxed">
+        <p className="text-[13px] text-white leading-relaxed">
           Use the search and category filters on the Browse tab first, then study only the filtered
           terms. This lets you focus on specific categories like safety terms or testing
           terminology.

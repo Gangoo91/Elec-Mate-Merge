@@ -192,10 +192,10 @@ const DomesticPlanningSection = () => {
         principle: 'Safe Zones',
         description: 'Cables in walls must be run in safe zones or protected by RCD',
         details: [
-          'Horizontal runs: 150mm from ceiling or floor',
-          'Vertical runs: 150mm from corners or door/window frames',
-          'Directly above/below accessories (switches, sockets)',
-          'If outside safe zones: mechanical protection or 30mA RCD required',
+          'Within 150mm of the top of the wall or partition',
+          'Within 150mm of an angle formed by two adjoining walls',
+          'Horizontally or vertically in line with an accessory (switch, socket) on either side of the wall',
+          'Cables less than 50mm deep and outside those zones: earthed metallic covering, earthed conduit/trunking, or 30mA RCD protection',
         ],
       },
       {
@@ -282,7 +282,7 @@ const DomesticPlanningSection = () => {
     complianceRoutes: [
       {
         route: 'Registered Competent Person',
-        description: 'Self-certify through scheme membership (NICEIC, NAPIT, ELECSA, etc.)',
+        description: 'Self-certify through scheme membership (NICEIC, NAPIT, etc.)',
         advantages: [
           'No Building Control fees',
           'Can certify own work',
@@ -390,7 +390,9 @@ const DomesticPlanningSection = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Comprehensive Planning Process</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              Comprehensive Planning Process
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4 p-0">
@@ -405,7 +407,7 @@ const DomesticPlanningSection = () => {
               <p className="text-sm text-white mb-3">{step.description}</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                 {step.checklist.map((item, idx) => (
-                  <div key={idx} className="text-xs text-white/85 flex items-center gap-2">
+                  <div key={idx} className="text-xs text-white flex items-center gap-2">
                     <span className="w-1.5 h-1.5 bg-white/55 rounded-full flex-shrink-0"></span>
                     {item}
                   </div>
@@ -420,14 +422,16 @@ const DomesticPlanningSection = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <siteSurveyChecklist.icon className="h-6 w-6 text-white/70" />
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{siteSurveyChecklist.title}</CardTitle>
+            <siteSurveyChecklist.icon className="h-6 w-6 text-white" />
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              {siteSurveyChecklist.title}
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4 p-0">
           <Alert className="border-white/[0.10] bg-white/[0.06]">
-            <Info className="h-4 w-4 text-white/70" />
-            <AlertDescription className="text-white/85 text-sm">
+            <Info className="h-4 w-4 text-white" />
+            <AlertDescription className="text-white text-sm">
               A thorough site survey is essential for accurate quoting, safe working, and
               compliance. Never skip this step.
             </AlertDescription>
@@ -440,8 +444,8 @@ const DomesticPlanningSection = () => {
                 {section.items.map((item, idx) => (
                   <div key={idx} className="flex items-start justify-between gap-3 text-sm">
                     <div className="flex items-start gap-2 flex-1">
-                      <CheckCircle className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
-                      <span className="text-white/85">{item.check}</span>
+                      <CheckCircle className="h-4 w-4 text-white mt-0.5 flex-shrink-0" />
+                      <span className="text-white">{item.check}</span>
                     </div>
                     <Badge
                       variant="outline"
@@ -471,14 +475,16 @@ const DomesticPlanningSection = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <loadCalculationGuidance.icon className="h-6 w-6 text-white/70" />
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{loadCalculationGuidance.title}</CardTitle>
+            <loadCalculationGuidance.icon className="h-6 w-6 text-white" />
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              {loadCalculationGuidance.title}
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4 p-0">
           <Alert className="border-white/[0.10] bg-white/[0.06]">
-            <Zap className="h-4 w-4 text-white/70" />
-            <AlertDescription className="text-white/85 text-sm">
+            <Zap className="h-4 w-4 text-white" />
+            <AlertDescription className="text-white text-sm">
               <strong>Basic Formula:</strong> {loadCalculationGuidance.basicFormula}
             </AlertDescription>
           </Alert>
@@ -491,9 +497,9 @@ const DomesticPlanningSection = () => {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/[0.10]">
-                    <th className="text-left py-2 text-white/85">Circuit Type</th>
-                    <th className="text-left py-2 text-white/85">Diversity</th>
-                    <th className="text-left py-2 text-white/85">Notes</th>
+                    <th className="text-left py-2 text-white">Circuit Type</th>
+                    <th className="text-left py-2 text-white">Diversity</th>
+                    <th className="text-left py-2 text-white">Notes</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -517,10 +523,10 @@ const DomesticPlanningSection = () => {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/[0.10]">
-                    <th className="text-left py-2 text-white/85">Load Item</th>
-                    <th className="text-left py-2 text-white/85">Connected</th>
-                    <th className="text-left py-2 text-white/85">Diversity Applied</th>
-                    <th className="text-left py-2 text-white/85">Max Demand</th>
+                    <th className="text-left py-2 text-white">Load Item</th>
+                    <th className="text-left py-2 text-white">Connected</th>
+                    <th className="text-left py-2 text-white">Diversity Applied</th>
+                    <th className="text-left py-2 text-white">Max Demand</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -535,7 +541,7 @@ const DomesticPlanningSection = () => {
                 </tbody>
               </table>
             </div>
-            <p className="text-sm text-white/85 mt-3">
+            <p className="text-sm text-white mt-3">
               <strong>Total:</strong> {loadCalculationGuidance.totalDemand}
             </p>
           </div>
@@ -544,8 +550,8 @@ const DomesticPlanningSection = () => {
             <h4 className="font-medium text-white mb-3">Key Considerations</h4>
             <ul className="space-y-2">
               {loadCalculationGuidance.considerations.map((consideration, idx) => (
-                <li key={idx} className="text-sm text-white/85 flex items-start gap-2">
-                  <Info className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
+                <li key={idx} className="text-sm text-white flex items-start gap-2">
+                  <Info className="h-4 w-4 text-white mt-0.5 flex-shrink-0" />
                   {consideration}
                 </li>
               ))}
@@ -558,16 +564,18 @@ const DomesticPlanningSection = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <cableRoutePlanning.icon className="h-6 w-6 text-white/70" />
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{cableRoutePlanning.title}</CardTitle>
+            <cableRoutePlanning.icon className="h-6 w-6 text-white" />
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              {cableRoutePlanning.title}
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4 p-0">
           <Alert className="border-white/[0.10] bg-white/[0.06]">
-            <AlertTriangle className="h-4 w-4 text-white/70" />
-            <AlertDescription className="text-white/85 text-sm">
-              <strong>Regulation 522.6:</strong> Cables in walls must be protected from damage or
-              installed in prescribed safe zones.
+            <AlertTriangle className="h-4 w-4 text-white" />
+            <AlertDescription className="text-white text-sm">
+              <strong>Regulation 522.6.201 and Table 52.1 (A4:2026):</strong> cables concealed in
+              walls must be in the prescribed zones or otherwise protected.
             </AlertDescription>
           </Alert>
 
@@ -575,10 +583,10 @@ const DomesticPlanningSection = () => {
             {cableRoutePlanning.principles.map((principle, idx) => (
               <div key={idx} className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
                 <h4 className="font-medium text-white mb-2">{principle.principle}</h4>
-                <p className="text-sm text-white/85 mb-3">{principle.description}</p>
+                <p className="text-sm text-white mb-3">{principle.description}</p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   {principle.details.map((detail, detailIdx) => (
-                    <div key={detailIdx} className="text-xs text-white/85 flex items-start gap-2">
+                    <div key={detailIdx} className="text-xs text-white flex items-start gap-2">
                       <span className="w-1.5 h-1.5 bg-white/55 rounded-full mt-1.5 flex-shrink-0"></span>
                       {detail}
                     </div>
@@ -593,14 +601,14 @@ const DomesticPlanningSection = () => {
             <div className="space-y-3">
               {cableRoutePlanning.routeOptions.map((option, idx) => (
                 <div key={idx} className="bg-white/[0.06] p-3 rounded border border-white/[0.10]">
-                  <h5 className="font-medium text-white/85 text-sm mb-2">{option.method}</h5>
+                  <h5 className="font-medium text-white text-sm mb-2">{option.method}</h5>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
                     <div>
-                      <span className="text-white/70">Advantages: </span>
+                      <span className="text-white">Advantages: </span>
                       <span className="text-white">{option.advantages}</span>
                     </div>
                     <div>
-                      <span className="text-white/70">Considerations: </span>
+                      <span className="text-white">Considerations: </span>
                       <span className="text-white">{option.considerations}</span>
                     </div>
                   </div>
@@ -615,14 +623,16 @@ const DomesticPlanningSection = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <partPRequirements.icon className="h-6 w-6 text-white/70" />
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{partPRequirements.title}</CardTitle>
+            <partPRequirements.icon className="h-6 w-6 text-white" />
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              {partPRequirements.title}
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4 p-0">
           <Alert className="border-white/[0.10] bg-white/[0.06]">
-            <Info className="h-4 w-4 text-white/70" />
-            <AlertDescription className="text-white/85 text-sm">
+            <Info className="h-4 w-4 text-white" />
+            <AlertDescription className="text-white text-sm">
               {partPRequirements.overview}
             </AlertDescription>
           </Alert>
@@ -641,11 +651,11 @@ const DomesticPlanningSection = () => {
             </div>
 
             <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
-              <h4 className="font-medium text-white/85 mb-3">Non-Notifiable Work</h4>
+              <h4 className="font-medium text-white mb-3">Non-Notifiable Work</h4>
               <ul className="space-y-2">
                 {partPRequirements.nonNotifiableWork.map((work, idx) => (
-                  <li key={idx} className="text-sm text-white/85 flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
+                  <li key={idx} className="text-sm text-white flex items-start gap-2">
+                    <CheckCircle className="h-4 w-4 text-white mt-0.5 flex-shrink-0" />
                     {work}
                   </li>
                 ))}
@@ -657,11 +667,11 @@ const DomesticPlanningSection = () => {
             <h4 className="font-medium text-white">Compliance Routes</h4>
             {partPRequirements.complianceRoutes.map((route, idx) => (
               <div key={idx} className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
-                <h5 className="font-medium text-white/85 text-sm mb-2">{route.route}</h5>
+                <h5 className="font-medium text-white text-sm mb-2">{route.route}</h5>
                 <p className="text-sm text-white mb-3">{route.description}</p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
                   <div>
-                    <span className="text-white/70 font-medium">Advantages:</span>
+                    <span className="text-white font-medium">Advantages:</span>
                     <ul className="mt-1 space-y-1">
                       {route.advantages.map((adv, advIdx) => (
                         <li key={advIdx} className="text-white">
@@ -671,7 +681,7 @@ const DomesticPlanningSection = () => {
                     </ul>
                   </div>
                   <div>
-                    <span className="text-white/70 font-medium">Requirements:</span>
+                    <span className="text-white font-medium">Requirements:</span>
                     <ul className="mt-1 space-y-1">
                       {route.requirements.map((req, reqIdx) => (
                         <li key={reqIdx} className="text-white">
@@ -687,11 +697,11 @@ const DomesticPlanningSection = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
-              <h4 className="font-medium text-white/85 mb-3">Certification Required</h4>
+              <h4 className="font-medium text-white mb-3">Certification Required</h4>
               <ul className="space-y-2">
                 {partPRequirements.certificationRequired.map((cert, idx) => (
-                  <li key={idx} className="text-sm text-white/85 flex items-start gap-2">
-                    <FileText className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
+                  <li key={idx} className="text-sm text-white flex items-start gap-2">
+                    <FileText className="h-4 w-4 text-white mt-0.5 flex-shrink-0" />
                     {cert}
                   </li>
                 ))}
@@ -699,11 +709,11 @@ const DomesticPlanningSection = () => {
             </div>
 
             <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
-              <h4 className="font-medium text-white/85 mb-3">Non-Compliance Penalties</h4>
+              <h4 className="font-medium text-white mb-3">Non-Compliance Penalties</h4>
               <ul className="space-y-2">
                 {partPRequirements.penalties.map((penalty, idx) => (
-                  <li key={idx} className="text-sm text-white/85 flex items-start gap-2">
-                    <AlertTriangle className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
+                  <li key={idx} className="text-sm text-white flex items-start gap-2">
+                    <AlertTriangle className="h-4 w-4 text-white mt-0.5 flex-shrink-0" />
                     {penalty}
                   </li>
                 ))}
@@ -717,7 +727,9 @@ const DomesticPlanningSection = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Advanced Design Considerations</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              Advanced Design Considerations
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4 p-0">
@@ -726,7 +738,7 @@ const DomesticPlanningSection = () => {
               <h4 className="font-medium text-white mb-3">{consideration.category}</h4>
               <div className="space-y-2">
                 {consideration.details.map((detail, idx) => (
-                  <div key={idx} className="text-xs text-white/85 flex items-start gap-2">
+                  <div key={idx} className="text-xs text-white flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-white/55 rounded-full mt-1.5 flex-shrink-0"></span>
                     {detail}
                   </div>
@@ -741,7 +753,9 @@ const DomesticPlanningSection = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Client Communication & Project Management</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              Client Communication & Project Management
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4 p-0">
@@ -750,7 +764,7 @@ const DomesticPlanningSection = () => {
               <h4 className="font-medium text-white mb-3">{stage.stage}</h4>
               <div className="space-y-2">
                 {stage.keyPoints.map((point, idx) => (
-                  <div key={idx} className="text-xs text-white/85 flex items-start gap-2">
+                  <div key={idx} className="text-xs text-white flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-white/55 rounded-full mt-1.5 flex-shrink-0"></span>
                     {point}
                   </div>
@@ -765,13 +779,15 @@ const DomesticPlanningSection = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Risk Assessment & Safety Planning</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              Risk Assessment & Safety Planning
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-3 p-0">
           <Alert className="border-white/[0.10] bg-white/[0.06]">
-            <AlertTriangle className="h-4 w-4 text-white/70" />
-            <AlertDescription className="text-white/85 text-sm">
+            <AlertTriangle className="h-4 w-4 text-white" />
+            <AlertDescription className="text-white text-sm">
               <strong>Essential:</strong> Complete risk assessment before starting any domestic
               electrical work. Consider all potential hazards and implement appropriate control
               measures.
@@ -779,10 +795,10 @@ const DomesticPlanningSection = () => {
           </Alert>
 
           <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
-            <h4 className="font-medium text-white/85 mb-3">Key Risk Areas to Assess</h4>
+            <h4 className="font-medium text-white mb-3">Key Risk Areas to Assess</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               {riskAssessment.map((risk, index) => (
-                <div key={index} className="text-xs text-white/85 flex items-start gap-2">
+                <div key={index} className="text-xs text-white flex items-start gap-2">
                   <span className="w-1.5 h-1.5 bg-white/55 rounded-full mt-1.5 flex-shrink-0"></span>
                   {risk}
                 </div>
@@ -796,7 +812,9 @@ const DomesticPlanningSection = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Documentation & Record Keeping</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              Documentation & Record Keeping
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="p-0">
@@ -815,7 +833,9 @@ const DomesticPlanningSection = () => {
               <div>
                 <h5 className="font-medium text-elec-yellow mb-2">Upon Completion</h5>
                 <ul className="space-y-1">
-                  <li className="text-elec-yellow text-xs">- Electrical Installation Certificate</li>
+                  <li className="text-elec-yellow text-xs">
+                    - Electrical Installation Certificate
+                  </li>
                   <li className="text-elec-yellow text-xs">- Test result schedules</li>
                   <li className="text-elec-yellow text-xs">
                     - Building Control notification (if required)

@@ -1,7 +1,7 @@
 /**
  * Tip of the day, expanding to the full list (ELE-1655).
  *
- * Was `bg-white/[0.02]` under a `/[0.06]` edge with `text-white/55` labels and
+ * Was `bg-white/[0.02]` under a `/[0.06]` edge with `text-white` labels and
  * `/85` body — a grey panel of grey text. Now the shared card surface with
  * every piece of type full white; the numbers down the expanded list recede
  * with `opacity` on the element rather than a dimmer text colour, so they stay

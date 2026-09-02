@@ -74,9 +74,7 @@ export function ACAuditTimeline({ signoff, evidenceCount, lastEvidenceAt }: ACAu
   if (signoff?.assessorVerdict === 'passed') {
     steps.push({
       key: 'assessor',
-      label: signoff.assessorName
-        ? `Signed off by ${signoff.assessorName}`
-        : 'Assessor signed off',
+      label: signoff.assessorName ? `Signed off by ${signoff.assessorName}` : 'Assessor signed off',
       when: fmt(signoff.assessorSignedAt),
       detail: signoff.assessorNarrative,
       state: 'done',
@@ -154,7 +152,7 @@ export function ACAuditTimeline({ signoff, evidenceCount, lastEvidenceAt }: ACAu
                 : 'bg-transparent border-white/35';
           const card =
             step.state === 'done'
-              ? 'border-elec-yellow/30 bg-elec-yellow/[0.06]'
+              ? 'border-elec-yellow/30 bg-white/[0.05]'
               : step.state === 'warn'
                 ? 'border-red-500/40 bg-red-500/[0.07]'
                 : 'border-white/[0.08] bg-white/[0.02]';

@@ -23,6 +23,7 @@ import {
 import InteractiveTestingGuide from './InteractiveTestingGuide';
 import { allBS7671Tests, BS7671Test } from '@/data/bs7671-testing/allBS7671Tests';
 import { cn } from '@/lib/utils';
+import { selectTriggerCn } from '@/components/forms/fieldStyles';
 
 const RunThroughStepsTab = () => {
   const [selectedTest, setSelectedTest] = useState<BS7671Test | null>(null);
@@ -174,7 +175,7 @@ const RunThroughStepsTab = () => {
               <select
                 value={difficultyFilter}
                 onChange={(e) => setDifficultyFilter(e.target.value)}
-                className="h-11 bg-white/10 border border-white/10 rounded-lg px-4 py-2 text-white focus:border-cyan-500/50 transition-colors"
+                className={cn(selectTriggerCn, '[color-scheme:dark]')}
               >
                 <option value="All">All Levels</option>
                 <option value="Beginner">Beginner</option>

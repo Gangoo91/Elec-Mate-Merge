@@ -56,8 +56,8 @@ const HealthSafetySubsection = ({
   if (isLoading) {
     return (
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 text-center animate-pulse space-y-1">
-        <p className="text-[14px] text-white/85 leading-relaxed">Loading content...</p>
-        <p className="text-[12px] text-white/55">
+        <p className="text-[14px] text-white leading-relaxed">Loading content...</p>
+        <p className="text-[12px] text-white">
           Please wait while we load your learning materials.
         </p>
       </div>
@@ -70,7 +70,7 @@ const HealthSafetySubsection = ({
         <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
           Load error
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           There was an issue loading this section. This might be due to a technical problem or
           missing content.
         </p>

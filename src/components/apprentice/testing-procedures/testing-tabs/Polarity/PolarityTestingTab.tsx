@@ -20,7 +20,7 @@ const PolarityTestingTab = () => {
           <h2 className="text-[20px] sm:text-[22px] font-semibold text-white leading-tight">
             Polarity testing
           </h2>
-          <p className="text-[14px] text-white/70 leading-relaxed">
+          <p className="text-[14px] text-white leading-relaxed">
             Verifies that all connections are correctly wired and switches/fuses are in the line
             conductor.
           </p>
@@ -30,7 +30,7 @@ const PolarityTestingTab = () => {
           {items.map((item, i) => (
             <li
               key={i}
-              className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+              className="text-[14px] text-white leading-relaxed flex items-start gap-2"
             >
               <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
               <span>{item}</span>
@@ -42,10 +42,10 @@ const PolarityTestingTab = () => {
       </div>
 
       <div className={cn(PANEL, "space-y-1")}>
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           The lampholder exception worth knowing
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           Regulation 643.6(b) requires centre contact bayonet and Edison screw lampholders to have
           the outer contact on the neutral — but it explicitly excepts{' '}
           <span className="text-white">E14 and E27 lampholders to BS EN 60238</span>. Those are the
@@ -59,7 +59,7 @@ const PolarityTestingTab = () => {
         <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-400">
           Safety warning
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           Incorrect polarity is a serious safety issue that can result in electric shock hazards and
           incorrectly isolated circuits. Always double-check polarity tests and immediately rectify
           any issues found.

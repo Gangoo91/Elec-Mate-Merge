@@ -10,7 +10,7 @@ interface StartQuizPanelProps {
 const StartQuizPanel = ({ isCompleted, onStartQuiz, onBack }: StartQuizPanelProps) => {
   return (
     <div className="flex flex-col h-full space-y-6">
-      <p className="text-[14px] text-white/85 leading-relaxed">
+      <p className="text-[14px] text-white leading-relaxed">
         This quiz will test your understanding of the key health and safety concepts covered in
         this unit. Complete the quiz to demonstrate your knowledge.
       </p>
@@ -18,7 +18,7 @@ const StartQuizPanel = ({ isCompleted, onStartQuiz, onBack }: StartQuizPanelProp
       {isCompleted && (
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 flex items-start gap-3">
           <CheckCircle className="h-5 w-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-          <p className="text-[14px] text-white/85 leading-relaxed">
+          <p className="text-[14px] text-white leading-relaxed">
             You have already completed this quiz. You can retake it to improve your score.
           </p>
         </div>
@@ -26,7 +26,7 @@ const StartQuizPanel = ({ isCompleted, onStartQuiz, onBack }: StartQuizPanelProp
 
       <div className="flex-grow rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-5">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Timed assessment
           </span>
           <h3 className="text-[18px] font-semibold text-white">45 minutes</h3>
@@ -40,7 +40,7 @@ const StartQuizPanel = ({ isCompleted, onStartQuiz, onBack }: StartQuizPanelProp
           ].map((note, idx) => (
             <li
               key={idx}
-              className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+              className="text-[14px] text-white leading-relaxed flex items-start gap-2"
             >
               <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
               <span>{note}</span>
@@ -49,10 +49,10 @@ const StartQuizPanel = ({ isCompleted, onStartQuiz, onBack }: StartQuizPanelProp
         </ul>
 
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Important
           </span>
-          <p className="text-[14px] text-white/85 leading-relaxed">
+          <p className="text-[14px] text-white leading-relaxed">
             Make sure you have enough time to complete the quiz before starting. If you leave the
             page, your progress may be lost.
           </p>

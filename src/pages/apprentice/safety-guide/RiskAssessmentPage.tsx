@@ -1,5 +1,7 @@
 import { CheckCircle2, AlertTriangle, ClipboardList } from 'lucide-react';
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const RiskAssessmentPage = () => {
   return (
@@ -17,7 +19,7 @@ const RiskAssessmentPage = () => {
         </p>
 
         {/* Intro */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 sm:p-5 space-y-4">
             <div className="flex items-center gap-2">
               <ClipboardList className="h-5 w-5 text-elec-yellow" />
@@ -42,7 +44,7 @@ const RiskAssessmentPage = () => {
               .
             </p>
 
-            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-2">
+            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3 space-y-2">
               <h3 className="text-elec-yellow text-xs font-semibold uppercase tracking-wide">
                 Hazard vs Risk — Know the Difference
               </h3>
@@ -61,7 +63,7 @@ const RiskAssessmentPage = () => {
         </div>
 
         {/* The 5 Steps */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 sm:p-5 space-y-4">
             <h2 className="text-lg font-semibold text-elec-yellow">
               The HSE 5 Steps to Risk Assessment
@@ -143,11 +145,11 @@ const RiskAssessmentPage = () => {
               ].map((item) => (
                 <div
                   key={item.step}
-                  className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 sm:p-4 space-y-3"
+                  className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3 sm:p-4 space-y-3"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-elec-yellow/15 flex items-center justify-center flex-shrink-0">
-                      <span className="text-elec-yellow font-bold text-sm">{item.step}</span>
+                    <div className="w-8 h-8 rounded-full bg-elec-yellow flex items-center justify-center flex-shrink-0">
+                      <span className="text-black font-bold text-sm">{item.step}</span>
                     </div>
                     <h3 className="font-semibold text-white">{item.title}</h3>
                   </div>
@@ -172,7 +174,7 @@ const RiskAssessmentPage = () => {
         </div>
 
         {/* Hierarchy of Controls */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 sm:p-5 space-y-4">
             <h2 className="text-lg font-semibold text-elec-yellow">Hierarchy of Controls</h2>
             <p className="text-white text-sm leading-relaxed">
@@ -204,9 +206,9 @@ const RiskAssessmentPage = () => {
                   level: '3. Engineering Controls',
                   detail:
                     'Physically separate people from the hazard. For example, use insulated barriers around live parts, guard rails around openings, extraction systems for dust.',
-                  colour: 'text-blue-400',
-                  border: 'border-blue-500/20',
-                  bg: 'bg-blue-500/10',
+                  colour: 'text-elec-yellow',
+                  border: 'border-elec-yellow/35',
+                  bg: 'bg-white/[0.04]',
                 },
                 {
                   level: '4. Administrative Controls',
@@ -235,7 +237,7 @@ const RiskAssessmentPage = () => {
         </div>
 
         {/* RAMS */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 sm:p-5 space-y-4">
             <h2 className="text-lg font-semibold text-elec-yellow">
               RAMS — Risk Assessment and Method Statement
@@ -267,7 +269,7 @@ const RiskAssessmentPage = () => {
               ))}
             </div>
 
-            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
+            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3">
               <p className="text-white text-xs">
                 <span className="font-semibold text-elec-yellow">As an apprentice: </span>
                 You will be asked to sign RAMS to confirm you have read and understood them. Never
@@ -279,7 +281,7 @@ const RiskAssessmentPage = () => {
         </div>
 
         {/* Dynamic Risk Assessment */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 sm:p-5 space-y-4">
             <div className="flex items-center gap-2">
               <AlertTriangle className="h-5 w-5 text-elec-yellow" />
@@ -321,7 +323,7 @@ const RiskAssessmentPage = () => {
               ].map((item) => (
                 <div
                   key={item.letter}
-                  className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3"
+                  className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3"
                 >
                   <div className="flex items-center gap-2 mb-1">
                     <span className="text-elec-yellow font-bold text-lg">{item.letter}</span>
@@ -353,7 +355,7 @@ const RiskAssessmentPage = () => {
         </div>
 
         {/* COSHH */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 sm:p-5 space-y-4">
             <h2 className="text-lg font-semibold text-elec-yellow">COSHH — Hazardous Substances</h2>
             <p className="text-white text-sm leading-relaxed">
@@ -401,7 +403,7 @@ const RiskAssessmentPage = () => {
                   className={`rounded-md border p-3 ${
                     item.danger
                       ? 'border-red-500/30 bg-red-500/[0.06]'
-                      : 'border-elec-yellow/20 bg-elec-yellow/[0.04]'
+                      : 'border-elec-yellow/20 bg-white/[0.05]'
                   }`}
                 >
                   <h4
@@ -426,7 +428,7 @@ const RiskAssessmentPage = () => {
         </div>
 
         {/* Manual Handling */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 sm:p-5 space-y-4">
             <h2 className="text-lg font-semibold text-elec-yellow">Manual Handling</h2>
             <p className="text-white text-sm leading-relaxed">
@@ -454,7 +456,7 @@ const RiskAssessmentPage = () => {
               ))}
             </div>
 
-            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
+            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3">
               <p className="text-white text-xs">
                 <span className="font-semibold text-elec-yellow">HSE guideline weights: </span>
                 The HSE filter figure for lifting at waist height, close to the body, is around 25kg
@@ -468,7 +470,7 @@ const RiskAssessmentPage = () => {
         </div>
 
         {/* Your Role */}
-        <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04]">
+        <div className="rounded-xl border border-elec-yellow/25 bg-white/[0.05]">
           <div className="p-4 sm:p-5 space-y-3">
             <h2 className="text-sm font-semibold text-elec-yellow">Your Role as an Apprentice</h2>
             <div className="space-y-2">
@@ -505,7 +507,7 @@ const RiskAssessmentPage = () => {
         </div>
 
         {/* Footer */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 sm:p-5">
             <p className="text-white text-xs leading-relaxed">
               Based on the Health and Safety at Work etc. Act 1974, the Management of Health and

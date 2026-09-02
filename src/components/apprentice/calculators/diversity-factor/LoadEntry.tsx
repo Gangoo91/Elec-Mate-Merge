@@ -111,13 +111,13 @@ export function LoadEntry({
   return (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
       <div className="flex items-center justify-between">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Load {index + 1}
         </span>
         {canRemove && (
           <button
             onClick={() => onRemove(load.id)}
-            className="h-9 w-9 flex items-center justify-center rounded-lg text-white/55 hover:text-white hover:bg-white/[0.05] transition-colors touch-manipulation"
+            className="h-9 w-9 flex items-center justify-center rounded-lg text-white hover:text-white hover:bg-white/[0.05] transition-colors touch-manipulation"
           >
             <Trash2 className="h-4 w-4" />
           </button>
@@ -181,10 +181,10 @@ export function LoadEntry({
               className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
             />
             <div>
-              <span className="text-[14px] text-white/85 font-medium">
+              <span className="text-[14px] text-white font-medium">
                 Cooker unit has socket outlet?
               </span>
-              <p className="text-[12px] text-white/55 mt-0.5">
+              <p className="text-[12px] text-white mt-0.5">
                 Adds 5A to diversified demand (Table A2, household cooking appliances)
               </p>
             </div>
@@ -202,10 +202,10 @@ export function LoadEntry({
               className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
             />
             <div>
-              <span className="text-[14px] text-white/85 font-medium">
+              <span className="text-[14px] text-white font-medium">
                 Thermostatically controlled?
               </span>
-              <p className="text-[12px] text-white/55 mt-0.5">
+              <p className="text-[12px] text-white mt-0.5">
                 {load.thermostaticallyControlled
                   ? '100% — no diversity for thermostatic heating (Table A2, space heating)'
                   : 'Largest 100% + 75% of remainder (Table A2, space heating)'}
@@ -216,7 +216,7 @@ export function LoadEntry({
 
         {load.power && (
           <div className="flex items-baseline justify-between p-3 rounded-lg border border-white/[0.06] bg-white/[0.02]">
-            <span className="text-[12px] text-white/55">Calculated power</span>
+            <span className="text-[12px] text-white">Calculated power</span>
             <span className="font-mono text-white text-[14px]">{load.power} kW</span>
           </div>
         )}

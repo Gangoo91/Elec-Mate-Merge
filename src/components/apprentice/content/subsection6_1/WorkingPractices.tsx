@@ -13,7 +13,7 @@ const WorkingPractices = () => {
               Safe Working Practices for Electricians
             </h3>
           </div>
-          <div className="px-3 py-1.5 bg-elec-yellow/10 rounded-full text-sm text-elec-yellow border border-elec-yellow/20 hidden md:flex items-center gap-2">
+          <div className="px-3 py-1.5 bg-white/[0.06] rounded-full text-sm text-elec-yellow border border-elec-yellow/20 hidden md:flex items-center gap-2">
             <ShieldCheck className="h-4 w-4" />
             <span>Essential Knowledge</span>
           </div>
@@ -31,7 +31,7 @@ const WorkingPractices = () => {
           {/* Core Safety Principles */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-elec-yellow/10 rounded-lg">
+              <div className="p-2 bg-white/[0.06] rounded-lg">
                 <Wrench className="h-5 w-5 text-elec-yellow" />
               </div>
               <h4 className="font-medium text-elec-yellow text-lg">Core Safety Principles</h4>
@@ -59,7 +59,7 @@ const WorkingPractices = () => {
           {/* Procedural Safety */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-elec-yellow/10 rounded-lg">
+              <div className="p-2 bg-white/[0.06] rounded-lg">
                 <HelpCircle className="h-5 w-5 text-elec-yellow" />
               </div>
               <h4 className="font-medium text-elec-yellow text-lg">Procedural Safety</h4>

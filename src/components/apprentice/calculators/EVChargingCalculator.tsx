@@ -535,21 +535,26 @@ const EVChargingCalculator = () => {
                     >
                       <div className="space-y-2 text-sm text-white">
                         <p>
-                          <strong>722.531.2:</strong> RCD protection (30mA Type A minimum) mandatory
+                          <strong>Section 722 RCDs:</strong> 30mA RCD per charge point — Type A
+                          minimum, with 6 mA DC detection (RDC-DD) or a Type B
                         </p>
                         <p>
-                          <strong>722.411.4.1:</strong> DC fault protection required for AC charging
+                          <strong>722.411.4.1:</strong> PME (TN-C-S) supplies — protection against
+                          an open PEN by one of the permitted options: earth electrode (b), an
+                          open-PEN device (c/d) or an equivalent (e)
                         </p>
                         <p>
-                          <strong>722.55:</strong> Earth electrode may be required for outdoor
-                          installations
+                          <strong>Annex A722.3:</strong> where an installation earth electrode is
+                          used, R<sub>A,EV</sub> is capped at 200 Ω
                         </p>
                         <p>
                           <strong>BS EN 61851:</strong> Charging equipment safety and performance
                           standards
                         </p>
                         <p>
-                          <strong>Part P:</strong> Notification required for new circuits &gt;3.68kW
+                          <strong>Part P (England):</strong> a new circuit is notifiable work —
+                          through a competent person scheme or building control; there is no kW
+                          threshold
                         </p>
                       </div>
                     </div>

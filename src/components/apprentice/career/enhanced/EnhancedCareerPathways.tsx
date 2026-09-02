@@ -230,13 +230,13 @@ const EnhancedCareerPathways = () => {
   return (
     <div className="max-w-6xl mx-auto space-y-6 animate-fade-in">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Career pathways
         </span>
         <h1 className="text-[24px] sm:text-[28px] font-bold tracking-tight text-white leading-tight">
           UK electrical career pathways
         </h1>
-        <p className="text-[14px] text-white/70 max-w-3xl leading-relaxed">
+        <p className="text-[14px] text-white max-w-3xl leading-relaxed">
           Skills matrices, professional development strategies, industry insights, and progression
           pathways for electrical professionals in the UK.
         </p>

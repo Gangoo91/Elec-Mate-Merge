@@ -40,7 +40,7 @@ const HazardIdentificationMatrix = ({ onHazardSelected }: HazardIdentificationMa
   return (
     <div className="space-y-5 animate-fade-in">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Hazard identification matrix
         </span>
         <h3 className="text-[16px] sm:text-[18px] font-medium text-white">
@@ -50,7 +50,7 @@ const HazardIdentificationMatrix = ({ onHazardSelected }: HazardIdentificationMa
 
       <div className="relative">
         {!searchTerm && (
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/70 pointer-events-none z-10" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none z-10" />
         )}
         <MobileInput
           label=""
@@ -67,7 +67,7 @@ const HazardIdentificationMatrix = ({ onHazardSelected }: HazardIdentificationMa
             key={category.id}
             className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-3"
           >
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               {category.name}
             </span>
             <div className="space-y-1.5">
@@ -77,7 +77,7 @@ const HazardIdentificationMatrix = ({ onHazardSelected }: HazardIdentificationMa
                   onClick={() => handleHazardSelect(hazard)}
                   className="w-full text-left p-3 rounded-lg bg-white/[0.06] border border-white/[0.10] hover:border-white/10 transition-all touch-manipulation active:scale-[0.99] min-h-[44px]"
                 >
-                  <span className="text-[13px] text-white/85 leading-relaxed">{hazard}</span>
+                  <span className="text-[13px] text-white leading-relaxed">{hazard}</span>
                 </button>
               ))}
             </div>
@@ -86,7 +86,7 @@ const HazardIdentificationMatrix = ({ onHazardSelected }: HazardIdentificationMa
       </div>
 
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Custom hazard
         </span>
         <div className="flex gap-2 items-end">
@@ -101,7 +101,7 @@ const HazardIdentificationMatrix = ({ onHazardSelected }: HazardIdentificationMa
           <Button
             onClick={handleCustomHazardSubmit}
             disabled={!customHazard.trim()}
-            className="h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98] disabled:opacity-30"
+            className="h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
           >
             Add
           </Button>

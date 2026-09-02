@@ -47,7 +47,7 @@ function SetupNeeded() {
   return (
     <div className={cn(CALLOUT, 'max-w-xl space-y-3')}>
       <span className={PANEL_LABEL_ACCENT}>Setup needed</span>
-      <p className="text-[14px] leading-relaxed text-white/85">
+      <p className="text-[14px] leading-relaxed text-white">
         Choose your qualification first — the readiness check, the professional discussion and every
         knowledge question are built from its assessment criteria, so the simulator cannot generate
         anything useful without it.
@@ -240,7 +240,7 @@ const EPASimulator = () => {
               </span>
             ))}
           </div>
-          <p className="text-[13px] leading-relaxed text-white/85">
+          <p className="text-[13px] leading-relaxed text-white">
             These are the AM2 grade boundaries, so a mock score here means the same thing it would
             on the day. Worth knowing before you sit it:{' '}
             <span className="text-white">
@@ -485,7 +485,7 @@ function HistoryTab({
     return (
       <div className={cn(PANEL, 'max-w-xl space-y-3')}>
         <span className={PANEL_LABEL}>No sessions yet</span>
-        <p className="text-[14px] leading-relaxed text-white/85">
+        <p className="text-[14px] leading-relaxed text-white">
           Once you have run a mock discussion or knowledge test, every attempt lands here with its
           score, predicted grade and how you are moving between attempts.
         </p>
@@ -537,15 +537,15 @@ function HistoryTab({
             footCn: cn(
               'tabular-nums',
               delta === null
-                ? 'text-white/70'
+                ? 'text-white'
                 : delta > 0
                   ? 'text-elec-yellow'
                   : delta < 0
                     ? 'text-red-400'
-                    : 'text-white/70'
+                    : 'text-white'
             ),
           },
-          { label: 'Sessions', value: items.length, foot: 'logged', footCn: 'text-white/70' },
+          { label: 'Sessions', value: items.length, foot: 'logged', footCn: 'text-white' },
         ].map((cell) => (
           <div
             key={cell.label}
@@ -554,7 +554,7 @@ function HistoryTab({
               CARD_SURFACE
             )}
           >
-            <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-white/70">
+            <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-white">
               {cell.label}
             </span>
             <span className="font-mono text-[24px] font-semibold leading-none tabular-nums text-white">
@@ -570,7 +570,7 @@ function HistoryTab({
       {(() => {
         const next = pointsToNextBand(best.score);
         return next ? (
-          <p className="text-[13px] leading-relaxed text-white/85">
+          <p className="text-[13px] leading-relaxed text-white">
             Your best is <span className="text-white">{best.score}%</span> —{' '}
             <span className="text-white">
               {next.points} {next.points === 1 ? 'point' : 'points'}
@@ -578,7 +578,7 @@ function HistoryTab({
             off a {next.target}.
           </p>
         ) : (
-          <p className="text-[13px] leading-relaxed text-white/85">
+          <p className="text-[13px] leading-relaxed text-white">
             Your best is <span className="text-white">{best.score}%</span> — distinction standard on
             the AM2 bands.
           </p>
@@ -586,7 +586,7 @@ function HistoryTab({
       })()}
 
       {collegeStudent && (
-        <p className="text-[13px] leading-relaxed text-white/85">
+        <p className="text-[13px] leading-relaxed text-white">
           Your latest mock already feeds your tutor's EPA readiness view. Submit a session to log it
           as a formal self-assessment alongside the tutor and AI verdicts.
         </p>
@@ -602,14 +602,14 @@ function HistoryTab({
               className={cn(PANEL, "space-y-3")}
             >
               <div className="flex items-baseline gap-3">
-                <span className="text-[11px] font-mono text-white/70 flex-shrink-0">
+                <span className="text-[11px] font-mono text-white flex-shrink-0">
                   {item.completedAt.toLocaleDateString('en-GB', {
                     day: '2-digit',
                     month: 'short',
                   })}
                 </span>
                 <div className="flex-1 min-w-0 space-y-0.5">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-white/70 block">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-white block">
                     {item.type === 'professional_discussion' ? 'Discussion' : 'Knowledge'} ·{' '}
                     {Math.floor(item.timeSpent / 60)}m
                   </span>
@@ -619,7 +619,7 @@ function HistoryTab({
                   <span className="text-[24px] font-mono font-semibold text-white tabular-nums leading-none">
                     {item.score}
                   </span>
-                  <span className="text-[11px] text-white/70 font-mono ml-0.5">/100</span>
+                  <span className="text-[11px] text-white font-mono ml-0.5">/100</span>
                 </div>
               </div>
               {collegeStudent && (

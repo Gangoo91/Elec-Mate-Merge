@@ -104,13 +104,13 @@ const SiteConditionTab = () => {
   return (
     <div className="space-y-5 animate-fade-in">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Site condition evaluation
         </span>
         <h2 className="text-[20px] sm:text-[24px] font-semibold tracking-tight text-white leading-tight">
           Environmental & working conditions assessment
         </h2>
-        <p className="text-[14px] text-white/70 leading-relaxed max-w-2xl">
+        <p className="text-[14px] text-white leading-relaxed max-w-2xl">
           Assess environmental and working conditions to ensure safe and effective electrical
           installation work.
         </p>
@@ -118,10 +118,10 @@ const SiteConditionTab = () => {
 
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-3">
         <div className="flex items-baseline justify-between">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Progress
           </span>
-          <span className="text-[12px] text-white/85 font-mono">
+          <span className="text-[12px] text-white font-mono">
             {checkedItems.length}/{totalItems} · {Math.round(completionRate)}%
           </span>
         </div>
@@ -142,10 +142,10 @@ const SiteConditionTab = () => {
             className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3"
           >
             <div className="flex items-baseline justify-between">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 {category.category}
               </span>
-              <span className="text-[12px] text-white/85 font-mono">
+              <span className="text-[12px] text-white font-mono">
                 {categoryChecked}/{category.items.length}
               </span>
             </div>
@@ -175,9 +175,7 @@ const SiteConditionTab = () => {
                     >
                       {isChecked && <CheckCircle className="h-4 w-4 text-black" />}
                     </div>
-                    <span
-                      className={`text-[14px] text-left leading-relaxed ${isChecked ? 'text-white' : 'text-white/85'}`}
-                    >
+                    <span className={`text-[14px] text-left leading-relaxed text-white`}>
                       {item}
                     </span>
                   </button>
@@ -189,7 +187,7 @@ const SiteConditionTab = () => {
       })}
 
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Environmental factors guide
         </span>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -199,15 +197,15 @@ const SiteConditionTab = () => {
               className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-3 space-y-2"
             >
               <p className="text-[14px] text-white">{factor.factor}</p>
-              <p className="text-[12px] text-white/70 leading-relaxed">
-                <span className="text-white/70">Optimal: </span>
+              <p className="text-[12px] text-white leading-relaxed">
+                <span className="text-white">Optimal: </span>
                 {factor.optimalRange}
               </p>
               <ul className="space-y-1">
                 {factor.considerations.map((consideration, idx) => (
                   <li
                     key={idx}
-                    className="text-[12px] text-white/85 flex items-start gap-2 leading-relaxed"
+                    className="text-[12px] text-white flex items-start gap-2 leading-relaxed"
                   >
                     <span className="w-1 h-1 bg-white/55 rounded-full mt-1.5 flex-shrink-0" />
                     <span>{consideration}</span>
@@ -220,7 +218,7 @@ const SiteConditionTab = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Environmental notes
         </span>
         <MobileInput
@@ -241,23 +239,23 @@ const SiteConditionTab = () => {
         <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
           Weather considerations
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           Always check weather conditions before starting outdoor electrical work.
         </p>
         <ul className="space-y-1.5 pt-1">
-          <li className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed">
+          <li className="flex items-start gap-2 text-[14px] text-white leading-relaxed">
             <span className="w-1 h-1 rounded-full bg-red-300 mt-2 flex-shrink-0" />
             <span>Do not work in wet conditions or during electrical storms</span>
           </li>
-          <li className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed">
+          <li className="flex items-start gap-2 text-[14px] text-white leading-relaxed">
             <span className="w-1 h-1 rounded-full bg-red-300 mt-2 flex-shrink-0" />
             <span>Wind speeds above 15 mph may affect ladder work</span>
           </li>
-          <li className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed">
+          <li className="flex items-start gap-2 text-[14px] text-white leading-relaxed">
             <span className="w-1 h-1 rounded-full bg-red-300 mt-2 flex-shrink-0" />
             <span>Temperature below 0°C may affect cable flexibility</span>
           </li>
-          <li className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed">
+          <li className="flex items-start gap-2 text-[14px] text-white leading-relaxed">
             <span className="w-1 h-1 rounded-full bg-red-300 mt-2 flex-shrink-0" />
             <span>High humidity can affect insulation resistance readings</span>
           </li>

@@ -85,15 +85,19 @@ export function VideoQuizSheet({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-        <div className="flex flex-col h-full bg-background">
+      <SheetContent
+        side="bottom"
+        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.06] bg-[hsl(0_0%_8%)]"
+      >
+        <div className="flex flex-col h-full">
+          <div className="mx-auto mt-3 h-1 w-12 shrink-0 rounded-full bg-white/15" />
           {/* Header */}
           <div className="px-5 pt-5 pb-4 border-b border-white/[0.08]">
             <div className="mx-auto w-full max-w-xl">
               <SheetTitle className="text-[15px] font-semibold text-white">
                 Test yourself
               </SheetTitle>
-              <p className="mt-0.5 text-[12px] text-white/70 line-clamp-1">{videoTitle}</p>
+              <p className="mt-0.5 text-[12px] text-white line-clamp-1">{videoTitle}</p>
               {!finished && (
                 <div className="mt-3 flex items-center gap-2">
                   {questions.map((_, i) => (
@@ -106,7 +110,7 @@ export function VideoQuizSheet({
                       }`}
                     />
                   ))}
-                  <span className="text-[11px] text-white/70 tabular-nums ml-1">
+                  <span className="text-[11px] text-white tabular-nums ml-1">
                     {index + 1}/{total}
                   </span>
                 </div>
@@ -137,7 +141,7 @@ export function VideoQuizSheet({
                   <p className="mt-1 text-[14px] font-medium text-white">
                     {passed ? 'Nice work — quiz passed' : 'Not quite — give it another go'}
                   </p>
-                  <p className="mt-1.5 text-[12.5px] text-white/70 max-w-[32ch]">
+                  <p className="mt-1.5 text-[12.5px] text-white max-w-[32ch]">
                     {passed
                       ? 'You clearly took the video in. XP banked.'
                       : 'Rewatch the tricky bits, then retake — passing needs 2 of 3.'}
@@ -173,7 +177,7 @@ export function VideoQuizSheet({
                         cls = 'bg-green-500/15 border-green-400/50 text-white';
                       else if (answered && isChosen && !isCorrect)
                         cls = 'bg-red-500/15 border-red-400/50 text-white';
-                      else if (answered) cls = 'bg-white/[0.03] border-white/[0.08] text-white/70';
+                      else if (answered) cls = 'bg-white/[0.03] border-white/[0.08] text-white';
                       return (
                         <button
                           key={i}
@@ -199,7 +203,7 @@ export function VideoQuizSheet({
                     })}
                   </div>
                   {answered && (
-                    <div className="mt-4 rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.07] px-4 py-3">
+                    <div className="mt-4 rounded-xl border border-elec-yellow/25 bg-white/[0.05] px-4 py-3">
                       <p className="text-[12.5px] leading-relaxed text-white">
                         {question.explanation}
                       </p>
@@ -220,7 +224,7 @@ export function VideoQuizSheet({
                   className={`w-full h-12 rounded-full text-[14px] font-semibold touch-manipulation transition-all active:scale-[0.98] flex items-center justify-center gap-1.5 ${
                     answered
                       ? 'bg-elec-yellow text-black'
-                      : 'bg-white/[0.06] text-white/70 cursor-not-allowed'
+                      : 'bg-white/[0.06] text-white cursor-not-allowed'
                   }`}
                 >
                   {isLast ? 'See my score' : 'Next question'}

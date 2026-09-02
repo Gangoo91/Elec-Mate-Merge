@@ -9,17 +9,17 @@ const Section = ({
 }) => (
   <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
     <div className="space-y-1">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
         {eyebrow}
       </span>
-      {description && <p className="text-[14px] text-white/70 leading-relaxed">{description}</p>}
+      {description && <p className="text-[14px] text-white leading-relaxed">{description}</p>}
     </div>
     {children}
   </div>
 );
 
 const Pill = ({ children }: { children: React.ReactNode }) => (
-  <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+  <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
     {children}
   </span>
 );
@@ -170,10 +170,10 @@ const ProgressTrackingTab = () => {
   return (
     <div className="space-y-5">
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Progress tracking and analytics
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           Monitor your learning journey with tracking tools and analytics. Students who track
           progress are more likely to achieve their study goals.
         </p>
@@ -194,7 +194,7 @@ const ProgressTrackingTab = () => {
                 {category.items.map((item, itemIndex) => (
                   <li
                     key={itemIndex}
-                    className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                    className="text-[13px] text-white leading-relaxed flex items-start gap-2"
                   >
                     <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                     <span>{item}</span>
@@ -214,16 +214,16 @@ const ProgressTrackingTab = () => {
               className="rounded-md border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
             >
               <h4 className="text-[14px] font-semibold text-white">{method.method}</h4>
-              <p className="text-[13px] text-white/70 leading-relaxed">{method.description}</p>
+              <p className="text-[13px] text-white leading-relaxed">{method.description}</p>
               <div className="space-y-1">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Key benefits
                 </span>
                 <ul className="space-y-1">
                   {method.benefits.map((benefit, idx) => (
                     <li
                       key={idx}
-                      className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                      className="text-[13px] text-white leading-relaxed flex items-start gap-2"
                     >
                       <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                       <span>{benefit}</span>
@@ -232,7 +232,7 @@ const ProgressTrackingTab = () => {
                 </ul>
               </div>
               <div className="space-y-1">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Recommended tools
                 </span>
                 <div className="flex flex-wrap gap-1.5">
@@ -256,19 +256,19 @@ const ProgressTrackingTab = () => {
               <div className="flex items-start justify-between gap-2">
                 <div className="space-y-1">
                   <h4 className="text-[14px] font-semibold text-white">{tool.tool}</h4>
-                  <p className="text-[13px] text-white/70 leading-relaxed">{tool.description}</p>
+                  <p className="text-[13px] text-white leading-relaxed">{tool.description}</p>
                 </div>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div className="space-y-1">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Key features
                   </span>
                   <ul className="space-y-1">
                     {tool.features.map((f, idx) => (
                       <li
                         key={idx}
-                        className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                        className="text-[13px] text-white leading-relaxed flex items-start gap-2"
                       >
                         <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                         <span>{f}</span>
@@ -277,7 +277,7 @@ const ProgressTrackingTab = () => {
                   </ul>
                 </div>
                 <div className="space-y-1">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Popular examples
                   </span>
                   <div className="flex flex-wrap gap-1.5">
@@ -285,8 +285,8 @@ const ProgressTrackingTab = () => {
                       <Pill key={idx}>{ex}</Pill>
                     ))}
                   </div>
-                  <p className="text-[12px] text-white/70 leading-relaxed">
-                    <span className="text-white/55">Best for: </span>
+                  <p className="text-[12px] text-white leading-relaxed">
+                    <span className="text-white">Best for: </span>
                     {tool.bestFor}
                   </p>
                 </div>
@@ -304,18 +304,18 @@ const ProgressTrackingTab = () => {
               className="rounded-md border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
             >
               <h4 className="text-[14px] font-semibold text-white">{strategy.strategy}</h4>
-              <p className="text-[13px] text-white/70 leading-relaxed">{strategy.description}</p>
+              <p className="text-[13px] text-white leading-relaxed">{strategy.description}</p>
               <div className="space-y-1">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Implementation steps
                 </span>
                 <ol className="space-y-1">
                   {strategy.implementation.map((step, idx) => (
                     <li
                       key={idx}
-                      className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                      className="text-[13px] text-white leading-relaxed flex items-start gap-2"
                     >
-                      <span className="text-white/55 font-mono">{idx + 1}.</span>
+                      <span className="text-white font-mono">{idx + 1}.</span>
                       <span>{step}</span>
                     </li>
                   ))}
@@ -339,7 +339,7 @@ const ProgressTrackingTab = () => {
               ].map((item, idx) => (
                 <li
                   key={idx}
-                  className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                  className="text-[13px] text-white leading-relaxed flex items-start gap-2"
                 >
                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{item}</span>
@@ -358,7 +358,7 @@ const ProgressTrackingTab = () => {
               ].map((item, idx) => (
                 <li
                   key={idx}
-                  className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                  className="text-[13px] text-white leading-relaxed flex items-start gap-2"
                 >
                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{item}</span>
@@ -370,7 +370,7 @@ const ProgressTrackingTab = () => {
       </Section>
 
       <Section eyebrow="Start tracking your progress today">
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           Pick one tracking method above and start this week. A simple notebook or a free habit app
           beats a perfect system you never open — the habit matters more than the tool.
         </p>

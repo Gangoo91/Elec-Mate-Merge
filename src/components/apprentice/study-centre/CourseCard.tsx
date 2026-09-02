@@ -28,12 +28,12 @@ export function CourseCard({
         </span>
       )}
       {number && (
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 font-mono">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white font-mono">
           {number}
         </span>
       )}
       <h3 className="text-[16px] font-semibold text-white leading-tight">{title}</h3>
-      <p className="text-[14px] text-white/70 leading-relaxed line-clamp-4">{description}</p>
+      <p className="text-[14px] text-white leading-relaxed line-clamp-4">{description}</p>
     </div>
   );
 

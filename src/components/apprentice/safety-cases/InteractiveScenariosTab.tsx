@@ -32,7 +32,7 @@ const InteractiveScenariosTab = () => {
           <span className="block text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
             Failed to load scenarios
           </span>
-          <p className="text-[14px] text-white/85 leading-relaxed max-w-xs mx-auto">{error}</p>
+          <p className="text-[14px] text-white leading-relaxed max-w-xs mx-auto">{error}</p>
         </div>
       </SafetyCasesErrorBoundary>
     );
@@ -51,13 +51,13 @@ const InteractiveScenariosTab = () => {
     <div className="space-y-6 animate-fade-in text-left">
       {/* Header */}
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Interactive scenarios
         </span>
         <h2 className="text-[24px] sm:text-[28px] font-bold tracking-tight text-white leading-tight">
           Safety scenarios
         </h2>
-        <p className="text-[14px] text-white/70 leading-relaxed max-w-2xl">
+        <p className="text-[14px] text-white leading-relaxed max-w-2xl">
           Experience realistic safety scenarios through interactive decision-making exercises. Each
           scenario is based on real incidents and provides valuable learning outcomes for electrical
           safety.
@@ -67,10 +67,10 @@ const InteractiveScenariosTab = () => {
       {/* Stats strip */}
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-3">
         <div className="flex items-baseline justify-between">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Progress
           </span>
-          <span className="text-[12px] text-white/85 font-mono">
+          <span className="text-[12px] text-white font-mono">
             {completedScenarios.length}/{allScenarios.length} · {completionPercentage}%
           </span>
         </div>

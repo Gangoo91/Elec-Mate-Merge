@@ -194,7 +194,7 @@ const PortfolioAnalyticsDashboard = ({
       </Card>
 
       {/* Recommendations */}
-      <Card className="border-elec-yellow/20 bg-elec-yellow/5">
+      <Card className="border-elec-yellow/20 bg-white/[0.05]">
         <CardHeader>
           <CardTitle className="text-elec-yellow">Recommendations</CardTitle>
         </CardHeader>

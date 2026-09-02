@@ -250,7 +250,7 @@ export function NotebookShell({
         <motion.button
           onClick={() => navigate(-1)}
           whileTap={{ scale: 0.97 }}
-          className="inline-flex items-center gap-1 -ml-1 h-9 px-2 rounded-lg text-[13px] font-medium text-white/85 hover:text-white hover:bg-white/[0.04] transition-colors touch-manipulation"
+          className="inline-flex items-center gap-1 -ml-2 h-11 px-2 rounded-lg text-[13px] font-medium text-white hover:bg-white/[0.04] transition-colors touch-manipulation"
         >
           <ChevronLeft className="h-4 w-4" />
           Back

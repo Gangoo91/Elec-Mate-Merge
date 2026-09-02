@@ -24,17 +24,17 @@ const CareerProgressionPaths = () => {
 
   return (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
         Career progression paths
       </span>
-      <p className="text-[14px] text-white/85 leading-relaxed">
+      <p className="text-[14px] text-white leading-relaxed">
         Common progression paths in the UK electrical industry include:
       </p>
       <div className="space-y-3">
         {paths.map((path, idx) => (
           <div key={idx} className="space-y-1">
             <p className="text-[13px] text-white">{path.title}</p>
-            <p className="text-[12px] text-white/70 leading-relaxed">{path.description}</p>
+            <p className="text-[12px] text-white leading-relaxed">{path.description}</p>
           </div>
         ))}
       </div>

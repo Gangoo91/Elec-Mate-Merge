@@ -13,7 +13,7 @@ const Subsection6_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         <h2 className="text-2xl font-bold text-elec-yellow mb-3">
           Manual Handling Techniques for Electrical Work
         </h2>
-        <p className="text-elec-light/80">
+        <p className="text-white">
           Manual handling activities are common in electrical work and pose significant risks if not
           performed correctly. The Manual Handling Operations Regulations 1992 (as amended) provide
           the legal framework that protects workers from injury.
@@ -23,7 +23,7 @@ const Subsection6_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
       {/* Decorative Separator with Icon */}
       <div className="flex items-center gap-4 py-2">
         <Separator className="flex-grow bg-elec-yellow/30" />
-        <div className="bg-elec-yellow/10 p-2 rounded-full">
+        <div className="bg-white/[0.06] p-2 rounded-full">
           <span className="text-elec-yellow text-xl">⚡</span>
         </div>
         <Separator className="flex-grow bg-elec-yellow/30" />
@@ -39,7 +39,7 @@ const Subsection6_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 TILE Principles of Manual Handling
               </h3>
             </div>
-            <div className="px-3 py-1.5 bg-elec-yellow/10 rounded-full text-sm text-elec-yellow border border-elec-yellow/20 hidden md:flex items-center gap-2">
+            <div className="px-3 py-1.5 bg-white/[0.06] rounded-full text-sm text-elec-yellow border border-elec-yellow/20 hidden md:flex items-center gap-2">
               <Scale className="h-4 w-4" />
               <span>Risk Assessment</span>
             </div>
@@ -55,7 +55,7 @@ const Subsection6_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-4">
               <div className="flex items-center gap-3 mb-2">
-                <div className="p-2 bg-elec-yellow/10 rounded-lg">
+                <div className="p-2 bg-white/[0.06] rounded-lg">
                   <HandHelping className="h-5 w-5 text-elec-yellow" />
                 </div>
                 <h4 className="font-medium text-elec-yellow text-lg">Task & Individual</h4>
@@ -102,7 +102,7 @@ const Subsection6_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
 
             <div className="space-y-4">
               <div className="flex items-center gap-3 mb-2">
-                <div className="p-2 bg-elec-yellow/10 rounded-lg">
+                <div className="p-2 bg-white/[0.06] rounded-lg">
                   <Scale className="h-5 w-5 text-elec-yellow" />
                 </div>
                 <h4 className="font-medium text-elec-yellow text-lg">Load & Environment</h4>
@@ -389,7 +389,7 @@ const Subsection6_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                     className="border-b border-elec-yellow/10 pb-2 last:border-0 last:pb-0"
                   >
                     <span className="font-medium block">{item.title}</span>
-                    <p className="text-sm mt-1 text-elec-light/80">{item.desc}</p>
+                    <p className="text-sm mt-1 text-white">{item.desc}</p>
                   </li>
                 ))}
               </ul>
@@ -421,7 +421,7 @@ const Subsection6_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                     className="border-b border-elec-yellow/10 pb-2 last:border-0 last:pb-0"
                   >
                     <span className="font-medium block">{item.title}</span>
-                    <p className="text-sm mt-1 text-elec-light/80">{item.desc}</p>
+                    <p className="text-sm mt-1 text-white">{item.desc}</p>
                   </li>
                 ))}
               </ul>
@@ -453,7 +453,7 @@ const Subsection6_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                     className="border-b border-elec-yellow/10 pb-2 last:border-0 last:pb-0"
                   >
                     <span className="font-medium block">{item.title}</span>
-                    <p className="text-sm mt-1 text-elec-light/80">{item.desc}</p>
+                    <p className="text-sm mt-1 text-white">{item.desc}</p>
                   </li>
                 ))}
               </ul>
@@ -627,7 +627,7 @@ const LiftingTechniqueCard = ({ title, steps }) => (
     <ul className="space-y-2">
       {steps.map((step, index) => (
         <li key={index} className="flex items-start gap-2 text-sm">
-          <div className="h-5 w-5 rounded-full bg-elec-yellow/20 flex items-center justify-center shrink-0 mt-0.5">
+          <div className="h-5 w-5 rounded-full bg-white/[0.08] flex items-center justify-center shrink-0 mt-0.5">
             <span className="text-elec-yellow text-xs">{index + 1}</span>
           </div>
           <span>{step}</span>

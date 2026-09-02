@@ -49,17 +49,13 @@ export function MyCollegePlanCard() {
   if (!ilp) return <PlaceholderCard hasCollegeLink={hasCollegeLink} />;
 
   const pct = rollUp.completion_percent;
-  const ringColour =
-    pct >= 80
-      ? 'stroke-white/55'
-      : pct >= 50
-        ? 'stroke-elec-yellow'
-        : pct >= 25
-          ? 'stroke-white/55'
-          : 'stroke-white/55';
+  // Volt once the plan is nearly done; neutral until then.
+  const ringColour = pct >= 80 ? 'stroke-elec-yellow' : 'stroke-white/55';
 
   return (
-    <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
+    <section
+      className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
+    >
       <div className="px-4 sm:px-5 py-4 sm:py-5">
         {/* Header — eyebrow + headline + tutor */}
         <div className="flex items-baseline justify-between gap-3 flex-wrap">
@@ -107,46 +103,46 @@ export function MyCollegePlanCard() {
             </dl>
           </div>
         ) : (
-        <div className="mt-4 sm:mt-5 grid grid-cols-[88px_minmax(0,1fr)] sm:grid-cols-[112px_minmax(0,1fr)] gap-4 sm:gap-5 items-center">
-          <div className="relative h-[88px] w-[88px] sm:h-[112px] sm:w-[112px]">
-            <svg viewBox="0 0 36 36" className="h-full w-full -rotate-90">
-              <circle
-                cx="18"
-                cy="18"
-                r="15.5"
-                fill="none"
-                strokeWidth="2.5"
-                className="stroke-white/[0.08]"
-              />
-              <circle
-                cx="18"
-                cy="18"
-                r="15.5"
-                fill="none"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeDasharray={`${(pct / 100) * 97.4} 97.4`}
-                className={cn('transition-all duration-500', ringColour)}
-              />
-            </svg>
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <div className="text-[20px] sm:text-[24px] font-semibold text-white tabular-nums leading-none">
-                {pct}
-                <span className="text-[12px] sm:text-[13px] text-white">%</span>
-              </div>
-              <div className="mt-0.5 text-[9.5px] sm:text-[10px] uppercase tracking-[0.16em] text-white">
-                done
+          <div className="mt-4 sm:mt-5 grid grid-cols-[88px_minmax(0,1fr)] sm:grid-cols-[112px_minmax(0,1fr)] gap-4 sm:gap-5 items-center">
+            <div className="relative h-[88px] w-[88px] sm:h-[112px] sm:w-[112px]">
+              <svg viewBox="0 0 36 36" className="h-full w-full -rotate-90">
+                <circle
+                  cx="18"
+                  cy="18"
+                  r="15.5"
+                  fill="none"
+                  strokeWidth="2.5"
+                  className="stroke-white/[0.08]"
+                />
+                <circle
+                  cx="18"
+                  cy="18"
+                  r="15.5"
+                  fill="none"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeDasharray={`${(pct / 100) * 97.4} 97.4`}
+                  className={cn('transition-all duration-500', ringColour)}
+                />
+              </svg>
+              <div className="absolute inset-0 flex flex-col items-center justify-center">
+                <div className="text-[20px] sm:text-[24px] font-semibold text-white tabular-nums leading-none">
+                  {pct}
+                  <span className="text-[12px] sm:text-[13px] text-white">%</span>
+                </div>
+                <div className="mt-0.5 text-[9.5px] sm:text-[10px] uppercase tracking-[0.16em] text-white">
+                  done
+                </div>
               </div>
             </div>
+            <dl className="text-[12px] sm:text-[12.5px] leading-relaxed space-y-1">
+              <Row label="Goals" value={`${rollUp.completed} of ${rollUp.total_goals} done`} />
+              {ilp.target_completion_date && (
+                <Row label="Target" value={formatDate(ilp.target_completion_date)} />
+              )}
+              {ilp.review_date && <Row label="Review" value={formatDate(ilp.review_date)} />}
+            </dl>
           </div>
-          <dl className="text-[12px] sm:text-[12.5px] leading-relaxed space-y-1">
-            <Row label="Goals" value={`${rollUp.completed} of ${rollUp.total_goals} done`} />
-            {ilp.target_completion_date && (
-              <Row label="Target" value={formatDate(ilp.target_completion_date)} />
-            )}
-            {ilp.review_date && <Row label="Review" value={formatDate(ilp.review_date)} />}
-          </dl>
-        </div>
         )}
 
         {/* Narrative */}
@@ -306,7 +302,8 @@ function GoalRow({
           onToggleComplete(!isComplete);
           if (!goal.student_acknowledged) onAcknowledge();
         }}
-        className={cn('mt-0.5 h-6 w-6 rounded-full border flex items-center justify-center flex-shrink-0 transition-all touch-manipulation',
+        className={cn(
+          'mt-0.5 h-6 w-6 rounded-full border flex items-center justify-center flex-shrink-0 transition-all touch-manipulation',
           isComplete
             ? 'bg-white/[0.02] border-white/[0.06] text-white'
             : 'border-white/25 text-transparent active:scale-95 hover:border-white/55'
@@ -325,7 +322,8 @@ function GoalRow({
       >
         <div className="flex items-start justify-between gap-2">
           <h5
-            className={cn('text-[13.5px] sm:text-[13px] font-medium leading-snug',
+            className={cn(
+              'text-[13.5px] sm:text-[13px] font-medium leading-snug',
               isComplete ? 'text-white line-through' : 'text-white'
             )}
           >
@@ -375,7 +373,12 @@ function Sep() {
 
 function PlaceholderCard({ hasCollegeLink }: { hasCollegeLink: boolean }) {
   return (
-    <section className={cn('rounded-2xl border border-white/[0.06] px-4 sm:px-5 py-4 sm:py-5', CARD_SURFACE)}>
+    <section
+      className={cn(
+        'rounded-2xl border border-elec-yellow/35 px-4 sm:px-5 py-4 sm:py-5',
+        CARD_SURFACE
+      )}
+    >
       <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
         Your ILP
       </div>
@@ -414,7 +417,9 @@ function PlaceholderCard({ hasCollegeLink }: { hasCollegeLink: boolean }) {
 
 function Skeleton() {
   return (
-    <section className={cn('rounded-2xl border border-white/[0.06] p-5 animate-pulse', CARD_SURFACE)}>
+    <section
+      className={cn('rounded-2xl border border-white/[0.06] p-5 animate-pulse', CARD_SURFACE)}
+    >
       <div className="h-3 w-1/4 rounded bg-white/[0.05]" />
       <div className="mt-3 h-5 w-3/4 rounded bg-white/[0.06]" />
       <div className="mt-2 h-2.5 w-1/3 rounded bg-white/[0.04]" />

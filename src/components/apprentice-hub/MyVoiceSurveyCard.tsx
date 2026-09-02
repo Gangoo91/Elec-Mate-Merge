@@ -24,7 +24,7 @@ export function MyVoiceSurveyCard() {
    */
   if (!survey || alreadySubmitted) {
     return (
-      <section className={cn('rounded-2xl border border-white/[0.06] p-5', CARD_SURFACE)}>
+      <section className={cn('rounded-2xl border border-elec-yellow/35 p-5', CARD_SURFACE)}>
         <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-elec-yellow">
           Your voice · anonymous
         </div>
@@ -46,12 +46,10 @@ export function MyVoiceSurveyCard() {
       <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-elec-yellow">
         Your voice · anonymous
       </div>
-      <h3 className="mt-2 text-lg font-semibold text-white">
-        {survey.title}
-      </h3>
+      <h3 className="mt-2 text-lg font-semibold text-white">{survey.title}</h3>
       <p className="mt-2 text-sm text-white leading-relaxed">
-        2-minute anonymous check-in for {survey.iso_month}. Your college sees aggregated themes
-        only — never who said what. Closes {new Date(survey.close_at).toLocaleDateString('en-GB')}.
+        2-minute anonymous check-in for {survey.iso_month}. Your college sees aggregated themes only
+        — never who said what. Closes {new Date(survey.close_at).toLocaleDateString('en-GB')}.
       </p>
       <div className="mt-4">
         <button

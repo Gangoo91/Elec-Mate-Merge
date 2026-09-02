@@ -7,18 +7,9 @@
  * No bottom sheet -- instant, immersive playback.
  */
 
-import {
-  useState,
-  useMemo,
-  useEffect,
-  useLayoutEffect,
-  useCallback,
-  useRef,
-  memo,
-} from 'react';
+import { useState, useMemo, useEffect, useLayoutEffect, useCallback, useRef, memo } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
-  ArrowLeft,
   Search,
   X,
   Bookmark,
@@ -36,6 +27,8 @@ import {
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { HubMasthead, HubPage } from '@/components/hub/HubPrimitives';
+import { chipBase, chipOff, chipOn } from '@/components/forms/fieldStyles';
 import { cn } from '@/lib/utils';
 import {
   curatedVideos,
@@ -535,47 +528,22 @@ export default function LearningVideos({ backTo = '/apprentice' }: { backTo?: st
   );
 
   return (
-    <div className="min-h-screen bg-[hsl(240,5.9%,10%)]">
-      {/* ═══ STICKY HEADER ═══ */}
-      <header className="sticky top-0 z-20 bg-[hsl(240,5.9%,10%)]/95 backdrop-blur-xl border-b border-white/[0.06]">
-        <div className="mx-auto max-w-[1600px] px-4 lg:px-8">
-          {/* Title row */}
-          <div className="flex items-center gap-2 sm:gap-3 h-14">
-            <button
-              onClick={
-                isPlayerMode
-                  ? handleClosePlayer
-                  : activePath
-                    ? () => setActivePath(null)
-                    : () => navigate(backTo)
-              }
-              className="h-11 w-11 -ml-1 flex items-center justify-center rounded-xl text-white hover:bg-white/[0.06] active:bg-white/10 touch-manipulation transition-colors"
-              aria-label="Back"
-            >
-              <ArrowLeft className="h-5 w-5" />
-            </button>
-
-            <div className="flex-1 min-w-0">
-              {isPlayerMode ? (
-                <h1 className="text-[15px] sm:text-base font-semibold text-white truncate">
-                  {selectedVideo.title}
-                </h1>
-              ) : (
-                <div className="flex items-baseline gap-2.5">
-                  <span className="hidden sm:inline text-[10px] font-medium uppercase tracking-[0.18em] text-white opacity-70">
-                    Learning
-                  </span>
-                  <span className="hidden sm:inline h-3 w-px bg-white/10" aria-hidden />
-                  <h1 className="text-[15px] sm:text-base font-semibold tracking-tight text-white truncate">
-                    {activePath ? activePath.title : 'Video Library'}
-                  </h1>
-                </div>
-              )}
-            </div>
-
+    <HubPage>
+      <HubMasthead
+        section="Learning"
+        title={isPlayerMode ? selectedVideo.title : activePath ? activePath.title : 'Video library'}
+        onBack={
+          isPlayerMode
+            ? handleClosePlayer
+            : activePath
+              ? () => setActivePath(null)
+              : () => navigate(backTo)
+        }
+        trailing={
+          <>
             {/* Action buttons -- only show in grid mode */}
             {!isPlayerMode && !activePath && (
-              <div className="hidden lg:flex flex-shrink-0 items-center gap-1 rounded-full bg-white/[0.04] p-1 mr-1">
+              <div className="hidden flex-shrink-0 items-center gap-0.5 rounded-full border border-white/[0.10] bg-white/[0.04] p-0.5 lg:flex">
                 {(
                   [
                     { v: 'all', label: 'Any level' },
@@ -588,11 +556,7 @@ export default function LearningVideos({ backTo = '/apprentice' }: { backTo?: st
                   <button
                     key={opt.v}
                     onClick={() => setLevelFilter(opt.v)}
-                    className={`px-3 h-7 text-[12px] rounded-full font-medium touch-manipulation transition-all whitespace-nowrap ${
-                      levelFilter === opt.v
-                        ? 'bg-white text-black'
-                        : 'text-white hover:bg-white/[0.08]'
-                    }`}
+                    className={`h-11 whitespace-nowrap rounded-full px-3 text-[12px] font-semibold transition-colors touch-manipulation ${levelFilter === opt.v ? 'bg-elec-yellow text-black' : 'text-white'}`}
                   >
                     {opt.label}
                   </button>
@@ -607,11 +571,7 @@ export default function LearningVideos({ backTo = '/apprentice' }: { backTo?: st
                     value={levelFilter}
                     onChange={(e) => setLevelFilter(e.target.value as typeof levelFilter)}
                     aria-label="Filter by level"
-                    className={`lg:hidden w-[88px] flex-shrink-0 h-9 rounded-full border px-2.5 text-[12px] font-medium touch-manipulation [color-scheme:dark] focus:outline-none ${
-                      levelFilter === 'all'
-                        ? 'bg-white/[0.06] border-white/[0.1] text-white'
-                        : 'bg-white text-black border-white'
-                    }`}
+                    className={`h-11 w-[96px] flex-shrink-0 rounded-full border px-2.5 text-[12px] font-medium touch-manipulation [color-scheme:dark] focus:outline-none lg:hidden ${levelFilter === 'all' ? 'border-white/[0.12] bg-white/[0.06] text-white' : 'border-elec-yellow bg-elec-yellow text-black'}`}
                   >
                     <option value="all">Any</option>
                     <option value="beginner">Beginner</option>
@@ -625,9 +585,7 @@ export default function LearningVideos({ backTo = '/apprentice' }: { backTo?: st
                   onClick={() => setSearchOpen(!searchOpen)}
                   aria-label="Search videos"
                   className={`h-11 w-11 flex items-center justify-center rounded-xl touch-manipulation transition-colors ${
-                    searchOpen
-                      ? 'bg-elec-yellow/15 text-elec-yellow'
-                      : 'text-white hover:bg-white/[0.06] active:bg-white/10'
+                    searchOpen ? 'bg-elec-yellow text-black' : 'text-white hover:bg-white/[0.06]'
                   }`}
                 >
                   <Search className="h-5 w-5" />
@@ -643,7 +601,7 @@ export default function LearningVideos({ backTo = '/apprentice' }: { backTo?: st
                     className={`h-11 flex items-center gap-1.5 px-3 rounded-xl border touch-manipulation transition-colors ${
                       savedOnly
                         ? 'bg-elec-yellow border-elec-yellow'
-                        : 'bg-elec-yellow/10 border-elec-yellow/25 hover:bg-elec-yellow/15'
+                        : 'border-elec-yellow/50 bg-white/[0.06]'
                     }`}
                   >
                     <Bookmark
@@ -658,74 +616,82 @@ export default function LearningVideos({ backTo = '/apprentice' }: { backTo?: st
                 )}
               </div>
             )}
-          </div>
+          </>
+        }
+      />
 
-          {/* Search bar - slides down when open (grid mode only) */}
-          {!isPlayerMode && searchOpen && (
-            <div className="pb-3">
-              <div className="relative max-w-xl">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white opacity-70" />
-                <input
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search by title, channel or topic…"
-                  autoFocus
-                  className="w-full h-11 pl-10 pr-10 rounded-xl bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white/70 focus:outline-none focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20 touch-manipulation"
-                />
-                {searchQuery && (
-                  <button
-                    onClick={() => setSearchQuery('')}
-                    aria-label="Clear search"
-                    className="absolute right-1 top-1/2 -translate-y-1/2 h-9 w-9 flex items-center justify-center rounded-full text-white opacity-70 active:bg-white/10 touch-manipulation"
-                  >
-                    <X className="h-4 w-4" />
-                  </button>
-                )}
+      {/* Search + filter rows sit directly under the masthead, in the same
+          column as the content, so the control set stays one row from sm: up. */}
+      {!isPlayerMode && (searchOpen || !activePath) && (
+        <div className="sticky top-12 z-40 border-b border-white/[0.06] bg-elec-dark/95 backdrop-blur-sm">
+          <div className="mx-auto max-w-[1600px] px-4 pt-3 lg:px-8">
+            {/* Search bar - slides down when open (grid mode only) */}
+            {!isPlayerMode && searchOpen && (
+              <div className="pb-3">
+                <div className="relative max-w-xl">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
+                  <input
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Search by title, channel or topic…"
+                    autoFocus
+                    className="h-11 w-full rounded-xl border border-white/[0.12] bg-white/[0.06] pl-10 pr-10 text-base text-white placeholder:text-white/40 caret-elec-yellow focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation"
+                  />
+                  {searchQuery && (
+                    <button
+                      onClick={() => setSearchQuery('')}
+                      aria-label="Clear search"
+                      className="absolute right-0 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full text-white touch-manipulation"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  )}
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {/* Filter bar — one line: categories scroll, level sits on the right.
+            {/* Filter bar — one line: categories scroll, level sits on the right.
               Three stacked rows of chips ate the top of the screen; this keeps
               the whole control set to a single row from sm: up. */}
-          {!isPlayerMode && !activePath && (
-            <div className="pb-3">
-              {/* Categories — horizontal scroll with a fade so it reads as scrollable */}
-              <div className="relative min-w-0 flex-1">
-                <div className="flex flex-nowrap gap-1.5 overflow-x-auto scrollbar-hide">
-                  <button
-                    onClick={() => setActiveCategory('all')}
-                    className={`flex-shrink-0 px-3.5 h-9 text-[13px] rounded-full font-medium touch-manipulation transition-all ${
-                      activeCategory === 'all'
-                        ? 'bg-elec-yellow text-black'
-                        : 'bg-white/[0.06] text-white hover:bg-white/[0.1] active:bg-white/10'
-                    }`}
-                  >
-                    All
-                  </button>
-                  {categories.map((cat) => (
+            {!isPlayerMode && !activePath && (
+              <div className="pb-3">
+                {/* Categories — horizontal scroll with a fade so it reads as scrollable */}
+                <div className="relative min-w-0 flex-1">
+                  <div className="flex flex-nowrap gap-1.5 overflow-x-auto scrollbar-hide">
                     <button
-                      key={cat}
-                      onClick={() => setActiveCategory(cat)}
-                      className={`flex-shrink-0 px-3.5 h-9 text-[13px] rounded-full font-medium touch-manipulation transition-all whitespace-nowrap ${
-                        activeCategory === cat
-                          ? 'bg-elec-yellow text-black'
-                          : 'bg-white/[0.06] text-white hover:bg-white/[0.1] active:bg-white/10'
-                      }`}
+                      onClick={() => setActiveCategory('all')}
+                      className={cn(
+                        chipBase,
+                        'flex-shrink-0 rounded-full px-3.5',
+                        activeCategory === 'all' ? chipOn : chipOff
+                      )}
                     >
-                      {categoryLabels[cat]}
+                      All
                     </button>
-                  ))}
+                    {categories.map((cat) => (
+                      <button
+                        key={cat}
+                        onClick={() => setActiveCategory(cat)}
+                        className={cn(
+                          chipBase,
+                          'flex-shrink-0 whitespace-nowrap rounded-full px-3.5',
+                          activeCategory === cat ? chipOn : chipOff
+                        )}
+                      >
+                        {categoryLabels[cat]}
+                      </button>
+                    ))}
+                  </div>
+                  <div
+                    className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-elec-dark to-transparent"
+                    aria-hidden
+                  />
                 </div>
-                <div
-                  className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-[hsl(240,5.9%,10%)] to-transparent"
-                  aria-hidden
-                />
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
-      </header>
+      )}
 
       {/* ═══ CONTENT AREA ═══ */}
       {isPlayerMode ? (
@@ -757,7 +723,7 @@ export default function LearningVideos({ backTo = '/apprentice' }: { backTo?: st
               <div className="mt-3 flex flex-wrap items-center gap-x-2.5 gap-y-2 text-[13px] text-white">
                 <span className="font-medium">{selectedVideo.channel}</span>
                 <span className="h-1 w-1 rounded-full bg-white/25" aria-hidden />
-                <span className="flex items-center gap-1 opacity-70">
+                <span className="flex items-center gap-1">
                   <Clock className="h-3.5 w-3.5" />
                   {selectedVideo.duration}
                 </span>
@@ -765,7 +731,7 @@ export default function LearningVideos({ backTo = '/apprentice' }: { backTo?: st
                 <span className="text-[12px] uppercase tracking-[0.12em] opacity-55">
                   {selectedVideo.level}
                 </span>
-                <span className="rounded-md border border-elec-yellow/20 bg-elec-yellow/10 px-2 py-0.5 text-[11px] font-medium text-elec-yellow">
+                <span className="rounded-md border border-elec-yellow/50 px-2 py-0.5 text-[11px] font-medium text-elec-yellow">
                   {categoryLabels[selectedVideo.category]}
                 </span>
                 {(() => {
@@ -777,8 +743,7 @@ export default function LearningVideos({ backTo = '/apprentice' }: { backTo?: st
                         Completed
                       </span>
                     );
-                  if (p && p.pct > 0)
-                    return <span className="text-[12px] opacity-70">{p.pct}% watched</span>;
+                  if (p && p.pct > 0) return <span className="text-[12px]">{p.pct}% watched</span>;
                   return null;
                 })()}
               </div>
@@ -787,7 +752,7 @@ export default function LearningVideos({ backTo = '/apprentice' }: { backTo?: st
               <div className="mt-4 flex flex-wrap items-center gap-2">
                 <button
                   onClick={() => handleBookmarkToggle(selectedVideo)}
-                  className={`inline-flex items-center gap-2 h-10 px-4 rounded-full text-[13px] font-semibold touch-manipulation transition-all active:scale-[0.98] ${
+                  className={`inline-flex items-center gap-2 h-11 px-4 rounded-full text-[13px] font-semibold touch-manipulation transition-all active:scale-[0.98] ${
                     isBookmarked(selectedVideo.id)
                       ? 'bg-elec-yellow text-black'
                       : 'bg-white/[0.06] border border-white/[0.12] text-white hover:bg-white/[0.1]'
@@ -802,7 +767,7 @@ export default function LearningVideos({ backTo = '/apprentice' }: { backTo?: st
                   onClick={() =>
                     openExternalUrl(`https://www.youtube.com/watch?v=${selectedVideo.id}`)
                   }
-                  className="inline-flex items-center gap-2 h-10 px-4 rounded-full bg-white/[0.06] border border-white/[0.12] text-white text-[13px] font-medium hover:bg-white/[0.1] touch-manipulation transition-all active:scale-[0.98]"
+                  className="inline-flex items-center gap-2 h-11 px-4 rounded-full bg-white/[0.06] border border-white/[0.12] text-white text-[13px] font-medium hover:bg-white/[0.1] touch-manipulation transition-all active:scale-[0.98]"
                 >
                   <ExternalLink className="h-4 w-4" />
                   Open in YouTube
@@ -828,7 +793,7 @@ export default function LearningVideos({ backTo = '/apprentice' }: { backTo?: st
                         ? `Quiz passed — best ${quizRecord.best}/${quizRecord.total}`
                         : 'Test yourself'}
                     </p>
-                    <p className="text-[12px] text-white opacity-70">
+                    <p className="text-[12px] text-white">
                       {quizRecord && quizRecord.best / quizRecord.total >= 2 / 3
                         ? 'Retake it any time'
                         : `${quizQuestions.length} quick questions on this video`}
@@ -842,7 +807,7 @@ export default function LearningVideos({ backTo = '/apprentice' }: { backTo?: st
 
               {/* Description */}
               {selectedVideo.description && (
-                <p className="mt-4 max-w-[68ch] text-[13.5px] leading-relaxed text-white opacity-80">
+                <p className="mt-4 max-w-[68ch] text-[13.5px] leading-relaxed text-white">
                   {selectedVideo.description}
                 </p>
               )}
@@ -853,7 +818,7 @@ export default function LearningVideos({ backTo = '/apprentice' }: { backTo?: st
                   {selectedVideo.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-md border border-white/[0.08] bg-white/[0.05] px-2 py-0.5 text-[11px] text-white opacity-70"
+                      className="rounded-md border border-white/[0.08] bg-white/[0.05] px-2 py-0.5 text-[11px] text-white"
                     >
                       {tag}
                     </span>
@@ -911,7 +876,7 @@ export default function LearningVideos({ backTo = '/apprentice' }: { backTo?: st
                     <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
                       Continue watching
                     </span>
-                    <span className="text-[11px] tabular-nums text-white opacity-70">
+                    <span className="text-[11px] tabular-nums text-white">
                       {continueVideos.length}
                     </span>
                   </div>
@@ -927,7 +892,7 @@ export default function LearningVideos({ backTo = '/apprentice' }: { backTo?: st
                     <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
                       Learning paths
                     </span>
-                    <span className="text-[11px] tabular-nums text-white opacity-70">
+                    <span className="text-[11px] tabular-nums text-white">
                       {learningPaths.length} paths · watch in order
                     </span>
                   </div>
@@ -952,7 +917,7 @@ export default function LearningVideos({ backTo = '/apprentice' }: { backTo?: st
                             <p className="text-[14px] font-semibold text-white leading-snug">
                               {path.title}
                             </p>
-                            <p className="mt-1 text-[11.5px] leading-snug text-white opacity-70 line-clamp-2">
+                            <p className="mt-1 text-[11.5px] leading-snug text-white line-clamp-2">
                               {path.strap}
                             </p>
                             <div className="mt-3 h-1.5 rounded-full bg-white/[0.08] overflow-hidden">
@@ -961,7 +926,7 @@ export default function LearningVideos({ backTo = '/apprentice' }: { backTo?: st
                                 style={{ width: `${pct}%` }}
                               />
                             </div>
-                            <p className="mt-1.5 text-[11px] tabular-nums text-white opacity-70">
+                            <p className="mt-1.5 text-[11px] tabular-nums text-white">
                               {done}/{vids.length} watched{pct === 100 ? ' · complete ✓' : ''}
                             </p>
                           </button>
@@ -969,7 +934,7 @@ export default function LearningVideos({ backTo = '/apprentice' }: { backTo?: st
                       })}
                     </div>
                     <div
-                      className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-[hsl(240,5.9%,10%)] to-transparent sm:w-16 lg:hidden"
+                      className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-elec-dark to-transparent sm:w-16 lg:hidden"
                       aria-hidden
                     />
                   </div>
@@ -1009,7 +974,7 @@ export default function LearningVideos({ backTo = '/apprentice' }: { backTo?: st
                         <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
                           {categoryLabels[cat]}
                         </span>
-                        <span className="text-[11px] tabular-nums text-white opacity-70">
+                        <span className="text-[11px] tabular-nums text-white">
                           {(() => {
                             const w = items.filter((v) => watchedSet.has(v.id)).length;
                             return w > 0
@@ -1037,7 +1002,7 @@ export default function LearningVideos({ backTo = '/apprentice' }: { backTo?: st
                           ? 'Results'
                           : categoryLabels[activeCategory]}
                     </span>
-                    <span className="text-[11px] tabular-nums text-white opacity-70">
+                    <span className="text-[11px] tabular-nums text-white">
                       {filteredVideos.length} {filteredVideos.length === 1 ? 'video' : 'videos'}
                       {searchQuery.trim() ? ` · “${searchQuery}”` : ''}
                     </span>
@@ -1073,7 +1038,7 @@ export default function LearningVideos({ backTo = '/apprentice' }: { backTo?: st
           onComplete={handleQuizComplete}
         />
       )}
-    </div>
+    </HubPage>
   );
 }
 
@@ -1156,7 +1121,7 @@ const VideoTile = memo(function VideoTile({
             onBookmarkToggle(video);
           }}
           aria-label={isBookmarked ? 'Remove bookmark' : 'Save video'}
-          className="absolute top-1.5 right-1.5 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-black/55 transition-colors touch-manipulation hover:bg-black/75 active:bg-black/80"
+          className="absolute top-1.5 right-1.5 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-black/55 transition-colors touch-manipulation hover:bg-black/75 active:bg-black/80"
         >
           <Bookmark
             className={`h-3.5 w-3.5 ${
@@ -1169,10 +1134,7 @@ const VideoTile = memo(function VideoTile({
       {/* Meta. One accent only — gold. The level used to be a traffic-light
           chip (green / amber / red), which put three more colours on screen
           400 times over. */}
-      <button
-        onClick={() => onTap(video)}
-        className="w-full pt-2.5 text-left touch-manipulation"
-      >
+      <button onClick={() => onTap(video)} className="w-full pt-2.5 text-left touch-manipulation">
         {/* Always two lines tall, clamped or not, so the channel/level row sits
             on the same baseline right across a grid row — and so every tile is
             the same height, which is what `estimateGridHeight` assumes. */}
@@ -1180,7 +1142,7 @@ const VideoTile = memo(function VideoTile({
           {video.title}
         </h4>
         <div className="mt-1.5 flex items-center gap-2 text-[11px] text-white">
-          <span className="min-w-0 flex-1 truncate opacity-60">{video.channel}</span>
+          <span className="min-w-0 flex-1 truncate">{video.channel}</span>
           <span className="shrink-0 text-[9px] font-medium uppercase tracking-[0.12em] opacity-45">
             {video.level}
           </span>
@@ -1196,7 +1158,7 @@ function FeaturedSpotlight({ video, onTap }: { video: CuratedVideo; onTap: () =>
   return (
     <button
       onClick={onTap}
-      className="group relative w-full text-left rounded-2xl overflow-hidden border border-white/[0.08] bg-[hsl(240,5.9%,12%)] touch-manipulation"
+      className="group relative w-full text-left rounded-2xl overflow-hidden border border-white/[0.08] bg-white/[0.05] touch-manipulation"
     >
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none z-10" />
       <div className="flex flex-col lg:flex-row">
@@ -1228,14 +1190,14 @@ function FeaturedSpotlight({ video, onTap }: { video: CuratedVideo; onTap: () =>
             {video.title}
           </h2>
           {video.description && (
-            <p className="mt-2.5 max-w-[52ch] text-[13px] sm:text-sm leading-relaxed text-white opacity-70 line-clamp-2 sm:line-clamp-3">
+            <p className="mt-2.5 max-w-[52ch] text-[13px] sm:text-sm leading-relaxed text-white line-clamp-2 sm:line-clamp-3">
               {video.description}
             </p>
           )}
           <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2 text-[12px] text-white">
-            <span className="opacity-70">{video.channel}</span>
+            <span className="">{video.channel}</span>
             <span className="h-1 w-1 rounded-full bg-white/25" />
-            <span className="flex items-center gap-1 opacity-70">
+            <span className="flex items-center gap-1">
               <Clock className="h-3.5 w-3.5" />
               {video.duration}
             </span>
@@ -1382,12 +1344,12 @@ function CreatorCard({ creator }: { creator: Creator }) {
     <div className={cn('overflow-hidden rounded-2xl border border-elec-yellow/20', CARD_SURFACE)}>
       {/* Header */}
       <div className="flex items-center gap-3 border-b border-white/[0.08] px-4 py-3.5">
-        <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-elec-yellow/15">
+        <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border border-elec-yellow/35 bg-white/[0.06]">
           <HeadIcon className="h-5 w-5 text-elec-yellow" />
         </div>
         <div className="min-w-0">
           <h3 className="truncate text-[15px] font-semibold text-white">{creator.name}</h3>
-          <p className="truncate text-[12px] text-white opacity-70">{creator.strap}</p>
+          <p className="truncate text-[12px] text-white">{creator.strap}</p>
         </div>
       </div>
 
@@ -1395,7 +1357,7 @@ function CreatorCard({ creator }: { creator: Creator }) {
         <p className="text-[13px] leading-relaxed text-white opacity-85">{creator.bio}</p>
 
         {creator.note && (
-          <div className="flex gap-2 rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.07] p-3">
+          <div className="flex gap-2 rounded-xl border border-elec-yellow/35 bg-white/[0.05] p-3">
             <Zap className="mt-0.5 h-4 w-4 flex-shrink-0 text-elec-yellow" />
             <p className="text-[12px] leading-relaxed text-white">{creator.note}</p>
           </div>
@@ -1415,9 +1377,7 @@ function CreatorCard({ creator }: { creator: Creator }) {
                   <BlockIcon className="h-4 w-4 flex-shrink-0 text-elec-yellow" />
                   <h4 className="text-[13px] font-semibold text-white">{block.title}</h4>
                 </div>
-                <p className="flex-1 text-[12px] leading-relaxed text-white opacity-80">
-                  {block.body}
-                </p>
+                <p className="flex-1 text-[12px] leading-relaxed text-white">{block.body}</p>
                 {block.cta && (
                   <a
                     href={block.cta.href}
@@ -1476,7 +1436,7 @@ function RelatedVideoRow({
         <h5 className="text-[12.5px] font-medium text-white leading-snug line-clamp-2 group-hover:text-elec-yellow transition-colors">
           {video.title}
         </h5>
-        <p className="mt-1 text-[11px] text-white opacity-70">{video.channel}</p>
+        <p className="mt-1 text-[11px] text-white">{video.channel}</p>
       </button>
 
       <button
@@ -1522,7 +1482,7 @@ function PathDetail({
           Learning path
         </p>
         <h2 className="mt-1 text-[20px] font-semibold tracking-tight text-white">{path.title}</h2>
-        <p className="mt-1 text-[13px] text-white opacity-70">{path.strap}</p>
+        <p className="mt-1 text-[13px] text-white">{path.strap}</p>
         <div className="mt-4 h-1.5 rounded-full bg-white/[0.08] overflow-hidden">
           <div
             className="h-full rounded-full bg-elec-yellow transition-all"
@@ -1530,13 +1490,13 @@ function PathDetail({
           />
         </div>
         <div className="mt-2 flex items-center justify-between">
-          <p className="text-[12px] tabular-nums text-white opacity-70">
+          <p className="text-[12px] tabular-nums text-white">
             {done}/{videos.length} watched · about {totalMinutes} min total
           </p>
           {next && pct < 100 && (
             <button
               onClick={() => onPlay(next)}
-              className="inline-flex items-center gap-1.5 h-9 px-4 rounded-full bg-elec-yellow text-[13px] font-semibold text-black touch-manipulation active:scale-[0.98]"
+              className="inline-flex items-center gap-1.5 h-11 px-4 rounded-full bg-elec-yellow text-[13px] font-semibold text-black touch-manipulation active:scale-[0.98]"
             >
               <Play className="h-3.5 w-3.5 fill-black" />
               {done === 0 ? 'Start' : 'Continue'}
@@ -1576,12 +1536,12 @@ function PathDetail({
                 <span className="block text-[13.5px] font-medium text-white leading-snug line-clamp-2">
                   {video.title}
                 </span>
-                <span className="mt-0.5 block text-[11.5px] text-white opacity-70">
+                <span className="mt-0.5 block text-[11.5px] text-white">
                   {video.channel} · {video.duration}
                   {inProgress ? ` · ${prog}% watched` : ''}
                 </span>
               </span>
-              <Play className="h-4 w-4 flex-shrink-0 text-white opacity-70" />
+              <Play className="h-4 w-4 flex-shrink-0 text-white" />
             </button>
           );
         })}

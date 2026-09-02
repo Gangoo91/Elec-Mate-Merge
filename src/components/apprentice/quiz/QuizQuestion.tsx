@@ -35,13 +35,13 @@ const QuestionComponent: React.FC<QuestionProps> = ({
               } else if (isIncorrect) {
                 optionClasses += ' border-red-500/30 bg-red-500/[0.04] text-white';
               } else {
-                optionClasses += ' border-white/[0.06] bg-white/[0.02] text-white/55';
+                optionClasses += ' border-white/[0.06] bg-white/[0.02] text-white';
               }
             } else if (isSelected) {
-              optionClasses += ' border-elec-yellow bg-elec-yellow/[0.06] text-white';
+              optionClasses += ' border-elec-yellow bg-white/[0.05] text-white';
             } else {
               optionClasses +=
-                ' border-white/[0.06] bg-white/[0.02] text-white/85 hover:border-white/15';
+                ' border-white/[0.06] bg-white/[0.02] text-white hover:border-white/15';
             }
 
             return (
@@ -50,10 +50,10 @@ const QuestionComponent: React.FC<QuestionProps> = ({
                   <div
                     className={`w-6 h-6 rounded-full border flex items-center justify-center flex-shrink-0 ${
                       isSelected || isCorrect
-                        ? 'bg-elec-yellow/[0.06] border-elec-yellow text-elec-yellow'
+                        ? 'bg-white/[0.05] border-elec-yellow text-elec-yellow'
                         : isIncorrect
                           ? 'border-red-400 text-red-400'
-                          : 'border-white/15 text-white/55'
+                          : 'border-white/15 text-white'
                     }`}
                   >
                     <span className="text-[11px] font-mono">{String.fromCharCode(65 + index)}</span>

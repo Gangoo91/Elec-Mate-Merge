@@ -2,6 +2,10 @@ import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 import { captureException } from '../_shared/sentry.ts';
 
+// Supabase edge runtime global — lets work continue after the response is sent.
+declare const EdgeRuntime: { waitUntil(p: Promise<unknown>): void };
+
+
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers':
@@ -43,6 +47,171 @@ async function fetchRcOverview(): Promise<RcMetrics | null> {
     console.warn('RevenueCat API call failed (non-fatal):', e);
     return null;
   }
+}
+
+type RcChurn = {
+  months: Array<{ month: string; payingAtStart: number; churned: number; complete: boolean }>;
+  daily: Array<{ day: string; n: number }>;
+  /*
+    Trial outcomes by the month the trial STARTED (RevenueCat buckets them
+    that way; Stripe's are by the month the trial ended). `pending` trials
+    have neither converted nor expired yet, so a rate for a recent month
+    should divide by conversions + expirations, not by starts.
+  */
+  trials: Array<{
+    month: string;
+    starts: number;
+    conversions: number;
+    expirations: number;
+    pending: number;
+  }>;
+  /** MRR movement by month, GBP: why the store MRR moved. */
+  movement: Array<{
+    month: string;
+    newMrr: number;
+    resubMrr: number;
+    expansionMrr: number;
+    churnedMrr: number;
+    contractionMrr: number;
+    net: number;
+  }>;
+};
+
+const RC_CHURN_CACHE_KEY = 'revenuecat_churn';
+const RC_CHURN_FRESH_MS = 6 * 60 * 60 * 1000;
+
+/*
+  Paid churn from RevenueCat's own churn chart.
+
+  The chart's "Churned Actives" is paid subscriptions that expired without
+  renewing — trials that lapsed are not in it, which is exactly the number the
+  overview wants. Two calls: daily buckets for the sparkline and the last 31
+  days, monthly buckets for the rate. Both are UTC-bucketed by RevenueCat.
+  If the key cannot read charts the function returns null and the page says
+  the churn figure is Stripe-only rather than pretending.
+*/
+async function fetchRcChurn(): Promise<RcChurn | null> {
+  const rcApiKey = Deno.env.get('REVENUECAT_API_V2_KEY');
+  if (!rcApiKey) return null;
+  const iso = (d: Date) => d.toISOString().slice(0, 10);
+  const now = new Date();
+  const dailyStart = new Date(now.getTime() - 31 * 86400 * 1000);
+  const monthStart = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - 3, 1));
+  const get = async (resolution: string, start: Date, chart = 'churn', extra = '') => {
+    const url =
+      `https://api.revenuecat.com/v2/projects/proj5dd5e597/charts/${chart}` +
+      `?resolution=${resolution}&start_date=${iso(start)}&end_date=${iso(now)}${extra}`;
+    const res = await fetch(url, { headers: { Authorization: `Bearer ${rcApiKey}` } });
+    if (!res.ok) {
+      console.warn('RevenueCat churn chart returned', res.status, await res.text());
+      return null;
+    }
+    return (await res.json()) as {
+      values?: Array<{ cohort: number; incomplete?: boolean; measure: number; value: number }>;
+    };
+  };
+  try {
+    const [daily, monthly, trialMonthly, movementMonthly] = await Promise.all([
+      get('0', dailyStart),
+      get('2', monthStart),
+      get('2', monthStart, 'trial_conversion_rate'),
+      get('2', monthStart, 'mrr_movement', '&currency=GBP'),
+    ]);
+    if (!daily?.values || !monthly?.values) return null;
+    const trials: Record<
+      string,
+      { starts: number; conversions: number; expirations: number; pending: number }
+    > = {};
+    for (const v of trialMonthly?.values ?? []) {
+      const k = new Date(v.cohort * 1000).toISOString().slice(0, 7);
+      trials[k] ??= { starts: 0, conversions: 0, expirations: 0, pending: 0 };
+      if (v.measure === 0) trials[k].starts = v.value;
+      if (v.measure === 1) trials[k].conversions = v.value;
+      if (v.measure === 2) trials[k].expirations = v.value;
+      if (v.measure === 3) trials[k].pending = v.value;
+    }
+    const dailyMap: Record<string, number> = {};
+    for (const v of daily.values) {
+      if (v.measure !== 1) continue;
+      dailyMap[new Date(v.cohort * 1000).toISOString().slice(0, 10)] = Math.max(0, v.value);
+    }
+    const months: Record<string, { payingAtStart: number; churned: number; complete: boolean }> =
+      {};
+    for (const v of monthly.values) {
+      const k = new Date(v.cohort * 1000).toISOString().slice(0, 7);
+      months[k] ??= { payingAtStart: 0, churned: 0, complete: !v.incomplete };
+      if (v.measure === 0) months[k].payingAtStart = v.value;
+      if (v.measure === 1) months[k].churned = Math.max(0, v.value);
+    }
+    const movement: Record<string, number[]> = {};
+    for (const v of movementMonthly?.values ?? []) {
+      const k = new Date(v.cohort * 1000).toISOString().slice(0, 7);
+      movement[k] ??= [0, 0, 0, 0, 0, 0];
+      if (v.measure >= 0 && v.measure <= 5) movement[k][v.measure] = v.value;
+    }
+    return {
+      movement: Object.entries(movement)
+        .sort(([a], [b]) => a.localeCompare(b))
+        .map(([month, m]) => ({
+          month,
+          newMrr: m[0],
+          resubMrr: m[1],
+          expansionMrr: m[2],
+          churnedMrr: m[3],
+          contractionMrr: m[4],
+          net: m[5],
+        })),
+      daily: Object.entries(dailyMap)
+        .sort(([a], [b]) => a.localeCompare(b))
+        .map(([day, n]) => ({ day, n })),
+      months: Object.entries(months)
+        .sort(([a], [b]) => a.localeCompare(b))
+        .map(([month, m]) => ({ month, ...m })),
+      trials: Object.entries(trials)
+        .sort(([a], [b]) => a.localeCompare(b))
+        .map(([month, t]) => ({ month, ...t })),
+    };
+  } catch (e) {
+    console.warn('RevenueCat churn chart failed (non-fatal):', e);
+    return null;
+  }
+}
+
+// deno-lint-ignore no-explicit-any
+async function getRcChurn(admin: any): Promise<RcChurn | null> {
+  const { data: cached } = await admin
+    .from('admin_metric_cache')
+    .select('value, updated_at')
+    .eq('key', RC_CHURN_CACHE_KEY)
+    .maybeSingle();
+
+  const refresh = async () => {
+    const fresh = await fetchRcChurn();
+    if (fresh) {
+      await admin
+        .from('admin_metric_cache')
+        .upsert({ key: RC_CHURN_CACHE_KEY, value: fresh, updated_at: new Date().toISOString() });
+      // The store half of the overview's daily history.
+      await admin.from('admin_metric_daily').upsert(
+        fresh.daily.map((r) => ({
+          day: r.day,
+          rc_churned_paid: r.n,
+          updated_at: new Date().toISOString(),
+        })),
+        { onConflict: 'day' }
+      );
+    }
+    return fresh;
+  };
+
+  if (cached?.value) {
+    const age = Date.now() - new Date(cached.updated_at).getTime();
+    if (age > RC_CHURN_FRESH_MS) EdgeRuntime.waitUntil(refresh());
+    return cached.value as RcChurn;
+  }
+  // Cold: answer without it, fill behind the response.
+  EdgeRuntime.waitUntil(refresh());
+  return null;
 }
 
 // RevenueCat's /metrics/overview takes ~10s per call and only recomputes
@@ -94,20 +263,25 @@ Deno.serve(async (req) => {
       { global: { headers: { Authorization: authHeader } } }
     );
 
-    const {
-      data: { user },
-      error: userError,
-    } = await supabase.auth.getUser();
-    if (userError || !user) throw new Error('Unauthorised');
+    // The nightly snapshot job (pg_cron) calls with the service-role key and has no user.
+    const scheduled =
+      authHeader.replace('Bearer ', '') === (Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '__');
+    if (!scheduled) {
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
+      if (userError || !user) throw new Error('Unauthorised');
 
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('admin_role')
-      .eq('id', user.id)
-      .single();
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('admin_role')
+        .eq('id', user.id)
+        .single();
 
-    if (!profile || !['super_admin', 'admin'].includes(profile.admin_role)) {
-      throw new Error('Admin access required');
+      if (!profile || !['super_admin', 'admin'].includes(profile.admin_role)) {
+        throw new Error('Admin access required');
+      }
     }
 
     // Use service role for full data access
@@ -119,6 +293,7 @@ Deno.serve(async (req) => {
     // Start the (cached) RevenueCat lookup now so it overlaps the DB work
     // below instead of running after it.
     const rcMetricsPromise = getRcMetrics(supabaseAdmin);
+    const rcChurnPromise = getRcChurn(supabaseAdmin);
 
     // Fetch all subscribed/trial/free users with full detail
     const { data: subscribers, error: subErr } = await supabaseAdmin
@@ -293,6 +468,27 @@ Deno.serve(async (req) => {
 
     // RevenueCat MRR/revenue — cached, kicked off before the DB work
     const rcMetrics = await rcMetricsPromise;
+    const rcChurn = await rcChurnPromise;
+
+    // Today's row of the overview's history line — the store half. The
+    // Stripe function writes the other half of the same row.
+    const ukDay = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/London' }).format(new Date());
+    EdgeRuntime.waitUntil(
+      Promise.resolve(
+        supabaseAdmin.from('admin_metric_daily').upsert(
+          {
+            day: ukDay,
+            rc_mrr: Math.round(rcMetrics.mrr * 100) / 100,
+            rc_paying: rcMetrics.activeSubscriptions,
+            rc_trialing: rcMetrics.activeTrials,
+            updated_at: new Date().toISOString(),
+          },
+          { onConflict: 'day' }
+        )
+      ).then(({ error }) => {
+        if (error) console.warn('[ADMIN-REVENUECAT-STATS] snapshot failed', error.message);
+      })
+    );
 
     return new Response(
       JSON.stringify({
@@ -300,6 +496,7 @@ Deno.serve(async (req) => {
         tiersBySource,
         totalSubscribers: Object.values(bySource).reduce((a, b) => a + b, 0),
         revenuecat: rcMetrics,
+        churn: rcChurn,
         trialUsers,
         paidUsers,
         generatedAt: new Date().toISOString(),

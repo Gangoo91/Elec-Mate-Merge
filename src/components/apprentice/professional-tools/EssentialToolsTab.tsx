@@ -93,10 +93,10 @@ const EssentialToolsTab = () => {
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Essential tools guide
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           Essential tools form the foundation of your professional toolkit. This comprehensive
           guide covers specifications, maintenance, and strategic purchasing advice.
         </p>
@@ -146,10 +146,10 @@ const EssentialToolsTab = () => {
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Apprentice tool progression timeline
           </span>
-          <p className="text-[13px] text-white/55">
+          <p className="text-[13px] text-white">
             Strategic toolkit development aligned with your learning journey
           </p>
         </div>
@@ -162,23 +162,23 @@ const EssentialToolsTab = () => {
               <div className="flex items-start justify-between flex-wrap gap-2">
                 <div className="space-y-1">
                   <h3 className="text-[14px] font-semibold text-white">{milestone.milestone}</h3>
-                  <p className="text-[13px] text-white/55">{milestone.competency}</p>
+                  <p className="text-[13px] text-white">{milestone.competency}</p>
                 </div>
-                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                   {milestone.cost}
                 </span>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Key items
                   </span>
                   <ul className="space-y-1">
                     {milestone.items.map((item, idx) => (
                       <li
                         key={idx}
-                        className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                        className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                       >
                         <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                         <span>{item}</span>
@@ -187,10 +187,10 @@ const EssentialToolsTab = () => {
                   </ul>
                 </div>
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Next focus
                   </span>
-                  <p className="text-[14px] text-white/85 leading-relaxed">{milestone.nextStep}</p>
+                  <p className="text-[14px] text-white leading-relaxed">{milestone.nextStep}</p>
                 </div>
               </div>
             </div>
@@ -200,10 +200,10 @@ const EssentialToolsTab = () => {
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Tool maintenance schedule
           </span>
-          <p className="text-[13px] text-white/55">
+          <p className="text-[13px] text-white">
             Proper maintenance extends tool life and ensures safety compliance
           </p>
         </div>
@@ -215,12 +215,12 @@ const EssentialToolsTab = () => {
             >
               <div className="flex items-center justify-between">
                 <h4 className="text-[14px] font-semibold text-white">{item.item}</h4>
-                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                   {item.frequency}
                 </span>
               </div>
-              <p className="text-[14px] text-white/85 leading-relaxed">{item.task}</p>
-              <p className="text-[12px] text-white/55 font-mono">{item.cost}</p>
+              <p className="text-[14px] text-white leading-relaxed">{item.task}</p>
+              <p className="text-[12px] text-white font-mono">{item.cost}</p>
             </div>
           ))}
         </div>
@@ -228,10 +228,10 @@ const EssentialToolsTab = () => {
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             UK certification requirements
           </span>
-          <p className="text-[13px] text-white/55">
+          <p className="text-[13px] text-white">
             Understanding compliance requirements and the risks of non-compliance
           </p>
         </div>
@@ -242,17 +242,17 @@ const EssentialToolsTab = () => {
               className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
             >
               <div className="flex items-center flex-wrap gap-2">
-                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
+                <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
                   {cert.standard}
                 </span>
                 <span className="text-[14px] font-semibold text-white">{cert.applies}</span>
               </div>
-              <p className="text-[14px] text-white/85 leading-relaxed">{cert.requirement}</p>
+              <p className="text-[14px] text-white leading-relaxed">{cert.requirement}</p>
               <div className="rounded-md border border-red-500/30 bg-red-500/[0.04] p-3 space-y-1">
                 <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
                   Risk of non-compliance
                 </span>
-                <p className="text-[13px] text-white/85 leading-relaxed">{cert.penalty}</p>
+                <p className="text-[13px] text-white leading-relaxed">{cert.penalty}</p>
               </div>
             </div>
           ))}
@@ -260,10 +260,10 @@ const EssentialToolsTab = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Investment strategy
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           Total essential toolkit cost: £1050–2700. Focus on quality over quantity, spread
           purchases strategically, and prioritise safety-critical items first. Your tools are an
           investment in your professional future.

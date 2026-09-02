@@ -38,13 +38,13 @@ const IndustrialPlanningPhases = () => {
   return (
     <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-4">
       <div className="space-y-1">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Planning phases
         </span>
         <h3 className="text-[18px] font-semibold text-white leading-tight">
           Industrial project planning phases
         </h3>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           Structured approach to complex industrial installations.
         </p>
       </div>
@@ -58,7 +58,7 @@ const IndustrialPlanningPhases = () => {
               <h4 className="text-[14px] font-medium text-white">
                 Phase {index + 1}: {phase.phase}
               </h4>
-              <span className="text-[12px] text-white/70 font-mono flex-shrink-0">
+              <span className="text-[12px] text-white font-mono flex-shrink-0">
                 {phase.duration}
               </span>
             </div>
@@ -66,7 +66,7 @@ const IndustrialPlanningPhases = () => {
               {phase.tasks.map((task, taskIndex) => (
                 <li
                   key={taskIndex}
-                  className="flex items-start gap-2 text-[13px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[13px] text-white leading-relaxed"
                 >
                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{task}</span>

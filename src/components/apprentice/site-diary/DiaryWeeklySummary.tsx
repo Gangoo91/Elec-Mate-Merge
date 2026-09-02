@@ -117,11 +117,11 @@ export function DiaryWeeklySummary({
         className="w-full flex items-center justify-between px-4 py-3 touch-manipulation min-h-[44px]"
       >
         <div className="flex items-center gap-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             This week
           </span>
           {collapsed && (
-            <span className="text-[12px] text-white/85 font-mono">
+            <span className="text-[12px] text-white font-mono">
               {thisWeek.daysLogged} day{thisWeek.daysLogged !== 1 ? 's' : ''} ·{' '}
               {thisWeek.totalTasks} tasks
             </span>
@@ -163,25 +163,25 @@ export function DiaryWeeklySummary({
           <div className="grid grid-cols-4 gap-2 sm:gap-3">
             <div className="text-center py-2 rounded-lg border border-white/[0.10] bg-white/[0.06]">
               <div className="text-[16px] font-mono text-white">{thisWeek.daysLogged}</div>
-              <div className="text-[10px] uppercase tracking-[0.18em] text-white/70 mt-0.5">
+              <div className="text-[10px] uppercase tracking-[0.18em] text-white mt-0.5">
                 Days
               </div>
             </div>
             <div className="text-center py-2 rounded-lg border border-white/[0.10] bg-white/[0.06]">
               <div className="text-[16px] font-mono text-white">{thisWeek.totalTasks}</div>
-              <div className="text-[10px] uppercase tracking-[0.18em] text-white/70 mt-0.5">
+              <div className="text-[10px] uppercase tracking-[0.18em] text-white mt-0.5">
                 Tasks
               </div>
             </div>
             <div className="text-center py-2 rounded-lg border border-white/[0.10] bg-white/[0.06]">
               <div className="text-[16px] font-mono text-white">{thisWeek.skills.length}</div>
-              <div className="text-[10px] uppercase tracking-[0.18em] text-white/70 mt-0.5">
+              <div className="text-[10px] uppercase tracking-[0.18em] text-white mt-0.5">
                 Skills
               </div>
             </div>
             <div className="text-center py-2 rounded-lg border border-white/[0.10] bg-white/[0.06]">
               <div className="text-[16px] font-mono text-white">{thisWeek.sites.length}</div>
-              <div className="text-[10px] uppercase tracking-[0.18em] text-white/70 mt-0.5">
+              <div className="text-[10px] uppercase tracking-[0.18em] text-white mt-0.5">
                 Sites
               </div>
             </div>

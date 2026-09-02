@@ -224,7 +224,9 @@ export function MyTimetableCard() {
 
   if (grouped.length === 0) {
     return (
-      <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
+      <section
+        className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
+      >
         <div className="px-4 sm:px-5 py-4 sm:py-5">
           <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
             This fortnight
@@ -240,8 +242,7 @@ export function MyTimetableCard() {
                 Nothing scheduled in the next 14 days.
               </p>
               <p className="text-[12.5px] leading-snug text-white">
-                Your last session was{' '}
-                <span className="font-medium">{lastTaught.title}</span> on{' '}
+                Your last session was <span className="font-medium">{lastTaught.title}</span> on{' '}
                 {DAY_FMT.format(new Date(lastTaught.scheduled_date))}
                 {(() => {
                   const days = Math.round(
@@ -262,7 +263,9 @@ export function MyTimetableCard() {
   }
 
   return (
-    <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
+    <section
+      className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
+    >
       <div className="px-4 sm:px-5 py-4 sm:py-5">
         <div className="flex items-baseline justify-between gap-3 flex-wrap">
           <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
@@ -297,7 +300,7 @@ export function MyTimetableCard() {
 function AgendaRow({ item }: { item: AgendaItem }) {
   // start_time is a `time` column (HH:MM:SS). Trim to HH:MM for display.
   const time = item.start_time ? item.start_time.slice(0, 5) : null;
-  const tone = item.kind === 'lesson' ? 'text-white' : 'text-white';
+  const tone = 'text-white';
   const kindLabel = item.kind === 'lesson' ? 'Lesson' : 'ILP target';
   return (
     <li className="px-1 py-2.5 flex items-baseline justify-between gap-3">
@@ -322,7 +325,9 @@ function AgendaRow({ item }: { item: AgendaItem }) {
 
 function Skeleton() {
   return (
-    <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
+    <section
+      className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
+    >
       <div className="px-4 sm:px-5 py-4 sm:py-5 space-y-3">
         <div className="h-3 w-28 rounded-full bg-white/[0.05]" />
         {[0, 1, 2].map((i) => (

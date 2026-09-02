@@ -77,7 +77,7 @@ export function ApprenticeTabBar() {
         aria-current={active ? 'page' : undefined}
         className={cn(
           'flex h-14 min-w-0 flex-col items-center justify-center gap-1 touch-manipulation transition-colors',
-          active ? 'text-elec-yellow' : 'text-white/55 hover:text-white/85'
+          active ? 'text-elec-yellow' : 'text-white hover:text-white/85'
         )}
       >
         <Icon className="h-5 w-5" strokeWidth={active ? 2.25 : 2} />

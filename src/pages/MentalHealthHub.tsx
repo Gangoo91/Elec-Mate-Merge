@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { ArrowLeft, Lock, Phone, Send } from 'lucide-react';
+import { useLocation, useSearchParams } from 'react-router-dom';
+import { Lock, Phone, Send } from 'lucide-react';
 
 import { useAuth } from '@/contexts/AuthContext';
 import { MentalHealthProvider } from '@/contexts/MentalHealthContext';
@@ -10,19 +10,20 @@ import { useWellbeingScore } from '@/hooks/useWellbeingScore';
 import { useWellbeingInsights } from '@/hooks/useWellbeingInsights';
 import { cn } from '@/lib/utils';
 
+import { Eyebrow, EmptyState, type Tone } from '@/components/college/primitives';
 import {
-  PageFrame,
-  PageHero,
-  StatStrip,
-  ListCard,
-  ListRow,
-  HubGrid,
-  HubCard,
-  Pill,
-  Eyebrow,
-  EmptyState,
-  type Tone,
-} from '@/components/college/primitives';
+  HubBody,
+  HubKpi,
+  HubKpiRow,
+  HubMasthead,
+  HubPage,
+  HubQuickStart,
+  HubSectionHeading,
+  HubToolGrid,
+  HubWorkList,
+} from '@/components/hub/HubPrimitives';
+import { CARD_BASE, CARD_NEUTRAL, CARD_SURFACE } from '@/components/ui/card-recipe';
+import { buttonSecondaryCn } from '@/components/forms/fieldStyles';
 
 import BreathingExercise from '@/components/mental-health/BreathingExercise';
 import QuickMoodCheck from '@/components/mental-health/QuickMoodCheck';
@@ -205,7 +206,7 @@ function TodayMoodRow({
   onOpen: () => void;
 }) {
   return (
-    <div className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] p-5">
+    <div className={cn('rounded-2xl border border-elec-yellow/35 p-5', CARD_SURFACE)}>
       <div className="flex items-center justify-between gap-3 mb-3">
         <div className="min-w-0 flex-1">
           <Eyebrow>Today</Eyebrow>
@@ -215,7 +216,7 @@ function TodayMoodRow({
         </div>
         <button
           onClick={onOpen}
-          className="text-[12px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation shrink-0"
+          className="h-11 shrink-0 px-2 text-[12.5px] font-semibold text-elec-yellow touch-manipulation"
         >
           Notes →
         </button>
@@ -233,12 +234,16 @@ function TodayMoodRow({
               className={cn(
                 'group flex flex-col items-center gap-1 py-3 rounded-xl border transition-all touch-manipulation active:scale-[0.94]',
                 selected
-                  ? 'bg-elec-yellow/15 border-elec-yellow/40'
-                  : 'bg-[hsl(0_0%_9%)] border-white/[0.08] hover:bg-[hsl(0_0%_11%)]'
+                  ? 'border-elec-yellow bg-elec-yellow'
+                  : 'border-white/[0.12] bg-white/[0.06]'
               )}
             >
               <span className="text-[22px] leading-none">{p.emoji}</span>
-              <span className="text-[10.5px] font-medium text-white">{p.label}</span>
+              <span
+                className={cn('text-[10.5px] font-medium', selected ? 'text-black' : 'text-white')}
+              >
+                {p.label}
+              </span>
             </button>
           );
         })}
@@ -279,14 +284,11 @@ function MoodHeatmap({
     if (m <= 2) return 'bg-orange-500/30 border-orange-500/40';
     if (m <= 3) return 'bg-amber-500/30 border-amber-500/40';
     if (m <= 4) return 'bg-emerald-500/30 border-emerald-500/40';
-    return 'bg-elec-yellow/40 border-elec-yellow/50';
+    return 'bg-elec-yellow border-elec-yellow';
   };
 
   return (
-    <button
-      onClick={onTap}
-      className="w-full rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] p-4 sm:p-5 text-left touch-manipulation hover:bg-[hsl(0_0%_14%)] transition-colors"
-    >
+    <button onClick={onTap} className={cn(CARD_BASE, CARD_NEUTRAL, 'w-full p-4 sm:p-5')}>
       <div className="flex items-center justify-between mb-3">
         <Eyebrow>Last 7 days</Eyebrow>
         <span className="text-[11px] text-white">Tap for insights →</span>
@@ -492,6 +494,26 @@ const rankTradeSupport = (role: string | null | undefined): TradeSupport[] => {
     );
 };
 
+/* ── Section titles for the masthead ──────────────────────────────── */
+
+const SECTION_TITLES: Record<string, string> = {
+  breathing: 'Breathe',
+  mood: 'Check in',
+  gratitude: 'Journal',
+  talk: 'Talk',
+  journal: 'Wellbeing journal',
+  grounding: 'Grounding',
+  coping: 'Coping toolkit',
+  sleep: 'Sleep tracker',
+  insights: 'Mood insights',
+  'safety-plan': 'My safety plan',
+  tools: 'Interactive tools',
+  resources: 'Resources',
+  support: 'Support network',
+  crisis: 'Crisis resources',
+  podcasts: 'Podcasts',
+};
+
 /* ── Quick reset row ───────────────────────────────────────────────── */
 
 interface QuickAction {
@@ -512,7 +534,10 @@ const quickActions: QuickAction[] = [
 
 export default function MentalHealthHub() {
   const { profile } = useAuth();
-  const navigate = useNavigate();
+  const location = useLocation();
+  // Shared between the apprentice and electrician hubs — Back goes to
+  // whichever one you came in from.
+  const backTo = location.pathname.startsWith('/apprentice') ? '/apprentice' : '/dashboard';
   const [searchParams, setSearchParams] = useSearchParams();
   const activeSection = searchParams.get('section') || null;
 
@@ -584,15 +609,6 @@ export default function MentalHealthHub() {
   /* ── Active section renderer ───────────────────────────────────── */
 
   if (activeSection) {
-    const BackBtn = () => (
-      <button
-        onClick={() => setActiveSection(null)}
-        className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-4"
-      >
-        <ArrowLeft className="h-4 w-4" /> Back to hub
-      </button>
-    );
-
     let body: React.ReactNode = null;
     switch (activeSection) {
       case 'breathing':
@@ -616,7 +632,6 @@ export default function MentalHealthHub() {
       case 'journal':
         body = (
           <>
-            <BackBtn />
             <WellbeingJournal />
           </>
         );
@@ -624,7 +639,6 @@ export default function MentalHealthHub() {
       case 'grounding':
         body = (
           <>
-            <BackBtn />
             <GroundingExercises />
           </>
         );
@@ -632,7 +646,6 @@ export default function MentalHealthHub() {
       case 'coping':
         body = (
           <>
-            <BackBtn />
             <QuickCopingToolkit />
           </>
         );
@@ -640,7 +653,6 @@ export default function MentalHealthHub() {
       case 'sleep':
         body = (
           <>
-            <BackBtn />
             <SleepTracker />
           </>
         );
@@ -648,7 +660,6 @@ export default function MentalHealthHub() {
       case 'insights':
         body = (
           <>
-            <BackBtn />
             <MoodInsights />
           </>
         );
@@ -656,7 +667,6 @@ export default function MentalHealthHub() {
       case 'safety-plan':
         body = (
           <>
-            <BackBtn />
             <PersonalSafetyPlan />
           </>
         );
@@ -664,7 +674,6 @@ export default function MentalHealthHub() {
       case 'tools':
         body = (
           <>
-            <BackBtn />
             <InteractiveToolsTab />
           </>
         );
@@ -672,7 +681,6 @@ export default function MentalHealthHub() {
       case 'resources':
         body = (
           <>
-            <BackBtn />
             <ResourcesLibraryTab />
           </>
         );
@@ -680,7 +688,6 @@ export default function MentalHealthHub() {
       case 'support':
         body = (
           <>
-            <BackBtn />
             <SupportNetworkTab />
           </>
         );
@@ -688,7 +695,6 @@ export default function MentalHealthHub() {
       case 'crisis':
         body = (
           <>
-            <BackBtn />
             <CrisisResourcesTab />
           </>
         );
@@ -696,7 +702,6 @@ export default function MentalHealthHub() {
       case 'podcasts':
         body = (
           <>
-            <BackBtn />
             <PodcastsTab />
           </>
         );
@@ -713,9 +718,14 @@ export default function MentalHealthHub() {
 
     return (
       <MentalHealthProvider>
-        <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white px-4 sm:px-6 lg:px-8 py-4 pb-24">
-          {body}
-        </div>
+        <HubPage>
+          <HubMasthead
+            section="Wellbeing"
+            title={SECTION_TITLES[activeSection] ?? 'Mental health'}
+            onBack={() => setActiveSection(null)}
+          />
+          <HubBody>{body}</HubBody>
+        </HubPage>
       </MentalHealthProvider>
     );
   }
@@ -726,290 +736,194 @@ export default function MentalHealthHub() {
 
   return (
     <MentalHealthProvider>
-      <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-        <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
-          <PageFrame>
-            {/* Back to dashboard — small ghost affordance, sits above the
-                hero so it doesn't compete with the page title */}
-            <button
-              type="button"
-              onClick={() => navigate('/dashboard')}
-              className="group inline-flex items-center gap-2 h-9 -ml-1 px-2 rounded-lg text-[12.5px] font-medium text-white/60 hover:text-white hover:bg-white/[0.04] transition-colors touch-manipulation"
-              aria-label="Back to dashboard"
+      <HubPage>
+        <HubMasthead section="Wellbeing" title="Mental health" backTo={backTo} />
+        <HubBody>
+          {/* Crisis — always visible, always first */}
+          <CrisisCard onCallLogged={onCallLogged} />
+
+          {/* Score + streak — the one row of figures */}
+          {!scoreLoading && !isFirstRun && (
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <WellbeingRing score={score} band={band} />
+              {streak >= 2 && (
+                <span className="inline-flex h-11 items-center rounded-full border border-elec-yellow/50 px-3.5 text-[12.5px] font-semibold tabular-nums text-elec-yellow">
+                  {streak}-day streak
+                </span>
+              )}
+            </div>
+          )}
+
+          {/* First-run — overrides the today/heatmap rows when no data */}
+          {isFirstRun ? (
+            <div
+              className={cn(
+                'rounded-2xl border border-elec-yellow/35 p-6 text-center sm:p-8',
+                CARD_SURFACE
+              )}
             >
-              <ArrowLeft className="h-4 w-4 group-hover:-translate-x-0.5 transition-transform" />
-              <span>Dashboard</span>
-            </button>
-
-            <PageHero
-              eyebrow="Wellbeing"
-              title="Mental health"
-              description="A private space — for resets, real talk, and patterns over time."
-              tone="yellow"
-              actions={
-                <>
-                  {!scoreLoading && <WellbeingRing score={score} band={band} />}
-                  {streak >= 2 && (
-                    <span className="inline-flex items-center h-9 px-3 rounded-full bg-elec-yellow/10 border border-elec-yellow/25 text-elec-yellow text-[12px] font-semibold tabular-nums">
-                      {streak}-day streak
-                    </span>
-                  )}
-                </>
-              }
-            />
-
-            {/* Crisis — always visible */}
-            <CrisisCard onCallLogged={onCallLogged} />
-
-            {/* First-run hero — overrides the today/heatmap rows when no data */}
-            {isFirstRun ? (
-              <div className="rounded-2xl bg-gradient-to-br from-elec-yellow/[0.08] via-purple-500/[0.04] to-transparent border border-elec-yellow/20 p-6 sm:p-8 text-center">
-                <Eyebrow>Start here</Eyebrow>
-                <div className="mt-2 text-[22px] sm:text-[26px] font-semibold text-white tracking-tight">
-                  Take 30 seconds — log how you feel today
-                </div>
-                <p className="mt-2 text-[13px] sm:text-sm text-white max-w-md mx-auto leading-relaxed">
-                  One tap is all it takes. The more you log, the better we can spot what helps and
-                  what drags you down.
-                </p>
-                <div className="mt-6 grid grid-cols-5 gap-2 max-w-sm mx-auto">
-                  {moodPills.map((p) => (
-                    <button
-                      key={p.value}
-                      onClick={() => {
-                        buzz(20);
-                        onLogMood(p.value);
-                      }}
-                      className="flex flex-col items-center gap-1 py-3 rounded-xl border bg-[hsl(0_0%_9%)] border-white/[0.08] hover:bg-[hsl(0_0%_11%)] active:scale-[0.94] transition-all touch-manipulation"
-                    >
-                      <span className="text-[26px] leading-none">{p.emoji}</span>
-                      <span className="text-[10.5px] font-medium text-white">{p.label}</span>
-                    </button>
-                  ))}
-                </div>
+              <Eyebrow>Start here</Eyebrow>
+              <div className="mt-2 text-[22px] font-semibold tracking-tight text-white sm:text-[26px]">
+                Take 30 seconds — log how you feel today
               </div>
-            ) : (
-              <>
-                {/* Today mood pill row */}
-                <div className="relative">
-                  <TodayMoodRow
-                    todaysMood={todaysMood}
-                    onLog={onLogMood}
-                    onOpen={() => setActiveSection('mood')}
-                  />
-                  {flashSuccess && (
-                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                      <div className="h-14 w-14 rounded-full bg-emerald-500/20 border-2 border-emerald-400 flex items-center justify-center animate-in zoom-in duration-200">
-                        <span className="text-[28px] leading-none font-semibold text-emerald-400">
-                          ✓
-                        </span>
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                {/* 7-day mood heatmap */}
-                <MoodHeatmap moodHistory={moodHistory} onTap={() => setActiveSection('insights')} />
-              </>
-            )}
-
-            {/* Smart insights — only when something to say */}
-            {insights.length > 0 && (
-              <ListCard>
-                <div className="relative px-5 sm:px-6 py-3.5 sm:py-4 border-b border-white/[0.06]">
-                  <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-purple-500/70 via-violet-400/70 to-indigo-400/70 opacity-70" />
-                  <div className="text-[13px] font-semibold text-white">Patterns we've noticed</div>
-                </div>
-                <div>
-                  {insights.map((i) => (
-                    <ListRow
-                      key={i.id}
-                      lead={
-                        <span
-                          className={cn(
-                            'h-2 w-2 rounded-full block shrink-0',
-                            i.tone === 'red' && 'bg-red-400',
-                            i.tone === 'orange' && 'bg-orange-400',
-                            i.tone === 'amber' && 'bg-amber-400',
-                            i.tone === 'blue' && 'bg-blue-400',
-                            i.tone === 'emerald' && 'bg-emerald-400',
-                            i.tone === 'purple' && 'bg-purple-400'
-                          )}
-                        />
-                      }
-                      title={i.title}
-                      subtitle={i.body}
-                      trailing={
-                        i.cta ? (
-                          <span className="text-[12px] font-medium text-elec-yellow">
-                            {i.cta.label} →
-                          </span>
-                        ) : undefined
-                      }
-                      onClick={i.cta ? () => setActiveSection(i.cta!.sectionId) : undefined}
-                    />
-                  ))}
-                </div>
-              </ListCard>
-            )}
-
-            {/* Quick reset row */}
-            <div>
-              <div className="mb-3 flex items-center justify-between">
-                <Eyebrow>Quick reset</Eyebrow>
-                <span className="text-[10.5px] text-white">No data needed — just tap one</span>
-              </div>
-              <div className="grid grid-cols-2 gap-[1.5px] bg-black border border-white/[0.06] rounded-2xl overflow-hidden">
-                {quickActions.map((q) => (
+              <p className="mx-auto mt-2 max-w-md text-[13px] leading-relaxed text-white sm:text-sm">
+                One tap is all it takes. The more you log, the better we can spot what helps and
+                what drags you down.
+              </p>
+              <div className="mx-auto mt-6 grid max-w-sm grid-cols-5 gap-2">
+                {moodPills.map((p) => (
                   <button
-                    key={q.id}
-                    onClick={() => setActiveSection(q.id)}
-                    className="bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] active:bg-[hsl(0_0%_17%)] transition-colors p-5 sm:p-6 text-left touch-manipulation"
+                    key={p.value}
+                    onClick={() => {
+                      buzz(20);
+                      onLogMood(p.value);
+                    }}
+                    className="flex flex-col items-center gap-1 rounded-xl border border-white/[0.12] bg-white/[0.06] py-3 transition-all active:scale-[0.94] touch-manipulation"
                   >
-                    <div className="text-[15px] font-semibold text-white">{q.label}</div>
-                    <div className="mt-0.5 text-[11.5px] text-white flex items-center gap-1.5">
-                      {q.id === 'talk' && matesOnline > 0 && (
-                        <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                      )}
-                      {q.id === 'talk' && matesOnline > 0
-                        ? `${matesOnline} mate${matesOnline === 1 ? '' : 's'} online`
-                        : q.sub}
-                    </div>
-                    <div
-                      className={cn(
-                        'mt-3 text-[12px] font-medium',
-                        q.tone === 'blue' && 'text-blue-400',
-                        q.tone === 'emerald' && 'text-emerald-400',
-                        q.tone === 'amber' && 'text-amber-400',
-                        q.tone === 'purple' && 'text-purple-400'
-                      )}
-                    >
-                      Open →
-                    </div>
+                    <span className="text-[26px] leading-none">{p.emoji}</span>
+                    <span className="text-[10.5px] font-medium text-white">{p.label}</span>
                   </button>
                 ))}
               </div>
             </div>
-
-            {/* Daily affirmation */}
-            <DailyAffirmation />
-
-            {/* Stat strip — wellbeing pillars */}
-            {!scoreLoading &&
-              (pillars.mood.n > 0 || pillars.sleep.n > 0 || pillars.journal.n > 0) && (
-                <StatStrip
-                  columns={4}
-                  stats={[
-                    {
-                      label: 'Mood 7d',
-                      value: pillars.mood.n > 0 ? pillars.mood.avg.toFixed(1) : '—',
-                      sub: pillars.mood.n > 0 ? `${pillars.mood.n} check-ins` : 'Log to track',
-                    },
-                    {
-                      label: 'Sleep 7d',
-                      value: pillars.sleep.n > 0 ? `${pillars.sleep.avgHours.toFixed(1)}h` : '—',
-                      sub: pillars.sleep.n > 0 ? `${pillars.sleep.n} nights` : 'Open tracker',
-                    },
-                    {
-                      label: 'Journal 7d',
-                      value: pillars.journal.n,
-                      sub: pillars.journal.n > 0 ? 'entries' : 'Try one prompt',
-                    },
-                    {
-                      label: 'Consistency',
-                      value: `${pillars.consistency.score}%`,
-                      sub: `${pillars.consistency.days}/7 days`,
-                    },
-                  ]}
+          ) : (
+            <>
+              <div className="relative">
+                <TodayMoodRow
+                  todaysMood={todaysMood}
+                  onLog={onLogMood}
+                  onOpen={() => setActiveSection('mood')}
                 />
-              )}
-
-            {/* Toolkit */}
-            <div className="space-y-4">
-              <div className="flex items-end justify-between gap-3">
-                <div>
-                  <Eyebrow>Your toolkit</Eyebrow>
-                  <h2 className="mt-1.5 text-xl sm:text-2xl font-semibold text-white tracking-tight">
-                    Go deeper
-                  </h2>
-                </div>
-              </div>
-              <HubGrid columns={2}>
-                {toolkit.map((c) => (
-                  <HubCard
-                    key={c.id}
-                    number={c.number}
-                    eyebrow={c.title.toUpperCase()}
-                    title={c.title}
-                    description={c.description}
-                    meta={c.meta}
-                    tone={c.tone}
-                    cta="Open"
-                    onClick={() => setActiveSection(c.id)}
-                  />
-                ))}
-              </HubGrid>
-            </div>
-
-            {/* Trade support — ranked by role so the most-relevant org leads */}
-            <ListCard>
-              <div className="relative px-5 sm:px-6 py-3.5 sm:py-4 border-b border-white/[0.06]">
-                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-amber-500/70 via-amber-400/70 to-yellow-400/70 opacity-70" />
-                <div className="flex items-center justify-between gap-2">
-                  <div className="text-[13px] font-semibold text-white">
-                    Support built for the trade
+                {flashSuccess && (
+                  <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-elec-yellow bg-elec-yellow animate-in zoom-in duration-200">
+                      <span className="text-[28px] font-semibold leading-none text-black">✓</span>
+                    </div>
                   </div>
-                  <span className="text-[10.5px] font-medium uppercase tracking-[0.16em] text-amber-300">
-                    For you
-                  </span>
-                </div>
-                <p className="mt-1.5 text-[12px] text-white/70 leading-relaxed max-w-2xl">
-                  Suicide is the biggest killer of men under 50 in the UK, and in construction and
-                  the trades the risk runs almost four times the national average. That's why this
-                  page exists. Talking is the strong move.
-                </p>
+                )}
               </div>
-              <div>
-                {tradeSupport.map((t) => (
-                  <ListRow
-                    key={t.id}
-                    title={t.title}
-                    subtitle={t.subtitle}
-                    trailing={
-                      t.isPhone ? (
-                        <a
-                          href={t.href}
-                          className="inline-flex items-center gap-1.5 h-9 px-3 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/25 text-[12px] font-semibold touch-manipulation"
-                        >
-                          <Phone className="h-3 w-3" /> {t.ctaLabel}
-                        </a>
-                      ) : (
-                        <a
-                          href={t.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 h-9 px-3 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/25 text-[12px] font-semibold touch-manipulation"
-                        >
-                          {t.ctaLabel} →
-                        </a>
-                      )
-                    }
-                  />
-                ))}
-              </div>
-            </ListCard>
+              <MoodHeatmap moodHistory={moodHistory} onTap={() => setActiveSection('insights')} />
+            </>
+          )}
 
-            {/* Privacy footer */}
-            <div className="flex flex-wrap items-center justify-center gap-2 pt-2 text-center">
-              <Lock className="h-3.5 w-3.5 text-emerald-400" />
-              <span className="text-[12px] text-white">
-                Your mood, journal and sleep entries are private to you. Never shared with your
-                employer, never sold, never used for ads.
-              </span>
-              <Pill tone="emerald">Private to you</Pill>
-            </div>
-          </PageFrame>
-        </div>
+          {/* Quick reset — four actions, the check-in is the one solid card */}
+          <HubQuickStart
+            label="Quick reset"
+            items={quickActions.map((q) => ({
+              title: q.label,
+              description:
+                q.id === 'talk' && matesOnline > 0
+                  ? `${matesOnline} mate${matesOnline === 1 ? '' : 's'} online now`
+                  : q.sub,
+              onClick: () => setActiveSection(q.id),
+              primary: q.id === 'mood',
+            }))}
+          />
+
+          {/* Smart insights — only when there is something to say */}
+          {insights.length > 0 && (
+            <HubWorkList
+              label="Patterns we've noticed"
+              unit="pattern"
+              items={insights.map((i) => ({
+                id: i.id,
+                title: i.title,
+                reason: i.body,
+                trailing: i.cta?.label,
+                urgent: i.tone === 'red' || i.tone === 'orange',
+                onClick: i.cta ? () => setActiveSection(i.cta!.sectionId) : undefined,
+              }))}
+            />
+          )}
+
+          <DailyAffirmation />
+
+          {/* Wellbeing pillars */}
+          {!scoreLoading &&
+            (pillars.mood.n > 0 || pillars.sleep.n > 0 || pillars.journal.n > 0) && (
+              <HubKpiRow>
+                <HubKpi
+                  label="Mood · 7 days"
+                  value={pillars.mood.n > 0 ? pillars.mood.avg.toFixed(1) : '—'}
+                  context={pillars.mood.n > 0 ? `${pillars.mood.n} check-ins` : 'Log to track'}
+                  accent
+                />
+                <HubKpi
+                  label="Sleep · 7 days"
+                  value={pillars.sleep.n > 0 ? `${pillars.sleep.avgHours.toFixed(1)}h` : '—'}
+                  context={pillars.sleep.n > 0 ? `${pillars.sleep.n} nights` : 'Open the tracker'}
+                />
+                <HubKpi
+                  label="Journal · 7 days"
+                  value={`${pillars.journal.n}`}
+                  context={pillars.journal.n > 0 ? 'entries' : 'Try one prompt'}
+                />
+                <HubKpi
+                  label="Consistency"
+                  value={`${pillars.consistency.score}%`}
+                  context={`${pillars.consistency.days} of 7 days`}
+                />
+              </HubKpiRow>
+            )}
+
+          {/* Toolkit */}
+          <HubToolGrid
+            label="Your toolkit"
+            columns="four"
+            cards={toolkit.map((c) => ({
+              id: c.id,
+              title: c.title,
+              description: c.description,
+              meta: c.meta,
+              onClick: () => setActiveSection(c.id),
+            }))}
+          />
+
+          {/* Trade support — ranked by role so the most-relevant org leads */}
+          <section className="space-y-3">
+            <HubSectionHeading>Support built for the trade</HubSectionHeading>
+            <p className="max-w-2xl text-[13px] leading-relaxed text-white">
+              Suicide is the biggest killer of men under 50 in the UK, and in construction and the
+              trades the risk runs almost four times the national average. That is why this page
+              exists. Talking is the strong move.
+            </p>
+            <ul
+              className={cn(
+                '-mx-4 divide-y divide-white/[0.10] overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
+                CARD_SURFACE
+              )}
+            >
+              {tradeSupport.map((t) => (
+                <li key={t.id} className="flex items-center gap-3 px-4 py-3.5 sm:px-5">
+                  <div className="min-w-0 flex-1">
+                    <div className="text-[14px] font-medium text-white">{t.title}</div>
+                    <div className="mt-0.5 text-[12px] leading-snug text-white">{t.subtitle}</div>
+                  </div>
+                  <a
+                    href={t.href}
+                    {...(t.isPhone ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
+                    className={cn(
+                      buttonSecondaryCn,
+                      'inline-flex h-11 shrink-0 items-center gap-1.5 px-3.5 text-[12.5px] font-semibold text-elec-yellow'
+                    )}
+                  >
+                    {t.isPhone && <Phone className="h-3.5 w-3.5" />}
+                    {t.ctaLabel}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          {/* Privacy footer */}
+          <div className="flex flex-wrap items-center justify-center gap-2 pt-2 text-center">
+            <Lock className="h-3.5 w-3.5 text-elec-yellow" />
+            <span className="text-[12px] text-white">
+              Your mood, journal and sleep entries are private to you. Never shared with your
+              employer, never sold, never used for ads.
+            </span>
+          </div>
+        </HubBody>
 
         {/* Sticky bottom crisis bar — appears once user scrolls past the
             top crisis card so help is always one tap away. Mobile-only. */}
@@ -1025,7 +939,7 @@ export default function MentalHealthHub() {
                   buzz(40);
                   onCallLogged('Samaritans 116 123');
                 }}
-                className="flex-1 inline-flex items-center justify-center gap-1.5 h-10 px-3 rounded-full bg-red-500/20 border border-red-500/35 text-red-300 text-[12.5px] font-semibold touch-manipulation"
+                className="flex-1 inline-flex items-center justify-center gap-1.5 h-12 px-3 rounded-full bg-red-500/20 border border-red-500/35 text-red-300 text-[12.5px] font-semibold touch-manipulation"
               >
                 <Phone className="h-3.5 w-3.5" /> 116 123
               </a>
@@ -1035,14 +949,14 @@ export default function MentalHealthHub() {
                   buzz(40);
                   recordCrisisEvent({ kind: 'text', label: 'SHOUT 85258' }).catch(() => {});
                 }}
-                className="flex-1 inline-flex items-center justify-center gap-1.5 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.12] text-white text-[12.5px] font-medium touch-manipulation"
+                className="flex-1 inline-flex items-center justify-center gap-1.5 h-12 px-3 rounded-full bg-white/[0.06] border border-white/[0.12] text-white text-[12.5px] font-medium touch-manipulation"
               >
                 <Send className="h-3.5 w-3.5" /> SHOUT
               </a>
             </div>
           </div>
         )}
-      </div>
+      </HubPage>
     </MentalHealthProvider>
   );
 }

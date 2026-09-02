@@ -12,7 +12,7 @@ const PPEAndSafetyEquipment = () => {
         PPE & Safety Equipment
       </h3>
 
-      <p className="mb-4 text-elec-light/90">
+      <p className="mb-4 text-white">
         Personal Protective Equipment (PPE) is the last line of defence against electrical hazards.
         The Electricity at Work Regulations 1989 requires employers to provide suitable PPE, and
         workers must use it correctly. All electrical safety equipment should conform to relevant

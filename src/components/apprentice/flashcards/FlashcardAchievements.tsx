@@ -93,7 +93,7 @@ function AchievementCard({ achievement }: { achievement: FlashcardAchievementSta
    * mixed into sludge and made an earned badge look the same as a locked one.
    */
   const cardClass = unlocked
-    ? 'rounded-2xl border border-elec-yellow/60 bg-elec-yellow/[0.12] p-3 space-y-2'
+    ? 'rounded-2xl border border-elec-yellow/60 bg-white/[0.06] p-3 space-y-2'
     : cn('rounded-2xl border border-elec-yellow/35 p-3 space-y-2', CARD_SURFACE);
 
   return (

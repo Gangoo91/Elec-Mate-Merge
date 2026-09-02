@@ -814,7 +814,7 @@ const IndustrialCircuitGuide = () => {
                       <Badge variant="outline" className="border-white/10 text-white">
                         {method.maxPower}
                       </Badge>
-                      <Badge variant="outline" className="border-white/10 text-white/70">
+                      <Badge variant="outline" className="border-white/10 text-white">
                         Start Current: {method.startingCurrent}
                       </Badge>
                     </div>
@@ -822,28 +822,28 @@ const IndustrialCircuitGuide = () => {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                     <div className="bg-white/[0.06] p-3 rounded border border-white/[0.10]">
-                      <h4 className="font-medium text-white/85 mb-2 flex items-center gap-2">
-                        <CheckCircle className="h-4 w-4 text-white/70" />
+                      <h4 className="font-medium text-white mb-2 flex items-center gap-2">
+                        <CheckCircle className="h-4 w-4 text-white" />
                         Advantages
                       </h4>
                       <ul className="space-y-1">
                         {method.advantages.map((adv, i) => (
                           <li key={i} className="text-sm text-white flex items-start gap-2">
-                            <span className="text-white/70 mt-1">+</span>
+                            <span className="text-white mt-1">+</span>
                             {adv}
                           </li>
                         ))}
                       </ul>
                     </div>
                     <div className="bg-white/[0.06] p-3 rounded border border-white/[0.10]">
-                      <h4 className="font-medium text-white/85 mb-2 flex items-center gap-2">
-                        <AlertTriangle className="h-4 w-4 text-white/70" />
+                      <h4 className="font-medium text-white mb-2 flex items-center gap-2">
+                        <AlertTriangle className="h-4 w-4 text-white" />
                         Disadvantages
                       </h4>
                       <ul className="space-y-1">
                         {method.disadvantages.map((dis, i) => (
                           <li key={i} className="text-sm text-white flex items-start gap-2">
-                            <span className="text-white/70 mt-1">-</span>
+                            <span className="text-white mt-1">-</span>
                             {dis}
                           </li>
                         ))}
@@ -892,14 +892,14 @@ const IndustrialCircuitGuide = () => {
                       <td className="py-2 px-2 font-medium">DOL</td>
                       <td className="py-2 px-2">6-8x FLC</td>
                       <td className="py-2 px-2">100%</td>
-                      <td className="py-2 px-2 text-white/70">Lowest</td>
+                      <td className="py-2 px-2 text-white">Lowest</td>
                       <td className="py-2 px-2">Small motors, strong supply</td>
                     </tr>
                     <tr className="border-b border-white/[0.10]">
                       <td className="py-2 px-2 font-medium">Star-Delta</td>
                       <td className="py-2 px-2">2-3x FLC</td>
                       <td className="py-2 px-2">33%</td>
-                      <td className="py-2 px-2 text-white/70">Low-Medium</td>
+                      <td className="py-2 px-2 text-white">Low-Medium</td>
                       <td className="py-2 px-2">Light loads, fans, pumps</td>
                     </tr>
                     <tr className="border-b border-white/[0.10]">
@@ -913,7 +913,7 @@ const IndustrialCircuitGuide = () => {
                       <td className="py-2 px-2 font-medium">VFD</td>
                       <td className="py-2 px-2">1-1.5x FLC</td>
                       <td className="py-2 px-2">Up to 150%</td>
-                      <td className="py-2 px-2 text-white/70">Highest</td>
+                      <td className="py-2 px-2 text-white">Highest</td>
                       <td className="py-2 px-2">Speed control required</td>
                     </tr>
                   </tbody>
@@ -951,21 +951,21 @@ const IndustrialCircuitGuide = () => {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
                     <div>
-                      <span className="text-white/85 font-medium text-sm">Mechanism: </span>
+                      <span className="text-white font-medium text-sm">Mechanism: </span>
                       <span className="text-white text-sm">{protection.mechanism}</span>
                     </div>
                     <div>
-                      <span className="text-white/85 font-medium text-sm">Settings: </span>
+                      <span className="text-white font-medium text-sm">Settings: </span>
                       <span className="text-white text-sm">{protection.settings}</span>
                     </div>
                   </div>
 
                   <div className="bg-white/[0.06] p-3 rounded">
-                    <h4 className="text-white/85 font-medium text-sm mb-2">Features:</h4>
+                    <h4 className="text-white font-medium text-sm mb-2">Features:</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
                       {protection.features.map((feature, i) => (
                         <div key={i} className="flex items-start gap-2 text-sm">
-                          <CheckCircle className="h-3 w-3 text-white/70 mt-1 flex-shrink-0" />
+                          <CheckCircle className="h-3 w-3 text-white mt-1 flex-shrink-0" />
                           <span className="text-white">{feature}</span>
                         </div>
                       ))}
@@ -992,21 +992,21 @@ const IndustrialCircuitGuide = () => {
               </p>
               <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
-                  <Zap className="h-4 w-4 text-white/70 mt-0.5" />
+                  <Zap className="h-4 w-4 text-white mt-0.5" />
                   <span>
                     <strong className="text-white">Discrimination:</strong> Motor overload trips
                     before upstream MCB/fuse
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Zap className="h-4 w-4 text-white/70 mt-0.5" />
+                  <Zap className="h-4 w-4 text-white mt-0.5" />
                   <span>
                     <strong className="text-white">Starting Current:</strong> Protection allows for
                     motor starting current (typically up to 30 seconds)
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Zap className="h-4 w-4 text-white/70 mt-0.5" />
+                  <Zap className="h-4 w-4 text-white mt-0.5" />
                   <span>
                     <strong className="text-white">Fault Current:</strong> Short circuit protection
                     clears faults before motor/cable damage
@@ -1040,22 +1040,22 @@ const IndustrialCircuitGuide = () => {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                     <div>
-                      <h4 className="text-white/85 font-medium text-sm mb-2">Advantages:</h4>
+                      <h4 className="text-white font-medium text-sm mb-2">Advantages:</h4>
                       <ul className="space-y-1">
                         {circuit.advantages.map((adv, i) => (
                           <li key={i} className="text-sm text-white flex items-start gap-2">
-                            <CheckCircle className="h-3 w-3 text-white/70 mt-1" />
+                            <CheckCircle className="h-3 w-3 text-white mt-1" />
                             {adv}
                           </li>
                         ))}
                       </ul>
                     </div>
                     <div>
-                      <h4 className="text-white/85 font-medium text-sm mb-2">Typical Uses:</h4>
+                      <h4 className="text-white font-medium text-sm mb-2">Typical Uses:</h4>
                       <ul className="space-y-1">
                         {circuit.typicalUse.map((use, i) => (
                           <li key={i} className="text-sm text-white flex items-start gap-2">
-                            <Zap className="h-3 w-3 text-white/70 mt-1" />
+                            <Zap className="h-3 w-3 text-white mt-1" />
                             {use}
                           </li>
                         ))}
@@ -1098,16 +1098,16 @@ const IndustrialCircuitGuide = () => {
                   <p className="text-white text-sm mb-3">{interlock.description}</p>
 
                   <div className="mb-3">
-                    <span className="text-white/85 font-medium text-sm">Example: </span>
+                    <span className="text-white font-medium text-sm">Example: </span>
                     <span className="text-white text-sm">{interlock.example}</span>
                   </div>
 
                   <div className="bg-white/[0.06] p-3 rounded">
-                    <h4 className="text-white/85 font-medium text-sm mb-2">Implementation:</h4>
+                    <h4 className="text-white font-medium text-sm mb-2">Implementation:</h4>
                     <ul className="space-y-1">
                       {interlock.implementation.map((impl, i) => (
                         <li key={i} className="text-sm text-white flex items-start gap-2">
-                          <span className="text-white/70">{i + 1}.</span>
+                          <span className="text-white">{i + 1}.</span>
                           {impl}
                         </li>
                       ))}
@@ -1232,7 +1232,7 @@ const IndustrialCircuitGuide = () => {
                   <ul className="space-y-2 ml-13">
                     {step.details.map((detail, i) => (
                       <li key={i} className="text-sm text-white flex items-start gap-2">
-                        <CheckCircle className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
+                        <CheckCircle className="h-4 w-4 text-white mt-0.5 flex-shrink-0" />
                         {detail}
                       </li>
                     ))}
@@ -1249,7 +1249,7 @@ const IndustrialCircuitGuide = () => {
                       key={index}
                       className="bg-white/[0.06] p-3 rounded border border-white/[0.10]"
                     >
-                      <h4 className="text-white/85 font-medium mb-1">{lock.type}</h4>
+                      <h4 className="text-white font-medium mb-1">{lock.type}</h4>
                       <p className="text-white text-sm mb-2">{lock.description}</p>
                       <p className="text-white text-xs italic">{lock.use}</p>
                     </div>
@@ -1316,31 +1316,31 @@ const IndustrialCircuitGuide = () => {
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
-                      <h4 className="text-white/85 font-medium text-sm mb-2">Applications:</h4>
+                      <h4 className="text-white font-medium text-sm mb-2">Applications:</h4>
                       <ul className="space-y-1">
                         {cable.applications.map((app, i) => (
                           <li key={i} className="text-sm text-white flex items-start gap-1">
-                            <span className="text-white/70">-</span> {app}
+                            <span className="text-white">-</span> {app}
                           </li>
                         ))}
                       </ul>
                     </div>
                     <div>
-                      <h4 className="text-white/85 font-medium text-sm mb-2">Advantages:</h4>
+                      <h4 className="text-white font-medium text-sm mb-2">Advantages:</h4>
                       <ul className="space-y-1">
                         {cable.advantages.map((adv, i) => (
                           <li key={i} className="text-sm text-white flex items-start gap-1">
-                            <span className="text-white/70">+</span> {adv}
+                            <span className="text-white">+</span> {adv}
                           </li>
                         ))}
                       </ul>
                     </div>
                     <div>
-                      <h4 className="text-white/85 font-medium text-sm mb-2">Installation:</h4>
+                      <h4 className="text-white font-medium text-sm mb-2">Installation:</h4>
                       <ul className="space-y-1">
                         {cable.installation.map((inst, i) => (
                           <li key={i} className="text-sm text-white flex items-start gap-1">
-                            <span className="text-white/70">!</span> {inst}
+                            <span className="text-white">!</span> {inst}
                           </li>
                         ))}
                       </ul>
@@ -1478,7 +1478,7 @@ const IndustrialCircuitGuide = () => {
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
-                      <h4 className="text-white/85 font-medium text-sm mb-2">Applications:</h4>
+                      <h4 className="text-white font-medium text-sm mb-2">Applications:</h4>
                       <ul className="space-y-1">
                         {busbar.applications.map((app, i) => (
                           <li key={i} className="text-sm text-white">
@@ -1488,7 +1488,7 @@ const IndustrialCircuitGuide = () => {
                       </ul>
                     </div>
                     <div>
-                      <h4 className="text-white/85 font-medium text-sm mb-2">Features:</h4>
+                      <h4 className="text-white font-medium text-sm mb-2">Features:</h4>
                       <ul className="space-y-1">
                         {busbar.features.map((feat, i) => (
                           <li key={i} className="text-sm text-white">
@@ -1498,7 +1498,7 @@ const IndustrialCircuitGuide = () => {
                       </ul>
                     </div>
                     <div>
-                      <h4 className="text-white/85 font-medium text-sm mb-2">Installation:</h4>
+                      <h4 className="text-white font-medium text-sm mb-2">Installation:</h4>
                       <ul className="space-y-1">
                         {busbar.installation.map((inst, i) => (
                           <li key={i} className="text-sm text-white">
@@ -1575,11 +1575,11 @@ const IndustrialCircuitGuide = () => {
                       </p>
                       <div className="grid grid-cols-2 gap-2 text-xs">
                         <div>
-                          <span className="text-white/70">Advantages: </span>
+                          <span className="text-white">Advantages: </span>
                           <span className="text-white">{sol.advantages.join(', ')}</span>
                         </div>
                         <div>
-                          <span className="text-white/70">Disadvantages: </span>
+                          <span className="text-white">Disadvantages: </span>
                           <span className="text-white">{sol.disadvantages.join(', ')}</span>
                         </div>
                       </div>
@@ -1603,15 +1603,15 @@ const IndustrialCircuitGuide = () => {
                 <h3 className="font-bold text-white mb-3">What are Harmonics?</h3>
                 <div className="space-y-2 text-sm text-white">
                   <p>
-                    <strong className="text-white/85">Definition:</strong>{' '}
+                    <strong className="text-white">Definition:</strong>{' '}
                     {harmonicFiltering.basics.definition}
                   </p>
                   <p>
-                    <strong className="text-white/85">Common:</strong>{' '}
+                    <strong className="text-white">Common:</strong>{' '}
                     {harmonicFiltering.basics.commonHarmonics}
                   </p>
                   <p>
-                    <strong className="text-white/85">Sources:</strong>{' '}
+                    <strong className="text-white">Sources:</strong>{' '}
                     {harmonicFiltering.basics.sources}
                   </p>
                 </div>
@@ -1623,7 +1623,7 @@ const IndustrialCircuitGuide = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   {harmonicFiltering.effects.map((effect, i) => (
                     <div key={i} className="flex items-start gap-2 text-sm text-white">
-                      <AlertTriangle className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
+                      <AlertTriangle className="h-4 w-4 text-white mt-0.5 flex-shrink-0" />
                       {effect}
                     </div>
                   ))}
@@ -1639,12 +1639,12 @@ const IndustrialCircuitGuide = () => {
                       key={index}
                       className="bg-white/[0.06] p-3 rounded border border-white/[0.10]"
                     >
-                      <h4 className="text-white/85 font-medium mb-1">{sol.type}</h4>
+                      <h4 className="text-white font-medium mb-1">{sol.type}</h4>
                       <p className="text-white text-sm mb-2">{sol.description}</p>
                       <p className="text-white text-xs">
                         <strong>Use:</strong> {sol.application}
                       </p>
-                      <p className="text-white/70 text-xs mt-1">
+                      <p className="text-white text-xs mt-1">
                         <strong>Pros:</strong> {sol.pros}
                       </p>
                       <p className="text-red-400 text-xs">

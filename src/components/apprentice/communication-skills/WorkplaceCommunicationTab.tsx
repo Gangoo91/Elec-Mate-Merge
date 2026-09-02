@@ -11,17 +11,17 @@ const Section = ({
 }) => (
   <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
     <div className="space-y-1">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
         {eyebrow}
       </span>
-      {description && <p className="text-[14px] text-white/70 leading-relaxed">{description}</p>}
+      {description && <p className="text-[14px] text-white leading-relaxed">{description}</p>}
     </div>
     {children}
   </div>
 );
 
 const Pill = ({ children }: { children: React.ReactNode }) => (
-  <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+  <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
     {children}
   </span>
 );
@@ -297,7 +297,7 @@ const WorkplaceCommunicationTab = () => {
                     className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-2"
                   >
                     <h4 className="text-[14px] text-white">{scenario.situation}</h4>
-                    <p className="text-[14px] text-white/85 italic leading-relaxed">
+                    <p className="text-[14px] text-white italic leading-relaxed">
                       &ldquo;{scenario.good}&rdquo;
                     </p>
                     <div className="flex flex-wrap gap-1.5">
@@ -321,12 +321,12 @@ const WorkplaceCommunicationTab = () => {
               className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
             >
               <h4 className="text-[14px] text-white">{channel.method}</h4>
-              <p className="text-[13px] text-white/70 leading-relaxed">{channel.when}</p>
+              <p className="text-[13px] text-white leading-relaxed">{channel.when}</p>
               <ul className="space-y-1">
                 {channel.pros.map((pro, proIndex) => (
                   <li
                     key={proIndex}
-                    className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                    className="text-[13px] text-white leading-relaxed flex items-start gap-2"
                   >
                     <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                     <span>{pro}</span>
@@ -357,7 +357,7 @@ const WorkplaceCommunicationTab = () => {
           ].map((item, index) => (
             <li
               key={index}
-              className="flex items-start gap-3 text-[14px] text-white/85 leading-relaxed"
+              className="flex items-start gap-3 text-[14px] text-white leading-relaxed"
             >
               <span className="flex-shrink-0 w-6 h-6 rounded-md border border-white/10 bg-white/[0.03] flex items-center justify-center text-[12px] font-mono">
                 {index + 1}
@@ -404,10 +404,10 @@ const WorkplaceCommunicationTab = () => {
               key={index}
               className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-1"
             >
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 {item.situation}
               </span>
-              <p className="text-[14px] text-white/85 italic leading-relaxed">
+              <p className="text-[14px] text-white italic leading-relaxed">
                 &ldquo;{item.phrase}&rdquo;
               </p>
             </div>

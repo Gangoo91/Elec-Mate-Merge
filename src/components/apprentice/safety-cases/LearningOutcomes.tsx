@@ -15,7 +15,7 @@ const LearningOutcomes = () => {
 
   return (
     <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3 animate-fade-in mt-6">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
         Learning outcomes
       </span>
 
@@ -23,7 +23,7 @@ const LearningOutcomes = () => {
         {outcomes.map((outcome, index) => (
           <div
             key={index}
-            className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed"
+            className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
           >
             <CheckCircle className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-1" />
             <span>{outcome}</span>

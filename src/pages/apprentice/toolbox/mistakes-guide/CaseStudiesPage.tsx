@@ -1,8 +1,10 @@
 import { CheckCircle2 } from 'lucide-react';
 import CaseStudiesTab from '@/components/apprentice/learning-mistakes/CaseStudiesTab';
 import { motion } from 'framer-motion';
-import { SectionHeader, itemVariants } from '@/components/college/primitives';
-import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { itemVariants } from '@/components/college/primitives';
+import { HubPage, HubBody, HubMasthead, HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const CaseStudiesPage = () => {
   return (
@@ -15,16 +17,19 @@ const CaseStudiesPage = () => {
       <HubBody>
         <motion.div
           variants={itemVariants}
-          className="space-y-4 sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)] sm:p-5"
+          className={cn(
+            'space-y-4 -mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+            CARD_SURFACE
+          )}
         >
-          <SectionHeader eyebrow="Overview" title="Real-world learning examples" />
+          <HubSectionHeading>Real-world learning examples</HubSectionHeading>
           <p className="text-white text-sm leading-relaxed">
             Learn from real scenarios that apprentice electricians have faced. Each case study walks
             through what happened, what went wrong, how it was resolved, and the lessons learned.
             These stories show that mistakes are part of the journey — not the end of it.
           </p>
 
-          <div className="space-y-2 sm:rounded-md sm:border sm:border-elec-yellow/20 sm:bg-elec-yellow/[0.04] sm:p-4">
+          <div className="space-y-2 sm:rounded-md sm:border sm:border-elec-yellow/20 sm:bg-white/[0.05] sm:p-4">
             <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
               Case Study Topics
             </span>
@@ -38,7 +43,7 @@ const CaseStudiesPage = () => {
               ].map((item) => (
                 <li
                   key={item}
-                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[12.5px] text-white leading-relaxed"
                 >
                   <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                   {item}

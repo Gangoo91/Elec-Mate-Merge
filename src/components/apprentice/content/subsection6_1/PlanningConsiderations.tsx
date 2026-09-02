@@ -9,7 +9,7 @@ const PlanningConsiderations = () => {
           Planning Considerations for Electrical Work
         </h3>
 
-        <div className="flex items-center gap-2 px-3 py-1.5 bg-elec-yellow/10 rounded-full text-sm text-elec-yellow border border-elec-yellow/20">
+        <div className="flex items-center gap-2 px-3 py-1.5 bg-white/[0.06] rounded-full text-sm text-elec-yellow border border-elec-yellow/20">
           <ClipboardList className="h-4 w-4" />
           <span>Preparation Required</span>
         </div>
@@ -34,8 +34,8 @@ const PlanningConsiderations = () => {
             {/* Left Column */}
             <div className="space-y-6">
               <div className="bg-gradient-to-br from-elec-gray to-elec-gray/80 rounded-lg overflow-hidden border border-elec-yellow/10 hover:border-elec-yellow/30 transition-colors">
-                <div className="flex items-center gap-3 p-4 border-b border-elec-yellow/10 bg-elec-yellow/5">
-                  <div className="p-1.5 bg-elec-yellow/10 rounded">
+                <div className="flex items-center gap-3 p-4 border-b border-elec-yellow/10 bg-white/[0.05]">
+                  <div className="p-1.5 bg-white/[0.06] rounded">
                     <LayoutTemplate className="h-5 w-5 text-elec-yellow" />
                   </div>
                   <h4 className="font-medium text-elec-yellow text-lg">
@@ -79,8 +79,8 @@ const PlanningConsiderations = () => {
               </div>
 
               <div className="bg-gradient-to-br from-elec-gray to-elec-gray/80 rounded-lg overflow-hidden border border-elec-yellow/10 hover:border-elec-yellow/30 transition-colors">
-                <div className="flex items-center gap-3 p-4 border-b border-elec-yellow/10 bg-elec-yellow/5">
-                  <div className="p-1.5 bg-elec-yellow/10 rounded">
+                <div className="flex items-center gap-3 p-4 border-b border-elec-yellow/10 bg-white/[0.05]">
+                  <div className="p-1.5 bg-white/[0.06] rounded">
                     <UserCheck className="h-5 w-5 text-elec-yellow" />
                   </div>
                   <h4 className="font-medium text-elec-yellow text-lg">Resource Planning</h4>
@@ -125,8 +125,8 @@ const PlanningConsiderations = () => {
             {/* Right Column */}
             <div className="space-y-6">
               <div className="bg-gradient-to-br from-elec-gray to-elec-gray/80 rounded-lg overflow-hidden border border-elec-yellow/10 hover:border-elec-yellow/30 transition-colors">
-                <div className="flex items-center gap-3 p-4 border-b border-elec-yellow/10 bg-elec-yellow/5">
-                  <div className="p-1.5 bg-elec-yellow/10 rounded">
+                <div className="flex items-center gap-3 p-4 border-b border-elec-yellow/10 bg-white/[0.05]">
+                  <div className="p-1.5 bg-white/[0.06] rounded">
                     <ClipboardList className="h-5 w-5 text-elec-yellow" />
                   </div>
                   <h4 className="font-medium text-elec-yellow text-lg">
@@ -172,8 +172,8 @@ const PlanningConsiderations = () => {
               </div>
 
               <div className="bg-gradient-to-br from-elec-gray to-elec-gray/80 rounded-lg overflow-hidden border border-elec-yellow/10 hover:border-elec-yellow/30 transition-colors">
-                <div className="flex items-center gap-3 p-4 border-b border-elec-yellow/10 bg-elec-yellow/5">
-                  <div className="p-1.5 bg-elec-yellow/10 rounded">
+                <div className="flex items-center gap-3 p-4 border-b border-elec-yellow/10 bg-white/[0.05]">
+                  <div className="p-1.5 bg-white/[0.06] rounded">
                     <UserCheck className="h-5 w-5 text-elec-yellow" />
                   </div>
                   <h4 className="font-medium text-elec-yellow text-lg">

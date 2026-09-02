@@ -97,13 +97,13 @@ const ToolStorage = () => {
   return (
     <div className="px-4 sm:px-6 py-4 sm:py-6 space-y-6">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Storage
         </span>
         <h2 className="text-[22px] sm:text-[26px] font-semibold text-white leading-tight">
           Tool storage solutions
         </h2>
-        <p className="text-[14px] text-white/85 leading-relaxed max-w-2xl">
+        <p className="text-[14px] text-white leading-relaxed max-w-2xl">
           Protect your investment with proper storage. Good organisation improves efficiency and
           maintains professional standards.
         </p>
@@ -125,12 +125,12 @@ const ToolStorage = () => {
                 >
                   <div className="flex items-baseline justify-between gap-3">
                     <h4 className="text-[14px] font-medium text-white">{option.name}</h4>
-                    <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] flex-shrink-0">
+                    <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] flex-shrink-0">
                       {option.price}
                     </span>
                   </div>
 
-                  <p className="text-[13px] text-white/85 leading-relaxed">
+                  <p className="text-[13px] text-white leading-relaxed">
                     <strong>Best for:</strong> {option.bestFor}
                   </p>
 
@@ -138,7 +138,7 @@ const ToolStorage = () => {
                     {option.features.map((feature, featureIndex) => (
                       <span
                         key={featureIndex}
-                        className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
+                        className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
                       >
                         {feature}
                       </span>
@@ -153,10 +153,10 @@ const ToolStorage = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Organisation tips
           </span>
-          <ul className="space-y-1 text-[14px] text-white/85 leading-relaxed">
+          <ul className="space-y-1 text-[14px] text-white leading-relaxed">
             <li className="flex items-start gap-2">
               <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
               <span>Label storage clearly</span>
@@ -177,10 +177,10 @@ const ToolStorage = () => {
         </div>
 
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Security essentials
           </span>
-          <ul className="space-y-1 text-[14px] text-white/85 leading-relaxed">
+          <ul className="space-y-1 text-[14px] text-white leading-relaxed">
             <li className="flex items-start gap-2">
               <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
               <span>Never leave tools visible in vehicles</span>
@@ -201,10 +201,10 @@ const ToolStorage = () => {
         </div>
 
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Efficiency tips
           </span>
-          <ul className="space-y-1 text-[14px] text-white/85 leading-relaxed">
+          <ul className="space-y-1 text-[14px] text-white leading-relaxed">
             <li className="flex items-start gap-2">
               <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
               <span>Foam inserts for organisation</span>

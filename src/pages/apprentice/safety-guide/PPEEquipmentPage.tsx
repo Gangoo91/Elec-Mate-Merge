@@ -1,5 +1,7 @@
 import { CheckCircle2, AlertTriangle, Shield } from 'lucide-react';
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const PPEEquipmentPage = () => {
   return (
@@ -17,7 +19,7 @@ const PPEEquipmentPage = () => {
         </p>
 
         {/* Intro */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 sm:p-5 space-y-4">
             <div className="flex items-center gap-2">
               <Shield className="h-5 w-5 text-elec-yellow" />
@@ -49,7 +51,7 @@ const PPEEquipmentPage = () => {
         </div>
 
         {/* Hierarchy of control */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 sm:p-5 space-y-4">
             <h2 className="text-lg font-semibold text-white">
               Where PPE Sits in the Hierarchy of Control
@@ -92,15 +94,13 @@ const PPEEquipmentPage = () => {
                   key={level.rank}
                   className={`flex items-start gap-3 rounded-md border p-3 ${
                     level.last
-                      ? 'border-elec-yellow/25 bg-elec-yellow/[0.04]'
+                      ? 'border-elec-yellow/25 bg-white/[0.05]'
                       : 'border-white/[0.08] bg-white/[0.02]'
                   }`}
                 >
                   <span
                     className={`flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full text-xs font-bold ${
-                      level.last
-                        ? 'bg-elec-yellow/20 text-elec-yellow'
-                        : 'bg-white/[0.06] text-white/70'
+                      level.last ? 'bg-white/[0.08] text-elec-yellow' : 'bg-white/[0.06] text-white'
                     }`}
                   >
                     {level.rank}
@@ -122,7 +122,7 @@ const PPEEquipmentPage = () => {
         </div>
 
         {/* PPE Items */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 sm:p-5 space-y-4">
             <h2 className="text-lg font-semibold text-white">Essential PPE for Electricians</h2>
 
@@ -263,7 +263,7 @@ const PPEEquipmentPage = () => {
               ].map((ppe) => (
                 <div
                   key={ppe.item}
-                  className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 sm:p-4 space-y-3"
+                  className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3 sm:p-4 space-y-3"
                 >
                   <div className="flex items-start justify-between gap-3">
                     <h3 className="font-semibold text-white">{ppe.item}</h3>
@@ -292,7 +292,7 @@ const PPEEquipmentPage = () => {
                     </div>
                   </div>
 
-                  <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-2">
+                  <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-2">
                     <p className="text-white text-xs">
                       <span className="font-semibold text-elec-yellow">Replace: </span>
                       {ppe.replace}
@@ -346,7 +346,7 @@ const PPEEquipmentPage = () => {
         </div>
 
         {/* Tool Safety */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 sm:p-5 space-y-4">
             <h2 className="text-lg font-semibold text-white">Tool Safety and Inspection</h2>
             <p className="text-white text-sm leading-relaxed">
@@ -380,7 +380,7 @@ const PPEEquipmentPage = () => {
                 insulation. As an electrician, your core hand tools (screwdrivers, pliers, side
                 cutters, strippers) should all be VDE-rated.
               </p>
-              <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
+              <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3">
                 <p className="text-white text-xs">
                   <span className="font-semibold text-elec-yellow">Note: </span>
                   VDE insulation is a backup safety measure — it does not replace safe isolation.
@@ -393,7 +393,7 @@ const PPEEquipmentPage = () => {
         </div>
 
         {/* Your Responsibilities */}
-        <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04]">
+        <div className="rounded-xl border border-elec-yellow/25 bg-white/[0.05]">
           <div className="p-4 sm:p-5 space-y-3">
             <h2 className="text-sm font-semibold text-elec-yellow">Your PPE Responsibilities</h2>
             <div className="space-y-2">
@@ -416,7 +416,7 @@ const PPEEquipmentPage = () => {
         </div>
 
         {/* Footer */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 sm:p-5">
             <p className="text-white text-xs leading-relaxed">
               PPE standards and requirements based on the Personal Protective Equipment at Work

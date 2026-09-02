@@ -47,10 +47,10 @@ const DeliveryMethodsCard = () => {
   return (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
       <div className="space-y-1">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Training delivery methods
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           Understanding different ways off-the-job training can be delivered
         </p>
       </div>
@@ -62,21 +62,21 @@ const DeliveryMethodsCard = () => {
           >
             <div className="flex items-center gap-2 flex-wrap">
               <h4 className="text-[14px] font-semibold text-white">{method.method}</h4>
-              <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+              <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                 {method.timeAllocation}
               </span>
             </div>
-            <p className="text-[14px] text-white/85 leading-relaxed">{method.description}</p>
+            <p className="text-[14px] text-white leading-relaxed">{method.description}</p>
             <div className="space-y-2">
               <div className="space-y-1">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Examples
                 </span>
                 <ul className="space-y-1">
                   {method.examples.map((example, idx) => (
                     <li
                       key={idx}
-                      className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                      className="text-[13px] text-white leading-relaxed flex items-start gap-2"
                     >
                       <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                       <span>{example}</span>
@@ -92,7 +92,7 @@ const DeliveryMethodsCard = () => {
                   {method.pros.map((pro, idx) => (
                     <li
                       key={idx}
-                      className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                      className="text-[13px] text-white leading-relaxed flex items-start gap-2"
                     >
                       <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
                       <span>{pro}</span>

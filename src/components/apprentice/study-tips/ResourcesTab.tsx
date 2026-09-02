@@ -118,10 +118,10 @@ const ResourcesTab = () => {
   return (
     <div className="space-y-6">
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Study resources library
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           A curated collection of essential resources for electrical apprentices and students. These
           materials cover everything from basic principles to advanced installation techniques.
         </p>
@@ -134,10 +134,10 @@ const ResourcesTab = () => {
             className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3"
           >
             <div className="space-y-1">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 {category.title}
               </span>
-              <p className="text-[13px] text-white/70 leading-relaxed">{category.description}</p>
+              <p className="text-[13px] text-white leading-relaxed">{category.description}</p>
             </div>
             <div className="space-y-2">
               {category.resources.map((resource, resourceIndex) => (
@@ -150,10 +150,10 @@ const ResourcesTab = () => {
                       <h4 className="text-[14px] font-semibold text-white leading-tight">
                         {resource.name}
                       </h4>
-                      <p className="text-[12px] text-white/70 leading-relaxed">
+                      <p className="text-[12px] text-white leading-relaxed">
                         {resource.description}
                       </p>
-                      <span className="inline-block text-[11px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                      <span className="inline-block text-[11px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                         {resource.type}
                       </span>
                     </div>
@@ -193,7 +193,7 @@ const ResourcesTab = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Resource usage tips
         </span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -206,7 +206,7 @@ const ResourcesTab = () => {
                 'Use multiple formats (text, video, interactive) for better understanding',
                 'Join online communities for additional support',
               ].map((item) => (
-                <li key={item} className="flex items-start gap-2 text-[13px] text-white/85">
+                <li key={item} className="flex items-start gap-2 text-[13px] text-white">
                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{item}</span>
                 </li>
@@ -222,7 +222,7 @@ const ResourcesTab = () => {
                 'Check for updates to regulations and standards',
                 'Prefer official publications for exam preparation',
               ].map((item) => (
-                <li key={item} className="flex items-start gap-2 text-[13px] text-white/85">
+                <li key={item} className="flex items-start gap-2 text-[13px] text-white">
                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{item}</span>
                 </li>

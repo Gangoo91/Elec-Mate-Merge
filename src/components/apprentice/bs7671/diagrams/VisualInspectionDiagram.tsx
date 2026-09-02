@@ -158,13 +158,13 @@ const VisualInspectionDiagram = ({ stepType, installationType }: VisualInspectio
 
   return (
     <div className="space-y-4">
-      <p className="text-[14px] text-white/85 leading-relaxed">
+      <p className="text-[14px] text-white leading-relaxed">
         Comprehensive EICR visual inspection for {installationType || 'electrical'} installations —
         10 main sections with 80+ inspection items.
       </p>
 
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           EICR outcome classifications
         </span>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
@@ -174,8 +174,8 @@ const VisualInspectionDiagram = ({ stepType, installationType }: VisualInspectio
               className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-3 text-center space-y-1"
             >
               <div className="text-[18px] font-bold text-white">{outcome.code}</div>
-              <div className="text-[12px] font-medium text-white/85">{outcome.label}</div>
-              <div className="text-[11px] text-white/70 leading-snug">{outcome.description}</div>
+              <div className="text-[12px] font-medium text-white">{outcome.label}</div>
+              <div className="text-[11px] text-white leading-snug">{outcome.description}</div>
             </div>
           ))}
         </div>
@@ -189,13 +189,13 @@ const VisualInspectionDiagram = ({ stepType, installationType }: VisualInspectio
           >
             <div className="flex items-start justify-between gap-3">
               <div className="space-y-0.5">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   {area.area}
                 </span>
-                <p className="text-[11px] text-white/70 font-mono">{area.regulation}</p>
+                <p className="text-[11px] text-white font-mono">{area.regulation}</p>
               </div>
               {area.critical && (
-                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07]">
+                <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07]">
                   Critical
                 </span>
               )}
@@ -204,7 +204,7 @@ const VisualInspectionDiagram = ({ stepType, installationType }: VisualInspectio
               {area.items.map((item, itemIndex) => (
                 <li
                   key={itemIndex}
-                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                  className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                 >
                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{item}</span>
@@ -221,7 +221,7 @@ const VisualInspectionDiagram = ({ stepType, installationType }: VisualInspectio
         </span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-1.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Before starting
             </span>
             <ul className="space-y-1.5">
@@ -233,7 +233,7 @@ const VisualInspectionDiagram = ({ stepType, installationType }: VisualInspectio
               ].map((item, i) => (
                 <li
                   key={i}
-                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                  className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                 >
                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{item}</span>
@@ -242,7 +242,7 @@ const VisualInspectionDiagram = ({ stepType, installationType }: VisualInspectio
             </ul>
           </div>
           <div className="space-y-1.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               During inspection
             </span>
             <ul className="space-y-1.5">
@@ -254,7 +254,7 @@ const VisualInspectionDiagram = ({ stepType, installationType }: VisualInspectio
               ].map((item, i) => (
                 <li
                   key={i}
-                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                  className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                 >
                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{item}</span>
@@ -266,12 +266,12 @@ const VisualInspectionDiagram = ({ stepType, installationType }: VisualInspectio
       </div>
 
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Professional documentation standards
         </span>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="space-y-1.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Recording
             </span>
             <ul className="space-y-1.5">
@@ -282,7 +282,7 @@ const VisualInspectionDiagram = ({ stepType, installationType }: VisualInspectio
               ].map((item, i) => (
                 <li
                   key={i}
-                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                  className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                 >
                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{item}</span>
@@ -291,7 +291,7 @@ const VisualInspectionDiagram = ({ stepType, installationType }: VisualInspectio
             </ul>
           </div>
           <div className="space-y-1.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Classification
             </span>
             <ul className="space-y-1.5">
@@ -302,7 +302,7 @@ const VisualInspectionDiagram = ({ stepType, installationType }: VisualInspectio
               ].map((item, i) => (
                 <li
                   key={i}
-                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                  className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                 >
                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{item}</span>
@@ -311,7 +311,7 @@ const VisualInspectionDiagram = ({ stepType, installationType }: VisualInspectio
             </ul>
           </div>
           <div className="space-y-1.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Follow-up
             </span>
             <ul className="space-y-1.5">
@@ -322,7 +322,7 @@ const VisualInspectionDiagram = ({ stepType, installationType }: VisualInspectio
               ].map((item, i) => (
                 <li
                   key={i}
-                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                  className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                 >
                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{item}</span>

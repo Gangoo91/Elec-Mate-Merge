@@ -2296,7 +2296,7 @@ export const siteJargonTerms: JargonTerm[] = [
   {
     term: 'City & Guilds',
     definition:
-      'Major awarding body offering electrical qualifications including 2365 (Design & Verification), 2391 (Inspection & Testing), and 2382 (18th Edition)',
+      'Major awarding body offering electrical qualifications including 2365 (Diploma in Electrical Installations, Levels 2 and 3), 2357/5357 (NVQ), 2391 (Inspection & Testing), 2396 (Design & Verification) and 2382 (18th Edition)',
     category: 'regulations-standards',
     context: 'City & Guilds qualifications are widely recognised across the UK electrical industry',
     commonUsage: 'I have got my City & Guilds 2391 for inspection and testing',

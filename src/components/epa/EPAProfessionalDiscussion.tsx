@@ -10,15 +10,8 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { cn } from '@/lib/utils';
-import {
-  Loader2,
-  ChevronDown,
-  Send,
-  CheckCircle2,
-  RotateCcw,
-  Mic,
-  MicOff,
-} from 'lucide-react';
+import { buttonPrimaryCn, buttonSecondaryCn, textareaCn } from '@/components/forms/fieldStyles';
+import { Loader2, ChevronDown, Send, CheckCircle2, RotateCcw, Mic, MicOff } from 'lucide-react';
 import {
   useEPAProfessionalDiscussion,
   type ResponseScore,
@@ -40,19 +33,8 @@ const GRADE_LABELS: Record<string, string> = {
   fail: 'Fail',
 };
 
-const Eyebrow = ({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) => (
-  <span
-    className={cn(
-      'text-[10px] font-medium uppercase tracking-[0.18em] text-white/70',
-      className
-    )}
-  >
+const Eyebrow = ({ children, className }: { children: React.ReactNode; className?: string }) => (
+  <span className={cn('text-[10px] font-medium uppercase tracking-[0.18em] text-white', className)}>
     {children}
   </span>
 );
@@ -62,8 +44,8 @@ const ComponentBar = ({ label, score }: { label: string; score: number }) => {
   return (
     <div className="space-y-1.5">
       <div className="flex items-baseline justify-between">
-        <span className="text-[12px] text-white/85">{label}</span>
-        <span className="text-[12px] font-mono text-white/85 tabular-nums">{score}</span>
+        <span className="text-[12px] text-white">{label}</span>
+        <span className="text-[12px] font-mono text-white tabular-nums">{score}</span>
       </div>
       <div className="h-1 w-full bg-white/[0.04] rounded-full overflow-hidden">
         <div
@@ -184,7 +166,7 @@ export function EPAProfessionalDiscussion({
           <h2 className="text-[24px] sm:text-[28px] font-semibold text-white tracking-tight leading-tight">
             Practise EPA-style questions on your real work
           </h2>
-          <p className="text-[14px] text-white/70 leading-relaxed max-w-xl">
+          <p className="text-[14px] text-white leading-relaxed max-w-xl">
             AI reads your portfolio evidence and generates 5–8 EPA-style discussion questions
             grounded in your actual jobs. Type or speak each answer; you'll be scored against the
             real grade descriptors.
@@ -204,7 +186,7 @@ export function EPAProfessionalDiscussion({
             ].map((skill) => (
               <span
                 key={skill}
-                className="text-[12px] text-white/85 px-2.5 py-0.5 rounded-md border border-white/[0.08] bg-white/[0.06]"
+                className="text-[12px] text-white px-2.5 py-0.5 rounded-md border border-white/[0.08] bg-white/[0.06]"
               >
                 {skill}
               </span>
@@ -217,10 +199,19 @@ export function EPAProfessionalDiscussion({
           <Eyebrow>How it works</Eyebrow>
           <ol className="space-y-2">
             {[
-              { title: 'Portfolio scan', desc: 'AI reads your portfolio evidence to personalise the session' },
-              { title: 'Question generation', desc: 'Creates 5–8 questions tailored to your actual jobs' },
+              {
+                title: 'Portfolio scan',
+                desc: 'AI reads your portfolio evidence to personalise the session',
+              },
+              {
+                title: 'Question generation',
+                desc: 'Creates 5–8 questions tailored to your actual jobs',
+              },
               { title: 'Your response', desc: 'Type or speak — voice transcription is supported' },
-              { title: 'AI scoring', desc: 'Marked against EPA grade descriptors with subscore breakdown' },
+              {
+                title: 'AI scoring',
+                desc: 'Marked against EPA grade descriptors with subscore breakdown',
+              },
               { title: 'Result', desc: 'Predicted grade, strengths, and targeted improvements' },
             ].map((step, i) => (
               <li
@@ -228,12 +219,12 @@ export function EPAProfessionalDiscussion({
                 className="rounded-xl border border-white/[0.10] bg-white/[0.06] px-4 py-3 sm:px-5 sm:py-4"
               >
                 <div className="flex items-baseline gap-3">
-                  <span className="text-[11px] font-mono text-elec-yellow/85 flex-shrink-0">
+                  <span className="text-[11px] font-mono text-elec-yellow flex-shrink-0">
                     {String(i + 1).padStart(2, '0')}
                   </span>
                   <div className="flex-1 min-w-0 space-y-1">
                     <span className="text-[14px] font-medium text-white block">{step.title}</span>
-                    <span className="text-[13px] text-white/70 leading-relaxed">{step.desc}</span>
+                    <span className="text-[13px] text-white leading-relaxed">{step.desc}</span>
                   </div>
                 </div>
               </li>
@@ -245,13 +236,13 @@ export function EPAProfessionalDiscussion({
         {portfolioEntries.length === 0 ? (
           <div className="rounded-xl border border-elec-yellow/30 bg-white/[0.06] p-4 sm:p-5 space-y-1.5">
             <Eyebrow className="text-elec-yellow">Add portfolio evidence first</Eyebrow>
-            <p className="text-[13px] text-white/85 leading-relaxed">
-              The discussion is grounded in your actual portfolio entries. Add at least one piece
-              of evidence first — questions get richer the more you've logged.
+            <p className="text-[13px] text-white leading-relaxed">
+              The discussion is grounded in your actual portfolio entries. Add at least one piece of
+              evidence first — questions get richer the more you've logged.
             </p>
             <a
               href="/apprentice/hub"
-              className="inline-flex items-center h-11 px-3 mt-1 rounded-md bg-elec-yellow text-black text-[12px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation"
+              className="inline-flex items-center h-11 px-3 mt-1 rounded-xl bg-elec-yellow text-black text-[12px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation"
             >
               Go to portfolio →
             </a>
@@ -261,7 +252,10 @@ export function EPAProfessionalDiscussion({
             <button
               onClick={handleStart}
               disabled={isGenerating}
-              className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:opacity-50 inline-flex items-center justify-center gap-2"
+              className={cn(
+                buttonPrimaryCn,
+                'inline-flex w-full items-center justify-center gap-2'
+              )}
             >
               {isGenerating ? (
                 <>
@@ -272,7 +266,7 @@ export function EPAProfessionalDiscussion({
                 <>Start mock discussion →</>
               )}
             </button>
-            <div className="flex items-baseline gap-2 text-[10px] uppercase tracking-[0.18em] text-white/70">
+            <div className="flex items-baseline gap-2 text-[10px] uppercase tracking-[0.18em] text-white">
               <span>{portfolioEntries.length} portfolio entries</span>
               <span>·</span>
               <span>~15 min session</span>
@@ -290,7 +284,7 @@ export function EPAProfessionalDiscussion({
       grade === 'distinction'
         ? 'text-elec-yellow'
         : grade === 'pass'
-          ? 'text-white/85'
+          ? 'text-white'
           : 'text-red-400';
 
     const strengths = sessionResult.responses
@@ -312,9 +306,9 @@ export function EPAProfessionalDiscussion({
             >
               {sessionResult.overallScore}
             </span>
-            <span className="text-[18px] text-white/70 font-mono">/ 100</span>
+            <span className="text-[18px] text-white font-mono">/ 100</span>
           </div>
-          <p className="text-[14px] text-white/70 leading-relaxed">
+          <p className="text-[14px] text-white leading-relaxed">
             {sessionResult.responses.filter((r) => r.score).length} of{' '}
             {sessionResult.questions.length} questions answered ·{' '}
             {Math.floor(sessionResult.timeSpentSeconds / 60)} min{' '}
@@ -326,11 +320,23 @@ export function EPAProfessionalDiscussion({
         <section className="space-y-3">
           <Eyebrow>Component scores</Eyebrow>
           <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-            <ComponentBar label="Technical knowledge" score={sessionResult.componentScores.technicalKnowledge} />
-            <ComponentBar label="Practical application" score={sessionResult.componentScores.practicalApplication} />
-            <ComponentBar label="Communication" score={sessionResult.componentScores.communication} />
+            <ComponentBar
+              label="Technical knowledge"
+              score={sessionResult.componentScores.technicalKnowledge}
+            />
+            <ComponentBar
+              label="Practical application"
+              score={sessionResult.componentScores.practicalApplication}
+            />
+            <ComponentBar
+              label="Communication"
+              score={sessionResult.componentScores.communication}
+            />
             <ComponentBar label="Reflection" score={sessionResult.componentScores.reflection} />
-            <ComponentBar label="Problem solving" score={sessionResult.componentScores.problemSolving} />
+            <ComponentBar
+              label="Problem solving"
+              score={sessionResult.componentScores.problemSolving}
+            />
           </div>
         </section>
 
@@ -340,7 +346,10 @@ export function EPAProfessionalDiscussion({
             <Eyebrow>Strengths</Eyebrow>
             <ul className="space-y-1.5">
               {strengths.map((s, i) => (
-                <li key={i} className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed">
+                <li
+                  key={i}
+                  className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
+                >
                   <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
                   <span>{s}</span>
                 </li>
@@ -359,7 +368,7 @@ export function EPAProfessionalDiscussion({
                   key={i}
                   className="rounded-xl border border-elec-yellow/20 bg-white/[0.06] px-4 py-3 sm:px-5 sm:py-4"
                 >
-                  <p className="text-[14px] text-white/85 leading-relaxed">{suggestion}</p>
+                  <p className="text-[14px] text-white leading-relaxed">{suggestion}</p>
                 </li>
               ))}
             </ul>
@@ -377,7 +386,7 @@ export function EPAProfessionalDiscussion({
                 score?.grade === 'distinction'
                   ? 'text-elec-yellow border-elec-yellow/30 bg-white/[0.06]'
                   : score?.grade === 'pass'
-                    ? 'text-white/85 border-white/[0.08] bg-white/[0.07]'
+                    ? 'text-white border-white/[0.08] bg-white/[0.07]'
                     : 'text-red-400 border-red-500/30 bg-white/[0.06]';
               return (
                 <li
@@ -385,7 +394,7 @@ export function EPAProfessionalDiscussion({
                   className="rounded-xl border border-white/[0.10] bg-white/[0.06] px-4 py-3 sm:px-5 sm:py-4 space-y-2"
                 >
                   <div className="flex items-baseline gap-3">
-                    <span className="text-[11px] font-mono text-white/70 flex-shrink-0">
+                    <span className="text-[11px] font-mono text-white flex-shrink-0">
                       {String(i + 1).padStart(2, '0')}
                     </span>
                     <p className="text-[14px] text-white leading-snug flex-1">{q.question}</p>
@@ -401,14 +410,14 @@ export function EPAProfessionalDiscussion({
                     )}
                   </div>
                   {q.portfolioContext && (
-                    <p className="text-[12px] text-white/70 italic pl-7">
+                    <p className="text-[12px] text-white italic pl-7">
                       Drawn from: {q.portfolioContext}
                     </p>
                   )}
                   {score && (
-                    <p className="text-[12px] text-white/70 leading-relaxed pl-7">{score.feedback}</p>
+                    <p className="text-[12px] text-white leading-relaxed pl-7">{score.feedback}</p>
                   )}
-                  {!score && <p className="text-[12px] text-white/70 italic pl-7">Not answered</p>}
+                  {!score && <p className="text-[12px] text-white italic pl-7">Not answered</p>}
                 </li>
               );
             })}
@@ -417,7 +426,7 @@ export function EPAProfessionalDiscussion({
 
         <button
           onClick={handleReset}
-          className="w-full h-12 rounded-xl border border-white/[0.08] bg-white/[0.06] text-white text-[14px] font-semibold hover:bg-white/[0.04] transition-colors touch-manipulation inline-flex items-center justify-center gap-2"
+          className={cn(buttonSecondaryCn, 'inline-flex w-full items-center justify-center gap-2')}
         >
           <RotateCcw className="h-4 w-4" />
           Start new discussion
@@ -435,7 +444,7 @@ export function EPAProfessionalDiscussion({
           <Eyebrow>
             Question {currentQuestionIndex + 1} / {totalCount}
           </Eyebrow>
-          <span className="text-[10px] font-mono text-white/70 uppercase tracking-[0.18em]">
+          <span className="text-[10px] font-mono text-white uppercase tracking-[0.18em]">
             {answeredCount} answered
           </span>
         </div>
@@ -455,7 +464,7 @@ export function EPAProfessionalDiscussion({
             {currentQuestion.portfolioContext && (
               <div className="rounded-xl border border-elec-yellow/20 bg-white/[0.06] px-4 py-3 sm:px-5 sm:py-4 space-y-1.5">
                 <Eyebrow className="text-elec-yellow">Drawn from your portfolio</Eyebrow>
-                <p className="text-[13px] text-white/85 leading-relaxed italic">
+                <p className="text-[13px] text-white leading-relaxed italic">
                   {currentQuestion.portfolioContext}
                 </p>
               </div>
@@ -466,17 +475,17 @@ export function EPAProfessionalDiscussion({
               <div className="flex items-baseline gap-2 flex-wrap">
                 <Eyebrow>Assessor question</Eyebrow>
                 {currentQuestion.targetLO && (
-                  <span className="text-[10px] font-mono text-white/70 uppercase tracking-[0.14em]">
+                  <span className="text-[10px] font-mono text-white uppercase tracking-[0.14em]">
                     LO {currentQuestion.targetLO}
                   </span>
                 )}
                 {currentQuestion.targetAC && (
-                  <span className="text-[10px] font-mono text-elec-yellow/85 uppercase tracking-[0.14em]">
+                  <span className="text-[10px] font-mono text-elec-yellow uppercase tracking-[0.14em]">
                     {currentQuestion.targetAC}
                   </span>
                 )}
                 {currentQuestion.questionType && (
-                  <span className="text-[10px] uppercase tracking-[0.14em] text-white/70">
+                  <span className="text-[10px] uppercase tracking-[0.14em] text-white">
                     {currentQuestion.questionType}
                   </span>
                 )}
@@ -495,7 +504,7 @@ export function EPAProfessionalDiscussion({
                 <Eyebrow>Grade descriptors</Eyebrow>
                 <ChevronDown
                   className={cn(
-                    'h-4 w-4 text-white/70 transition-transform',
+                    'h-4 w-4 text-white transition-transform',
                     descriptorsOpen && 'rotate-180'
                   )}
                 />
@@ -504,13 +513,13 @@ export function EPAProfessionalDiscussion({
                 <div className="px-4 pb-4 space-y-2">
                   <div className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-3 space-y-1">
                     <Eyebrow>Pass</Eyebrow>
-                    <p className="text-[13px] text-white/85 leading-relaxed">
+                    <p className="text-[13px] text-white leading-relaxed">
                       {currentQuestion.gradeDescriptors.pass}
                     </p>
                   </div>
                   <div className="rounded-lg border border-elec-yellow/20 bg-white/[0.06] p-3 space-y-1">
                     <Eyebrow className="text-elec-yellow">Distinction</Eyebrow>
-                    <p className="text-[13px] text-white/85 leading-relaxed">
+                    <p className="text-[13px] text-white leading-relaxed">
                       {currentQuestion.gradeDescriptors.distinction}
                     </p>
                   </div>
@@ -523,7 +532,7 @@ export function EPAProfessionalDiscussion({
               <div className="space-y-3">
                 <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-1.5">
                   <Eyebrow>Your response</Eyebrow>
-                  <p className="text-[13px] text-white/85 leading-relaxed whitespace-pre-wrap">
+                  <p className="text-[13px] text-white leading-relaxed whitespace-pre-wrap">
                     {existingResponse.responseText}
                   </p>
                 </div>
@@ -536,14 +545,15 @@ export function EPAProfessionalDiscussion({
                   value={responseText}
                   onChange={(e) => setResponseText(e.target.value)}
                   placeholder="Type or speak your response. Aim for 3–5 paragraphs covering your experience, reasoning, and reflection…"
-                  className="w-full min-h-[200px] p-4 rounded-xl bg-white/[0.06] border border-white/[0.08] text-[14px] text-white placeholder:text-white/70 focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20 touch-manipulation resize-none leading-relaxed"
+                  className={cn(
+                    textareaCn,
+                    'min-h-[200px] w-full resize-none leading-relaxed disabled:text-white/70'
+                  )}
                   disabled={isScoring}
                 />
 
                 {interimTranscript && (
-                  <p className="text-[12px] text-elec-yellow/85 italic px-2">
-                    {interimTranscript}…
-                  </p>
+                  <p className="text-[12px] text-elec-yellow italic px-2">{interimTranscript}…</p>
                 )}
 
                 {speechSupported && (
@@ -556,13 +566,13 @@ export function EPAProfessionalDiscussion({
                         'h-11 w-11 rounded-lg flex items-center justify-center touch-manipulation transition-colors shrink-0 border',
                         isListening
                           ? 'bg-white/[0.06] border-red-500/40 text-red-400 animate-pulse'
-                          : 'bg-white/[0.06] border-white/[0.08] text-white/85 hover:bg-white/[0.04]'
+                          : 'bg-white/[0.06] border-white/[0.08] text-white hover:bg-white/[0.04]'
                       )}
                       aria-label={isListening ? 'Stop recording' : 'Start voice input'}
                     >
                       {isListening ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
                     </button>
-                    <span className="text-[13px] text-white/70">
+                    <span className="text-[13px] text-white">
                       {isListening ? (
                         <span className="flex items-center gap-2">
                           <span className="h-1.5 w-1.5 rounded-full bg-red-300 animate-pulse" />
@@ -572,7 +582,7 @@ export function EPAProfessionalDiscussion({
                         'Tap to speak'
                       )}
                     </span>
-                    <span className="ml-auto text-[10px] font-mono text-white/70 uppercase tracking-[0.14em]">
+                    <span className="ml-auto text-[10px] font-mono text-white uppercase tracking-[0.14em]">
                       {responseText.length} chars
                     </span>
                   </div>
@@ -581,7 +591,10 @@ export function EPAProfessionalDiscussion({
                 <button
                   onClick={handleSubmit}
                   disabled={!responseText.trim() || isScoring}
-                  className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:opacity-50 inline-flex items-center justify-center gap-2"
+                  className={cn(
+                    buttonPrimaryCn,
+                    'inline-flex w-full items-center justify-center gap-2'
+                  )}
                 >
                   {isScoring ? (
                     <>
@@ -616,23 +629,23 @@ export function EPAProfessionalDiscussion({
             setDescriptorsOpen(false);
           }}
           disabled={currentQuestionIndex === 0}
-          className="h-11 px-4 rounded-lg border border-white/[0.08] bg-white/[0.06] text-white text-[13px] font-medium hover:bg-white/[0.04] transition-colors touch-manipulation disabled:opacity-30"
+          className={cn(buttonSecondaryCn, 'h-11 px-4 text-[13px]')}
         >
           ← Previous
         </button>
 
         {currentQuestionIndex < totalCount - 1 ? (
-          <button
-            onClick={handleNext}
-            className="h-11 px-4 rounded-lg border border-white/[0.08] bg-white/[0.06] text-white text-[13px] font-medium hover:bg-white/[0.04] transition-colors touch-manipulation"
-          >
+          <button onClick={handleNext} className={cn(buttonSecondaryCn, 'h-11 px-4 text-[13px]')}>
             Next →
           </button>
         ) : (
           <button
             onClick={handleFinish}
             disabled={answeredCount === 0 || isFinishing}
-            className="h-11 px-5 rounded-lg bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:opacity-50 inline-flex items-center gap-1.5"
+            className={cn(
+              buttonPrimaryCn,
+              'inline-flex h-11 items-center gap-1.5 px-5 text-[13px]'
+            )}
           >
             {isFinishing ? (
               <Loader2 className="h-4 w-4 animate-spin" />
@@ -654,7 +667,7 @@ function ScoreFeedback({ score }: { score: ResponseScore }) {
     score.grade === 'distinction'
       ? 'text-elec-yellow'
       : score.grade === 'pass'
-        ? 'text-white/85'
+        ? 'text-white'
         : 'text-red-400';
 
   return (
@@ -671,9 +684,9 @@ function ScoreFeedback({ score }: { score: ResponseScore }) {
           >
             {score.score}
           </span>
-          <span className="text-[12px] text-white/70 font-mono">/ 100</span>
+          <span className="text-[12px] text-white font-mono">/ 100</span>
         </div>
-        <p className="text-[13px] text-white/85 leading-relaxed">{score.feedback}</p>
+        <p className="text-[13px] text-white leading-relaxed">{score.feedback}</p>
       </div>
 
       {/* Subscores */}
@@ -693,7 +706,7 @@ function ScoreFeedback({ score }: { score: ResponseScore }) {
             {score.strengthsShown.map((s, i) => (
               <li
                 key={i}
-                className="flex items-start gap-2 text-[13px] text-white/85 leading-relaxed"
+                className="flex items-start gap-2 text-[13px] text-white leading-relaxed"
               >
                 <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
                 <span>{s}</span>
@@ -711,7 +724,7 @@ function ScoreFeedback({ score }: { score: ResponseScore }) {
             {score.areasToImprove.map((a, i) => (
               <li
                 key={i}
-                className="flex items-start gap-2 text-[13px] text-white/85 leading-relaxed"
+                className="flex items-start gap-2 text-[13px] text-white leading-relaxed"
               >
                 <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                 <span>{a}</span>

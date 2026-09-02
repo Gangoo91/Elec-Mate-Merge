@@ -22,10 +22,10 @@ const ActiveToolContent = ({ activeTool, onClose }: ActiveToolContentProps) => {
       default:
         return (
           <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-6 text-center space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Tool content
             </span>
-            <p className="text-[14px] text-white/85 leading-relaxed">
+            <p className="text-[14px] text-white leading-relaxed">
               Content for {activeTool} is being developed and will be available soon.
             </p>
           </div>

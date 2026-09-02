@@ -73,7 +73,7 @@ const QuizContent = () => {
     <div className="space-y-6 animate-fade-in">
       <div className="mb-6">
         <Link to={`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}`}>
-          <Button variant="outline" className="border-elec-yellow/30 hover:bg-elec-yellow/10">
+          <Button variant="outline" className="border-elec-yellow/30 hover:bg-white/[0.06]">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Unit
           </Button>

@@ -67,12 +67,12 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
 
       {/* Project Information */}
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Project information
         </span>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
           <div>
-            <Label htmlFor="projectName" className="text-[13px] text-white/85">
+            <Label htmlFor="projectName" className="text-[13px] text-white">
               Project name
             </Label>
             <Input
@@ -84,7 +84,7 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
             />
           </div>
           <div>
-            <Label htmlFor="template" className="text-[13px] text-white/85">
+            <Label htmlFor="template" className="text-[13px] text-white">
               Industry template
             </Label>
             <Select
@@ -114,7 +114,7 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
             <div className="text-[14px] font-medium text-white">
               {industryTemplates.find((t) => t.id === inputs.template)?.name}
             </div>
-            <div className="text-[12px] text-white/55">
+            <div className="text-[12px] text-white">
               {industryTemplates.find((t) => t.id === inputs.template)?.description}
             </div>
           </div>
@@ -123,12 +123,12 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
 
       {/* Load Requirements */}
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Load requirements
         </span>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           <div>
-            <Label htmlFor="current" className="text-[13px] text-white/85">
+            <Label htmlFor="current" className="text-[13px] text-white">
               Design current (A) *
             </Label>
             <Input
@@ -149,7 +149,7 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
           </div>
 
           <div>
-            <Label htmlFor="voltage" className="text-[13px] text-white/85">
+            <Label htmlFor="voltage" className="text-[13px] text-white">
               Voltage (V) *
             </Label>
             <Select
@@ -170,7 +170,7 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
           </div>
 
           <div>
-            <Label htmlFor="phases" className="text-[13px] text-white/85">
+            <Label htmlFor="phases" className="text-[13px] text-white">
               Phases
             </Label>
             <Select
@@ -188,7 +188,7 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
           </div>
 
           <div>
-            <Label htmlFor="powerFactor" className="text-[13px] text-white/85">
+            <Label htmlFor="powerFactor" className="text-[13px] text-white">
               Power factor
             </Label>
             <Input
@@ -204,7 +204,7 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
           </div>
 
           <div>
-            <Label htmlFor="loadType" className="text-[13px] text-white/85">
+            <Label htmlFor="loadType" className="text-[13px] text-white">
               Load type
             </Label>
             <Select
@@ -225,7 +225,7 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
           </div>
 
           <div>
-            <Label htmlFor="futureExpansion" className="text-[13px] text-white/85">
+            <Label htmlFor="futureExpansion" className="text-[13px] text-white">
               Future expansion (%)
             </Label>
             <Input
@@ -243,12 +243,12 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
 
       {/* Circuit Details */}
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Circuit details
         </span>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           <div>
-            <Label htmlFor="length" className="text-[13px] text-white/85">
+            <Label htmlFor="length" className="text-[13px] text-white">
               Cable length (m) *
             </Label>
             <Input
@@ -269,7 +269,7 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
           </div>
 
           <div>
-            <Label htmlFor="circuitType" className="text-[13px] text-white/85">
+            <Label htmlFor="circuitType" className="text-[13px] text-white">
               Circuit type
             </Label>
             <Select
@@ -290,7 +290,7 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
           </div>
 
           <div>
-            <Label htmlFor="voltageDropLimit" className="text-[13px] text-white/85">
+            <Label htmlFor="voltageDropLimit" className="text-[13px] text-white">
               Voltage drop limit (%)
             </Label>
             <Input
@@ -309,12 +309,12 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
 
       {/* Installation Environment */}
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Installation environment
         </span>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           <div>
-            <Label htmlFor="installationMethod" className="text-[13px] text-white/85">
+            <Label htmlFor="installationMethod" className="text-[13px] text-white">
               Installation method
             </Label>
             <Select
@@ -336,7 +336,7 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
           </div>
 
           <div>
-            <Label htmlFor="ambientTemperature" className="text-[13px] text-white/85">
+            <Label htmlFor="ambientTemperature" className="text-[13px] text-white">
               Ambient temperature (°C)
             </Label>
             <Input
@@ -349,7 +349,7 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
           </div>
 
           <div>
-            <Label htmlFor="groupingFactor" className="text-[13px] text-white/85">
+            <Label htmlFor="groupingFactor" className="text-[13px] text-white">
               Grouping factor
             </Label>
             <Input
@@ -372,7 +372,7 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
             onCheckedChange={(checked) => updateInput('thermalInsulation', checked)}
             className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
           />
-          <Label htmlFor="thermalInsulation" className="text-[13px] text-white/85">
+          <Label htmlFor="thermalInsulation" className="text-[13px] text-white">
             Cable in contact with thermal insulation
           </Label>
         </label>
@@ -380,11 +380,11 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
 
       {/* Cable Preferences */}
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Cable preferences
         </span>
         <div>
-          <Label className="text-[13px] text-white/85">Preferred cable types</Label>
+          <Label className="text-[13px] text-white">Preferred cable types</Label>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 mt-2">
             {['twin-and-earth', 'swa', 'lsf', 'micc', 'fplsoh'].map((type) => (
               <label
@@ -406,7 +406,7 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
                   }}
                   className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
                 />
-                <Label htmlFor={type} className="text-[12px] text-white/85 capitalize">
+                <Label htmlFor={type} className="text-[12px] text-white capitalize">
                   {type.replace('-', ' ')}
                 </Label>
               </label>
@@ -417,12 +417,12 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
 
       {/* Protection */}
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Protection
         </span>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           <div>
-            <Label htmlFor="protectionType" className="text-[13px] text-white/85">
+            <Label htmlFor="protectionType" className="text-[13px] text-white">
               Protection type
             </Label>
             <Select
@@ -443,7 +443,7 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
           </div>
 
           <div>
-            <Label htmlFor="protectionRating" className="text-[13px] text-white/85">
+            <Label htmlFor="protectionRating" className="text-[13px] text-white">
               Protection rating (A)
             </Label>
             <Select
@@ -477,7 +477,7 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
           </div>
 
           <div>
-            <Label htmlFor="earthingSystem" className="text-[13px] text-white/85">
+            <Label htmlFor="earthingSystem" className="text-[13px] text-white">
               Earthing system
             </Label>
             <Select
@@ -508,7 +508,7 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
           </span>
           <div className="space-y-1">
             {Object.entries(errors).map(([field, error]) => (
-              <p key={field} className="text-[13px] text-white/85 leading-relaxed">
+              <p key={field} className="text-[13px] text-white leading-relaxed">
                 • {error}
               </p>
             ))}

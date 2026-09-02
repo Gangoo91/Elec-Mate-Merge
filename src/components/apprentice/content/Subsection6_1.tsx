@@ -20,7 +20,7 @@ const Subsection6_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
       {/* Decorative Separator with Icon */}
       <div className="flex items-center gap-4 py-2">
         <Separator className="flex-grow bg-elec-yellow/30" />
-        <div className="bg-elec-yellow/10 p-2 rounded-full">
+        <div className="bg-white/[0.06] p-2 rounded-full">
           <span className="text-elec-yellow text-xl">⚡</span>
         </div>
         <Separator className="flex-grow bg-elec-yellow/30" />

@@ -132,20 +132,20 @@ const SafetyMeetings = () => {
 
       <div className="space-y-6">
         <div className="space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Safety communication
           </span>
           <h1 className="text-[24px] sm:text-[28px] font-bold tracking-tight text-white leading-tight">
             Safety meeting structure guide
           </h1>
-          <p className="text-[14px] text-white/70 leading-relaxed max-w-2xl">
+          <p className="text-[14px] text-white leading-relaxed max-w-2xl">
             Well-structured safety meetings maintain awareness and ensure all workers stay updated
             with critical safety information.
           </p>
         </div>
 
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Types of safety meetings
           </span>
           <div className="space-y-3">
@@ -159,7 +159,7 @@ const SafetyMeetings = () => {
                   {type.items.map((item, i) => (
                     <li
                       key={i}
-                      className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                      className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                     >
                       <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                       <span>{item}</span>
@@ -172,7 +172,7 @@ const SafetyMeetings = () => {
         </div>
 
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Effective meeting structure
           </span>
           <ol className="space-y-3">
@@ -187,7 +187,7 @@ const SafetyMeetings = () => {
                     {step.items.map((item, i) => (
                       <li
                         key={i}
-                        className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                        className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                       >
                         <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                         <span>{item}</span>
@@ -201,14 +201,14 @@ const SafetyMeetings = () => {
         </div>
 
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Meeting documentation
           </span>
-          <p className="text-[14px] text-white/85 leading-relaxed">
+          <p className="text-[14px] text-white leading-relaxed">
             Every safety meeting should be documented to track attendance and content covered:
           </p>
           <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Essential documentation elements
             </span>
             <ul className="space-y-1.5">
@@ -224,7 +224,7 @@ const SafetyMeetings = () => {
               ].map((item, idx) => (
                 <li
                   key={idx}
-                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                  className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                 >
                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{item}</span>
@@ -235,7 +235,7 @@ const SafetyMeetings = () => {
         </div>
 
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Best practices for engaging safety meetings
           </span>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -245,14 +245,14 @@ const SafetyMeetings = () => {
                 className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1.5"
               >
                 <h4 className="text-[14px] font-semibold text-white">{practice.title}</h4>
-                <p className="text-[14px] text-white/85 leading-relaxed">{practice.description}</p>
+                <p className="text-[14px] text-white leading-relaxed">{practice.description}</p>
               </div>
             ))}
           </div>
         </div>
 
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Meeting resources
           </span>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
@@ -266,8 +266,8 @@ const SafetyMeetings = () => {
                 key={idx}
                 className="flex items-center gap-3 p-3 rounded-md border border-white/[0.06] bg-white/[0.02]"
               >
-                <FileText className="h-4 w-4 text-white/55" />
-                <span className="text-[13px] text-white/85">{item}</span>
+                <FileText className="h-4 w-4 text-white" />
+                <span className="text-[13px] text-white">{item}</span>
               </div>
             ))}
           </div>

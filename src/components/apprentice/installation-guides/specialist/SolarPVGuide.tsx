@@ -499,7 +499,7 @@ const SolarPVGuide = () => {
     installerRequirements: [
       {
         requirement: 'Competent Person Scheme Membership',
-        description: 'Full scope electrical registration with NAPIT, NICEIC, ELECSA, etc.',
+        description: 'Full scope electrical registration with NAPIT, NICEIC, etc.',
       },
       {
         requirement: 'MCS Contractor Certification',
@@ -763,38 +763,31 @@ const SolarPVGuide = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{howSolarWorks.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              {howSolarWorks.title}
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4 p-0">
           {howSolarWorks.stages.map((stage, idx) => (
             <div key={idx} className="relative">
-              <div
-                className="p-4 rounded-lg border border-elec-yellow/30 bg-white/[0.06]"
-              >
+              <div className="p-4 rounded-lg border border-elec-yellow/30 bg-white/[0.06]">
                 <div className="flex items-start gap-4">
-                  <div
-                    className="flex-shrink-0 w-12 h-12 rounded-full border border-elec-yellow/40 bg-white/[0.06] flex items-center justify-center"
-                  >
+                  <div className="flex-shrink-0 w-12 h-12 rounded-full border border-elec-yellow/40 bg-white/[0.06] flex items-center justify-center">
                     <stage.icon className="h-6 w-6 text-elec-yellow" />
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-2">
-                      <Badge
-                        variant="outline"
-                        className="border-elec-yellow/50 text-elec-yellow"
-                      >
+                      <Badge variant="outline" className="border-elec-yellow/50 text-elec-yellow">
                         Stage {stage.stage}
                       </Badge>
                       <h4 className="font-medium text-white">{stage.title}</h4>
                     </div>
-                    <p className="text-sm text-white/85 mb-3">{stage.description}</p>
+                    <p className="text-sm text-white mb-3">{stage.description}</p>
                     <ul className="space-y-1">
                       {stage.details.map((detail, detailIdx) => (
                         <li key={detailIdx} className="text-xs text-white flex items-start gap-2">
-                          <ArrowRight
-                            className="h-3 w-3 text-elec-yellow mt-0.5 flex-shrink-0"
-                          />
+                          <ArrowRight className="h-3 w-3 text-elec-yellow mt-0.5 flex-shrink-0" />
                           {detail}
                         </li>
                       ))}
@@ -816,7 +809,9 @@ const SolarPVGuide = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">System Components</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              System Components
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="p-0">
@@ -840,7 +835,7 @@ const SolarPVGuide = () => {
               >
                 <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
                   <h4 className="font-medium text-white mb-2">{component.component}</h4>
-                  <p className="text-sm text-white/85 mb-4">{component.description}</p>
+                  <p className="text-sm text-white mb-4">{component.description}</p>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
@@ -848,7 +843,7 @@ const SolarPVGuide = () => {
                       <ul className="space-y-1">
                         {component.specifications.map((spec, specIdx) => (
                           <li key={specIdx} className="text-xs text-white flex items-start gap-2">
-                            <Gauge className="h-3 w-3 text-white/70 mt-0.5 flex-shrink-0" />
+                            <Gauge className="h-3 w-3 text-white mt-0.5 flex-shrink-0" />
                             {spec}
                           </li>
                         ))}
@@ -859,7 +854,7 @@ const SolarPVGuide = () => {
                       <ul className="space-y-1">
                         {component.installation.map((note, noteIdx) => (
                           <li key={noteIdx} className="text-xs text-white flex items-start gap-2">
-                            <CheckCircle className="h-3 w-3 text-white/70 mt-0.5 flex-shrink-0" />
+                            <CheckCircle className="h-3 w-3 text-white mt-0.5 flex-shrink-0" />
                             {note}
                           </li>
                         ))}
@@ -877,7 +872,9 @@ const SolarPVGuide = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">DC Safety Considerations</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              DC Safety Considerations
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4 p-0">
@@ -900,7 +897,7 @@ const SolarPVGuide = () => {
                 </Badge>
               </div>
               <p
-                className={`text-sm ${item.severity === 'Critical' ? 'text-red-200' : 'text-white/85'} mb-3`}
+                className={`text-sm ${item.severity === 'Critical' ? 'text-red-200' : 'text-white'} mb-3`}
               >
                 {item.description}
               </p>
@@ -918,11 +915,11 @@ const SolarPVGuide = () => {
                   </ul>
                 </div>
                 <div>
-                  <h5 className="font-medium text-white/85 text-sm mb-2">Mitigations</h5>
+                  <h5 className="font-medium text-white text-sm mb-2">Mitigations</h5>
                   <ul className="space-y-1">
                     {item.mitigations.map((mitigation, mitIdx) => (
                       <li key={mitIdx} className="text-xs text-white flex items-start gap-2">
-                        <Shield className="h-3 w-3 text-white/70 mt-0.5 flex-shrink-0" />
+                        <Shield className="h-3 w-3 text-white mt-0.5 flex-shrink-0" />
                         {mitigation}
                       </li>
                     ))}
@@ -938,22 +935,24 @@ const SolarPVGuide = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{stringSizing.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              {stringSizing.title}
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4 p-0">
           <div className="space-y-4">
             {stringSizing.principles.map((principle, idx) => (
               <div key={idx} className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
-                <h4 className="font-medium text-white/85 mb-2">{principle.principle}</h4>
+                <h4 className="font-medium text-white mb-2">{principle.principle}</h4>
                 <p className="text-sm text-white mb-2">{principle.description}</p>
-                <code className="block bg-white/[0.06] p-2 rounded text-xs text-white/85 mb-3">
+                <code className="block bg-white/[0.06] p-2 rounded text-xs text-white mb-3">
                   {principle.calculation}
                 </code>
                 <ul className="space-y-1">
                   {principle.notes.map((note, noteIdx) => (
                     <li key={noteIdx} className="text-xs text-white flex items-start gap-2">
-                      <span className="text-white/70">-</span>
+                      <span className="text-white">-</span>
                       {note}
                     </li>
                   ))}
@@ -970,11 +969,11 @@ const SolarPVGuide = () => {
                   key={idx}
                   className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]"
                 >
-                  <h5 className="font-medium text-white/85 mb-2">{config.type}</h5>
+                  <h5 className="font-medium text-white mb-2">{config.type}</h5>
                   <p className="text-xs text-white mb-3">{config.description}</p>
                   <div className="space-y-2">
                     <div>
-                      <span className="text-xs text-white/70">Advantages:</span>
+                      <span className="text-xs text-white">Advantages:</span>
                       <ul className="space-y-0.5 mt-1">
                         {config.advantages.map((adv, advIdx) => (
                           <li key={advIdx} className="text-xs text-white">
@@ -1005,14 +1004,16 @@ const SolarPVGuide = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Inverter Selection Guide</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              Inverter Selection Guide
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="p-0">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {inverterTypes.map((inverter, idx) => (
               <div key={idx} className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
-                <h4 className="font-medium text-white/85 mb-1">{inverter.type}</h4>
+                <h4 className="font-medium text-white mb-1">{inverter.type}</h4>
                 <p className="text-xs text-white mb-2">{inverter.description}</p>
 
                 <div className="flex flex-wrap gap-2 mb-3">
@@ -1024,13 +1025,13 @@ const SolarPVGuide = () => {
                   </Badge>
                 </div>
 
-                <p className="text-xs text-white/85 mb-2">
+                <p className="text-xs text-white mb-2">
                   <strong>Best for:</strong> {inverter.bestFor}
                 </p>
 
                 <div className="grid grid-cols-2 gap-2">
                   <div>
-                    <span className="text-xs text-white/70">Pros:</span>
+                    <span className="text-xs text-white">Pros:</span>
                     <ul className="space-y-0.5 mt-1">
                       {inverter.pros.map((pro, proIdx) => (
                         <li key={proIdx} className="text-xs text-white">
@@ -1060,7 +1061,9 @@ const SolarPVGuide = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Installation Best Practices</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              Installation Best Practices
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="p-0">
@@ -1068,13 +1071,13 @@ const SolarPVGuide = () => {
             {installationBestPractices.map((category, idx) => (
               <div key={idx} className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
                 <div className="flex items-center gap-2 mb-3">
-                  <category.icon className="h-5 w-5 text-white/70" />
-                  <h4 className="font-medium text-white/85">{category.category}</h4>
+                  <category.icon className="h-5 w-5 text-white" />
+                  <h4 className="font-medium text-white">{category.category}</h4>
                 </div>
                 <ul className="space-y-2">
                   {category.practices.map((practice, practiceIdx) => (
                     <li key={practiceIdx} className="text-xs text-white flex items-start gap-2">
-                      <CheckCircle className="h-3 w-3 text-white/70 mt-0.5 flex-shrink-0" />
+                      <CheckCircle className="h-3 w-3 text-white mt-0.5 flex-shrink-0" />
                       {practice}
                     </li>
                   ))}
@@ -1089,16 +1092,18 @@ const SolarPVGuide = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{roofAccessFireSafety.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              {roofAccessFireSafety.title}
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4 p-0">
           <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
-            <h4 className="font-medium text-white/85 mb-2">Roof Access Requirements</h4>
+            <h4 className="font-medium text-white mb-2">Roof Access Requirements</h4>
             <ul className="space-y-1">
               {roofAccessFireSafety.accessRequirements.map((req, idx) => (
                 <li key={idx} className="text-sm text-white flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="h-4 w-4 text-white mt-0.5 flex-shrink-0" />
                   {req}
                 </li>
               ))}
@@ -1106,7 +1111,10 @@ const SolarPVGuide = () => {
           </div>
 
           {roofAccessFireSafety.fireSafety.map((item, idx) => (
-            <div key={idx} className="p-4 rounded-lg border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]">
+            <div
+              key={idx}
+              className="p-4 rounded-lg border border-white/[0.12] border-l-[3px] border-l-red-500 bg-white/[0.06]"
+            >
               <h4 className="font-medium text-red-200 mb-2">{item.concern}</h4>
               <p className="text-sm text-white mb-3">{item.description}</p>
               <ul className="space-y-1">
@@ -1126,20 +1134,22 @@ const SolarPVGuide = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{mcsCertification.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              {mcsCertification.title}
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4 p-0">
           <Alert className="border-white/[0.10] bg-white/[0.06]">
-            <Award className="h-4 w-4 text-white/70" />
-            <AlertDescription className="text-white/85 text-sm">
+            <Award className="h-4 w-4 text-white" />
+            <AlertDescription className="text-white text-sm">
               {mcsCertification.overview}
             </AlertDescription>
           </Alert>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
-              <h4 className="font-medium text-white/85 mb-3">Installer Requirements</h4>
+              <h4 className="font-medium text-white mb-3">Installer Requirements</h4>
               <ul className="space-y-2">
                 {mcsCertification.installerRequirements.map((req, idx) => (
                   <li key={idx} className="text-sm text-white">
@@ -1151,11 +1161,11 @@ const SolarPVGuide = () => {
             </div>
 
             <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
-              <h4 className="font-medium text-white/85 mb-3">Installation Requirements</h4>
+              <h4 className="font-medium text-white mb-3">Installation Requirements</h4>
               <ul className="space-y-1">
                 {mcsCertification.installationRequirements.map((req, idx) => (
                   <li key={idx} className="text-sm text-white flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-white/70 mt-0.5 flex-shrink-0" />
+                    <CheckCircle className="h-4 w-4 text-white mt-0.5 flex-shrink-0" />
                     {req}
                   </li>
                 ))}
@@ -1169,7 +1179,9 @@ const SolarPVGuide = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{gridConnection.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              {gridConnection.title}
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="p-0">
@@ -1178,7 +1190,7 @@ const SolarPVGuide = () => {
               <Badge variant="outline" className="border-white/10 text-white mb-3">
                 {gridConnection.g98.name}
               </Badge>
-              <p className="text-sm text-white/85 mb-3">
+              <p className="text-sm text-white mb-3">
                 <strong>Applies to:</strong> {gridConnection.g98.applies}
               </p>
 
@@ -1195,7 +1207,7 @@ const SolarPVGuide = () => {
               <ul className="space-y-1">
                 {gridConnection.g98.requirements.map((req, idx) => (
                   <li key={idx} className="text-xs text-white flex items-start gap-2">
-                    <CheckCircle className="h-3 w-3 text-white/70 mt-0.5" />
+                    <CheckCircle className="h-3 w-3 text-white mt-0.5" />
                     {req}
                   </li>
                 ))}
@@ -1206,7 +1218,7 @@ const SolarPVGuide = () => {
               <Badge variant="outline" className="border-white/10 text-white mb-3">
                 {gridConnection.g99.name}
               </Badge>
-              <p className="text-sm text-white/85 mb-3">
+              <p className="text-sm text-white mb-3">
                 <strong>Applies to:</strong> {gridConnection.g99.applies}
               </p>
 
@@ -1223,7 +1235,7 @@ const SolarPVGuide = () => {
               <ul className="space-y-1">
                 {gridConnection.g99.requirements.map((req, idx) => (
                   <li key={idx} className="text-xs text-white flex items-start gap-2">
-                    <CheckCircle className="h-3 w-3 text-white/70 mt-0.5" />
+                    <CheckCircle className="h-3 w-3 text-white mt-0.5" />
                     {req}
                   </li>
                 ))}
@@ -1237,7 +1249,9 @@ const SolarPVGuide = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">Testing Requirements</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              Testing Requirements
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="p-0">
@@ -1255,7 +1269,7 @@ const SolarPVGuide = () => {
                   className="bg-white/[0.06] p-3 rounded-lg border border-white/[0.10]"
                 >
                   <div className="flex justify-between items-start mb-1">
-                    <h5 className="font-medium text-white/85 text-sm">{test.test}</h5>
+                    <h5 className="font-medium text-white text-sm">{test.test}</h5>
                     <Badge variant="outline" className="border-white/10 text-white text-xs">
                       {test.acceptable}
                     </Badge>
@@ -1272,7 +1286,7 @@ const SolarPVGuide = () => {
                   className="bg-white/[0.06] p-3 rounded-lg border border-white/[0.10]"
                 >
                   <div className="flex justify-between items-start mb-1">
-                    <h5 className="font-medium text-white/85 text-sm">{test.test}</h5>
+                    <h5 className="font-medium text-white text-sm">{test.test}</h5>
                     <Badge variant="outline" className="border-white/10 text-white text-xs">
                       {test.acceptable}
                     </Badge>
@@ -1288,7 +1302,7 @@ const SolarPVGuide = () => {
                   key={idx}
                   className="flex items-center gap-2 p-2 bg-white/[0.06] rounded border border-white/[0.10]"
                 >
-                  <FileCheck className="h-4 w-4 text-white/70" />
+                  <FileCheck className="h-4 w-4 text-white" />
                   <span className="text-sm text-white">{doc}</span>
                 </div>
               ))}
@@ -1301,7 +1315,9 @@ const SolarPVGuide = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{smartExportGuarantee.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              {smartExportGuarantee.title}
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4 p-0">
@@ -1309,11 +1325,11 @@ const SolarPVGuide = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
-              <h4 className="font-medium text-white/85 mb-3">Eligibility</h4>
+              <h4 className="font-medium text-white mb-3">Eligibility</h4>
               <ul className="space-y-1">
                 {smartExportGuarantee.eligibility.map((item, idx) => (
                   <li key={idx} className="text-sm text-white flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-white/70 mt-0.5" />
+                    <CheckCircle className="h-4 w-4 text-white mt-0.5" />
                     {item}
                   </li>
                 ))}
@@ -1321,7 +1337,7 @@ const SolarPVGuide = () => {
             </div>
 
             <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
-              <h4 className="font-medium text-white/85 mb-3">Application Process</h4>
+              <h4 className="font-medium text-white mb-3">Application Process</h4>
               <ul className="space-y-1">
                 {smartExportGuarantee.process.map((step, idx) => (
                   <li key={idx} className="text-sm text-white">
@@ -1333,8 +1349,8 @@ const SolarPVGuide = () => {
           </div>
 
           <Alert className="border-white/[0.10] bg-white/[0.06]">
-            <BadgePoundSterling className="h-4 w-4 text-white/70" />
-            <AlertDescription className="text-white/85 text-sm">
+            <BadgePoundSterling className="h-4 w-4 text-white" />
+            <AlertDescription className="text-white text-sm">
               <strong>Current Rates:</strong> {smartExportGuarantee.rates}
             </AlertDescription>
           </Alert>
@@ -1345,16 +1361,18 @@ const SolarPVGuide = () => {
       <Card variant="plain">
         <CardHeader className="p-0 pb-3">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">{batteryIntegration.title}</CardTitle>
+            <CardTitle className="text-[15px] font-semibold tracking-tight text-white">
+              {batteryIntegration.title}
+            </CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4 p-0">
           <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
-            <h4 className="font-medium text-white/85 mb-3">Benefits of Battery Storage</h4>
+            <h4 className="font-medium text-white mb-3">Benefits of Battery Storage</h4>
             <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
               {batteryIntegration.benefits.map((benefit, idx) => (
                 <li key={idx} className="text-sm text-white flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-white/70 mt-0.5" />
+                  <CheckCircle className="h-4 w-4 text-white mt-0.5" />
                   {benefit}
                 </li>
               ))}
@@ -1364,12 +1382,12 @@ const SolarPVGuide = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {batteryIntegration.types.map((type, idx) => (
               <div key={idx} className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
-                <h4 className="font-medium text-white/85 mb-2">{type.type}</h4>
+                <h4 className="font-medium text-white mb-2">{type.type}</h4>
                 <p className="text-xs text-white mb-3">{type.description}</p>
 
                 <div className="space-y-2">
                   <div>
-                    <span className="text-xs text-white/70">Pros:</span>
+                    <span className="text-xs text-white">Pros:</span>
                     <ul className="space-y-0.5 mt-1">
                       {type.pros.map((pro, proIdx) => (
                         <li key={proIdx} className="text-xs text-white">
@@ -1394,11 +1412,11 @@ const SolarPVGuide = () => {
           </div>
 
           <div className="bg-white/[0.06] p-4 rounded-lg border border-white/[0.10]">
-            <h4 className="font-medium text-white/85 mb-3">Key Considerations</h4>
+            <h4 className="font-medium text-white mb-3">Key Considerations</h4>
             <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
               {batteryIntegration.considerations.map((item, idx) => (
                 <li key={idx} className="text-sm text-white flex items-start gap-2">
-                  <Lightbulb className="h-4 w-4 text-white/70 mt-0.5" />
+                  <Lightbulb className="h-4 w-4 text-white mt-0.5" />
                   {item}
                 </li>
               ))}
@@ -1409,8 +1427,8 @@ const SolarPVGuide = () => {
 
       {/* Final Important Notice */}
       <Alert className="border-white/[0.10] bg-white/[0.06]">
-        <AlertTriangle className="h-5 w-5 text-white/70" />
-        <AlertDescription className="text-white/85">
+        <AlertTriangle className="h-5 w-5 text-white" />
+        <AlertDescription className="text-white">
           <strong className="text-white">Remember:</strong> Solar PV installation requires MCS
           certification for customers to access the Smart Export Guarantee. Always follow
           manufacturer guidelines, MCS standards (MIS 3002), and BS 7671 Section 712 requirements.

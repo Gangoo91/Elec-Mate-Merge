@@ -18,12 +18,12 @@ const CareerSectionCard = ({ title, description, icon, onClick }: CareerSectionC
         <h3 className="text-[16px] sm:text-[17px] font-semibold text-white leading-tight">
           {title}
         </h3>
-        <ArrowRight className="h-4 w-4 text-white/40 group-hover:text-white/70 transition-colors flex-shrink-0" />
+        <ArrowRight className="h-4 w-4 text-white group-hover:text-white/70 transition-colors flex-shrink-0" />
       </div>
 
-      <p className="text-[13px] text-white/70 leading-relaxed flex-1">{description}</p>
+      <p className="text-[13px] text-white leading-relaxed flex-1">{description}</p>
 
-      <div className="text-white/55">{icon}</div>
+      <div className="text-white">{icon}</div>
     </button>
   );
 };

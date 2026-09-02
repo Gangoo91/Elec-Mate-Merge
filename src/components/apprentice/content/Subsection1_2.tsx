@@ -249,8 +249,8 @@ const Subsection1_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 training
               </li>
               <li>
-                <span className="font-semibold">NICEIC, ELECSA, NAPIT:</span> Registration and
-                assessment of contractors, certification, quality assurance schemes
+                <span className="font-semibold">NICEIC, NAPIT:</span> Registration and assessment of
+                contractors, certification, quality assurance schemes
               </li>
               <li>
                 <span className="font-semibold">Office for Product Safety and Standards:</span>{' '}
@@ -324,7 +324,7 @@ const Subsection1_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 <h4 className="font-semibold text-white">
                   Level 3 NVQ Diploma in Electrotechnical Technology
                 </h4>
-                <p className="text-sm text-elec-light/90">
+                <p className="text-sm text-white">
                   The standard qualification for electricians working in the UK, covering
                   installation and maintenance.
                 </p>
@@ -334,7 +334,7 @@ const Subsection1_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 <h4 className="font-semibold text-white">
                   City & Guilds 2365 Diploma in Electrical Installation
                 </h4>
-                <p className="text-sm text-elec-light/90">
+                <p className="text-sm text-white">
                   A theory-based qualification that covers the principles of electrical
                   installation.
                 </p>
@@ -344,7 +344,7 @@ const Subsection1_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 <h4 className="font-semibold text-white">
                   City & Guilds 2391 Inspection and Testing
                 </h4>
-                <p className="text-sm text-elec-light/90">
+                <p className="text-sm text-white">
                   Specific qualification for conducting inspection and testing of electrical
                   installations.
                 </p>
@@ -354,7 +354,7 @@ const Subsection1_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 <h4 className="font-semibold text-white">
                   City & Guilds 2382 18th Edition Wiring Regulations
                 </h4>
-                <p className="text-sm text-elec-light/90">
+                <p className="text-sm text-white">
                   Required qualification covering the current BS 7671 wiring regulations.
                 </p>
               </div>
@@ -363,7 +363,7 @@ const Subsection1_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 <h4 className="font-semibold text-white">
                   ECS Card (Electrotechnical Certification Scheme)
                 </h4>
-                <p className="text-sm text-elec-light/90">
+                <p className="text-sm text-white">
                   Industry recognition card that proves identity, qualifications, and occupational
                   competence.
                 </p>

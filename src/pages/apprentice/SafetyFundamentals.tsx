@@ -14,6 +14,8 @@ import { CheckCircle2, ChevronRight, AlertTriangle, Siren } from 'lucide-react';
 import { itemVariants } from '@/components/college/primitives';
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 interface Section {
   title: string;
@@ -111,7 +113,7 @@ const SafetyFundamentals = () => {
               <AlertTriangle className="h-4 w-4 text-red-300 flex-shrink-0" />
               <Eyebrow className="text-red-300">Electricity can kill</Eyebrow>
             </div>
-            <p className="text-[13.5px] text-white/85 leading-relaxed">
+            <p className="text-[13.5px] text-white leading-relaxed">
               These aren't just guidelines — they're the difference between going home safely and
               not going home at all. As an apprentice, safety is your{' '}
               <span className="font-semibold text-red-300">number one priority</span>. Never
@@ -128,12 +130,12 @@ const SafetyFundamentals = () => {
             title="Six things that should stick"
             meta="The numbers and rules behind the procedures"
           />
-          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
+          <div className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE)}>
             <ul className="space-y-1.5">
               {keyFacts.map((fact) => (
                 <li
                   key={fact}
-                  className="flex items-start gap-2 text-[13px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[13px] text-white leading-relaxed"
                 >
                   <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                   <span>{fact}</span>
@@ -155,7 +157,10 @@ const SafetyFundamentals = () => {
               <li key={section.slug}>
                 <button
                   onClick={() => navigate(`/apprentice/safety-fundamentals/${section.slug}`)}
-                  className="w-full flex items-start gap-3 p-4 sm:p-5 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] active:bg-white/[0.04] active:scale-[0.99] transition-all touch-manipulation text-left"
+                  className={cn(
+                    'w-full flex items-start gap-3 p-4 sm:p-5 rounded-2xl border border-elec-yellow/35 active:bg-white/[0.04] active:scale-[0.99] transition-all touch-manipulation text-left',
+                    CARD_SURFACE
+                  )}
                 >
                   <span className="text-[20px] sm:text-[22px] leading-none flex-shrink-0 mt-0.5">
                     {section.icon}
@@ -163,20 +168,20 @@ const SafetyFundamentals = () => {
                   <div className="flex-1 min-w-0 space-y-1">
                     <div className="flex items-baseline justify-between gap-3">
                       <div className="flex items-baseline gap-2 min-w-0">
-                        <span className="text-[10px] font-mono text-white/40 tabular-nums">
+                        <span className="text-[10px] font-mono text-white tabular-nums">
                           {String(i + 1).padStart(2, '0')}
                         </span>
                         <span className="text-[14px] font-semibold text-white truncate">
                           {section.title}
                         </span>
                       </div>
-                      <span className="text-[10.5px] font-mono text-white/55 tabular-nums flex-shrink-0">
+                      <span className="text-[10.5px] font-mono text-white tabular-nums flex-shrink-0">
                         {section.readTime}
                       </span>
                     </div>
-                    <p className="text-[12.5px] text-white/70 leading-relaxed">{section.blurb}</p>
+                    <p className="text-[12.5px] text-white leading-relaxed">{section.blurb}</p>
                   </div>
-                  <ChevronRight className="h-4 w-4 text-white/40 flex-shrink-0 mt-1" />
+                  <ChevronRight className="h-4 w-4 text-white flex-shrink-0 mt-1" />
                 </button>
               </li>
             ))}
@@ -203,7 +208,7 @@ const SafetyFundamentals = () => {
                       <p className="text-[13.5px] font-medium text-white leading-snug">
                         {contact.label}
                       </p>
-                      <p className="text-[12px] text-white/70 leading-snug">{contact.note}</p>
+                      <p className="text-[12px] text-white leading-snug">{contact.note}</p>
                     </div>
                   </div>
                   <a
@@ -220,7 +225,7 @@ const SafetyFundamentals = () => {
 
         {/* ── Footnote ──────────────────────────────────────────────── */}
         <motion.section variants={itemVariants}>
-          <p className="text-[11px] text-white/40 leading-relaxed">
+          <p className="text-[11px] text-white leading-relaxed">
             Safety guidance referenced from BS 7671:2018+A4:2026, the Health and Safety at Work Act
             1974, the Electricity at Work Regulations 1989, HSE guidance note GS38, and current
             industry best practice. Always follow your employer's specific safety procedures and

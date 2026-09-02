@@ -351,7 +351,7 @@ const BatteryBackupCalculator = () => {
                   <button
                     onClick={addLoad}
                     disabled={!newLoadName || !newLoadWatts || parseFloat(newLoadWatts) <= 0}
-                    className="self-end h-12 px-4 rounded-xl bg-white/[0.06] border border-white/[0.18] text-white hover:bg-white/[0.10] transition-colors disabled:opacity-50 disabled:cursor-not-allowed min-h-11 touch-manipulation"
+                    className="self-end h-12 px-4 rounded-xl bg-white/[0.06] border border-white/[0.18] text-white hover:bg-white/[0.10] transition-colors disabled:text-white/70 disabled:cursor-not-allowed min-h-11 touch-manipulation"
                   >
                     <Plus className="h-5 w-5" />
                   </button>

@@ -20,18 +20,13 @@ import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, FileCheck, ChevronRight, Share2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetDescription,
-} from '@/components/ui/sheet';
+import { FormSheet } from '@/components/forms/FormSheet';
+import { buttonPrimaryCn, buttonSecondaryCn } from '@/components/forms/fieldStyles';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import type { PortfolioEntry } from '@/types/portfolio';
 import { EvidenceImage } from '@/components/shared/EvidenceImage';
 import { parseEvidencedACs } from '@/utils/parseEvidencedACs';
 import { cn } from '@/lib/utils';
-import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { useHaptic } from '@/hooks/useHaptic';
 import { HubAlertLine, HubKpi, HubKpiRow } from '@/components/hub/HubPrimitives';
 import { useAuth } from '@/contexts/AuthContext';
@@ -367,13 +362,15 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
         label="Signed off"
         value={tree.totalACs > 0 ? `${signedOffCount}` : '—'}
         verdict={
-          referredCount > 0 ? `${referredCount} sent back` : signedOffCount > 0 ? 'Confirmed by your tutor' : 'None yet'
+          referredCount > 0
+            ? `${referredCount} sent back`
+            : signedOffCount > 0
+              ? 'Confirmed by your tutor'
+              : 'None yet'
         }
         sentiment={referredCount > 0 ? 'bad' : 'neutral'}
         direction={referredCount > 0 ? 'down' : 'flat'}
-        context={
-          tree.totalACs > 0 ? `Of ${tree.totalACs} criteria on your course` : undefined
-        }
+        context={tree.totalACs > 0 ? `Of ${tree.totalACs} criteria on your course` : undefined}
         onClick={() => onNavigate('work')}
       />
       <HubKpi
@@ -515,7 +512,12 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
     <div className="py-5 sm:py-6 lg:py-8 space-y-7 lg:space-y-10">
       {/* No-data guard */}
       {userSelection && !acLoading && !qualLoading && tree.totalACs === 0 && (
-        <div className={cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-1.5', CARD_SURFACE)}>
+        <div
+          className={cn(
+            'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-1.5',
+            CARD_SURFACE
+          )}
+        >
           <Eyebrow>Course data missing</Eyebrow>
           <p className="text-[13px] text-white leading-relaxed">
             We don't have curriculum data for this course yet.
@@ -653,155 +655,136 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
       {RecentEvidence}
 
       {/* AC Evidence bottom sheet */}
-      <Sheet
+      <FormSheet
         open={showACEvidence}
         onOpenChange={(v) => {
           setShowACEvidence(v);
           if (!v) setSelectedAC(null);
         }}
+        eyebrow={
+          selectedAC?.unitCode
+            ? `Unit ${selectedAC.unitCode} · ${selectedAC.code}`
+            : selectedAC?.code
+        }
+        title={selectedAC?.text ?? 'Assessment criterion'}
+        bodyClassName="space-y-0"
       >
-        <SheetContent side="bottom" className="h-[60vh] rounded-t-3xl p-0">
-          <div className="w-12 h-1 bg-muted rounded-full mx-auto mt-3 mb-2" />
-          <div className="flex flex-col h-full">
-            <SheetHeader className="px-4 pb-3">
-              <SheetTitle className="text-left flex items-center gap-2">
-                <span className="text-[11px] font-mono text-elec-yellow bg-elec-yellow/[0.06] border border-elec-yellow/30 px-2 py-0.5 rounded-md">
-                  {selectedAC?.code}
-                </span>
-                {selectedAC?.unitCode && (
-                  <span className="text-[10px] uppercase tracking-[0.14em] text-white">
-                    Unit {selectedAC.unitCode}
-                  </span>
-                )}
-              </SheetTitle>
-              <SheetDescription className="text-left text-white text-[13px] leading-snug">
-                {selectedAC?.text}
-              </SheetDescription>
-            </SheetHeader>
-            <div className="flex-1 overflow-y-auto px-4 pb-20 sm:pb-8">
-              <AnimatePresence mode="wait">
-                {selectedAC && (
-                  <motion.div
-                    key={selectedAC.code}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.15 }}
-                  >
-                    {(() => {
-                      const entries = acEvidenceMap.get(selectedAC.code) || [];
-                      const signoff = getSignoff(selectedAC.code, selectedAC.unitCode);
-                      const lastEvidenceAt =
-                        entries.length > 0
-                          ? entries
-                              .map((e) => e.dateCreated)
-                              .filter(Boolean)
-                              .sort()
-                              .reverse()[0] || null
-                          : signoff?.lastEvidenceAt || null;
+        <AnimatePresence mode="wait">
+          {selectedAC && (
+            <motion.div
+              key={selectedAC.code}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.15 }}
+            >
+              {(() => {
+                const entries = acEvidenceMap.get(selectedAC.code) || [];
+                const signoff = getSignoff(selectedAC.code, selectedAC.unitCode);
+                const lastEvidenceAt =
+                  entries.length > 0
+                    ? entries
+                        .map((e) => e.dateCreated)
+                        .filter(Boolean)
+                        .sort()
+                        .reverse()[0] || null
+                    : signoff?.lastEvidenceAt || null;
 
-                      return (
-                        <div className="space-y-5">
-                          {/* Audit timeline — always visible, builds the compliance picture */}
-                          <ACAuditTimeline
-                            signoff={signoff}
-                            evidenceCount={entries.length}
-                            lastEvidenceAt={lastEvidenceAt}
-                          />
+                return (
+                  <div className="space-y-5">
+                    {/* Audit timeline — always visible, builds the compliance picture */}
+                    <ACAuditTimeline
+                      signoff={signoff}
+                      evidenceCount={entries.length}
+                      lastEvidenceAt={lastEvidenceAt}
+                    />
 
-                          {/* Evidence list */}
-                          {entries.length === 0 ? (
-                            <div className="rounded-xl border border-dashed border-white/[0.12] bg-white/[0.02] px-5 py-8 flex flex-col items-center justify-center text-center space-y-3">
-                              <p className="text-[13px] text-white leading-relaxed max-w-[260px]">
-                                Nothing linked yet — start with a quick capture on site.
+                    {/* Evidence list */}
+                    {entries.length === 0 ? (
+                      <div className="flex flex-col items-center justify-center space-y-3 rounded-2xl border border-dashed border-white/[0.14] px-5 py-8 text-center">
+                        <p className="text-[13px] text-white leading-relaxed max-w-[260px]">
+                          Nothing linked yet — start with a quick capture on site.
+                        </p>
+                        <Button
+                          onClick={() => {
+                            haptic.light();
+                            setShowACEvidence(false);
+                            setSelectedAC(null);
+                            onCapture();
+                          }}
+                          className={cn(buttonPrimaryCn, 'h-11 px-5')}
+                        >
+                          <Plus className="h-4 w-4 mr-2" />
+                          Capture for {selectedAC.code}
+                        </Button>
+                      </div>
+                    ) : (
+                      <div className="space-y-2">
+                        <Eyebrow>Evidence linked</Eyebrow>
+                        {entries.map((entry) => (
+                          <div
+                            key={entry.id}
+                            className={cn(
+                              'flex items-center gap-3 rounded-2xl border border-elec-yellow/35 p-3.5',
+                              CARD_SURFACE
+                            )}
+                          >
+                            <EvidenceThumbnail entry={entry} />
+                            <div className="flex-1 min-w-0">
+                              <p className="text-[13px] font-medium text-white truncate">
+                                {entry.title}
                               </p>
-                              <Button
-                                onClick={() => {
-                                  haptic.light();
-                                  setShowACEvidence(false);
-                                  setSelectedAC(null);
-                                  onCapture();
-                                }}
-                                className="h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
-                              >
-                                <Plus className="h-4 w-4 mr-2" />
-                                Capture for {selectedAC.code}
-                              </Button>
-                            </div>
-                          ) : (
-                            <div className="space-y-2">
-                              <Eyebrow>Evidence linked</Eyebrow>
-                              {entries.map((entry) => (
-                                <div
-                                  key={entry.id}
-                                  className="flex items-center gap-3 p-3.5 rounded-xl bg-white/[0.02] border border-white/[0.06]"
-                                >
-                                  <EvidenceThumbnail entry={entry} />
-                                  <div className="flex-1 min-w-0">
-                                    <p className="text-[13px] font-medium text-white truncate">
-                                      {entry.title}
-                                    </p>
-                                    <div className="flex items-center gap-2 mt-0.5">
-                                      <span className="text-[10px] text-white font-mono">
-                                        {formatRelativeDate(new Date(entry.dateCreated))}
-                                      </span>
-                                      {entry.evidenceFiles && entry.evidenceFiles.length > 0 && (
-                                        <span className="text-[10px] text-white">
-                                          {entry.evidenceFiles.length} file
-                                          {entry.evidenceFiles.length !== 1 ? 's' : ''}
-                                        </span>
-                                      )}
-                                    </div>
-                                  </div>
-                                  <span className="text-[10px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] uppercase tracking-[0.14em]">
-                                    {String(entry.status || 'draft')}
+                              <div className="flex items-center gap-2 mt-0.5">
+                                <span className="text-[10px] text-white font-mono">
+                                  {formatRelativeDate(new Date(entry.dateCreated))}
+                                </span>
+                                {entry.evidenceFiles && entry.evidenceFiles.length > 0 && (
+                                  <span className="text-[10px] text-white">
+                                    {entry.evidenceFiles.length} file
+                                    {entry.evidenceFiles.length !== 1 ? 's' : ''}
                                   </span>
-                                </div>
-                              ))}
-                              <Button
-                                variant="outline"
-                                onClick={() => {
-                                  haptic.light();
-                                  setShowACEvidence(false);
-                                  setSelectedAC(null);
-                                  onCapture();
-                                }}
-                                className="w-full h-11 mt-3 touch-manipulation border-white/[0.08] bg-white/[0.02] text-white hover:bg-white/[0.04]"
-                              >
-                                <Plus className="h-4 w-4 mr-2" />
-                                Add more evidence
-                              </Button>
+                                )}
+                              </div>
                             </div>
-                          )}
-                        </div>
-                      );
-                    })()}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          </div>
-        </SheetContent>
-      </Sheet>
+                            <span className="text-[10px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] uppercase tracking-[0.14em]">
+                              {String(entry.status || 'draft')}
+                            </span>
+                          </div>
+                        ))}
+                        <Button
+                          variant="outline"
+                          onClick={() => {
+                            haptic.light();
+                            setShowACEvidence(false);
+                            setSelectedAC(null);
+                            onCapture();
+                          }}
+                          className={cn(buttonSecondaryCn, 'mt-3 h-11 w-full')}
+                        >
+                          <Plus className="h-4 w-4 mr-2" />
+                          Add more evidence
+                        </Button>
+                      </div>
+                    )}
+                  </div>
+                );
+              })()}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </FormSheet>
 
       {/* Course selector */}
-      <Sheet open={showCourseSelector} onOpenChange={setShowCourseSelector}>
-        {/* Full content-column width (house rule: no centred trays) and a
-            REAL scroll region — overflow-y-auto only works with the flex
-            column + min-h-0 constraint; without it the list just clipped. */}
-        <SheetContent
-          side="bottom"
-          className="h-[85vh] w-full sm:max-w-none rounded-t-3xl p-0 flex flex-col overflow-hidden"
-        >
-          <div className="w-12 h-1 bg-muted rounded-full mx-auto mt-3 mb-2 shrink-0" />
-          <SheetHeader className="px-4 sm:px-6 pb-3 shrink-0 text-left">
-            <SheetTitle>{collegeCourseCode ? 'Your course' : 'Change qualification'}</SheetTitle>
-          </SheetHeader>
-          <div className="flex-1 min-h-0 overflow-y-auto px-4 sm:px-6 pb-[max(env(safe-area-inset-bottom),24px)]">
-            <QualificationSelector lockedToCode={collegeCourseCode} />
-          </div>
-        </SheetContent>
-      </Sheet>
+      <FormSheet
+        open={showCourseSelector}
+        onOpenChange={setShowCourseSelector}
+        eyebrow="Portfolio"
+        title={collegeCourseCode ? 'Your course' : 'Change qualification'}
+        width="lg"
+        bodyClassName="space-y-0"
+      >
+        <QualificationSelector lockedToCode={collegeCourseCode} />
+      </FormSheet>
 
       {/* Share */}
       <SharePortfolioSheet open={showShareSheet} onOpenChange={setShowShareSheet} />

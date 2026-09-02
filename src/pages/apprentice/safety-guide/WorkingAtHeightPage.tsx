@@ -1,5 +1,7 @@
 import { CheckCircle2, AlertTriangle } from 'lucide-react';
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const WorkingAtHeightPage = () => {
   return (
@@ -17,7 +19,7 @@ const WorkingAtHeightPage = () => {
         </p>
 
         {/* Intro */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 sm:p-5 space-y-4">
             <h2 className="text-lg font-semibold text-white">
               Falls are the biggest killer in construction
@@ -44,7 +46,7 @@ const WorkingAtHeightPage = () => {
               </p>
             </div>
 
-            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
+            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3">
               <p className="text-white text-sm">
                 <span className="font-bold text-elec-yellow">Myth — the "two-metre rule": </span>
                 There is no two-metre threshold in the Work at Height Regulations. The old rule was
@@ -57,7 +59,7 @@ const WorkingAtHeightPage = () => {
         </div>
 
         {/* Hierarchy of Controls */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 sm:p-5 space-y-4">
             <h2 className="text-lg font-semibold text-white">
               The hierarchy — avoid, prevent, mitigate
@@ -88,7 +90,7 @@ const WorkingAtHeightPage = () => {
               ].map((item) => (
                 <div
                   key={item.step}
-                  className="rounded-lg border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4"
+                  className="rounded-lg border border-elec-yellow/20 bg-white/[0.05] p-4"
                 >
                   <h3 className="font-semibold text-elec-yellow text-sm mb-2">{item.step}</h3>
                   <p className="text-white text-sm">{item.detail}</p>
@@ -99,7 +101,7 @@ const WorkingAtHeightPage = () => {
         </div>
 
         {/* Ladders */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 sm:p-5 space-y-4">
             <h2 className="text-lg font-semibold text-white">Ladders — BS EN 131</h2>
             <p className="text-white text-sm leading-relaxed">
@@ -134,7 +136,7 @@ const WorkingAtHeightPage = () => {
         </div>
 
         {/* Step Ladders */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 sm:p-5 space-y-4">
             <h2 className="text-lg font-semibold text-white">Step Ladders</h2>
             <p className="text-white text-sm leading-relaxed">
@@ -163,7 +165,7 @@ const WorkingAtHeightPage = () => {
         </div>
 
         {/* Scaffolding */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 sm:p-5 space-y-4">
             <h2 className="text-lg font-semibold text-white">Scaffolding</h2>
             <p className="text-white text-sm leading-relaxed">
@@ -195,7 +197,7 @@ const WorkingAtHeightPage = () => {
         </div>
 
         {/* Mobile Towers */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 sm:p-5 space-y-4">
             <h2 className="text-lg font-semibold text-white">Mobile Access Towers — PASMA</h2>
             <p className="text-white text-sm leading-relaxed">
@@ -232,7 +234,7 @@ const WorkingAtHeightPage = () => {
         </div>
 
         {/* MEWPs */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 sm:p-5 space-y-4">
             <h2 className="text-lg font-semibold text-white">
               MEWPs — Cherry Pickers and Scissor Lifts (IPAF)
@@ -359,7 +361,7 @@ const WorkingAtHeightPage = () => {
         </div>
 
         {/* Common Electrical Tasks at Height */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 sm:p-5 space-y-4">
             <h2 className="text-lg font-semibold text-white">Common Electrical Tasks at Height</h2>
             <p className="text-white text-sm leading-relaxed">
@@ -402,7 +404,7 @@ const WorkingAtHeightPage = () => {
               ].map((item) => (
                 <div
                   key={item.task}
-                  className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3"
+                  className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3"
                 >
                   <h4 className="text-elec-yellow font-semibold text-sm mb-1">{item.task}</h4>
                   <p className="text-white text-xs">{item.equipment}</p>
@@ -413,7 +415,7 @@ const WorkingAtHeightPage = () => {
         </div>
 
         {/* Footer */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 sm:p-5">
             <p className="text-white text-xs leading-relaxed">
               Based on the Work at Height Regulations 2005, BS EN 131 (ladders), NASC SG4

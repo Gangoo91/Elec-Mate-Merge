@@ -124,20 +124,20 @@ const DocumentationSystems = () => {
 
       <div className="space-y-6">
         <div className="space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Safety communication
           </span>
           <h1 className="text-[24px] sm:text-[28px] font-bold tracking-tight text-white leading-tight">
             Safety documentation systems
           </h1>
-          <p className="text-[14px] text-white/70 leading-relaxed max-w-2xl">
+          <p className="text-[14px] text-white leading-relaxed max-w-2xl">
             Proper documentation creates records of safety communications, ensuring accountability
             and creating a traceable information flow.
           </p>
         </div>
 
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Types of safety documentation
           </span>
           <div className="space-y-3">
@@ -147,15 +147,15 @@ const DocumentationSystems = () => {
                 className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1.5"
               >
                 <h3 className="text-[14px] font-semibold text-white">{type.title}</h3>
-                <p className="text-[14px] text-white/85 leading-relaxed">{type.description}</p>
-                <p className="text-[12px] text-white/55 italic">{type.note}</p>
+                <p className="text-[14px] text-white leading-relaxed">{type.description}</p>
+                <p className="text-[12px] text-white italic">{type.note}</p>
               </div>
             ))}
           </div>
         </div>
 
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Documentation management systems
           </span>
           <div className="space-y-3">
@@ -169,7 +169,7 @@ const DocumentationSystems = () => {
                   {system.items.map((item, i) => (
                     <li
                       key={i}
-                      className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                      className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                     >
                       <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                       <span>{item}</span>
@@ -182,10 +182,10 @@ const DocumentationSystems = () => {
         </div>
 
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Documentation templates
           </span>
-          <p className="text-[14px] text-white/85 leading-relaxed">
+          <p className="text-[14px] text-white leading-relaxed">
             Standardised templates ensure consistent and complete documentation:
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -199,7 +199,7 @@ const DocumentationSystems = () => {
                   {template.items.map((item, i) => (
                     <li
                       key={i}
-                      className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                      className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                     >
                       <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                       <span>{item}</span>
@@ -212,7 +212,7 @@ const DocumentationSystems = () => {
         </div>
 
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Documentation best practices
           </span>
           <ul className="space-y-1.5">
@@ -228,7 +228,7 @@ const DocumentationSystems = () => {
             ].map((item, idx) => (
               <li
                 key={idx}
-                className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                className="text-[14px] text-white leading-relaxed flex items-start gap-2"
               >
                 <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
                 <span>{item}</span>
@@ -238,10 +238,10 @@ const DocumentationSystems = () => {
         </div>
 
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Legal requirements
           </span>
-          <p className="text-[14px] text-white/85 leading-relaxed">
+          <p className="text-[14px] text-white leading-relaxed">
             Many safety documents must be retained for specific periods to comply with
             regulations:
           </p>
@@ -256,14 +256,14 @@ const DocumentationSystems = () => {
               ].map((item, idx) => (
                 <li
                   key={idx}
-                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                  className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                 >
                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{item}</span>
                 </li>
               ))}
             </ul>
-            <p className="text-[12px] text-white/55 italic pt-2">
+            <p className="text-[12px] text-white italic pt-2">
               Always verify current legal requirements for document retention in your
               jurisdiction.
             </p>
@@ -271,7 +271,7 @@ const DocumentationSystems = () => {
         </div>
 
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Available templates
           </span>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
@@ -287,8 +287,8 @@ const DocumentationSystems = () => {
                 key={idx}
                 className="flex items-center gap-3 p-3 rounded-md border border-white/[0.06] bg-white/[0.02]"
               >
-                <FileText className="h-4 w-4 text-white/55" />
-                <span className="text-[13px] text-white/85">{item}</span>
+                <FileText className="h-4 w-4 text-white" />
+                <span className="text-[13px] text-white">{item}</span>
               </div>
             ))}
           </div>

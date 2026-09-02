@@ -75,7 +75,7 @@ const CourseSelectionTips = () => {
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Course selection tips
         </span>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
@@ -85,14 +85,14 @@ const CourseSelectionTips = () => {
               className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1.5"
             >
               <p className="text-[13px] text-white">{tip.title}</p>
-              <p className="text-[12px] text-white/70 leading-relaxed">{tip.description}</p>
+              <p className="text-[12px] text-white leading-relaxed">{tip.description}</p>
             </div>
           ))}
         </div>
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Course cost guidance
         </span>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -102,17 +102,17 @@ const CourseSelectionTips = () => {
               className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2"
             >
               <p className="text-[13px] text-white">{item.category}</p>
-              <div className="space-y-1 text-[12px] text-white/85">
+              <div className="space-y-1 text-[12px] text-white">
                 <div className="flex justify-between">
-                  <span className="text-white/55">Cost</span>
+                  <span className="text-white">Cost</span>
                   <span>{item.cost}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/55">Duration</span>
+                  <span className="text-white">Duration</span>
                   <span>{item.duration}</span>
                 </div>
               </div>
-              <p className="text-[12px] text-white/70 pt-2 border-t border-white/[0.06]">
+              <p className="text-[12px] text-white pt-2 border-t border-white/[0.06]">
                 {item.outcome}
               </p>
             </div>
@@ -121,14 +121,14 @@ const CourseSelectionTips = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Quality indicators to look for
         </span>
         <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           {qualityIndicators.map((indicator, idx) => (
             <li
               key={idx}
-              className="flex items-start gap-2 text-[13px] text-white/85 rounded-md border border-white/10 bg-white/[0.03] p-3"
+              className="flex items-start gap-2 text-[13px] text-white rounded-md border border-white/10 bg-white/[0.03] p-3"
             >
               <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
               <span>{indicator}</span>
@@ -138,7 +138,7 @@ const CourseSelectionTips = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Industry insight & market trends
         </span>
 
@@ -171,11 +171,11 @@ const CourseSelectionTips = () => {
                 key={s.title}
                 className="rounded-md border border-white/10 bg-white/[0.03] p-3 space-y-1"
               >
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   {s.tag}
                 </span>
                 <p className="text-[13px] text-white">{s.title}</p>
-                <p className="text-[12px] text-white/70">{s.note}</p>
+                <p className="text-[12px] text-white">{s.note}</p>
               </div>
             ))}
           </div>
@@ -204,9 +204,9 @@ const CourseSelectionTips = () => {
             ].map((r) => (
               <div
                 key={r.region}
-                className="flex items-start gap-2 text-[13px] text-white/85 leading-relaxed"
+                className="flex items-start gap-2 text-[13px] text-white leading-relaxed"
               >
-                <span className="text-white/55 font-medium min-w-[70px]">{r.region}</span>
+                <span className="text-white font-medium min-w-[70px]">{r.region}</span>
                 <span>{r.note}</span>
               </div>
             ))}

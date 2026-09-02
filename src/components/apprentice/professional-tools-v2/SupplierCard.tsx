@@ -14,14 +14,14 @@ const SupplierCard = ({ supplier }: SupplierCardProps) => {
           href={supplier.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-1 text-[12px] text-white/85 px-2 py-1 rounded-md border border-white/10 bg-white/[0.03] hover:bg-white/[0.05] touch-manipulation active:scale-[0.98] whitespace-nowrap"
+          className="flex items-center gap-1 text-[12px] text-white px-2 py-1 rounded-md border border-white/10 bg-white/[0.03] hover:bg-white/[0.05] touch-manipulation active:scale-[0.98] whitespace-nowrap"
         >
           Visit
           <ExternalLink className="h-3 w-3" />
         </a>
       </div>
-      <p className="text-[14px] text-white/85 leading-relaxed">{supplier.description}</p>
-      <div className="space-y-1.5 text-[13px] text-white/85">
+      <p className="text-[14px] text-white leading-relaxed">{supplier.description}</p>
+      <div className="space-y-1.5 text-[13px] text-white">
         <div>
           <span className="font-medium">Best for:</span> {supplier.bestFor}
         </div>
@@ -35,7 +35,7 @@ const SupplierCard = ({ supplier }: SupplierCardProps) => {
               <Check className="h-3 w-3" /> Required
             </span>
           ) : (
-            <span className="flex items-center gap-1 text-white/85">
+            <span className="flex items-center gap-1 text-white">
               <X className="h-3 w-3" /> Open to all
             </span>
           )}

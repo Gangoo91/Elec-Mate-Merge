@@ -41,7 +41,7 @@ const TestingProceduresPanel = ({ progress }: TestingProceduresPanelProps) => {
       {/* Search and Filter */}
       <div className="flex flex-col sm:flex-row gap-2">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/70" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
           <Input
             placeholder="Search tests..."
             value={search}
@@ -59,7 +59,7 @@ const TestingProceduresPanel = ({ progress }: TestingProceduresPanelProps) => {
                 className={`px-3 rounded-lg text-[12px] font-medium border transition-all touch-manipulation h-11 ${
                   isActive
                     ? 'bg-elec-yellow text-black border-elec-yellow'
-                    : 'bg-white/[0.06] text-white/85 border-white/[0.08] hover:bg-white/[0.04]'
+                    : 'bg-white/[0.06] text-white border-white/[0.08] hover:bg-white/[0.04]'
                 }`}
               >
                 {level}
@@ -79,13 +79,13 @@ const TestingProceduresPanel = ({ progress }: TestingProceduresPanelProps) => {
             <Collapsible key={test.id}>
               <CollapsibleTrigger className="w-full flex items-center justify-between gap-3 p-4 rounded-xl bg-white/[0.06] border border-white/[0.10] hover:bg-white/[0.04] touch-manipulation h-auto min-h-[44px] transition-colors text-left">
                 <div className="min-w-0 flex-1 space-y-1">
-                  <div className="flex items-baseline gap-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+                  <div className="flex items-baseline gap-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     <span>{test.difficulty}</span>
-                    <span className="text-white/25">·</span>
+                    <span className="text-white">·</span>
                     <span>{test.duration}</span>
                     {stepsComplete > 0 && (
                       <>
-                        <span className="text-white/25">·</span>
+                        <span className="text-white">·</span>
                         <span className="font-mono normal-case tracking-normal">
                           {stepsComplete}/{test.steps.length}
                         </span>
@@ -96,16 +96,16 @@ const TestingProceduresPanel = ({ progress }: TestingProceduresPanelProps) => {
                 </div>
                 <div className="flex items-center gap-2 flex-shrink-0">
                   {testDone && <CheckCircle className="h-4 w-4 text-elec-yellow" />}
-                  <ChevronDown className="h-4 w-4 text-white/70 transition-transform [[data-state=open]>&]:rotate-180" />
+                  <ChevronDown className="h-4 w-4 text-white transition-transform [[data-state=open]>&]:rotate-180" />
                 </div>
               </CollapsibleTrigger>
               <CollapsibleContent>
                 <div className="px-4 pb-4 pt-3 mt-1 space-y-4 text-[14px] rounded-b-xl bg-white/[0.06]">
-                  <p className="text-white/85 leading-relaxed">{test.purpose}</p>
+                  <p className="text-white leading-relaxed">{test.purpose}</p>
 
                   {test.testLimits.length > 0 && (
                     <div className="space-y-1.5">
-                      <h4 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+                      <h4 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                         Test limits
                       </h4>
                       <div className="space-y-1">
@@ -114,7 +114,7 @@ const TestingProceduresPanel = ({ progress }: TestingProceduresPanelProps) => {
                             key={idx}
                             className="flex items-baseline justify-between gap-3 py-1.5 border-b border-white/[0.04] last:border-0 text-[13px]"
                           >
-                            <span className="text-white/70">{limit.parameter}</span>
+                            <span className="text-white">{limit.parameter}</span>
                             <span className="font-mono text-white text-right">
                               {limit.limit} {limit.unit}
                             </span>
@@ -126,14 +126,14 @@ const TestingProceduresPanel = ({ progress }: TestingProceduresPanelProps) => {
 
                   {test.commonIssues.length > 0 && (
                     <div className="space-y-1.5">
-                      <h4 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+                      <h4 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                         Common issues
                       </h4>
                       <ul className="space-y-1.5">
                         {test.commonIssues.map((issue, idx) => (
                           <li key={idx} className="flex items-start gap-2 text-[13px]">
                             <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
-                            <span className="text-white/85 leading-relaxed">{issue}</span>
+                            <span className="text-white leading-relaxed">{issue}</span>
                           </li>
                         ))}
                       </ul>
@@ -153,7 +153,7 @@ const TestingProceduresPanel = ({ progress }: TestingProceduresPanelProps) => {
         })}
 
         {filtered.length === 0 && (
-          <div className="text-center py-8 text-white/70 text-[13px]">
+          <div className="text-center py-8 text-white text-[13px]">
             No tests match your search. Try different keywords.
           </div>
         )}

@@ -20,7 +20,7 @@ const Subsection7_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         <h2 className="text-2xl md:text-3xl font-bold text-elec-yellow">
           Risk Assessment and Control
         </h2>
-        <p className="mt-2 text-elec-light/80">
+        <p className="mt-2 text-white">
           Identifying potential hazards in the work environment and implementing control measures to
           mitigate risks
         </p>
@@ -47,13 +47,13 @@ const Subsection7_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             Hazard Identification Methods
           </h3>
 
-          <p className="text-elec-light/90 mb-3">
+          <p className="text-white mb-3">
             Apply these practical techniques to identify electrical hazards:
           </p>
 
           <div className="overflow-x-auto">
             <Table>
-              <TableHeader className="bg-elec-yellow/20">
+              <TableHeader className="bg-white/[0.08]">
                 <TableRow className="hover:bg-transparent">
                   <TableHead className="text-white">Technique</TableHead>
                   <TableHead className="text-white">Application</TableHead>
@@ -110,14 +110,14 @@ const Subsection7_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             Control Measure Implementation
           </h3>
 
-          <p className="text-elec-light/90 mb-3">
+          <p className="text-white mb-3">
             Follow this hierarchy of controls when mitigating electrical hazards:
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div className="bg-white/5 p-3 rounded-lg">
               <h4 className="font-medium text-white">1. Elimination</h4>
-              <p className="text-elec-light/80 text-sm">
+              <p className="text-white text-sm">
                 Remove the hazard completely when possible (e.g., de-energise circuits before work,
                 replace damaged equipment)
               </p>
@@ -125,7 +125,7 @@ const Subsection7_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
 
             <div className="bg-white/5 p-3 rounded-lg">
               <h4 className="font-medium text-white">2. Substitution</h4>
-              <p className="text-elec-light/80 text-sm">
+              <p className="text-white text-sm">
                 Replace the hazard with a safer alternative (e.g., lower voltage equipment,
                 alternative materials)
               </p>
@@ -133,7 +133,7 @@ const Subsection7_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
 
             <div className="bg-white/5 p-3 rounded-lg">
               <h4 className="font-medium text-white">3. Engineering Controls</h4>
-              <p className="text-elec-light/80 text-sm">
+              <p className="text-white text-sm">
                 Implement physical barriers or modifications (e.g., insulation, enclosures, GFCIs,
                 RCDs)
               </p>
@@ -141,7 +141,7 @@ const Subsection7_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
 
             <div className="bg-white/5 p-3 rounded-lg">
               <h4 className="font-medium text-white">4. Administrative Controls</h4>
-              <p className="text-elec-light/80 text-sm">
+              <p className="text-white text-sm">
                 Create procedures, training, and schedules to reduce exposure (e.g., permits to
                 work, lockout-tagout protocols)
               </p>
@@ -150,7 +150,7 @@ const Subsection7_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
 
           <div className="bg-white/5 p-3 rounded-lg mt-3">
             <h4 className="font-medium text-white">5. Personal Protective Equipment</h4>
-            <p className="text-elec-light/80 text-sm">
+            <p className="text-white text-sm">
               Provide appropriate PPE as a last line of defence (e.g., insulating gloves, arc flash
               protection)
             </p>
@@ -162,13 +162,13 @@ const Subsection7_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             Risk Assessment Exercise: Electrical Panel Work
           </h3>
 
-          <p className="text-elec-light/90 mb-3">
+          <p className="text-white mb-3">
             Apply risk assessment principles to this practical scenario:
           </p>
 
           <div className="bg-white/5 p-4 rounded-lg">
             <h4 className="font-semibold text-white mb-2">Scenario:</h4>
-            <p className="text-elec-light/90">
+            <p className="text-white">
               You need to replace a circuit breaker in an existing industrial panel. The panel
               supplies several critical machines, and the work needs to be completed with minimal
               downtime.
@@ -176,7 +176,7 @@ const Subsection7_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
 
             <div className="mt-3">
               <p className="font-medium text-white">Hazards identified:</p>
-              <ul className="list-disc pl-5 grid grid-cols-1 md:grid-cols-2 gap-1 text-elec-light/80 mt-1">
+              <ul className="list-disc pl-5 grid grid-cols-1 md:grid-cols-2 gap-1 text-white mt-1">
                 <li>Live electrical components</li>
                 <li>Potential for arc flash/blast</li>
                 <li>Confined workspace</li>
@@ -187,7 +187,7 @@ const Subsection7_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
 
             <div className="mt-3">
               <p className="font-medium text-white">Complete this exercise:</p>
-              <ol className="list-decimal pl-5 text-elec-light/80 mt-1">
+              <ol className="list-decimal pl-5 text-white mt-1">
                 <li>What specific control measures would you implement for each hazard?</li>
                 <li>In what sequence would you perform the work?</li>
                 <li>What verification steps would you include?</li>
@@ -202,7 +202,7 @@ const Subsection7_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             Continuous Risk Monitoring
           </h3>
 
-          <p className="text-elec-light/90 mb-3">
+          <p className="text-white mb-3">
             Risk assessment is not a one-time activity. Implement these ongoing monitoring practices
             during electrical work:
           </p>
@@ -210,7 +210,7 @@ const Subsection7_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-white/5 p-3 rounded-lg">
               <h4 className="font-semibold text-white mb-1">During Work Monitoring:</h4>
-              <ul className="list-disc pl-4 space-y-1 text-elec-light/80 text-sm">
+              <ul className="list-disc pl-4 space-y-1 text-white text-sm">
                 <li>Conduct regular visual checks of the work area</li>
                 <li>Re-test circuits when conditions change</li>
                 <li>Verify tool and equipment condition throughout the job</li>
@@ -225,7 +225,7 @@ const Subsection7_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
 
             <div className="bg-white/5 p-3 rounded-lg">
               <h4 className="font-semibold text-white mb-1">Risk Level Indicators:</h4>
-              <ul className="list-disc pl-4 space-y-1 text-elec-light/80 text-sm">
+              <ul className="list-disc pl-4 space-y-1 text-white text-sm">
                 <li>
                   <span className="font-medium text-red-400">Stop Work Triggers:</span> Unexpected
                   findings, equipment failures, new hazards

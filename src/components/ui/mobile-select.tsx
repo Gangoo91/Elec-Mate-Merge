@@ -4,6 +4,7 @@ import { Check, ChevronDown, ChevronUp } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 import { Label } from '@/components/ui/label';
+import { labelCn, selectTriggerCn } from '@/components/forms/fieldStyles';
 
 const MobileSelect = SelectPrimitive.Root;
 
@@ -19,33 +20,27 @@ const MobileSelectTrigger = React.forwardRef<
     hint?: string;
   }
 >(({ className, children, label, error, hint, ...props }, ref) => (
-  <div className="space-y-2">
-    {label && (
-      <Label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-        {label}
-      </Label>
-    )}
+  <div>
+    {label && <Label className={labelCn}>{label}</Label>}
     <SelectPrimitive.Trigger
       ref={ref}
       className={cn(
-        'flex h-12 w-full items-center justify-between rounded-md border border-elec-yellow/20',
-        'bg-elec-dark px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground',
-        'focus:outline-none focus:ring-2 focus:ring-elec-yellow focus:ring-offset-2',
-        'disabled:cursor-not-allowed disabled:opacity-50 transition-colors',
-        // Mobile-specific improvements
-        'touch-manipulation text-base', // Prevent zoom on iOS
-        error && 'border-destructive focus:ring-destructive',
+        selectTriggerCn,
+        'flex w-full items-center justify-between disabled:cursor-not-allowed disabled:text-white/70',
+        error && '!border-red-400',
         className
       )}
       {...props}
     >
       {children}
       <SelectPrimitive.Icon asChild>
-        <ChevronDown className="h-4 w-4 opacity-50" />
+        <ChevronDown className="h-4 w-4 text-white" />
       </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
-    {hint && !error && <p className="text-xs text-muted-foreground">{hint}</p>}
-    {error && <p className="text-xs text-destructive animate-fade-in">{error}</p>}
+    {hint && !error && <p className="mt-1.5 text-[11.5px] leading-snug text-white">{hint}</p>}
+    {error && (
+      <p className="mt-1.5 text-[11.5px] leading-snug text-red-300 animate-fade-in">{error}</p>
+    )}
   </div>
 ));
 MobileSelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
@@ -86,8 +81,8 @@ const MobileSelectContent = React.forwardRef<
     <SelectPrimitive.Content
       ref={ref}
       className={cn(
-        'relative z-[9999] max-h-96 min-w-[8rem] overflow-hidden rounded-md border border-elec-yellow/20',
-        'bg-elec-dark text-foreground shadow-xl data-[state=open]:animate-in data-[state=closed]:animate-out',
+        'relative z-[9999] max-h-96 min-w-[8rem] overflow-hidden rounded-xl border border-white/[0.12]',
+        'bg-[hsl(0_0%_10%)] text-white shadow-xl data-[state=open]:animate-in data-[state=closed]:animate-out',
         'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95',
         'data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2',
         'data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2',
@@ -137,7 +132,7 @@ const MobileSelectItem = React.forwardRef<
     ref={ref}
     className={cn(
       'relative flex w-full cursor-default select-none items-center rounded-sm py-2.5 pl-8 pr-2',
-      'text-sm outline-none focus:bg-elec-yellow/20 focus:text-accent-foreground',
+      'text-sm text-white outline-none focus:bg-white/[0.08] focus:text-white',
       'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
       // Mobile-specific improvements
       'min-h-[48px] touch-manipulation', // Larger touch targets

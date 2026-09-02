@@ -1,5 +1,7 @@
 import { AlertTriangle, CheckCircle2, Lock, Zap } from 'lucide-react';
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const SafeIsolationPage = () => {
   return (
@@ -35,7 +37,7 @@ const SafeIsolationPage = () => {
         </div>
 
         {/* What is Safe Isolation */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 sm:p-5 space-y-4">
             <h2 className="text-lg font-semibold text-white">What Is Safe Isolation?</h2>
             <p className="text-white text-sm leading-relaxed">
@@ -121,7 +123,7 @@ const SafeIsolationPage = () => {
                     <h3 className="font-semibold text-white">{item.title}</h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">{item.detail}</p>
-                  <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
+                  <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3">
                     <p className="text-white text-xs">
                       <span className="font-semibold text-elec-yellow">Tip: </span>
                       {item.tip}
@@ -132,7 +134,7 @@ const SafeIsolationPage = () => {
             </div>
 
             {/* Memory Aid */}
-            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 sm:p-4">
+            <div className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3 sm:p-4">
               <h3 className="text-[13.5px] font-semibold text-elec-yellow tracking-tight mb-2">
                 Memory Aid — "Identify, Isolate, Lock, Prove, Test, Prove"
               </h3>
@@ -189,7 +191,7 @@ const SafeIsolationPage = () => {
         </div>
 
         {/* GS38 Requirements */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 sm:p-5 space-y-4">
             <h2 className="text-lg font-semibold text-elec-yellow">
               HSE Guidance Note GS38 — Test Equipment
@@ -241,7 +243,7 @@ const SafeIsolationPage = () => {
         </div>
 
         {/* Proving Units */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 sm:p-5 space-y-4">
             <h2 className="text-lg font-semibold text-elec-yellow">Proving Units</h2>
             <p className="text-white text-sm leading-relaxed">
@@ -270,7 +272,7 @@ const SafeIsolationPage = () => {
         </div>
 
         {/* Lock-Off Devices */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 sm:p-5 space-y-4">
             <h2 className="text-lg font-semibold text-elec-yellow">Lock-Off Devices and Tagging</h2>
             <p className="text-white text-sm leading-relaxed">
@@ -305,7 +307,7 @@ const SafeIsolationPage = () => {
               ].map((item) => (
                 <div
                   key={item.type}
-                  className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3"
+                  className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3"
                 >
                   <h4 className="text-white font-semibold text-sm mb-1">{item.type}</h4>
                   <p className="text-white text-xs">{item.desc}</p>
@@ -370,7 +372,7 @@ const SafeIsolationPage = () => {
         </div>
 
         {/* Common Mistakes */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 sm:p-5 space-y-4">
             <h2 className="text-lg font-semibold text-elec-yellow">Common Mistakes to Avoid</h2>
             <div className="space-y-3">
@@ -417,7 +419,7 @@ const SafeIsolationPage = () => {
               ].map((item) => (
                 <div
                   key={item.mistake}
-                  className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3"
+                  className="rounded-md border border-elec-yellow/20 bg-white/[0.05] p-3"
                 >
                   <p className="text-white font-semibold text-sm">{item.mistake}</p>
                   <p className="text-white text-xs mt-1">{item.consequence}</p>
@@ -428,7 +430,7 @@ const SafeIsolationPage = () => {
         </div>
 
         {/* AM2 / EPA Note */}
-        <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04]">
+        <div className="rounded-xl border border-elec-yellow/25 bg-white/[0.05]">
           <div className="p-4 sm:p-5 space-y-3">
             <h2 className="text-sm font-semibold text-elec-yellow">
               Safe Isolation in Your AM2 and EPA
@@ -444,7 +446,7 @@ const SafeIsolationPage = () => {
         </div>
 
         {/* Footer */}
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
           <div className="p-4 sm:p-5">
             <p className="text-white text-xs leading-relaxed">
               Based on the Electricity at Work Regulations 1989 (Regulations 12–14), BS

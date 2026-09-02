@@ -22,22 +22,22 @@ const PortfolioCategoriesOverview = ({ categories, entries }: PortfolioCategorie
               className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3"
             >
               <div className="flex items-center justify-between gap-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 truncate">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white truncate">
                   {category.name}
                 </span>
-                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono flex-shrink-0">
+                <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono flex-shrink-0">
                   {completedEntries}/{category.requiredEntries}
                 </span>
               </div>
 
-              <p className="text-[13px] text-white/70 leading-relaxed line-clamp-2">
+              <p className="text-[13px] text-white leading-relaxed line-clamp-2">
                 {category.description}
               </p>
 
               <div className="space-y-2">
                 <div className="flex justify-between text-[12px]">
-                  <span className="text-white/55">Progress</span>
-                  <span className="text-white/85 font-mono">{Math.round(progress)}%</span>
+                  <span className="text-white">Progress</span>
+                  <span className="text-white font-mono">{Math.round(progress)}%</span>
                 </div>
                 <div className="h-1 rounded-full bg-white/5 overflow-hidden">
                   <div
@@ -51,13 +51,13 @@ const PortfolioCategoriesOverview = ({ categories, entries }: PortfolioCategorie
                 <div className="grid grid-cols-3 gap-2 text-center">
                   <div>
                     <p className="text-[16px] font-mono text-white">{categoryEntries.length}</p>
-                    <p className="text-[10px] uppercase tracking-[0.18em] text-white/55 mt-0.5">
+                    <p className="text-[10px] uppercase tracking-[0.18em] text-white mt-0.5">
                       Total
                     </p>
                   </div>
                   <div>
                     <p className="text-[16px] font-mono text-white">{completedEntries}</p>
-                    <p className="text-[10px] uppercase tracking-[0.18em] text-white/55 mt-0.5">
+                    <p className="text-[10px] uppercase tracking-[0.18em] text-white mt-0.5">
                       Complete
                     </p>
                   </div>
@@ -65,7 +65,7 @@ const PortfolioCategoriesOverview = ({ categories, entries }: PortfolioCategorie
                     <p className="text-[16px] font-mono text-white">
                       {categoryEntries.filter((e) => e.status === 'in-progress').length}
                     </p>
-                    <p className="text-[10px] uppercase tracking-[0.18em] text-white/55 mt-0.5">
+                    <p className="text-[10px] uppercase tracking-[0.18em] text-white mt-0.5">
                       Progress
                     </p>
                   </div>
@@ -77,12 +77,12 @@ const PortfolioCategoriesOverview = ({ categories, entries }: PortfolioCategorie
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Recent activity
         </span>
 
         {entries.length === 0 ? (
-          <p className="text-[14px] text-white/55 leading-relaxed text-center py-6">
+          <p className="text-[14px] text-white leading-relaxed text-center py-6">
             No portfolio entries yet. Start by adding your first entry.
           </p>
         ) : (
@@ -97,12 +97,12 @@ const PortfolioCategoriesOverview = ({ categories, entries }: PortfolioCategorie
                 >
                   <div className="flex-1 min-w-0">
                     <p className="text-[14px] text-white truncate">{entry.title}</p>
-                    <p className="text-[11px] text-white/55 mt-0.5 font-mono">
+                    <p className="text-[11px] text-white mt-0.5 font-mono">
                       {entry.category.name} ·{' '}
                       {new Date(entry.dateCreated).toLocaleDateString('en-GB')}
                     </p>
                   </div>
-                  <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] flex-shrink-0">
+                  <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] flex-shrink-0">
                     {entry.status}
                   </span>
                 </div>

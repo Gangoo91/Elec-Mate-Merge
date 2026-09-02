@@ -9,6 +9,7 @@ import {
   ResultsGrid,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { inputCn, selectTriggerCn } from '@/components/forms/fieldStyles';
 
 type Unit = 'Ω' | 'kΩ' | 'MΩ';
 
@@ -75,12 +76,12 @@ const ResistorRow = ({
           placeholder="Value"
           value={value}
           onChange={(e) => onValueChange(e.target.value)}
-          className="flex-1 h-11 px-3 rounded-lg bg-white/5 border border-white/10 text-white text-base placeholder:text-white focus:outline-none focus:border-amber-400/50"
+          className={cn(inputCn, 'flex-1')}
         />
         <select
           value={unit}
           onChange={(e) => onUnitChange(e.target.value as Unit)}
-          className="h-11 px-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-amber-400/50"
+          className={cn(selectTriggerCn, '[color-scheme:dark]')}
         >
           <option value="Ω">Ω</option>
           <option value="kΩ">kΩ</option>

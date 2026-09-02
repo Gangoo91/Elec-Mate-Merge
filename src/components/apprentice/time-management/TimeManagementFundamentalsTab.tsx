@@ -58,7 +58,7 @@ const TimeManagementFundamentalsTab = () => {
   return (
     <div className="space-y-6">
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Core time management principles
         </span>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
@@ -71,7 +71,7 @@ const TimeManagementFundamentalsTab = () => {
                 <h3 className="text-[16px] font-semibold text-white leading-tight">
                   {principle.title}
                 </h3>
-                <p className="text-[14px] text-white/70 leading-relaxed mt-1">
+                <p className="text-[14px] text-white leading-relaxed mt-1">
                   {principle.description}
                 </p>
               </div>
@@ -79,7 +79,7 @@ const TimeManagementFundamentalsTab = () => {
                 {principle.steps.map((step, stepIndex) => (
                   <li
                     key={stepIndex}
-                    className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                    className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                   >
                     <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                     <span>{step}</span>
@@ -92,7 +92,7 @@ const TimeManagementFundamentalsTab = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Common challenges & solutions
         </span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -102,8 +102,8 @@ const TimeManagementFundamentalsTab = () => {
               className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
             >
               <h4 className="text-[14px] font-semibold text-white">{item.challenge}</h4>
-              <p className="text-[14px] text-white/85 leading-relaxed">{item.solution}</p>
-              <span className="inline-block text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04]">
+              <p className="text-[14px] text-white leading-relaxed">{item.solution}</p>
+              <span className="inline-block text-[12px] text-white px-2 py-0.5 rounded-md border border-elec-yellow/20 bg-white/[0.05]">
                 {item.tip}
               </span>
             </div>
@@ -112,7 +112,7 @@ const TimeManagementFundamentalsTab = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Getting started: your first week
         </span>
         <div className="space-y-3">
@@ -151,7 +151,7 @@ const TimeManagementFundamentalsTab = () => {
                 {block.items.map((item, i) => (
                   <li
                     key={i}
-                    className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                    className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                   >
                     <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                     <span>{item}</span>

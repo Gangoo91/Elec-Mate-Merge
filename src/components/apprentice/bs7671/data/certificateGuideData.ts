@@ -51,7 +51,7 @@ export const certificateTypes: CertificateType[] = [
       'NICEIC — Available to registered contractors',
       'NAPIT — Available to registered members',
       'ECA — Available to ECA members',
-      'Certsure/ELECSA — Digital certificate platforms',
+      'Certsure (NICEIC) — Digital certificate platforms',
     ],
     regulationReference: 'BS 7671:2018+A4:2026 Part 6, Regulation 641.7 and Appendix 6',
   },

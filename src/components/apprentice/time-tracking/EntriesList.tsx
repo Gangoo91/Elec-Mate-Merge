@@ -31,7 +31,7 @@ const EntriesList = ({ entries, isLoading = false }: EntriesListProps) => {
   if (entries.length === 0) {
     return (
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 text-center">
-        <p className="text-[14px] text-white/85 leading-relaxed">No entries found</p>
+        <p className="text-[14px] text-white leading-relaxed">No entries found</p>
       </div>
     );
   }

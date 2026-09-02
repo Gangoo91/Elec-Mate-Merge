@@ -104,7 +104,7 @@ const CPDEntryForm = ({ onSuccess }: CPDEntryFormProps = {}) => {
     return (
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-8 text-center">
         <div className="animate-spin w-8 h-8 border-2 border-white/30 border-t-elec-yellow rounded-full mx-auto mb-4" />
-        <div className="text-[14px] text-white/85">Loading CPD system...</div>
+        <div className="text-[14px] text-white">Loading CPD system...</div>
       </div>
     );
   }
@@ -113,10 +113,10 @@ const CPDEntryForm = ({ onSuccess }: CPDEntryFormProps = {}) => {
     <div className="space-y-5 animate-fade-in">
       {(!activeMembership || memberships.length === 0) && (
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Professional body required
           </span>
-          <p className="text-[14px] text-white/85 leading-relaxed">
+          <p className="text-[14px] text-white leading-relaxed">
             {memberships.length === 0
               ? 'Please set up your professional body membership in settings to enable CPD tracking.'
               : 'No active professional body selected. CPD entries will be saved but may not count towards compliance.'}
@@ -126,11 +126,11 @@ const CPDEntryForm = ({ onSuccess }: CPDEntryFormProps = {}) => {
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-5">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Log CPD activity
           </span>
           {activeMembership && (
-            <p className="text-[14px] text-white/85">
+            <p className="text-[14px] text-white">
               Recording for{' '}
               <span className="text-white">{activeMembership.professional_body?.name}</span>
             </p>
@@ -140,7 +140,7 @@ const CPDEntryForm = ({ onSuccess }: CPDEntryFormProps = {}) => {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="title" className="text-[12px] text-white/70">
+              <Label htmlFor="title" className="text-[12px] text-white">
                 Activity title *
               </Label>
               <Input
@@ -154,28 +154,28 @@ const CPDEntryForm = ({ onSuccess }: CPDEntryFormProps = {}) => {
             </div>
 
             <div className="space-y-2">
-              <Label className="text-[12px] text-white/70">Date completed *</Label>
+              <Label className="text-[12px] text-white">Date completed *</Label>
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
                     variant="outline"
                     className={cn(
                       'w-full h-11 justify-start text-left font-normal touch-manipulation bg-white/[0.03] border-white/10 hover:bg-white/[0.06]',
-                      !date && 'text-white/40'
+                      !date && 'text-white'
                     )}
                   >
-                    <CalendarIcon className="mr-2 h-4 w-4 text-white/55" />
+                    <CalendarIcon className="mr-2 h-4 w-4 text-white" />
                     {date ? format(date, 'PPP') : 'Pick a date'}
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto p-0 bg-elec-gray border-white/10">
+                <PopoverContent className="w-auto p-0 bg-white/[0.06] border-white/10">
                   <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
                 </PopoverContent>
               </Popover>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="hours" className="text-[12px] text-white/70">
+              <Label htmlFor="hours" className="text-[12px] text-white">
                 Hours *
               </Label>
               <Input
@@ -192,7 +192,7 @@ const CPDEntryForm = ({ onSuccess }: CPDEntryFormProps = {}) => {
             </div>
 
             <div className="space-y-2">
-              <Label className="text-[12px] text-white/70">Category *</Label>
+              <Label className="text-[12px] text-white">Category *</Label>
               <Select
                 value={formData.category}
                 onValueChange={(value) => handleInputChange('category', value)}
@@ -201,7 +201,7 @@ const CPDEntryForm = ({ onSuccess }: CPDEntryFormProps = {}) => {
                 <SelectTrigger className="h-11 touch-manipulation bg-white/[0.03] border-white/10 text-white">
                   <SelectValue placeholder="Select category" />
                 </SelectTrigger>
-                <SelectContent className="bg-elec-gray border-white/10">
+                <SelectContent className="bg-white/[0.06] border-white/10">
                   {categories.map((category) => (
                     <SelectItem key={category.id} value={category.id}>
                       {category.name}
@@ -212,7 +212,7 @@ const CPDEntryForm = ({ onSuccess }: CPDEntryFormProps = {}) => {
             </div>
 
             <div className="space-y-2 md:col-span-2">
-              <Label className="text-[12px] text-white/70">Activity type *</Label>
+              <Label className="text-[12px] text-white">Activity type *</Label>
               <Select
                 value={formData.type}
                 onValueChange={(value) => handleInputChange('type', value)}
@@ -221,7 +221,7 @@ const CPDEntryForm = ({ onSuccess }: CPDEntryFormProps = {}) => {
                 <SelectTrigger className="h-11 touch-manipulation bg-white/[0.03] border-white/10 text-white">
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
-                <SelectContent className="bg-elec-gray border-white/10">
+                <SelectContent className="bg-white/[0.06] border-white/10">
                   {activityTypes.map((type) => (
                     <SelectItem key={type.id} value={type.id}>
                       {type.name}
@@ -233,7 +233,7 @@ const CPDEntryForm = ({ onSuccess }: CPDEntryFormProps = {}) => {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="description" className="text-[12px] text-white/70">
+            <Label htmlFor="description" className="text-[12px] text-white">
               Description
             </Label>
             <Textarea
@@ -247,7 +247,7 @@ const CPDEntryForm = ({ onSuccess }: CPDEntryFormProps = {}) => {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="learningOutcomes" className="text-[12px] text-white/70">
+            <Label htmlFor="learningOutcomes" className="text-[12px] text-white">
               Learning outcomes
             </Label>
             <Textarea

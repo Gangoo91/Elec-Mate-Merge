@@ -22,6 +22,8 @@ import { Calendar, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useReducedMotion } from '@/components/ui/MobileAwareMotion';
 import { useAm2Readiness } from '@/hooks/useAm2Readiness';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { inputCn } from '@/components/forms/fieldStyles';
 
 const SIMULATOR_PATH = '/apprentice/am2-simulator';
 const TIMED_MOCK_PATH = `${SIMULATOR_PATH}?tab=mock-day`;
@@ -98,7 +100,7 @@ function Ring({ score, size = 120 }: { score: number | null; size?: number }) {
         <span className="text-[32px] font-semibold tabular-nums leading-none text-white">
           {score === null ? '—' : score}
         </span>
-        <span className="mt-1.5 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="mt-1.5 text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           {score === null ? 'No runs' : 'Ready'}
         </span>
       </div>
@@ -137,18 +139,23 @@ export function Am2ReadinessRing({ onRunMock, className }: Am2ReadinessRingProps
 
       {/* Null state — first-run nudge instead of a misleading zero */}
       {score === null && (
-        <p className="mt-4 max-w-xs text-center text-[12.5px] leading-relaxed text-white/65">
+        <p className="mt-4 max-w-xs text-center text-[12.5px] leading-relaxed text-white">
           No timed runs banked yet — your readiness score starts with your first one.
         </p>
       )}
 
       {/* The WHY — explainable bands, quiet rows */}
       {score !== null && bands.length > 0 && (
-        <ul className="mt-5 w-full max-w-xl divide-y divide-white/[0.04] overflow-hidden rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+        <ul
+          className={cn(
+            'mt-5 w-full max-w-xl divide-y divide-white/[0.04] overflow-hidden rounded-2xl border border-elec-yellow/35',
+            CARD_SURFACE
+          )}
+        >
           {bands.map((band) => (
             <li key={band.key} className="px-4 py-3">
               <div className="flex items-center gap-3">
-                <span className="w-28 shrink-0 text-[11.5px] font-medium text-white/80">
+                <span className="w-28 shrink-0 text-[11.5px] font-medium text-white">
                   {band.label}
                 </span>
                 <div className="h-1 flex-1 overflow-hidden rounded-full bg-white/[0.06]">
@@ -157,11 +164,11 @@ export function Am2ReadinessRing({ onRunMock, className }: Am2ReadinessRingProps
                     style={{ width: `${band.value}%` }}
                   />
                 </div>
-                <span className="w-9 shrink-0 text-right text-[11.5px] tabular-nums text-white/70">
+                <span className="w-9 shrink-0 text-right text-[11.5px] tabular-nums text-white">
                   {band.value}
                 </span>
               </div>
-              <p className="mt-1 text-[10.5px] leading-snug text-white/45">{band.hint}</p>
+              <p className="mt-1 text-[10.5px] leading-snug text-white">{band.hint}</p>
             </li>
           ))}
         </ul>
@@ -174,8 +181,8 @@ export function Am2ReadinessRing({ onRunMock, className }: Am2ReadinessRingProps
             className={cn(
               'inline-flex h-8 items-center gap-1.5 rounded-full border px-3 text-[11.5px] font-medium tabular-nums',
               daysToGo >= 0
-                ? 'border-elec-yellow/30 bg-elec-yellow/[0.08] text-elec-yellow'
-                : 'border-white/[0.08] bg-white/[0.03] text-white/55'
+                ? 'border-elec-yellow/30 bg-white/[0.05] text-elec-yellow'
+                : 'border-white/[0.08] bg-white/[0.03] text-white'
             )}
           >
             <Calendar className="h-3 w-3" />
@@ -184,7 +191,7 @@ export function Am2ReadinessRing({ onRunMock, className }: Am2ReadinessRingProps
         ) : (
           <label
             htmlFor={dateInputId}
-            className="inline-flex items-center gap-2 text-[11.5px] font-medium text-white/65"
+            className="inline-flex items-center gap-2 text-[11.5px] font-medium text-white"
           >
             <span className="inline-flex items-center gap-1.5">
               <Calendar className="h-3 w-3 text-elec-yellow" />
@@ -197,7 +204,7 @@ export function Am2ReadinessRing({ onRunMock, className }: Am2ReadinessRingProps
               onChange={(e) => {
                 if (e.target.value) setExamDate(e.target.value);
               }}
-              className="h-8 rounded-lg border border-white/[0.08] bg-[hsl(0_0%_8%)] px-2 text-[12px] text-white outline-none touch-manipulation focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20"
+              className={cn(inputCn, 'w-28 tabular-nums')}
             />
           </label>
         )}
@@ -233,9 +240,9 @@ export function Am2ReadinessRow({ className }: { className?: string }) {
         <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
           AM2 readiness
         </div>
-        <div className="mt-1 flex items-baseline gap-2 text-[13px] text-white/70">
+        <div className="mt-1 flex items-baseline gap-2 text-[13px] text-white">
           {loading ? (
-            <span className="text-white/45">Checking your runs…</span>
+            <span className="text-white">Checking your runs…</span>
           ) : score === null ? (
             <span>No timed runs yet — take your first</span>
           ) : (
@@ -243,14 +250,14 @@ export function Am2ReadinessRow({ className }: { className?: string }) {
               <span className="font-mono text-[18px] font-semibold tabular-nums leading-none text-elec-yellow">
                 {score}
               </span>
-              <span className="text-[11px] text-white/45">/ 100</span>
-              <span className="text-white/25">·</span>
+              <span className="text-[11px] text-white">/ 100</span>
+              <span className="text-white">·</span>
               <span className="tabular-nums">
                 {sessionsCount} run{sessionsCount === 1 ? '' : 's'}
               </span>
               {daysToGo !== null && daysToGo >= 0 && (
                 <>
-                  <span className="text-white/25">·</span>
+                  <span className="text-white">·</span>
                   <span className="tabular-nums">{daysToGoLabel(daysToGo)}</span>
                 </>
               )}

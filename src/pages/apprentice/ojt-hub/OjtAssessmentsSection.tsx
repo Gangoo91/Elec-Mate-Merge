@@ -15,7 +15,7 @@ import { OjtSectionHeader as SectionHeader } from './ojtSection';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const STATUS_TONE: Record<OJTAssessment['status'], string> = {
-  completed: 'border-elec-yellow/30 bg-elec-yellow/[0.06] text-elec-yellow',
+  completed: 'border-elec-yellow/30 bg-white/[0.05] text-elec-yellow',
   scheduled: 'border-white/[0.10] bg-white/[0.04] text-white',
   pending: 'border-white/[0.10] bg-white/[0.04] text-white',
   failed: 'border-red-500/30 bg-red-500/[0.04] text-red-300',
@@ -110,7 +110,12 @@ export function OjtAssessmentsSection() {
           <Eyebrow>Loading…</Eyebrow>
         </div>
       ) : assessments.length === 0 ? (
-        <div className={cn('rounded-2xl border border-elec-yellow/35 p-6 text-center space-y-2', CARD_SURFACE)}>
+        <div
+          className={cn(
+            'rounded-2xl border border-elec-yellow/35 p-6 text-center space-y-2',
+            CARD_SURFACE
+          )}
+        >
           <ClipboardCheck className="h-7 w-7 text-white mx-auto" />
           <p className="text-[13px] text-white leading-relaxed">
             No assessments tracked yet. Add upcoming practical, written or portfolio assessments so
@@ -127,7 +132,10 @@ export function OjtAssessmentsSection() {
             return (
               <li
                 key={a.id}
-                className={cn('rounded-2xl border border-elec-yellow/35 px-3.5 py-3 sm:px-5 sm:py-4', CARD_SURFACE)}
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 px-3.5 py-3 sm:px-5 sm:py-4',
+                  CARD_SURFACE
+                )}
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex-1 min-w-0 space-y-1.5">
@@ -159,9 +167,7 @@ export function OjtAssessmentsSection() {
                       <p className="text-[11.5px] text-elec-yellow/85">Grade: {a.grade}</p>
                     )}
                     {a.feedback && (
-                      <p className="text-[11.5px] text-white italic leading-snug">
-                        {a.feedback}
-                      </p>
+                      <p className="text-[11.5px] text-white italic leading-snug">{a.feedback}</p>
                     )}
                   </div>
                   <div className="flex items-center gap-1 flex-shrink-0">
@@ -170,7 +176,7 @@ export function OjtAssessmentsSection() {
                         type="button"
                         onClick={() => void completeAssessment(a.id)}
                         aria-label="Mark complete"
-                        className="h-8 w-8 inline-flex items-center justify-center rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-elec-yellow hover:bg-elec-yellow/[0.12] transition-colors touch-manipulation"
+                        className="h-8 w-8 inline-flex items-center justify-center rounded-md border border-elec-yellow/30 bg-white/[0.05] text-elec-yellow hover:bg-elec-yellow/[0.12] transition-colors touch-manipulation"
                         title="Mark complete"
                       >
                         <Check className="h-3.5 w-3.5" />

@@ -167,7 +167,7 @@ export function EPAGradePredictor({
   if (confidence === 'none') {
     const remaining = Math.max(0, MIN_FOR_INDICATION - quizCount);
     return (
-      <section className={cn('rounded-2xl border border-white/[0.06] p-5 sm:p-6', CARD_SURFACE)}>
+      <section className={cn('rounded-2xl border border-elec-yellow/35 p-5 sm:p-6', CARD_SURFACE)}>
         <div className="space-y-2.5 max-w-2xl">
           <Eyebrow>Predicted EPA grade</Eyebrow>
           <p className="text-[26px] sm:text-[32px] font-semibold tracking-tight leading-none text-white">
@@ -186,16 +186,9 @@ export function EPAGradePredictor({
 
   const isIndicative = confidence === 'indicative';
 
-  const nextBandTarget =
-    band === 'fail' ? 50 : band === 'pass' ? 65 : band === 'merit' ? 80 : null;
+  const nextBandTarget = band === 'fail' ? 50 : band === 'pass' ? 65 : band === 'merit' ? 80 : null;
   const nextBandLabel =
-    band === 'fail'
-      ? 'Pass'
-      : band === 'pass'
-        ? 'Merit'
-        : band === 'merit'
-          ? 'Distinction'
-          : null;
+    band === 'fail' ? 'Pass' : band === 'pass' ? 'Merit' : band === 'merit' ? 'Distinction' : null;
 
   const trendCopy =
     !isIndicative && trend === 'improving'
@@ -214,13 +207,8 @@ export function EPAGradePredictor({
         : "You're on track for the top band — keep cementing depth across topics.";
 
   return (
-    <section className={cn('rounded-2xl border border-white/[0.06] p-5 sm:p-6', CARD_SURFACE)}>
-      <div
-        className={cn(
-          'grid gap-5 lg:gap-10 lg:items-center',
-          !degenerate && 'lg:grid-cols-2'
-        )}
-      >
+    <section className={cn('rounded-2xl border border-elec-yellow/35 p-5 sm:p-6', CARD_SURFACE)}>
+      <div className={cn('grid gap-5 lg:gap-10 lg:items-center', !degenerate && 'lg:grid-cols-2')}>
         {/* Left — grade headline + actionable nudge */}
         <div className={cn('space-y-3', degenerate && 'max-w-3xl')}>
           <div className="flex items-baseline justify-between gap-3 flex-wrap">
@@ -267,40 +255,40 @@ export function EPAGradePredictor({
             rest are quiet white. Four tinted segments read as a chart to be
             decoded, and translucent volt over near-black goes muddy. */}
         {!degenerate && (
-        <div className={cn('space-y-2', isIndicative && 'opacity-90')}>
-          <div className="flex h-2.5 w-full rounded-full overflow-hidden bg-white/[0.04]">
-            {(['distinction', 'merit', 'pass', 'fail'] as Band[]).map((b) => {
-              const pct = probs[b];
-              if (pct < 1) return null;
-              return (
-                <div
-                  key={b}
-                  className={cn(
-                    'h-full transition-all duration-700',
-                    b === band ? 'bg-elec-yellow' : 'bg-white/20'
-                  )}
-                  style={{ width: `${pct}%` }}
-                  title={`${BAND_LABEL[b]} · ${pct}%`}
-                />
-              );
-            })}
-          </div>
-          <div className="grid grid-cols-4 gap-2 text-[10px] uppercase tracking-[0.14em]">
-            {(['distinction', 'merit', 'pass', 'fail'] as Band[]).map((b) => (
-              <div key={b} className="text-center space-y-0.5">
-                <div
-                  className={cn(
-                    'font-mono text-[12px] tabular-nums',
-                    b === band ? 'text-elec-yellow' : 'text-white'
-                  )}
-                >
-                  {probs[b]}%
+          <div className={cn('space-y-2', isIndicative && 'opacity-90')}>
+            <div className="flex h-2.5 w-full rounded-full overflow-hidden bg-white/[0.04]">
+              {(['distinction', 'merit', 'pass', 'fail'] as Band[]).map((b) => {
+                const pct = probs[b];
+                if (pct < 1) return null;
+                return (
+                  <div
+                    key={b}
+                    className={cn(
+                      'h-full transition-all duration-700',
+                      b === band ? 'bg-elec-yellow' : 'bg-white/20'
+                    )}
+                    style={{ width: `${pct}%` }}
+                    title={`${BAND_LABEL[b]} · ${pct}%`}
+                  />
+                );
+              })}
+            </div>
+            <div className="grid grid-cols-4 gap-2 text-[10px] uppercase tracking-[0.14em]">
+              {(['distinction', 'merit', 'pass', 'fail'] as Band[]).map((b) => (
+                <div key={b} className="text-center space-y-0.5">
+                  <div
+                    className={cn(
+                      'font-mono text-[12px] tabular-nums',
+                      b === band ? 'text-elec-yellow' : 'text-white'
+                    )}
+                  >
+                    {probs[b]}%
+                  </div>
+                  <div className="text-white">{BAND_LABEL[b]}</div>
                 </div>
-                <div className="text-white">{BAND_LABEL[b]}</div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
         )}
       </div>
     </section>

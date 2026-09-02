@@ -31,7 +31,7 @@ const SubsectionsNavigation = ({
     <div className="border-t border-elec-yellow/20 py-4 px-4 md:px-6 flex flex-col sm:flex-row justify-between items-center gap-3 mt-8">
       <Button
         variant="outline"
-        className="w-full sm:w-auto border-elec-yellow/30 hover:bg-elec-yellow/10"
+        className="w-full sm:w-auto border-elec-yellow/30 hover:bg-white/[0.06]"
         onClick={() => previousSubsection && navigateToSubsection(previousSubsection)}
         disabled={!previousSubsection}
       >
@@ -45,7 +45,7 @@ const SubsectionsNavigation = ({
 
       <Button
         variant="outline"
-        className="w-full sm:w-auto border-elec-yellow/30 hover:bg-elec-yellow/10"
+        className="w-full sm:w-auto border-elec-yellow/30 hover:bg-white/[0.06]"
         onClick={() => nextSubsection && navigateToSubsection(nextSubsection)}
         disabled={!nextSubsection}
       >

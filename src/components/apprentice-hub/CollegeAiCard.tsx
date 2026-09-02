@@ -19,7 +19,7 @@ export function CollegeAiCard() {
     <button
       type="button"
       onClick={() => navigate('/apprentice/college-ai')}
-      className="group w-full text-left rounded-2xl border border-white/[0.06] bg-white/[0.02] hover:border-white/[0.06] hover:from-cyan-500/[0.14] transition-colors overflow-hidden touch-manipulation"
+      className="group w-full text-left rounded-2xl border border-elec-yellow/35 bg-white/[0.02] hover:bg-white/[0.04] transition-colors overflow-hidden touch-manipulation"
     >
       <div className="px-4 sm:px-5 py-4 sm:py-5">
         <div className="flex items-baseline justify-between gap-3 flex-wrap">

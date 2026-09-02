@@ -104,10 +104,10 @@ const ProductivityToolsTab = () => {
     <div className="space-y-6">
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Recommended mobile apps
           </span>
-          <p className="text-[14px] text-white/85 leading-relaxed">
+          <p className="text-[14px] text-white leading-relaxed">
             Apps specifically useful for apprentices managing work and study
           </p>
         </div>
@@ -120,22 +120,22 @@ const ProductivityToolsTab = () => {
               <div className="flex items-start justify-between gap-2">
                 <div>
                   <h4 className="text-[14px] font-semibold text-white">{app.name}</h4>
-                  <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] inline-block mt-1">
+                  <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] inline-block mt-1">
                     {app.category}
                   </span>
                 </div>
-                <div className="text-[12px] text-white/55">{app.price}</div>
+                <div className="text-[12px] text-white">{app.price}</div>
               </div>
-              <p className="text-[14px] text-white/85 leading-relaxed">{app.description}</p>
+              <p className="text-[14px] text-white leading-relaxed">{app.description}</p>
               <div className="space-y-1">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Key features
                 </span>
                 <ul className="space-y-1">
                   {app.features.map((feature, idx) => (
                     <li
                       key={idx}
-                      className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                      className="text-[13px] text-white leading-relaxed flex items-start gap-2"
                     >
                       <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                       <span>{feature}</span>
@@ -150,10 +150,10 @@ const ProductivityToolsTab = () => {
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Web-based tools
           </span>
-          <p className="text-[14px] text-white/85 leading-relaxed">
+          <p className="text-[14px] text-white leading-relaxed">
             Browser-based tools for planning and organisation
           </p>
         </div>
@@ -165,20 +165,20 @@ const ProductivityToolsTab = () => {
             >
               <div>
                 <h4 className="text-[14px] font-semibold text-white">{tool.name}</h4>
-                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] inline-block mt-1">
+                <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] inline-block mt-1">
                   {tool.category}
                 </span>
               </div>
-              <p className="text-[14px] text-white/85 leading-relaxed">{tool.description}</p>
+              <p className="text-[14px] text-white leading-relaxed">{tool.description}</p>
               <div className="space-y-1">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Features
                 </span>
                 <ul className="space-y-1">
                   {tool.features.map((feature, idx) => (
                     <li
                       key={idx}
-                      className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                      className="text-[13px] text-white leading-relaxed flex items-start gap-2"
                     >
                       <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                       <span>{feature}</span>
@@ -202,10 +202,10 @@ const ProductivityToolsTab = () => {
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Proven productivity techniques
           </span>
-          <p className="text-[14px] text-white/85 leading-relaxed">
+          <p className="text-[14px] text-white leading-relaxed">
             Time-tested methods for maximising efficiency
           </p>
         </div>
@@ -219,7 +219,7 @@ const ProductivityToolsTab = () => {
                 <h3 className="text-[16px] font-semibold text-white leading-tight">
                   {technique.title}
                 </h3>
-                <p className="text-[14px] text-white/70 leading-relaxed mt-1">
+                <p className="text-[14px] text-white leading-relaxed mt-1">
                   {technique.description}
                 </p>
               </div>
@@ -232,7 +232,7 @@ const ProductivityToolsTab = () => {
                     {technique.benefits.map((benefit, idx) => (
                       <li
                         key={idx}
-                        className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                        className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                       >
                         <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
                         <span>{benefit}</span>
@@ -241,14 +241,14 @@ const ProductivityToolsTab = () => {
                   </ul>
                 </div>
                 <div className="space-y-1">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     How to implement
                   </span>
                   <ol className="space-y-1">
                     {technique.howTo.map((step, idx) => (
                       <li
                         key={idx}
-                        className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                        className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                       >
                         <span className="text-elec-yellow font-medium mt-0">{idx + 1}.</span>
                         <span>{step}</span>

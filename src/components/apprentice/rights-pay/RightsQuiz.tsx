@@ -11,21 +11,27 @@ const RightsQuiz = () => {
     {
       question: 'How much annual leave are apprentices entitled to?',
       options: [
-        '20 days plus bank holidays',
+        '5.6 weeks a year — 28 days for a five-day week',
         '15 days plus bank holidays',
         '25 days plus bank holidays',
         'It depends on your employer',
       ],
       correct: 0,
       explanation:
-        'Apprentices are entitled to 20 days annual leave plus bank holidays as a minimum.',
+        'The statutory minimum is 5.6 weeks a year — 28 days if you work five days a week. Bank holidays can be counted within it. Your contract may give more, never less.',
     },
     {
-      question: 'What percentage of your time should be spent on off-the-job training?',
-      options: ['10%', '15%', '20%', '25%'],
-      correct: 2,
+      question:
+        'For an apprenticeship starting from 1 August 2025, how is your off-the-job training requirement set?',
+      options: [
+        '20% of your working hours',
+        'A fixed number of hours set by your apprenticeship standard',
+        'Six hours a week',
+        'Whatever your employer decides',
+      ],
+      correct: 1,
       explanation:
-        'Apprentices are entitled to a minimum of 20% off-the-job training (typically 1 day per week).',
+        'Since 1 August 2025 each standard carries a fixed total — 1,066 hours for an Installation & Maintenance Electrician (ST0152) — delivered in paid working time over the programme. The old 20% / six-hours-a-week rule only still applies to apprenticeships that started before that date.',
     },
     {
       question: 'Can your employer make you work overtime without extra pay?',
@@ -66,7 +72,8 @@ const RightsQuiz = () => {
         'Employers cannot deduct apprenticeship training costs from your wages. Your training is funded through the apprenticeship levy or government co-investment.',
     },
     {
-      question: 'What should you do if asked to work on live electrical circuits without proper safety procedures?',
+      question:
+        'What should you do if asked to work on live electrical circuits without proper safety procedures?',
       options: [
         'Do it carefully to impress your employer',
         'Refuse the task — it is your legal right',
@@ -87,17 +94,18 @@ const RightsQuiz = () => {
     {
       question: 'Who should you report apprenticeship quality or funding concerns to?',
       options: [
-        'Education & Skills Funding Agency (ESFA)',
+        'The Department for Education apprenticeship service',
         'Your local council',
         'Ofsted',
-        'The Department for Education directly',
+        'The Health and Safety Executive',
       ],
       correct: 0,
       explanation:
-        'The ESFA oversees apprenticeship quality and funding. They handle complaints about training providers and employers. Contact them at 0370 267 0001 or through GOV.UK.',
+        'Apprenticeship quality and funding sit with the Department for Education — the ESFA closed on 31 March 2025 and its work moved into the DfE. Raise it with your provider first; if unresolved, call the National Apprenticeship Helpline on 0800 015 0600 or complain through GOV.UK.',
     },
     {
-      question: 'After your first year as an apprentice aged 21+, what is the minimum wage you should receive from April 2026?',
+      question:
+        'After your first year as an apprentice aged 21+, what is the minimum wage you should receive from April 2026?',
       options: ['£8.00', '£12.71', '£10.85', '£15.00'],
       correct: 1,
       explanation:
@@ -163,14 +171,14 @@ const RightsQuiz = () => {
     const score = getScore();
     return (
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Quiz results
         </span>
         <div className="text-center">
           <div className="text-[36px] font-semibold text-elec-yellow font-mono">
             {score}/{questions.length}
           </div>
-          <p className="text-[14px] text-white/85 leading-relaxed mt-2">
+          <p className="text-[14px] text-white leading-relaxed mt-2">
             {score >= 11
               ? 'Excellent — you know your rights well.'
               : score >= 7
@@ -193,11 +201,11 @@ const RightsQuiz = () => {
                   {isCorrect ? (
                     <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   ) : (
-                    <XCircle className="h-5 w-5 text-white/55 mt-0.5 flex-shrink-0" />
+                    <XCircle className="h-5 w-5 text-white mt-0.5 flex-shrink-0" />
                   )}
                   <div className="space-y-1">
                     <h4 className="text-[14px] font-semibold text-white">{question.question}</h4>
-                    <p className="text-[13px] text-white/85">
+                    <p className="text-[13px] text-white">
                       Your answer: {question.options[userAnswer]}
                     </p>
                     {!isCorrect && (
@@ -205,9 +213,7 @@ const RightsQuiz = () => {
                         Correct answer: {question.options[question.correct]}
                       </p>
                     )}
-                    <p className="text-[12px] text-white/55 leading-relaxed">
-                      {question.explanation}
-                    </p>
+                    <p className="text-[12px] text-white leading-relaxed">{question.explanation}</p>
                   </div>
                 </div>
               </div>
@@ -231,10 +237,10 @@ const RightsQuiz = () => {
   return (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
       <div className="flex items-center justify-between">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Rights assessment quiz
         </span>
-        <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+        <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
           {currentQuestion + 1} of {questions.length}
         </span>
       </div>
@@ -251,9 +257,7 @@ const RightsQuiz = () => {
               className="w-full text-left justify-start h-auto p-4 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
               onClick={() => handleAnswer(index)}
             >
-              <span className="mr-3 text-white/55 font-mono">
-                {String.fromCharCode(65 + index)}.
-              </span>
+              <span className="mr-3 text-white font-mono">{String.fromCharCode(65 + index)}.</span>
               <span className="text-[14px] whitespace-normal">{option}</span>
             </Button>
           ))}

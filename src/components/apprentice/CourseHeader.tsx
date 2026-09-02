@@ -18,7 +18,7 @@ const CourseHeader = ({ courseTitle }: CourseHeaderProps) => {
       <Link to="/apprentice/study/eal" className="flex-shrink-0 w-full sm:w-auto">
         <Button
           variant="outline"
-          className="border-elec-yellow/30 hover:bg-elec-yellow/10 w-full sm:w-auto"
+          className="border-elec-yellow/30 hover:bg-white/[0.06] w-full sm:w-auto"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to EAL Courses

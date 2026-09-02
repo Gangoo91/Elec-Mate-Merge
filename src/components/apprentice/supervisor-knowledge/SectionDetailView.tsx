@@ -28,7 +28,7 @@ interface SectionDetailViewProps {
   onBack: () => void;
 }
 
-const eyebrowClass = 'text-[10px] font-medium uppercase tracking-[0.18em] text-white/70';
+const eyebrowClass = 'text-[10px] font-medium uppercase tracking-[0.18em] text-white';
 const sectionCardClass =
   'rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2';
 
@@ -112,7 +112,7 @@ const SectionDetailView = ({ section, progress, onBack }: SectionDetailViewProps
             <h1 className="text-[20px] sm:text-[22px] font-semibold text-white leading-tight truncate">
               {section.title}
             </h1>
-            <p className="text-[14px] text-white/70 leading-relaxed">{section.subtitle}</p>
+            <p className="text-[14px] text-white leading-relaxed">{section.subtitle}</p>
           </div>
         </div>
 
@@ -121,7 +121,7 @@ const SectionDetailView = ({ section, progress, onBack }: SectionDetailViewProps
           <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 space-y-2">
             <div className="flex items-baseline justify-between">
               <span className={eyebrowClass}>Progress</span>
-              <span className="text-[12px] text-white/85 font-mono">
+              <span className="text-[12px] text-white font-mono">
                 {sectionProgress.read}/{sectionProgress.total} ·{' '}
                 {sectionProgress.total > 0
                   ? Math.round((sectionProgress.read / sectionProgress.total) * 100)
@@ -170,7 +170,7 @@ const SectionDetailView = ({ section, progress, onBack }: SectionDetailViewProps
                           <CheckCircle className="h-3.5 w-3.5 text-elec-yellow" />
                         )}
                         <ChevronDown
-                          className={`h-4 w-4 text-white/70 transition-transform duration-200 ${
+                          className={`h-4 w-4 text-white transition-transform duration-200 ${
                             isExpanded ? 'rotate-180' : ''
                           }`}
                         />
@@ -180,14 +180,14 @@ const SectionDetailView = ({ section, progress, onBack }: SectionDetailViewProps
 
                   {isExpanded && (
                     <div className="px-4 pb-4 space-y-3 animate-fade-in text-left">
-                      <p className="text-[14px] text-white/85 leading-relaxed">{q.answer}</p>
+                      <p className="text-[14px] text-white leading-relaxed">{q.answer}</p>
 
                       <div className="flex items-center justify-between">
                         <div className="flex flex-wrap gap-1.5">
                           {q.tags.map((tag) => (
                             <span
                               key={tag}
-                              className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07]"
+                              className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07]"
                             >
                               {tag}
                             </span>
@@ -204,7 +204,7 @@ const SectionDetailView = ({ section, progress, onBack }: SectionDetailViewProps
                           {isBookmarked ? (
                             <BookmarkCheck className="h-4 w-4 text-elec-yellow" />
                           ) : (
-                            <Bookmark className="h-4 w-4 text-white/70" />
+                            <Bookmark className="h-4 w-4 text-white" />
                           )}
                         </button>
                       </div>
@@ -228,12 +228,12 @@ const SectionDetailView = ({ section, progress, onBack }: SectionDetailViewProps
               return (
                 <div key={scenario.id} className={sectionCardClass}>
                   <h3 className="text-[16px] font-medium text-white">{scenario.title}</h3>
-                  <p className="text-[14px] text-white/85 leading-relaxed">{scenario.situation}</p>
+                  <p className="text-[14px] text-white leading-relaxed">{scenario.situation}</p>
 
                   <div className="space-y-2 pt-2">
                     {scenario.options.map((opt, idx) => {
                       const isSelected = selectedIdx === idx;
-                      let optionStyle = 'bg-white/[0.06] border-white/[0.10] text-white/85';
+                      let optionStyle = 'bg-white/[0.06] border-white/[0.10] text-white';
                       if (hasSubmitted && isSelected && opt.isCorrect) {
                         optionStyle = 'bg-white/[0.06] border-elec-yellow/30 text-white';
                       } else if (hasSubmitted && isSelected && !opt.isCorrect) {
@@ -254,7 +254,7 @@ const SectionDetailView = ({ section, progress, onBack }: SectionDetailViewProps
                           <span className="font-medium">{String.fromCharCode(65 + idx)}.</span>{' '}
                           {opt.text}
                           {hasSubmitted && isSelected && (
-                            <p className="mt-1.5 text-[12px] text-white/70 leading-relaxed">
+                            <p className="mt-1.5 text-[12px] text-white leading-relaxed">
                               {opt.feedback}
                             </p>
                           )}
@@ -274,7 +274,7 @@ const SectionDetailView = ({ section, progress, onBack }: SectionDetailViewProps
 
                   {hasSubmitted && (
                     <div className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-3">
-                      <p className="text-[14px] text-white/85 leading-relaxed">
+                      <p className="text-[14px] text-white leading-relaxed">
                         {scenario.explanation}
                       </p>
                     </div>
@@ -296,13 +296,13 @@ const SectionDetailView = ({ section, progress, onBack }: SectionDetailViewProps
                 <div className="space-y-2 pt-1">
                   <div className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-3 space-y-1">
                     <span className={eyebrowClass}>Avoid</span>
-                    <p className="text-[14px] text-white/85 italic leading-relaxed">
+                    <p className="text-[14px] text-white italic leading-relaxed">
                       &ldquo;{script.poor}&rdquo;
                     </p>
                   </div>
                   <div className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-3 space-y-1">
                     <span className={eyebrowClass}>Better</span>
-                    <p className="text-[14px] text-white/85 italic leading-relaxed">
+                    <p className="text-[14px] text-white italic leading-relaxed">
                       &ldquo;{script.better}&rdquo;
                     </p>
                   </div>
@@ -310,7 +310,7 @@ const SectionDetailView = ({ section, progress, onBack }: SectionDetailViewProps
                     <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
                       Best
                     </span>
-                    <p className="text-[14px] text-white/85 italic leading-relaxed">
+                    <p className="text-[14px] text-white italic leading-relaxed">
                       &ldquo;{script.best}&rdquo;
                     </p>
                   </div>
@@ -328,16 +328,16 @@ const SectionDetailView = ({ section, progress, onBack }: SectionDetailViewProps
             {sectionConversations.map((convo) => (
               <div key={convo.id} className={sectionCardClass}>
                 <h3 className="text-[16px] font-medium text-white">{convo.scenario}</h3>
-                <p className="text-[14px] text-white/85 leading-relaxed">
-                  <span className="text-white/70">Challenge:</span> {convo.challenge}
+                <p className="text-[14px] text-white leading-relaxed">
+                  <span className="text-white">Challenge:</span> {convo.challenge}
                 </p>
-                <p className="text-[14px] text-white/85 leading-relaxed">
-                  <span className="text-white/70">Approach:</span> {convo.approach}
+                <p className="text-[14px] text-white leading-relaxed">
+                  <span className="text-white">Approach:</span> {convo.approach}
                 </p>
 
                 <div className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-3 space-y-1">
                   <span className={eyebrowClass}>Example script</span>
-                  <p className="text-[14px] text-white/85 italic leading-relaxed">
+                  <p className="text-[14px] text-white italic leading-relaxed">
                     &ldquo;{convo.script}&rdquo;
                   </p>
                 </div>
@@ -348,7 +348,7 @@ const SectionDetailView = ({ section, progress, onBack }: SectionDetailViewProps
                     {convo.followUp.map((step, i) => (
                       <li
                         key={i}
-                        className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed"
+                        className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
                       >
                         <CheckCircle className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0 mt-1" />
                         <span>{step}</span>
@@ -373,7 +373,7 @@ const SectionDetailView = ({ section, progress, onBack }: SectionDetailViewProps
                   {topic.items.map((item, i) => (
                     <li
                       key={i}
-                      className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed"
+                      className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
                     >
                       <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                       <span>{item}</span>
@@ -405,7 +405,7 @@ const SectionDetailView = ({ section, progress, onBack }: SectionDetailViewProps
                   <p className="text-[14px] font-medium text-white leading-relaxed">
                     {ss.scenario}
                   </p>
-                  <p className="text-[14px] text-white/85 leading-relaxed">{ss.guidance}</p>
+                  <p className="text-[14px] text-white leading-relaxed">{ss.guidance}</p>
                 </div>
               );
             })}
@@ -421,8 +421,8 @@ const SectionDetailView = ({ section, progress, onBack }: SectionDetailViewProps
               {sectionSiteContacts.map((contact) => (
                 <div key={contact.id} className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-3 space-y-1">
                   <h3 className="text-[14px] font-medium text-white">{contact.role}</h3>
-                  <p className="text-[12px] text-white/70">{contact.when}</p>
-                  <p className="text-[12px] text-white/85">{contact.approach}</p>
+                  <p className="text-[12px] text-white">{contact.when}</p>
+                  <p className="text-[12px] text-white">{contact.approach}</p>
                 </div>
               ))}
             </div>
@@ -437,9 +437,9 @@ const SectionDetailView = ({ section, progress, onBack }: SectionDetailViewProps
             {sectionContacts.map((contact) => (
               <div key={contact.id} className={sectionCardClass}>
                 <h3 className="text-[16px] font-medium text-white">{contact.name}</h3>
-                <p className="text-[14px] text-white/85 leading-relaxed">{contact.description}</p>
+                <p className="text-[14px] text-white leading-relaxed">{contact.description}</p>
                 {contact.availability && (
-                  <p className="text-[12px] text-white/70">{contact.availability}</p>
+                  <p className="text-[12px] text-white">{contact.availability}</p>
                 )}
                 <div className="flex gap-2 pt-1 flex-wrap">
                   {contact.phone && (
@@ -494,13 +494,13 @@ const SectionDetailView = ({ section, progress, onBack }: SectionDetailViewProps
                 <div key={activity.id} className={sectionCardClass}>
                   <div className="flex items-baseline justify-between gap-2">
                     <h3 className="text-[16px] font-medium text-white">{activity.title}</h3>
-                    <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07] capitalize">
+                    <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.07] capitalize">
                       {activity.category}
                     </span>
                   </div>
-                  <p className="text-[14px] text-white/85 leading-relaxed">{activity.description}</p>
+                  <p className="text-[14px] text-white leading-relaxed">{activity.description}</p>
 
-                  <div className="flex items-center gap-3 text-[12px] text-white/70">
+                  <div className="flex items-center gap-3 text-[12px] text-white">
                     <span>{activity.timeRequired}</span>
                     <span className="w-1 h-1 rounded-full bg-white/30" />
                     <span className="capitalize">{activity.difficulty}</span>
@@ -509,7 +509,7 @@ const SectionDetailView = ({ section, progress, onBack }: SectionDetailViewProps
                   <div className="space-y-2">
                     <div className="flex items-baseline justify-between">
                       <span className={eyebrowClass}>Steps</span>
-                      <span className="text-[12px] text-white/70 font-mono">
+                      <span className="text-[12px] text-white font-mono">
                         {stepsComplete}/{totalSteps}
                       </span>
                     </div>
@@ -532,7 +532,7 @@ const SectionDetailView = ({ section, progress, onBack }: SectionDetailViewProps
                           </div>
                           <span
                             className={`text-[14px] text-left leading-relaxed ${
-                              done ? 'text-white/70 line-through' : 'text-white/85'
+                              done ? 'text-white line-through' : 'text-white'
                             }`}
                           >
                             {step}
@@ -548,7 +548,7 @@ const SectionDetailView = ({ section, progress, onBack }: SectionDetailViewProps
                       {activity.benefits.map((b, i) => (
                         <li
                           key={i}
-                          className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed"
+                          className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
                         >
                           <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                           <span>{b}</span>
@@ -563,7 +563,7 @@ const SectionDetailView = ({ section, progress, onBack }: SectionDetailViewProps
                       {activity.tips.map((t, i) => (
                         <li
                           key={i}
-                          className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed"
+                          className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
                         >
                           <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
                           <span>{t}</span>

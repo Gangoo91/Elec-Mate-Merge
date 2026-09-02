@@ -1,10 +1,17 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
 import useSEO from '@/hooks/useSEO';
 import { useApprenticeVoiceSurvey, type SurveyQuestion } from '@/hooks/useApprenticeVoiceSurvey';
 import { useToast } from '@/hooks/use-toast';
-import { Textarea } from '@/components/ui/textarea';
+import { HubSubPage } from '@/components/hub/HubSubPage';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import {
+  buttonPrimaryCn,
+  chipBase,
+  chipOff,
+  chipOn,
+  textareaCn,
+} from '@/components/forms/fieldStyles';
 import { cn } from '@/lib/utils';
 
 /* ==========================================================================
@@ -23,7 +30,6 @@ export default function VoiceSurveyPage() {
 
   const { survey, alreadySubmitted, loading, submitting, error, submit } =
     useApprenticeVoiceSurvey();
-  const navigate = useNavigate();
   const { toast } = useToast();
   const [answers, setAnswers] = useState<Record<string, string | number>>({});
 
@@ -57,27 +63,14 @@ export default function VoiceSurveyPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
-      <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8 py-6 sm:py-10 pb-24">
-        <button
-          onClick={() => navigate('/apprentice/college-plan')}
-          className="text-[13px] font-medium text-white/70 hover:text-white touch-manipulation"
-        >
-          ← Back to College Plan
-        </button>
-
-        <div className="mt-6 sm:mt-8">
-          <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-elec-yellow">
-            Anonymous monthly check-in
-          </div>
-          <h1 className="mt-2 text-2xl sm:text-3xl font-semibold tracking-tight">Your voice</h1>
-          <p className="mt-2 text-sm text-white/70 max-w-xl">
-            Your college reads themes and overall sentiment — they never see who said what.
-            Responses are k-anonymised; results only show once 5+ apprentices have answered.
-          </p>
-        </div>
-
-        {loading && <div className="mt-8 text-sm text-white/60">Loading…</div>}
+    <HubSubPage
+      section="College"
+      title="Your voice"
+      backTo="/apprentice/college-plan"
+      description="Anonymous monthly check-in. Your college reads themes and overall sentiment — they never see who said what, and results only show once five or more apprentices have answered."
+    >
+      <div className="mx-auto w-full max-w-3xl">
+        {loading && <div className="mt-8 text-sm text-white">Loading…</div>}
 
         {error && (
           <div className="mt-6 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300">
@@ -86,7 +79,7 @@ export default function VoiceSurveyPage() {
         )}
 
         {!loading && !survey && (
-          <div className="mt-8 rounded-2xl border border-dashed border-white/10 px-5 py-8 text-center text-sm text-white/40">
+          <div className="mt-8 rounded-2xl border border-dashed border-white/[0.14] px-5 py-8 text-center text-sm text-white">
             No active survey this month. Check back next month — or speak directly to your tutor if
             anything's on your mind.
           </div>
@@ -117,7 +110,7 @@ export default function VoiceSurveyPage() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="inline-flex items-center justify-center h-11 px-6 rounded-full bg-elec-yellow text-black font-semibold disabled:bg-white/[0.08] disabled:text-white/70 touch-manipulation"
+                className={cn(buttonPrimaryCn, 'w-full sm:w-auto sm:px-8')}
               >
                 {submitting ? 'Submitting…' : 'Submit anonymously'}
               </button>
@@ -125,7 +118,7 @@ export default function VoiceSurveyPage() {
           </motion.form>
         )}
       </div>
-    </div>
+    </HubSubPage>
   );
 }
 
@@ -140,7 +133,7 @@ function QuestionBlock({
 }) {
   if (q.kind === 'scale_1_5') {
     return (
-      <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+      <div className={cn('rounded-2xl border border-elec-yellow/35 p-5', CARD_SURFACE)}>
         <label className="text-sm font-medium text-white">{q.label}</label>
         <div className="mt-4 grid grid-cols-5 gap-2">
           {[1, 2, 3, 4, 5].map((n) => {
@@ -150,19 +143,14 @@ function QuestionBlock({
                 key={n}
                 type="button"
                 onClick={() => onChange(q.key, n)}
-                className={cn(
-                  'rounded-xl border h-12 text-sm font-semibold touch-manipulation transition-colors',
-                  active
-                    ? 'border-elec-yellow bg-elec-yellow text-black'
-                    : 'border-white/10 bg-white/5 text-white hover:bg-white/10'
-                )}
+                className={cn(chipBase, 'h-12 font-semibold', active ? chipOn : chipOff)}
               >
                 {n}
               </button>
             );
           })}
         </div>
-        <div className="mt-2 flex justify-between text-[10px] uppercase tracking-wider text-white/40">
+        <div className="mt-2 flex justify-between text-[10px] uppercase tracking-wider text-white">
           <span>Disagree</span>
           <span>Agree</span>
         </div>
@@ -171,21 +159,21 @@ function QuestionBlock({
   }
   if (q.kind === 'free_text') {
     return (
-      <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+      <div className={cn('rounded-2xl border border-elec-yellow/35 p-5', CARD_SURFACE)}>
         <label className="text-sm font-medium text-white">{q.label}</label>
-        <Textarea
+        <textarea
           rows={4}
           value={(value as string) ?? ''}
           onChange={(e) => onChange(q.key, e.target.value)}
           placeholder="Optional — write as much or as little as you want."
-          className="mt-3 touch-manipulation text-base border-white/30 focus:border-yellow-500"
+          className={cn(textareaCn, 'mt-3 w-full resize-none')}
         />
       </div>
     );
   }
   if (q.kind === 'multi_choice') {
     return (
-      <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+      <div className={cn('rounded-2xl border border-elec-yellow/35 p-5', CARD_SURFACE)}>
         <label className="text-sm font-medium text-white">{q.label}</label>
         <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2">
           {(q.options ?? []).map((opt) => {
@@ -196,10 +184,9 @@ function QuestionBlock({
                 type="button"
                 onClick={() => onChange(q.key, opt)}
                 className={cn(
-                  'rounded-xl border px-3 py-2.5 text-left text-sm touch-manipulation',
-                  active
-                    ? 'border-elec-yellow bg-elec-yellow/10 text-white'
-                    : 'border-white/10 bg-white/5 text-white hover:bg-white/10'
+                  chipBase,
+                  'min-h-11 h-auto px-3 py-2.5 text-left',
+                  active ? chipOn : chipOff
                 )}
               >
                 {opt}

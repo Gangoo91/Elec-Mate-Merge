@@ -57,7 +57,9 @@ export function MyActivityFeedCard() {
 
   if (items.length === 0) {
     return (
-      <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
+      <section
+        className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
+      >
         <div className="px-4 sm:px-5 py-4 sm:py-5">
           <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
             Recent activity
@@ -72,7 +74,9 @@ export function MyActivityFeedCard() {
   }
 
   return (
-    <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
+    <section
+      className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
+    >
       <div className="px-4 sm:px-5 py-4 sm:py-5">
         <div className="flex items-baseline justify-between gap-3 flex-wrap">
           <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
@@ -125,7 +129,8 @@ function ActivityRow({ item, onClick }: { item: CollegeActivityItem; onClick: ()
       >
         <div className="min-w-0 flex-1">
           <div
-            className={cn('text-[10.5px] font-medium uppercase tracking-[0.16em]',
+            className={cn(
+              'text-[10.5px] font-medium uppercase tracking-[0.16em]',
               KIND_TONE[item.kind]
             )}
           >
@@ -155,7 +160,9 @@ function ActivityRow({ item, onClick }: { item: CollegeActivityItem; onClick: ()
 
 function Skeleton() {
   return (
-    <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
+    <section
+      className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
+    >
       <div className="px-4 sm:px-5 py-4 sm:py-5 space-y-3">
         <div className="h-3 w-28 rounded-full bg-white/[0.05]" />
         {[0, 1, 2].map((i) => (

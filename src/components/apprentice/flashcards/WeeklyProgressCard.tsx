@@ -3,7 +3,7 @@
  *
  * Rebuilt on the shared card surface as a divided stat strip — the same
  * treatment the rest of the app gives a row of figures — instead of a grey
- * panel with `text-white/55` labels. Labels are the standard eyebrow, values
+ * panel with `text-white` labels. Labels are the standard eyebrow, values
  * are `statValueCn`, and the whole thing reaches the edges of a phone.
  */
 import { cn } from '@/lib/utils';

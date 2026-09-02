@@ -150,7 +150,9 @@ export function MyPortfolioSummaryCard() {
   const empty = stats.totalItems === 0 && submissions.length === 0;
 
   return (
-    <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
+    <section
+      className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
+    >
       <div className="px-4 sm:px-5 py-4 sm:py-5">
         <div className="flex items-baseline justify-between gap-3 flex-wrap">
           <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
@@ -184,13 +186,9 @@ export function MyPortfolioSummaryCard() {
               <Stat
                 value={stats.actioning.toString()}
                 label="Action needed"
-                tone={stats.actioning > 0 ? 'text-white' : 'text-white'}
+                tone={stats.actioning > 0 ? 'text-elec-yellow' : 'text-white'}
               />
-              <Stat
-                value={stats.approved.toString()}
-                label="Approved"
-                tone={stats.approved > 0 ? 'text-white' : 'text-white'}
-              />
+              <Stat value={stats.approved.toString()} label="Approved" tone="text-white" />
             </div>
 
             <p className="mt-3 text-[11.5px] sm:text-[12px] text-white leading-snug">
@@ -275,7 +273,9 @@ function Stat({ value, label, tone }: { value: string; label: string; tone: stri
 
 function Skeleton() {
   return (
-    <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
+    <section
+      className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
+    >
       <div className="px-4 sm:px-5 py-4 sm:py-5 space-y-4">
         <div className="h-3 w-24 rounded-full bg-white/[0.05]" />
         <div className="grid grid-cols-3 gap-3">

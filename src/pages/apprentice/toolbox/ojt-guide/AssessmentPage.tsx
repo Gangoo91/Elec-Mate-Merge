@@ -183,6 +183,8 @@ const portfolioCards = [
   },
 ];
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const AssessmentPage = () => {
   return (
@@ -194,7 +196,7 @@ const AssessmentPage = () => {
       />
       <HubBody>
         {/* OJT & EPA Connection */}
-        <div className="sm:rounded-xl sm:border sm:border-elec-yellow/25 sm:bg-elec-yellow/[0.04]">
+        <div className="sm:rounded-xl sm:border sm:border-elec-yellow/25 sm:bg-white/[0.05]">
           <div className="sm:p-5">
             <h2 className="text-white font-semibold text-sm mb-2">OJT & EPA connection</h2>
             <p className="text-white text-sm leading-relaxed">
@@ -212,7 +214,7 @@ const AssessmentPage = () => {
         <div className="space-y-3">
           <div className="flex items-baseline justify-between gap-3 pb-1">
             <div className="space-y-1 min-w-0">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 AM2S sections
               </span>
             </div>
@@ -227,11 +229,14 @@ const AssessmentPage = () => {
           {epaSections.map((sec) => (
             <div
               key={sec.title}
-              className="sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]"
+              className={cn(
+                '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+                CARD_SURFACE
+              )}
             >
               <div className="sm:p-5 py-4 space-y-2">
                 <h3 className="font-medium text-sm text-white">{sec.title}</h3>
-                <div className="text-xs text-white/85">Duration: {sec.duration}</div>
+                <div className="text-xs text-white">Duration: {sec.duration}</div>
                 <p className="text-white text-sm">{sec.desc}</p>
                 <div className="bg-white/5 rounded p-2 mt-1">
                   <p className="text-white text-xs">
@@ -248,13 +253,18 @@ const AssessmentPage = () => {
         <div className="space-y-3">
           <div className="flex items-baseline justify-between gap-3 pb-1">
             <div className="space-y-1 min-w-0">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Gateway Requirements
               </span>
             </div>
           </div>
 
-          <div className="sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]">
+          <div
+            className={cn(
+              '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+              CARD_SURFACE
+            )}
+          >
             <div className="sm:p-5 space-y-3">
               <p className="text-white text-sm">
                 Before you can sit your EPA, you must pass through "gateway" — a formal check that
@@ -313,7 +323,7 @@ const AssessmentPage = () => {
         <div className="space-y-3">
           <div className="flex items-baseline justify-between gap-3 pb-1">
             <div className="space-y-1 min-w-0">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Timeline to EPA
               </span>
             </div>
@@ -327,7 +337,10 @@ const AssessmentPage = () => {
           {timeline.map((phase) => (
             <div
               key={phase.phase}
-              className="sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]"
+              className={cn(
+                '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+                CARD_SURFACE
+              )}
             >
               <div className="sm:p-5 py-4 space-y-2">
                 <h3 className="font-medium text-sm text-white">{phase.phase}</h3>
@@ -348,7 +361,7 @@ const AssessmentPage = () => {
         <div className="space-y-3">
           <div className="flex items-baseline justify-between gap-3 pb-1">
             <div className="space-y-1 min-w-0">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Knowledge Alignment
               </span>
             </div>
@@ -357,7 +370,10 @@ const AssessmentPage = () => {
           {knowledgeCards.map((card) => (
             <div
               key={card.title}
-              className="sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]"
+              className={cn(
+                '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+                CARD_SURFACE
+              )}
             >
               <div className="sm:p-5 py-4">
                 <h3 className="font-medium text-sm text-white">{card.title}</h3>
@@ -371,7 +387,7 @@ const AssessmentPage = () => {
         <div className="space-y-3">
           <div className="flex items-baseline justify-between gap-3 pb-1">
             <div className="space-y-1 min-w-0">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Skills Development
               </span>
             </div>
@@ -380,7 +396,10 @@ const AssessmentPage = () => {
           {skillsCards.map((card) => (
             <div
               key={card.title}
-              className="sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]"
+              className={cn(
+                '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+                CARD_SURFACE
+              )}
             >
               <div className="sm:p-5 py-4">
                 <h3 className="font-medium text-sm text-white">{card.title}</h3>
@@ -394,7 +413,7 @@ const AssessmentPage = () => {
         <div className="space-y-3">
           <div className="flex items-baseline justify-between gap-3 pb-1">
             <div className="space-y-1 min-w-0">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Portfolio Strategy
               </span>
             </div>
@@ -403,7 +422,10 @@ const AssessmentPage = () => {
           {portfolioCards.map((card) => (
             <div
               key={card.title}
-              className="sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]"
+              className={cn(
+                '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+                CARD_SURFACE
+              )}
             >
               <div className="sm:p-5 py-4">
                 <h3 className="font-medium text-white text-sm">{card.title}</h3>

@@ -182,7 +182,7 @@ const QuizInterface = ({ assessment, questions, onComplete, onExit }: QuizInterf
                   variant="outline"
                   onClick={handlePrevious}
                   disabled={progress.current === 1}
-                  className="border-border text-white disabled:opacity-50 min-w-[100px]"
+                  className="border-white/[0.12] text-white disabled:text-white/70 min-w-[100px]"
                 >
                   <ChevronLeft className="h-4 w-4 mr-2" />
                   Previous

@@ -1,5 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
-import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
+import { Input } from '@/components/ui/input';
+import { FormSheet } from '@/components/forms/FormSheet';
+import {
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  grid2Cn,
+  inputCn,
+  labelCn,
+  textareaCn,
+} from '@/components/forms/fieldStyles';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
@@ -141,134 +150,126 @@ export function FilePortfolioItemSheet({ open, onOpenChange, onSubmitted, prefil
     }
   };
 
+  const canSave = !saving && !!form.title.trim() && !!form.description.trim();
+
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        side="bottom"
-        className="h-[88vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_8%)] border-white/[0.06]"
-      >
-        <SheetTitle className="sr-only">File portfolio item</SheetTitle>
-        <div className="flex flex-col h-full">
-          <div className="px-4 sm:px-5 pt-4 pb-3 border-b border-white/[0.06]">
-            <div className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-white/85">
-              Add to portfolio
-            </div>
-            <h2 className="mt-1 text-[18px] font-semibold text-white tracking-tight leading-tight">
-              Review &amp; file evidence
-            </h2>
-            <p className="mt-1 text-[12px] text-white/85 leading-snug">
-              Edit anything before saving. Goes straight into your portfolio under the category you
-              pick — your tutor sees it next time they review.
-            </p>
-          </div>
-
-          <div className="flex-1 overflow-y-auto px-4 sm:px-5 py-4 space-y-4">
-            <Field label="Date">
-              <input
-                type="date"
-                value={form.date_completed}
-                onChange={(e) => setForm((f) => ({ ...f, date_completed: e.target.value }))}
-                className="w-full h-11 px-3 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[14.5px] text-white focus:outline-none focus:border-white/30 touch-manipulation"
-              />
-            </Field>
-
-            <Field label="Title">
-              <input
-                type="text"
-                value={form.title}
-                onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
-                placeholder="e.g. Tested ring final on flat refurb"
-                maxLength={120}
-                className="w-full h-11 px-3 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[14.5px] text-white placeholder:text-white/45 focus:outline-none focus:border-white/30 touch-manipulation"
-              />
-            </Field>
-
-            <Field label="Category">
-              <input
-                type="text"
-                value={form.category}
-                onChange={(e) => setForm((f) => ({ ...f, category: e.target.value }))}
-                placeholder="e.g. Initial Verification — site work"
-                maxLength={80}
-                className="w-full h-11 px-3 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[14.5px] text-white placeholder:text-white/45 focus:outline-none focus:border-white/30 touch-manipulation"
-              />
-            </Field>
-
-            <Field label="What you did" hint="The work itself — process, observations, results.">
-              <textarea
-                value={form.description}
-                onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
-                rows={6}
-                maxLength={4000}
-                className="w-full px-3 py-2.5 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[14.5px] text-white placeholder:text-white/45 leading-relaxed focus:outline-none focus:border-white/30 touch-manipulation resize-none"
-              />
-            </Field>
-
-            <Field label="Reflection (optional)" hint="What you learnt — for IQA evidence.">
-              <textarea
-                value={form.reflection_notes}
-                onChange={(e) => setForm((f) => ({ ...f, reflection_notes: e.target.value }))}
-                rows={4}
-                maxLength={6000}
-                className="w-full px-3 py-2.5 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[14.5px] text-white placeholder:text-white/45 leading-relaxed focus:outline-none focus:border-white/30 touch-manipulation resize-none"
-              />
-            </Field>
-
-            <Field label="AC codes" hint="Comma-separated, e.g. 303.1.4, 303.2.1.">
-              <input
-                type="text"
-                value={form.acs_text}
-                onChange={(e) => setForm((f) => ({ ...f, acs_text: e.target.value }))}
-                placeholder="303.1.4, 303.2.1"
-                className="w-full h-11 px-3 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[14.5px] text-white placeholder:text-white/45 focus:outline-none focus:border-white/30 font-mono touch-manipulation"
-              />
-            </Field>
-          </div>
-
-          <div className="px-4 sm:px-5 py-3 border-t border-white/[0.06] bg-[hsl(0_0%_10%)] flex items-center justify-between gap-3">
-            <button
-              type="button"
-              onClick={() => onOpenChange(false)}
-              disabled={saving}
-              className="h-11 px-4 rounded-lg text-[13px] font-medium text-white/85 hover:text-white hover:bg-white/[0.04] transition-colors touch-manipulation disabled:opacity-50"
-            >
-              Cancel
-            </button>
-            <button
-              type="button"
-              onClick={handleSubmit}
-              disabled={saving || !form.title.trim() || !form.description.trim()}
-              className={cn('inline-flex items-center h-11 px-4 rounded-lg text-[13px] font-semibold text-black transition-colors touch-manipulation',
-                saving || !form.title.trim() || !form.description.trim()
-                  ? 'bg-white/[0.05] text-white/40'
-                  : 'bg-white/[0.02] hover:bg-white/[0.02]'
-              )}
-            >
-              {savedTick ? 'Saved ✓' : saving ? 'Saving…' : 'Save to portfolio'}
-            </button>
-          </div>
+    <FormSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      eyebrow="Add to portfolio"
+      title="Review & file evidence"
+      description="Edit anything before saving. It goes straight into your portfolio under the category you pick — your tutor sees it next time they review."
+      footer={
+        <div className="grid grid-cols-2 gap-2.5">
+          <button
+            type="button"
+            onClick={() => onOpenChange(false)}
+            disabled={saving}
+            className={buttonSecondaryCn}
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            onClick={handleSubmit}
+            disabled={!canSave}
+            className={buttonPrimaryCn}
+          >
+            {savedTick ? 'Saved ✓' : saving ? 'Saving…' : 'Save to portfolio'}
+          </button>
         </div>
-      </SheetContent>
-    </Sheet>
-  );
-}
+      }
+    >
+      <div className={grid2Cn}>
+        <div>
+          <label className={labelCn} htmlFor="fpi-date">
+            Date
+          </label>
+          <Input
+            id="fpi-date"
+            type="date"
+            value={form.date_completed}
+            onChange={(e) => setForm((f) => ({ ...f, date_completed: e.target.value }))}
+            className={inputCn}
+          />
+        </div>
+        <div>
+          <label className={labelCn} htmlFor="fpi-category">
+            Category
+          </label>
+          <Input
+            id="fpi-category"
+            type="text"
+            value={form.category}
+            onChange={(e) => setForm((f) => ({ ...f, category: e.target.value }))}
+            placeholder="e.g. Initial verification"
+            maxLength={80}
+            className={inputCn}
+          />
+        </div>
+      </div>
 
-function Field({
-  label,
-  hint,
-  children,
-}: {
-  label: string;
-  hint?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <label className="block">
-      <span className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-white/85">
-        {label}
-      </span>
-      {hint && <span className="block mt-0.5 text-[11.5px] text-white/55">{hint}</span>}
-      <div className="mt-1.5">{children}</div>
-    </label>
+      <div>
+        <label className={labelCn} htmlFor="fpi-title">
+          Title
+        </label>
+        <Input
+          id="fpi-title"
+          type="text"
+          value={form.title}
+          onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
+          placeholder="e.g. Tested ring final on flat refurb"
+          maxLength={120}
+          className={inputCn}
+        />
+      </div>
+
+      <div>
+        <label className={labelCn} htmlFor="fpi-description">
+          What you did
+        </label>
+        <textarea
+          id="fpi-description"
+          value={form.description}
+          onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
+          placeholder="The work itself — process, observations, results"
+          rows={6}
+          maxLength={4000}
+          className={cn(textareaCn, 'w-full resize-none')}
+        />
+      </div>
+
+      <div>
+        <label className={labelCn} htmlFor="fpi-reflection">
+          Reflection (optional)
+        </label>
+        <textarea
+          id="fpi-reflection"
+          value={form.reflection_notes}
+          onChange={(e) => setForm((f) => ({ ...f, reflection_notes: e.target.value }))}
+          placeholder="What you learnt — this is what an IQA reads"
+          rows={4}
+          maxLength={6000}
+          className={cn(textareaCn, 'w-full resize-none')}
+        />
+      </div>
+
+      <div>
+        <label className={labelCn} htmlFor="fpi-acs">
+          AC codes
+        </label>
+        <Input
+          id="fpi-acs"
+          type="text"
+          value={form.acs_text}
+          onChange={(e) => setForm((f) => ({ ...f, acs_text: e.target.value }))}
+          placeholder="303.1.4, 303.2.1"
+          className={cn(inputCn, 'font-mono')}
+        />
+        <p className="mt-1.5 text-[11.5px] leading-snug text-white">
+          Comma-separated, e.g. 303.1.4, 303.2.1.
+        </p>
+      </div>
+    </FormSheet>
   );
 }

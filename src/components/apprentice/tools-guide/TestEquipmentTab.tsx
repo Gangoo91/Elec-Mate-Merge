@@ -80,13 +80,13 @@ const TestEquipmentTab = () => {
   return (
     <div className="px-4 sm:px-6 py-4 sm:py-6 space-y-6">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Test equipment
         </span>
         <h2 className="text-[22px] sm:text-[26px] font-semibold text-white leading-tight">
           Test equipment
         </h2>
-        <p className="text-[14px] text-white/85 leading-relaxed max-w-2xl">
+        <p className="text-[14px] text-white leading-relaxed max-w-2xl">
           As you progress through your apprenticeship, you'll need appropriate test equipment that
           meets UK regulations. Quality test equipment is essential for safety and compliance.
         </p>
@@ -113,10 +113,10 @@ const TestEquipmentTab = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           18th Edition testing & progression
         </span>
-        <div className="space-y-2 text-[14px] text-white/85 leading-relaxed">
+        <div className="space-y-2 text-[14px] text-white leading-relaxed">
           <p>
             <strong>Year 1-2:</strong> Focus on basic safety equipment. Learn to use voltage
             indicators, proving units, and simple continuity testers. Understand the principles
@@ -143,7 +143,7 @@ const TestEquipmentTab = () => {
         <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
           Critical safety reminders
         </span>
-        <ul className="space-y-1.5 text-[14px] text-white/85 leading-relaxed">
+        <ul className="space-y-1.5 text-[14px] text-white leading-relaxed">
           <li className="flex items-start gap-2">
             <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
             <span>Always prove your voltage indicator is working before and after use</span>

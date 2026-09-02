@@ -22,6 +22,7 @@
  * Cards come from `card-recipe`, so press feel, focus ring and the volt rule
  * are defined once.
  */
+import type { ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ChevronRight, Minus, TrendingDown, TrendingUp } from 'lucide-react';
@@ -44,10 +45,19 @@ export const HubMasthead = ({
   section = 'Electrician',
   title,
   backTo = '/electrician',
+  onBack,
+  trailing,
 }: {
   section?: string;
   title: string;
   backTo?: string;
+  /** Overrides `backTo` — for pages whose Back steps within their own state. */
+  onBack?: () => void;
+  /**
+   * Optional controls on the right of the rule (a search or filter button on
+   * a list page). Keep them to 44px icon buttons — the masthead is 48px tall.
+   */
+  trailing?: ReactNode;
 }) => {
   const navigate = useNavigate();
   return (
@@ -59,7 +69,7 @@ export const HubMasthead = ({
               bare text button measured 19px tall on a phone. */}
           <button
             type="button"
-            onClick={() => navigate(backTo)}
+            onClick={() => (onBack ? onBack() : navigate(backTo))}
             className="-ml-2 flex h-11 shrink-0 items-center whitespace-nowrap px-2 text-[12.5px] font-medium text-white transition-colors touch-manipulation"
           >
             ← Back
@@ -73,6 +83,9 @@ export const HubMasthead = ({
               {title}
             </h1>
           </div>
+          {trailing ? (
+            <div className="-mr-2 flex shrink-0 items-center gap-1">{trailing}</div>
+          ) : null}
         </div>
       </div>
     </div>

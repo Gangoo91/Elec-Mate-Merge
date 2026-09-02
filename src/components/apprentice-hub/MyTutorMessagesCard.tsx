@@ -160,7 +160,9 @@ export function MyTutorMessagesCard() {
 
   return (
     <>
-      <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
+      <section
+        className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
+      >
         <div className="px-4 sm:px-5 py-4 sm:py-5">
           <div className="flex items-baseline justify-between gap-3 flex-wrap">
             <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
@@ -191,8 +193,11 @@ export function MyTutorMessagesCard() {
             <>
               {latestMsg && (
                 <div
-                  className={cn('mt-3 border-l-2 pl-3 py-1',
-                    latestMsg.sender_kind === 'tutor' ? 'border-white/[0.06]' : 'border-white/[0.10]'
+                  className={cn(
+                    'mt-3 border-l-2 pl-3 py-1',
+                    latestMsg.sender_kind === 'tutor'
+                      ? 'border-white/[0.06]'
+                      : 'border-white/[0.10]'
                   )}
                 >
                   <div className="text-[10.5px] uppercase tracking-[0.14em] text-white">
@@ -207,7 +212,8 @@ export function MyTutorMessagesCard() {
               <button
                 type="button"
                 onClick={() => setOpen(true)}
-                className={cn('mt-4 w-full h-11 rounded-lg text-[13px] font-semibold transition-colors touch-manipulation',
+                className={cn(
+                  'mt-4 w-full h-11 rounded-lg text-[13px] font-semibold transition-colors touch-manipulation',
                   unreadTotal > 0
                     ? 'bg-white/[0.02] text-white hover:bg-white/[0.02]'
                     : 'border border-white/[0.10] bg-white/[0.02] text-white hover:text-white hover:border-white/[0.22]'
@@ -227,7 +233,9 @@ export function MyTutorMessagesCard() {
 
 function Skeleton() {
   return (
-    <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
+    <section
+      className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
+    >
       <div className="px-4 sm:px-5 py-4 sm:py-5 space-y-3">
         <div className="h-3 w-20 rounded-full bg-white/[0.05]" />
         <div className="h-12 rounded-md bg-white/[0.04]" />

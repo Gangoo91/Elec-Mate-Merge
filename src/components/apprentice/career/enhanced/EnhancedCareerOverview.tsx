@@ -17,13 +17,13 @@ import {
 } from 'lucide-react';
 
 const Eyebrow = ({ children }: { children: React.ReactNode }) => (
-  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
     {children}
   </span>
 );
 
 const Pill = ({ children }: { children: React.ReactNode }) => (
-  <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+  <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
     {children}
   </span>
 );
@@ -33,7 +33,7 @@ const Bullets = ({ items }: { items: string[] }) => (
     {items.map((item, idx) => (
       <li
         key={idx}
-        className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+        className="text-[14px] text-white leading-relaxed flex items-start gap-2"
       >
         <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
         <span>{item}</span>
@@ -368,7 +368,7 @@ const EnhancedCareerOverview = () => {
   return (
     <div className="space-y-4">
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5">
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           The UK electrical industry offers diverse career paths with strong job security,
           competitive salaries, and opportunities for continuous professional growth.
         </p>
@@ -383,14 +383,14 @@ const EnhancedCareerOverview = () => {
             className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 space-y-1"
           >
             <Eyebrow>{metric.metric}</Eyebrow>
-            <div className="text-[14px] text-white/85">{metric.data}</div>
+            <div className="text-[14px] text-white">{metric.data}</div>
           </div>
         ))}
       </div>
 
       <MobileAccordion type="single" collapsible className="space-y-2">
         <MobileAccordionItem value="career-stages">
-          <MobileAccordionTrigger icon={<TrendingUp className="h-5 w-5 text-white/55" />}>
+          <MobileAccordionTrigger icon={<TrendingUp className="h-5 w-5 text-white" />}>
             Career progression stages
           </MobileAccordionTrigger>
           <MobileAccordionContent>
@@ -404,17 +404,17 @@ const EnhancedCareerOverview = () => {
                       <Pill>{stage.level}</Pill>
                     </div>
                   </div>
-                  <p className="text-[14px] text-white/85 leading-relaxed">{stage.description}</p>
+                  <p className="text-[14px] text-white leading-relaxed">{stage.description}</p>
                   <div className="space-y-2">
                     <Eyebrow>Key milestones</Eyebrow>
                     <Bullets items={stage.keyMilestones} />
                   </div>
-                  <div className="text-[14px] text-white/85">
-                    <span className="text-white/55">Salary range: </span>
+                  <div className="text-[14px] text-white">
+                    <span className="text-white">Salary range: </span>
                     {stage.salaryRange}
                   </div>
-                  <div className="text-[14px] text-white/85">
-                    <span className="text-white/55">Next steps: </span>
+                  <div className="text-[14px] text-white">
+                    <span className="text-white">Next steps: </span>
                     {stage.nextSteps}
                   </div>
                 </div>
@@ -433,7 +433,7 @@ const EnhancedCareerOverview = () => {
                 </div>
                 <div className="space-y-2">
                   <Eyebrow>Typical roles by stage</Eyebrow>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-[14px] text-white/85">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-[14px] text-white">
                     <div>Foundation: Electrical Mate, Trainee Installer</div>
                     <div>Development: Improver, Installation Electrician</div>
                     <div>Specialisation: Testing and Inspection, EV Installer, Industrial Maintenance</div>
@@ -456,7 +456,7 @@ const EnhancedCareerOverview = () => {
         </MobileAccordionItem>
 
         <MobileAccordionItem value="career-paths">
-          <MobileAccordionTrigger icon={<Target className="h-5 w-5 text-white/55" />}>
+          <MobileAccordionTrigger icon={<Target className="h-5 w-5 text-white" />}>
             Popular career pathways
           </MobileAccordionTrigger>
           <MobileAccordionContent>
@@ -464,17 +464,17 @@ const EnhancedCareerOverview = () => {
               {careerPathHighlights.map((path, index) => (
                 <div key={index} className="space-y-2">
                   <h4 className="text-[16px] text-white">{path.path}</h4>
-                  <div className="grid grid-cols-2 gap-3 text-[14px] text-white/85">
+                  <div className="grid grid-cols-2 gap-3 text-[14px] text-white">
                     <div>
-                      <span className="text-white/55">Growth: </span>
+                      <span className="text-white">Growth: </span>
                       {path.growth}
                     </div>
                     <div>
-                      <span className="text-white/55">Earning: </span>
+                      <span className="text-white">Earning: </span>
                       {path.earning}
                     </div>
                   </div>
-                  <p className="text-[14px] text-white/85 leading-relaxed">{path.speciality}</p>
+                  <p className="text-[14px] text-white leading-relaxed">{path.speciality}</p>
                 </div>
               ))}
 
@@ -490,14 +490,14 @@ const EnhancedCareerOverview = () => {
                 </div>
                 <div className="space-y-1">
                   <Eyebrow>Common employers</Eyebrow>
-                  <p className="text-[14px] text-white/85 leading-relaxed">
+                  <p className="text-[14px] text-white leading-relaxed">
                     Electrical contractors, facilities management, housebuilders, local authorities,
                     utilities and DNOs.
                   </p>
                 </div>
                 <div className="space-y-1">
                   <Eyebrow>Salary benchmarks</Eyebrow>
-                  <p className="text-[14px] text-white/85 leading-relaxed">
+                  <p className="text-[14px] text-white leading-relaxed">
                     Entry £24-28k, experienced £35-45k, specialist £45-60k+ (London weighting
                     typically adds 10-20%).
                   </p>
@@ -508,7 +508,7 @@ const EnhancedCareerOverview = () => {
         </MobileAccordionItem>
 
         <MobileAccordionItem value="advancement-tips">
-          <MobileAccordionTrigger icon={<GraduationCap className="h-5 w-5 text-white/55" />}>
+          <MobileAccordionTrigger icon={<GraduationCap className="h-5 w-5 text-white" />}>
             Career advancement tips
           </MobileAccordionTrigger>
           <MobileAccordionContent>
@@ -545,7 +545,7 @@ const EnhancedCareerOverview = () => {
         </MobileAccordionItem>
 
         <MobileAccordionItem value="industry-context">
-          <MobileAccordionTrigger icon={<Sparkles className="h-5 w-5 text-white/55" />}>
+          <MobileAccordionTrigger icon={<Sparkles className="h-5 w-5 text-white" />}>
             Industry context and trends
           </MobileAccordionTrigger>
           <MobileAccordionContent>
@@ -553,9 +553,9 @@ const EnhancedCareerOverview = () => {
               {industryContext.map((context, index) => (
                 <div key={index} className="space-y-2">
                   <h4 className="text-[16px] text-white">{context.title}</h4>
-                  <p className="text-[14px] text-white/85 leading-relaxed">{context.description}</p>
-                  <div className="text-[14px] text-white/85">
-                    <span className="text-white/55">Impact: </span>
+                  <p className="text-[14px] text-white leading-relaxed">{context.description}</p>
+                  <div className="text-[14px] text-white">
+                    <span className="text-white">Impact: </span>
                     {context.impact}
                   </div>
                 </div>
@@ -573,7 +573,7 @@ const EnhancedCareerOverview = () => {
                 </div>
                 <div className="space-y-1">
                   <Eyebrow>Skills to focus on</Eyebrow>
-                  <p className="text-[14px] text-white/85 leading-relaxed">
+                  <p className="text-[14px] text-white leading-relaxed">
                     Testing and verification, commissioning, data cabling, basic PLC awareness,
                     safe systems of work.
                   </p>
@@ -584,7 +584,7 @@ const EnhancedCareerOverview = () => {
         </MobileAccordionItem>
 
         <MobileAccordionItem value="qualification-pathways">
-          <MobileAccordionTrigger icon={<BookOpen className="h-5 w-5 text-white/55" />}>
+          <MobileAccordionTrigger icon={<BookOpen className="h-5 w-5 text-white" />}>
             Qualification pathways
           </MobileAccordionTrigger>
           <MobileAccordionContent>
@@ -609,21 +609,21 @@ const EnhancedCareerOverview = () => {
               <div className="pt-3 border-t border-white/[0.06] space-y-3">
                 <div className="space-y-1">
                   <Eyebrow>Entry requirements</Eyebrow>
-                  <p className="text-[14px] text-white/85 leading-relaxed">
+                  <p className="text-[14px] text-white leading-relaxed">
                     GCSEs (or equivalent) typically in Maths and English, aptitude for practical
                     work, health and safety awareness.
                   </p>
                 </div>
                 <div className="space-y-1">
                   <Eyebrow>Assessment methods</Eyebrow>
-                  <p className="text-[14px] text-white/85 leading-relaxed">
+                  <p className="text-[14px] text-white leading-relaxed">
                     Portfolio evidence, on-site observations, written and practical exams,
                     AM2 / EPA as applicable.
                   </p>
                 </div>
                 <div className="space-y-1">
                   <Eyebrow>Funding routes</Eyebrow>
-                  <p className="text-[14px] text-white/85 leading-relaxed">
+                  <p className="text-[14px] text-white leading-relaxed">
                     Employer apprenticeship levy, adult learning loans, regional grants — check
                     local colleges and providers.
                   </p>
@@ -634,7 +634,7 @@ const EnhancedCareerOverview = () => {
         </MobileAccordionItem>
 
         <MobileAccordionItem value="professional-development">
-          <MobileAccordionTrigger icon={<Network className="h-5 w-5 text-white/55" />}>
+          <MobileAccordionTrigger icon={<Network className="h-5 w-5 text-white" />}>
             Professional development journey
           </MobileAccordionTrigger>
           <MobileAccordionContent>
@@ -655,7 +655,7 @@ const EnhancedCareerOverview = () => {
               <div className="pt-3 border-t border-white/[0.06] space-y-3">
                 <div className="space-y-1">
                   <Eyebrow>CPD targets</Eyebrow>
-                  <p className="text-[14px] text-white/85 leading-relaxed">
+                  <p className="text-[14px] text-white leading-relaxed">
                     Early 10-15 hours / year, mid 15-25 hours / year, senior 25+ hours / year (mix
                     of formal, informal, and on-the-job learning).
                   </p>
@@ -675,7 +675,7 @@ const EnhancedCareerOverview = () => {
         </MobileAccordionItem>
 
         <MobileAccordionItem value="industry-sectors">
-          <MobileAccordionTrigger icon={<Building className="h-5 w-5 text-white/55" />}>
+          <MobileAccordionTrigger icon={<Building className="h-5 w-5 text-white" />}>
             Industry sectors and opportunities
           </MobileAccordionTrigger>
           <MobileAccordionContent>
@@ -690,8 +690,8 @@ const EnhancedCareerOverview = () => {
                     <Eyebrow>Growth opportunities</Eyebrow>
                     <Bullets items={sector.opportunities} />
                   </div>
-                  <div className="text-[14px] text-white/85">
-                    <span className="text-white/55">Salary range: </span>
+                  <div className="text-[14px] text-white">
+                    <span className="text-white">Salary range: </span>
                     {sector.salaryRange}
                   </div>
                 </div>
@@ -700,21 +700,21 @@ const EnhancedCareerOverview = () => {
               <div className="pt-3 border-t border-white/[0.06] space-y-3">
                 <div className="space-y-1">
                   <Eyebrow>Mandatory certifications</Eyebrow>
-                  <p className="text-[14px] text-white/85 leading-relaxed">
+                  <p className="text-[14px] text-white leading-relaxed">
                     BS 7671:2018+A4:2026, ECS / JIB, site inductions; sector-specific may include
                     IPAF, PASMA, confined spaces.
                   </p>
                 </div>
                 <div className="space-y-1">
                   <Eyebrow>Key risks</Eyebrow>
-                  <p className="text-[14px] text-white/85 leading-relaxed">
+                  <p className="text-[14px] text-white leading-relaxed">
                     Live work exposure, working at height, isolation errors — mitigate via SSOW,
                     permits, and competency checks.
                   </p>
                 </div>
                 <div className="space-y-1">
                   <Eyebrow>Essential tools</Eyebrow>
-                  <p className="text-[14px] text-white/85 leading-relaxed">
+                  <p className="text-[14px] text-white leading-relaxed">
                     Calibrated testers, lock-off kits, voltage indicators (GS38), appropriate PPE
                     per task and environment.
                   </p>
@@ -725,7 +725,7 @@ const EnhancedCareerOverview = () => {
         </MobileAccordionItem>
 
         <MobileAccordionItem value="entrepreneurship">
-          <MobileAccordionTrigger icon={<Briefcase className="h-5 w-5 text-white/55" />}>
+          <MobileAccordionTrigger icon={<Briefcase className="h-5 w-5 text-white" />}>
             Entrepreneurship and self-employment
           </MobileAccordionTrigger>
           <MobileAccordionContent>
@@ -737,8 +737,8 @@ const EnhancedCareerOverview = () => {
                     <Eyebrow>Requirements</Eyebrow>
                     <Bullets items={path.requirements} />
                   </div>
-                  <div className="text-[14px] text-white/85">
-                    <span className="text-white/55">Potential earnings: </span>
+                  <div className="text-[14px] text-white">
+                    <span className="text-white">Potential earnings: </span>
                     {path.earnings}
                   </div>
                   <div className="space-y-2">
@@ -751,14 +751,14 @@ const EnhancedCareerOverview = () => {
               <div className="pt-3 border-t border-white/[0.06] space-y-3">
                 <div className="space-y-1">
                   <Eyebrow>Start-up costs (indicative)</Eyebrow>
-                  <p className="text-[14px] text-white/85 leading-relaxed">
+                  <p className="text-[14px] text-white leading-relaxed">
                     Insurance, test equipment, van and tools, scheme fees, marketing, accounting
                     software — typically £5k-£15k+ depending on scope.
                   </p>
                 </div>
                 <div className="space-y-1">
                   <Eyebrow>Day rates and pricing</Eyebrow>
-                  <p className="text-[14px] text-white/85 leading-relaxed">
+                  <p className="text-[14px] text-white leading-relaxed">
                     Typical day rate £180-£350+ depending on region. Price by value with
                     allowances for testing, certification, and warranty.
                   </p>
@@ -774,7 +774,7 @@ const EnhancedCareerOverview = () => {
                 </div>
                 <div className="space-y-2">
                   <Eyebrow>Useful UK links</Eyebrow>
-                  <ul className="space-y-1 text-[14px] text-white/85">
+                  <ul className="space-y-1 text-[14px] text-white">
                     <li>
                       <a
                         href="https://www.gov.uk/set-up-business"

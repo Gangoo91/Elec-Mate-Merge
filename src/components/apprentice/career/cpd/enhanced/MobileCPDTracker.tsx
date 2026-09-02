@@ -50,13 +50,13 @@ const MobileCPDTracker = ({ onAddEntry, onViewEntry, onViewHistory }: MobileCPDT
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
         <div className="grid grid-cols-2 gap-3">
           <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Hours this year
             </span>
             <div className="text-[20px] font-semibold text-white">{stats.hoursThisYear}</div>
           </div>
           <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Progress
             </span>
             <div className="text-[20px] font-semibold text-white">
@@ -66,7 +66,7 @@ const MobileCPDTracker = ({ onAddEntry, onViewEntry, onViewHistory }: MobileCPDT
         </div>
         <div className="space-y-2 rounded-lg border border-white/[0.06] bg-white/[0.02] p-3">
           <div className="flex justify-between text-[13px]">
-            <span className="text-white/55">Annual target</span>
+            <span className="text-white">Annual target</span>
             <span className="text-white font-mono">
               {stats.hoursThisYear} / {stats.targetHours} hours
             </span>
@@ -87,7 +87,7 @@ const MobileCPDTracker = ({ onAddEntry, onViewEntry, onViewHistory }: MobileCPDT
             className={`flex-1 flex items-center justify-center px-3 py-2.5 rounded-lg text-[13px] font-medium transition-colors touch-manipulation ${
               activeTab === tab.id
                 ? 'bg-elec-yellow text-black'
-                : 'text-white/85 hover:text-white hover:bg-white/[0.04]'
+                : 'text-white hover:text-white hover:bg-white/[0.04]'
             }`}
           >
             {tab.label}
@@ -99,13 +99,13 @@ const MobileCPDTracker = ({ onAddEntry, onViewEntry, onViewHistory }: MobileCPDT
         <div className="space-y-3">
           <div className="grid grid-cols-2 gap-3">
             <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Days left
               </span>
               <div className="text-[20px] font-semibold text-white">{stats.daysRemaining}</div>
             </div>
             <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 This month
               </span>
               <div className="text-[20px] font-semibold text-white">{stats.hoursThisMonth}</div>
@@ -113,15 +113,15 @@ const MobileCPDTracker = ({ onAddEntry, onViewEntry, onViewHistory }: MobileCPDT
           </div>
 
           <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Top categories
             </span>
             <div className="space-y-2">
               {stats.categoryBreakdown.slice(0, 3).map((category, index) => (
                 <div key={index} className="space-y-1.5">
                   <div className="flex justify-between items-baseline">
-                    <span className="text-[13px] text-white/85">{category.category}</span>
-                    <span className="text-[12px] text-white/55 font-mono">{category.hours}h</span>
+                    <span className="text-[13px] text-white">{category.category}</span>
+                    <span className="text-[12px] text-white font-mono">{category.hours}h</span>
                   </div>
                   <div className="w-full bg-white/[0.04] rounded-full h-1">
                     <div
@@ -148,18 +148,18 @@ const MobileCPDTracker = ({ onAddEntry, onViewEntry, onViewHistory }: MobileCPDT
                 <div className="space-y-2 flex-1 min-w-0">
                   <h3 className="text-[14px] text-white line-clamp-2">{entry.activity}</h3>
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                    <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                       {entry.date}
                     </span>
-                    <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                    <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                       {entry.hours}h
                     </span>
-                    <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                    <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                       {entry.status}
                     </span>
                   </div>
                 </div>
-                <ChevronRight className="h-5 w-5 text-white/55 flex-shrink-0" />
+                <ChevronRight className="h-5 w-5 text-white flex-shrink-0" />
               </div>
             </button>
           ))}
@@ -183,14 +183,14 @@ const MobileCPDTracker = ({ onAddEntry, onViewEntry, onViewHistory }: MobileCPDT
             >
               <div className="flex items-start justify-between gap-2">
                 <h3 className="text-[14px] text-white">{goal.title}</h3>
-                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
+                <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                   {goal.status}
                 </span>
               </div>
 
               <div className="space-y-1.5 rounded-lg border border-white/[0.06] bg-white/[0.02] p-3">
                 <div className="flex justify-between text-[13px]">
-                  <span className="text-white/55">Progress</span>
+                  <span className="text-white">Progress</span>
                   <span className="text-white font-mono">
                     {goal.currentHours} / {goal.targetHours} hours
                   </span>
@@ -201,7 +201,7 @@ const MobileCPDTracker = ({ onAddEntry, onViewEntry, onViewHistory }: MobileCPDT
                 />
               </div>
 
-              <div className="text-[12px] text-white/55 font-mono">
+              <div className="text-[12px] text-white font-mono">
                 Due: {new Date(goal.deadline).toLocaleDateString()}
               </div>
             </div>
@@ -209,9 +209,9 @@ const MobileCPDTracker = ({ onAddEntry, onViewEntry, onViewHistory }: MobileCPDT
 
           {activeGoals.length === 0 && (
             <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-6 text-center space-y-2">
-              <Target className="h-6 w-6 text-white/55 mx-auto" />
+              <Target className="h-6 w-6 text-white mx-auto" />
               <p className="text-[14px] text-white">No active goals</p>
-              <p className="text-[12px] text-white/55">Create goals to track your progress</p>
+              <p className="text-[12px] text-white">Create goals to track your progress</p>
             </div>
           )}
         </div>

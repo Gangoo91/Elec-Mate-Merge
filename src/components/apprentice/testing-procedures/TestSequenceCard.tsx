@@ -26,7 +26,11 @@ type Step = {
 const DEAD: Step[] = [
   { reg: '643.2', name: 'Continuity of protective conductors', covered: true },
   { reg: '643.3', name: 'Insulation resistance', covered: true },
-  { reg: '643.4', name: 'Protection by SELV, PELV or electrical separation', note: 'where relevant' },
+  {
+    reg: '643.4',
+    name: 'Protection by SELV, PELV or electrical separation',
+    note: 'where relevant',
+  },
   { reg: '643.5', name: 'Resistance of floors and walls', note: 'where relevant' },
   { reg: '643.6', name: 'Polarity', covered: true },
 ];
@@ -35,27 +39,23 @@ const LIVE: Step[] = [{ reg: '643.7', name: 'Earth fault loop impedance', covere
 
 const Row = ({ step, index }: { step: Step; index: number }) => (
   <li className="flex items-baseline gap-3">
-    <span className="w-4 shrink-0 font-mono text-[12px] text-white/70">{index}</span>
-    <span className="w-[52px] shrink-0 font-mono text-[12px] text-white/70">{step.reg}</span>
+    <span className="w-4 shrink-0 font-mono text-[12px] text-white">{index}</span>
+    <span className="w-[52px] shrink-0 font-mono text-[12px] text-white">{step.reg}</span>
     <span className="text-[14px] leading-relaxed text-white">
       {step.name}
-      {step.note && <span className="text-white/70"> — {step.note}</span>}
-      {step.covered && (
-        <span className={CHIP_ACCENT}>
-          on this page
-        </span>
-      )}
+      {step.note && <span className="text-white"> — {step.note}</span>}
+      {step.covered && <span className={CHIP_ACCENT}>on this page</span>}
     </span>
   </li>
 );
 
 const TestSequenceCard = () => (
-  <div className={cn(PANEL, "space-y-4")}>
+  <div className={cn(PANEL, 'space-y-4')}>
     <div className="space-y-1">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
         The order is not optional
       </span>
-      <p className="text-[14px] leading-relaxed text-white/85">
+      <p className="text-[14px] leading-relaxed text-white">
         Regulation 643.1 requires the tests below to be carried out in this order, and to be
         finished before the installation is energised. Each one depends on the last having passed.
       </p>
@@ -79,20 +79,20 @@ const TestSequenceCard = () => (
           <Row key={step.reg} step={step} index={DEAD.length + i + 1} />
         ))}
       </ul>
-      <p className="text-[13px] leading-relaxed text-white/85">
+      <p className="text-[13px] leading-relaxed text-white">
         Further live tests follow — RCD operation, phase sequence where relevant, and a functional
         check of the main switch.
       </p>
     </div>
 
-    <div className={cn(CALLOUT_INSET, "space-y-1")}>
+    <div className={cn(CALLOUT_INSET, 'space-y-1')}>
       <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
         If you find a fault
       </span>
-      <p className="text-[14px] leading-relaxed text-white/85">
-        A fault found by any test can invalidate the tests already done. Under Regulation 643.7.2,
-        once you have put it right you repeat the earlier tests that the fault could have affected —
-        you do not simply carry on from where you stopped.
+      <p className="text-[14px] leading-relaxed text-white">
+        A fault found by any test can invalidate the tests already done. Under Regulation 643.1,
+        once you have put it right you repeat that test and the earlier tests the fault could have
+        affected — you do not simply carry on from where you stopped.
       </p>
     </div>
   </div>

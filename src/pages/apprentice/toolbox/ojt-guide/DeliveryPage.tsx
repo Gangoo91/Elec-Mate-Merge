@@ -3,8 +3,8 @@ import { CheckCircle2, AlertTriangle, Lightbulb } from 'lucide-react';
 const traditionalMethods = [
   {
     title: 'College Block Release',
-    colour: 'text-blue-400',
-    border: 'border-blue-500/20',
+    colour: 'text-elec-yellow',
+    border: 'border-elec-yellow/35',
     desc: 'Full-time attendance at college for concentrated periods (typically 1-2 weeks). Intensive learning with dedicated facilities and expert instructors.',
     pros: [
       'Deep focus without work distractions',
@@ -59,8 +59,8 @@ const traditionalMethods = [
 const modernApproaches = [
   {
     title: 'Blended Learning',
-    colour: 'text-purple-400',
-    border: 'border-purple-500/20',
+    colour: 'text-elec-yellow',
+    border: 'border-elec-yellow/35',
     desc: 'Combination of face-to-face and digital learning. Interactive online modules complemented by practical workshops and assessments.',
     pros: [
       'Flexible — learn theory online, practise in workshops',
@@ -77,8 +77,8 @@ const modernApproaches = [
   },
   {
     title: 'Virtual Reality Training',
-    colour: 'text-cyan-400',
-    border: 'border-cyan-500/20',
+    colour: 'text-elec-yellow',
+    border: 'border-elec-yellow/35',
     desc: 'Immersive simulation environments for hazardous scenario training. Safe practice of high-risk procedures and fault-finding techniques.',
     pros: [
       'Practise dangerous scenarios safely (e.g. fault finding on live systems)',
@@ -95,8 +95,8 @@ const modernApproaches = [
   },
   {
     title: 'Mobile Learning',
-    colour: 'text-pink-400',
-    border: 'border-pink-500/20',
+    colour: 'text-elec-yellow',
+    border: 'border-elec-yellow/35',
     desc: 'Smartphone and tablet-based learning platforms. Micro-learning modules for flexible study during paid working time.',
     pros: [
       'Learn anywhere — on the van, in the cabin, at home',
@@ -159,8 +159,9 @@ const providerCriteria = [
     ],
   },
 ];
-import { SectionHeader } from '@/components/college/primitives';
-import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { HubPage, HubBody, HubMasthead, HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const DeliveryPage = () => {
   return (
@@ -173,12 +174,15 @@ const DeliveryPage = () => {
       <HubBody>
         {/* Traditional Methods */}
         <div className="space-y-3">
-          <SectionHeader eyebrow="Methods" title="Traditional methods" />
+          <HubSectionHeading>Traditional methods</HubSectionHeading>
 
           {traditionalMethods.map((method) => (
             <div
               key={method.title}
-              className="sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]"
+              className={cn(
+                '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+                CARD_SURFACE
+              )}
             >
               <div className="sm:p-5 py-4 space-y-3">
                 <h3 className="font-medium text-sm text-white">{method.title}</h3>
@@ -215,12 +219,15 @@ const DeliveryPage = () => {
 
         {/* Modern Approaches */}
         <div className="space-y-3">
-          <SectionHeader eyebrow="Methods" title="Modern approaches" />
+          <HubSectionHeading>Modern approaches</HubSectionHeading>
 
           {modernApproaches.map((method) => (
             <div
               key={method.title}
-              className="sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]"
+              className={cn(
+                '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+                CARD_SURFACE
+              )}
             >
               <div className="sm:p-5 py-4 space-y-3">
                 <h3 className="font-medium text-sm text-white">{method.title}</h3>
@@ -257,9 +264,9 @@ const DeliveryPage = () => {
 
         {/* Remote Learning Tips */}
         <div className="space-y-3">
-          <SectionHeader eyebrow="Tips" title="Remote learning tips" />
+          <HubSectionHeading>Remote learning tips</HubSectionHeading>
 
-          <div className="sm:rounded-xl sm:border sm:border-elec-yellow/25 sm:bg-elec-yellow/[0.04]">
+          <div className="sm:rounded-xl sm:border sm:border-elec-yellow/25 sm:bg-white/[0.05]">
             <div className="sm:p-5 space-y-3">
               <div className="flex items-center gap-2 mb-1">
                 <Lightbulb className="h-4 w-4 text-amber-400" />
@@ -281,12 +288,15 @@ const DeliveryPage = () => {
 
         {/* Provider Selection */}
         <div className="space-y-3">
-          <SectionHeader eyebrow="Choosing" title="Provider selection criteria" />
+          <HubSectionHeading>Provider selection criteria</HubSectionHeading>
 
           {providerCriteria.map((section) => (
             <div
               key={section.title}
-              className="sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]"
+              className={cn(
+                '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+                CARD_SURFACE
+              )}
             >
               <div className="sm:p-5 py-4">
                 <h3 className="text-elec-yellow font-semibold text-sm mb-2">{section.title}</h3>

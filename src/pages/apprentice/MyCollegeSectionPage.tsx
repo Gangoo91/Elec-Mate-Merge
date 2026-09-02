@@ -127,7 +127,7 @@ const SECTIONS: Record<Section, SectionDef> = {
   },
   compliance: {
     eyebrow: 'Compliance',
-    title: 'Funding & ESFA evidence',
+    title: 'Funding & compliance evidence',
     description:
       'What the funding body needs from you and where you stand against it. Tutor can see the same thing.',
     render: () => <MyComplianceCard />,

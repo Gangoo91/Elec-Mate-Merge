@@ -16,7 +16,7 @@ const ReportingTools = () => {
           {/* Reporting Methods */}
           <div>
             <div className="flex items-center gap-2 mb-3">
-              <div className="p-1.5 bg-elec-yellow/10 rounded">
+              <div className="p-1.5 bg-white/[0.06] rounded">
                 <FileWarning className="h-5 w-5 text-elec-yellow" />
               </div>
               <h4 className="font-medium text-elec-yellow">Reporting Methods</h4>
@@ -50,7 +50,7 @@ const ReportingTools = () => {
           {/* Effective Reporting */}
           <div>
             <div className="flex items-center gap-2 mb-3">
-              <div className="p-1.5 bg-elec-yellow/10 rounded">
+              <div className="p-1.5 bg-white/[0.06] rounded">
                 <CheckCircle className="h-5 w-5 text-elec-yellow" />
               </div>
               <h4 className="font-medium text-elec-yellow">Effective Reporting</h4>
@@ -86,7 +86,7 @@ const ReportingTools = () => {
           {/* Common Barriers */}
           <div>
             <div className="flex items-center gap-2 mb-3">
-              <div className="p-1.5 bg-elec-yellow/10 rounded">
+              <div className="p-1.5 bg-white/[0.06] rounded">
                 <AlertTriangle className="h-5 w-5 text-elec-yellow" />
               </div>
               <h4 className="font-medium text-elec-yellow">Common Barriers</h4>
@@ -126,7 +126,7 @@ const ReportingTools = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="flex gap-3">
-              <div className="p-1.5 bg-elec-yellow/10 rounded h-fit">
+              <div className="p-1.5 bg-white/[0.06] rounded h-fit">
                 <AlertTriangle className="h-5 w-5 text-elec-yellow" />
               </div>
               <div>
@@ -140,7 +140,7 @@ const ReportingTools = () => {
             </div>
 
             <div className="flex gap-3">
-              <div className="p-1.5 bg-elec-yellow/10 rounded h-fit">
+              <div className="p-1.5 bg-white/[0.06] rounded h-fit">
                 <CheckCircle className="h-5 w-5 text-elec-yellow" />
               </div>
               <div>

@@ -86,7 +86,7 @@ const SchedulePlanningTab = () => {
   return (
     <div className="space-y-6">
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Schedule templates
         </span>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
@@ -97,7 +97,7 @@ const SchedulePlanningTab = () => {
                 key={template.id}
                 className={`rounded-xl border p-4 transition-all duration-200 cursor-pointer touch-manipulation ${
                   active
-                    ? 'border-elec-yellow/30 bg-elec-yellow/[0.04]'
+                    ? 'border-elec-yellow/30 bg-white/[0.05]'
                     : 'border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04]'
                 }`}
                 onClick={() => setSelectedTemplate(active ? null : template.id)}
@@ -105,7 +105,7 @@ const SchedulePlanningTab = () => {
                 <h3 className="text-[16px] font-semibold text-white leading-tight">
                   {template.title}
                 </h3>
-                <p className="text-[14px] text-white/70 leading-relaxed mt-1">
+                <p className="text-[14px] text-white leading-relaxed mt-1">
                   {template.description}
                 </p>
                 <Button
@@ -126,7 +126,7 @@ const SchedulePlanningTab = () => {
 
         {selectedTemplate && (
           <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               {scheduleTemplates.find((t) => t.id === selectedTemplate)?.title} — sample day
             </span>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -137,10 +137,10 @@ const SchedulePlanningTab = () => {
                   key={time}
                   className="flex items-center gap-3 rounded-lg border border-white/[0.06] bg-white/[0.02] p-3"
                 >
-                  <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono whitespace-nowrap">
+                  <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono whitespace-nowrap">
                     {time}
                   </span>
-                  <span className="text-[14px] text-white/85 leading-relaxed">{activity}</span>
+                  <span className="text-[14px] text-white leading-relaxed">{activity}</span>
                 </div>
               ))}
             </div>
@@ -149,7 +149,7 @@ const SchedulePlanningTab = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Planning routines
         </span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -160,16 +160,16 @@ const SchedulePlanningTab = () => {
             >
               <div className="flex items-start justify-between gap-2">
                 <h4 className="text-[14px] font-semibold text-white">{tool.title}</h4>
-                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] whitespace-nowrap">
+                <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] whitespace-nowrap">
                   {tool.time}
                 </span>
               </div>
-              <p className="text-[14px] text-white/85 leading-relaxed">{tool.description}</p>
+              <p className="text-[14px] text-white leading-relaxed">{tool.description}</p>
               <ul className="space-y-1.5">
                 {tool.steps.map((step, stepIndex) => (
                   <li
                     key={stepIndex}
-                    className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                    className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                   >
                     <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                     <span>{step}</span>
@@ -182,7 +182,7 @@ const SchedulePlanningTab = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Site-specific planning
         </span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -197,7 +197,7 @@ const SchedulePlanningTab = () => {
               ].map((item, i) => (
                 <li
                   key={i}
-                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                  className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                 >
                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{item}</span>
@@ -217,7 +217,7 @@ const SchedulePlanningTab = () => {
               ].map((item, i) => (
                 <li
                   key={i}
-                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                  className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                 >
                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{item}</span>

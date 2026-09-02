@@ -575,7 +575,10 @@ const RCDTripTimeCalculator = () => {
                   description:
                     'Legacy (pre-A4): 40ms (30/100mA) / 150ms (300mA) — deleted in A4:2026',
                 },
-                { symbol: '0.5×IΔn', description: 'Optional check — should NOT trip' },
+                {
+                  symbol: '0.5×IΔn',
+                  description: 'Device-standard check, not a BS 7671 requirement — should NOT trip',
+                },
               ]}
             />
           </>

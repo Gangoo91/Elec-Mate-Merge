@@ -267,10 +267,10 @@ export function PortfolioDetailSheet({
   const comments = getCommentsForEvidence(entry.id) || [];
 
   const statusColors: Record<string, string> = {
-    draft: 'bg-muted text-white',
-    'in-progress': 'bg-white/[0.02] text-white/85 border-white/[0.06]',
-    completed: 'bg-white/[0.02] text-white/85 border-white/[0.06]',
-    reviewed: 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30',
+    draft: 'bg-white/[0.06] text-white',
+    'in-progress': 'bg-white/[0.02] text-white border-white/[0.06]',
+    completed: 'bg-white/[0.02] text-white border-white/[0.06]',
+    reviewed: 'text-elec-yellow border-elec-yellow/60',
   };
 
   const handleAddComment = async () => {
@@ -394,13 +394,16 @@ export function PortfolioDetailSheet({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] rounded-t-3xl p-0">
-        {/* Drag handle */}
-        <div className="w-12 h-1 bg-muted rounded-full mx-auto mt-3 mb-2" />
-
-        <div className="flex flex-col h-full">
+      <SheetContent
+        side="bottom"
+        className="h-[85vh] overflow-hidden rounded-t-2xl border-white/[0.06] bg-[hsl(0_0%_8%)] p-0"
+      >
+        {/* ONE column, handle included — a handle above the column pushed
+            the action bar off the bottom of the sheet. */}
+        <div className="flex h-full flex-col">
+          <div className="mx-auto mt-3 h-1 w-12 shrink-0 rounded-full bg-white/15" />
           {/* Header with image/preview */}
-          <div className="relative h-48 bg-muted shrink-0">
+          <div className="relative mt-2 h-48 shrink-0 bg-white/[0.04]">
             {entry.evidenceFiles?.[0]?.url ? (
               <EvidenceImage
                 src={entry.evidenceFiles[0].url}
@@ -412,11 +415,11 @@ export function PortfolioDetailSheet({
                 <FileText className="h-16 w-16 text-white" />
               </div>
             )}
-            <div className="absolute inset-0 bg-white/[0.02] from-background via-background/50" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[hsl(0_0%_8%)] via-[hsl(0_0%_8%)]/60 to-transparent" />
 
             {/* Title overlay */}
             <div className="absolute bottom-0 left-0 right-0 p-4">
-              <h2 className="text-xl font-bold text-foreground mb-2">{entry.title}</h2>
+              <h2 className="mb-2 text-xl font-bold text-white">{entry.title}</h2>
               <div className="flex items-center gap-2 flex-wrap">
                 <Badge
                   variant="outline"
@@ -433,7 +436,7 @@ export function PortfolioDetailSheet({
                   entry.category === 'site-diary-evidence') && (
                   <Badge
                     variant="outline"
-                    className="text-xs bg-white/[0.02] text-white/85 border-white/[0.06]"
+                    className="text-xs bg-white/[0.02] text-white border-white/[0.06]"
                   >
                     <NotebookPen className="h-3 w-3 mr-1" />
                     From Site Diary
@@ -442,7 +445,7 @@ export function PortfolioDetailSheet({
                 {isVerified && (
                   <Badge
                     variant="outline"
-                    className="text-xs bg-white/[0.02] text-white/85 border-white/[0.06]"
+                    className="text-xs bg-white/[0.02] text-white border-white/[0.06]"
                   >
                     <ShieldCheck className="h-3 w-3 mr-1" />
                     Verified
@@ -458,10 +461,11 @@ export function PortfolioDetailSheet({
           </div>
 
           {/* Tab buttons */}
-          <div className="flex border-b border-border shrink-0">
+          <div className="flex shrink-0 border-b border-white/[0.08]">
             <button
               onClick={() => setActiveTab('details')}
-              className={cn('flex-1 h-11 text-sm font-medium border-b-2 transition-colors touch-manipulation',
+              className={cn(
+                'flex-1 h-11 text-sm font-medium border-b-2 transition-colors touch-manipulation',
                 activeTab === 'details'
                   ? 'border-elec-yellow text-elec-yellow'
                   : 'border-transparent text-white'
@@ -471,7 +475,8 @@ export function PortfolioDetailSheet({
             </button>
             <button
               onClick={() => setActiveTab('comments')}
-              className={cn('flex-1 h-11 text-sm font-medium border-b-2 transition-colors flex items-center justify-center gap-2 touch-manipulation',
+              className={cn(
+                'flex-1 h-11 text-sm font-medium border-b-2 transition-colors flex items-center justify-center gap-2 touch-manipulation',
                 activeTab === 'comments'
                   ? 'border-elec-yellow text-elec-yellow'
                   : 'border-transparent text-white'
@@ -479,7 +484,7 @@ export function PortfolioDetailSheet({
             >
               Comments
               {comments.length > 0 && (
-                <span className="px-1.5 py-0.5 text-[10px] bg-elec-yellow/20 text-elec-yellow rounded-full">
+                <span className="rounded-full bg-elec-yellow px-1.5 py-0.5 text-[10px] font-semibold text-black">
                   {comments.length}
                 </span>
               )}
@@ -499,7 +504,7 @@ export function PortfolioDetailSheet({
                         Ready
                       </span>
                     ) : (
-                      <span className="text-[10px] uppercase tracking-[0.14em] text-white/40">
+                      <span className="text-[10px] uppercase tracking-[0.14em] text-white">
                         {readiness.score}/5
                       </span>
                     )}
@@ -513,8 +518,8 @@ export function PortfolioDetailSheet({
                           className={cn(
                             'inline-flex items-center gap-1 px-2 h-6 rounded-full text-[10px] font-medium border',
                             on
-                              ? 'border-elec-yellow/40 bg-elec-yellow/[0.08] text-elec-yellow'
-                              : 'border-white/[0.08] text-white/40'
+                              ? 'border-elec-yellow text-elec-yellow'
+                              : 'border-white/[0.08] text-white'
                           )}
                         >
                           <span
@@ -534,7 +539,7 @@ export function PortfolioDetailSheet({
                 {entry.description && (
                   <div className="space-y-2">
                     <h3 className="text-sm font-medium text-white">Description</h3>
-                    <p className="text-sm text-foreground">{entry.description}</p>
+                    <p className="text-sm text-white">{entry.description}</p>
                   </div>
                 )}
 
@@ -542,7 +547,7 @@ export function PortfolioDetailSheet({
                 {entry.reflection && (
                   <div className="space-y-2">
                     <h3 className="text-sm font-medium text-white">Reflection</h3>
-                    <p className="text-sm text-foreground whitespace-pre-line">{entry.reflection}</p>
+                    <p className="text-sm text-white whitespace-pre-line">{entry.reflection}</p>
                   </div>
                 )}
 
@@ -562,7 +567,7 @@ export function PortfolioDetailSheet({
                             <Calendar className="h-3 w-3" />
                             Date of work
                           </span>
-                          <p className="text-sm text-foreground">
+                          <p className="text-sm text-white">
                             {new Date(meta.workDate).toLocaleDateString('en-GB', {
                               day: 'numeric',
                               month: 'short',
@@ -574,13 +579,13 @@ export function PortfolioDetailSheet({
                       {meta.siteRef && (
                         <div className="space-y-1">
                           <span className="text-xs text-white">Site / job</span>
-                          <p className="text-sm text-foreground">{meta.siteRef}</p>
+                          <p className="text-sm text-white">{meta.siteRef}</p>
                         </div>
                       )}
                       {meta.evidenceType && (
                         <div className="space-y-1">
                           <span className="text-xs text-white">Evidence type</span>
-                          <p className="text-sm text-foreground">
+                          <p className="text-sm text-white">
                             {EVIDENCE_TYPE_LABEL[meta.evidenceType] || meta.evidenceType}
                           </p>
                         </div>
@@ -589,7 +594,7 @@ export function PortfolioDetailSheet({
                     {meta.role && (
                       <div className="space-y-1">
                         <span className="text-xs text-white">What they personally did</span>
-                        <p className="text-sm text-foreground">{meta.role}</p>
+                        <p className="text-sm text-white">{meta.role}</p>
                       </div>
                     )}
                     {meta.witness?.name && (
@@ -598,7 +603,7 @@ export function PortfolioDetailSheet({
                           <User className="h-3 w-3" />
                           Witnessed by
                         </div>
-                        <p className="text-sm text-foreground">
+                        <p className="text-sm text-white">
                           {meta.witness.name}
                           {meta.witness.role ? ` · ${meta.witness.role}` : ''}
                         </p>
@@ -614,7 +619,7 @@ export function PortfolioDetailSheet({
                       </div>
                     )}
                     {meta.authenticityConfirmed && (
-                      <div className="flex items-center gap-1.5 text-xs text-white/85">
+                      <div className="flex items-center gap-1.5 text-xs text-white">
                         <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow" />
                         Apprentice confirmed this is their own work
                       </div>
@@ -629,7 +634,7 @@ export function PortfolioDetailSheet({
                       <Calendar className="h-3 w-3" />
                       Created
                     </span>
-                    <p className="text-sm text-foreground">
+                    <p className="text-sm text-white">
                       {new Date(entry.dateCreated).toLocaleDateString('en-GB', {
                         day: 'numeric',
                         month: 'short',
@@ -646,7 +651,7 @@ export function PortfolioDetailSheet({
                         <Clock className="h-3 w-3" />
                         Time Spent
                       </span>
-                      <p className="text-sm text-foreground">{entry.timeSpent} mins</p>
+                      <p className="text-sm text-white">{entry.timeSpent} mins</p>
                     </div>
                   )}
                 </div>
@@ -700,7 +705,8 @@ export function PortfolioDetailSheet({
                                 )}
                                 <Badge
                                   variant="outline"
-                                  className={cn('text-[10px]',
+                                  className={cn(
+                                    'text-[10px]',
                                     getConfidenceBadgeClass(matchedDetail.confidence)
                                   )}
                                 >
@@ -724,7 +730,7 @@ export function PortfolioDetailSheet({
                 {aiAnalysis && (
                   <div className="space-y-2">
                     <h3 className="text-sm font-medium text-white">AI Analysis</h3>
-                    <div className="p-3 rounded-lg bg-elec-yellow/5 border border-elec-yellow/15 space-y-3">
+                    <div className="space-y-3 rounded-xl border border-elec-yellow/35 bg-white/[0.05] p-3">
                       <div className="flex items-center gap-2">
                         <Badge
                           variant="outline"
@@ -793,11 +799,12 @@ export function PortfolioDetailSheet({
                                             return next;
                                           });
                                         }}
-                                        className={cn('w-full text-left rounded-lg p-2.5 border transition-colors touch-manipulation',
+                                        className={cn(
+                                          'w-full text-left rounded-lg p-2.5 border transition-colors touch-manipulation',
                                           alreadyClaimed
                                             ? 'border-white/[0.06] bg-white/[0.02] opacity-70'
                                             : isSelected
-                                              ? 'border-elec-yellow/40 bg-elec-yellow/10'
+                                              ? 'border-elec-yellow bg-white/[0.06]'
                                               : 'border-white/[0.08] bg-transparent active:bg-white/[0.04]'
                                         )}
                                       >
@@ -816,14 +823,15 @@ export function PortfolioDetailSheet({
                                             <div className="flex items-center gap-2">
                                               <Badge
                                                 variant="outline"
-                                                className={cn('text-[10px] shrink-0',
+                                                className={cn(
+                                                  'text-[10px] shrink-0',
                                                   getConfidenceBadgeClass(mc.confidence)
                                                 )}
                                               >
                                                 {mc.confidence}%
                                               </Badge>
                                               {alreadyClaimed && (
-                                                <span className="text-[10px] text-white/85 font-medium">
+                                                <span className="text-[10px] text-white font-medium">
                                                   Claimed
                                                 </span>
                                               )}
@@ -853,7 +861,7 @@ export function PortfolioDetailSheet({
                       {aiAnalysis.matchedCriteria?.length > 0 && selectedClaimACs.size > 0 && (
                         <button
                           onClick={handleClaimACs}
-                          className="w-full flex items-center justify-center gap-2 h-12 rounded-xl bg-white/[0.02] border border-white/[0.06] text-white/85 text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all"
+                          className="w-full flex items-center justify-center gap-2 h-12 rounded-xl bg-white/[0.02] border border-white/[0.06] text-white text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all"
                         >
                           <CheckCircle2 className="h-4.5 w-4.5" />
                           Claim {selectedClaimACs.size} Selected ACs
@@ -891,7 +899,7 @@ export function PortfolioDetailSheet({
                           className="flex items-start gap-2.5 p-2.5 rounded-lg bg-white/[0.02] border border-white/[0.06]"
                         >
                           <span className="h-2 w-2 rounded-full bg-white/40 shrink-0 mt-1.5" />
-                          <span className="text-sm text-foreground">{lo}</span>
+                          <span className="text-sm text-white">{lo}</span>
                         </div>
                       ))}
                     </div>
@@ -916,10 +924,10 @@ export function PortfolioDetailSheet({
                 {entry.dateCompleted && (
                   <div className="space-y-1">
                     <span className="text-xs text-white flex items-center gap-1">
-                      <FileCheck className="h-3 w-3 text-white/85" />
+                      <FileCheck className="h-3 w-3 text-white" />
                       Completed
                     </span>
-                    <p className="text-sm text-foreground">
+                    <p className="text-sm text-white">
                       {new Date(entry.dateCompleted).toLocaleDateString('en-GB', {
                         day: 'numeric',
                         month: 'short',
@@ -946,10 +954,10 @@ export function PortfolioDetailSheet({
                           }}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center gap-3 p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors touch-manipulation min-h-[48px]"
+                          className="flex items-center gap-3 p-3 rounded-lg bg-white/[0.06] hover:bg-white/[0.06] transition-colors touch-manipulation min-h-[48px]"
                         >
                           <FileIcon type={file.type} />
-                          <span className="flex-1 text-sm text-foreground truncate">
+                          <span className="flex-1 text-sm text-white truncate">
                             {file.name || `File ${i + 1}`}
                           </span>
                           <ExternalLink className="h-4 w-4 text-white" />
@@ -964,7 +972,7 @@ export function PortfolioDetailSheet({
                   <div className="space-y-2">
                     <h3 className="text-sm font-medium text-white">Supervisor Feedback</h3>
                     <div className="p-3 rounded-lg bg-white/[0.02] border border-white/[0.06]">
-                      <p className="text-sm text-foreground">{entry.supervisorFeedback}</p>
+                      <p className="text-sm text-white">{entry.supervisorFeedback}</p>
                     </div>
                   </div>
                 )}
@@ -977,7 +985,7 @@ export function PortfolioDetailSheet({
                       <div className="p-3 rounded-lg bg-white/[0.02] border border-white/[0.06] space-y-2">
                         <div className="flex items-center gap-2">
                           <span className="h-2 w-2 rounded-full bg-elec-yellow shrink-0" />
-                          <span className="text-sm font-medium text-white/85">
+                          <span className="text-sm font-medium text-white">
                             Verified by {existingVerification.supervisor_name}
                           </span>
                         </div>
@@ -1005,7 +1013,7 @@ export function PortfolioDetailSheet({
                         onClick={() => setShowVerificationQR(true)}
                         className="w-full p-3 rounded-lg bg-white/[0.02] border border-white/[0.06] text-left touch-manipulation active:scale-[0.98]"
                       >
-                        <p className="text-sm text-white/85 font-medium">Verification pending</p>
+                        <p className="text-sm text-white font-medium">Verification pending</p>
                         <p className="text-xs text-white mt-0.5">
                           Tap to show QR code or share link
                         </p>
@@ -1028,12 +1036,12 @@ export function PortfolioDetailSheet({
                     {comments.map((comment: any) => (
                       <div key={comment.id} className="space-y-2">
                         <div className="flex items-start gap-3">
-                          <div className="p-2 rounded-full bg-muted">
+                          <div className="p-2 rounded-full bg-white/[0.06]">
                             <User className="h-4 w-4 text-white" />
                           </div>
                           <div className="flex-1">
                             <div className="flex items-center gap-2">
-                              <span className="text-sm font-medium text-foreground">
+                              <span className="text-sm font-medium text-white">
                                 {comment.authorName}
                               </span>
                               <Badge variant="outline" className="text-[10px]">
@@ -1043,7 +1051,7 @@ export function PortfolioDetailSheet({
                                 {formatDate(comment.createdAt)}
                               </span>
                             </div>
-                            <p className="text-sm text-foreground mt-1">{comment.content}</p>
+                            <p className="text-sm text-white mt-1">{comment.content}</p>
                             {comment.requiresAction && !comment.isResolved && (
                               <Badge variant="destructive" className="mt-2 text-[10px]">
                                 Action Required
@@ -1057,7 +1065,7 @@ export function PortfolioDetailSheet({
                 )}
 
                 {/* Add comment */}
-                <div className="flex gap-2 pt-4 border-t border-border">
+                <div className="flex gap-2 pt-4 border-t border-white/[0.10]">
                   <Textarea
                     placeholder="Add a comment..."
                     value={newComment}
@@ -1078,11 +1086,14 @@ export function PortfolioDetailSheet({
           </div>
 
           {/* Actions — native icon toolbar */}
-          <div className="border-t border-border shrink-0 bg-background px-2 pt-2 pb-20 sm:pb-3">
+          <div
+            className="shrink-0 border-t border-white/[0.08] bg-[hsl(0_0%_8%)] px-2 pt-2"
+            style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
+          >
             <div className="flex justify-evenly">
               <button
                 onClick={handleShare}
-                className="flex flex-col items-center gap-0.5 min-w-[56px] py-1.5 rounded-lg hover:bg-muted/60 touch-manipulation active:scale-95 transition-colors"
+                className="flex flex-col items-center gap-0.5 min-w-[56px] py-1.5 min-h-11 rounded-lg touch-manipulation transition-colors hover:bg-white/[0.06] active:scale-95"
               >
                 <Share2 className="h-5 w-5 text-white" />
                 <span className="text-[10px] text-white">Share</span>
@@ -1092,14 +1103,14 @@ export function PortfolioDetailSheet({
                 <button
                   onClick={aiAnalysis ? handleValidateEvidence : handleAnalyseEvidence}
                   disabled={isAnalyzing}
-                  className="flex flex-col items-center gap-0.5 min-w-[56px] py-1.5 rounded-lg hover:bg-muted/60 touch-manipulation active:scale-95 transition-colors disabled:opacity-50"
+                  className="flex flex-col items-center gap-0.5 min-w-[56px] py-1.5 min-h-11 rounded-lg touch-manipulation transition-colors hover:bg-white/[0.06] active:scale-95 disabled:text-white/70"
                 >
                   {isAnalyzing ? (
                     <Loader2 className="h-5 w-5 text-elec-yellow animate-spin" />
                   ) : (
                     <Sparkles className="h-5 w-5 text-elec-yellow" />
                   )}
-                  <span className="text-[10px] text-elec-yellow/80">
+                  <span className="text-[10px] text-elec-yellow">
                     {isAnalyzing ? 'Analysing' : aiAnalysis ? 'Validate' : 'Analyse'}
                   </span>
                 </button>
@@ -1108,29 +1119,26 @@ export function PortfolioDetailSheet({
               <button
                 onClick={handleRequestVerification}
                 disabled={isCreatingVerification || isVerified}
-                className={cn('flex flex-col items-center gap-0.5 min-w-[56px] py-1.5 rounded-lg hover:bg-muted/60 touch-manipulation active:scale-95 transition-colors disabled:opacity-70',
+                className={cn(
+                  'flex flex-col items-center gap-0.5 min-w-[56px] py-1.5 min-h-11 rounded-lg touch-manipulation transition-colors hover:bg-white/[0.06] active:scale-95 disabled:text-white/70',
                   isVerified && 'bg-white/[0.02]'
                 )}
               >
                 {isCreatingVerification ? (
-                  <Loader2 className="h-5 w-5 text-white/85 animate-spin" />
+                  <Loader2 className="h-5 w-5 animate-spin text-white" />
                 ) : (
                   <ShieldCheck
-                    className={cn('h-5 w-5', isVerified ? 'text-white/85' : 'text-white/85')}
+                    className={cn('h-5 w-5', isVerified ? 'text-white' : 'text-elec-yellow')}
                   />
                 )}
-                <span
-                  className={cn('text-[10px]',
-                    isVerified ? 'text-white/85' : 'text-purple-400/80'
-                  )}
-                >
+                <span className={cn('text-[10px]', isVerified ? 'text-white' : 'text-elec-yellow')}>
                   {isVerified ? 'Verified' : 'Verify'}
                 </span>
               </button>
 
               <button
                 onClick={handleEdit}
-                className="flex flex-col items-center gap-0.5 min-w-[56px] py-1.5 rounded-lg hover:bg-muted/60 touch-manipulation active:scale-95 transition-colors"
+                className="flex flex-col items-center gap-0.5 min-w-[56px] py-1.5 min-h-11 rounded-lg touch-manipulation transition-colors hover:bg-white/[0.06] active:scale-95"
               >
                 <Edit className="h-5 w-5 text-white" />
                 <span className="text-[10px] text-white">Edit</span>
@@ -1138,10 +1146,10 @@ export function PortfolioDetailSheet({
 
               <button
                 onClick={() => setShowDeleteDialog(true)}
-                className="flex flex-col items-center gap-0.5 min-w-[56px] py-1.5 rounded-lg hover:bg-muted/60 touch-manipulation active:scale-95 transition-colors"
+                className="flex flex-col items-center gap-0.5 min-w-[56px] py-1.5 min-h-11 rounded-lg touch-manipulation transition-colors hover:bg-white/[0.06] active:scale-95"
               >
-                <Trash2 className="h-5 w-5 text-destructive/80" />
-                <span className="text-[10px] text-destructive/60">Delete</span>
+                <Trash2 className="h-5 w-5 text-red-400" />
+                <span className="text-[10px] text-red-400">Delete</span>
               </button>
             </div>
           </div>
@@ -1197,7 +1205,7 @@ export function PortfolioDetailSheet({
             <AlertDialogAction
               onClick={handleDelete}
               disabled={isDeleting}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              className="bg-destructive text-white hover:bg-destructive/90"
             >
               {isDeleting ? (
                 <>
@@ -1246,10 +1254,10 @@ const EVIDENCE_TYPE_LABEL: Record<string, string> = {
 // File icon helper
 function FileIcon({ type }: { type?: string }) {
   if (type?.startsWith('image/')) {
-    return <ImageIcon className="h-5 w-5 text-white/85" />;
+    return <ImageIcon className="h-5 w-5 text-white" />;
   }
   if (type?.startsWith('video/')) {
-    return <Video className="h-5 w-5 text-white/85" />;
+    return <Video className="h-5 w-5 text-white" />;
   }
   if (type?.includes('pdf')) {
     return <FileText className="h-5 w-5 text-red-500" />;

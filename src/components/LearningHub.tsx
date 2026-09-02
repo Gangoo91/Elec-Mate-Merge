@@ -1,7 +1,7 @@
-import React from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
+import { HubBody, HubMasthead, HubPage } from '@/components/hub/HubPrimitives';
+import { chipBase, chipOff, chipOn } from '@/components/forms/fieldStyles';
+import { cn } from '@/lib/utils';
 import RegulationsProcedure from '@/components/inspection/learning-hub/regulations/RegulationsProcedure';
 import FaultFindingProcedure from '@/components/inspection/learning-hub/fault-finding/FaultFindingProcedure';
 import TestingProceduresSection from './learning-hub/TestingProceduresSection';
@@ -84,49 +84,36 @@ const LearningHub = ({ onBack }: LearningHubProps) => {
     );
   }
 
-  const tabCn = (active: boolean) =>
-    `h-11 flex-1 touch-manipulation rounded-xl text-[13px] font-semibold transition-colors ${
-      active
-        ? 'bg-elec-yellow text-black'
-        : 'border border-white/[0.12] bg-white/[0.06] text-white'
-    }`;
-
   return (
-    <div className="-mt-3 bg-background pb-24 sm:-mt-4 md:-mt-6">
-      <div className="sticky top-0 z-50 border-b border-white/[0.06] bg-background/95 backdrop-blur-sm">
-        <div className="px-4 py-2">
-          <div className="flex h-11 items-center gap-3">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={onBack}
-              className="h-11 w-11 touch-manipulation rounded-xl text-white hover:bg-white/10 hover:text-white active:scale-[0.98]"
-            >
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
-            <div>
-              <h1 className="text-base font-semibold text-white">Inspection &amp; Testing</h1>
-              <p className="text-[10px] text-white">BS 7671:2018+A4:2026</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex gap-2 px-4 pb-3">
-          <button type="button" onClick={() => setMode('learn')} className={tabCn(mode === 'learn')}>
+    <HubPage>
+      <HubMasthead
+        section="Apprentice"
+        title="Inspection & Testing · BS 7671:2018+A4:2026"
+        onBack={onBack}
+      />
+      <HubBody>
+        <div className="flex gap-2">
+          <button
+            type="button"
+            onClick={() => setMode('learn')}
+            aria-pressed={mode === 'learn'}
+            className={cn(chipBase, 'flex-1', mode === 'learn' ? chipOn : chipOff)}
+          >
             Learn
           </button>
           <button
             type="button"
             onClick={() => setMode('onsite')}
-            className={tabCn(mode === 'onsite')}
+            aria-pressed={mode === 'onsite'}
+            className={cn(chipBase, 'flex-1', mode === 'onsite' ? chipOn : chipOff)}
           >
             On site
           </button>
         </div>
-      </div>
 
-      {mode === 'learn' ? <LearnPath onNavigateToSection={setSection} /> : <OnSiteReference />}
-    </div>
+        {mode === 'learn' ? <LearnPath onNavigateToSection={setSection} /> : <OnSiteReference />}
+      </HubBody>
+    </HubPage>
   );
 };
 

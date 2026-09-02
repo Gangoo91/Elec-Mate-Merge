@@ -20,7 +20,7 @@ const Subsection7_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         <h2 className="text-2xl md:text-3xl font-bold text-elec-yellow">
           Safe Execution and Emergency Procedures
         </h2>
-        <p className="mt-2 text-elec-light/80">
+        <p className="mt-2 text-white">
           Applying correct procedures when working with electrical systems and being prepared for
           emergency response
         </p>
@@ -45,13 +45,13 @@ const Subsection7_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         <div className="bg-white/10 border border-elec-yellow/20 rounded-lg p-5">
           <h3 className="text-xl font-semibold text-elec-yellow mb-3">Safe Isolation Procedures</h3>
 
-          <p className="text-elec-light/90 mb-3">
+          <p className="text-white mb-3">
             Follow these crucial steps for safe electrical isolation:
           </p>
 
           <div className="overflow-x-auto">
             <Table>
-              <TableHeader className="bg-elec-yellow/20">
+              <TableHeader className="bg-white/[0.08]">
                 <TableRow className="hover:bg-transparent">
                   <TableHead className="text-white">Step</TableHead>
                   <TableHead className="text-white">Procedure</TableHead>
@@ -105,7 +105,7 @@ const Subsection7_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
 
           <div className="bg-white/5 p-3 rounded-lg mt-3">
             <h4 className="font-medium text-white mb-1">Safe Isolation Certification:</h4>
-            <p className="text-elec-light/80 text-sm">
+            <p className="text-white text-sm">
               Remember that formal certification is required for isolation procedures in many work
               environments. Ensure you have the appropriate training and authorisation before
               performing isolation.
@@ -119,14 +119,14 @@ const Subsection7_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               Tool Usage Best Practices
             </h3>
 
-            <p className="text-elec-light/90 mb-3">
+            <p className="text-white mb-3">
               Implement these practices to ensure safe handling of tools:
             </p>
 
             <div className="space-y-3">
               <div className="bg-white/5 p-3 rounded-lg">
                 <h4 className="font-medium text-white">Selection</h4>
-                <ul className="list-disc pl-4 mt-1 text-elec-light/80 text-sm">
+                <ul className="list-disc pl-4 mt-1 text-white text-sm">
                   <li>Use insulated tools rated for the voltage</li>
                   <li>Select tools with the appropriate VDE certification</li>
                   <li>Ensure tools are suitable for the specific task</li>
@@ -136,7 +136,7 @@ const Subsection7_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
 
               <div className="bg-white/5 p-3 rounded-lg">
                 <h4 className="font-medium text-white">Handling</h4>
-                <ul className="list-disc pl-4 mt-1 text-elec-light/80 text-sm">
+                <ul className="list-disc pl-4 mt-1 text-white text-sm">
                   <li>Maintain firm grip on handles, never touch metal parts</li>
                   <li>Keep working area clear of obstructions</li>
                   <li>Store tools safely when not in use</li>
@@ -146,7 +146,7 @@ const Subsection7_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
 
               <div className="bg-white/5 p-3 rounded-lg">
                 <h4 className="font-medium text-white">Maintenance</h4>
-                <ul className="list-disc pl-4 mt-1 text-elec-light/80 text-sm">
+                <ul className="list-disc pl-4 mt-1 text-white text-sm">
                   <li>Inspect tools before each use for damage</li>
                   <li>Replace damaged insulation immediately</li>
                   <li>Keep cutting tools sharp to prevent slipping</li>
@@ -159,14 +159,14 @@ const Subsection7_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           <div className="bg-white/10 border border-elec-yellow/20 rounded-lg p-5">
             <h3 className="text-xl font-semibold text-elec-yellow mb-3">Safe Live Testing</h3>
 
-            <p className="text-elec-light/90 mb-3">
+            <p className="text-white mb-3">
               While it's always preferable to work on de-energised circuits, certain diagnostic
               procedures require live testing:
             </p>
 
             <div className="bg-white/5 p-3 rounded-lg">
               <h4 className="font-medium text-white mb-1">When Live Testing is Permitted:</h4>
-              <ul className="list-disc pl-4 text-elec-light/80 text-sm">
+              <ul className="list-disc pl-4 text-white text-sm">
                 <li>Diagnosing faults that can't be found without power</li>
                 <li>Testing RCD operation</li>
                 <li>Completing initial verification tests</li>
@@ -175,7 +175,7 @@ const Subsection7_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
 
               <div className="border-t border-elec-yellow/20 mt-2 pt-2">
                 <p className="text-white text-sm font-medium">Required Precautions:</p>
-                <ul className="list-disc pl-4 mt-1 text-elec-light/80 text-sm">
+                <ul className="list-disc pl-4 mt-1 text-white text-sm">
                   <li>Risk assessment must be completed and documented</li>
                   <li>Appropriate PPE must be worn</li>
                   <li>Ensure adequate working space</li>
@@ -199,7 +199,7 @@ const Subsection7_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             Emergency Response Protocols
           </h3>
 
-          <p className="text-elec-light/90 mb-3">
+          <p className="text-white mb-3">
             Being prepared for emergencies is crucial. Know how to respond to these common
             electrical incidents:
           </p>
@@ -207,7 +207,7 @@ const Subsection7_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-white/5 p-4 rounded-lg">
               <h4 className="font-medium text-white mb-2">Electric Shock Response</h4>
-              <ol className="list-decimal pl-5 space-y-1 text-elec-light/80">
+              <ol className="list-decimal pl-5 space-y-1 text-white">
                 <li>Do not touch the casualty if still in contact with the source</li>
                 <li>Switch off power immediately if possible</li>
                 <li>
@@ -228,7 +228,7 @@ const Subsection7_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
 
             <div className="bg-white/5 p-4 rounded-lg">
               <h4 className="font-medium text-white mb-2">Electrical Fire Response</h4>
-              <ol className="list-decimal pl-5 space-y-1 text-elec-light/80">
+              <ol className="list-decimal pl-5 space-y-1 text-white">
                 <li>Raise the alarm and call emergency services (999)</li>
                 <li>Switch off power if safe to do so</li>
                 <li>Only attempt to fight small fires if trained and safe</li>
@@ -249,10 +249,10 @@ const Subsection7_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             <h4 className="font-medium text-white mb-2">Communication During Emergencies</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <p className="text-elec-light/90 mb-2">
+                <p className="text-white mb-2">
                   Effective communication is critical during emergency situations:
                 </p>
-                <ul className="list-disc pl-5 space-y-1 text-elec-light/80">
+                <ul className="list-disc pl-5 space-y-1 text-white">
                   <li>Use clear, concise language when raising alarms</li>
                   <li>Specify exact location and nature of emergency</li>
                   <li>Designate a single point of contact for emergency services</li>
@@ -261,8 +261,8 @@ const Subsection7_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 </ul>
               </div>
               <div>
-                <p className="text-elec-light/90 mb-2">Essential information to communicate:</p>
-                <ul className="list-disc pl-5 space-y-1 text-elec-light/80">
+                <p className="text-white mb-2">Essential information to communicate:</p>
+                <ul className="list-disc pl-5 space-y-1 text-white">
                   <li>Exact location of incident</li>
                   <li>Type of incident (shock, fire, etc.)</li>
                   <li>Number of people affected</li>
@@ -280,7 +280,7 @@ const Subsection7_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             Practical Exercise: Emergency Response Plan
           </h3>
 
-          <p className="text-elec-light/90 mb-3">
+          <p className="text-white mb-3">
             Apply your knowledge to create an emergency response plan for the following scenario:
           </p>
 
@@ -288,17 +288,17 @@ const Subsection7_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             <h4 className="font-medium text-white mb-2">
               Scenario: Industrial Distribution Board Failure
             </h4>
-            <p className="text-elec-light/90 mb-3">
+            <p className="text-white mb-3">
               You are working on a team installing a new industrial distribution board in a
               manufacturing facility. The facility remains operational during the installation, with
               only the immediate work area isolated. While making final connections, you notice
               smoke coming from an adjacent existing distribution board that is still live.
             </p>
 
-            <ol className="list-decimal pl-5 mt-2 space-y-2 text-elec-light/80">
+            <ol className="list-decimal pl-5 mt-2 space-y-2 text-white">
               <li className="pl-2">
                 <span className="font-medium text-white">Create an emergency response plan:</span>
-                <ul className="list-disc pl-5 mt-1 text-elec-light/80">
+                <ul className="list-disc pl-5 mt-1 text-white">
                   <li>What are your immediate actions?</li>
                   <li>Who needs to be notified and in what order?</li>
                   <li>What safety measures need to be implemented?</li>
@@ -307,7 +307,7 @@ const Subsection7_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               </li>
               <li className="pl-2">
                 <span className="font-medium text-white">Document the incident:</span>
-                <ul className="list-disc pl-5 mt-1 text-elec-light/80">
+                <ul className="list-disc pl-5 mt-1 text-white">
                   <li>What information would you record?</li>
                   <li>What forms or documentation would be required?</li>
                   <li>Who would need copies of this documentation?</li>
@@ -315,7 +315,7 @@ const Subsection7_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               </li>
               <li className="pl-2">
                 <span className="font-medium text-white">Follow-up actions:</span>
-                <ul className="list-disc pl-5 mt-1 text-elec-light/80">
+                <ul className="list-disc pl-5 mt-1 text-white">
                   <li>What steps would you take before resuming work?</li>
                   <li>What additional safety measures might be implemented?</li>
                   <li>How would you prevent similar incidents?</li>
@@ -324,7 +324,7 @@ const Subsection7_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             </ol>
           </div>
 
-          <p className="text-elec-light/90">
+          <p className="text-white">
             Discuss this scenario with your colleagues or instructor, comparing different approaches
             to emergency response. Consider how the response might change if the incident occurred
             outside of normal working hours.

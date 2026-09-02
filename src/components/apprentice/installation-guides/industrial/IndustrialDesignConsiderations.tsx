@@ -35,13 +35,13 @@ const IndustrialDesignConsiderations = () => {
   return (
     <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-4">
       <div className="space-y-1">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Design
         </span>
         <h3 className="text-[18px] font-semibold text-white leading-tight">
           Critical design considerations
         </h3>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           Key factors for industrial electrical design.
         </p>
       </div>
@@ -56,7 +56,7 @@ const IndustrialDesignConsiderations = () => {
               {item.considerations.map((consideration, conIndex) => (
                 <li
                   key={conIndex}
-                  className="flex items-start gap-2 text-[13px] text-white/85 leading-relaxed"
+                  className="flex items-start gap-2 text-[13px] text-white leading-relaxed"
                 >
                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{consideration}</span>

@@ -70,7 +70,7 @@ const LiveTrackingPanel = () => {
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4">
         <div className="flex items-center space-x-2">
           <div className="animate-pulse h-4 w-4 bg-white/[0.04] rounded-full" />
-          <span className="text-[14px] text-white/85">Loading...</span>
+          <span className="text-[14px] text-white">Loading...</span>
         </div>
       </div>
     );
@@ -78,7 +78,7 @@ const LiveTrackingPanel = () => {
 
   return (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
         Live tracking
       </span>
 
@@ -88,13 +88,13 @@ const LiveTrackingPanel = () => {
             <div className="flex-1 min-w-0">
               <div className="inline-flex items-center gap-2 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                 <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full animate-pulse" />
-                <span className="text-[11px] text-white/85">Active</span>
+                <span className="text-[11px] text-white">Active</span>
               </div>
-              <p className="text-[14px] text-white/85 mt-2 leading-relaxed">
+              <p className="text-[14px] text-white mt-2 leading-relaxed">
                 {activeSession.activity_type}
               </p>
               {activeSession.location && (
-                <p className="text-[11px] text-white/55 flex items-center gap-1 mt-1">
+                <p className="text-[11px] text-white flex items-center gap-1 mt-1">
                   <MapPin className="h-3 w-3" />
                   {activeSession.location}
                 </p>
@@ -102,7 +102,7 @@ const LiveTrackingPanel = () => {
             </div>
             <div className="text-right flex-shrink-0">
               <div className="text-2xl font-mono text-elec-yellow">{getElapsedTime()}</div>
-              <p className="text-[11px] text-white/55">elapsed</p>
+              <p className="text-[11px] text-white">elapsed</p>
             </div>
           </div>
 
@@ -131,15 +131,15 @@ const LiveTrackingPanel = () => {
                 </DialogHeader>
                 <div className="space-y-4">
                   <div className="space-y-1">
-                    <p className="text-[13px] text-white/70">
+                    <p className="text-[13px] text-white">
                       Session: {activeSession.activity_type}
                     </p>
-                    <p className="text-[13px] text-white/70 font-mono">
+                    <p className="text-[13px] text-white font-mono">
                       Duration: {getElapsedTime()}
                     </p>
                   </div>
                   <div className="space-y-2">
-                    <label className="text-[13px] text-white/85">Notes (optional)</label>
+                    <label className="text-[13px] text-white">Notes (optional)</label>
                     <Textarea
                       value={notes}
                       onChange={(e) => setNotes(e.target.value)}
@@ -169,7 +169,7 @@ const LiveTrackingPanel = () => {
         </div>
       ) : (
         <div className="space-y-3">
-          <p className="text-[14px] text-white/55 leading-relaxed">No active tracking session</p>
+          <p className="text-[14px] text-white leading-relaxed">No active tracking session</p>
           <Dialog open={showStartDialog} onOpenChange={setShowStartDialog}>
             <DialogTrigger asChild>
               <Button className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation">
@@ -183,7 +183,7 @@ const LiveTrackingPanel = () => {
               </DialogHeader>
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <label className="text-[13px] text-white/85">Activity type</label>
+                  <label className="text-[13px] text-white">Activity type</label>
                   <div className="grid grid-cols-2 gap-2">
                     {activityTypes.map((type) => (
                       <Button
@@ -211,7 +211,7 @@ const LiveTrackingPanel = () => {
                   )}
                 </div>
                 <div className="space-y-2">
-                  <label className="text-[13px] text-white/85">Location (optional)</label>
+                  <label className="text-[13px] text-white">Location (optional)</label>
                   <Input
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}

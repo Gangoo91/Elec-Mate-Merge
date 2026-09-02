@@ -193,7 +193,7 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
       {/* Calculator Selection */}
       <Label
         htmlFor="calculator-select"
-        className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 block"
+        className="text-[10px] font-medium uppercase tracking-[0.18em] text-white block"
       >
         Select calculator
       </Label>
@@ -211,7 +211,7 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
 
             return (
               <div key={category}>
-                <div className="px-3 py-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 bg-white/[0.02] sticky top-0 border-b border-white/[0.06]">
+                <div className="px-3 py-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white bg-white/[0.02] sticky top-0 border-b border-white/[0.06]">
                   {category}
                 </div>
                 {calcs.map((calc) => (
@@ -235,11 +235,11 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
       <button
         type="button"
         onClick={() => setShowStandards(!showStandards)}
-        className="flex items-center gap-2 h-11 touch-manipulation active:opacity-70 transition-opacity text-white/85 hover:text-white"
+        className="flex items-center gap-2 h-11 touch-manipulation active:opacity-70 transition-opacity text-white hover:text-white"
       >
         <span className="text-[12px]">{showStandards ? 'Hide' : 'Show'} standards reference</span>
         <ChevronDown
-          className={`h-3.5 w-3.5 text-white/55 transition-transform duration-200 ${showStandards ? 'rotate-180' : ''}`}
+          className={`h-3.5 w-3.5 text-white transition-transform duration-200 ${showStandards ? 'rotate-180' : ''}`}
         />
       </button>
 

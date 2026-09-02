@@ -224,8 +224,8 @@ export const REFERENCE_TABLES: ReferenceTable[] = [
     rows: [
       { label: '½× IΔn', value: 'Must not trip' },
       { label: '1× IΔn (general)', value: '≤ 300 ms' },
-      { label: "1× IΔn (Type S)", value: '130–500 ms' },
-      { label: '5× IΔn', value: '≤ 40 ms' },
+      { label: '1× IΔn (Type S)', value: '130–500 ms' },
+      { label: '5× IΔn', value: 'Not required — deleted at A4:2026' },
     ],
     keywords: ['rcd', 'rcbo', 'residual', 'trip', 'ramp', '30ma'],
   },

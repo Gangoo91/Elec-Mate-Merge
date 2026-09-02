@@ -209,10 +209,6 @@ const ElectricalTheoryPartP = ({ subsectionId, isCompleted, markAsComplete }: Su
                 Electrical Installation Contracting
               </li>
               <li>
-                <span className="font-semibold">ELECSA</span> - Part of Certsure LLP alongside
-                NICEIC
-              </li>
-              <li>
                 <span className="font-semibold">NAPIT</span> - National Association of Professional
                 Inspectors and Testers
               </li>
@@ -445,7 +441,7 @@ const ElectricalTheoryPartP = ({ subsectionId, isCompleted, markAsComplete }: Su
                 control notification)
               </li>
               <li>Understand the required documentation for different types of electrical work</li>
-              <li>Know the main competent person schemes (NICEIC, ELECSA, NAPIT, etc.)</li>
+              <li>Know the main competent person schemes (NICEIC, NAPIT, etc.)</li>
               <li>
                 Understand the consequences of non-compliance for both electricians and homeowners
               </li>

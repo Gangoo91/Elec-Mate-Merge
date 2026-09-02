@@ -20,7 +20,7 @@ const RecordingIndicator = ({ className, showText = false }: RecordingIndicatorP
       <Circle
         className={cn('h-2 w-2 fill-elec-yellow text-elec-yellow', isTracking && 'animate-pulse')}
       />
-      {showText && <span className="text-[12px] text-white/85 font-medium">Recording</span>}
+      {showText && <span className="text-[12px] text-white font-medium">Recording</span>}
     </div>
   );
 };

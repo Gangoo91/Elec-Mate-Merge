@@ -116,10 +116,10 @@ const AssessmentPreparation = () => {
   return (
     <div className="space-y-6">
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Assessment preparation guide
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           Prepare thoroughly for your end-point assessment with this comprehensive guide covering
           portfolio review, professional discussion, and practical assessment components.
         </p>
@@ -137,27 +137,27 @@ const AssessmentPreparation = () => {
             >
               <div>
                 <h4 className="text-[16px] font-semibold text-white">{assessment.type}</h4>
-                <p className="text-[14px] text-white/70 leading-relaxed mt-1">
+                <p className="text-[14px] text-white leading-relaxed mt-1">
                   {assessment.description}
                 </p>
               </div>
-              <div className="space-y-1 text-[13px] text-white/85">
+              <div className="space-y-1 text-[13px] text-white">
                 <div>
-                  <span className="text-white/55">Duration:</span> {assessment.duration}
+                  <span className="text-white">Duration:</span> {assessment.duration}
                 </div>
                 <div>
-                  <span className="text-white/55">Format:</span> {assessment.format}
+                  <span className="text-white">Format:</span> {assessment.format}
                 </div>
               </div>
               <div className="space-y-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Preparation checklist
                 </span>
                 <ul className="space-y-1.5">
                   {assessment.preparation.map((item, itemIndex) => (
                     <li
                       key={itemIndex}
-                      className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                      className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                     >
                       <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                       <span>{item}</span>
@@ -171,10 +171,10 @@ const AssessmentPreparation = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Assessment criteria breakdown
         </span>
-        <p className="text-[14px] text-white/70 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           Understanding how you'll be assessed across knowledge, skills, and behaviours
         </p>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
@@ -182,20 +182,20 @@ const AssessmentPreparation = () => {
             <div key={index} className="space-y-2">
               <div className="flex items-center justify-between">
                 <h4 className="text-[14px] font-semibold text-white">{criteria.category}</h4>
-                <span className="text-[12px] text-elec-yellow px-2 py-0.5 rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04]">
+                <span className="text-[12px] text-elec-yellow px-2 py-0.5 rounded-md border border-elec-yellow/20 bg-white/[0.05]">
                   {criteria.weight}
                 </span>
               </div>
-              <p className="text-[14px] text-white/85 leading-relaxed">{criteria.description}</p>
+              <p className="text-[14px] text-white leading-relaxed">{criteria.description}</p>
               <div className="space-y-1.5">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Evidence types
                 </span>
                 <ul className="space-y-1">
                   {criteria.evidence.map((evidence, evidenceIndex) => (
                     <li
                       key={evidenceIndex}
-                      className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                      className="text-[13px] text-white leading-relaxed flex items-start gap-2"
                     >
                       <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                       <span>{evidence}</span>
@@ -209,20 +209,20 @@ const AssessmentPreparation = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Assessment preparation timeline
         </span>
         <div className="space-y-4">
           {preparationTimeline.map((period, index) => (
             <div key={index} className="space-y-2">
-              <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] inline-block">
+              <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] inline-block">
                 {period.timeframe}
               </span>
               <ul className="space-y-1.5">
                 {period.tasks.map((task, taskIndex) => (
                   <li
                     key={taskIndex}
-                    className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                    className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                   >
                     <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                     <span>{task}</span>
@@ -234,7 +234,7 @@ const AssessmentPreparation = () => {
         </div>
       </div>
 
-      <div className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-3">
+      <div className="rounded-xl border border-elec-yellow/20 bg-white/[0.05] p-4 sm:p-5 space-y-3">
         <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
           Top tips for assessment success
         </span>
@@ -250,7 +250,7 @@ const AssessmentPreparation = () => {
               ].map((item, i) => (
                 <li
                   key={i}
-                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                  className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                 >
                   <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
                   <span>{item}</span>
@@ -269,7 +269,7 @@ const AssessmentPreparation = () => {
               ].map((item, i) => (
                 <li
                   key={i}
-                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                  className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                 >
                   <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
                   <span>{item}</span>
@@ -281,7 +281,7 @@ const AssessmentPreparation = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Common assessment pitfalls to avoid
         </span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -296,7 +296,7 @@ const AssessmentPreparation = () => {
               ].map((item, i) => (
                 <li
                   key={i}
-                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                  className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                 >
                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{item}</span>
@@ -315,7 +315,7 @@ const AssessmentPreparation = () => {
               ].map((item, i) => (
                 <li
                   key={i}
-                  className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+                  className="text-[14px] text-white leading-relaxed flex items-start gap-2"
                 >
                   <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                   <span>{item}</span>

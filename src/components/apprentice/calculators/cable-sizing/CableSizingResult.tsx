@@ -88,7 +88,7 @@ const CableSizingResult = ({
     <div className="space-y-6">
       {!recommendedCable ? (
         <div className="text-center py-12">
-          <p className="text-[14px] text-white/55 leading-relaxed">
+          <p className="text-[14px] text-white leading-relaxed">
             Enter the circuit specifications and tap "Calculate" to get results
           </p>
         </div>
@@ -96,7 +96,7 @@ const CableSizingResult = ({
         <>
           {/* Recommended Cable */}
           <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Recommended cable
             </span>
 
@@ -106,13 +106,13 @@ const CableSizingResult = ({
                 <span className="text-5xl md:text-6xl font-mono font-semibold text-white">
                   {recommendedCable.size}
                 </span>
-                <span className="text-2xl md:text-3xl font-mono text-white/85">mm²</span>
+                <span className="text-2xl md:text-3xl font-mono text-white">mm²</span>
               </div>
               <div className="space-y-1">
                 <p className="text-[14px] font-medium text-white">
                   {getCableTypeDisplay(inputs.cableType)}
                 </p>
-                <p className="text-[12px] text-white/55 font-mono">
+                <p className="text-[12px] text-white font-mono">
                   {recommendedCable.tableReference} —{' '}
                   {getInstallationMethodDisplay(deratingFactors?.referenceMethod || 'C')}
                 </p>
@@ -122,7 +122,7 @@ const CableSizingResult = ({
             {/* Capacity Info */}
             <div className="space-y-1">
               <div className="flex items-center justify-between py-3 border-b border-white/[0.06]">
-                <span className="text-[13px] text-white/85 flex items-center gap-1">
+                <span className="text-[13px] text-white flex items-center gap-1">
                   Tabulated capacity (It)
                   <RequiredFieldTooltip content="Current-carrying capacity from BS 7671 Appendix 4 tables at reference conditions" />
                 </span>
@@ -132,7 +132,7 @@ const CableSizingResult = ({
               </div>
 
               <div className="flex items-center justify-between py-3 border-b border-white/[0.06]">
-                <span className="text-[13px] text-white/85 flex items-center gap-1">
+                <span className="text-[13px] text-white flex items-center gap-1">
                   Effective capacity
                   <RequiredFieldTooltip content="It × Ca × Cg × Ci — the current-carrying capacity adjusted for installation conditions" />
                 </span>
@@ -142,7 +142,7 @@ const CableSizingResult = ({
               </div>
 
               <div className="flex items-center justify-between py-3">
-                <span className="text-[13px] text-white/85 flex items-center gap-1">
+                <span className="text-[13px] text-white flex items-center gap-1">
                   Voltage drop
                   <RequiredFieldTooltip content="Voltage drop must not exceed 3% for lighting or 5% for other circuits per BS 7671" />
                 </span>
@@ -150,7 +150,7 @@ const CableSizingResult = ({
                   <div className="text-xl font-mono text-white">
                     {recommendedCable.calculatedVoltageDrop}V
                   </div>
-                  <div className="text-[12px] font-mono text-white/55">
+                  <div className="text-[12px] font-mono text-white">
                     ({recommendedCable.voltageDropPercent}%)
                   </div>
                 </div>
@@ -161,7 +161,7 @@ const CableSizingResult = ({
           {/* Alternative Options */}
           {alternativeCables.length > 0 && (
             <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Alternative options
               </span>
               <div className="space-y-3">
@@ -172,19 +172,19 @@ const CableSizingResult = ({
                   >
                     <div className="flex items-baseline gap-2 mb-3">
                       <span className="text-2xl font-mono text-white">{cable.size}</span>
-                      <span className="text-[14px] font-mono text-white/85">mm²</span>
+                      <span className="text-[14px] font-mono text-white">mm²</span>
                     </div>
                     <div className="space-y-1">
                       <div className="flex justify-between text-[13px]">
-                        <span className="text-white/85">Tabulated</span>
+                        <span className="text-white">Tabulated</span>
                         <span className="font-mono text-white">{cable.tabulatedCapacity}A</span>
                       </div>
                       <div className="flex justify-between text-[13px]">
-                        <span className="text-white/85">Effective</span>
+                        <span className="text-white">Effective</span>
                         <span className="font-mono text-white">{cable.deratedCapacity}A</span>
                       </div>
                       <div className="flex justify-between text-[13px]">
-                        <span className="text-white/85">Voltage drop</span>
+                        <span className="text-white">Voltage drop</span>
                         <span className="font-mono text-white">
                           {cable.calculatedVoltageDrop}V ({cable.voltageDropPercent}%)
                         </span>
@@ -199,19 +199,19 @@ const CableSizingResult = ({
           {/* Show Calculation Derivation */}
           <Collapsible open={showDerivation} onOpenChange={setShowDerivation} className="mt-6">
             <CollapsibleTrigger className="w-full rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 flex items-center justify-between text-left touch-manipulation min-h-[44px]">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 {showDerivation ? 'Hide calculation derivation' : 'Show calculation derivation'}
               </span>
               <ChevronDown
                 className={cn(
-                  'h-4 w-4 text-white/55 transition-transform duration-200',
+                  'h-4 w-4 text-white transition-transform duration-200',
                   showDerivation && 'rotate-180'
                 )}
               />
             </CollapsibleTrigger>
             <CollapsibleContent className="pt-4">
               <div className="space-y-4">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   BS 7671 calculation steps
                 </span>
 
@@ -219,7 +219,7 @@ const CableSizingResult = ({
                   {/* Step 1 */}
                   <div className="p-4 rounded-xl border border-white/[0.06] bg-white/[0.02]">
                     <div className="flex items-start gap-3 text-left">
-                      <span className="flex items-center justify-center w-7 h-7 rounded-full text-[12px] font-mono flex-shrink-0 bg-white/[0.04] text-white/85">
+                      <span className="flex items-center justify-center w-7 h-7 rounded-full text-[12px] font-mono flex-shrink-0 bg-white/[0.04] text-white">
                         1
                       </span>
                       <div className="flex-1">
@@ -240,7 +240,7 @@ const CableSizingResult = ({
                   {/* Step 2 */}
                   <div className="p-4 rounded-xl border border-white/[0.06] bg-white/[0.02]">
                     <div className="flex items-start gap-3 text-left">
-                      <span className="flex items-center justify-center w-7 h-7 rounded-full text-[12px] font-mono flex-shrink-0 bg-white/[0.04] text-white/85">
+                      <span className="flex items-center justify-center w-7 h-7 rounded-full text-[12px] font-mono flex-shrink-0 bg-white/[0.04] text-white">
                         2
                       </span>
                       <div className="flex-1">
@@ -321,7 +321,7 @@ const CableSizingResult = ({
                   {/* Step 3 */}
                   <div className="p-4 rounded-xl border border-white/[0.06] bg-white/[0.02]">
                     <div className="flex items-start gap-3 text-left">
-                      <span className="flex items-center justify-center w-7 h-7 rounded-full text-[12px] font-mono flex-shrink-0 bg-white/[0.04] text-white/85">
+                      <span className="flex items-center justify-center w-7 h-7 rounded-full text-[12px] font-mono flex-shrink-0 bg-white/[0.04] text-white">
                         3
                       </span>
                       <div className="flex-1">
@@ -351,7 +351,7 @@ const CableSizingResult = ({
                   {/* Step 4 */}
                   <div className="p-4 rounded-xl border border-white/[0.06] bg-white/[0.02]">
                     <div className="flex items-start gap-3 text-left">
-                      <span className="flex items-center justify-center w-7 h-7 rounded-full text-[12px] font-mono flex-shrink-0 bg-white/[0.04] text-white/85">
+                      <span className="flex items-center justify-center w-7 h-7 rounded-full text-[12px] font-mono flex-shrink-0 bg-white/[0.04] text-white">
                         4
                       </span>
                       <div className="flex-1">
@@ -369,7 +369,7 @@ const CableSizingResult = ({
                   {/* Step 5 */}
                   <div className="p-4 rounded-xl border border-white/[0.06] bg-white/[0.02]">
                     <div className="flex items-start gap-3 text-left">
-                      <span className="flex items-center justify-center w-7 h-7 rounded-full text-[12px] font-mono flex-shrink-0 bg-white/[0.04] text-white/85">
+                      <span className="flex items-center justify-center w-7 h-7 rounded-full text-[12px] font-mono flex-shrink-0 bg-white/[0.04] text-white">
                         5
                       </span>
                       <div className="flex-1">
@@ -390,7 +390,7 @@ const CableSizingResult = ({
                           <span className="font-mono text-white">
                             = {recommendedCable.calculatedVoltageDrop}V
                           </span>
-                          <span className="text-white/55 ml-1">
+                          <span className="text-white ml-1">
                             ({recommendedCable.voltageDropPercent}%)
                           </span>
                         </p>
@@ -416,10 +416,10 @@ const CableSizingResult = ({
 
       {errors.general && (
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Error
           </span>
-          <p className="text-[14px] text-white/85 leading-relaxed">{errors.general}</p>
+          <p className="text-[14px] text-white leading-relaxed">{errors.general}</p>
         </div>
       )}
     </div>

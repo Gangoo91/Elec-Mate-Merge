@@ -232,7 +232,7 @@ export default function OnJobTools() {
             <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
               Tip
             </span>
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               · {todaysTip.category}
             </span>
           </div>
@@ -258,7 +258,7 @@ export default function OnJobTools() {
             <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
               Safety
             </span>
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               · Stop and ask
             </span>
           </div>

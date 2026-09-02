@@ -217,7 +217,7 @@ const EnhancedEmergencyProcedures = () => {
                     className={
                       selectedCategory === category.value
                         ? 'bg-elec-yellow text-elec-dark'
-                        : 'bg-white/5 border-elec-yellow/20 text-white hover:bg-elec-yellow/10'
+                        : 'bg-white/5 border-elec-yellow/20 text-white hover:bg-white/[0.06]'
                     }
                   >
                     {category.label}
@@ -235,7 +235,7 @@ const EnhancedEmergencyProcedures = () => {
                 className="border border-elec-yellow/20 rounded-lg p-4 bg-white/5 hover:border-elec-yellow/40 transition-colors"
               >
                 <div className="flex items-start gap-3 mb-3">
-                  <div className="p-2 bg-elec-yellow/10 rounded">
+                  <div className="p-2 bg-white/[0.06] rounded">
                     {getIconComponent(procedure.icon, 'h-5 w-5 text-elec-yellow')}
                   </div>
                   <div className="flex-1">

@@ -52,13 +52,13 @@ const CourseContentSection = ({
 
       return (
         <>
-          <p className="text-[14px] text-white/85 leading-relaxed mb-4">{beforeSteps}</p>
+          <p className="text-[14px] text-white leading-relaxed mb-4">{beforeSteps}</p>
 
           <div className="my-4 rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Essential steps of safe isolation
             </span>
-            <ol className="list-decimal pl-5 space-y-1.5 text-[14px] text-white/85 leading-relaxed">
+            <ol className="list-decimal pl-5 space-y-1.5 text-[14px] text-white leading-relaxed">
               <li>
                 <span className="font-medium text-white">Identify</span> — correctly identify the
                 circuit or equipment to be worked on
@@ -90,12 +90,12 @@ const CourseContentSection = ({
             </ol>
           </div>
 
-          <p className="text-[14px] text-white/85 leading-relaxed mt-3">{afterSteps}</p>
+          <p className="text-[14px] text-white leading-relaxed mt-3">{afterSteps}</p>
         </>
       );
     }
 
-    return <p className="text-[14px] text-white/85 leading-relaxed">{text}</p>;
+    return <p className="text-[14px] text-white leading-relaxed">{text}</p>;
   };
 
   return (
@@ -103,7 +103,7 @@ const CourseContentSection = ({
       {(sectionNumber || title) && (
         <div className="flex items-baseline gap-3">
           {sectionNumber && (
-            <span className="text-[11px] font-mono text-white/55 flex-shrink-0">
+            <span className="text-[11px] font-mono text-white flex-shrink-0">
               {sectionNumber}
             </span>
           )}
@@ -121,12 +121,12 @@ const CourseContentSection = ({
         <Accordion type="single" collapsible className="border-l border-white/[0.08] pl-4">
           <AccordionItem value="key-points" className="border-b-0">
             <AccordionTrigger className="py-3 hover:no-underline">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Key learning points
               </span>
             </AccordionTrigger>
             <AccordionContent>
-              <ul className="space-y-1.5 text-[14px] text-white/85 leading-relaxed">
+              <ul className="space-y-1.5 text-[14px] text-white leading-relaxed">
                 {keyPoints.map((point, index) => (
                   <li key={index} className="flex items-start gap-2">
                     <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />

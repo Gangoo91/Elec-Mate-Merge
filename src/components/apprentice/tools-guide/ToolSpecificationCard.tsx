@@ -26,29 +26,29 @@ const ToolSpecificationCard = ({ tool }: ToolSpecificationCardProps) => {
       <div className="flex items-start justify-between gap-3">
         <div className="space-y-1">
           <h3 className="text-[18px] font-semibold text-white leading-tight">{tool.name}</h3>
-          <p className="text-[14px] text-white/85 leading-relaxed">{tool.description}</p>
+          <p className="text-[14px] text-white leading-relaxed">{tool.description}</p>
         </div>
-        <span className="text-[10px] uppercase tracking-[0.18em] text-white/55 flex-shrink-0">
+        <span className="text-[10px] uppercase tracking-[0.18em] text-white flex-shrink-0">
           {tool.priority}
         </span>
       </div>
 
       <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Specifications
         </span>
-        <div className="grid grid-cols-2 gap-2 text-[13px] text-white/85">
+        <div className="grid grid-cols-2 gap-2 text-[13px] text-white">
           {Object.entries(tool.specifications).map(
             ([key, value]) =>
               value && (
                 <div key={key} className="flex justify-between">
-                  <span className="capitalize text-white/55">{key}</span>
+                  <span className="capitalize text-white">{key}</span>
                   <span>{value}</span>
                 </div>
               )
           )}
           <div className="flex justify-between col-span-2 pt-2 border-t border-white/[0.06]">
-            <span className="text-white/55">Price range</span>
+            <span className="text-white">Price range</span>
             <span className="font-mono text-white">{tool.priceRange}</span>
           </div>
         </div>
@@ -56,10 +56,10 @@ const ToolSpecificationCard = ({ tool }: ToolSpecificationCardProps) => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Advantages
           </span>
-          <ul className="space-y-1 text-[13px] text-white/85 leading-relaxed">
+          <ul className="space-y-1 text-[13px] text-white leading-relaxed">
             {tool.pros.map((pro, index) => (
               <li key={index} className="flex items-start gap-2">
                 <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
@@ -70,10 +70,10 @@ const ToolSpecificationCard = ({ tool }: ToolSpecificationCardProps) => {
         </div>
 
         <div className="space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Considerations
           </span>
-          <ul className="space-y-1 text-[13px] text-white/85 leading-relaxed">
+          <ul className="space-y-1 text-[13px] text-white leading-relaxed">
             {tool.cons.map((con, index) => (
               <li key={index} className="flex items-start gap-2">
                 <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
@@ -85,10 +85,10 @@ const ToolSpecificationCard = ({ tool }: ToolSpecificationCardProps) => {
       </div>
 
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Buying tips
         </span>
-        <ul className="space-y-1 text-[13px] text-white/85 leading-relaxed">
+        <ul className="space-y-1 text-[13px] text-white leading-relaxed">
           {tool.buyingTips.map((tip, index) => (
             <li key={index} className="flex items-start gap-2">
               <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
@@ -100,10 +100,10 @@ const ToolSpecificationCard = ({ tool }: ToolSpecificationCardProps) => {
 
       {tool.maintenanceNotes && (
         <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Maintenance notes
           </span>
-          <p className="text-[13px] text-white/85 leading-relaxed">{tool.maintenanceNotes}</p>
+          <p className="text-[13px] text-white leading-relaxed">{tool.maintenanceNotes}</p>
         </div>
       )}
     </div>

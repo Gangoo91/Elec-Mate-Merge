@@ -203,13 +203,13 @@ export const TEST_LEARNING: Record<string, TestLearningEntry> = {
       "RCDs provide additional protection against electric shock. If the RCD doesn't trip fast enough at its rated current, it may not protect a person in a fault condition.",
     eicInfo: 'Column 28 — RCD disconnection time (ms)',
     practicalTip:
-      'This is a LIVE test. Connect your RCD test leads to L and E downstream of the RCD. Press TEST for a 1× IΔn test. The reading should be well under 300ms — typically 15–30ms for a modern RCD. Also test at 5× IΔn (must trip within 40ms).',
-    regulation: 'BS 7671:2018+A3:2024 Reg. 643.10 / GN3 Section 15',
+      'This is a LIVE test. Connect your RCD test leads to L and E downstream of the RCD. Press TEST for a 1× IΔn test. The reading should be well under 300ms — typically 15–30ms for a modern RCD. Record the 1× result only: the old 5× IΔn / 40 ms test was deleted from BS 7671 at A4:2026.',
+    regulation: 'BS 7671:2018+A4:2026 Reg. 643.8 / GN3',
     failPoints: [
       'Connecting test leads upstream of the RCD — the test current must flow through the RCD to trigger it',
-      'Forgetting the 5× IΔn test — you must also test at 150mA (5×30mA) and it must trip within 40ms',
+      'Recording a 5× IΔn / 40 ms result — that test was deleted at A4:2026 and an assessor will query it',
       'Not testing on both half-cycles (0° and 180°) — your MFT should offer both; test on the worst case',
-      'Recording trip time without checking the 300ms / 40ms limits — an RCD tripping at 350ms is a FAIL',
+      'Recording a trip time without checking it against the limit (300 ms general type; 130–500 ms for a Type S) — an RCD tripping at 350ms is a FAIL',
     ],
   },
 
@@ -237,7 +237,7 @@ export const TEST_LEARNING: Record<string, TestLearningEntry> = {
     eicInfo: 'Column 28 — RCD disconnection time (ms)',
     practicalTip:
       'Same procedure as 30mA testing but with the MFT set to the 100mA range. 100mA RCDs are typically used for fire protection on circuits without 30mA coverage.',
-    regulation: 'BS 7671:2018+A3:2024 Reg. 643.10 / GN3 Section 15',
+    regulation: 'BS 7671:2018+A4:2026 Reg. 643.8 / GN3',
     failPoints: [
       'Setting the MFT to 30mA when the RCD is rated at 100mA — always match the test current to the device rating',
       'Confusing fire protection (100mA) with additional protection (30mA) — they serve different purposes',
@@ -252,7 +252,7 @@ export const TEST_LEARNING: Record<string, TestLearningEntry> = {
     eicInfo: 'Column 28 — RCD disconnection time (ms)',
     practicalTip:
       'Set your MFT to 300mA range. These are typically found on distribution boards protecting groups of circuits. Test at the furthest point downstream.',
-    regulation: 'BS 7671:2018+A3:2024 Reg. 643.10 / GN3 Section 15',
+    regulation: 'BS 7671:2018+A4:2026 Reg. 643.8 / GN3',
     failPoints: [
       'Testing at the distribution board instead of downstream — test at the furthest point for worst-case results',
       'Not checking selectivity with downstream 30mA RCDs — only the intended RCD should trip',

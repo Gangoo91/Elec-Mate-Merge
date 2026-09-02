@@ -102,7 +102,9 @@ export function MyReflectionCard() {
 
   return (
     <>
-      <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
+      <section
+        className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
+      >
         <div className="px-4 sm:px-5 py-4 sm:py-5">
           <div className="flex items-baseline justify-between gap-3 flex-wrap">
             <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
@@ -117,7 +119,7 @@ export function MyReflectionCard() {
             {reflectedToday
               ? 'Captured today. Keep the streak alive tomorrow.'
               : streak > 0
-                ? `${streak} days in a row. Don't break the chain — capture today's reflection.`
+                ? `${streak} ${streak === 1 ? 'day' : 'days'} in a row. Don't break the chain — capture today's reflection.`
                 : 'Two minutes today. Goes into your portfolio and — if you tick — counts toward your verified hours.'}
           </p>
 
@@ -199,7 +201,7 @@ function ReflectionViewerSheet({
     <Sheet open={Boolean(row)} onOpenChange={(v) => (!v ? onClose() : undefined)}>
       <SheetContent
         side="bottom"
-        className="h-[80vh] sm:max-w-2xl sm:mx-auto p-0 rounded-t-2xl overflow-hidden border-white/10 bg-[hsl(0_0%_8%)]"
+        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.06] bg-[hsl(0_0%_8%)]"
       >
         <SheetTitle className="sr-only">Past reflection</SheetTitle>
         {row && (

@@ -141,13 +141,13 @@ const InteractiveAssessmentTool = ({ tool, onComplete }: InteractiveAssessmentTo
     return (
       <div className="space-y-5 animate-fade-in">
         <div className="space-y-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Complete
           </span>
           <h2 className="text-[20px] sm:text-[24px] font-semibold tracking-tight text-white leading-tight">
             Assessment complete
           </h2>
-          <p className="text-[14px] text-white/70 leading-relaxed">
+          <p className="text-[14px] text-white leading-relaxed">
             You've successfully completed the {tool.title}.
           </p>
         </div>
@@ -155,15 +155,13 @@ const InteractiveAssessmentTool = ({ tool, onComplete }: InteractiveAssessmentTo
         <div className="grid grid-cols-2 gap-3">
           <div className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-4 text-center space-y-1">
             <div className="text-[24px] font-semibold text-white font-mono">{completedItems}</div>
-            <div className="text-[10px] uppercase tracking-[0.18em] text-white/70">
-              Items assessed
-            </div>
+            <div className="text-[10px] uppercase tracking-[0.18em] text-white">Items assessed</div>
           </div>
           <div className="rounded-lg border border-white/[0.10] bg-white/[0.06] p-4 text-center space-y-1">
             <div className="text-[24px] font-semibold text-white font-mono">
               {successRate.toFixed(0)}%
             </div>
-            <div className="text-[10px] uppercase tracking-[0.18em] text-white/70">
+            <div className="text-[10px] uppercase tracking-[0.18em] text-white">
               Completion rate
             </div>
           </div>
@@ -171,22 +169,22 @@ const InteractiveAssessmentTool = ({ tool, onComplete }: InteractiveAssessmentTo
 
         {notes && (
           <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Your notes
             </span>
-            <p className="text-[14px] text-white/85 leading-relaxed">{notes}</p>
+            <p className="text-[14px] text-white leading-relaxed">{notes}</p>
           </div>
         )}
 
         <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Key points summary
           </span>
           <div className="space-y-2">
             {assessmentItems.map((item) => (
               <div
                 key={item.id}
-                className="flex items-start gap-2 text-[14px] text-white/85 leading-relaxed"
+                className="flex items-start gap-2 text-[14px] text-white leading-relaxed"
               >
                 <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span>{item.text}</span>
@@ -203,14 +201,14 @@ const InteractiveAssessmentTool = ({ tool, onComplete }: InteractiveAssessmentTo
   return (
     <div className="space-y-5">
       <div className="space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           {tool.title}
         </span>
         <div className="flex items-baseline justify-between">
-          <span className="text-[12px] text-white/85 font-mono">
+          <span className="text-[12px] text-white font-mono">
             {currentStep + 1}/{assessmentItems.length}
           </span>
-          <span className="text-[12px] text-white/85 font-mono">{Math.round(progress)}%</span>
+          <span className="text-[12px] text-white font-mono">{Math.round(progress)}%</span>
         </div>
         <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
           <div
@@ -222,11 +220,11 @@ const InteractiveAssessmentTool = ({ tool, onComplete }: InteractiveAssessmentTo
 
       <div className="space-y-4">
         <div className="space-y-2">
-          <div className="flex flex-wrap items-baseline gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
-            <span className={isHighRisk ? 'text-red-300' : 'text-white/70'}>
+          <div className="flex flex-wrap items-baseline gap-3 text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            <span className={isHighRisk ? 'text-red-300' : 'text-white'}>
               {currentItem.riskLevel} risk
             </span>
-            <span className="text-white/25">·</span>
+            <span className="text-white">·</span>
             <span>{currentItem.category}</span>
           </div>
           <h3 className="text-[18px] sm:text-[20px] font-semibold text-white leading-tight">
@@ -236,15 +234,15 @@ const InteractiveAssessmentTool = ({ tool, onComplete }: InteractiveAssessmentTo
 
         {currentItem.guidance && (
           <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Guidance
             </span>
-            <p className="text-[14px] text-white/85 leading-relaxed">{currentItem.guidance}</p>
+            <p className="text-[14px] text-white leading-relaxed">{currentItem.guidance}</p>
           </div>
         )}
 
         <div className="space-y-3">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Assessment status
           </span>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
@@ -256,7 +254,7 @@ const InteractiveAssessmentTool = ({ tool, onComplete }: InteractiveAssessmentTo
                 ${
                   responses[currentItem.id]?.status === 'compliant'
                     ? 'bg-white/[0.06] border-elec-yellow/30 text-elec-yellow'
-                    : 'bg-white/[0.06] border-white/[0.10] hover:border-white/10 text-white/85'
+                    : 'bg-white/[0.06] border-white/[0.10] hover:border-white/10 text-white'
                 }
               `}
             >
@@ -271,7 +269,7 @@ const InteractiveAssessmentTool = ({ tool, onComplete }: InteractiveAssessmentTo
                 ${
                   responses[currentItem.id]?.status === 'non-compliant'
                     ? 'bg-white/[0.06] border-red-500/30 text-red-300'
-                    : 'bg-white/[0.06] border-white/[0.10] hover:border-white/10 text-white/85'
+                    : 'bg-white/[0.06] border-white/[0.10] hover:border-white/10 text-white'
                 }
               `}
             >
@@ -286,7 +284,7 @@ const InteractiveAssessmentTool = ({ tool, onComplete }: InteractiveAssessmentTo
                 ${
                   responses[currentItem.id]?.status === 'not-applicable'
                     ? 'bg-white/[0.04] border-white/15 text-white'
-                    : 'bg-white/[0.06] border-white/[0.10] hover:border-white/10 text-white/85'
+                    : 'bg-white/[0.06] border-white/[0.10] hover:border-white/10 text-white'
                 }
               `}
             >
@@ -322,7 +320,7 @@ const InteractiveAssessmentTool = ({ tool, onComplete }: InteractiveAssessmentTo
             variant="outline"
             onClick={prevStep}
             disabled={currentStep === 0}
-            className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation disabled:opacity-30"
+            className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation disabled:text-white/70"
           >
             <ChevronLeft className="h-4 w-4 mr-2" />
             Previous
@@ -331,7 +329,7 @@ const InteractiveAssessmentTool = ({ tool, onComplete }: InteractiveAssessmentTo
           <Button
             onClick={nextStep}
             disabled={!responses[currentItem.id]}
-            className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98] disabled:opacity-30"
+            className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
           >
             {currentStep === assessmentItems.length - 1 ? 'Complete assessment' : 'Next'}
             {currentStep === assessmentItems.length - 1 ? (
@@ -344,7 +342,7 @@ const InteractiveAssessmentTool = ({ tool, onComplete }: InteractiveAssessmentTo
       </div>
 
       <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Assessment notes
         </span>
         <MobileInput

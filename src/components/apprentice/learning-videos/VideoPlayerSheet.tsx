@@ -41,7 +41,7 @@ export function VideoPlayerSheet({
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-        <div className="flex flex-col h-full bg-[hsl(240,5.9%,10%)]">
+        <div className="flex flex-col h-full bg-[hsl(0_0%_8%)]">
           <SheetHeader className="flex-shrink-0 relative z-10">
             <div className="flex justify-center pt-2.5 pb-1">
               <div className="h-1 w-10 rounded-full bg-white/30" />
@@ -59,22 +59,20 @@ export function VideoPlayerSheet({
             <YouTubePlayer videoId={video.id} title={video.title} />
 
             <div className="px-4 pt-4 pb-6 space-y-4">
-              <h3 className="text-[16px] font-semibold text-white leading-snug">
-                {video.title}
-              </h3>
+              <h3 className="text-[16px] font-semibold text-white leading-snug">{video.title}</h3>
 
-              <div className="flex items-baseline gap-2 flex-wrap text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-                <span className="normal-case tracking-normal text-[13px] text-white/85">
+              <div className="flex items-baseline gap-2 flex-wrap text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                <span className="normal-case tracking-normal text-[13px] text-white">
                   {video.channel}
                 </span>
-                <span className="text-white/25">·</span>
-                <span className="flex items-center gap-1 normal-case tracking-normal text-[13px] text-white/85">
+                <span className="text-white">·</span>
+                <span className="flex items-center gap-1 normal-case tracking-normal text-[13px] text-white">
                   <Clock className="h-3.5 w-3.5" />
                   {video.duration}
                 </span>
-                <span className="text-white/25">·</span>
+                <span className="text-white">·</span>
                 <span>{video.level}</span>
-                <span className="text-white/25">·</span>
+                <span className="text-white">·</span>
                 <span>{categoryLabels[video.category]}</span>
               </div>
 
@@ -83,7 +81,7 @@ export function VideoPlayerSheet({
                   onClick={onBookmarkToggle}
                   className={`flex-1 flex items-center justify-center gap-2 h-12 rounded-xl border touch-manipulation active:scale-[0.98] transition-all ${
                     isBookmarked
-                      ? 'bg-elec-yellow/[0.06] border-elec-yellow/30 text-elec-yellow'
+                      ? 'bg-white/[0.05] border-elec-yellow/30 text-elec-yellow'
                       : 'bg-white/[0.02] border-white/[0.06] text-white'
                   }`}
                 >
@@ -100,12 +98,12 @@ export function VideoPlayerSheet({
               </div>
 
               {video.description && (
-                <p className="text-[14px] text-white/85 leading-relaxed">{video.description}</p>
+                <p className="text-[14px] text-white leading-relaxed">{video.description}</p>
               )}
 
               {relatedVideos.length > 0 && (
                 <div className="pt-4 border-t border-white/[0.06] space-y-3">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     More like this
                   </span>
                   <div className="space-y-2">
@@ -161,7 +159,7 @@ function RelatedVideoRow({
         <h5 className="text-[13px] font-medium text-white leading-tight line-clamp-2">
           {video.title}
         </h5>
-        <p className="text-[11px] text-white/55 mt-1">{video.channel}</p>
+        <p className="text-[11px] text-white mt-1">{video.channel}</p>
       </button>
 
       <button

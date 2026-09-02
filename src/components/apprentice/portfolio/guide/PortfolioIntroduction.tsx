@@ -38,10 +38,10 @@ const PortfolioIntroduction = () => {
   return (
     <div className="space-y-6">
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Welcome to portfolio building
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           Your apprenticeship portfolio is one of the most important documents you'll create during
           your training. It's not just a collection of evidence — it's a comprehensive record of
           your professional development, skills acquisition, and journey towards becoming a
@@ -50,10 +50,10 @@ const PortfolioIntroduction = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           What is an apprenticeship portfolio?
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           An apprenticeship portfolio is a structured collection of evidence that demonstrates your
           competency against the standards required for your electrical qualification. It includes:
         </p>
@@ -61,7 +61,7 @@ const PortfolioIntroduction = () => {
           {portfolioPurpose.map((purpose, index) => (
             <li
               key={index}
-              className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+              className="text-[14px] text-white leading-relaxed flex items-start gap-2"
             >
               <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
               <span>{purpose}</span>
@@ -77,16 +77,16 @@ const PortfolioIntroduction = () => {
             className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-2"
           >
             <h4 className="text-[14px] font-semibold text-white">{benefit.title}</h4>
-            <p className="text-[14px] text-white/85 leading-relaxed">{benefit.description}</p>
+            <p className="text-[14px] text-white leading-relaxed">{benefit.description}</p>
           </div>
         ))}
       </div>
 
-      <div className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-3">
+      <div className="rounded-xl border border-elec-yellow/20 bg-white/[0.05] p-4 sm:p-5 space-y-3">
         <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
           Start early, stay consistent
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           The most successful apprentices start building their portfolio from day one and maintain
           it consistently throughout their training. Don't wait until the end of your apprenticeship
           to begin collecting evidence.
@@ -95,7 +95,7 @@ const PortfolioIntroduction = () => {
           {['Start from week 1', 'Document everything', 'Review regularly'].map((tag) => (
             <span
               key={tag}
-              className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
+              className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
             >
               {tag}
             </span>
@@ -104,14 +104,14 @@ const PortfolioIntroduction = () => {
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           What you'll learn in this guide
         </span>
         <div className="flex flex-wrap gap-1.5">
           {modules.map((m) => (
             <span
               key={m}
-              className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
+              className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
             >
               {m}
             </span>

@@ -212,27 +212,27 @@ const RecommendedBrands = () => {
       <div className="space-y-1">
         <div className="flex items-baseline justify-between gap-3">
           <h3 className="text-[18px] font-semibold text-white leading-tight">{brand.name}</h3>
-          <span className="text-[12px] text-white/85 font-mono flex-shrink-0">
+          <span className="text-[12px] text-white font-mono flex-shrink-0">
             {brand.rating}/5
           </span>
         </div>
-        <p className="text-[13px] text-white/85">{brand.category}</p>
+        <p className="text-[13px] text-white">{brand.category}</p>
       </div>
 
       <div className="flex items-baseline justify-between gap-3 text-[13px]">
-        <span className="font-mono text-white/85">{brand.priceRange}</span>
-        <span className="text-[12px] text-white/55">{brand.ukAvailability} UK availability</span>
+        <span className="font-mono text-white">{brand.priceRange}</span>
+        <span className="text-[12px] text-white">{brand.ukAvailability} UK availability</span>
       </div>
 
       <div className="space-y-1">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Strengths
         </span>
         <div className="flex flex-wrap gap-1.5">
           {brand.strengths.map((strength, i) => (
             <span
               key={i}
-              className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
+              className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]"
             >
               {strength}
             </span>
@@ -241,17 +241,17 @@ const RecommendedBrands = () => {
       </div>
 
       <div className="space-y-1">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Best for
         </span>
-        <p className="text-[13px] text-white/85 leading-relaxed">{brand.bestFor}</p>
+        <p className="text-[13px] text-white leading-relaxed">{brand.bestFor}</p>
       </div>
 
       <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Apprentice tip
         </span>
-        <p className="text-[13px] text-white/85 leading-relaxed">{brand.apprenticeTip}</p>
+        <p className="text-[13px] text-white leading-relaxed">{brand.apprenticeTip}</p>
       </div>
     </div>
   );
@@ -259,10 +259,10 @@ const RecommendedBrands = () => {
   return (
     <div className="space-y-6">
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-1">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Trusted brands
         </span>
-        <p className="text-[14px] text-white/85 leading-relaxed">
+        <p className="text-[14px] text-white leading-relaxed">
           These brands are trusted by UK electrical professionals. Quality tools are an investment -
           they'll serve you throughout your career.
         </p>
@@ -304,7 +304,7 @@ const RecommendedBrands = () => {
         <TabsContent value="budget">
           <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
             <div className="space-y-1">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Budget-friendly alternatives
               </span>
               <h3 className="text-[18px] font-semibold text-white leading-tight">
@@ -318,21 +318,21 @@ const RecommendedBrands = () => {
                   className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 space-y-2"
                 >
                   <h4 className="text-[14px] font-medium text-white">{alt.category}</h4>
-                  <div className="space-y-1 text-[13px] text-white/85">
+                  <div className="space-y-1 text-[13px] text-white">
                     <div className="flex justify-between">
-                      <span className="text-white/55">Premium</span>
+                      <span className="text-white">Premium</span>
                       <span>{alt.premiumBrand}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-white/55">Budget</span>
+                      <span className="text-white">Budget</span>
                       <span>{alt.budgetAlternative}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-white/55">Savings</span>
+                      <span className="text-white">Savings</span>
                       <span className="font-mono text-white">{alt.savings}</span>
                     </div>
                     <div className="pt-2 border-t border-white/[0.06]">
-                      <p className="text-[12px] text-white/55 leading-relaxed">
+                      <p className="text-[12px] text-white leading-relaxed">
                         <strong>Trade-off:</strong> {alt.tradeOff}
                       </p>
                     </div>

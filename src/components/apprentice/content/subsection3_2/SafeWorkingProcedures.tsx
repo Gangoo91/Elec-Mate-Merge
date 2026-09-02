@@ -13,7 +13,7 @@ const SafeWorkingProcedures = () => {
         Safe Working Procedures
       </h3>
 
-      <p className="mb-4 text-elec-light/90">
+      <p className="mb-4 text-white">
         Adhering to proper safe working procedures is paramount when working with electrical
         systems. The Health and Safety Executive (HSE) in the UK provides strict guidelines that
         must be followed to protect both workers and the public from electrical hazards.

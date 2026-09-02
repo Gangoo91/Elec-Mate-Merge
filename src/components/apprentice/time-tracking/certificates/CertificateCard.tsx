@@ -13,13 +13,13 @@ const CertificateCard = ({ certificate, onDelete }: CertificateCardProps) => {
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1 min-w-0">
           <h4 className="text-[15px] font-medium text-white">{certificate.name}</h4>
-          <p className="text-[13px] text-white/55 mt-0.5">{certificate.issuedBy}</p>
+          <p className="text-[13px] text-white mt-0.5">{certificate.issuedBy}</p>
         </div>
         <div className="flex gap-1">
           <Button
             size="sm"
             variant="ghost"
-            className="h-9 w-9 p-0 text-white/55 hover:text-white hover:bg-white/[0.05] touch-manipulation"
+            className="h-9 w-9 p-0 text-white hover:text-white hover:bg-white/[0.05] touch-manipulation"
           >
             <Eye className="h-4 w-4" />
           </Button>
@@ -36,20 +36,20 @@ const CertificateCard = ({ certificate, onDelete }: CertificateCardProps) => {
 
       <div className="grid grid-cols-2 gap-3 mt-4">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Issue date
           </span>
-          <div className="flex items-center gap-1.5 text-[13px] text-white/85 font-mono">
-            <Calendar className="h-3.5 w-3.5 text-white/55" />
+          <div className="flex items-center gap-1.5 text-[13px] text-white font-mono">
+            <Calendar className="h-3.5 w-3.5 text-white" />
             {certificate.issueDate}
           </div>
         </div>
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Expiry date
           </span>
-          <div className="flex items-center gap-1.5 text-[13px] text-white/85 font-mono">
-            <Calendar className="h-3.5 w-3.5 text-white/55" />
+          <div className="flex items-center gap-1.5 text-[13px] text-white font-mono">
+            <Calendar className="h-3.5 w-3.5 text-white" />
             {certificate.expiryDate}
           </div>
         </div>

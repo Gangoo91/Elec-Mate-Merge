@@ -44,7 +44,7 @@ const STATUS_PILL: Record<string, string> = {
    * here that is actually a problem, so it keeps red.
    */
   Present: 'text-white bg-white/[0.06] border-white/[0.12]',
-  Late: 'text-elec-yellow bg-elec-yellow/[0.06] border-elec-yellow/25',
+  Late: 'text-elec-yellow bg-white/[0.05] border-elec-yellow/25',
   Authorised: 'text-white bg-white/[0.04] border-white/[0.10]',
   Absent: 'text-red-300 bg-red-500/[0.08] border-red-500/25',
 };
@@ -143,7 +143,9 @@ export function MyAttendanceCard() {
   // Linked but no register marked yet — quiet panel so the learner knows it's coming.
   if (!calc) {
     return (
-      <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
+      <section
+        className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
+      >
         <div className="px-4 sm:px-5 py-4 sm:py-5">
           <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-white">
             Attendance
@@ -158,7 +160,9 @@ export function MyAttendanceCard() {
   }
 
   return (
-    <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
+    <section
+      className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
+    >
       <div className="px-4 sm:px-5 py-4 sm:py-5">
         <div className="flex items-baseline justify-between gap-3 flex-wrap">
           <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-white">
@@ -185,18 +189,22 @@ export function MyAttendanceCard() {
           <div className="pb-1 text-[11px] text-white leading-snug">
             attended
             <br />
-            <span className="text-white">{calc.attended} of {calc.total}</span>
+            <span className="text-white">
+              {calc.attended} of {calc.total}
+            </span>
           </div>
         </div>
 
         {/* Status breakdown */}
         <div className="mt-4 flex flex-wrap gap-1.5">
-          {([
-            ['Present', calc.present],
-            ['Late', calc.late],
-            ['Authorised', calc.authorised],
-            ['Absent', calc.absent],
-          ] as const)
+          {(
+            [
+              ['Present', calc.present],
+              ['Late', calc.late],
+              ['Authorised', calc.authorised],
+              ['Absent', calc.absent],
+            ] as const
+          )
             .filter(([, n]) => n > 0)
             .map(([label, n]) => (
               <span
@@ -269,7 +277,9 @@ export function MyAttendanceCard() {
 
 function Skeleton() {
   return (
-    <section className={cn('rounded-2xl border border-white/[0.06] overflow-hidden', CARD_SURFACE)}>
+    <section
+      className={cn('rounded-2xl border border-elec-yellow/35 overflow-hidden', CARD_SURFACE)}
+    >
       <div className="px-4 sm:px-5 py-4 sm:py-5 space-y-4">
         <div className="h-3 w-32 rounded-full bg-white/[0.05]" />
         <div className="h-9 w-24 rounded-md bg-white/[0.05]" />

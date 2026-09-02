@@ -111,8 +111,9 @@ Kind regards,
 [Your Name]
 [Apprenticeship Standard: ST0152]`,
 };
-import { SectionHeader } from '@/components/college/primitives';
-import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
+import { HubPage, HubBody, HubMasthead, HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 const RightsPage = () => {
   return (
@@ -125,15 +126,15 @@ const RightsPage = () => {
       <HubBody>
         {/* Your Pay */}
         <div className="space-y-3">
-          <SectionHeader eyebrow="Money" title="Your pay" />
+          <HubSectionHeading>Your pay</HubSectionHeading>
 
-          <div className="sm:rounded-xl sm:border sm:border-elec-yellow/25 sm:bg-elec-yellow/[0.04]">
+          <div className="sm:rounded-xl sm:border sm:border-elec-yellow/25 sm:bg-white/[0.05]">
             <div className="sm:p-5 space-y-3">
               <div className="flex items-baseline gap-2">
                 <span className="text-3xl font-semibold tabular-nums text-elec-yellow leading-none">
                   £8.00
                 </span>
-                <span className="text-[13px] text-white/85">
+                <span className="text-[13px] text-white">
                   per hour · apprentice minimum from 1 Apr 2026
                 </span>
               </div>
@@ -151,12 +152,15 @@ const RightsPage = () => {
 
         {/* Your Rights */}
         <div className="space-y-3">
-          <SectionHeader eyebrow="Rights" title="Your rights as an apprentice" />
+          <HubSectionHeading>Your rights as an apprentice</HubSectionHeading>
 
           {apprenticeRights.map((right) => (
             <div
               key={right.title}
-              className="sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]"
+              className={cn(
+                '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+                CARD_SURFACE
+              )}
             >
               <div className="sm:p-5 py-4 flex items-start gap-3">
                 <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 mt-0.5 flex-shrink-0" />
@@ -171,12 +175,15 @@ const RightsPage = () => {
 
         {/* Employer Responsibilities */}
         <div className="space-y-3">
-          <SectionHeader eyebrow="Duties" title="Employer responsibilities" />
+          <HubSectionHeading>Employer responsibilities</HubSectionHeading>
 
           {employerDuties.map((duty) => (
             <div
               key={duty.title}
-              className="sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]"
+              className={cn(
+                '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+                CARD_SURFACE
+              )}
             >
               <div className="sm:p-5 py-4 flex items-start gap-3">
                 <Target className="h-5 w-5 text-elec-yellow/85 mt-0.5 flex-shrink-0" />
@@ -191,7 +198,7 @@ const RightsPage = () => {
 
         {/* Key Legislation */}
         <div className="space-y-3">
-          <SectionHeader eyebrow="Law" title="Key legislation" />
+          <HubSectionHeading>Key legislation</HubSectionHeading>
 
           <p className="text-white text-sm">
             Your rights are backed by law. Here are the key pieces of legislation that protect you:
@@ -200,7 +207,10 @@ const RightsPage = () => {
           {legislation.map((law) => (
             <div
               key={law.title}
-              className="sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]"
+              className={cn(
+                '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+                CARD_SURFACE
+              )}
             >
               <div className="sm:p-5 py-4">
                 <div className="flex items-start gap-2">
@@ -217,9 +227,9 @@ const RightsPage = () => {
 
         {/* Apprenticeship Agreement */}
         <div className="space-y-3">
-          <SectionHeader eyebrow="Document" title="Your apprenticeship agreement" />
+          <HubSectionHeading>Your apprenticeship agreement</HubSectionHeading>
 
-          <div className="sm:rounded-xl sm:border sm:border-elec-yellow/25 sm:bg-elec-yellow/[0.04]">
+          <div className="sm:rounded-xl sm:border sm:border-elec-yellow/25 sm:bg-white/[0.05]">
             <div className="sm:p-5 space-y-3">
               <div className="flex items-center gap-2">
                 <FileText className="h-4 w-4 text-amber-400" />
@@ -249,9 +259,14 @@ const RightsPage = () => {
 
         {/* Template for Raising Concerns */}
         <div className="space-y-3">
-          <SectionHeader eyebrow="Template" title="Raising concerns" />
+          <HubSectionHeading>Raising concerns</HubSectionHeading>
 
-          <div className="sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]">
+          <div
+            className={cn(
+              '-mx-4 rounded-none border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x px-4 py-4 sm:p-5',
+              CARD_SURFACE
+            )}
+          >
             <div className="sm:p-5 space-y-3">
               <p className="text-white text-sm">
                 If your employer is not providing your OJT, use this template as a starting point.
@@ -344,7 +359,7 @@ const RightsPage = () => {
                     </li>
                     <li className="text-white text-sm flex items-start gap-2">
                       <span className="text-red-300 mt-0.5">·</span>
-                      Call the National Apprenticeship Helpline on 08000 150 600
+                      Call the National Apprenticeship Helpline on 0800 015 0600
                     </li>
                     <li className="text-white text-sm flex items-start gap-2">
                       <span className="text-red-300 mt-0.5">·</span>

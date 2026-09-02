@@ -28,11 +28,9 @@ import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { useVideoInsights } from '@/hooks/apprentice-stats/useVideoInsights';
 import { RecommendationCard } from './RecommendationCard';
-import {
-  Eyebrow,
-  SectionHeader,
-} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 import { categoryLabels, type VideoCategory } from '@/data/apprentice/curatedVideos';
+import { CARD_SURFACE, CARD_BASE, CARD_NEUTRAL } from '@/components/ui/card-recipe';
 
 const levelTone: Record<'beginner' | 'intermediate' | 'advanced', string> = {
   beginner: 'bg-elec-yellow',
@@ -42,8 +40,8 @@ const levelTone: Record<'beginner' | 'intermediate' | 'advanced', string> = {
 
 const levelTextTone: Record<'beginner' | 'intermediate' | 'advanced', string> = {
   beginner: 'text-elec-yellow',
-  intermediate: 'text-white/85',
-  advanced: 'text-white/55',
+  intermediate: 'text-white',
+  advanced: 'text-white',
 };
 
 const levelLabel: Record<'beginner' | 'intermediate' | 'advanced', string> = {
@@ -66,10 +64,7 @@ function formatTime(minutes: number): string {
   return `${minutes}m`;
 }
 
-export function VideosWatchedDetailSheet({
-  open,
-  onOpenChange,
-}: VideosWatchedDetailSheetProps) {
+export function VideosWatchedDetailSheet({ open, onOpenChange }: VideosWatchedDetailSheetProps) {
   const navigate = useNavigate();
 
   const goToVideos = () => {
@@ -109,7 +104,7 @@ export function VideosWatchedDetailSheet({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side="bottom"
-        className="h-[90vh] sm:h-[85vh] p-0 rounded-t-3xl overflow-hidden bg-[hsl(0_0%_8%)] border-white/[0.06]"
+        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_8%)] border-white/[0.06]"
       >
         <div className="flex flex-col h-full">
           <SheetHeader className="flex-shrink-0 relative">
@@ -122,7 +117,7 @@ export function VideosWatchedDetailSheet({
               className="absolute right-2 top-2 h-11 w-11 flex items-center justify-center rounded-full active:bg-white/10 touch-manipulation z-10"
               aria-label="Close"
             >
-              <X className="h-5 w-5 text-white/70" />
+              <X className="h-5 w-5 text-white" />
             </button>
           </SheetHeader>
 
@@ -140,8 +135,8 @@ export function VideosWatchedDetailSheet({
                   'Library waiting'
                 ) : (
                   <>
-                    <span className="font-mono tabular-nums">{watchedCount}</span>{' '}
-                    of {totalVideos} watched
+                    <span className="font-mono tabular-nums">{watchedCount}</span> of {totalVideos}{' '}
+                    watched
                   </>
                 )}
               </h2>
@@ -150,11 +145,11 @@ export function VideosWatchedDetailSheet({
                   <span className="text-[13px] font-mono text-elec-yellow tabular-nums">
                     {completionPercent}%
                   </span>
-                  <span className="text-[13px] text-white/55">complete</span>
+                  <span className="text-[13px] text-white">complete</span>
                 </div>
               )}
               {subtitleParts.length > 0 && (
-                <p className="text-[13px] text-white/70 leading-relaxed">
+                <p className="text-[13px] text-white leading-relaxed">
                   {subtitleParts.join(' · ')}
                 </p>
               )}
@@ -223,7 +218,7 @@ export function VideosWatchedDetailSheet({
                 />
                 <button
                   onClick={goToVideos}
-                  className="w-full text-left rounded-xl overflow-hidden border border-white/[0.06] bg-[hsl(0_0%_10%)] active:bg-white/[0.04] active:scale-[0.99] transition-all group touch-manipulation"
+                  className={cn(CARD_BASE, CARD_NEUTRAL, 'w-full overflow-hidden')}
                 >
                   <div className="relative w-full aspect-video bg-black/50">
                     <img
@@ -271,7 +266,12 @@ export function VideosWatchedDetailSheet({
                   title="What you're watching"
                   meta="Where you've spent your viewing time"
                 />
-                <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-4">
+                <div
+                  className={cn(
+                    'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-4',
+                    CARD_SURFACE
+                  )}
+                >
                   {/* Stacked bar */}
                   <div className="h-2.5 w-full rounded-full overflow-hidden bg-white/[0.04] flex">
                     {(['beginner', 'intermediate', 'advanced'] as const).map((level) => {
@@ -297,18 +297,13 @@ export function VideosWatchedDetailSheet({
                       return (
                         <li
                           key={level}
-                          className="flex items-center gap-1.5 text-[11.5px] text-white/85"
+                          className="flex items-center gap-1.5 text-[11.5px] text-white"
                         >
                           <span
-                            className={cn(
-                              'h-1.5 w-1.5 rounded-sm flex-shrink-0',
-                              levelTone[level]
-                            )}
+                            className={cn('h-1.5 w-1.5 rounded-sm flex-shrink-0', levelTone[level])}
                           />
                           <span className="flex-1 truncate">{levelLabel[level]}</span>
-                          <span className="font-mono tabular-nums text-white/55">
-                            {count}
-                          </span>
+                          <span className="font-mono tabular-nums text-white">{count}</span>
                         </li>
                       );
                     })}
@@ -325,11 +320,16 @@ export function VideosWatchedDetailSheet({
                   title="Coverage across topics"
                   meta={`${categoriesExplored} of ${categoriesTotal} explored`}
                 />
-                <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+                <div
+                  className={cn(
+                    'rounded-2xl border border-elec-yellow/35 p-4 sm:p-5 space-y-3',
+                    CARD_SURFACE
+                  )}
+                >
                   <div className="space-y-1.5">
                     <div className="flex items-baseline justify-between gap-2">
                       <Eyebrow>Coverage</Eyebrow>
-                      <span className="text-[12px] font-mono text-white/85 tabular-nums">
+                      <span className="text-[12px] font-mono text-white tabular-nums">
                         {Math.round((categoriesExplored / categoriesTotal) * 100)}%
                       </span>
                     </div>
@@ -350,12 +350,10 @@ export function VideosWatchedDetailSheet({
                         <button
                           key={category}
                           onClick={goToVideos}
-                          className="inline-flex items-center gap-1.5 h-8 px-2.5 rounded-md border border-white/[0.08] bg-white/[0.02] text-white/85 text-[12px] hover:bg-white/[0.04] active:scale-[0.98] transition-all touch-manipulation"
+                          className="inline-flex items-center gap-1.5 h-8 px-2.5 rounded-md border border-white/[0.08] bg-white/[0.02] text-white text-[12px] hover:bg-white/[0.04] active:scale-[0.98] transition-all touch-manipulation"
                         >
                           <span>{label}</span>
-                          <span className="font-mono text-white/55 tabular-nums">
-                            {count}
-                          </span>
+                          <span className="font-mono text-white tabular-nums">{count}</span>
                         </button>
                       ))}
                     </div>
@@ -381,7 +379,10 @@ export function VideosWatchedDetailSheet({
                     <li key={b.videoId}>
                       <button
                         onClick={goToVideos}
-                        className="w-full flex items-center gap-3 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] active:bg-white/[0.04] active:scale-[0.99] transition-all text-left overflow-hidden touch-manipulation"
+                        className={cn(
+                          'w-full flex items-center gap-3 rounded-2xl border border-elec-yellow/35 active:bg-white/[0.04] active:scale-[0.99] transition-all text-left overflow-hidden touch-manipulation',
+                          CARD_SURFACE
+                        )}
                       >
                         <div className="relative w-20 h-14 flex-shrink-0 bg-black/50">
                           <img
@@ -397,14 +398,12 @@ export function VideosWatchedDetailSheet({
                           </div>
                         </div>
                         <div className="flex-1 min-w-0 py-2 pr-3 space-y-1">
-                          <p className="text-[13px] text-white font-medium truncate">
-                            {b.title}
-                          </p>
-                          <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-white/55">
+                          <p className="text-[13px] text-white font-medium truncate">{b.title}</p>
+                          <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-white">
                             {categoryLabels[b.category as VideoCategory] || b.category}
                           </span>
                         </div>
-                        <ChevronRight className="h-4 w-4 text-white/40 flex-shrink-0 mr-3" />
+                        <ChevronRight className="h-4 w-4 text-white flex-shrink-0 mr-3" />
                       </button>
                     </li>
                   ))}
@@ -429,22 +428,25 @@ export function VideosWatchedDetailSheet({
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-1.5"
+                className="rounded-xl border border-elec-yellow/20 bg-white/[0.05] p-4 sm:p-5 space-y-1.5"
               >
                 <Eyebrow className="text-elec-yellow/85">Insight</Eyebrow>
-                <p className="text-[13.5px] text-white/85 leading-relaxed">
-                  {insightText}
-                </p>
+                <p className="text-[13.5px] text-white leading-relaxed">{insightText}</p>
               </motion.div>
             )}
 
             {/* ── Empty state ─────────────────────────────────────── */}
             {watchedCount === 0 && !nextRecommendedVideo && (
-              <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-6 sm:p-7 text-center space-y-3">
+              <div
+                className={cn(
+                  'rounded-2xl border border-elec-yellow/35 p-6 sm:p-7 text-center space-y-3',
+                  CARD_SURFACE
+                )}
+              >
                 <Eyebrow>Library waiting</Eyebrow>
-                <p className="text-[14px] text-white/85 leading-relaxed max-w-[300px] mx-auto">
-                  Curated electrical training videos, organised by topic and
-                  level. Pick one and start watching.
+                <p className="text-[14px] text-white leading-relaxed max-w-[300px] mx-auto">
+                  Curated electrical training videos, organised by topic and level. Pick one and
+                  start watching.
                 </p>
                 <button
                   onClick={goToVideos}
@@ -516,9 +518,14 @@ function KpiCell({
   icon?: LucideIcon;
 }) {
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-3.5 sm:p-5 space-y-1.5">
+    <div
+      className={cn(
+        'rounded-2xl border border-elec-yellow/35 p-3.5 sm:p-5 space-y-1.5',
+        CARD_SURFACE
+      )}
+    >
       <div className="flex items-center gap-1.5">
-        {Icon && <Icon className="h-3 w-3 text-white/40" />}
+        {Icon && <Icon className="h-3 w-3 text-white" />}
         <Eyebrow className="text-[9.5px] sm:text-[10px]">{label}</Eyebrow>
       </div>
       <div
@@ -541,9 +548,7 @@ function KpiCell({
         </div>
       )}
       {sub && (
-        <span className="text-[10.5px] sm:text-[11px] text-white/55 block leading-snug">
-          {sub}
-        </span>
+        <span className="text-[10.5px] sm:text-[11px] text-white block leading-snug">{sub}</span>
       )}
     </div>
   );

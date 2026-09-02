@@ -16,7 +16,7 @@ const QuizResults = ({
     <div className="space-y-6">
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-6 text-center">
         <div className="space-y-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Quiz result
           </span>
           <h2 className="text-[20px] sm:text-[22px] font-semibold text-white leading-tight">
@@ -26,7 +26,7 @@ const QuizResults = ({
 
         <div className="space-y-3 py-2">
           <div className="text-[40px] font-mono text-white leading-none">{percentage}%</div>
-          <div className="text-[14px] text-white/85">
+          <div className="text-[14px] text-white">
             {score} of {totalQuestions} correct
           </div>
 
@@ -38,7 +38,7 @@ const QuizResults = ({
           </div>
 
           <p
-            className={`text-[14px] ${isPassing ? 'text-elec-yellow' : 'text-white/85'}`}
+            className={`text-[14px] ${isPassing ? 'text-elec-yellow' : 'text-white'}`}
           >
             {isPassing ? 'Pass' : 'Keep practising'}
           </p>
@@ -46,19 +46,19 @@ const QuizResults = ({
 
         {isPassing ? (
           <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Result
             </span>
-            <p className="text-[14px] text-white/85 leading-relaxed">
+            <p className="text-[14px] text-white leading-relaxed">
               Congratulations — you&apos;ve successfully passed the Health & Safety assessment.
             </p>
           </div>
         ) : (
           <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Almost there
             </span>
-            <p className="text-[14px] text-white/85 leading-relaxed">
+            <p className="text-[14px] text-white leading-relaxed">
               You need 70% to pass. Keep studying and try again.
             </p>
           </div>
@@ -74,7 +74,7 @@ const QuizResults = ({
       </div>
 
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-5">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Question review
         </span>
         <div className="space-y-5">
@@ -96,12 +96,12 @@ const QuizResults = ({
                     )}
                   </div>
                   <div className="flex-1">
-                    <p className="text-[14px] text-white/85 leading-relaxed font-medium mb-2">
+                    <p className="text-[14px] text-white leading-relaxed font-medium mb-2">
                       {index + 1}. {question.question}
                     </p>
                     <div className="space-y-1 text-[13px]">
                       {question.options.map((option, optIndex) => {
-                        let optionClass = 'text-white/55';
+                        let optionClass = 'text-white';
                         if (optIndex === question.correctAnswer) {
                           optionClass = 'text-elec-yellow';
                         } else if (
@@ -121,10 +121,10 @@ const QuizResults = ({
                     </div>
                     {!isCorrect && question.explanation && (
                       <div className="mt-3 rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
-                        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                           Explanation
                         </span>
-                        <p className="text-[13px] text-white/85 leading-relaxed">
+                        <p className="text-[13px] text-white leading-relaxed">
                           {question.explanation}
                         </p>
                       </div>
