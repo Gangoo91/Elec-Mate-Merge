@@ -139,7 +139,22 @@ export function DiaryEntryDetailSheet({
     setIsSearchingACs(true);
 
     try {
-      // Build keywords from diary entry
+      /*
+       * Keywords for the AC search.
+       *
+       * The only filter used to be `length >= 3`, which let "the", "and",
+       * "was", "with", "for" and the rest through — and the search is capped at
+       * 15 keywords, so stopwords crowded out the words that actually describe
+       * the work. Stripping them means the fifteen slots hold fifteen real
+       * terms.
+       */
+      const STOPWORDS = new Set([
+        'the', 'and', 'was', 'were', 'with', 'for', 'had', 'has', 'have', 'that',
+        'this', 'from', 'they', 'them', 'you', 'your', 'our', 'their', 'been',
+        'but', 'not', 'all', 'any', 'are', 'its', 'out', 'got', 'did', 'due',
+        'how', 'why', 'who', 'what', 'when', 'some', 'more', 'than', 'then',
+        'into', 'onto', 'over', 'under', 'about', 'after', 'before', 'today',
+      ]);
       const keywords = [
         ...entry.tasks_completed,
         ...entry.skills_practised,
@@ -147,8 +162,8 @@ export function DiaryEntryDetailSheet({
       ]
         .join(' ')
         .toLowerCase()
-        .split(/\s+/)
-        .filter((w) => w.length >= 3);
+        .split(/[^a-z0-9]+/)
+        .filter((w) => w.length >= 3 && !STOPWORDS.has(w));
       const uniqueKeywords = Array.from(new Set(keywords)).slice(0, 15);
 
       const { data, error } = await supabase.rpc('search_qualification_requirements', {
@@ -191,18 +206,33 @@ export function DiaryEntryDetailSheet({
             }
           }
         }
-        // If no AI matches found in DB results, fall back to top 3
-        if (!suggestions.some((s) => s.selected)) {
-          for (let i = 0; i < Math.min(3, suggestions.length); i++) {
-            suggestions[i].selected = true;
-          }
-        }
-      } else {
-        // No AI analysis — auto-select top 3
-        for (let i = 0; i < Math.min(3, suggestions.length); i++) {
-          suggestions[i].selected = true;
-        }
+        /*
+         * Deliberately no fallback pre-selection here.
+         *
+         * If the AI matched nothing above 60% confidence, nothing has actually
+         * verified these criteria — they are keyword hits. See the note below.
+         */
       }
+      /*
+       * 🔴 Nothing is pre-ticked unless the AI matched it with >= 60 %
+       * confidence.
+       *
+       * This used to auto-select the top 3 keyword results whenever the AI
+       * analysis was absent — which is the FIRST time any entry is opened,
+       * because the analysis only auto-loads from cache and is otherwise
+       * fetched on demand. So the common path pre-ticked three assessment
+       * criteria that nothing had checked, from a search over any word of three
+       * letters or more.
+       *
+       * That matters more here than it looks: this builds a QUALIFICATION
+       * portfolio. Ticking an AC claims you met it. The EPA readiness screen
+       * already separates "claimed" from "validated" and scores you on
+       * validated only — so a default that inflates claims widens the very gap
+       * the app then reports back as a deficit, and leaves an assessor
+       * rejecting evidence the apprentice never intended to submit.
+       *
+       * Suggest freely; let the apprentice claim.
+       */
 
       setSuggestedACs(suggestions.slice(0, 15));
     } catch (err) {
@@ -712,15 +742,16 @@ export function DiaryEntryDetailSheet({
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="rounded-xl border border-elec-yellow/20 bg-gradient-to-br from-elec-yellow/[0.04] to-transparent overflow-hidden"
+                className="rounded-xl border border-elec-yellow/40 bg-white/[0.06] overflow-hidden"
               >
                 <div className="px-4 py-3 border-b border-white/[0.10]">
                   <div className="flex items-center gap-2">
                     <Sparkles className="h-4 w-4 text-elec-yellow" />
-                    <h4 className="text-sm font-semibold text-white">Link Assessment Criteria</h4>
+                    <h4 className="text-sm font-semibold text-white">Link assessment criteria</h4>
                   </div>
-                  <p className="text-[11px] text-white mt-0.5">
-                    Auto-matched from your diary entry. Tap to select/deselect.
+                  <p className="text-[11px] text-white/85 mt-0.5">
+                    Suggested from what you wrote. Tick only the ones you actually met — your
+                    assessor checks each claim.
                   </p>
                 </div>
 
@@ -791,7 +822,12 @@ export function DiaryEntryDetailSheet({
                     {isCreatingPortfolio ? (
                       <Loader2 className="h-4 w-4 animate-spin mx-auto" />
                     ) : (
-                      `Add${suggestedACs.filter((a) => a.selected).length > 0 ? ` (${suggestedACs.filter((a) => a.selected).length} ACs)` : ''}`
+                      (() => {
+                        const n = suggestedACs.filter((a) => a.selected).length;
+                        return n === 0
+                          ? 'Add without claiming criteria'
+                          : `Add and claim ${n} ${n === 1 ? 'criterion' : 'criteria'}`;
+                      })()
                     )}
                   </button>
                 </div>

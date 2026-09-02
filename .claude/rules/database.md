@@ -11,9 +11,12 @@ paths:
 
 ## URL: https://jtwygbeceundfgnkirof.supabase.co
 
-## 663 tables (+36 views), 476 deployed edge functions, 1,473 users
+## 677 tables (+37 views), 499 deployed edge functions, 1,777 users
 
-_Verified 2026-08-07 — re-query before quoting; these drift fast._
+_Verified 2026-09-02 — re-query before quoting; these drift fast._
+
+⚠️ 558 function directories exist on disk against 499 deployed. A directory in
+`supabase/functions/` is not evidence the function is live.
 
 ## When querying Supabase:
 

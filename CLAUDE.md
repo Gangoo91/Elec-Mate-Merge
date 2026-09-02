@@ -196,9 +196,11 @@ src/pages/study-centre/
 
 - **Project:** `jtwygbeceundfgnkirof`
 - **URL:** `https://jtwygbeceundfgnkirof.supabase.co`
-- **Contains:** Auth, user profiles, all tables (663 + 36 views), all edge functions (476 deployed), RAG data
-- **Users:** 1,473 registered accounts
-- _Counts verified against the live project 2026-08-07. They drift fast — re-query before quoting them._
+- **Contains:** Auth, user profiles, all tables (677 + 37 views), all edge functions (499 deployed), RAG data
+- **Users:** 1,777 registered accounts (339 in the last 30 days)
+- ⚠️ **558 function directories on disk vs 499 deployed** — roughly sixty exist only locally. Never
+  assume a directory in `supabase/functions/` is live; check with `functions list` before relying on it.
+- _Counts verified against the live project 2026-09-02. They drift fast — re-query before quoting them._
 - **client.ts points here**
 
 ### Edge Function Deployment

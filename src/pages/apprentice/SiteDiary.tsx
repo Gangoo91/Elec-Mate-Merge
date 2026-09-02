@@ -8,6 +8,8 @@
 
 import { useState, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useApprenticeOtj } from '@/hooks/useApprenticeOtj';
+import { useAuth } from '@/contexts/AuthContext';
 import {
   ArrowLeft,
   Plus,
@@ -26,8 +28,7 @@ import {
   Lightbulb,
   Brain,
   AlertTriangle,
-  Briefcase,
-} from 'lucide-react';
+  Briefcase,, Clock } from 'lucide-react';
 import { useSiteDiaryEntries } from '@/hooks/site-diary/useSiteDiaryEntries';
 import { useDiaryStreak } from '@/hooks/site-diary/useDiaryStreak';
 import { useDiaryCoach } from '@/hooks/site-diary/useDiaryCoach';
@@ -65,6 +66,9 @@ const skillFilterOptions = [
 
 export default function SiteDiary() {
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const { breakdown: otjBreakdown } = useApprenticeOtj(user?.id ?? null);
+  const otjHours = Math.round(otjBreakdown?.total_hours ?? 0);
   const {
     entries,
     isLoading,
@@ -305,6 +309,28 @@ export default function SiteDiary() {
               {totalEntries} entries
             </span>
           </div>
+
+          {/*
+           * Off-the-job hours.
+           *
+           * The hours field on an entry creates a linked `time_entries` row, so
+           * logging your day quietly satisfies a legal requirement — and the
+           * diary never mentioned it. Showing the running total gives the daily
+           * entry a reason beyond the diary itself, and the link goes to where
+           * the target for your standard is set out.
+           */}
+          {otjHours > 0 && (
+            <button
+              onClick={() => navigate('/apprentice/toolbox/off-job-training-guide')}
+              title="Hours you log here count towards your off-the-job total"
+              className="flex items-center gap-1.5 flex-shrink-0 px-2 h-7 rounded-md border border-elec-yellow/25 touch-manipulation hover:border-elec-yellow/50 transition-colors"
+            >
+              <Clock className="h-3 w-3 text-elec-yellow" />
+              <span className="text-[11px] font-mono tabular-nums text-elec-yellow">
+                {otjHours}h off-the-job
+              </span>
+            </button>
+          )}
           {longestStreak > 1 && (
             <div className="flex items-center gap-1.5 flex-shrink-0">
               <TrendingUp className="h-3 w-3 text-white/70" />
