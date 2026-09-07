@@ -1,6 +1,15 @@
 /**
  * Named PostHog events — centralised so funnel analysis has a stable schema.
  *
+ * 🔴 This module is emitted as `assets/product-events-<hash>.js`, NOT under its
+ * own name — see `chunkFileNames` in vite.config.ts. EasyPrivacy (uBlock
+ * Origin, AdGuard, Brave) has the generic rule `/analytics-events-`, which
+ * matched the default filename on every build and left blocker users with an
+ * export-less stub: seventeen "does not provide an export named …" issues in
+ * Sentry over a month. If you rename this file, update that mapping, and do
+ * not name any new chunk-forming module `analytics-*`, `tracking-*` or
+ * `pixel-*`.
+ *
  * Consent-gated at the source by PostHogProvider — `track*()` calls are safe
  * no-ops when the user hasn't opted in.
  *

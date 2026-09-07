@@ -153,7 +153,7 @@ export function useStudentOtjTrajectory(args: {
     const finalWeek = sundayEnding(end && end < today ? end : today);
     const firstWeek = sundayEnding(start);
     const weeks: Date[] = [];
-    let cursor = new Date(firstWeek);
+    const cursor = new Date(firstWeek);
     let safety = 0;
     while (cursor.getTime() <= finalWeek.getTime() && safety < 200) {
       weeks.push(new Date(cursor));
@@ -178,6 +178,11 @@ export function useStudentOtjTrajectory(args: {
     }>) {
       const d = new Date(row.activity_date);
       if (d < start) continue;
+      // A returned entry is not hours the learner has — it was sent back to
+      // be redone. Counting it toward the total (and the ahead/behind delta)
+      // showed a learner on target who was not.
+      if (row.verification_status === 'rejected' || row.verification_status === 'returned')
+        continue;
       const key = isoDate(sundayEnding(d));
       const bucket = byWeek.get(key) ?? { mins: 0, verifiedMins: 0 };
       bucket.mins += row.duration_minutes ?? 0;

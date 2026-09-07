@@ -9,19 +9,29 @@ import {
   ReferenceLine,
   CartesianGrid,
 } from 'recharts';
-import { TrendingUp, TrendingDown, Target } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { useStudentOtjTrajectory } from '@/hooks/useStudentOtjTrajectory';
 
 /* ==========================================================================
-   OtjTrajectoryChart — cumulative actual OTJ vs linear required target.
+   OtjTrajectoryChart — cumulative OTJ hours against the linear required
+   ramp, inside the Student 360 OTJ panel.
 
-   Used inside the Student 360 OTJ panel. Two lines: actual (cumulative
-   hours from college_otj_entries) and required (linear ramp from
-   start_date to expected_end_date hitting otj_required_hours).
-   Tutors instantly see whether the learner is ahead/on/behind for the
-   ESFA 20% rule.
+   Three lines: logged (every college_otj_entries row, whatever its status),
+   verified (the subset a tutor or employer has signed off), and required
+   (a straight ramp from start_date to expected_end_date hitting the
+   programme's required hours). A tutor sees at a glance whether the learner
+   is ahead, on or behind.
+
+   Palette: verified is the volt stroke because it is the figure that
+   counts for gateway; logged is white; required is the /25 guide. The old
+   chart drew logged in blue and verified in a translucent emerald.
    ========================================================================== */
+
+const VOLT = 'hsl(47 100% 50%)';
+const WHITE = 'rgba(255,255,255,0.95)';
+const GUIDE = 'rgba(255,255,255,0.25)';
+const AXIS = 'rgba(255,255,255,0.10)';
 
 function fmtDate(iso: string): string {
   return new Date(iso).toLocaleDateString('en-GB', {
@@ -29,6 +39,8 @@ function fmtDate(iso: string): string {
     month: 'short',
   });
 }
+
+const CARD = cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE);
 
 export function OtjTrajectoryChart({
   collegeStudentId,
@@ -50,115 +62,103 @@ export function OtjTrajectoryChart({
 
   if (t.loading) {
     return (
-      <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-5 py-5 animate-pulse">
-        <div className="h-3 w-32 rounded bg-white/[0.06]" />
-        <div className="mt-4 h-48 rounded bg-white/[0.04]" />
+      <div className={cn(CARD, 'animate-pulse px-4 py-4 sm:px-5')}>
+        <div className="h-3 w-32 rounded bg-white/[0.10]" />
+        <div className="mt-4 h-48 rounded bg-white/[0.06]" />
       </div>
     );
   }
 
   if (!t.start_date || chartData.length === 0) {
     return (
-      <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-5 py-6 text-[12.5px] text-white/55 leading-snug">
-        Trajectory needs a programme start date and at least one logged OTJ entry.
-        Once both are set, this chart shows whether the learner is ahead, on or
-        behind the ESFA 20% line.
+      <div className={cn(CARD, 'px-4 py-4 sm:px-5')}>
+        <div className="text-[13px] font-semibold text-white">Trajectory</div>
+        <p className="mt-1 text-[12.5px] leading-snug text-white">
+          Needs a programme start date and at least one logged entry. Once both are set, this shows
+          whether the learner is ahead, on or behind the required line.
+        </p>
       </div>
     );
   }
 
-  const deltaTone =
-    t.current_delta >= 0
-      ? 'text-emerald-300'
-      : t.current_delta >= -10
-        ? 'text-amber-300'
-        : 'text-red-300';
-  const TrendIcon = t.current_delta >= 0 ? TrendingUp : TrendingDown;
+  const last = t.points[t.points.length - 1];
+  const verifiedNow = last?.cumulative_verified_hours ?? 0;
+  // More than ten hours behind is a real problem; anything else is a figure.
+  const behind = t.current_delta < -10;
 
   return (
-    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-5 py-5">
-      <div className="flex items-baseline justify-between gap-3 flex-wrap mb-3">
-        <div>
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-            OTJ trajectory
-          </div>
-          <div className="mt-0.5 text-[13.5px] text-white/85 leading-snug">
-            Cumulative hours vs ESFA 20% ramp
+    <div className={cn(CARD, 'px-4 py-4 sm:px-5')}>
+      <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
+        <div className="min-w-0">
+          <div className="text-[13px] font-semibold text-white">Trajectory</div>
+          <div className="mt-0.5 text-[12px] leading-snug text-white">
+            Cumulative hours against the required line · goal {t.required_total}h
           </div>
         </div>
-        <div className="flex items-center gap-3 flex-wrap">
+        <div className="flex items-start gap-4 sm:gap-5">
+          <Stat label="Verified" value={`${verifiedNow}h`} accent />
           <Stat
-            label="Now"
+            label="Logged"
             value={`${t.current_actual}h`}
-            sub={`/ ${t.current_required}h target`}
+            sub={`of ${t.current_required}h due`}
           />
-          <Stat label="Goal" value={`${t.required_total}h`} icon={<Target className="h-3 w-3" />} />
-          <div
-            className={cn(
-              'inline-flex items-center gap-1.5 h-7 px-2.5 rounded-full text-[11px] font-semibold tabular-nums',
-              t.current_delta >= 0
-                ? 'bg-emerald-500/[0.10] border border-emerald-400/30 text-emerald-200'
-                : t.current_delta >= -10
-                  ? 'bg-amber-500/[0.10] border border-amber-400/30 text-amber-200'
-                  : 'bg-red-500/[0.10] border border-red-400/30 text-red-200'
-            )}
-          >
-            <TrendIcon className="h-3 w-3" />
-            {t.current_delta >= 0 ? '+' : ''}
-            {t.current_delta}h
-          </div>
+          <Stat
+            label={t.current_delta >= 0 ? 'Ahead' : 'Behind'}
+            value={`${Math.abs(t.current_delta)}h`}
+            tone={behind ? 'bad' : 'neutral'}
+          />
         </div>
       </div>
 
-      <div className="h-56 sm:h-64 w-full -mx-1">
+      <div className="-mx-1 mt-3 h-56 w-full sm:h-64">
         <ResponsiveContainer>
           <LineChart data={chartData} margin={{ top: 8, right: 12, left: -10, bottom: 0 }}>
-            <CartesianGrid stroke="rgba(255,255,255,0.04)" strokeDasharray="2 4" />
+            <CartesianGrid stroke={AXIS} strokeDasharray="2 4" />
             <XAxis
               dataKey="label"
-              tick={{ fontSize: 10, fill: 'rgba(255,255,255,0.45)' }}
+              tick={{ fontSize: 10, fill: WHITE }}
               tickLine={false}
-              axisLine={{ stroke: 'rgba(255,255,255,0.08)' }}
+              axisLine={{ stroke: AXIS }}
               minTickGap={20}
             />
             <YAxis
-              tick={{ fontSize: 10, fill: 'rgba(255,255,255,0.45)' }}
+              tick={{ fontSize: 10, fill: WHITE }}
               tickLine={false}
-              axisLine={{ stroke: 'rgba(255,255,255,0.08)' }}
+              axisLine={{ stroke: AXIS }}
               label={{
                 value: 'Hours',
                 angle: -90,
                 position: 'insideLeft',
                 offset: 14,
-                style: { fontSize: 10, fill: 'rgba(255,255,255,0.45)' },
+                style: { fontSize: 10, fill: WHITE },
               }}
             />
             <Tooltip
               contentStyle={{
                 backgroundColor: 'hsl(0 0% 8%)',
-                border: '1px solid rgba(255,255,255,0.08)',
+                border: '1px solid rgba(255,255,255,0.14)',
                 borderRadius: '0.5rem',
                 fontSize: 11,
               }}
-              labelStyle={{ color: 'rgba(255,255,255,0.55)' }}
-              itemStyle={{ color: 'rgba(255,255,255,0.85)' }}
+              labelStyle={{ color: WHITE }}
+              itemStyle={{ color: WHITE }}
               formatter={(v: number) => `${v}h`}
             />
             <ReferenceLine
               y={t.required_total}
-              stroke="rgba(252,211,77,0.35)"
+              stroke={GUIDE}
               strokeDasharray="3 4"
               label={{
                 value: `${t.required_total}h`,
                 position: 'right',
-                fill: 'rgba(252,211,77,0.7)',
+                fill: WHITE,
                 fontSize: 9,
               }}
             />
             <Line
               type="monotone"
               dataKey="required_hours"
-              stroke="rgba(252,211,77,0.6)"
+              stroke={GUIDE}
               strokeWidth={1.5}
               strokeDasharray="4 4"
               dot={false}
@@ -166,28 +166,28 @@ export function OtjTrajectoryChart({
             />
             <Line
               type="monotone"
-              dataKey="cumulative_verified_hours"
-              stroke="rgba(52,211,153,0.55)"
+              dataKey="cumulative_hours"
+              stroke={WHITE}
               strokeWidth={1.5}
               dot={false}
-              name="Verified"
+              name="Logged"
             />
             <Line
               type="monotone"
-              dataKey="cumulative_hours"
-              stroke="rgb(96,165,250)"
+              dataKey="cumulative_verified_hours"
+              stroke={VOLT}
               strokeWidth={2.2}
               dot={false}
-              name="Actual"
+              name="Verified"
             />
           </LineChart>
         </ResponsiveContainer>
       </div>
 
-      <div className="mt-3 flex items-center gap-4 text-[10.5px] text-white/55 flex-wrap">
-        <Legend dot="bg-blue-400" label="Actual cumulative" />
-        <Legend dot="bg-emerald-400/70" label="Verified" />
-        <Legend dot="bg-elec-yellow/70" label="Required (linear)" />
+      <div className="mt-3 flex flex-wrap items-center gap-4 text-[11.5px] text-white">
+        <Legend swatch="bg-elec-yellow" label="Verified" />
+        <Legend swatch="bg-white" label="Logged (all statuses)" />
+        <Legend swatch="bg-white/[0.25]" label="Required" />
       </div>
     </div>
   );
@@ -197,31 +197,35 @@ function Stat({
   label,
   value,
   sub,
-  icon,
+  accent = false,
+  tone = 'neutral',
 }: {
   label: string;
   value: string;
   sub?: string;
-  icon?: React.ReactNode;
+  accent?: boolean;
+  tone?: 'neutral' | 'bad';
 }) {
   return (
     <div className="text-right">
-      <div className="text-[9.5px] uppercase tracking-[0.14em] text-white/50 inline-flex items-center gap-1 justify-end">
-        {icon}
-        {label}
-      </div>
-      <div className="text-[13.5px] font-semibold text-white tabular-nums leading-none mt-0.5">
+      <div className="text-[11px] font-medium text-white">{label}</div>
+      <div
+        className={cn(
+          'mt-0.5 text-[15px] font-semibold leading-none tabular-nums',
+          accent ? 'text-elec-yellow' : tone === 'bad' ? 'text-red-300' : 'text-white'
+        )}
+      >
         {value}
       </div>
-      {sub && <div className="text-[10px] text-white/45 mt-0.5">{sub}</div>}
+      {sub && <div className="mt-0.5 text-[11px] tabular-nums text-white">{sub}</div>}
     </div>
   );
 }
 
-function Legend({ dot, label }: { dot: string; label: string }) {
+function Legend({ swatch, label }: { swatch: string; label: string }) {
   return (
     <div className="inline-flex items-center gap-1.5">
-      <span className={cn('inline-block h-1.5 w-1.5 rounded-full', dot)} />
+      <span className={cn('inline-block h-[3px] w-4 rounded-full', swatch)} />
       {label}
     </div>
   );

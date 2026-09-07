@@ -1,35 +1,58 @@
+/**
+ * MasteryQueueSection — tutor approves or rejects AC sign-off proposals.
+ * ELE-906 (B11).
+ *
+ * Rebuilt on the shared hub language. CollegeDashboard draws the masthead;
+ * this is content only:
+ *
+ *   filters → the queue
+ *
+ * What went: the SectionHeader eyebrow, `bg-white/5` chips at 28px, the
+ * `text-white/60` and `/70` copy, emerald/blue pills and a `bg-black/20` notes
+ * box punched into each card. Each proposal is now a row: learner and
+ * criterion, the evidence and score beneath, the decision on the right.
+ *
+ * No solid volt on this screen on purpose: every pending row carries an
+ * Approve, and a page of them would be a page of volt slabs. Approve is a
+ * volt-text control, Reject a white one, both 44px.
+ *
+ * Data unchanged: `useMasteryProposals` (server-filtered by status, 200 rows)
+ * and the `decide_ac_signoff` RPC. No KPI row — the hook only loads the
+ * selected status, so counts for the other statuses would be a second query
+ * this page does not make.
+ */
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { containerVariants, itemVariants } from '@/components/college/primitives';
+import { HubSectionHeading } from '@/components/hub/HubPrimitives';
 import { useMasteryProposals, type ProposalStatus } from '@/hooks/useMasteryProposals';
 import { useToast } from '@/hooks/use-toast';
-import {
-  Pill,
-  PrimaryButton,
-  SecondaryButton,
-  SectionHeader,
-  statusTone,
-  itemVariants,
-} from '@/components/college/primitives';
-import { cn } from '@/lib/utils';
-
-/* ==========================================================================
-   MasteryQueueSection — tutor approves / rejects AC sign-off proposals.
-   ELE-906 (B11).
-   ========================================================================== */
 
 const TABS: Array<{ key: ProposalStatus | 'all'; label: string }> = [
-  { key: 'pending', label: 'Pending' },
+  { key: 'pending', label: 'Awaiting decision' },
   { key: 'auto_approved', label: 'Auto-approved' },
   { key: 'approved', label: 'Approved' },
   { key: 'rejected', label: 'Rejected' },
   { key: 'all', label: 'All' },
 ];
 
-// Route proposal status through the canonical otj domain so the chip tone is
-// shared with the rest of the hub: approved/auto-approved → emerald,
-// rejected → red, pending → blue (informational, awaiting tutor action).
-const proposalTone = (status: string) =>
-  statusTone('otj', status === 'auto_approved' ? 'approved' : status);
+const STATUS_LABEL: Record<string, string> = {
+  pending: 'Awaiting decision',
+  auto_approved: 'Auto-approved',
+  approved: 'Approved',
+  rejected: 'Rejected',
+  expired: 'Expired',
+};
+
+const chipCn = (active: boolean) =>
+  cn(
+    'inline-flex h-11 shrink-0 items-center whitespace-nowrap rounded-full border px-3.5 text-[12.5px] font-medium transition-colors touch-manipulation',
+    active
+      ? 'border-elec-yellow text-elec-yellow'
+      : 'border-white/[0.12] text-white hover:bg-white/[0.06]'
+  );
 
 export function MasteryQueueSection() {
   const [status, setStatus] = useState<ProposalStatus | 'all'>('pending');
@@ -54,98 +77,121 @@ export function MasteryQueueSection() {
   };
 
   return (
-    <motion.section variants={itemVariants} initial="hidden" animate="visible" className="space-y-4">
-      <SectionHeader eyebrow="Mastery loop" title="AC sign-off proposals" />
-      <p className="text-[13px] text-white/70 leading-relaxed -mt-2">
-        When a learner clears the mastery threshold on evidence, we propose the AC sign-off here. One tap to approve.
-      </p>
+    <motion.section
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="space-y-3"
+    >
+      <HubSectionHeading>Criterion sign-off proposals</HubSectionHeading>
+      <motion.p variants={itemVariants} className="max-w-prose text-[13px] leading-relaxed text-white">
+        When a learner's evidence clears the mastery threshold for an assessment criterion, the
+        sign-off is proposed here. Approve it and the criterion is marked achieved on their record.
+      </motion.p>
 
-      <div className="flex flex-wrap gap-2">
+      <motion.div
+        variants={itemVariants}
+        className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0"
+      >
         {TABS.map((t) => (
-          <button
-            key={t.key}
-            type="button"
-            onClick={() => setStatus(t.key)}
-            className={cn(
-              'rounded-full border px-3 py-1.5 text-xs touch-manipulation',
-              status === t.key
-                ? 'border-elec-yellow bg-elec-yellow/10 text-elec-yellow'
-                : 'border-white/10 bg-white/5 text-white/70'
-            )}
-          >
+          <button key={t.key} type="button" onClick={() => setStatus(t.key)} className={chipCn(status === t.key)}>
             {t.label}
           </button>
         ))}
-      </div>
+      </motion.div>
 
-      {loading && <div className="text-sm text-white/60">Loading proposals…</div>}
       {error && (
-        <div className="rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300">
+        <motion.p variants={itemVariants} className="text-[13px] font-medium text-red-300">
           {error}
-        </div>
+        </motion.p>
       )}
 
-      {!loading && proposals.length === 0 && (
-        <div className="rounded-2xl border border-dashed border-white/10 px-4 py-8 text-center text-sm text-white/70">
-          Nothing in this queue.
-        </div>
-      )}
-
-      {!loading && proposals.length > 0 && (
-        <ul className="space-y-2">
-          {proposals.map((p) => (
-            <li
-              key={p.id}
-              className="rounded-2xl border border-white/10 bg-white/5 p-4"
-            >
-              <div className="min-w-0">
-                <div className="text-sm font-medium text-white">
-                  {p.student_name || 'Learner'} —{' '}
-                  <span className="text-white/80">{p.ac_code || p.ac_id}</span>
-                </div>
-                {p.ac_title && (
-                  <div className="text-xs text-white/70 mt-1">{p.ac_title}</div>
-                )}
-                <div className="mt-2 flex flex-wrap gap-2">
-                  <Pill tone="emerald">
-                    {p.score_pct != null ? `${Math.round(p.score_pct)}%` : '—'}
-                    {p.threshold_pct ? ` ≥ ${p.threshold_pct}%` : ''}
-                  </Pill>
-                  <Pill tone="blue">{p.evidence_kind.replace('_', ' ')}</Pill>
-                  <Pill tone={proposalTone(p.status)}>
-                    {p.status.replace('_', ' ')}
-                  </Pill>
-                </div>
-              </div>
-              {p.status === 'pending' && (
-                <div className="mt-3 flex flex-col sm:flex-row gap-2">
-                  <SecondaryButton
-                    disabled={busyId === p.id}
-                    onClick={() => handle(p.id, 'rejected')}
-                    fullWidth
-                    className="sm:w-auto sm:ml-auto"
-                  >
-                    {busyId === p.id ? 'Saving…' : 'Reject'}
-                  </SecondaryButton>
-                  <PrimaryButton
-                    disabled={busyId === p.id}
-                    onClick={() => handle(p.id, 'approved')}
-                    fullWidth
-                    className="sm:w-auto"
-                  >
-                    {busyId === p.id ? 'Saving…' : 'Approve'}
-                  </PrimaryButton>
-                </div>
-              )}
-              {p.decision_notes && (
-                <div className="mt-2 rounded-lg bg-black/20 px-3 py-2 text-xs text-white/70">
-                  Notes: {p.decision_notes}
-                </div>
-              )}
-            </li>
-          ))}
-        </ul>
-      )}
+      <motion.div
+        variants={itemVariants}
+        className={cn(
+          '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
+          CARD_SURFACE
+        )}
+      >
+        {loading ? (
+          <div className="flex items-center justify-center py-12">
+            <div className="h-6 w-6 animate-spin rounded-full border-2 border-elec-yellow border-t-transparent" />
+          </div>
+        ) : proposals.length === 0 ? (
+          <p className="px-4 py-6 text-[13px] text-white sm:px-5">
+            {status === 'pending' ? 'Nothing awaiting a decision.' : 'Nothing in this queue.'}
+          </p>
+        ) : (
+          <ul className="divide-y divide-white/[0.10]">
+            {proposals.map((p) => {
+              const pending = p.status === 'pending';
+              const busy = busyId === p.id;
+              const score = p.score_pct != null ? `${Math.round(p.score_pct)}%` : null;
+              const threshold = p.threshold_pct ? `threshold ${p.threshold_pct}%` : null;
+              const reason = [
+                p.ac_title,
+                p.evidence_kind.replace(/_/g, ' '),
+                score && threshold ? `${score} against ${threshold}` : (score ?? threshold),
+              ]
+                .filter(Boolean)
+                .join(' · ');
+              return (
+                <li key={p.id} className="px-4 py-3.5 sm:px-5">
+                  <div className="flex items-center gap-3">
+                    <span
+                      aria-hidden="true"
+                      className={cn(
+                        'h-8 w-[3px] shrink-0 rounded-full',
+                        p.status === 'rejected' ? 'bg-red-400' : pending ? 'bg-elec-yellow' : 'bg-white/[0.25]'
+                      )}
+                    />
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+                        {p.student_name || 'Learner'} · {p.ac_code || p.ac_id}
+                      </span>
+                      <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">{reason}</span>
+                      {p.decision_notes && (
+                        <span className="mt-1 block text-[12px] leading-snug text-white">
+                          Notes · {p.decision_notes}
+                        </span>
+                      )}
+                    </span>
+                    {pending ? (
+                      <span className="flex shrink-0 items-center gap-1">
+                        <button
+                          type="button"
+                          disabled={busy}
+                          onClick={() => handle(p.id, 'rejected')}
+                          className="flex h-11 items-center rounded-full px-3 text-[12.5px] font-medium text-white transition-colors touch-manipulation hover:bg-white/[0.06] disabled:opacity-60"
+                        >
+                          Reject
+                        </button>
+                        <button
+                          type="button"
+                          disabled={busy}
+                          onClick={() => handle(p.id, 'approved')}
+                          className="flex h-11 items-center rounded-full border border-elec-yellow px-4 text-[12.5px] font-bold text-elec-yellow transition-colors touch-manipulation hover:bg-white/[0.06] disabled:opacity-60"
+                        >
+                          {busy ? 'Saving…' : 'Approve'}
+                        </button>
+                      </span>
+                    ) : (
+                      <span
+                        className={cn(
+                          'shrink-0 text-[12px] font-semibold',
+                          p.status === 'rejected' ? 'text-red-300' : 'text-white'
+                        )}
+                      >
+                        {STATUS_LABEL[p.status] ?? p.status}
+                      </span>
+                    )}
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </motion.div>
     </motion.section>
   );
 }

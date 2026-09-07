@@ -130,6 +130,51 @@ export interface CollegeBrand {
   accent_color: string | null;
 }
 
+/** Copy for the error codes ai-generate-slide-deck returns in its JSON `error` field. */
+const FUNCTION_ERROR_COPY: Record<string, string> = {
+  unauthorized: 'Sign in again to generate slides.',
+  no_college: 'Your account is not linked to a college.',
+  plan_not_found: 'This lesson plan could not be found.',
+  forbidden: 'This lesson plan belongs to another college.',
+  openai_error: 'The AI provider rejected the request. Try again in a minute.',
+  no_tool_call: 'The AI returned no deck. Try again.',
+  invalid_json: 'The AI returned an unreadable deck. Try again.',
+  empty_slides: 'The AI returned an empty deck. Try again.',
+  save_failed: 'The deck was generated but could not be saved.',
+};
+
+const GENERATION_UNAVAILABLE =
+  'Slide generation is unavailable right now. Try again in a few minutes.';
+
+/**
+ * Turn a supabase.functions.invoke error into something a tutor can act on.
+ * The generic FunctionsHttpError message ("Edge Function returned a non-2xx
+ * status code") hides the function's own JSON `error` field — and when the
+ * worker fails to boot (503) there is no JSON at all. Read the body when it
+ * is JSON, map known codes to plain copy, otherwise say it is unavailable.
+ */
+async function readFunctionError(fnErr: unknown): Promise<string> {
+  const ctx = (fnErr as { context?: unknown } | null)?.context;
+  if (ctx instanceof Response) {
+    try {
+      const json = (await ctx.clone().json()) as {
+        error?: unknown;
+        detail?: unknown;
+      } | null;
+      const code = typeof json?.error === 'string' ? json.error : null;
+      if (code) {
+        const friendly = FUNCTION_ERROR_COPY[code];
+        if (friendly) return friendly;
+        const detail = typeof json?.detail === 'string' ? json.detail : null;
+        return detail ? `${code}: ${detail}` : code;
+      }
+    } catch {
+      /* body was not JSON (e.g. a worker boot failure) — fall through */
+    }
+  }
+  return GENERATION_UNAVAILABLE;
+}
+
 export function useSlideDeck(lessonPlanId: string | null) {
   const [plan, setPlan] = useState<PlanRow | null>(null);
   const [brand, setBrand] = useState<CollegeBrand | null>(null);
@@ -168,7 +213,8 @@ export function useSlideDeck(lessonPlanId: string | null) {
           .eq('id', planRow.college_id)
           .maybeSingle();
         if (collegeRow) {
-          const settings = (collegeRow as { settings?: Record<string, unknown> | null }).settings ?? null;
+          const settings =
+            (collegeRow as { settings?: Record<string, unknown> | null }).settings ?? null;
           // accept either 'brand_color' or 'accent_color' from settings; strip leading #
           let accent: string | null = null;
           if (settings && typeof settings === 'object') {
@@ -221,14 +267,14 @@ export function useSlideDeck(lessonPlanId: string | null) {
             differentiation: preflight?.differentiation,
           },
         });
-        if (fnErr) throw new Error(fnErr.message);
+        if (fnErr) throw new Error(await readFunctionError(fnErr));
         const deck = (data as { deck?: SlideDeck } | null)?.deck ?? null;
-        if (!deck) throw new Error('Edge function returned no deck');
+        if (!deck) throw new Error(GENERATION_UNAVAILABLE);
         // Refetch the plan so slide_deck_generated_at is also up to date.
         await load();
         return deck;
       } catch (e) {
-        setError((e as Error).message ?? 'Could not generate slide deck');
+        setError((e as Error).message || GENERATION_UNAVAILABLE);
         return null;
       } finally {
         setGenerating(false);

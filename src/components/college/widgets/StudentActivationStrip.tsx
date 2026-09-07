@@ -1,14 +1,20 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { useCollegeActivation } from '@/hooks/useCollegeActivation';
 
 /* ==========================================================================
    StudentActivationStrip — "are my apprentices actually in the app yet?"
 
-   Bulk-add loads roster records; this shows how many have signed up + redeemed
-   their join code (activated) vs still pending, with the chase list. The
-   "Share join link" CTA opens the existing invite sheet — emailing the cohort
-   their links is the next slice.
+   Bulk-add loads roster records; this shows how many have signed up and
+   redeemed their join code (activated) against still pending, with the
+   chase list. "Share join link" opens the existing invite sheet.
+
+   Hub card language: 15px volt title, the figure on the right, a neutral
+   bar, and two h-11 footer actions. The share action is volt TEXT — the
+   Students page has its own primary, and a second solid volt button on
+   the same screen is the defect this dialect exists to stop.
    ========================================================================== */
 
 interface Props {
@@ -17,6 +23,9 @@ interface Props {
   /** The page's resolved college — passed through so the count scopes correctly. */
   collegeId?: string;
 }
+
+const FOOT =
+  'flex h-11 flex-1 items-center justify-center px-3 text-[12.5px] font-semibold transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09]';
 
 export function StudentActivationStrip({ onShareInvite, collegeId }: Props) {
   const { total, activated, pending, pct, pendingLearners, loading } =
@@ -29,74 +38,66 @@ export function StudentActivationStrip({ onShareInvite, collegeId }: Props) {
   const allIn = pending === 0;
 
   return (
-    <motion.div
+    <motion.section
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
-      className="rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_9%)] p-4 sm:p-5"
+      className={cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}
     >
-      <div className="flex items-center justify-between gap-3">
-        <div>
-          <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/45">
-            Apprentice activation
-          </div>
-          <div className="mt-1 flex items-baseline gap-2">
-            <span className="text-[22px] font-semibold text-white tabular-nums">
-              {activated}
-              <span className="text-white/70">/{total}</span>
-            </span>
-            <span
-              className={`text-[12px] font-medium ${allIn ? 'text-green-400' : 'text-white/55'}`}
-            >
-              {pct}% in the app
-            </span>
-          </div>
-        </div>
-        {!allIn && (
-          <button
-            onClick={onShareInvite}
-            className="h-9 shrink-0 rounded-lg bg-elec-yellow px-3 text-[12.5px] font-semibold text-black touch-manipulation"
-          >
-            Share join link →
-          </button>
-        )}
+      <div className="flex items-end justify-between gap-4 px-4 py-3.5 sm:px-5">
+        <h3 className="text-[15px] font-semibold tracking-tight text-elec-yellow">
+          Apprentice activation
+        </h3>
+        <span className="text-[11px] font-semibold tabular-nums text-white">
+          {activated}/{total} · {pct}% in the app
+        </span>
       </div>
 
-      {/* Progress bar */}
-      <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-white/[0.06]">
-        <div
-          className={`h-full rounded-full ${allIn ? 'bg-green-400' : 'bg-elec-yellow'}`}
-          style={{ width: `${Math.max(pct, 3)}%` }}
-        />
+      <div className="px-4 pb-3.5 sm:px-5">
+        <div className="h-1 w-full overflow-hidden rounded-full bg-white/[0.10]">
+          <div className="h-full rounded-full bg-white" style={{ width: `${Math.max(pct, 2)}%` }} />
+        </div>
       </div>
 
       {allIn ? (
-        <p className="mt-2.5 text-[12px] text-green-400/80">
-          Every enrolled apprentice has signed in. 🎉
+        <p className="border-t border-white/[0.10] px-4 py-4 text-[12.5px] leading-snug text-white sm:px-5">
+          Every enrolled apprentice has signed in.
         </p>
       ) : (
-        <button
-          onClick={() => setShowPending((v) => !v)}
-          className="mt-2.5 text-[12px] font-medium text-white/55 hover:text-white/80 touch-manipulation"
-        >
-          {pending} not signed up yet · {showPending ? 'hide' : 'who?'}
-        </button>
+        <div className="flex border-t border-white/[0.10]">
+          <button
+            type="button"
+            onClick={() => setShowPending((v) => !v)}
+            className={cn(FOOT, 'text-white')}
+          >
+            {pending} not signed up yet · {showPending ? 'Hide' : 'Who?'}
+          </button>
+          <span aria-hidden="true" className="w-px bg-white/[0.10]" />
+          <button type="button" onClick={onShareInvite} className={cn(FOOT, 'font-bold text-elec-yellow')}>
+            Share join link
+          </button>
+        </div>
       )}
 
       {showPending && !allIn && (
-        <div className="mt-3 space-y-1.5 border-t border-white/[0.06] pt-3">
+        <ul className="divide-y divide-white/[0.10] border-t border-white/[0.10]">
           {pendingLearners.slice(0, 40).map((l) => (
-            <div key={l.id} className="flex items-center justify-between gap-3 text-[12.5px]">
-              <span className="truncate text-white/85">{l.name}</span>
-              <span className="shrink-0 truncate text-white/70">{l.email ?? 'no email'}</span>
-            </div>
+            <li key={l.id} className="flex items-center gap-3 px-4 py-3 sm:px-5">
+              <span aria-hidden="true" className="h-8 w-[3px] shrink-0 rounded-full bg-white/[0.25]" />
+              <span className="min-w-0 flex-1 truncate text-[14px] font-semibold leading-tight text-white">
+                {l.name}
+              </span>
+              <span className="min-w-0 shrink truncate text-[12px] text-white">
+                {l.email ?? 'no email'}
+              </span>
+            </li>
           ))}
           {pendingLearners.length > 40 && (
-            <div className="pt-1 text-[11px] text-white/70">
+            <li className="px-4 py-3 text-[12px] font-semibold text-white sm:px-5">
               +{pendingLearners.length - 40} more
-            </div>
+            </li>
           )}
-        </div>
+        </ul>
       )}
-    </motion.div>
+    </motion.section>
   );
 }

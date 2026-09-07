@@ -1,52 +1,173 @@
 /**
- * BatchOperationsSection — Bulk actions for tutors managing cohorts.
- * Editorial redesign, typography-led, no icons.
+ * BatchOperationsSection — grades, ILP reviews or a message for a whole
+ * cohort in one pass.
+ *
+ * Rebuilt on the shared hub language. CollegeDashboard draws the masthead;
+ * this is content only:
+ *
+ *   cohort → what to run → the one form → run it
+ *
+ * What went: the PageHero, three numbered `01 · Cohort` cards on a
+ * `bg-[hsl(0_0%_12%)]` grid, and THREE solid volt submit buttons on one
+ * screen. The three batches are now chips; one form shows at a time, so the
+ * screen has one primary and a phone does not scroll past two forms to reach
+ * the third. Every batch keeps its state while you switch.
+ *
+ * Three things corrected:
+ *
+ * 1. The cohort was chosen once, on first render, from a list that had not
+ *    loaded yet — so on a cold load nothing was selected and every form was
+ *    empty until you tapped a cohort. It now defaults to the first active
+ *    cohort as soon as cohorts arrive.
+ *
+ * 2. "Overdue ILP review" meant `last_reviewed` older than six weeks here and
+ *    `review_date` in the past everywhere else (the Assessment hub KPI, the
+ *    work queue, ILP management — `getOverdueILPReviews`). The two lists
+ *    disagreed. This page now uses the same rule as the rest of the hub.
+ *
+ * 3. "Mark all reviewed" only stamped `last_reviewed`, so by the hub's rule
+ *    every plan stayed overdue afterwards. It now also sets the next
+ *    `review_date` (six weeks out, the cadence this page already assumed) and
+ *    refreshes the ILP queries so the hub's count drops with it.
  */
-
-import { useState, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
+import { useQueryClient } from '@tanstack/react-query';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { containerVariants, itemVariants } from '@/components/college/primitives';
+import { HubSectionHeading } from '@/components/hub/HubPrimitives';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import {
-  PageFrame,
-  PageHero,
-  SectionHeader,
-  ListCard,
-  ListRow,
-  Pill,
-  EmptyState,
-  itemVariants,
-  FormCard,
-  Field,
-  fieldLabelClass,
-  inputClass,
-  textareaClass,
-  PrimaryButton,
-  type Tone,
-} from '@/components/college/primitives';
 
 interface BatchOperationsSectionProps {
   onNavigate: (section: CollegeSection) => void;
 }
 
+type Operation = 'grades' | 'ilp' | 'message';
+const GRADES = ['Distinction', 'Merit', 'Pass', 'Refer'] as const;
+const REVIEW_CADENCE_DAYS = 42;
+
+const chipCn = (active: boolean) =>
+  cn(
+    'inline-flex h-11 shrink-0 items-center whitespace-nowrap rounded-full border px-3.5 text-[12.5px] font-medium transition-colors touch-manipulation',
+    active
+      ? 'border-elec-yellow text-elec-yellow'
+      : 'border-white/[0.12] text-white hover:bg-white/[0.06]'
+  );
+
+const primaryCn =
+  'inline-flex h-11 w-full items-center justify-center rounded-full bg-elec-yellow px-5 text-[13px] font-semibold text-black transition-colors touch-manipulation hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white disabled:opacity-60 sm:w-auto';
+
+const inputCn =
+  'h-11 w-full rounded-xl border border-white/[0.12] bg-transparent px-4 text-[14px] text-white placeholder:text-white placeholder:opacity-60 focus:border-elec-yellow focus:outline-none';
+
+const textareaCn =
+  'w-full rounded-xl border border-white/[0.12] bg-transparent px-4 py-3 text-[14px] text-white placeholder:text-white placeholder:opacity-60 focus:border-elec-yellow focus:outline-none resize-none';
+
+const labelCn = 'mb-1.5 block text-[12px] font-semibold text-white';
+
+function shortDate(iso: string): string {
+  return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+}
+
+/** Tick-list of learners, 44px rows, used by two of the three batches. */
+function LearnerPicker({
+  learners,
+  selected,
+  onToggle,
+  onToggleAll,
+}: {
+  learners: Array<{ id: string; name: string }>;
+  selected: Set<string>;
+  onToggle: (id: string) => void;
+  onToggleAll: () => void;
+}) {
+  const allSelected = learners.length > 0 && selected.size === learners.length;
+  return (
+    <div>
+      <div className="flex items-center justify-between">
+        <span className={labelCn}>
+          Learners · {selected.size}/{learners.length}
+        </span>
+        {learners.length > 0 && (
+          <button
+            type="button"
+            onClick={onToggleAll}
+            className="-my-1 flex h-11 items-center px-2 text-[12px] font-bold text-elec-yellow transition-colors touch-manipulation"
+          >
+            {allSelected ? 'Clear all' : 'Select all'}
+          </button>
+        )}
+      </div>
+      {learners.length === 0 ? (
+        <p className="py-3 text-[13px] text-white">No active learners in this cohort.</p>
+      ) : (
+        <ul className="max-h-[300px] divide-y divide-white/[0.10] overflow-y-auto rounded-xl border border-white/[0.12]">
+          {learners.map((learner) => {
+            const on = selected.has(learner.id);
+            return (
+              <li key={learner.id}>
+                <button
+                  type="button"
+                  role="checkbox"
+                  aria-checked={on}
+                  onClick={() => onToggle(learner.id)}
+                  className="flex h-11 w-full items-center gap-3 px-4 text-left transition-colors touch-manipulation hover:bg-white/[0.06]"
+                >
+                  <span
+                    aria-hidden
+                    className={cn(
+                      'flex h-5 w-5 shrink-0 items-center justify-center rounded border text-[11px] font-bold',
+                      on ? 'border-elec-yellow bg-elec-yellow text-black' : 'border-white/[0.25]'
+                    )}
+                  >
+                    {on ? '✓' : ''}
+                  </span>
+                  <span className="truncate text-[13.5px] text-white">{learner.name}</span>
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </div>
+  );
+}
+
 export function BatchOperationsSection({ onNavigate: _onNavigate }: BatchOperationsSectionProps) {
+  void _onNavigate;
   const { cohorts, students, ilps } = useCollegeSupabase();
   const { toast } = useToast();
+  const queryClient = useQueryClient();
 
-  const activeCohorts = cohorts.filter((c) => c.status === 'Active');
-  const [selectedCohortId, setSelectedCohortId] = useState<string>(activeCohorts[0]?.id || '');
+  const activeCohorts = useMemo(
+    () => cohorts.filter((c) => (c.status ?? '').toLowerCase() === 'active'),
+    [cohorts]
+  );
+  const [selectedCohortId, setSelectedCohortId] = useState<string>('');
+  // Cohorts load after first render; pick the first active one once they do.
+  useEffect(() => {
+    if (!selectedCohortId && activeCohorts.length > 0) setSelectedCohortId(activeCohorts[0].id);
+  }, [activeCohorts, selectedCohortId]);
+
+  const [operation, setOperation] = useState<Operation>('grades');
 
   const cohortStudents = useMemo(
-    () => students.filter((s) => s.cohort_id === selectedCohortId && s.status === 'Active'),
+    () =>
+      students.filter(
+        (s) => s.cohort_id === selectedCohortId && (s.status ?? '').toLowerCase() === 'active'
+      ),
     [students, selectedCohortId]
   );
   const selectedCohort = cohorts.find((c) => c.id === selectedCohortId);
+  const activeCountFor = (cohortId: string) =>
+    students.filter((s) => s.cohort_id === cohortId && (s.status ?? '').toLowerCase() === 'active').length;
 
   const [unitName, setUnitName] = useState('');
-  const [selectedGrade, setSelectedGrade] = useState<string>('Pass');
+  const [selectedGrade, setSelectedGrade] = useState<(typeof GRADES)[number]>('Pass');
   const [batchFeedback, setBatchFeedback] = useState('');
   const [selectedStudentIds, setSelectedStudentIds] = useState<Set<string>>(new Set());
   const [gradeSubmitting, setGradeSubmitting] = useState(false);
@@ -64,48 +185,39 @@ export function BatchOperationsSection({ onNavigate: _onNavigate }: BatchOperati
     setNotifSelectedIds(new Set());
   };
 
-  const handleToggleAllGrade = () => {
-    if (selectedStudentIds.size === cohortStudents.length) setSelectedStudentIds(new Set());
-    else setSelectedStudentIds(new Set(cohortStudents.map((s) => s.id)));
-  };
-  const handleToggleStudentGrade = (id: string) => {
-    setSelectedStudentIds((prev) => {
+  const toggleIn = (setter: React.Dispatch<React.SetStateAction<Set<string>>>) => (id: string) =>
+    setter((prev) => {
       const next = new Set(prev);
       if (next.has(id)) next.delete(id);
       else next.add(id);
       return next;
     });
-  };
-
-  const handleToggleAllNotif = () => {
-    if (notifSelectedIds.size === cohortStudents.length) setNotifSelectedIds(new Set());
-    else setNotifSelectedIds(new Set(cohortStudents.map((s) => s.id)));
-  };
-  const handleToggleStudentNotif = (id: string) => {
-    setNotifSelectedIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-  };
-
-  const overdueILPs = useMemo(() => {
-    const sixWeeksAgo = new Date();
-    sixWeeksAgo.setDate(sixWeeksAgo.getDate() - 42);
-    const cohortStudentIds = new Set(cohortStudents.map((s) => s.id));
-    return ilps.filter(
-      (ilp) =>
-        cohortStudentIds.has(ilp.student_id) &&
-        (!ilp.last_reviewed || new Date(ilp.last_reviewed) < sixWeeksAgo)
+  const toggleAllIn = (setter: React.Dispatch<React.SetStateAction<Set<string>>>, current: Set<string>) => () =>
+    setter(
+      current.size === cohortStudents.length ? new Set() : new Set(cohortStudents.map((s) => s.id))
     );
+
+  // Same rule as getOverdueILPReviews: current, active, review date passed.
+  const overdueILPs = useMemo(() => {
+    const today = new Date().toISOString().slice(0, 10);
+    const cohortStudentIds = new Set(cohortStudents.map((s) => s.id));
+    return ilps
+      .filter(
+        (ilp) =>
+          !!ilp.student_id &&
+          cohortStudentIds.has(ilp.student_id) &&
+          (ilp.status ?? '').toLowerCase() === 'active' &&
+          !!ilp.review_date &&
+          ilp.review_date < today
+      )
+      .sort((a, b) => (a.review_date ?? '').localeCompare(b.review_date ?? ''));
   }, [ilps, cohortStudents]);
 
   const handleSubmitGrades = async () => {
     if (!unitName.trim() || selectedStudentIds.size === 0) {
       toast({
         title: 'Missing information',
-        description: 'Enter a unit name and select students.',
+        description: 'Enter a unit name and select at least one learner.',
         variant: 'destructive',
       });
       return;
@@ -114,25 +226,26 @@ export function BatchOperationsSection({ onNavigate: _onNavigate }: BatchOperati
     try {
       const gradeRows = Array.from(selectedStudentIds).map((studentId) => ({
         student_id: studentId,
-        unit_name: unitName,
+        unit_name: unitName.trim(),
         grade: selectedGrade,
-        feedback: batchFeedback || null,
+        feedback: batchFeedback.trim() || null,
         status: 'Graded',
         assessed_at: new Date().toISOString(),
       }));
-      const { error } = await (supabase as any).from('college_grades').insert(gradeRows);
+      const { error } = await supabase.from('college_grades').insert(gradeRows);
       if (error) throw error;
       toast({
-        title: 'Grades submitted',
-        description: `${gradeRows.length} grades recorded for ${unitName}.`,
+        title: 'Grades recorded',
+        description: `${gradeRows.length} grade${gradeRows.length === 1 ? '' : 's'} recorded for ${unitName.trim()}.`,
       });
+      void queryClient.invalidateQueries({ queryKey: ['college-grades'] });
       setUnitName('');
       setBatchFeedback('');
       setSelectedStudentIds(new Set());
-    } catch (err: any) {
+    } catch (err) {
       toast({
-        title: 'Error',
-        description: err.message || 'Failed to submit grades.',
+        title: 'Could not record grades',
+        description: err instanceof Error ? err.message : 'Please try again.',
         variant: 'destructive',
       });
     } finally {
@@ -144,21 +257,25 @@ export function BatchOperationsSection({ onNavigate: _onNavigate }: BatchOperati
     if (overdueILPs.length === 0) return;
     setIlpSubmitting(true);
     try {
-      const today = new Date().toISOString().split('T')[0];
-      for (const ilp of overdueILPs) {
-        await (supabase as any)
-          .from('college_ilps')
-          .update({ last_reviewed: today })
-          .eq('id', ilp.id);
-      }
+      const now = new Date();
+      const next = new Date(now.getTime() + REVIEW_CADENCE_DAYS * 86_400_000).toISOString().slice(0, 10);
+      const { error } = await supabase
+        .from('college_ilps')
+        .update({ last_reviewed: now.toISOString(), review_date: next })
+        .in(
+          'id',
+          overdueILPs.map((i) => i.id)
+        );
+      if (error) throw error;
       toast({
-        title: 'ILPs updated',
-        description: `${overdueILPs.length} ILPs marked as reviewed today.`,
+        title: 'Reviews recorded',
+        description: `${overdueILPs.length} plan${overdueILPs.length === 1 ? '' : 's'} marked reviewed today · next review ${shortDate(next)}.`,
       });
-    } catch (err: any) {
+      void queryClient.invalidateQueries({ queryKey: ['college-ilps'] });
+    } catch (err) {
       toast({
-        title: 'Error',
-        description: err.message || 'Failed to update ILPs.',
+        title: 'Could not update the plans',
+        description: err instanceof Error ? err.message : 'Please try again.',
         variant: 'destructive',
       });
     } finally {
@@ -166,13 +283,14 @@ export function BatchOperationsSection({ onNavigate: _onNavigate }: BatchOperati
     }
   };
 
+  const notifRecipientCount = notifRecipients === 'all' ? cohortStudents.length : notifSelectedIds.size;
+
   const handleSendNotification = async () => {
-    const ids =
-      notifRecipients === 'all' ? cohortStudents.map((s) => s.id) : [...notifSelectedIds];
+    const ids = notifRecipients === 'all' ? cohortStudents.map((s) => s.id) : [...notifSelectedIds];
     if (!notifMessage.trim() || ids.length === 0) {
       toast({
         title: 'Missing information',
-        description: 'Enter a message and ensure recipients are selected.',
+        description: 'Write a message and choose who receives it.',
         variant: 'destructive',
       });
       return;
@@ -192,7 +310,7 @@ export function BatchOperationsSection({ onNavigate: _onNavigate }: BatchOperati
       if (userIds.length === 0) {
         toast({
           title: 'No linked accounts',
-          description: 'None of the selected learners have an app account yet.',
+          description: 'None of the chosen learners have an app account yet.',
           variant: 'destructive',
         });
         return;
@@ -207,8 +325,10 @@ export function BatchOperationsSection({ onNavigate: _onNavigate }: BatchOperati
       );
       if (error) throw error;
       toast({
-        title: 'Notification sent',
-        description: `Message sent to ${userIds.length} student${userIds.length !== 1 ? 's' : ''}.`,
+        title: 'Message sent',
+        description: `Sent to ${userIds.length} learner${userIds.length === 1 ? '' : 's'}${
+          userIds.length < ids.length ? ` (${ids.length - userIds.length} without an app account skipped)` : ''
+        }.`,
       });
       setNotifMessage('');
     } catch (e) {
@@ -222,345 +342,258 @@ export function BatchOperationsSection({ onNavigate: _onNavigate }: BatchOperati
     }
   };
 
-  const notifRecipientCount =
-    notifRecipients === 'all' ? cohortStudents.length : notifSelectedIds.size;
-
-  const gradeTone = (g: string): Tone =>
-    g === 'Distinction'
-      ? 'green'
-      : g === 'Merit'
-        ? 'blue'
-        : g === 'Pass'
-          ? 'yellow'
-          : 'red';
+  const cardCn = cn('rounded-2xl border border-elec-yellow/35 p-4 sm:p-5', CARD_SURFACE);
 
   return (
-    <PageFrame>
-      <motion.div variants={itemVariants}>
-        <PageHero
-          eyebrow="Tools · Batch Operations"
-          title="Batch operations"
-          description="Bulk grades, ILP reviews and notifications across whole cohorts in one go."
-          tone="amber"
-        />
-      </motion.div>
-
-      {/* COHORT SELECTOR */}
-      <motion.section variants={itemVariants} className="space-y-5">
-        <SectionHeader eyebrow="Cohort" title="Select a cohort" />
+    <>
+      <motion.section
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="space-y-3"
+      >
+        <HubSectionHeading>Cohort</HubSectionHeading>
         {activeCohorts.length === 0 ? (
-          <EmptyState title="No active cohorts found" />
+          <motion.div variants={itemVariants} className={cardCn}>
+            <p className="text-[13px] text-white">No active cohorts yet — set one up under People.</p>
+          </motion.div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-white/[0.06] border border-white/[0.06] rounded-2xl overflow-hidden">
-            {activeCohorts.map((cohort, i) => {
-              const count = students.filter(
-                (s) => s.cohort_id === cohort.id && s.status === 'Active'
-              ).length;
-              const selected = cohort.id === selectedCohortId;
-              return (
-                <button
-                  key={cohort.id}
-                  onClick={() => handleCohortChange(cohort.id)}
-                  className={cn(
-                    'bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-5 text-left touch-manipulation',
-                    selected && 'bg-elec-yellow/[0.05] ring-1 ring-inset ring-elec-yellow/30'
-                  )}
-                >
-                  <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
-                    {String(i + 1).padStart(2, '0')} · Cohort
-                  </div>
-                  <div className="mt-2 flex items-center justify-between gap-3">
-                    <div className="min-w-0">
-                      <div className="text-[15px] font-medium text-white truncate">
-                        {cohort.name}
-                      </div>
-                      <div className="mt-0.5 text-[11.5px] text-white tabular-nums">
-                        {count} active student{count !== 1 ? 's' : ''}
-                      </div>
-                    </div>
-                    {selected && <Pill tone="yellow">Selected</Pill>}
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-        )}
-      </motion.section>
-
-      {/* BATCH GRADE */}
-      <motion.section variants={itemVariants} className="space-y-5">
-        <SectionHeader
-          eyebrow="Grade Workflow"
-          title="Batch grade"
-          action="Select all"
-          onAction={handleToggleAllGrade}
-        />
-
-        <FormCard>
-          <Field label="Unit / Assessment">
-            <input
-              type="text"
-              placeholder="e.g. Unit 201 — Health and Safety"
-              value={unitName}
-              onChange={(e) => setUnitName(e.target.value)}
-              className={inputClass}
-            />
-          </Field>
-
-          <div>
-            <label className={fieldLabelClass}>Grade</label>
-            <div className="mt-2 flex gap-1.5 flex-wrap">
-              {(['Distinction', 'Merit', 'Pass', 'Refer'] as const).map((grade) => (
-                <button
-                  key={grade}
-                  onClick={() => setSelectedGrade(grade)}
-                  className={cn(
-                    'h-10 px-4 rounded-full text-[12.5px] font-medium transition-colors touch-manipulation',
-                    selectedGrade === grade
-                      ? 'bg-elec-yellow text-black'
-                      : 'bg-[hsl(0_0%_9%)] border border-white/[0.08] text-white hover:bg-white/[0.04]'
-                  )}
-                >
-                  {grade}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <div className="flex items-baseline justify-between mb-2">
-              <label className={fieldLabelClass}>
-                Students ({selectedStudentIds.size}/{cohortStudents.length})
-              </label>
-            </div>
-            {cohortStudents.length === 0 ? (
-              <div className="py-6 text-center text-[12px] text-white bg-[hsl(0_0%_9%)] border border-white/[0.06] rounded-xl">
-                No students in this cohort.
-              </div>
-            ) : (
-              <div className="bg-[hsl(0_0%_9%)] border border-white/[0.06] rounded-xl max-h-[260px] overflow-y-auto divide-y divide-white/[0.04]">
-                {cohortStudents.map((student) => {
-                  const selected = selectedStudentIds.has(student.id);
-                  return (
-                    <button
-                      key={student.id}
-                      onClick={() => handleToggleStudentGrade(student.id)}
-                      className="w-full flex items-center gap-3 px-4 py-3 hover:bg-white/[0.03] transition-colors text-left touch-manipulation"
-                    >
-                      <div
-                        className={cn(
-                          'w-4 h-4 rounded border flex items-center justify-center shrink-0 transition-all',
-                          selected
-                            ? 'bg-elec-yellow border-elec-yellow'
-                            : 'border-white/20 bg-transparent'
-                        )}
-                      >
-                        {selected && (
-                          <span className="text-[9px] font-bold text-black leading-none">✓</span>
-                        )}
-                      </div>
-                      <span className="text-[13px] text-white truncate">{student.name}</span>
-                    </button>
-                  );
-                })}
-              </div>
-            )}
-          </div>
-
-          <Field label="Feedback (applied to all)">
-            <textarea
-              placeholder="Shared feedback for all selected students…"
-              value={batchFeedback}
-              onChange={(e) => setBatchFeedback(e.target.value)}
-              rows={3}
-              className={textareaClass}
-            />
-          </Field>
-
-          <div className="flex items-center justify-between gap-3 pt-1">
-            <div className="text-[11px] text-white">
-              {selectedGrade && (
-                <span className="inline-flex items-center gap-2">
-                  Grade ·
-                  <Pill tone={gradeTone(selectedGrade)}>{selectedGrade}</Pill>
-                </span>
-              )}
-            </div>
-            <PrimaryButton
-              onClick={handleSubmitGrades}
-              disabled={gradeSubmitting || selectedStudentIds.size === 0 || !unitName.trim()}
-            >
-              {gradeSubmitting
-                ? 'Submitting…'
-                : `Submit grades (${selectedStudentIds.size}) →`}
-            </PrimaryButton>
-          </div>
-        </FormCard>
-      </motion.section>
-
-      {/* BATCH ILP REVIEW */}
-      <motion.section variants={itemVariants} className="space-y-5">
-        <SectionHeader
-          eyebrow="ILP Workflow"
-          title="Batch ILP review"
-          action={overdueILPs.length > 0 ? `Mark all reviewed` : undefined}
-          onAction={overdueILPs.length > 0 ? handleBatchILPReview : undefined}
-        />
-        {overdueILPs.length === 0 ? (
-          <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6 flex items-center gap-4">
-            <span aria-hidden className="w-[3px] h-10 rounded-full bg-emerald-400 shrink-0" />
-            <div>
-              <div className="text-[15px] font-medium text-white">All caught up</div>
-              <div className="mt-0.5 text-[12px] text-white">
-                All ILPs are up to date for this cohort.
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div className="space-y-3">
-            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6 flex items-center gap-4">
-              <span aria-hidden className="w-[3px] h-10 rounded-full bg-amber-400 shrink-0" />
-              <div className="flex-1 min-w-0">
-                <div className="text-[15px] font-medium text-white">
-                  {overdueILPs.length} overdue ILP review
-                  {overdueILPs.length !== 1 ? 's' : ''}
-                </div>
-                <div className="mt-0.5 text-[12px] text-white">
-                  Mark all as reviewed today, or action individually below.
-                </div>
-              </div>
-              <PrimaryButton
-                onClick={handleBatchILPReview}
-                disabled={ilpSubmitting}
-                className="whitespace-nowrap"
+          <motion.div
+            variants={itemVariants}
+            className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0"
+          >
+            {activeCohorts.map((cohort) => (
+              <button
+                key={cohort.id}
+                type="button"
+                onClick={() => handleCohortChange(cohort.id)}
+                className={chipCn(cohort.id === selectedCohortId)}
               >
-                {ilpSubmitting ? 'Updating…' : 'Mark all →'}
-              </PrimaryButton>
-            </div>
-
-            <ListCard>
-              {overdueILPs.map((ilp) => {
-                const student = students.find((s) => s.id === ilp.student_id);
-                return (
-                  <ListRow
-                    key={ilp.id}
-                    accent="amber"
-                    title={student?.name || 'Unknown'}
-                    subtitle={
-                      ilp.last_reviewed
-                        ? `Last reviewed ${new Date(ilp.last_reviewed).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}`
-                        : 'Never reviewed'
-                    }
-                  />
-                );
-              })}
-            </ListCard>
-          </div>
+                {cohort.name} · {activeCountFor(cohort.id)}
+              </button>
+            ))}
+          </motion.div>
         )}
       </motion.section>
 
-      {/* BATCH NOTIFICATIONS */}
-      <motion.section variants={itemVariants} className="space-y-5">
-        <SectionHeader eyebrow="Communications" title="Batch notifications" />
-
-        <FormCard>
-          <Field label="Message">
-            <textarea
-              placeholder="Type your notification…"
-              value={notifMessage}
-              onChange={(e) => setNotifMessage(e.target.value)}
-              rows={4}
-              className={textareaClass}
-            />
-          </Field>
-
-          <div>
-            <label className={fieldLabelClass}>Recipients</label>
-            <div className="mt-2 flex gap-1.5">
-              {(['all', 'selected'] as const).map((opt) => (
-                <button
-                  key={opt}
-                  onClick={() => setNotifRecipients(opt)}
-                  className={cn(
-                    'h-10 px-4 rounded-full text-[12.5px] font-medium transition-colors touch-manipulation',
-                    notifRecipients === opt
-                      ? 'bg-elec-yellow text-black'
-                      : 'bg-[hsl(0_0%_9%)] border border-white/[0.08] text-white hover:bg-white/[0.04]'
-                  )}
-                >
-                  {opt === 'all' ? 'All in cohort' : 'Selected students'}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {notifRecipients === 'selected' && (
-            <div>
-              <div className="flex items-baseline justify-between mb-2">
-                <label className={fieldLabelClass}>
-                  Selected ({notifSelectedIds.size}/{cohortStudents.length})
-                </label>
-                <button
-                  onClick={handleToggleAllNotif}
-                  className="text-[11.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
-                >
-                  {notifSelectedIds.size === cohortStudents.length
-                    ? 'Deselect all'
-                    : 'Select all'}
-                </button>
-              </div>
-              <div className="bg-[hsl(0_0%_9%)] border border-white/[0.06] rounded-xl max-h-[240px] overflow-y-auto divide-y divide-white/[0.04]">
-                {cohortStudents.map((student) => {
-                  const sel = notifSelectedIds.has(student.id);
-                  return (
-                    <button
-                      key={student.id}
-                      onClick={() => handleToggleStudentNotif(student.id)}
-                      className="w-full flex items-center gap-3 px-4 py-3 hover:bg-white/[0.03] transition-colors text-left touch-manipulation"
-                    >
-                      <div
-                        className={cn(
-                          'w-4 h-4 rounded border flex items-center justify-center shrink-0 transition-all',
-                          sel
-                            ? 'bg-elec-yellow border-elec-yellow'
-                            : 'border-white/20 bg-transparent'
-                        )}
-                      >
-                        {sel && (
-                          <span className="text-[9px] font-bold text-black leading-none">✓</span>
-                        )}
-                      </div>
-                      <span className="text-[13px] text-white truncate">{student.name}</span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-          <div className="bg-[hsl(0_0%_9%)] border border-white/[0.06] rounded-xl px-4 py-3">
-            <p className="text-[12px] text-white">
-              Sending to{' '}
-              <span className="font-semibold text-elec-yellow tabular-nums">
-                {notifRecipientCount}
-              </span>{' '}
-              student{notifRecipientCount !== 1 ? 's' : ''}
-              {selectedCohort ? ` in ${selectedCohort.name}` : ''}
-            </p>
-          </div>
-
-          <div className="flex items-center justify-end gap-3 pt-1">
-            <PrimaryButton
-              onClick={handleSendNotification}
-              disabled={notifSending || !notifMessage.trim() || notifRecipientCount === 0}
+      <motion.section
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="space-y-3"
+      >
+        <HubSectionHeading>What to run</HubSectionHeading>
+        <motion.div
+          variants={itemVariants}
+          className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0"
+        >
+          {(
+            [
+              ['grades', 'Record grades'],
+              ['ilp', `ILP reviews${overdueILPs.length > 0 ? ` · ${overdueILPs.length} overdue` : ''}`],
+              ['message', 'Message the cohort'],
+            ] as const
+          ).map(([value, label]) => (
+            <button
+              key={value}
+              type="button"
+              onClick={() => setOperation(value)}
+              className={chipCn(operation === value)}
             >
-              {notifSending
-                ? 'Sending…'
-                : `Send notification (${notifRecipientCount}) →`}
-            </PrimaryButton>
-          </div>
-        </FormCard>
+              {label}
+            </button>
+          ))}
+        </motion.div>
+
+        {operation === 'grades' && (
+          <motion.div variants={itemVariants} className={cn(cardCn, 'space-y-4')}>
+            <div>
+              <label htmlFor="batch-unit" className={labelCn}>
+                Unit or assessment
+              </label>
+              <input
+                id="batch-unit"
+                type="text"
+                placeholder="e.g. Unit 201 — Health and safety"
+                value={unitName}
+                onChange={(e) => setUnitName(e.target.value)}
+                className={inputCn}
+              />
+            </div>
+
+            <div>
+              <span className={labelCn}>Grade</span>
+              <div className="flex flex-wrap gap-2">
+                {GRADES.map((grade) => (
+                  <button
+                    key={grade}
+                    type="button"
+                    onClick={() => setSelectedGrade(grade)}
+                    className={chipCn(selectedGrade === grade)}
+                  >
+                    {grade}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <LearnerPicker
+              learners={cohortStudents}
+              selected={selectedStudentIds}
+              onToggle={toggleIn(setSelectedStudentIds)}
+              onToggleAll={toggleAllIn(setSelectedStudentIds, selectedStudentIds)}
+            />
+
+            <div>
+              <label htmlFor="batch-feedback" className={labelCn}>
+                Feedback for every selected learner
+              </label>
+              <textarea
+                id="batch-feedback"
+                placeholder="Optional — the same feedback goes on each grade"
+                value={batchFeedback}
+                onChange={(e) => setBatchFeedback(e.target.value)}
+                rows={3}
+                className={textareaCn}
+              />
+            </div>
+
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <p className="text-[12.5px] text-white">
+                {selectedStudentIds.size === 0
+                  ? 'Choose the learners to grade.'
+                  : `${selectedGrade} for ${selectedStudentIds.size} learner${selectedStudentIds.size === 1 ? '' : 's'}${
+                      selectedCohort ? ` in ${selectedCohort.name}` : ''
+                    }.`}
+              </p>
+              <button
+                type="button"
+                onClick={handleSubmitGrades}
+                disabled={gradeSubmitting || selectedStudentIds.size === 0 || !unitName.trim()}
+                className={primaryCn}
+              >
+                {gradeSubmitting ? 'Recording…' : `Record ${selectedStudentIds.size || ''} grade${selectedStudentIds.size === 1 ? '' : 's'}`}
+              </button>
+            </div>
+          </motion.div>
+        )}
+
+        {operation === 'ilp' && (
+          <motion.div variants={itemVariants} className={cn(cardCn, 'space-y-4')}>
+            {overdueILPs.length === 0 ? (
+              <p className="text-[13px] text-white">
+                No overdue reviews{selectedCohort ? ` in ${selectedCohort.name}` : ''} — every current plan
+                has a review date ahead of it.
+              </p>
+            ) : (
+              <>
+                <p className="text-[13px] text-white">
+                  {overdueILPs.length} plan{overdueILPs.length === 1 ? ' is' : 's are'} past{' '}
+                  {overdueILPs.length === 1 ? 'its' : 'their'} review date. Marking them reviewed stamps
+                  today and sets the next review {REVIEW_CADENCE_DAYS / 7} weeks out.
+                </p>
+                <ul className="-mx-4 divide-y divide-white/[0.10] border-y border-white/[0.10] sm:-mx-5">
+                  {overdueILPs.map((ilp) => {
+                    const student = students.find((s) => s.id === ilp.student_id);
+                    return (
+                      <li key={ilp.id} className="flex min-h-11 items-center gap-3 px-4 py-2.5 sm:px-5">
+                        <span aria-hidden className="h-8 w-[3px] shrink-0 rounded-full bg-red-400" />
+                        <span className="min-w-0 flex-1">
+                          <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+                            {student?.name ?? 'Unknown learner'}
+                          </span>
+                          <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
+                            {ilp.last_reviewed
+                              ? `Last reviewed ${shortDate(ilp.last_reviewed)}`
+                              : 'Never reviewed'}
+                          </span>
+                        </span>
+                        <span className="shrink-0 text-[12px] font-semibold tabular-nums text-red-300">
+                          Due {ilp.review_date ? shortDate(ilp.review_date) : '—'}
+                        </span>
+                      </li>
+                    );
+                  })}
+                </ul>
+                <div className="flex justify-end">
+                  <button
+                    type="button"
+                    onClick={handleBatchILPReview}
+                    disabled={ilpSubmitting}
+                    className={primaryCn}
+                  >
+                    {ilpSubmitting ? 'Updating…' : `Mark all ${overdueILPs.length} reviewed`}
+                  </button>
+                </div>
+              </>
+            )}
+          </motion.div>
+        )}
+
+        {operation === 'message' && (
+          <motion.div variants={itemVariants} className={cn(cardCn, 'space-y-4')}>
+            <div>
+              <label htmlFor="batch-message" className={labelCn}>
+                Message
+              </label>
+              <textarea
+                id="batch-message"
+                placeholder="Goes to each learner's app as a notification"
+                value={notifMessage}
+                onChange={(e) => setNotifMessage(e.target.value)}
+                rows={4}
+                className={textareaCn}
+              />
+            </div>
+
+            <div>
+              <span className={labelCn}>Recipients</span>
+              <div className="flex flex-wrap gap-2">
+                {(
+                  [
+                    ['all', 'Everyone in the cohort'],
+                    ['selected', 'Chosen learners'],
+                  ] as const
+                ).map(([value, label]) => (
+                  <button
+                    key={value}
+                    type="button"
+                    onClick={() => setNotifRecipients(value)}
+                    className={chipCn(notifRecipients === value)}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {notifRecipients === 'selected' && (
+              <LearnerPicker
+                learners={cohortStudents}
+                selected={notifSelectedIds}
+                onToggle={toggleIn(setNotifSelectedIds)}
+                onToggleAll={toggleAllIn(setNotifSelectedIds, notifSelectedIds)}
+              />
+            )}
+
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <p className="text-[12.5px] text-white">
+                Sending to {notifRecipientCount} learner{notifRecipientCount === 1 ? '' : 's'}
+                {selectedCohort ? ` in ${selectedCohort.name}` : ''}. Only learners with an app account
+                receive it.
+              </p>
+              <button
+                type="button"
+                onClick={handleSendNotification}
+                disabled={notifSending || !notifMessage.trim() || notifRecipientCount === 0}
+                className={primaryCn}
+              >
+                {notifSending ? 'Sending…' : 'Send message'}
+              </button>
+            </div>
+          </motion.div>
+        )}
       </motion.section>
-    </PageFrame>
+    </>
   );
 }

@@ -1,51 +1,100 @@
-import { useState } from 'react';
+/**
+ * ProgressTrackingSection — progress scores, attendance and at-risk flags
+ * for every active learner.
+ *
+ * Rebuilt on the shared hub language. CollegeDashboard draws the masthead;
+ * this is content only:
+ *
+ *   KPI row → at risk (needs you) → by cohort → filters → learners
+ *
+ * What went: the PageHero, the blue StatStrip, the `bg-[hsl(0_0%_12%)]`
+ * "immediate attention" panel of red name-pills, the blue avatar rings and
+ * the emerald attendance bars.
+ *
+ * Two things corrected:
+ *
+ * 1. `risk_level` is Capitalised in the live table — Critical, High, Medium —
+ *    and this page compared it to 'high' and 'critical'. Nobody was ever at
+ *    risk here: the filter was empty, the rail never drew and the callout
+ *    listed a different set of learners from the rows beneath it. Compared
+ *    case-insensitively now, and Critical counts (it is the worst level, and
+ *    `useStudentsAtRisk` in collegeStudentService only asks for Medium and
+ *    High — five Critical learners on the live roll were missing from it).
+ *    The at-risk figure is now derived from the same rows as the list, so the
+ *    KPI, the list and the filter agree.
+ *
+ * 2. "On track" was ≥80% in the KPI and ≥70% in the filter — the same word
+ *    counting two different sets one tap apart. One definition now: On track
+ *    ≥80, Needs attention 60–79, Behind <60, and At risk is a flag on top.
+ *
+ * Per-learner attendance still comes from the one server-side aggregation
+ * (`useCollegeStudentSummaries`) rather than every attendance row.
+ */
+import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { useCollegeStudents, useStudentsAtRisk } from '@/hooks/college/useCollegeStudents';
+import { useNavigate } from 'react-router-dom';
+import { ChevronRight, MoreHorizontal } from 'lucide-react';
+import { useQueryClient } from '@tanstack/react-query';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { containerVariants, itemVariants } from '@/components/college/primitives';
+import {
+  HubKpi,
+  HubKpiRow,
+  HubSectionHeading,
+  HubWorkList,
+  type HubWorkItem,
+} from '@/components/hub/HubPrimitives';
+import { useCollegeStudents } from '@/hooks/college/useCollegeStudents';
 import type { CollegeStudent } from '@/services/college/collegeStudentService';
 import { useCollegeCohorts } from '@/hooks/college/useCollegeCohorts';
 import { useCollegeStudentSummaries } from '@/hooks/college/useCollegeStudentSummaries';
 import { StudentDetailSheet } from '@/components/college/sheets/StudentDetailSheet';
 import { ProgressUpdateSheet } from '@/components/college/sheets/ProgressUpdateSheet';
 import { useToast } from '@/hooks/use-toast';
-import { ProgressCardSkeletonList } from '@/components/college/ui/ProgressCardSkeleton';
 import { PullToRefresh } from '@/components/college/ui/PullToRefresh';
-import { useQueryClient } from '@tanstack/react-query';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import {
-  PageFrame,
-  PeopleListRow,
-  PageHero,
-  StatStrip,
-  FilterBar,
-  ListCard,
-  Pill,
-  EmptyState,
-  SectionHeader,
-  itemVariants,
-  type Tone,
-} from '@/components/college/primitives';
-import { cn } from '@/lib/utils';
+
+type Band = 'ontrack' | 'attention' | 'behind';
+type Filter = 'all' | 'atrisk' | Band;
+
+const bandOf = (progress: number): Band =>
+  progress >= 80 ? 'ontrack' : progress >= 60 ? 'attention' : 'behind';
+
+const riskOf = (level: string | null): 'critical' | 'high' | 'medium' | null => {
+  const l = (level ?? '').toLowerCase();
+  return l === 'critical' || l === 'high' || l === 'medium' ? l : null;
+};
+
+const chipCn = (active: boolean) =>
+  cn(
+    'inline-flex h-11 shrink-0 items-center whitespace-nowrap rounded-full border px-3.5 text-[12.5px] font-medium transition-colors touch-manipulation',
+    active
+      ? 'border-elec-yellow text-elec-yellow'
+      : 'border-white/[0.12] text-white hover:bg-white/[0.06]'
+  );
 
 export function ProgressTrackingSection() {
   const { data: students = [], isLoading: studentsLoading } = useCollegeStudents();
-  const { data: studentsAtRisk = [] } = useStudentsAtRisk();
   const { data: cohorts = [] } = useCollegeCohorts();
-  // Per-student attendance comes from one server-side aggregation instead of
-  // fetching every attendance row for the college and counting in JS.
   const collegeId = students[0]?.college_id ?? undefined;
   const { data: studentSummaries = [] } = useCollegeStudentSummaries(collegeId);
-  const summaryByStudent = new Map(studentSummaries.map((s) => [s.student_id, s]));
+  const summaryByStudent = useMemo(
+    () => new Map(studentSummaries.map((s) => [s.student_id, s])),
+    [studentSummaries]
+  );
 
+  const navigate = useNavigate();
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [searchQuery, setSearchQuery] = useState('');
-  const [filterStatus, setFilterStatus] = useState<string>('all');
+  const [filter, setFilter] = useState<Filter>('all');
   const [filterCohort, setFilterCohort] = useState<string>('all');
   const [selectedStudentId, setSelectedStudentId] = useState<string | null>(null);
   const [selectedStudent, setSelectedStudent] = useState<CollegeStudent | null>(null);
@@ -57,378 +106,450 @@ export function ProgressTrackingSection() {
     await queryClient.invalidateQueries({ queryKey: ['college-student-summaries'] });
   };
 
-  const getAvatarInitials = (name: string): string => {
-    const parts = name.trim().split(/\s+/);
-    if (parts.length >= 2) return `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase();
-    return name.slice(0, 2).toUpperCase();
-  };
-
-  const getStudentAttendanceRate = (studentId: string): number => {
+  /** null when there are no marks — never a made-up 100%. */
+  const attendanceRateFor = (studentId: string): number | null => {
     const s = summaryByStudent.get(studentId);
-    // Same definition as before: (Present + Late) / total; 100% when no records.
-    if (!s || s.attendance_total === 0) return 100;
+    if (!s || s.attendance_total === 0) return null;
     return Math.round((s.attendance_present_late / s.attendance_total) * 100);
   };
 
-  const progressData = students
-    .filter((s) => s.status === 'Active')
-    .map((student) => {
-      const attendanceRate = getStudentAttendanceRate(student.id);
-      const overallProgress = student.progress_percent ?? 0;
-      const isAtRisk = student.risk_level === 'high' || student.risk_level === 'critical';
-      return { ...student, attendanceRate, overallProgress, isAtRisk };
-    });
-
-  const filteredProgress = progressData.filter((data) => {
-    const matchesSearch =
-      data.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (data.uln && data.uln.toLowerCase().includes(searchQuery.toLowerCase()));
-    const matchesStatus =
-      filterStatus === 'all' ||
-      (filterStatus === 'at-risk' && data.isAtRisk) ||
-      (filterStatus === 'on-track' && !data.isAtRisk && data.overallProgress >= 70) ||
-      (filterStatus === 'behind' && !data.isAtRisk && data.overallProgress < 70);
-    const matchesCohort = filterCohort === 'all' || data.cohort_id === filterCohort;
-    return matchesSearch && matchesStatus && matchesCohort;
-  });
-
-  const sortedProgress = [...filteredProgress].sort(
-    (a, b) => a.overallProgress - b.overallProgress
+  const progressData = useMemo(
+    () =>
+      students
+        .filter((s) => (s.status ?? '').toLowerCase() === 'active')
+        .map((student) => {
+          const progress = student.progress_percent ?? 0;
+          const risk = riskOf(student.risk_level);
+          return {
+            student,
+            progress,
+            attendance: attendanceRateFor(student.id),
+            band: bandOf(progress),
+            risk,
+            isAtRisk: risk !== null,
+          };
+        }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [students, summaryByStudent]
   );
 
-  const getCohortName = (cohortId?: string | null) =>
+  const atRisk = progressData.filter((p) => p.isAtRisk);
+  const criticalCount = atRisk.filter((p) => p.risk === 'critical').length;
+  const onTrackCount = progressData.filter((p) => !p.isAtRisk && p.band === 'ontrack').length;
+  const attentionCount = progressData.filter((p) => !p.isAtRisk && p.band === 'attention').length;
+  const behindCount = progressData.filter((p) => !p.isAtRisk && p.band === 'behind').length;
+  const avgProgress =
+    progressData.length > 0
+      ? Math.round(progressData.reduce((sum, p) => sum + p.progress, 0) / progressData.length)
+      : null;
+
+  const cohortName = (cohortId?: string | null) =>
     !cohortId ? 'Unassigned' : cohorts.find((c) => c.id === cohortId)?.name || 'Unknown';
+  const activeCohorts = useMemo(
+    () => cohorts.filter((c) => (c.status ?? '').toLowerCase() === 'active'),
+    [cohorts]
+  );
 
-  const progressTone = (percent: number): Tone =>
-    percent >= 80 ? 'green' : percent >= 60 ? 'amber' : 'red';
-
-  const cohortAverages = cohorts
-    .filter((c) => c.status === 'Active')
+  const cohortAverages = activeCohorts
     .map((cohort) => {
-      const cohortStudents = progressData.filter((p) => p.cohort_id === cohort.id);
-      const avgProgress =
-        cohortStudents.length > 0
-          ? Math.round(
-              cohortStudents.reduce((sum, s) => sum + s.overallProgress, 0) / cohortStudents.length
-            )
-          : 0;
+      const rows = progressData.filter((p) => p.student.cohort_id === cohort.id);
       return {
         ...cohort,
-        avgProgress,
-        studentCount: cohortStudents.length,
-        atRiskCount: cohortStudents.filter((s) => s.isAtRisk).length,
+        avgProgress:
+          rows.length > 0 ? Math.round(rows.reduce((sum, p) => sum + p.progress, 0) / rows.length) : null,
+        studentCount: rows.length,
+        atRiskCount: rows.filter((p) => p.isAtRisk).length,
       };
-    });
+    })
+    .filter((c) => c.studentCount > 0);
 
-  const onTrackCount = progressData.filter((p) => p.overallProgress >= 80).length;
-  const attentionCount = progressData.filter(
-    (p) => p.overallProgress >= 60 && p.overallProgress < 80
-  ).length;
-  const avgProgressAll = Math.round(
-    progressData.reduce((sum, p) => sum + p.overallProgress, 0) / (progressData.length || 1)
+  const q = searchQuery.trim().toLowerCase();
+  const filtered = useMemo(
+    () =>
+      progressData
+        .filter((p) => {
+          const matchesSearch =
+            !q ||
+            p.student.name.toLowerCase().includes(q) ||
+            (p.student.uln ?? '').toLowerCase().includes(q);
+          const matchesFilter =
+            filter === 'all' ||
+            (filter === 'atrisk' && p.isAtRisk) ||
+            (filter !== 'atrisk' && !p.isAtRisk && p.band === filter);
+          const matchesCohort = filterCohort === 'all' || p.student.cohort_id === filterCohort;
+          return matchesSearch && matchesFilter && matchesCohort;
+        })
+        .sort((a, b) => a.progress - b.progress),
+    [progressData, q, filter, filterCohort]
   );
 
+  const goTo360 = (studentId: string) =>
+    navigate(`/college?section=student360&studentId=${encodeURIComponent(studentId)}`);
+
+  const atRiskItems: HubWorkItem[] = [...atRisk]
+    .sort((a, b) => {
+      const rank = { critical: 0, high: 1, medium: 2 } as const;
+      return rank[a.risk!] - rank[b.risk!];
+    })
+    .map((p) => ({
+      id: `risk-${p.student.id}`,
+      title: p.student.name,
+      reason: [
+        `${p.risk!.charAt(0).toUpperCase()}${p.risk!.slice(1)} risk`,
+        cohortName(p.student.cohort_id),
+        p.attendance !== null ? `attendance ${p.attendance}%` : null,
+      ]
+        .filter(Boolean)
+        .join(' · '),
+      trailing: `${p.progress}%`,
+      urgent: p.risk === 'critical' || p.risk === 'high',
+      onClick: () => goTo360(p.student.id),
+    }));
+
+  const exportCsv = () => {
+    // Real CSV export of the currently filtered list — no backend round-trip,
+    // just serialise the rows we already have.
+    if (filtered.length === 0) {
+      toast({
+        title: 'Nothing to export',
+        description: 'Adjust the filters so the list has at least one learner.',
+        variant: 'destructive',
+      });
+      return;
+    }
+    const escape = (v: string) => (/[",\n]/.test(v) ? `"${v.replace(/"/g, '""')}"` : v);
+    const header = ['Name', 'ULN', 'Cohort', 'Progress %', 'Attendance %', 'Risk'];
+    const lines = [
+      header.join(','),
+      ...filtered.map((p) =>
+        [
+          escape(p.student.name ?? ''),
+          escape(p.student.uln ?? ''),
+          escape(cohortName(p.student.cohort_id)),
+          String(p.progress),
+          p.attendance === null ? '' : String(p.attendance),
+          escape(p.student.risk_level ?? ''),
+        ].join(',')
+      ),
+    ];
+    const blob = new Blob([lines.join('\n')], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `progress-${new Date().toISOString().slice(0, 10)}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    toast({
+      title: 'Export ready',
+      description: `${filtered.length} learner${filtered.length === 1 ? '' : 's'} downloaded as CSV.`,
+    });
+  };
+
   return (
-    <PullToRefresh onRefresh={handleRefresh}>
-      <PageFrame>
-        <motion.div variants={itemVariants}>
-          <PageHero
-            eyebrow="Assessment · Progress"
-            title="Progress tracking"
-            description={`${studentsAtRisk.length} student${studentsAtRisk.length === 1 ? '' : 's'} at risk of falling behind.`}
-            tone="blue"
-            actions={
-              <button
-                onClick={() => {
-                  // Real CSV export of the currently filtered progress
-                  // table — no backend round-trip needed, just serialise
-                  // the rows we already have. Keeps it honest.
-                  const rows = sortedProgress;
-                  if (rows.length === 0) {
-                    toast({
-                      title: 'Nothing to export',
-                      description: 'Adjust filters so the list has at least one learner.',
-                      variant: 'destructive',
-                    });
-                    return;
-                  }
-                  const escape = (v: string) =>
-                    /[",\n]/.test(v) ? `"${v.replace(/"/g, '""')}"` : v;
-                  const header = [
-                    'Name',
-                    'ULN',
-                    'Cohort',
-                    'Progress %',
-                    'Attendance %',
-                    'Risk',
-                  ];
-                  const lines = [
-                    header.join(','),
-                    ...rows.map((r) =>
-                      [
-                        escape(r.name ?? ''),
-                        escape(r.uln ?? ''),
-                        escape(getCohortName(r.cohort_id)),
-                        String(r.overallProgress),
-                        String(r.attendanceRate),
-                        escape(r.risk_level ?? 'low'),
-                      ].join(',')
-                    ),
-                  ];
-                  const blob = new Blob([lines.join('\n')], {
-                    type: 'text/csv;charset=utf-8;',
-                  });
-                  const url = URL.createObjectURL(blob);
-                  const a = document.createElement('a');
-                  a.href = url;
-                  a.download = `progress-${new Date().toISOString().slice(0, 10)}.csv`;
-                  document.body.appendChild(a);
-                  a.click();
-                  document.body.removeChild(a);
-                  URL.revokeObjectURL(url);
-                  toast({
-                    title: 'Export ready',
-                    description: `${rows.length} learner${rows.length === 1 ? '' : 's'} downloaded as CSV.`,
-                  });
-                }}
-                className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap"
-              >
-                Export →
-              </button>
-            }
-          />
-        </motion.div>
+    <PullToRefresh onRefresh={handleRefresh} className="space-y-8 sm:space-y-10">
+      <HubKpiRow>
+        <HubKpi
+          accent
+          label="At risk"
+          value={String(atRisk.length)}
+          verdict={
+            criticalCount > 0
+              ? `${criticalCount} critical — check in today`
+              : atRisk.length > 0
+                ? 'Worth a check-in this week'
+                : 'Nobody flagged'
+          }
+          context="Flagged Critical, High or Medium"
+          sentiment={atRisk.length > 0 ? 'bad' : 'neutral'}
+          onClick={() => setFilter('atrisk')}
+        />
+        <HubKpi
+          label="On track"
+          value={String(onTrackCount)}
+          verdict={onTrackCount > 0 ? '80% or more, not flagged' : 'Nobody at 80% yet'}
+          onClick={() => setFilter('ontrack')}
+        />
+        <HubKpi
+          label="Needs attention"
+          value={String(attentionCount)}
+          verdict={attentionCount > 0 ? 'Between 60% and 80%' : 'Nobody in the 60–80% band'}
+          context={behindCount > 0 ? `${behindCount} below 60%` : undefined}
+          onClick={() => setFilter('attention')}
+        />
+        <HubKpi
+          label="Average progress"
+          value={avgProgress === null ? '—' : `${avgProgress}%`}
+          verdict={
+            avgProgress === null
+              ? 'No active learners'
+              : `Across ${progressData.length} active learner${progressData.length === 1 ? '' : 's'}`
+          }
+        />
+      </HubKpiRow>
 
-        <motion.div variants={itemVariants}>
-          <StatStrip
-            columns={4}
-            stats={[
-              { value: onTrackCount, label: 'On Track', sub: '80%+ progress', tone: 'green' },
-              { value: attentionCount, label: 'Attention', sub: '60–80% progress', tone: 'amber' },
-              {
-                value: studentsAtRisk.length,
-                label: 'At Risk',
-                sub: 'Requires action',
-                tone: 'red',
-                accent: studentsAtRisk.length > 0,
-              },
-              { value: `${avgProgressAll}%`, label: 'Avg Progress', sub: 'Across active' },
-            ]}
-          />
-        </motion.div>
+      {/* Renders nothing when nobody is flagged. */}
+      <HubWorkList label="At risk" items={atRiskItems} unit="learner" />
 
-        {cohortAverages.length > 0 && (
-          <motion.section variants={itemVariants} className="space-y-5">
-            <SectionHeader eyebrow="Cohorts" title="Progress by cohort" />
-            <ListCard>
+      {cohortAverages.length > 0 && (
+        <motion.section
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="space-y-3"
+        >
+          <HubSectionHeading>By cohort</HubSectionHeading>
+          <motion.div
+            variants={itemVariants}
+            className={cn(
+              '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
+              CARD_SURFACE
+            )}
+          >
+            <ul className="divide-y divide-white/[0.10]">
               {cohortAverages.map((cohort) => (
-                <div
-                  key={cohort.id}
-                  className="flex items-center gap-4 px-5 sm:px-6 py-4"
-                >
-                  <div className="min-w-0 flex-1">
-                    <div className="text-[14px] font-medium text-white truncate">{cohort.name}</div>
-                    <div className="mt-0.5 text-[11.5px] text-white tabular-nums">
-                      {cohort.studentCount} students
-                    </div>
-                  </div>
-                  <div className="w-32 sm:w-48 h-1 bg-white/[0.06] rounded-full overflow-hidden shrink-0">
-                    <div
-                      className="h-full bg-elec-yellow/80 rounded-full transition-all"
-                      style={{ width: `${cohort.avgProgress}%` }}
+                <li key={cohort.id}>
+                  <button
+                    type="button"
+                    onClick={() => setFilterCohort(cohort.id)}
+                    className="flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className={cn(
+                        'h-8 w-[3px] shrink-0 rounded-full',
+                        cohort.atRiskCount > 0 ? 'bg-red-400' : 'bg-white/[0.25]'
+                      )}
                     />
-                  </div>
-                  <div className="text-[13px] font-medium tabular-nums text-white w-10 text-right shrink-0">
-                    {cohort.avgProgress}%
-                  </div>
-                  {cohort.atRiskCount > 0 && (
-                    <Pill tone="red">{cohort.atRiskCount} at risk</Pill>
-                  )}
-                </div>
-              ))}
-            </ListCard>
-          </motion.section>
-        )}
-
-        {studentsAtRisk.length > 0 && (
-          <motion.div variants={itemVariants}>
-            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6 flex items-start gap-4">
-              <span aria-hidden className="w-[3px] h-10 rounded-full bg-red-400 shrink-0" />
-              <div className="flex-1 min-w-0">
-                <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                  Immediate attention
-                </div>
-                <div className="mt-1 text-[15px] font-medium text-white">
-                  {studentsAtRisk.length} student{studentsAtRisk.length !== 1 ? 's' : ''} at risk
-                </div>
-                <div className="mt-3 flex flex-wrap gap-1.5">
-                  {studentsAtRisk.slice(0, 8).map((student) => (
-                    <Pill key={student.id} tone="red">
-                      {student.name}
-                    </Pill>
-                  ))}
-                  {studentsAtRisk.length > 8 && (
-                    <span className="text-[11px] text-white px-1.5 py-1">
-                      +{studentsAtRisk.length - 8}
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+                        {cohort.name}
+                      </span>
+                      <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
+                        {cohort.studentCount} learner{cohort.studentCount === 1 ? '' : 's'}
+                        {cohort.atRiskCount > 0 ? ` · ${cohort.atRiskCount} at risk` : ''}
+                      </span>
                     </span>
-                  )}
-                </div>
-              </div>
-            </div>
+                    <span className="shrink-0 text-[13px] font-semibold tabular-nums text-white">
+                      {cohort.avgProgress === null ? '—' : `${cohort.avgProgress}%`}
+                    </span>
+                    <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
+                  </button>
+                </li>
+              ))}
+            </ul>
           </motion.div>
-        )}
+        </motion.section>
+      )}
 
-        <motion.div variants={itemVariants}>
-          <FilterBar
-            tabs={[
-              { value: 'all', label: 'All', count: progressData.length },
-              { value: 'on-track', label: 'On Track', count: onTrackCount },
-              { value: 'behind', label: 'Behind', count: attentionCount },
-              { value: 'at-risk', label: 'At Risk', count: studentsAtRisk.length },
-            ]}
-            activeTab={filterStatus}
-            onTabChange={setFilterStatus}
-            search={searchQuery}
-            onSearchChange={setSearchQuery}
-            searchPlaceholder="Search name or ULN…"
-            actions={
-              <select
-                value={filterCohort}
-                onChange={(e) => setFilterCohort(e.target.value)}
-                className="h-10 px-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-full text-[13px] text-white focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
-              >
-                <option value="all">All Cohorts</option>
-                {cohorts
-                  .filter((c) => c.status === 'Active')
-                  .map((cohort) => (
-                    <option key={cohort.id} value={cohort.id}>
-                      {cohort.name}
-                    </option>
-                  ))}
-              </select>
-            }
-          />
+      <motion.section
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="space-y-3"
+      >
+        <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
+          <HubSectionHeading>Learners</HubSectionHeading>
+          <button
+            type="button"
+            onClick={exportCsv}
+            className="-my-2 flex h-11 items-center px-2 text-[12px] font-bold text-elec-yellow transition-colors touch-manipulation"
+          >
+            Export CSV
+          </button>
         </motion.div>
 
-        {studentsLoading ? (
-          <ProgressCardSkeletonList count={4} />
-        ) : sortedProgress.length === 0 ? (
-          <EmptyState title="No students found" description="Try adjusting filters." />
-        ) : (
-          <motion.div variants={itemVariants}>
-            <ListCard>
-              {sortedProgress.map((data) => (
-                <PeopleListRow
-                  key={data.id}
-                  id={data.id}
-                  accent={data.isAtRisk ? 'red' : 'none'}
-                  lead={{
-                    kind: 'avatar',
-                    name: data.name,
-                    photoUrl: data.photo_url,
-                    ringTone: data.isAtRisk ? 'red' : 'blue',
-                  }}
-                  title={data.name}
-                  titleChips={data.isAtRisk ? <Pill tone="red">At risk</Pill> : null}
-                  subtitle={getCohortName(data.cohort_id)}
-                  meta={
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      <div>
-                        <div className="flex items-baseline justify-between text-[10.5px]">
-                          <span className="text-white uppercase tracking-[0.12em]">
-                            Progress
-                          </span>
-                          <Pill tone={progressTone(data.overallProgress)}>
-                            {data.overallProgress}%
-                          </Pill>
-                        </div>
-                        <div className="mt-1.5 h-1 bg-white/[0.06] rounded-full overflow-hidden">
-                          <div
-                            className="h-full bg-elec-yellow/80 rounded-full"
-                            style={{ width: `${data.overallProgress}%` }}
-                          />
-                        </div>
-                      </div>
-                      <div>
-                        <div className="flex items-baseline justify-between text-[10.5px]">
-                          <span className="text-white uppercase tracking-[0.12em]">
-                            Attendance
-                          </span>
-                          <Pill tone={progressTone(data.attendanceRate)}>
-                            {data.attendanceRate}%
-                          </Pill>
-                        </div>
-                        <div className="mt-1.5 h-1 bg-white/[0.06] rounded-full overflow-hidden">
-                          <div
-                            className="h-full bg-emerald-400/80 rounded-full"
-                            style={{ width: `${data.attendanceRate}%` }}
-                          />
-                        </div>
-                      </div>
-                      {data.expected_end_date && (
-                        <div className="col-span-full text-[11px] text-white tabular-nums">
-                          Due{' '}
-                          {new Date(data.expected_end_date).toLocaleDateString('en-GB', {
-                            month: 'short',
-                            year: 'numeric',
-                          })}
-                        </div>
-                      )}
-                    </div>
-                  }
-                  onOpen={() => {
-                    setSelectedStudent(data);
-                    setProfileSheetOpen(true);
-                  }}
-                  actions={[
-                    {
-                      label: 'View profile',
-                      onClick: () => {
-                        setSelectedStudent(data);
-                        setProfileSheetOpen(true);
-                      },
-                    },
-                    {
-                      label: 'Update progress',
-                      onClick: () => {
-                        setSelectedStudentId(data.id);
-                        setProgressSheetOpen(true);
-                      },
-                      divider: true,
-                    },
-                    {
-                      label: data.phone ? `Call · ${data.phone}` : 'Call',
-                      onClick: () => {
-                        if (data.phone) window.location.href = 'tel:' + data.phone;
-                      },
-                      disabled: !data.phone,
-                      divider: true,
-                    },
-                    {
-                      label: 'Email',
-                      onClick: () => {
-                        if (data.email) window.location.href = 'mailto:' + data.email;
-                      },
-                      disabled: !data.email,
-                    },
-                  ]}
-                />
+        <motion.div variants={itemVariants} className="space-y-3">
+          <input
+            type="search"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search by name or ULN"
+            aria-label="Search learners"
+            className="h-11 w-full border-0 border-b border-white/[0.18] bg-transparent px-0 text-[14px] text-white placeholder:text-white placeholder:opacity-60 focus:border-elec-yellow focus:outline-none"
+          />
+          <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0">
+            {(
+              [
+                ['all', `All · ${progressData.length}`],
+                ['atrisk', `At risk · ${atRisk.length}`],
+                ['ontrack', `On track · ${onTrackCount}`],
+                ['attention', `Needs attention · ${attentionCount}`],
+                ['behind', `Behind · ${behindCount}`],
+              ] as const
+            ).map(([value, label]) => (
+              <button
+                key={value}
+                type="button"
+                onClick={() => setFilter(value)}
+                className={chipCn(filter === value)}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+          {activeCohorts.length > 1 && (
+            <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0">
+              <button
+                type="button"
+                onClick={() => setFilterCohort('all')}
+                className={chipCn(filterCohort === 'all')}
+              >
+                All cohorts
+              </button>
+              {activeCohorts.map((cohort) => (
+                <button
+                  key={cohort.id}
+                  type="button"
+                  onClick={() => setFilterCohort(cohort.id)}
+                  className={chipCn(filterCohort === cohort.id)}
+                >
+                  {cohort.name}
+                </button>
               ))}
-            </ListCard>
-          </motion.div>
-        )}
+            </div>
+          )}
+        </motion.div>
 
-        <StudentDetailSheet
-          student={selectedStudent}
-          open={profileSheetOpen}
-          onOpenChange={setProfileSheetOpen}
-        />
-        <ProgressUpdateSheet
-          studentId={selectedStudentId}
-          open={progressSheetOpen}
-          onOpenChange={setProgressSheetOpen}
-        />
-      </PageFrame>
+        <motion.div
+          variants={itemVariants}
+          className={cn(
+            '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
+            CARD_SURFACE
+          )}
+        >
+          {studentsLoading ? (
+            <div className="flex items-center justify-center py-12">
+              <div className="h-6 w-6 animate-spin rounded-full border-2 border-elec-yellow border-t-transparent" />
+            </div>
+          ) : filtered.length === 0 ? (
+            <p className="px-4 py-6 text-[13px] text-white sm:px-5">
+              {progressData.length === 0 ? 'No active learners on the roll.' : 'Nothing matches these filters.'}
+            </p>
+          ) : (
+            <ul className="divide-y divide-white/[0.10]">
+              {filtered.map((p) => {
+                const reason = [
+                  cohortName(p.student.cohort_id),
+                  p.attendance !== null ? `attendance ${p.attendance}%` : 'no attendance marks',
+                  p.student.expected_end_date
+                    ? `due ${new Date(p.student.expected_end_date).toLocaleDateString('en-GB', {
+                        month: 'short',
+                        year: 'numeric',
+                      })}`
+                    : null,
+                ]
+                  .filter(Boolean)
+                  .join(' · ');
+                return (
+                  <li key={p.student.id} className="flex items-stretch">
+                    <button
+                      type="button"
+                      onClick={() => goTo360(p.student.id)}
+                      className="flex min-w-0 flex-1 items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5"
+                    >
+                      <span
+                        aria-hidden="true"
+                        className={cn(
+                          'h-8 w-[3px] shrink-0 rounded-full',
+                          p.isAtRisk ? 'bg-red-400' : p.band === 'behind' ? 'bg-elec-yellow' : 'bg-white/[0.25]'
+                        )}
+                      />
+                      <span className="min-w-0 flex-1">
+                        <span className="flex min-w-0 items-center gap-2">
+                          <span className="truncate text-[14px] font-semibold leading-tight text-white">
+                            {p.student.name}
+                          </span>
+                          {p.isAtRisk && (
+                            <span className="inline-flex h-6 shrink-0 items-center rounded-full border border-red-400/40 px-2 text-[11px] font-medium text-red-300">
+                              {p.student.risk_level}
+                            </span>
+                          )}
+                        </span>
+                        <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
+                          {reason}
+                        </span>
+                      </span>
+                      <span
+                        className={cn(
+                          'shrink-0 text-[13px] font-semibold tabular-nums',
+                          p.isAtRisk ? 'text-red-300' : p.band === 'behind' ? 'text-elec-yellow' : 'text-white'
+                        )}
+                      >
+                        {p.progress}%
+                      </span>
+                      <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
+                    </button>
+
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <button
+                          type="button"
+                          aria-label="More actions"
+                          className="flex h-11 w-11 shrink-0 items-center justify-center self-center text-white transition-colors touch-manipulation hover:bg-white/[0.06]"
+                        >
+                          <MoreHorizontal className="h-4 w-4" aria-hidden />
+                        </button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem
+                          className="h-11"
+                          onClick={() => {
+                            setSelectedStudent(p.student);
+                            setProfileSheetOpen(true);
+                          }}
+                        >
+                          Quick view
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          className="h-11"
+                          onClick={() => {
+                            setSelectedStudentId(p.student.id);
+                            setProgressSheetOpen(true);
+                          }}
+                        >
+                          Update progress
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem
+                          className="h-11"
+                          disabled={!p.student.phone}
+                          onClick={() => {
+                            if (p.student.phone) window.location.href = 'tel:' + p.student.phone;
+                          }}
+                        >
+                          {p.student.phone ? `Call · ${p.student.phone}` : 'Call'}
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          className="h-11"
+                          disabled={!p.student.email}
+                          onClick={() => {
+                            if (p.student.email) window.location.href = 'mailto:' + p.student.email;
+                          }}
+                        >
+                          Email
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </motion.div>
+      </motion.section>
+
+      <StudentDetailSheet
+        student={selectedStudent}
+        open={profileSheetOpen}
+        onOpenChange={setProfileSheetOpen}
+      />
+      <ProgressUpdateSheet
+        studentId={selectedStudentId}
+        open={progressSheetOpen}
+        onOpenChange={setProgressSheetOpen}
+      />
     </PullToRefresh>
   );
 }

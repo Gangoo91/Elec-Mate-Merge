@@ -458,7 +458,7 @@ export function useTutorToday() {
         title: l.scheduled_start_time
           ? `${l.title} · ${l.scheduled_start_time.slice(0, 5)}`
           : l.title,
-        href: `/college/lesson-plans/${l.id}`,
+        href: `/college/lessons/${l.id}`,
       }));
 
       const followUpRows: TodayUpcomingDate[] = (

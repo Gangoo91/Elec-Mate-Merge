@@ -1,33 +1,32 @@
 import { useState } from 'react';
+import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Pill, type Tone } from '@/components/college/primitives';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { HubSectionHeading } from '@/components/hub/HubPrimitives';
 import {
   useStudentPortfolio,
   type PortfolioSubmission,
   type SubmissionStatus,
   type IqaOutcome,
+  type StudentPortfolio,
 } from '@/hooks/useStudentPortfolio';
 import { PortfolioSubmissionDrawer } from '@/components/college/sheets/PortfolioSubmissionDrawer';
 
 /* ==========================================================================
    SectionPortfolio — apprentice-side portfolio submissions + IQA verdicts.
-   Mobile-first, tap a submission to expand inline detail.
-   ========================================================================== */
+   Tap a submission to open the drawer.
 
-const STATUS_TONE: Record<SubmissionStatus, Tone> = {
-  draft: 'cyan',
-  submitted: 'blue',
-  in_review: 'amber',
-  under_review: 'amber',
-  feedback_given: 'orange',
-  resubmitted: 'blue',
-  approved: 'emerald',
-  signed_off: 'emerald',
-  iqa_sampled: 'purple',
-  iqa_verified: 'emerald',
-  rejected: 'red',
-  returned: 'orange',
-};
+   Hub language: heading, a four-figure strip, requirements card, and ONE
+   submissions card with divided rows (each submission used to be its own
+   card with a coloured spine — twelve of them was twelve rectangles).
+   Colour only where it encodes state: red for returned/rejected/overdue,
+   emerald for approved/signed-off/IQA-verified. Everything awaiting a
+   tutor is volt text.
+
+   `data` lets a parent that already runs `useStudentPortfolio` share the
+   instance; when supplied the section's own hook is given a null id (its
+   no-fetch path).
+   ========================================================================== */
 
 const STATUS_LABEL: Record<SubmissionStatus, string> = {
   draft: 'Draft',
@@ -44,17 +43,29 @@ const STATUS_LABEL: Record<SubmissionStatus, string> = {
   returned: 'Returned',
 };
 
-const IQA_TONE: Record<NonNullable<IqaOutcome>, Tone> = {
-  verified: 'emerald',
-  not_verified: 'red',
-  requires_action: 'amber',
-};
+const GOOD_STATUS: ReadonlySet<string> = new Set(['approved', 'signed_off', 'iqa_verified']);
+const BAD_STATUS: ReadonlySet<string> = new Set(['rejected', 'returned']);
+const WAITING_STATUS: ReadonlySet<string> = new Set([
+  'submitted',
+  'resubmitted',
+  'in_review',
+  'under_review',
+]);
 
 const IQA_LABEL: Record<NonNullable<IqaOutcome>, string> = {
   verified: 'IQA verified',
   not_verified: 'IQA rejected',
   requires_action: 'IQA action',
 };
+
+const CHIP =
+  'inline-flex items-center rounded-full border px-2 py-0.5 text-[10.5px] font-semibold tabular-nums';
+const CHIP_NEUTRAL = 'border-white/[0.14] bg-white/[0.06] text-white';
+const CHIP_RED = 'border-red-400/30 bg-red-500/[0.08] text-red-300';
+const CHIP_GOOD = 'border-emerald-400/30 bg-emerald-500/[0.08] text-emerald-300';
+const CHIP_VOLT = 'border-elec-yellow/35 text-elec-yellow';
+
+const CARD = cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE);
 
 function formatRelative(iso: string | null): string {
   if (!iso) return '—';
@@ -71,20 +82,24 @@ export function SectionPortfolio({
   id,
   studentName,
   userId,
+  data: shared,
 }: {
   id: string;
   studentName: string;
   userId: string | null;
+  data?: StudentPortfolio;
 }) {
-  const { submissions, items, requirements, rollUp, loading } = useStudentPortfolio(userId);
+  const own = useStudentPortfolio(shared ? null : userId);
+  const { submissions, requirements, rollUp, loading } = shared ?? own;
   const [openSubmission, setOpenSubmission] = useState<PortfolioSubmission | null>(null);
+  const first = studentName.split(' ')[0];
 
   if (!userId) {
     return (
-      <section id={id} className="scroll-mt-6">
-        <Header />
-        <div className="mt-5 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-6 py-8 text-center">
-          <p className="text-[12.5px] text-white/65 max-w-md mx-auto leading-relaxed">
+      <section id={id} className="scroll-mt-20 space-y-3">
+        <HubSectionHeading>Portfolio</HubSectionHeading>
+        <div className={cn(CARD, 'px-4 py-5 sm:px-5')}>
+          <p className="text-[12.5px] leading-relaxed text-white">
             No linked apprentice account — connect this learner's app sign-in to see their
             portfolio submissions.
           </p>
@@ -93,91 +108,77 @@ export function SectionPortfolio({
     );
   }
 
-  return (
-    <section id={id} className="scroll-mt-6">
-      <Header />
+  const waiting = submissions.filter((s) => WAITING_STATUS.has(s.status)).length;
 
-      <div className="mt-5 grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-        <StatCard
+  return (
+    <section id={id} className="scroll-mt-20 space-y-3">
+      <HubSectionHeading>Portfolio</HubSectionHeading>
+
+      <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4 sm:gap-3">
+        <StatCell
           label="Submissions"
           value={String(rollUp.total_submissions)}
-          sub={`${rollUp.by_status.in_review + rollUp.by_status.submitted} pending`}
+          sub={waiting > 0 ? `${waiting} awaiting review` : 'None awaiting review'}
+          alert={waiting > 0}
         />
-        <StatCard
-          label="Approved"
-          value={String(rollUp.by_status.approved)}
-          tone="emerald"
-        />
-        <StatCard
+        <StatCell label="Approved" value={String(rollUp.by_status.approved)} good={rollUp.by_status.approved > 0} />
+        <StatCell
           label="IQA verified"
           value={String(rollUp.iqa_verified)}
           sub={`${rollUp.iqa_sampled} sampled`}
-          tone={rollUp.iqa_requires_action > 0 ? 'amber' : 'emerald'}
+          good={rollUp.iqa_verified > 0}
         />
-        <StatCard
+        <StatCell
           label="Evidence items"
           value={String(rollUp.total_items)}
           sub={`${rollUp.items_supervisor_verified} supervisor-verified`}
         />
       </div>
 
-      {/* Tutor requirements panel — only show open ones */}
+      {/* Tutor-set requirements */}
       {requirements.length > 0 && (
-        <div className="mt-4 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
-          <div className="px-5 py-3 border-b border-white/[0.06] flex items-center justify-between">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-              Tutor-set evidence requirements
-            </div>
+        <div className={CARD}>
+          <div className="flex items-center justify-between gap-3 border-b border-white/[0.10] px-4 py-3 sm:px-5">
+            <div className="text-[13px] font-semibold text-white">Evidence requirements you set</div>
             {rollUp.overdue_requirements > 0 && (
-              <span className="inline-flex items-center h-5 px-1.5 rounded-md bg-red-500/[0.1] border border-red-500/30 text-[10px] font-semibold tracking-[0.06em] uppercase text-red-200">
+              <span className="text-[11px] font-semibold tabular-nums text-red-300">
                 {rollUp.overdue_requirements} overdue
               </span>
             )}
           </div>
-          <ul className="divide-y divide-white/[0.04]">
+          <ul className="divide-y divide-white/[0.10]">
             {requirements.slice(0, 6).map((r) => {
               // due_date is `timestamp with time zone` — parse to Date so we
               // can compare reliably (string compare on ISO with TZ suffix
               // against a YYYY-MM-DD prefix gave wrong answers).
               const dueMs = r.due_date ? new Date(r.due_date).getTime() : null;
-              const overdue =
-                dueMs != null && dueMs < Date.now() && r.status !== 'completed';
+              const done = r.status === 'completed';
+              const overdue = dueMs != null && dueMs < Date.now() && !done;
               return (
-                <li key={r.id} className="px-5 py-3 flex items-start gap-3">
+                <li key={r.id} className="flex items-center gap-3 px-4 py-3 sm:px-5">
                   <span
                     aria-hidden
                     className={cn(
-                      'mt-1.5 inline-block h-2 w-2 rounded-full flex-shrink-0',
-                      r.status === 'completed' ? 'bg-emerald-400' :
-                      overdue ? 'bg-red-400' :
-                      r.is_mandatory ? 'bg-elec-yellow' : 'bg-white/30'
+                      'h-8 w-[3px] shrink-0 rounded-full',
+                      overdue ? 'bg-red-400' : r.is_mandatory && !done ? 'bg-elec-yellow' : 'bg-white/[0.25]'
                     )}
                   />
                   <div className="min-w-0 flex-1">
-                    <div className="text-[12.5px] text-white">{r.title}</div>
-                    <div className="mt-0.5 text-[10.5px] text-white/55 tabular-nums">
-                      Need {r.quantity_required}
+                    <div className={cn('text-[13px] font-medium text-white', done && 'line-through opacity-70')}>
+                      {r.title}
+                    </div>
+                    <div className="mt-0.5 flex flex-wrap items-center gap-x-2 text-[11px] tabular-nums text-white">
+                      <span>Need {r.quantity_required}</span>
                       {r.due_date && (
-                        <>
-                          <span className="text-white/25 mx-1.5">·</span>
-                          <span className={overdue ? 'text-red-300' : ''}>
-                            Due {new Date(r.due_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
-                          </span>
-                        </>
+                        <span className={cn(overdue && 'font-semibold text-red-300')}>
+                          {overdue ? 'Overdue · ' : 'Due '}
+                          {new Date(r.due_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
+                        </span>
                       )}
-                      {r.is_mandatory && (
-                        <>
-                          <span className="text-white/25 mx-1.5">·</span>
-                          <span className="text-amber-300">Mandatory</span>
-                        </>
-                      )}
+                      {r.is_mandatory && <span className="font-semibold text-elec-yellow">Mandatory</span>}
                     </div>
                   </div>
-                  {r.status === 'completed' && (
-                    <span className="inline-flex items-center justify-center h-4 w-4 rounded-full bg-emerald-500/20 text-emerald-300 text-[9px] font-bold">
-                      ✓
-                    </span>
-                  )}
+                  {done && <span className="text-[11px] font-semibold text-emerald-300">Done</span>}
                 </li>
               );
             })}
@@ -185,35 +186,34 @@ export function SectionPortfolio({
         </div>
       )}
 
-      {/* Submissions list */}
-      <div className="mt-4">
-        {loading && submissions.length === 0 ? (
-          <Skeleton />
-        ) : submissions.length === 0 ? (
-          <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-6 py-8 text-center">
-            <p className="text-[12.5px] text-white/65 max-w-md mx-auto leading-relaxed">
-              {studentName.split(' ')[0]} hasn't submitted any portfolio entries yet.
-              They'll appear here as they go through the app.
-            </p>
+      {/* Submissions */}
+      {loading && submissions.length === 0 ? (
+        <Skeleton />
+      ) : submissions.length === 0 ? (
+        <div className={cn(CARD, 'px-4 py-5 sm:px-5')}>
+          <p className="text-[12.5px] leading-relaxed text-white">
+            {first} hasn't submitted any portfolio entries yet. They appear here as they come
+            through the app.
+          </p>
+        </div>
+      ) : (
+        <div className={CARD}>
+          <div className="flex items-center justify-between gap-3 border-b border-white/[0.10] px-4 py-3 sm:px-5">
+            <div className="text-[13px] font-semibold text-white">Submissions</div>
+            <div className="text-[11px] tabular-nums text-white">{submissions.length} total</div>
           </div>
-        ) : (
-          <div className="space-y-2.5">
+          <ul className="divide-y divide-white/[0.10]">
             {submissions.slice(0, 12).map((s) => (
-              <SubmissionCard
-                key={s.id}
-                submission={s}
-                itemsCount={items.length}
-                onOpen={() => setOpenSubmission(s)}
-              />
+              <SubmissionRow key={s.id} submission={s} onOpen={() => setOpenSubmission(s)} />
             ))}
-            {submissions.length > 12 && (
-              <div className="text-center text-[11px] text-white/45 tabular-nums pt-1">
-                + {submissions.length - 12} more submissions
-              </div>
-            )}
-          </div>
-        )}
-      </div>
+          </ul>
+          {submissions.length > 12 && (
+            <div className="border-t border-white/[0.10] px-4 py-2.5 text-center text-[11px] tabular-nums text-white">
+              {submissions.length - 12} more in the learner's app
+            </div>
+          )}
+        </div>
+      )}
 
       <PortfolioSubmissionDrawer
         open={openSubmission !== null}
@@ -228,129 +228,106 @@ export function SectionPortfolio({
   );
 }
 
-function Header() {
-  return (
-    <div className="flex items-end justify-between gap-4 flex-wrap">
-      <div>
-        <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Evidence portfolio
-        </div>
-        <h2 className="mt-1.5 text-xl sm:text-[26px] font-semibold text-white tracking-tight leading-tight">
-          Portfolio
-        </h2>
-      </div>
-    </div>
-  );
-}
-
-function SubmissionCard({
+function SubmissionRow({
   submission,
-  itemsCount,
   onOpen,
 }: {
   submission: PortfolioSubmission;
-  itemsCount: number;
   onOpen: () => void;
 }) {
-  void itemsCount;
-  const tone = STATUS_TONE[submission.status as SubmissionStatus] ?? 'cyan';
-  const accent =
-    submission.status === 'approved' ? 'bg-emerald-400/80' :
-    submission.status === 'rejected' ? 'bg-red-400/80' :
-    submission.status === 'in_review' ? 'bg-amber-400/80' :
-    submission.status === 'returned' ? 'bg-orange-400/80' :
-    submission.status === 'submitted' ? 'bg-blue-400/80' :
-    'bg-cyan-400/60';
+  const status = submission.status as SubmissionStatus;
+  const good = GOOD_STATUS.has(status);
+  const bad = BAD_STATUS.has(status);
+  const waiting = WAITING_STATUS.has(status);
   const iqa = submission.iqa_outcome;
 
   return (
-    <div className="relative bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden hover:border-white/[0.14] transition-colors">
-      <span aria-hidden className={cn('absolute left-0 top-3 bottom-3 w-[3px] rounded-full', accent)} />
+    <li>
       <button
         type="button"
         onClick={onOpen}
-        className="w-full text-left px-5 sm:px-6 py-4 touch-manipulation"
+        className="flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5"
       >
-        <div className="flex items-center justify-between gap-3 flex-wrap">
-          <div className="min-w-0 flex-1">
-            <div className="flex items-center gap-2 flex-wrap">
-              <Pill tone={tone}>{STATUS_LABEL[submission.status as SubmissionStatus] ?? submission.status}</Pill>
-              {submission.grade && (
-                <span className="text-[11px] font-medium text-elec-yellow/85 tabular-nums">
-                  {submission.grade}
-                </span>
-              )}
-              {submission.iqa_sampled && (
-                <span className="inline-flex items-center h-5 px-1.5 rounded-md bg-purple-500/[0.1] border border-purple-500/30 text-[10px] font-semibold tracking-[0.06em] uppercase text-purple-200">
-                  IQA sampled
-                </span>
-              )}
-              {iqa && <Pill tone={IQA_TONE[iqa]}>{IQA_LABEL[iqa]}</Pill>}
-              {submission.action_required && (
-                <span className="inline-flex items-center h-5 px-1.5 rounded-md bg-amber-500/[0.1] border border-amber-500/30 text-[10px] font-semibold tracking-[0.06em] uppercase text-amber-200">
-                  Action required
-                </span>
-              )}
-            </div>
-            <div className="mt-1.5 flex items-center flex-wrap gap-x-2.5 gap-y-0.5 text-[11px] text-white/65 tabular-nums">
-              <span>Submitted {formatRelative(submission.submitted_at)}</span>
-              {submission.submission_count && submission.submission_count > 1 && (
-                <>
-                  <span className="text-white/25">·</span>
-                  <span>Attempt {submission.submission_count}</span>
-                </>
-              )}
-              {submission.reviewed_at && (
-                <>
-                  <span className="text-white/25">·</span>
-                  <span>Reviewed {formatRelative(submission.reviewed_at)}</span>
-                </>
-              )}
-            </div>
-          </div>
-          <span className="text-[14px] text-white/35 leading-none">→</span>
-        </div>
+        <span
+          aria-hidden
+          className={cn(
+            'h-8 w-[3px] shrink-0 rounded-full',
+            bad ? 'bg-red-400' : waiting ? 'bg-elec-yellow' : 'bg-white/[0.25]'
+          )}
+        />
+        <span className="min-w-0 flex-1">
+          <span className="flex flex-wrap items-center gap-1.5">
+            <span className={cn(CHIP, bad ? CHIP_RED : good ? CHIP_GOOD : waiting ? CHIP_VOLT : CHIP_NEUTRAL)}>
+              {STATUS_LABEL[status] ?? submission.status}
+            </span>
+            {submission.grade && (
+              <span className="text-[11px] font-semibold tabular-nums text-white">{submission.grade}</span>
+            )}
+            {submission.iqa_sampled && !iqa && <span className={cn(CHIP, CHIP_NEUTRAL)}>IQA sampled</span>}
+            {iqa && (
+              <span
+                className={cn(
+                  CHIP,
+                  iqa === 'verified' ? CHIP_GOOD : iqa === 'not_verified' ? CHIP_RED : CHIP_VOLT
+                )}
+              >
+                {IQA_LABEL[iqa]}
+              </span>
+            )}
+            {submission.action_required && (
+              <span className="text-[11px] font-semibold text-elec-yellow">Action required</span>
+            )}
+          </span>
+          <span className="mt-1 flex flex-wrap items-center gap-x-2 text-[11px] tabular-nums text-white">
+            <span>Submitted {formatRelative(submission.submitted_at)}</span>
+            {submission.submission_count && submission.submission_count > 1 && (
+              <span>Attempt {submission.submission_count}</span>
+            )}
+            {submission.reviewed_at && <span>Reviewed {formatRelative(submission.reviewed_at)}</span>}
+          </span>
+        </span>
+        <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden />
       </button>
-    </div>
+    </li>
   );
 }
 
-function StatCard({
+function StatCell({
   label,
   value,
   sub,
-  tone,
+  alert,
+  good,
 }: {
   label: string;
   value: string;
   sub?: string;
-  tone?: 'emerald' | 'amber';
+  alert?: boolean;
+  good?: boolean;
 }) {
   return (
-    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-4 py-3.5">
-      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
-        {label}
-      </div>
+    <div className={cn(CARD, 'px-4 py-3.5')}>
+      <div className="text-[12px] font-medium text-white">{label}</div>
       <div
         className={cn(
-          'mt-1 text-[18px] font-semibold tabular-nums leading-none',
-          tone === 'emerald' ? 'text-emerald-300' : tone === 'amber' ? 'text-amber-300' : 'text-white'
+          'mt-1 text-[22px] font-semibold leading-none tabular-nums tracking-tight',
+          alert ? 'text-elec-yellow' : good ? 'text-emerald-300' : 'text-white'
         )}
       >
         {value}
       </div>
-      {sub && <div className="mt-1 text-[10.5px] text-white/55 tabular-nums">{sub}</div>}
+      {sub && <div className="mt-1 text-[11px] tabular-nums text-white">{sub}</div>}
     </div>
   );
 }
 
 function Skeleton() {
   return (
-    <div className="space-y-2.5 animate-pulse">
+    <div className={cn(CARD, 'space-y-3 px-4 py-4 animate-pulse sm:px-5')}>
       {[0, 1, 2].map((i) => (
-        <div key={i} className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-5 py-4">
-          <div className="h-3 w-1/2 rounded bg-white/[0.06]" />
-          <div className="mt-2 h-2 w-1/3 rounded bg-white/[0.04]" />
+        <div key={i}>
+          <div className="h-3 w-1/2 rounded bg-white/[0.08]" />
+          <div className="mt-2 h-2 w-1/3 rounded bg-white/[0.05]" />
         </div>
       ))}
     </div>

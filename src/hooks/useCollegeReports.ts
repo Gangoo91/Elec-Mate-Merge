@@ -344,12 +344,13 @@ export async function fetchEpaReadinessReport(
   const { data: students } = await studentQ;
   if (!students || students.length === 0) return [];
 
-  const userIds = (students as Array<{ user_id: string | null }>)
-    .map((s) => s.user_id)
-    .filter((id): id is string => !!id);
+  // college_epa.student_id is a FK to college_students.id (the college row),
+  // NOT the learner's auth uid. This queried it with user_ids, which matched
+  // nothing — every EPA readiness export came back empty.
+  const rowIds = (students as Array<{ id: string }>).map((s) => s.id);
 
   const [{ data: epaRows }, { data: cohorts }, { data: fsRows }] = await Promise.all([
-    supabase.from('college_epa').select('student_id, status, gateway_date, result').in('student_id', userIds),
+    supabase.from('college_epa').select('student_id, status, gateway_date, result').in('student_id', rowIds),
     supabase
       .from('college_cohorts')
       .select('id, name')
@@ -369,7 +370,7 @@ export async function fetchEpaReadinessReport(
       .in('student_id', (students as Array<{ id: string }>).map((s) => s.id)),
   ]);
 
-  const epaByUser = new Map((epaRows ?? []).map((e: any) => [e.student_id, e]));
+  const epaByStudent = new Map((epaRows ?? []).map((e: any) => [e.student_id, e]));
   const cohortMap = new Map((cohorts ?? []).map((c: any) => [c.id, c.name as string]));
   const fsByStudent = new Map<string, { maths?: string; english?: string }>();
   for (const f of (fsRows ?? []) as Array<{
@@ -385,7 +386,7 @@ export async function fetchEpaReadinessReport(
 
   const today = new Date();
   return (students as Array<any>).map((s) => {
-    const epa = s.user_id ? epaByUser.get(s.user_id) : null;
+    const epa = epaByStudent.get(s.id) ?? null;
     const fs = fsByStudent.get(s.id) ?? {};
     const weeksToGateway =
       epa?.gateway_date
@@ -421,13 +422,13 @@ export async function fetchEpaPassRateReport(
   const { data: students } = await studentQ;
   if (!students || students.length === 0) return [];
 
-  const userIds = (students as Array<{ user_id: string | null }>)
-    .map((s) => s.user_id)
-    .filter((id): id is string => !!id);
+  // Same id-space fix as the readiness report: college_epa keys on the
+  // college row id, so the pass-rate roll-up counted zero completions.
+  const rowIds = (students as Array<{ id: string }>).map((s) => s.id);
 
   const [{ data: epaRows }, { data: cohorts }] = await Promise.all([
-    userIds.length > 0
-      ? supabase.from('college_epa').select('student_id, status, result').in('student_id', userIds)
+    rowIds.length > 0
+      ? supabase.from('college_epa').select('student_id, status, result').in('student_id', rowIds)
       : Promise.resolve({ data: [] as any[], error: null }),
     supabase
       .from('college_cohorts')
@@ -444,7 +445,7 @@ export async function fetchEpaPassRateReport(
       ),
   ]);
 
-  const epaByUser = new Map(
+  const epaByStudent = new Map(
     ((epaRows ?? []) as Array<{ student_id: string; status: string | null; result: string | null }>)
       .map((e) => [e.student_id, e])
   );
@@ -473,10 +474,10 @@ export async function fetchEpaPassRateReport(
     return fresh;
   };
 
-  for (const s of students as Array<{ user_id: string | null; cohort_id: string | null }>) {
+  for (const s of students as Array<{ id: string; cohort_id: string | null }>) {
     const b = getBucket(s.cohort_id);
     b.total_apprentices += 1;
-    const epa = s.user_id ? epaByUser.get(s.user_id) : null;
+    const epa = epaByStudent.get(s.id) ?? null;
     if (epa?.status === 'Gateway Ready') b.gateway_ready += 1;
     if (epa?.status === 'In Progress' || epa?.status === 'Pre-Gateway') b.in_progress += 1;
     if (epa?.status === 'Complete') {

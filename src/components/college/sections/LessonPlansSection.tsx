@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { ChevronRight } from 'lucide-react';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import { useToast } from '@/hooks/use-toast';
 import {
@@ -9,18 +10,51 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import {
-  PageFrame,
-  PageHero,
-  FilterBar,
-  EmptyState,
-  Pill,
-  ListCard,
-  itemVariants,
-  toneDot,
-  statusTone as lessonStatusTone,
-} from '@/components/college/primitives';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { containerVariants, itemVariants, EmptyState } from '@/components/college/primitives';
+import { HubKpi, HubKpiRow, HubSectionHeading } from '@/components/hub/HubPrimitives';
+import type { CollegeLessonPlan } from '@/services/college/collegeLessonPlanService';
 import { cn } from '@/lib/utils';
+
+/**
+ * Lesson plans — every plan in the college, ranked by date, with the status
+ * vocabulary the database actually uses.
+ *
+ * `college_lesson_plans.status` is CHECK-constrained to lowercase
+ * draft / ready / published / delivered / archived. This section used to
+ * filter on 'Draft' / 'Published' / 'Approved' / 'Delivered' — none of which
+ * ever matched a live row, so every tab but "All" counted 0 — and its
+ * "Mark as delivered" wrote 'Delivered', which the constraint rejects.
+ * Everything here now compares case-insensitively and writes the lowercase
+ * value. ('Approved' / 'Published' are still READ as ready, because older
+ * code wrote them before the constraint landed.)
+ *
+ * `scheduled_date` is a DATE column. Comparing it as a timestamp against
+ * "now" made this morning's lesson read as overdue by lunchtime; everything
+ * here compares calendar days.
+ *
+ * Renders CONTENT ONLY under the CollegeDashboard masthead. The Slides row
+ * action (added 2026-09-04) is kept as a quiet text control beside the menu.
+ */
+
+type LessonRow = CollegeLessonPlan & { scheduled_start_time?: string | null };
+
+type LessonState = 'draft' | 'ready' | 'delivered' | 'archived';
+
+const STATE_LABEL: Record<LessonState, string> = {
+  draft: 'Draft',
+  ready: 'Ready',
+  delivered: 'Delivered',
+  archived: 'Archived',
+};
+
+function lessonState(status: string | null): LessonState {
+  const s = (status ?? 'draft').trim().toLowerCase();
+  if (s === 'ready' || s === 'published' || s === 'approved') return 'ready';
+  if (s === 'delivered') return 'delivered';
+  if (s === 'archived') return 'archived';
+  return 'draft';
+}
 
 interface ParsedObjective {
   text: string;
@@ -48,9 +82,7 @@ function parseObjectives(objectives: string | null): ParsedObjective[] {
               const obj = o as { text?: unknown; ac_codes?: unknown };
               const text = typeof obj.text === 'string' ? obj.text : null;
               const acCodes = Array.isArray(obj.ac_codes)
-                ? (obj.ac_codes as unknown[]).filter(
-                    (v): v is string => typeof v === 'string'
-                  )
+                ? (obj.ac_codes as unknown[]).filter((v): v is string => typeof v === 'string')
                 : [];
               return text ? { text, acCodes } : null;
             }
@@ -78,301 +110,429 @@ function parseObjectives(objectives: string | null): ParsedObjective[] {
     .map((t) => ({ text: t, acCodes: [] }));
 }
 
+/** Local calendar day as YYYY-MM-DD — the shape `scheduled_date` arrives in. */
+function localIso(d: Date): string {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
+
+function fmtDay(iso: string): string {
+  const [y, m, d] = iso.split('-').map(Number);
+  return new Date(y, m - 1, d).toLocaleDateString('en-GB', {
+    weekday: 'short',
+    day: 'numeric',
+    month: 'short',
+  });
+}
+
+const CHIP =
+  'inline-flex h-11 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border px-4 text-[12.5px] font-medium transition-colors touch-manipulation';
+const CHIP_ON = 'border-white bg-white text-black';
+const CHIP_OFF = 'border-white/[0.14] text-white hover:bg-white/[0.06]';
+const SEARCH =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white placeholder:text-white placeholder:opacity-40 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus:outline-none touch-manipulation';
+const SELECT =
+  'input-underline h-11 w-full appearance-none rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus:outline-none [color-scheme:dark] touch-manipulation sm:w-64';
+const PRIMARY =
+  'inline-flex h-11 w-full items-center justify-center rounded-full bg-elec-yellow px-5 text-[13px] font-semibold text-black transition-[filter,transform] touch-manipulation hover:brightness-105 active:scale-[0.98] sm:w-auto';
+const LIST_CARD = cn(
+  '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
+  CARD_SURFACE
+);
+
+const STATE_ORDER: LessonState[] = ['draft', 'ready', 'delivered', 'archived'];
+
 export function LessonPlansSection() {
   const { lessonPlans, cohorts, staff, updateLessonPlan, addLessonPlan } = useCollegeSupabase();
   const { toast } = useToast();
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
-  const [filterStatus, setFilterStatus] = useState<string>('all');
+  const [filterState, setFilterState] = useState<LessonState | 'all'>('all');
   const [filterCohort, setFilterCohort] = useState<string>('all');
 
-  const filteredLessons = lessonPlans.filter((lesson) => {
-    const query = searchQuery.toLowerCase();
-    const objectives = parseObjectives(lesson.objectives);
-    const objectivesText = objectives.map((o) => o.text).join(' ');
-    const matchesSearch =
-      lesson.title.toLowerCase().includes(query) || objectivesText.toLowerCase().includes(query);
-    const matchesStatus =
-      filterStatus === 'all' ||
-      lesson.status === filterStatus ||
-      (filterStatus === 'Published' && lesson.status === 'Approved') ||
-      (filterStatus === 'Approved' && lesson.status === 'Published');
-    const matchesCohort = filterCohort === 'all' || lesson.cohort_id === filterCohort;
-    return matchesSearch && matchesStatus && matchesCohort;
-  });
+  const todayIso = localIso(new Date());
+  const weekAheadIso = useMemo(() => {
+    const d = new Date();
+    d.setDate(d.getDate() + 7);
+    return localIso(d);
+  }, []);
 
-  const sortedLessons = [...filteredLessons].sort((a, b) => {
+  const plans = lessonPlans as LessonRow[];
+
+  const counts = useMemo(() => {
+    const c: Record<LessonState, number> = { draft: 0, ready: 0, delivered: 0, archived: 0 };
+    for (const l of plans) c[lessonState(l.status)] += 1;
+    return c;
+  }, [plans]);
+
+  const isUpcoming = (l: LessonRow) =>
+    !!l.scheduled_date && l.scheduled_date >= todayIso && l.scheduled_date <= weekAheadIso;
+  const isOverdue = (l: LessonRow) => {
+    const state = lessonState(l.status);
+    return (
+      !!l.scheduled_date &&
+      l.scheduled_date < todayIso &&
+      state !== 'delivered' &&
+      state !== 'archived'
+    );
+  };
+
+  const overdueCount = plans.filter(isOverdue).length;
+  const upcomingCount = plans.filter(isUpcoming).length;
+
+  const filtered = useMemo(() => {
+    const query = searchQuery.trim().toLowerCase();
+    return plans.filter((lesson) => {
+      if (query) {
+        const objectivesText = parseObjectives(lesson.objectives)
+          .map((o) => o.text)
+          .join(' ');
+        if (
+          !lesson.title.toLowerCase().includes(query) &&
+          !objectivesText.toLowerCase().includes(query)
+        )
+          return false;
+      }
+      if (filterState !== 'all' && lessonState(lesson.status) !== filterState) return false;
+      if (filterCohort !== 'all' && lesson.cohort_id !== filterCohort) return false;
+      return true;
+    });
+  }, [plans, searchQuery, filterState, filterCohort]);
+
+  // Overdue first (cost of delay), then by date; unscheduled last. Cheap
+  // enough not to memoise — a college has tens of plans, not thousands.
+  const sorted = [...filtered].sort((a, b) => {
+    const ao = isOverdue(a) ? 0 : 1;
+    const bo = isOverdue(b) ? 0 : 1;
+    if (ao !== bo) return ao - bo;
     if (!a.scheduled_date) return 1;
     if (!b.scheduled_date) return -1;
-    return new Date(a.scheduled_date).getTime() - new Date(b.scheduled_date).getTime();
+    return a.scheduled_date.localeCompare(b.scheduled_date);
   });
 
-  // Route status → canonical lesson tone (Approved is the DB alias for Published).
-  const statusTone = (status: string | null) =>
-    lessonStatusTone('lesson', status === 'Approved' ? 'Published' : status);
-  const statusLabel = (status: string | null) => (status === 'Approved' ? 'Published' : status ?? 'Unknown');
-
   const getCohortName = (cohortId: string | null) => {
-    if (!cohortId) return 'No cohort';
+    if (!cohortId) return null;
     return cohorts.find((c) => c.id === cohortId)?.name || 'Cohort missing';
   };
+  // college_lesson_plans.tutor_id → college_staff.id (the college row, not the
+  // auth uid) — checked against the FK.
   const getTutorName = (tutorId: string | null) => {
     if (!tutorId) return null;
     return staff.find((s) => s.id === tutorId)?.name || null;
   };
 
-  const isUpcoming = (date?: string | null) => {
-    if (!date) return false;
-    const lessonDate = new Date(date);
-    const today = new Date();
-    const weekFromNow = new Date();
-    weekFromNow.setDate(weekFromNow.getDate() + 7);
-    return lessonDate >= today && lessonDate <= weekFromNow;
-  };
-  const isPastUndelivered = (lesson: { scheduled_date: string | null; status: string | null }) =>
-    lesson.scheduled_date && new Date(lesson.scheduled_date) < new Date() && lesson.status !== 'Delivered';
-
-  const publishedCount = lessonPlans.filter(
-    (l) => l.status === 'Published' || l.status === 'Approved'
-  ).length;
+  const activeCohorts = cohorts.filter((c) => (c.status ?? '').toLowerCase() === 'active');
 
   return (
-    <PageFrame>
-      <motion.div variants={itemVariants}>
-        <PageHero
-          eyebrow="Curriculum · Lesson Plans"
-          title="Plans & delivery"
-          description={`${publishedCount} published lesson plan${publishedCount === 1 ? '' : 's'}.`}
-          tone="blue"
-          actions={
-            <button
-              onClick={() => navigate('/college?section=courses')}
-              className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap"
-              title="Pick a qualification and unit to generate a new lesson plan"
-            >
-              New plan →
-            </button>
-          }
-        />
-      </motion.div>
+    <>
+      <motion.section
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="space-y-3"
+      >
+        {plans.length > 0 && (
+          <HubKpiRow>
+            <HubKpi
+              accent
+              label="Ready to teach"
+              value={String(counts.ready)}
+              verdict={counts.ready > 0 ? 'Planned and approved' : 'Nothing marked ready'}
+              context={counts.delivered > 0 ? `${counts.delivered} delivered` : undefined}
+              onClick={() => setFilterState('ready')}
+            />
+            <HubKpi
+              label="Drafts"
+              value={String(counts.draft)}
+              verdict={counts.draft > 0 ? 'Finish and mark ready' : 'No drafts'}
+              onClick={() => setFilterState('draft')}
+            />
+            <HubKpi
+              label="Overdue"
+              value={String(overdueCount)}
+              sentiment={overdueCount > 0 ? 'bad' : 'neutral'}
+              verdict={
+                overdueCount > 0 ? 'Scheduled, never marked delivered' : 'Nothing slipped'
+              }
+            />
+            <HubKpi
+              label="Next 7 days"
+              value={String(upcomingCount)}
+              verdict={upcomingCount > 0 ? 'Scheduled this week' : 'Nothing scheduled'}
+            />
+          </HubKpiRow>
+        )}
 
-      <motion.div variants={itemVariants}>
-        <FilterBar
-          tabs={[
-            { value: 'all', label: 'All', count: lessonPlans.length },
-            { value: 'Draft', label: 'Draft', count: lessonPlans.filter((l) => l.status === 'Draft').length },
-            { value: 'Published', label: 'Published', count: publishedCount },
-            { value: 'Delivered', label: 'Delivered', count: lessonPlans.filter((l) => l.status === 'Delivered').length },
-          ]}
-          activeTab={filterStatus}
-          onTabChange={setFilterStatus}
-          search={searchQuery}
-          onSearchChange={setSearchQuery}
-          searchPlaceholder="Search title or objectives…"
-          actions={
-            <select
-              value={filterCohort}
-              onChange={(e) => setFilterCohort(e.target.value)}
-              className="h-10 px-3 bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-full text-[13px] text-white focus:outline-none focus:border-elec-yellow/60 touch-manipulation data-[state=open]:border-elec-yellow/60"
-            >
-              <option value="all">All Cohorts</option>
-              {cohorts
-                .filter((c) => c.status === 'Active')
-                .map((cohort) => (
-                  <option key={cohort.id} value={cohort.id}>
-                    {cohort.name}
-                  </option>
-                ))}
-            </select>
-          }
-        />
-      </motion.div>
-
-      {sortedLessons.length === 0 ? (
-        <EmptyState
-          title="No lesson plans found"
-          description="Try adjusting filters, or create a new lesson plan."
-        />
-      ) : (
+        {/* New plans start from a qualification unit — the generator lives
+            in the curriculum browser, so this is a navigation. */}
         <motion.div variants={itemVariants}>
-          <ListCard>
-            {sortedLessons.map((lesson) => {
-              const objectives = parseObjectives(lesson.objectives);
-              const upcoming = isUpcoming(lesson.scheduled_date);
-              const past = isPastUndelivered(lesson);
-              const tone = statusTone(lesson.status);
-
-              const cohortName = getCohortName(lesson.cohort_id);
-              const tutorName = getTutorName(lesson.tutor_id);
-              const subtitleParts = [cohortName, tutorName].filter(Boolean) as string[];
-              const openPlan = () => navigate(`/college/lessons/${lesson.id}`);
-
-              return (
-                <div
-                  key={lesson.id}
-                  className="group flex items-start gap-4 px-5 sm:px-6 py-5 hover:bg-[hsl(0_0%_15%)] transition-colors"
-                >
-                  <span
-                    aria-hidden
-                    className={cn(
-                      'w-[3px] self-stretch rounded-full shrink-0',
-                      upcoming
-                        ? 'bg-blue-400'
-                        : past
-                          ? 'bg-amber-400'
-                          : toneDot[tone]
-                    )}
-                  />
-                  <button
-                    type="button"
-                    onClick={openPlan}
-                    className="flex-1 min-w-0 text-left touch-manipulation"
-                  >
-                    <div className="flex items-baseline justify-between gap-2">
-                      <div className="min-w-0">
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <h3 className="text-[15px] font-medium text-white truncate">
-                            {lesson.title}
-                          </h3>
-                          {upcoming && <Pill tone="blue">Upcoming</Pill>}
-                          {past && <Pill tone="amber">Overdue</Pill>}
-                        </div>
-                        <div className="mt-0.5 text-[11.5px] text-white truncate">
-                          {subtitleParts.length > 0
-                            ? subtitleParts.join(' · ')
-                            : 'Unscheduled'}
-                        </div>
-                      </div>
-                    </div>
-
-                    {objectives.length > 0 && (
-                      <ul className="mt-3 space-y-1">
-                        {objectives.slice(0, 3).map((o, i) => (
-                          <li
-                            key={i}
-                            className="flex items-start gap-2 text-[12px] text-white leading-relaxed"
-                          >
-                            <span
-                              className="mt-[7px] h-1 w-1 rounded-full bg-elec-yellow/70 shrink-0"
-                              aria-hidden
-                            />
-                            <span className="flex-1">
-                              {o.text.length > 90
-                                ? o.text.slice(0, 90) + '…'
-                                : o.text}
-                              {o.acCodes.length > 0 && (
-                                <span className="ml-2 text-[10.5px] font-mono tabular-nums text-elec-yellow/80">
-                                  AC {o.acCodes.join(' · ')}
-                                </span>
-                              )}
-                            </span>
-                          </li>
-                        ))}
-                        {objectives.length > 3 && (
-                          <li className="ml-3 text-[11px] text-white">
-                            +{objectives.length - 3} more
-                          </li>
-                        )}
-                      </ul>
-                    )}
-
-                    <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white/65">
-                      <span className="tabular-nums">
-                        {lesson.duration_minutes ?? 0} min
-                      </span>
-                      {lesson.scheduled_date && (
-                        <span className="tabular-nums">
-                          {new Date(lesson.scheduled_date).toLocaleDateString('en-GB', {
-                            weekday: 'short',
-                            day: 'numeric',
-                            month: 'short',
-                          })}
-                        </span>
-                      )}
-                      <span className="tabular-nums">
-                        {lesson.resources?.length || 0} resources
-                      </span>
-                    </div>
-                  </button>
-
-                  <div className="flex items-center gap-1.5 shrink-0">
-                    <Pill tone={tone}>
-                      {statusLabel(lesson.status)}
-                    </Pill>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <button
-                          className="h-9 w-9 rounded-full flex items-center justify-center text-white hover:text-white hover:bg-white/[0.06] transition-colors touch-manipulation"
-                          aria-label="Options"
-                        >
-                          <span className="text-[15px] font-semibold tracking-[0.12em]">
-                            ⋯
-                          </span>
-                        </button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent
-                        align="end"
-                        className="bg-[hsl(0_0%_11%)] border border-white/[0.08] text-white min-w-[180px]"
-                      >
-                        <DropdownMenuItem
-                          className="h-11 touch-manipulation text-[13px]"
-                          onClick={openPlan}
-                        >
-                          Open plan
-                        </DropdownMenuItem>
-                        <DropdownMenuItem
-                          className="h-11 touch-manipulation text-[13px]"
-                          onClick={async () => {
-                            // Duplicate: clone every editable column, prefix
-                            // title with "Copy of", reset status to draft and
-                            // wipe the scheduled date so the assessor can
-                            // schedule the new copy independently.
-                            try {
-                              await addLessonPlan({
-                                college_id: lesson.college_id,
-                                title: `Copy of ${lesson.title}`,
-                                cohort_id: lesson.cohort_id,
-                                tutor_id: lesson.tutor_id,
-                                scheduled_date: null,
-                                duration_minutes: lesson.duration_minutes,
-                                objectives: lesson.objectives,
-                                content: lesson.content,
-                                resources: lesson.resources,
-                                status: 'draft',
-                              });
-                              toast({
-                                title: 'Lesson plan duplicated',
-                                description: `"Copy of ${lesson.title}" is now in your drafts.`,
-                              });
-                            } catch (e) {
-                              toast({
-                                title: 'Duplicate failed',
-                                description: (e as Error).message,
-                                variant: 'destructive',
-                              });
-                            }
-                          }}
-                        >
-                          Duplicate
-                        </DropdownMenuItem>
-                        <DropdownMenuItem
-                          className="h-11 touch-manipulation text-[13px]"
-                          onClick={async () => {
-                            await updateLessonPlan(lesson.id, { status: 'Delivered' });
-                            toast({ title: 'Marked as delivered', description: lesson.title });
-                          }}
-                        >
-                          Mark as delivered
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </div>
-                </div>
-              );
-            })}
-          </ListCard>
+          <button
+            type="button"
+            onClick={() => navigate('/college?section=courses')}
+            className={PRIMARY}
+          >
+            New plan
+          </button>
         </motion.div>
-      )}
-    </PageFrame>
+      </motion.section>
+
+      <motion.section
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="space-y-3"
+      >
+        <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
+          <HubSectionHeading>Plans</HubSectionHeading>
+          <span
+            className={cn(
+              'text-[11px] font-semibold tabular-nums',
+              overdueCount > 0 ? 'text-elec-yellow' : 'text-white'
+            )}
+          >
+            {filtered.length === plans.length
+              ? `${plans.length}`
+              : `${filtered.length} of ${plans.length}`}
+          </span>
+        </motion.div>
+
+        {plans.length > 0 && (
+          <>
+            <motion.div
+              variants={itemVariants}
+              className="flex flex-col gap-3 sm:flex-row sm:items-end sm:gap-4"
+            >
+              <input
+                type="search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search title or objectives"
+                aria-label="Search lesson plans"
+                className={SEARCH}
+              />
+              {activeCohorts.length > 0 && (
+                <select
+                  value={filterCohort}
+                  onChange={(e) => setFilterCohort(e.target.value)}
+                  aria-label="Filter by cohort"
+                  className={SELECT}
+                >
+                  <option value="all">All cohorts</option>
+                  {activeCohorts.map((cohort) => (
+                    <option key={cohort.id} value={cohort.id}>
+                      {cohort.name}
+                    </option>
+                  ))}
+                </select>
+              )}
+            </motion.div>
+
+            <motion.div
+              variants={itemVariants}
+              className="-mx-4 flex gap-2 overflow-x-auto px-4 hide-scrollbar sm:mx-0 sm:flex-wrap sm:px-0"
+            >
+              <button
+                type="button"
+                onClick={() => setFilterState('all')}
+                className={cn(CHIP, filterState === 'all' ? CHIP_ON : CHIP_OFF)}
+              >
+                All
+                <span className="text-[11px] tabular-nums opacity-70">{plans.length}</span>
+              </button>
+              {STATE_ORDER.filter((s) => s !== 'archived' || counts.archived > 0).map((s) => (
+                <button
+                  key={s}
+                  type="button"
+                  onClick={() => setFilterState(s)}
+                  className={cn(CHIP, filterState === s ? CHIP_ON : CHIP_OFF)}
+                >
+                  {STATE_LABEL[s]}
+                  <span className="text-[11px] tabular-nums opacity-70">{counts[s]}</span>
+                </button>
+              ))}
+            </motion.div>
+          </>
+        )}
+
+        {plans.length === 0 ? (
+          <motion.div variants={itemVariants}>
+            <EmptyState
+              title="No lesson plans yet"
+              description="Pick a qualification unit in the curriculum browser and generate the first plan from its criteria."
+            />
+          </motion.div>
+        ) : (
+          <motion.div variants={itemVariants} className={LIST_CARD}>
+            {sorted.length === 0 ? (
+              <p className="px-4 py-5 text-[12.5px] text-white sm:px-5">
+                Nothing matches — clear the search or filters.
+              </p>
+            ) : (
+              <ul className="divide-y divide-white/[0.10]">
+                {sorted.map((lesson) => {
+                  const objectives = parseObjectives(lesson.objectives);
+                  const state = lessonState(lesson.status);
+                  const overdue = isOverdue(lesson);
+                  const upcoming = isUpcoming(lesson);
+                  const openPlan = () => navigate(`/college/lessons/${lesson.id}`);
+                  const openSlides = () => navigate(`/college/lessons/${lesson.id}/slides`);
+
+                  const reason = [
+                    overdue ? 'Overdue' : upcoming ? 'This week' : null,
+                    getCohortName(lesson.cohort_id),
+                    getTutorName(lesson.tutor_id),
+                    objectives.length > 0
+                      ? `${objectives.length} objective${objectives.length === 1 ? '' : 's'}`
+                      : null,
+                    lesson.duration_minutes ? `${lesson.duration_minutes} min` : null,
+                  ]
+                    .filter(Boolean)
+                    .join(' · ');
+
+                  const trailing = lesson.scheduled_date
+                    ? [
+                        fmtDay(lesson.scheduled_date),
+                        lesson.scheduled_start_time?.slice(0, 5) ?? null,
+                      ]
+                        .filter(Boolean)
+                        .join(' ')
+                    : STATE_LABEL[state];
+
+                  return (
+                    <li key={lesson.id} className="flex items-center gap-1 pr-2 sm:pr-3">
+                      <button
+                        type="button"
+                        onClick={openPlan}
+                        className="flex min-w-0 flex-1 items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5"
+                      >
+                        <span
+                          aria-hidden="true"
+                          className={cn(
+                            'h-8 w-[3px] shrink-0 rounded-full',
+                            overdue ? 'bg-elec-yellow' : 'bg-white/[0.25]'
+                          )}
+                        />
+                        <span className="min-w-0 flex-1">
+                          <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+                            {lesson.title}
+                          </span>
+                          <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
+                            {reason || STATE_LABEL[state]}
+                          </span>
+                        </span>
+                        <span
+                          className={cn(
+                            'shrink-0 text-right text-[13px] font-semibold tabular-nums',
+                            overdue ? 'text-elec-yellow' : 'text-white'
+                          )}
+                        >
+                          <span className="block">{trailing}</span>
+                          {lesson.scheduled_date && (
+                            <span className="block text-[11px] font-medium">
+                              {STATE_LABEL[state]}
+                            </span>
+                          )}
+                        </span>
+                        <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
+                      </button>
+
+                      {/* Slide deck — the deck page owns generation, so this
+                          is a plain navigation whether or not a deck exists. */}
+                      <button
+                        type="button"
+                        onClick={openSlides}
+                        className="hidden h-11 shrink-0 items-center px-3 text-[12.5px] font-semibold text-white transition-colors touch-manipulation hover:text-elec-yellow sm:flex"
+                        aria-label={`Slides for ${lesson.title}`}
+                      >
+                        Slides
+                      </button>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <button
+                            type="button"
+                            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white transition-colors touch-manipulation hover:bg-white/[0.06]"
+                            aria-label={`Options for ${lesson.title}`}
+                          >
+                            <span className="text-[18px] leading-none">⋯</span>
+                          </button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end" className="min-w-[180px]">
+                          <DropdownMenuItem className="h-11 touch-manipulation" onClick={openPlan}>
+                            Open plan
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            className="h-11 touch-manipulation"
+                            onClick={openSlides}
+                          >
+                            Slides
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            className="h-11 touch-manipulation"
+                            onClick={async () => {
+                              // Duplicate: clone every editable column, prefix
+                              // title with "Copy of", reset status to draft and
+                              // wipe the scheduled date so the assessor can
+                              // schedule the new copy independently.
+                              try {
+                                await addLessonPlan({
+                                  college_id: lesson.college_id,
+                                  title: `Copy of ${lesson.title}`,
+                                  cohort_id: lesson.cohort_id,
+                                  tutor_id: lesson.tutor_id,
+                                  scheduled_date: null,
+                                  duration_minutes: lesson.duration_minutes,
+                                  objectives: lesson.objectives,
+                                  content: lesson.content,
+                                  resources: lesson.resources,
+                                  status: 'draft',
+                                });
+                                toast({
+                                  title: 'Lesson plan duplicated',
+                                  description: `"Copy of ${lesson.title}" is now in your drafts.`,
+                                });
+                              } catch (e) {
+                                toast({
+                                  title: 'Duplicate failed',
+                                  description: (e as Error).message,
+                                  variant: 'destructive',
+                                });
+                              }
+                            }}
+                          >
+                            Duplicate
+                          </DropdownMenuItem>
+                          {state !== 'delivered' && (
+                            <DropdownMenuItem
+                              className="h-11 touch-manipulation"
+                              onClick={async () => {
+                                try {
+                                  // Lowercase — the DB CHECK constraint rejects 'Delivered'.
+                                  await updateLessonPlan(lesson.id, { status: 'delivered' });
+                                  toast({ title: 'Marked as delivered', description: lesson.title });
+                                } catch (e) {
+                                  toast({
+                                    title: 'Could not update',
+                                    description: (e as Error).message,
+                                    variant: 'destructive',
+                                  });
+                                }
+                              }}
+                            >
+                              Mark as delivered
+                            </DropdownMenuItem>
+                          )}
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+          </motion.div>
+        )}
+      </motion.section>
+    </>
   );
 }

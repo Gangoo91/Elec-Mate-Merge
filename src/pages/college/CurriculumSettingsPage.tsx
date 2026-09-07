@@ -1,18 +1,26 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { PageFrame, PageHero, LoadingState, itemVariants } from '@/components/college/primitives';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { inputCn, labelCn, textareaCn } from '@/components/forms/fieldStyles';
+import { containerVariants, itemVariants } from '@/components/college/primitives';
+import { HubPage, HubBody, HubMasthead, HubSectionHeading } from '@/components/hub/HubPrimitives';
 
 /* ==========================================================================
-   CurriculumSettingsPage — college-level configuration that shapes every
-   AI lesson plan we generate:
+   CurriculumSettingsPage — /college/settings/curriculum
+
+   College-level configuration that shapes every AI lesson plan we generate:
      - British Values embedding (Ofsted/DfE mandate)
      - Stretch & Challenge tasks
      - Inclusive Practice strategies
      - Optional Prevent lead + DSL names for safeguarding wording
+
+   Rebuilt on the shared hub shell. The old page drew its own hero, its own
+   back link at white/65, boxed inputs on hsl(0 0% 10%) and a volt-tinted
+   toggle card — all four are dialects this app has retired. Masthead →
+   two cards → one solid volt Save.
    ========================================================================== */
 
 interface Settings {
@@ -35,8 +43,10 @@ const DEFAULTS: Settings = {
   additional_frameworks: null,
 };
 
+const BACK_TO = '/college?section=collegesettings';
+const PUSH_CONTEXT = 'Get notified about marking, off-the-job hours and learners who need you';
+
 export default function CurriculumSettingsPage() {
-  const navigate = useNavigate();
   const { toast } = useToast();
   const [collegeId, setCollegeId] = useState<string | null>(null);
   const [settings, setSettings] = useState<Settings>(DEFAULTS);
@@ -96,140 +106,173 @@ export default function CurriculumSettingsPage() {
     }
   };
 
-  if (loading) {
-    return (
-      <PageFrame>
-        <LoadingState />
-      </PageFrame>
-    );
-  }
-
-  if (!collegeId) {
-    return (
-      <PageFrame>
-        <div className="text-white text-[13px]">
-          Not linked to a college. Ask your admin to add you to the staff roster.
-        </div>
-      </PageFrame>
-    );
-  }
-
   return (
-    <PageFrame>
-      <motion.div variants={itemVariants}>
-        <button
-          onClick={() => navigate(-1)}
-          className="text-[12px] font-medium text-white/65 hover:text-white transition-colors"
-        >
-          ← Back
-        </button>
-      </motion.div>
-
-      <motion.div variants={itemVariants}>
-        <PageHero
-          eyebrow="College · Curriculum"
-          title="Lesson plan settings"
-          description="Shape what the AI must include in every generated lesson plan. Defaults match Ofsted and DfE expectations for FE providers in England."
-          tone="yellow"
-        />
-      </motion.div>
-
-      {/* What the AI includes */}
-      <motion.div variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Compliance sections"
-          title="What the AI must include"
-        />
-
-        <ToggleCard
-          label="British Values"
-          hint="Democracy, rule of law, individual liberty, mutual respect, tolerance of faiths & beliefs — embedded in specific activities. Required by the Prevent duty."
-          on={settings.include_british_values}
-          onToggle={(v) => setSettings((s) => ({ ...s, include_british_values: v }))}
-        />
-        <ToggleCard
-          label="Stretch & challenge"
-          hint="Extension tasks aimed at higher-attaining learners, using the top Bloom levels (analyse / evaluate / create)."
-          on={settings.include_stretch_challenge}
-          onToggle={(v) => setSettings((s) => ({ ...s, include_stretch_challenge: v }))}
-        />
-        <ToggleCard
-          label="Inclusive practice"
-          hint="Concrete strategies per need profile — SEND, EAL, EHCP, neurodivergence, prior-attainment spread. Named moves, not platitudes."
-          on={settings.include_inclusive_practice}
-          onToggle={(v) => setSettings((s) => ({ ...s, include_inclusive_practice: v }))}
-        />
-      </motion.div>
-
-      {/* Safeguarding context */}
-      <motion.div variants={itemVariants} className="space-y-3">
-        <SectionHeader
-          eyebrow="Safeguarding context"
-          title="Names the AI can reference"
-        />
-        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden divide-y divide-white/[0.06]">
-          <TextField
-            label="Designated safeguarding lead (DSL)"
-            placeholder="e.g. Jane Smith"
-            value={settings.dsl_name ?? ''}
-            onChange={(v) => setSettings((s) => ({ ...s, dsl_name: v || null }))}
-          />
-          <TextField
-            label="Prevent lead"
-            placeholder="e.g. Mark Jones"
-            value={settings.prevent_lead_name ?? ''}
-            onChange={(v) => setSettings((s) => ({ ...s, prevent_lead_name: v || null }))}
-          />
-          <TextAreaField
-            label="Safeguarding notes"
-            placeholder="Anything the AI should reference in wording — e.g. referral pathways, escalation, specific college policy."
-            value={settings.safeguarding_notes ?? ''}
-            onChange={(v) => setSettings((s) => ({ ...s, safeguarding_notes: v || null }))}
-          />
-          <TextAreaField
-            label="Additional frameworks"
-            placeholder="Other frameworks to reference — e.g. Gatsby Benchmarks, PSHE, SMSC, Careers Education, specific awarding body guidance."
-            value={settings.additional_frameworks ?? ''}
-            onChange={(v) =>
-              setSettings((s) => ({ ...s, additional_frameworks: v || null }))
-            }
-          />
-        </div>
-      </motion.div>
-
-      {/* Save bar */}
-      <motion.div variants={itemVariants} className="sticky bottom-4 z-20">
-        <div className="bg-[hsl(0_0%_10%)]/95 backdrop-blur-md border border-white/[0.1] rounded-2xl px-5 py-4 flex items-center justify-between gap-4">
-          <div className="text-[12px] text-white">
-            Changes apply to the next lesson plan generated.
+    <HubPage>
+      <HubMasthead section="College" title="Lesson plan settings" backTo={BACK_TO} />
+      <HubBody pushContext={PUSH_CONTEXT}>
+        {loading ? (
+          <div className="flex items-center justify-center py-24">
+            <div className="h-6 w-6 animate-spin rounded-full border-2 border-elec-yellow border-t-transparent" />
           </div>
-          <button
-            onClick={save}
-            disabled={saving}
-            className="h-11 px-6 rounded-full bg-elec-yellow hover:bg-elec-yellow/90 text-black text-[13px] font-medium transition-colors disabled:bg-white/[0.08] disabled:text-white/70"
-          >
-            {saving ? 'Saving…' : 'Save settings'}
-          </button>
-        </div>
-      </motion.div>
-    </PageFrame>
+        ) : !collegeId ? (
+          <div className={cn('rounded-2xl border border-elec-yellow/35 px-4 py-5 sm:px-5', CARD_SURFACE)}>
+            <p className="text-[13px] leading-relaxed text-white">
+              You are not linked to a college yet. Ask your admin to add you to the staff roster.
+            </p>
+          </div>
+        ) : (
+          <>
+            <p className="-mb-4 max-w-prose text-[13px] leading-relaxed text-white sm:-mb-6">
+              What the AI must include in every generated lesson plan. Defaults match Ofsted and
+              DfE expectations for FE providers in England.
+            </p>
+
+            {/* What the AI includes */}
+            <motion.section
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="space-y-3"
+            >
+              <HubSectionHeading>What the AI must include</HubSectionHeading>
+              <motion.div
+                variants={itemVariants}
+                className={cn(
+                  '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
+                  CARD_SURFACE
+                )}
+              >
+                <ul className="divide-y divide-white/[0.10]">
+                  <ToggleRow
+                    label="British Values"
+                    hint="Democracy, rule of law, individual liberty, mutual respect, tolerance of faiths and beliefs — embedded in specific activities. Required by the Prevent duty."
+                    on={settings.include_british_values}
+                    onToggle={(v) => setSettings((s) => ({ ...s, include_british_values: v }))}
+                  />
+                  <ToggleRow
+                    label="Stretch and challenge"
+                    hint="Extension tasks aimed at higher-attaining learners, using the top Bloom levels (analyse, evaluate, create)."
+                    on={settings.include_stretch_challenge}
+                    onToggle={(v) => setSettings((s) => ({ ...s, include_stretch_challenge: v }))}
+                  />
+                  <ToggleRow
+                    label="Inclusive practice"
+                    hint="Concrete strategies per need profile — SEND, EAL, EHCP, neurodivergence, prior-attainment spread. Named moves, not platitudes."
+                    on={settings.include_inclusive_practice}
+                    onToggle={(v) => setSettings((s) => ({ ...s, include_inclusive_practice: v }))}
+                  />
+                </ul>
+              </motion.div>
+            </motion.section>
+
+            {/* Safeguarding context */}
+            <motion.section
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="space-y-3"
+            >
+              <HubSectionHeading>Names the AI can reference</HubSectionHeading>
+              <motion.div
+                variants={itemVariants}
+                className={cn(
+                  '-mx-4 space-y-5 border-y border-elec-yellow/35 px-4 py-5 sm:mx-0 sm:rounded-2xl sm:border-x sm:px-5',
+                  CARD_SURFACE
+                )}
+              >
+                <div className="grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-2">
+                  <div>
+                    <label htmlFor="dsl-name" className={labelCn}>
+                      Designated safeguarding lead (DSL)
+                    </label>
+                    <input
+                      id="dsl-name"
+                      type="text"
+                      value={settings.dsl_name ?? ''}
+                      onChange={(e) => setSettings((s) => ({ ...s, dsl_name: e.target.value || null }))}
+                      placeholder="e.g. Jane Smith"
+                      className={inputCn}
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="prevent-lead" className={labelCn}>
+                      Prevent lead
+                    </label>
+                    <input
+                      id="prevent-lead"
+                      type="text"
+                      value={settings.prevent_lead_name ?? ''}
+                      onChange={(e) =>
+                        setSettings((s) => ({ ...s, prevent_lead_name: e.target.value || null }))
+                      }
+                      placeholder="e.g. Mark Jones"
+                      className={inputCn}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label htmlFor="safeguarding-notes" className={labelCn}>
+                    Safeguarding notes
+                  </label>
+                  <textarea
+                    id="safeguarding-notes"
+                    rows={3}
+                    value={settings.safeguarding_notes ?? ''}
+                    onChange={(e) =>
+                      setSettings((s) => ({ ...s, safeguarding_notes: e.target.value || null }))
+                    }
+                    placeholder="Anything the AI should reference in wording — referral pathways, escalation, specific college policy."
+                    className={textareaCn}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="additional-frameworks" className={labelCn}>
+                    Additional frameworks
+                  </label>
+                  <textarea
+                    id="additional-frameworks"
+                    rows={3}
+                    value={settings.additional_frameworks ?? ''}
+                    onChange={(e) =>
+                      setSettings((s) => ({ ...s, additional_frameworks: e.target.value || null }))
+                    }
+                    placeholder="Other frameworks to reference — Gatsby Benchmarks, PSHE, SMSC, Careers Education, specific awarding body guidance."
+                    className={textareaCn}
+                  />
+                </div>
+              </motion.div>
+            </motion.section>
+
+            {/* Save — the one solid volt control on the page. Sticky on phones
+                so a tutor who has scrolled through four fields does not have
+                to scroll back to commit. */}
+            <div className="sticky bottom-0 z-10 -mx-4 flex flex-col gap-3 border-t border-white/[0.06] bg-elec-dark/95 px-4 py-3 backdrop-blur-sm sm:mx-0 sm:flex-row sm:items-center sm:justify-between sm:border-0 sm:bg-transparent sm:px-0 sm:py-0 sm:backdrop-blur-none">
+              <span className="text-[12px] text-white">
+                Changes apply to the next lesson plan generated.
+              </span>
+              <button
+                type="button"
+                onClick={save}
+                disabled={saving}
+                className="h-11 w-full rounded-full bg-elec-yellow px-6 text-[13px] font-semibold text-black transition-colors touch-manipulation hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white sm:w-auto"
+              >
+                {saving ? 'Saving…' : 'Save settings'}
+              </button>
+            </div>
+          </>
+        )}
+      </HubBody>
+    </HubPage>
   );
 }
 
-function SectionHeader({ eyebrow, title }: { eyebrow: string; title: string }) {
-  return (
-    <div>
-      <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-        {eyebrow}
-      </div>
-      <h2 className="mt-1.5 text-xl sm:text-[22px] font-semibold text-white tracking-tight leading-tight">
-        {title}
-      </h2>
-    </div>
-  );
-}
-
-function ToggleCard({
+/**
+ * One row of the include-list. The whole row is the control (44px+), the
+ * switch on the right shows state. Solid volt on the switch only — the old
+ * card washed its whole face in volt/[0.04] when on, which is the khaki
+ * tint the design forbids.
+ */
+function ToggleRow({
   label,
   hint,
   on,
@@ -241,96 +284,33 @@ function ToggleCard({
   onToggle: (v: boolean) => void;
 }) {
   return (
-    <button
-      type="button"
-      onClick={() => onToggle(!on)}
-      className={cn(
-        'w-full text-left rounded-2xl px-5 py-5 border transition-colors',
-        on
-          ? 'border-elec-yellow/30 bg-elec-yellow/[0.04]'
-          : 'border-white/[0.08] bg-[hsl(0_0%_12%)] hover:border-white/[0.18]'
-      )}
-    >
-      <div className="flex items-start gap-4">
-        <div
+    <li>
+      <button
+        type="button"
+        role="switch"
+        aria-checked={on}
+        onClick={() => onToggle(!on)}
+        className="flex w-full items-start gap-4 px-4 py-4 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5"
+      >
+        <span className="min-w-0 flex-1">
+          <span className="block text-[14px] font-semibold leading-tight text-white">{label}</span>
+          <span className="mt-1 block text-[12.5px] leading-relaxed text-white">{hint}</span>
+        </span>
+        <span
+          aria-hidden
           className={cn(
-            'relative h-6 w-11 rounded-full shrink-0 mt-0.5 transition-colors',
-            on ? 'bg-elec-yellow' : 'bg-white/[0.1]'
+            'relative mt-0.5 h-6 w-11 shrink-0 rounded-full transition-colors',
+            on ? 'bg-elec-yellow' : 'bg-white/[0.14]'
           )}
         >
           <span
             className={cn(
-              'absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform',
+              'absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform',
               on && 'translate-x-5'
             )}
           />
-        </div>
-        <div className="flex-1 min-w-0">
-          <div
-            className={cn(
-              'text-[14px] font-semibold',
-              on ? 'text-elec-yellow' : 'text-white'
-            )}
-          >
-            {label}
-          </div>
-          <p className="mt-1 text-[12.5px] text-white leading-relaxed">{hint}</p>
-        </div>
-      </div>
-    </button>
-  );
-}
-
-function TextField({
-  label,
-  placeholder,
-  value,
-  onChange,
-}: {
-  label: string;
-  placeholder: string;
-  value: string;
-  onChange: (v: string) => void;
-}) {
-  return (
-    <div className="px-5 sm:px-6 py-4">
-      <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white mb-2">
-        {label}
-      </div>
-      <input
-        type="text"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder}
-        className="h-11 w-full bg-[hsl(0_0%_10%)] border border-white/[0.08] rounded-xl px-4 text-[13.5px] text-white placeholder:text-white focus:outline-none focus:border-elec-yellow/60"
-      />
-    </div>
-  );
-}
-
-function TextAreaField({
-  label,
-  placeholder,
-  value,
-  onChange,
-}: {
-  label: string;
-  placeholder: string;
-  value: string;
-  onChange: (v: string) => void;
-}) {
-  return (
-    <div className="px-5 sm:px-6 py-4">
-      <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white mb-2">
-        {label}
-      </div>
-      <textarea
-        rows={3}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder}
-        className="w-full bg-[hsl(0_0%_10%)] border border-white/[0.08] rounded-xl px-4 py-3 text-[13.5px] text-white placeholder:text-white focus:outline-none focus:border-elec-yellow/60 resize-y"
-      />
-    </div>
+        </span>
+      </button>
+    </li>
   );
 }

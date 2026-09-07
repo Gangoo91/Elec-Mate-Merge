@@ -17,6 +17,27 @@ export function generateRequestId(): string {
   return `req_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
 }
 
+const ABORT_PATTERN = /AbortError|Fetch is aborted|signal timed out|Request was aborted|TimeoutError/i;
+
+function abortReason(error: unknown): string {
+  if (!error || typeof error !== 'object') return String(error ?? '');
+  const e = error as { name?: string; message?: string; hint?: string; details?: string };
+  return [e.name, e.message, e.hint, e.details].filter(Boolean).join(' | ');
+}
+
+/** True for the browser / Supabase abort and timeout shapes — see logger.api().error. */
+export function isAbortLike(error: unknown): boolean {
+  if (!error) return false;
+  if (
+    typeof DOMException !== 'undefined' &&
+    error instanceof DOMException &&
+    (error.name === 'AbortError' || error.name === 'TimeoutError')
+  ) {
+    return true;
+  }
+  return ABORT_PATTERN.test(abortReason(error));
+}
+
 /**
  * Logger utility for consistent logging across the application
  */
@@ -91,6 +112,22 @@ export const logger = {
     },
     error: (error: any, context?: Record<string, unknown>) => {
       console.error(`[API] ${endpoint} failed`, { requestId, error, ...context });
+      // The Supabase client aborts any request after 30s (client.ts) and the
+      // browser aborts in-flight fetches on navigation or app backgrounding.
+      // Those arrive here as a PostgrestError-shaped object whose message is
+      // "AbortError: Fetch is aborted" — a dead connection on a phone, not a
+      // server fault. Reporting them as exceptions made company_profiles/fetch
+      // a 27-event, 10-user "error" (Sentry 58/A8) nobody could act on. The
+      // Sentry beforeSend downgrade never saw them because the abort text sits
+      // on the nested object, not on the exception message.
+      if (isAbortLike(error)) {
+        addBreadcrumb(`API call aborted: ${endpoint}`, 'api', {
+          requestId,
+          reason: abortReason(error),
+          ...context,
+        });
+        return;
+      }
       if (error instanceof Error) {
         captureError(error, { endpoint, requestId, ...context });
       } else {

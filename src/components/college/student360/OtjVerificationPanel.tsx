@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { supabase } from '@/integrations/supabase/client';
 import { EvidenceImage } from '@/components/shared/EvidenceImage';
 import { openEvidence } from '@/lib/evidenceUrl';
 import { fmtHours, fmtRel } from '@/lib/format';
+import { textareaCn } from '@/components/forms/fieldStyles';
 import {
   useStudentOtjVerification,
   type OtjEntryRow,
@@ -77,12 +79,6 @@ const VERDICT_LABEL: Record<AiVerdict['verdict'], string> = {
   recommend_reject: 'AI: would return this',
 };
 
-const VERDICT_TONE: Record<AiVerdict['verdict'], string> = {
-  recommend_verify: 'border-emerald-400/30 bg-emerald-500/[0.06] text-emerald-200',
-  recommend_question: 'border-amber-400/30 bg-amber-500/[0.06] text-amber-200',
-  recommend_reject: 'border-rose-400/30 bg-rose-500/[0.06] text-rose-200',
-};
-
 /* ==========================================================================
    OtjVerificationPanel — tutor-side. Sits inside SectionApprenticeOtj on
    Student 360. Three jobs:
@@ -91,13 +87,19 @@ const VERDICT_TONE: Record<AiVerdict['verdict'], string> = {
         apprentice-submitted / tutor-recorded / employer-attested) so the
         tutor can see at a glance where the hours come from.
      2. Pending verifications — the apprentice's submitted work-based OTJ
-        entries with description, photos, units, awaiting one-click
-        Verify or Reject (with rationale prompt).
-     3. Returned-to-apprentice list — recently rejected entries the
+        entries with description, photos, units, awaiting one-tap
+        Verify or Return (with a reason).
+     3. Returned-to-apprentice list — recently returned entries the
         apprentice can resubmit.
 
-   Pairs with the existing SectionApprenticeOtj timeline below — this panel
-   is the *action surface* and the timeline is the *history view*.
+   This panel is the *action surface*; the timeline beneath it is the
+   *history view*.
+
+   Colour: "Verify hours" is the one solid volt control in the section —
+   it is the action the panel exists for. "Return" is neutral, and only the
+   word "Returned" on an already-returned entry is red, because that is the
+   one genuine problem state on this card. The AI's recommendation is advice,
+   not state, so it reads in white.
    ========================================================================== */
 
 const SOURCE_KIND_LABEL: Record<SourceKind, string> = {
@@ -105,13 +107,6 @@ const SOURCE_KIND_LABEL: Record<SourceKind, string> = {
   apprentice_submitted: 'Apprentice-submitted',
   tutor_recorded: 'Tutor-recorded',
   employer_attested: 'Employer-attested',
-};
-
-const SOURCE_KIND_DOT: Record<SourceKind, string> = {
-  in_app: 'bg-blue-400',
-  apprentice_submitted: 'bg-emerald-400',
-  tutor_recorded: 'bg-amber-400',
-  employer_attested: 'bg-purple-400',
 };
 
 const ACTIVITY_LABEL: Record<string, string> = {
@@ -131,6 +126,13 @@ const ACTIVITY_LABEL: Record<string, string> = {
   other: 'Other',
 };
 
+const CARD = cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE);
+const CARD_TITLE = 'text-[13px] font-semibold text-white';
+const CHIP =
+  'inline-flex h-6 items-center rounded-md border border-white/[0.14] px-1.5 text-[10.5px] font-medium tabular-nums text-white';
+const NEUTRAL_BTN =
+  'h-11 flex-1 rounded-lg border border-white/[0.12] bg-white/[0.06] text-[12.5px] font-semibold text-white transition-colors touch-manipulation hover:bg-white/[0.10] disabled:opacity-50';
+
 interface Props {
   studentUserId: string | null;
 }
@@ -145,52 +147,46 @@ export function OtjVerificationPanel({ studentUserId }: Props) {
   const showPending = hook.pending_apprentice.length > 0;
 
   return (
-    <div className="space-y-3 sm:space-y-4">
+    <div className="space-y-3">
       {/* Tri-source verified-hours strip */}
-      <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-4 sm:px-5 py-4">
-        <div className="flex items-baseline justify-between gap-3 flex-wrap">
-          <div className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-white/95">
-            Verified hours by source
-          </div>
-          <div className="text-[12px] text-white/85 tabular-nums">
-            {fmtHours(hook.stats.verified_minutes)} total
+      <div className={cn(CARD, 'px-4 py-4 sm:px-5')}>
+        <div className="flex items-baseline justify-between gap-3">
+          <div className={CARD_TITLE}>Verified hours by source</div>
+          <div className="text-[15px] font-semibold tabular-nums text-white">
+            {fmtHours(hook.stats.verified_minutes)}
           </div>
         </div>
-        <ul className="mt-3 space-y-2">
+        <ul className="mt-3 space-y-2.5">
           {(
-            ['apprentice_submitted', 'tutor_recorded', 'employer_attested', 'in_app'] as SourceKind[]
+            [
+              'apprentice_submitted',
+              'tutor_recorded',
+              'employer_attested',
+              'in_app',
+            ] as SourceKind[]
           ).map((kind) => {
             const b = hook.stats.by_source_kind[kind];
             const verified = b.verified_minutes;
             const total = b.minutes;
             const pct = total > 0 ? Math.round((verified / total) * 100) : 0;
             const widthPct =
-              hook.stats.verified_minutes > 0
-                ? (verified / hook.stats.verified_minutes) * 100
-                : 0;
+              hook.stats.verified_minutes > 0 ? (verified / hook.stats.verified_minutes) * 100 : 0;
             return (
               <li key={kind}>
-                <div className="flex items-center justify-between text-[11.5px]">
-                  <div className="flex items-center gap-2">
-                    <span
-                      className={cn('inline-block h-1.5 w-1.5 rounded-full', SOURCE_KIND_DOT[kind])}
-                    />
-                    <span className="text-white/90">{SOURCE_KIND_LABEL[kind]}</span>
-                    <span className="text-white/65 tabular-nums">{b.entries}</span>
+                <div className="flex items-center justify-between gap-3 text-[12px] text-white">
+                  <div className="flex min-w-0 items-center gap-2">
+                    <span className="truncate">{SOURCE_KIND_LABEL[kind]}</span>
+                    <span className="tabular-nums">{b.entries}</span>
                   </div>
-                  <span className="text-white/95 tabular-nums">
-                    {fmtHours(verified)}
-                    {total > 0 && verified < total && (
-                      <span className="text-white/55"> / {fmtHours(total)}</span>
-                    )}
-                    {total > 0 && (
-                      <span className="ml-1.5 text-white/55">{pct}%</span>
-                    )}
+                  <span className="tabular-nums">
+                    <span className="font-semibold">{fmtHours(verified)}</span>
+                    {total > 0 && verified < total && <span> / {fmtHours(total)}</span>}
+                    {total > 0 && <span className="ml-1.5">{pct}%</span>}
                   </span>
                 </div>
-                <div className="mt-1 h-1 rounded-full bg-white/[0.04] overflow-hidden">
+                <div className="mt-1 h-1 overflow-hidden rounded-full bg-white/[0.10]">
                   <div
-                    className={cn('h-full rounded-full transition-all duration-500', SOURCE_KIND_DOT[kind])}
+                    className="h-full rounded-full bg-elec-yellow transition-all duration-500"
                     style={{ width: `${widthPct}%` }}
                   />
                 </div>
@@ -201,18 +197,23 @@ export function OtjVerificationPanel({ studentUserId }: Props) {
       </div>
 
       {/* Pending verifications */}
-      {showPending && (
+      {showPending ? (
         <PendingVerifications
           rows={hook.pending_apprentice}
           onVerify={hook.verify}
           onReject={hook.reject}
         />
+      ) : (
+        <div className={cn(CARD, 'px-4 py-3 sm:px-5')}>
+          <div className={CARD_TITLE}>
+            Awaiting your sign-off
+            <span className="ml-2 font-normal">Nothing outstanding</span>
+          </div>
+        </div>
       )}
 
       {/* Recently returned to apprentice */}
-      {showRejected && (
-        <RejectedHistory rows={hook.rejected_apprentice.slice(0, 4)} />
-      )}
+      {showRejected && <RejectedHistory rows={hook.rejected_apprentice.slice(0, 4)} />}
     </div>
   );
 }
@@ -227,22 +228,18 @@ function PendingVerifications({
   onReject: (id: string, rationale: string) => Promise<void>;
 }) {
   return (
-    <div className="rounded-2xl border border-amber-400/25 bg-amber-500/[0.04] overflow-hidden">
-      <div className="px-4 sm:px-5 py-4 sm:py-5">
-        <div className="flex items-baseline justify-between gap-3 flex-wrap">
-          <div className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-amber-300">
-            Pending verification
-          </div>
-          <span className="text-[10.5px] tabular-nums text-amber-200/95">
-            {rows.length} {rows.length === 1 ? 'submission' : 'submissions'} awaiting your sign-off
-          </span>
-        </div>
-        <ul className="mt-3 space-y-3">
-          {rows.map((r) => (
-            <PendingRow key={r.id} row={r} onVerify={onVerify} onReject={onReject} />
-          ))}
-        </ul>
+    <div className={cn(CARD, 'border-elec-yellow/70')}>
+      <div className="flex items-center justify-between gap-3 border-b border-white/[0.10] px-4 py-3 sm:px-5">
+        <div className={CARD_TITLE}>Awaiting your sign-off</div>
+        <span className="text-[12px] font-semibold tabular-nums text-elec-yellow">
+          {rows.length} {rows.length === 1 ? 'submission' : 'submissions'}
+        </span>
       </div>
+      <ul className="divide-y divide-white/[0.10]">
+        {rows.map((r) => (
+          <PendingRow key={r.id} row={r} onVerify={onVerify} onReject={onReject} />
+        ))}
+      </ul>
     </div>
   );
 }
@@ -319,24 +316,18 @@ function PendingRow({
   };
 
   const photos = row.evidence_urls ?? (row.evidence_url ? [row.evidence_url] : []);
+  const canReturn = rationale.trim().length > 0;
 
   return (
-    <li className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-3.5">
-      <div className="flex items-baseline justify-between gap-3">
-        <div className="min-w-0 flex-1">
-          <div className="text-[10.5px] uppercase tracking-[0.14em] text-white/85">
-            {ACTIVITY_LABEL[row.activity_type] ?? row.activity_type} ·{' '}
-            <span className="tabular-nums">{fmtHours(row.duration_minutes)}</span> ·{' '}
-            <span>{fmtRel(row.activity_date)}</span>
-          </div>
-          <div className="mt-0.5 text-[14px] font-medium text-white leading-snug">
-            {row.title}
-          </div>
-        </div>
+    <li className="px-4 py-4 sm:px-5">
+      <div className="text-[12px] tabular-nums text-white">
+        {ACTIVITY_LABEL[row.activity_type] ?? row.activity_type} · {fmtHours(row.duration_minutes)}{' '}
+        · {fmtRel(row.activity_date)}
       </div>
+      <div className="mt-0.5 text-[14px] font-semibold leading-snug text-white">{row.title}</div>
 
       {row.description && (
-        <p className="mt-2 text-[12.5px] text-white/95 leading-snug whitespace-pre-wrap">
+        <p className="mt-2 whitespace-pre-wrap text-[12.5px] leading-snug text-white">
           {row.description}
         </p>
       )}
@@ -345,16 +336,12 @@ function PendingRow({
           supervisor flagged at sign-off so the tutor sees it without
           digging. Only shown for employer-attested rows. */}
       {row.source_kind === 'employer_attested' && row.attestation_comment && (
-        <div className="mt-2 rounded-lg border border-purple-400/30 bg-purple-500/[0.06] px-3 py-2">
-          <div className="text-[9.5px] font-medium uppercase tracking-[0.16em] text-purple-200/85">
+        <div className="mt-2 border-l-2 border-white/[0.25] pl-3">
+          <div className="text-[12px] font-semibold text-white">
             Employer comment
-            {row.attested_by_name && (
-              <span className="ml-1.5 normal-case text-white/55 tracking-normal">
-                — {row.attested_by_name}
-              </span>
-            )}
+            {row.attested_by_name && <span className="font-normal"> — {row.attested_by_name}</span>}
           </div>
-          <p className="mt-1 text-[12px] text-white/90 leading-snug whitespace-pre-wrap">
+          <p className="mt-0.5 whitespace-pre-wrap text-[12px] leading-snug text-white">
             {row.attestation_comment}
           </p>
         </div>
@@ -363,44 +350,30 @@ function PendingRow({
       {/* AI verdict — pre-grade so the tutor knows what to spot-check. */}
       {(verdictLoading || verdict || verdictError) && (
         <div className="mt-2.5">
-          {verdictLoading && (
-            <div className="inline-flex items-center h-6 px-2 rounded-md border border-white/[0.08] bg-white/[0.02] text-[10.5px] text-white/85">
-              AI checking…
-            </div>
-          )}
+          {verdictLoading && <div className="text-[12px] text-white">AI checking…</div>}
           {verdictError && !verdictLoading && (
-            <div className="text-[10.5px] text-white/65">AI verdict unavailable</div>
+            <div className="text-[12px] text-white">AI verdict unavailable</div>
           )}
           {verdict && !verdictLoading && (
-            <div
-              className={cn(
-                'rounded-lg border px-2.5 py-2',
-                VERDICT_TONE[verdict.verdict]
-              )}
-            >
+            <div className="rounded-lg border border-white/[0.14] px-3 py-2">
               <div className="flex items-baseline justify-between gap-3">
-                <span className="text-[10.5px] font-medium uppercase tracking-[0.14em]">
+                <span className="text-[12px] font-semibold text-white">
                   {VERDICT_LABEL[verdict.verdict]}
                 </span>
-                <span className="text-[10.5px] tabular-nums opacity-85">
+                <span className="text-[12px] tabular-nums text-white">
                   {Math.round(verdict.confidence * 100)}% confident
                 </span>
               </div>
               {verdict.feedback_for_tutor && (
-                <p className="mt-1 text-[11.5px] leading-snug text-white/95">
+                <p className="mt-1 text-[12px] leading-snug text-white">
                   {verdict.feedback_for_tutor}
                 </p>
               )}
               {verdict.suggested_ac_refs.length > 0 && (
-                <div className="mt-1.5 flex items-center flex-wrap gap-1">
-                  <span className="text-[10px] uppercase tracking-[0.14em] text-white/85">
-                    Suggested ACs:
-                  </span>
+                <div className="mt-1.5 flex flex-wrap items-center gap-1">
+                  <span className="text-[11px] text-white">Suggested ACs:</span>
                   {verdict.suggested_ac_refs.map((ref) => (
-                    <span
-                      key={ref}
-                      className="inline-flex h-5 px-1.5 items-center rounded-md border border-white/[0.10] text-[10px] font-medium text-white/95 tabular-nums"
-                    >
+                    <span key={ref} className={CHIP}>
                       {ref}
                     </span>
                   ))}
@@ -412,12 +385,9 @@ function PendingRow({
       )}
 
       {row.unit_codes && row.unit_codes.length > 0 && (
-        <div className="mt-2 flex items-center flex-wrap gap-1.5">
+        <div className="mt-2 flex flex-wrap items-center gap-1.5">
           {row.unit_codes.map((u) => (
-            <span
-              key={u}
-              className="inline-flex h-5 px-1.5 items-center rounded-md border border-white/[0.10] text-[10.5px] font-medium text-white/95 tabular-nums"
-            >
+            <span key={u} className={CHIP}>
               {u}
             </span>
           ))}
@@ -425,7 +395,7 @@ function PendingRow({
       )}
 
       {photos.length > 0 && (
-        <div className="mt-3 flex items-center gap-2 flex-wrap">
+        <div className="mt-3 flex flex-wrap items-center gap-2">
           {photos.map((url, i) => (
             <a
               key={`${url}-${i}`}
@@ -436,10 +406,14 @@ function PendingRow({
               }}
               target="_blank"
               rel="noopener noreferrer"
-              className="block h-16 w-16 rounded-lg overflow-hidden border border-white/[0.08] hover:border-white/[0.22] transition-colors touch-manipulation"
+              className="block h-16 w-16 overflow-hidden rounded-lg border border-white/[0.14] transition-colors touch-manipulation hover:border-elec-yellow/60"
             >
-              {/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
-              <EvidenceImage src={url} alt={`Evidence ${i + 1}`} className="h-full w-full object-cover" />
+              {' '}
+              <EvidenceImage
+                src={url}
+                alt={`Evidence ${i + 1}`}
+                className="h-full w-full object-cover"
+              />
             </a>
           ))}
         </div>
@@ -452,10 +426,11 @@ function PendingRow({
             onClick={handleVerify}
             disabled={acting !== null}
             className={cn(
-              'flex-1 h-10 rounded-lg text-[12.5px] font-semibold transition-colors touch-manipulation',
-              acting === 'verify'
-                ? 'bg-emerald-500/60 text-black/85'
-                : 'bg-emerald-500 text-black hover:bg-emerald-400'
+              'h-11 flex-1 rounded-lg text-[12.5px] font-semibold transition-colors touch-manipulation',
+              acting !== null
+                ? // Disabled goes neutral — a faded volt goes muddy on this ground.
+                  'bg-white/[0.08] text-white'
+                : 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
             )}
           >
             {acting === 'verify' ? 'Verifying…' : 'Verify hours'}
@@ -464,7 +439,7 @@ function PendingRow({
             type="button"
             onClick={() => setRejectingMode(true)}
             disabled={acting !== null}
-            className="flex-1 h-10 rounded-lg border border-white/[0.10] bg-white/[0.02] text-[12.5px] font-medium text-white/95 hover:text-white hover:border-white/[0.22] transition-colors touch-manipulation disabled:opacity-50"
+            className={NEUTRAL_BTN}
           >
             Return for more info
           </button>
@@ -477,7 +452,7 @@ function PendingRow({
             onChange={(e) => setRationale(e.target.value)}
             rows={2}
             placeholder="What does the apprentice need to add or change?"
-            className="w-full px-3 py-2 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[12.5px] text-white placeholder:text-white/50 leading-relaxed focus:outline-none focus:border-rose-400/40 focus:ring-1 focus:ring-rose-400/20 touch-manipulation resize-none"
+            className={cn(textareaCn, 'w-full resize-none')}
           />
           <div className="flex items-center gap-2">
             <button
@@ -487,21 +462,19 @@ function PendingRow({
                 setRationale('');
               }}
               disabled={acting !== null}
-              className="flex-1 h-10 rounded-lg border border-white/[0.10] bg-white/[0.02] text-[12.5px] font-medium text-white/95 hover:text-white hover:border-white/[0.22] transition-colors touch-manipulation disabled:opacity-50"
+              className={NEUTRAL_BTN}
             >
               Cancel
             </button>
             <button
               type="button"
               onClick={handleReject}
-              disabled={acting !== null || rationale.trim().length === 0}
+              disabled={acting !== null || !canReturn}
               className={cn(
-                'flex-1 h-10 rounded-lg text-[12.5px] font-semibold transition-colors touch-manipulation',
-                acting === 'reject'
-                  ? 'bg-rose-500/60 text-white/85'
-                  : rationale.trim().length === 0
-                    ? 'bg-white/[0.05] text-white/70'
-                    : 'bg-rose-500 text-white hover:bg-rose-400'
+                'h-11 flex-1 rounded-lg text-[12.5px] font-semibold transition-colors touch-manipulation',
+                acting !== null || !canReturn
+                  ? 'bg-white/[0.08] text-white'
+                  : 'bg-white text-black hover:bg-white/90'
               )}
             >
               {acting === 'reject' ? 'Returning…' : 'Return to apprentice'}
@@ -515,50 +488,52 @@ function PendingRow({
 
 function RejectedHistory({ rows }: { rows: OtjEntryRow[] }) {
   return (
-    <div className="rounded-2xl border border-rose-400/15 bg-rose-500/[0.03] overflow-hidden">
-      <div className="px-4 sm:px-5 py-4">
-        <div className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-rose-300/95">
-          Returned for more info
-        </div>
-        <p className="mt-1 text-[11.5px] text-white/85 leading-snug">
+    <div className={CARD}>
+      <div className="border-b border-white/[0.10] px-4 py-3 sm:px-5">
+        <div className={CARD_TITLE}>Returned for more info</div>
+        <p className="mt-0.5 text-[12px] leading-snug text-white">
           The apprentice has been asked to resubmit these. They show in their hub with your reason.
         </p>
-        <ul className="mt-3 -mx-1 divide-y divide-white/[0.05]">
-          {rows.map((r) => (
-            <li key={r.id} className="px-1 py-2.5">
+      </div>
+      <ul className="divide-y divide-white/[0.10]">
+        {rows.map((r) => (
+          <li key={r.id} className="flex items-start gap-3 px-4 py-3 sm:px-5">
+            <span
+              aria-hidden="true"
+              className="mt-0.5 h-8 w-[3px] shrink-0 rounded-full bg-red-400"
+            />
+            <div className="min-w-0 flex-1">
               <div className="flex items-baseline justify-between gap-3">
                 <div className="min-w-0">
-                  <div className="text-[12.5px] font-medium text-white truncate">{r.title}</div>
-                  <div className="mt-0.5 text-[10.5px] text-white/85">
+                  <div className="truncate text-[14px] font-semibold leading-tight text-white">
+                    {r.title}
+                  </div>
+                  <div className="mt-0.5 text-[12px] tabular-nums leading-tight text-white">
                     {fmtHours(r.duration_minutes)} · {fmtRel(r.activity_date)}
                   </div>
                 </div>
-                <span className="shrink-0 text-[10.5px] uppercase tracking-tight font-medium text-rose-300">
-                  Returned
-                </span>
+                <span className="shrink-0 text-[12px] font-semibold text-red-300">Returned</span>
               </div>
               {r.verification_rationale && (
-                <div className="mt-1.5 border-l-2 border-rose-400/30 pl-2 text-[11px] text-rose-100/90 leading-snug">
+                <div className="mt-1.5 border-l-2 border-white/[0.25] pl-2 text-[12px] leading-snug text-white">
                   {r.verification_rationale}
                 </div>
               )}
-            </li>
-          ))}
-        </ul>
-      </div>
+            </div>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
 
 function PanelSkeleton() {
   return (
-    <div className="space-y-3">
-      <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-5 py-5 space-y-3">
-        <div className="h-3 w-32 rounded-full bg-white/[0.05]" />
-        {[0, 1, 2, 3].map((i) => (
-          <div key={i} className="h-5 rounded-full bg-white/[0.04]" />
-        ))}
-      </div>
+    <div className={cn(CARD, 'animate-pulse space-y-3 px-4 py-4 sm:px-5')}>
+      <div className="h-3 w-32 rounded-full bg-white/[0.10]" />
+      {[0, 1, 2, 3].map((i) => (
+        <div key={i} className="h-5 rounded-full bg-white/[0.06]" />
+      ))}
     </div>
   );
 }

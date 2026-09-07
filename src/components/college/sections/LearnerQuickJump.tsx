@@ -1,16 +1,22 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ChevronRight } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 
 /**
- * Top-of-dashboard learner quick-jump. Student 360 is the single most-used
- * destination for a tutor, but it was buried 3–4 levels deep (overview →
- * People → Students → list → tap). This surfaces it at the top of every main
- * surface: type a name to jump straight into any learner's profile, or tap an
- * at-risk learner (the default) — one tap to Student 360 via
- * /college/students/:id. Self-fetches (RLS scopes to the caller's college) so
- * it drops into the overview AND the tutor's daily "Today" view without props.
+ * Learner quick-jump. Student 360 is the single most-used destination for a
+ * tutor, but it was buried 3–4 levels deep (overview → People → Students →
+ * list → tap). This puts it on the front page: type a name to jump straight
+ * into any learner's profile, or tap an at-risk learner (the default) — one
+ * tap to Student 360 via /college/students/:id. Self-fetches (RLS scopes to
+ * the caller's college) so it drops into the overview AND the tutor's daily
+ * "Today" view without props.
+ *
+ * Hub card language: 15px volt title, a 44px search field, then HubWorkList
+ * rows (rule · name · risk · chevron). Critical is the one word that stays
+ * red; high gets the volt rule; nothing wears a coloured chip.
  */
 interface QuickJumpLearner {
   id: string;
@@ -18,11 +24,18 @@ interface QuickJumpLearner {
   risk_level?: string | null;
 }
 
-const RISK_TONE: Record<string, string> = {
-  critical: 'bg-red-500/15 border-red-400/40 text-red-200',
-  high: 'bg-orange-500/15 border-orange-400/40 text-orange-200',
-  medium: 'bg-amber-500/15 border-amber-400/40 text-amber-200',
-};
+function riskWord(level: string | null | undefined): JSX.Element | string {
+  switch ((level ?? '').toLowerCase()) {
+    case 'critical':
+      return <span className="font-semibold text-red-300">Critical risk</span>;
+    case 'high':
+      return 'High risk';
+    case 'medium':
+      return 'Medium risk';
+    default:
+      return 'Open Student 360';
+  }
+}
 
 export function LearnerQuickJump() {
   const navigate = useNavigate();
@@ -53,71 +66,74 @@ export function LearnerQuickJump() {
     : atRisk.slice(0, 6);
 
   return (
-    <section className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_11%)] p-5 sm:p-6">
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none" />
-      <div className="flex items-baseline justify-between gap-3">
-        <h2 className="text-base sm:text-lg font-semibold text-foreground">Jump to a learner</h2>
+    <section
+      className={cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}
+    >
+      <div className="flex items-end justify-between gap-4 px-4 py-3.5 sm:px-5">
+        <h3 className="text-[15px] font-semibold tracking-tight text-elec-yellow">
+          Jump to a learner
+        </h3>
         {students.length > 0 && (
-          <span className="text-[11px] text-white/70">{students.length} learners</span>
+          <span className="text-[11px] font-semibold tabular-nums text-white">
+            {students.length} learners
+          </span>
         )}
       </div>
 
-      <input
-        value={q}
-        onChange={(e) => setQ(e.target.value)}
-        placeholder="Search by name…"
-        className="mt-3 w-full h-11 rounded-xl bg-black/30 border border-white/[0.12] px-3.5 text-base text-foreground placeholder:text-white/35 touch-manipulation focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/40 outline-none"
-      />
+      <div className="px-4 pb-3.5 sm:px-5">
+        <input
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          placeholder="Search by name…"
+          aria-label="Search learners by name"
+          className="h-11 w-full rounded-xl border border-white/[0.18] bg-transparent px-3.5 text-base text-white outline-none transition-colors placeholder:text-white placeholder:opacity-60 focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/40 touch-manipulation"
+        />
+      </div>
 
-      {!query && atRisk.length > 0 && (
-        <div className="mt-2 text-[11px] uppercase tracking-[0.14em] text-white/70">
-          Needs attention
-        </div>
-      )}
-
-      <ul className="mt-2 space-y-1.5">
-        {results.map((s) => {
-          const tone = RISK_TONE[(s.risk_level ?? '').toLowerCase()];
-          return (
-            <li key={s.id}>
-              <button
-                type="button"
-                onClick={() => navigate(`/college/students/${s.id}`)}
-                className="w-full text-left flex items-center justify-between gap-3 rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.05] px-3.5 py-2.5 touch-manipulation transition-colors"
-              >
-                <span className="block text-[13.5px] font-medium text-foreground truncate min-w-0">
-                  {s.name}
-                </span>
-                <span className="flex items-center gap-2 shrink-0">
-                  {tone && (
-                    <span
-                      className={cn(
-                        'inline-flex items-center h-5 px-1.5 rounded-md border text-[9.5px] font-semibold uppercase tracking-[0.08em]',
-                        tone
-                      )}
-                    >
-                      {s.risk_level}
+      {results.length > 0 && (
+        <ul className="divide-y divide-white/[0.10] border-t border-white/[0.10]">
+          {results.map((s) => {
+            const level = (s.risk_level ?? '').toLowerCase();
+            const urgent = level === 'critical' || level === 'high';
+            return (
+              <li key={s.id}>
+                <button
+                  type="button"
+                  onClick={() => navigate(`/college?section=student360&studentId=${s.id}`)}
+                  className="flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5"
+                >
+                  <span
+                    aria-hidden="true"
+                    className={cn(
+                      'h-8 w-[3px] shrink-0 rounded-full',
+                      urgent ? 'bg-elec-yellow' : 'bg-white/[0.25]'
+                    )}
+                  />
+                  <span className="min-w-0 flex-1">
+                    <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+                      {s.name}
                     </span>
-                  )}
-                  <span className="text-white/60 text-[13px]" aria-hidden>
-                    →
+                    <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
+                      {riskWord(s.risk_level)}
+                    </span>
                   </span>
-                </span>
-              </button>
-            </li>
-          );
-        })}
-      </ul>
+                  <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      )}
 
       {query && results.length === 0 && (
-        <div className="mt-2 rounded-xl border border-dashed border-white/[0.10] px-4 py-5 text-center text-[12.5px] text-white/45">
+        <p className="border-t border-white/[0.10] px-4 py-4 text-[12.5px] leading-snug text-white sm:px-5">
           No learner matches &ldquo;{q}&rdquo;.
-        </div>
+        </p>
       )}
       {!query && atRisk.length === 0 && students.length > 0 && (
-        <div className="mt-2 text-[12.5px] text-white/45">
-          No at-risk learners right now — search above to open any profile.
-        </div>
+        <p className="border-t border-white/[0.10] px-4 py-4 text-[12.5px] leading-snug text-white sm:px-5">
+          No at-risk learners right now. Search above to open any profile.
+        </p>
       )}
     </section>
   );

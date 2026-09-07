@@ -1,206 +1,178 @@
-import { motion } from 'framer-motion';
-import { PullToRefresh } from '@/components/college/ui/PullToRefresh';
-import type { CollegeSection } from '@/pages/college/CollegeDashboard';
-import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
+/**
+ * Resources Hub — compliance records, integrations and college settings.
+ *
+ * Rebuilt on the shared hub shell (`@/components/hub/HubPrimitives`). The
+ * masthead is drawn by CollegeDashboard; this is only the body:
+ *
+ *   quick start → records → integrations & admin
+ *
+ * What went, and why:
+ *
+ * The STAT STRIP ("Active Staff / VLE Connected / Compliance Docs"). Active
+ * staff is a People Hub figure and had nothing to do with this page; the other
+ * two now sit on the cards that own them.
+ *
+ * The QUICK ACTIONS grid at the bottom — four small cards opening the same
+ * four sections as the big cards above them.
+ *
+ * Three groups of two. The grid is auto-fit and fills the width, so a pair of
+ * cards on a desktop drew two wide slabs with a hole beside them. Now three
+ * and four.
+ *
+ * The compliance figure changed source: it was a bare `count(*)` of
+ * `compliance_documents`, a number that means nothing on its own. It now
+ * reads the single central record view through `useComplianceStats` — the
+ * same figures the Compliance Docs page shows — so the card can say how many
+ * records are expired or missing rather than how many exist.
+ */
 import { useEffect, useState } from 'react';
+import type { CollegeSection } from '@/pages/college/CollegeDashboard';
 import { supabase } from '@/integrations/supabase/client';
+import { useComplianceStats } from '@/hooks/useComplianceStats';
+import { useCollegeEmployers } from '@/hooks/useCollegeEmployers';
 import {
-  PageFrame,
-  PageHero,
-  StatStrip,
-  SectionHeader,
-  HubGrid,
-  HubCard,
-  itemVariants,
-} from '@/components/college/primitives';
+  HubQuickStart,
+  HubToolGrid,
+  type HubTool,
+  type HubQuickAction,
+} from '@/components/hub/HubPrimitives';
 
 interface ResourcesHubProps {
   onNavigate: (section: CollegeSection) => void;
 }
 
 export function ResourcesHub({ onNavigate }: ResourcesHubProps) {
-  const { staff } = useCollegeSupabase();
-  const activeStaff = staff.filter((s) => s.status === 'Active').length;
+  const { stats: compliance } = useComplianceStats();
+  const { employers } = useCollegeEmployers();
   const [vleConnected, setVleConnected] = useState<number | null>(null);
-  const [complianceDocs, setComplianceDocs] = useState<number | null>(null);
 
-  // Real stats: live count of LTI platforms + compliance documents,
-  // scoped to the caller's college via RLS.
+  // Live count of LTI platforms, scoped to the caller's college via RLS.
   useEffect(() => {
+    let cancelled = false;
     void (async () => {
-      const [ltiRes, docsRes] = await Promise.all([
-        supabase.from('lti_platforms').select('id', { count: 'exact', head: true }),
-        supabase.from('compliance_documents').select('id', { count: 'exact', head: true }),
-      ]);
-      setVleConnected(ltiRes.count ?? 0);
-      setComplianceDocs(docsRes.count ?? 0);
+      const { count } = await supabase
+        .from('lti_platforms')
+        .select('id', { count: 'exact', head: true });
+      if (!cancelled) setVleConnected(count ?? 0);
     })();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
-  const handleRefresh = async () => {
-    await new Promise((resolve) => setTimeout(resolve, 600));
-  };
+  const complianceProblems = compliance.expired + compliance.missing;
+
+  /*
+   * ── Start something ──────────────────────────────────────────────────
+   * Compliance is the thing on this page with a cost of delay, so it takes
+   * the single solid volt card.
+   */
+  const quickStart: HubQuickAction[] = [
+    {
+      title: 'Check compliance',
+      description:
+        complianceProblems > 0
+          ? `${complianceProblems} record${complianceProblems === 1 ? '' : 's'} expired or missing`
+          : 'DBS, policies and staff records',
+      onClick: () => onNavigate('compliancedocs'),
+      primary: true,
+    },
+    {
+      title: 'Add a resource',
+      description: 'Upload slides or a handout',
+      onClick: () => onNavigate('teachingresources'),
+    },
+    {
+      title: 'Connect a VLE',
+      description: 'Canvas, Moodle or any LTI 1.3 platform',
+      onClick: () => onNavigate('ltisettings'),
+    },
+  ];
+
+  /*
+   * ── Tool groups ──────────────────────────────────────────────────────
+   * Three and four. A card reports a figure when it has one and says what it
+   * is for when it doesn't — never both.
+   */
+  const records: HubTool[] = [
+    {
+      id: 'compliance-docs',
+      title: 'Compliance docs',
+      onClick: () => onNavigate('compliancedocs'),
+      value:
+        complianceProblems > 0
+          ? String(complianceProblems)
+          : compliance.expiring > 0
+            ? String(compliance.expiring)
+            : compliance.total > 0
+              ? String(compliance.total)
+              : undefined,
+      valueLabel:
+        complianceProblems > 0
+          ? 'expired or missing'
+          : compliance.expiring > 0
+            ? 'expiring soon'
+            : compliance.total > 0
+              ? 'records on file'
+              : undefined,
+      description: 'Policies, DBS checks and staff documentation.',
+      alert: complianceProblems > 0,
+    },
+    {
+      id: 'teaching-resources',
+      title: 'Teaching resources',
+      onClick: () => onNavigate('teachingresources'),
+      description: 'Shared teaching materials and uploads across the college.',
+    },
+    {
+      id: 'resource-analytics',
+      title: 'Resource analytics',
+      onClick: () => onNavigate('resourceanalytics'),
+      description: 'What is being used, and which materials to mark as gold standard.',
+    },
+  ];
+
+  const integrationsAndAdmin: HubTool[] = [
+    {
+      id: 'vle-integration',
+      title: 'VLE integration',
+      onClick: () => onNavigate('ltisettings'),
+      value: vleConnected !== null && vleConnected > 0 ? String(vleConnected) : undefined,
+      valueLabel:
+        vleConnected !== null && vleConnected > 0
+          ? `platform${vleConnected === 1 ? '' : 's'} connected`
+          : undefined,
+      description: 'Connect Canvas, Moodle or any LTI 1.3 learning platform.',
+    },
+    {
+      id: 'employer-portal',
+      title: 'Employer portal',
+      onClick: () => onNavigate('employerportal'),
+      value: employers.length > 0 ? String(employers.length) : undefined,
+      valueLabel: employers.length > 0 ? 'employers linked' : undefined,
+      description: 'Apprentice progress visibility and employer engagement.',
+    },
+    {
+      id: 'college-settings',
+      title: 'College settings',
+      onClick: () => onNavigate('collegesettings'),
+      description: 'Institution preferences, defaults and staff roles.',
+    },
+    {
+      id: 'audit-log',
+      title: 'Audit log',
+      onClick: () => onNavigate('auditlog'),
+      description: 'Append-only record of every sensitive action, built for audits.',
+    },
+  ];
 
   return (
-    <PullToRefresh onRefresh={handleRefresh}>
-      <PageFrame>
-        {/* HERO */}
-        <motion.div variants={itemVariants}>
-          <PageHero
-            eyebrow="Resources Hub"
-            title="Compliance, integrations & settings"
-            description="Documentation, VLE integrations, employer engagement and institution-wide settings."
-            tone="purple"
-          />
-        </motion.div>
+    <>
+      <HubQuickStart label="Start something" items={quickStart} />
 
-        {/* STATS */}
-        <motion.div variants={itemVariants}>
-          <StatStrip
-            columns={3}
-            stats={[
-              {
-                value: activeStaff,
-                label: 'Active Staff',
-                sub: 'Across all roles',
-              },
-              {
-                value: vleConnected ?? '—',
-                label: 'VLE Connected',
-                sub: 'Canvas / Moodle / LTI',
-              },
-              {
-                value: complianceDocs ?? '—',
-                label: 'Compliance Docs',
-                sub: 'On file',
-              },
-            ]}
-          />
-        </motion.div>
+      <HubToolGrid label="Records" cards={records} columns="four" />
 
-        {/* COMPLIANCE & DOCS */}
-        <motion.section variants={itemVariants} className="space-y-6 sm:space-y-7">
-          <SectionHeader eyebrow="Compliance & Documents" title="Keep records in order" />
-          <HubGrid columns={2}>
-            <HubCard
-              number="01"
-              eyebrow="Policies & Checks"
-              title="Compliance"
-              description="Policies, DBS checks and staff documentation."
-              tone="purple"
-              meta="Docs & audit trail"
-              onClick={() => onNavigate('compliancedocs')}
-            />
-            <HubCard
-              number="02"
-              eyebrow="Shared Materials"
-              title="Teaching Resources"
-              description="Institution-wide teaching resources and uploads."
-              tone="amber"
-              meta="Resource library"
-              onClick={() => onNavigate('teachingresources')}
-            />
-            <HubCard
-              number="03"
-              eyebrow="Usage & Gold Standard"
-              title="Resource Analytics"
-              description="See what's being used. Tag the top performers as gold standard."
-              tone="yellow"
-              meta="Views + downloads"
-              onClick={() => onNavigate('resourceanalytics')}
-            />
-          </HubGrid>
-        </motion.section>
-
-        {/* INTEGRATIONS */}
-        <motion.section variants={itemVariants} className="space-y-6 sm:space-y-7">
-          <SectionHeader eyebrow="Integrations" title="Connect external systems" />
-          <HubGrid columns={2}>
-            <HubCard
-              number="04"
-              eyebrow="VLE & Learning"
-              title="VLE Integration"
-              description="Connect Canvas, Moodle or any LTI 1.3 learning platform."
-              tone="blue"
-              meta={vleConnected !== null ? `${vleConnected} connected` : 'Loading…'}
-              onClick={() => onNavigate('ltisettings')}
-            />
-            <HubCard
-              number="05"
-              eyebrow="Workplace Partners"
-              title="Employer Portal"
-              description="Apprentice progress visibility and employer engagement."
-              tone="green"
-              meta="See employers"
-              onClick={() => onNavigate('employerportal')}
-            />
-          </HubGrid>
-        </motion.section>
-
-        {/* ADMINISTRATION */}
-        <motion.section variants={itemVariants} className="space-y-6 sm:space-y-7">
-          <SectionHeader eyebrow="Administration" title="Institution configuration" />
-          <HubGrid columns={2}>
-            <HubCard
-              number="06"
-              eyebrow="Preferences & Setup"
-              title="College Settings"
-              description="Institution preferences, defaults and system configuration."
-              tone="indigo"
-              meta="Admin only"
-              onClick={() => onNavigate('collegesettings')}
-            />
-            <HubCard
-              number="07"
-              eyebrow="Who did what · when"
-              title="Audit log"
-              description="Append-only record of every sensitive action. Built for Ofsted + funding audits."
-              tone="amber"
-              meta="Append-only"
-              onClick={() => onNavigate('auditlog')}
-            />
-          </HubGrid>
-        </motion.section>
-
-        {/* QUICK ACTIONS */}
-        <motion.section variants={itemVariants} className="space-y-6 sm:space-y-7">
-          <SectionHeader eyebrow="Quick Actions" title="Common tasks" />
-          <HubGrid columns={4}>
-            <HubCard
-              size="sm"
-              eyebrow="Review"
-              title="Check compliance"
-              description="Open doc register."
-              tone="purple"
-              onClick={() => onNavigate('compliancedocs')}
-            />
-            <HubCard
-              size="sm"
-              eyebrow="Connect"
-              title="VLE setup"
-              description="Open LTI settings."
-              tone="blue"
-              onClick={() => onNavigate('ltisettings')}
-            />
-            <HubCard
-              size="sm"
-              eyebrow="Browse"
-              title="Resources"
-              description="View materials."
-              tone="amber"
-              onClick={() => onNavigate('teachingresources')}
-            />
-            <HubCard
-              size="sm"
-              eyebrow="Configure"
-              title="Settings"
-              description="Institution prefs."
-              tone="indigo"
-              onClick={() => onNavigate('collegesettings')}
-            />
-          </HubGrid>
-        </motion.section>
-      </PageFrame>
-    </PullToRefresh>
+      <HubToolGrid label="Integrations & admin" cards={integrationsAndAdmin} columns="four" />
+    </>
   );
 }

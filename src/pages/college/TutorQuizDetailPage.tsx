@@ -1,20 +1,18 @@
 import { useEffect, useMemo, useState, useCallback } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import {
-  ChevronLeft,
-  Sparkles,
-  Brain,
-  Users,
-  Clock,
-  AlertTriangle,
-  Check,
-  TrendingUp,
-  FileText,
-  X,
-  Download,
-} from 'lucide-react';
+import { useParams } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { PageFrame, LoadingState } from '@/components/college/primitives';
+import { containerVariants, itemVariants, LoadingState } from '@/components/college/primitives';
+import {
+  HubPage,
+  HubBody,
+  HubMasthead,
+  HubKpi,
+  HubKpiRow,
+  HubSectionHeading,
+} from '@/components/hub/HubPrimitives';
+import { CARD_BASE, CARD_NEUTRAL, CARD_SURFACE } from '@/components/ui/card-recipe';
 import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { QuizAttemptReviewSheet } from '@/components/college/sheets/QuizAttemptReviewSheet';
@@ -23,9 +21,20 @@ import { rowsToCsv, downloadCsv } from '@/lib/csv';
 
 /* ==========================================================================
    TutorQuizDetailPage — /college/quizzes/:id
-   Per-quiz cohort dashboard: header with quiz meta + per-question stats +
-   per-attempt list (clickable to QuizAttemptReviewSheet). Buttons to
-   publish/unpublish + AI-regrade-all-pending.
+
+   Per-quiz cohort view: what the quiz is, how the cohort did per question
+   and per AC, and every attempt (tap → QuizAttemptReviewSheet). Publish /
+   unpublish, regrade pending AI marks, export CSV.
+
+   Rebuilt on the shared hub shell. What went: the hero with a 28px title
+   and five coloured badges, four tinted count tiles, and a per-question
+   card stack in five hues. Publish is the one solid volt control while the
+   quiz is a draft; once it is live the page has no volt button at all and
+   regrade is a volt text action on the Attempts heading.
+
+   The per-question bar keeps its colour because it encodes real state:
+   right (emerald), partly right (volt), wrong (red). Pending and skipped
+   are white at two strengths.
    ========================================================================== */
 
 type Kind = 'quiz' | 'assessment' | 'mock_exam';
@@ -88,9 +97,24 @@ interface GradeRow {
   tutor_override_score: number | null;
 }
 
+const KIND_LABEL: Record<Kind, string> = {
+  quiz: 'Quiz',
+  assessment: 'Assessment',
+  mock_exam: 'Mock exam',
+};
+
+const neutralButtonCn =
+  'inline-flex h-11 items-center justify-center rounded-xl border border-white/[0.12] bg-white/[0.06] px-4 text-[12.5px] font-semibold text-white transition-colors touch-manipulation hover:bg-white/[0.10] active:scale-[0.98] disabled:bg-white/[0.03] disabled:opacity-60';
+
+const primaryButtonCn =
+  'inline-flex h-11 w-full items-center justify-center rounded-xl bg-elec-yellow px-5 text-[13px] font-semibold text-black transition-colors touch-manipulation hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white sm:w-auto';
+
+function plural(n: number, one: string, many = `${one}s`): string {
+  return `${n} ${n === 1 ? one : many}`;
+}
+
 export default function TutorQuizDetailPage() {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
   const { toast } = useToast();
   const [loading, setLoading] = useState(true);
   const [quiz, setQuiz] = useState<QuizMeta | null>(null);
@@ -144,9 +168,11 @@ export default function TutorQuizDetailPage() {
     setQuestions((qs ?? []) as QuestionRow[]);
 
     const attemptList = (at ?? []) as Array<Omit<AttemptRow, 'student_name'>>;
+    // tutor_quiz_attempts.student_id is the learner's AUTH uid (verified
+    // against the live DB), which is why names come from profiles.
     const studentIds = Array.from(new Set(attemptList.map((a) => a.student_id)));
 
-    let nameById = new Map<string, string>();
+    const nameById = new Map<string, string>();
     if (studentIds.length > 0) {
       const { data: profs } = await supabase
         .from('profiles')
@@ -195,8 +221,16 @@ export default function TutorQuizDetailPage() {
     if (!id) return;
     const ch = supabase
       .channel(realtimeChannelName(`tutor_quiz_detail:${id}`))
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'tutor_quiz_attempts', filter: `quiz_id=eq.${id}` }, () => void load())
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'tutor_quiz_answer_grades' }, () => void load())
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'tutor_quiz_attempts', filter: `quiz_id=eq.${id}` },
+        () => void load()
+      )
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'tutor_quiz_answer_grades' },
+        () => void load()
+      )
       .subscribe();
     return () => {
       supabase.removeChannel(ch);
@@ -267,10 +301,7 @@ export default function TutorQuizDetailPage() {
   }, [questions, attempts, allGrades]);
 
   const acStats = useMemo(() => {
-    const acMap = new Map<
-      string,
-      { correct: number; total: number; questions: number }
-    >();
+    const acMap = new Map<string, { correct: number; total: number; questions: number }>();
     for (const qs of questionStats) {
       const ac = qs.question.ac_ref;
       if (!ac) continue;
@@ -297,15 +328,20 @@ export default function TutorQuizDetailPage() {
         return false;
       return (a.score / a.total_points) * 100 >= quiz.pass_mark;
     });
+    // Average over the attempts that actually carry a score. The old
+    // version summed scored attempts and divided by ALL completed attempts,
+    // which dragged the average down whenever a submission was still
+    // waiting on its AI marks.
+    const scored = completed.filter(
+      (a) => a.score != null && a.total_points != null && a.total_points > 0
+    );
     const avg =
-      completed.length > 0
+      scored.length > 0
         ? Math.round(
-            completed
-              .filter((a) => a.score != null && a.total_points != null && a.total_points > 0)
-              .reduce(
-                (s, a) => s + ((a.score as number) / (a.total_points as number)) * 100,
-                0
-              ) / Math.max(1, completed.length)
+            scored.reduce(
+              (s, a) => s + ((a.score as number) / (a.total_points as number)) * 100,
+              0
+            ) / scored.length
           )
         : null;
     const totalPending = Object.values(pendingByAttempt).reduce((s, n) => s + n, 0);
@@ -314,8 +350,7 @@ export default function TutorQuizDetailPage() {
       completed: completed.length,
       inProgress,
       passes: passes.length,
-      passRate:
-        completed.length > 0 ? Math.round((passes.length / completed.length) * 100) : null,
+      passRate: completed.length > 0 ? Math.round((passes.length / completed.length) * 100) : null,
       avg,
       pending: totalPending,
     };
@@ -378,7 +413,13 @@ export default function TutorQuizDetailPage() {
       return {
         learner_name: a.student_name,
         student_id: a.student_id,
-        status: a.completed_at ? (passed === false ? 'failed' : passed ? 'passed' : 'submitted') : 'in_progress',
+        status: a.completed_at
+          ? passed === false
+            ? 'failed'
+            : passed
+              ? 'passed'
+              : 'submitted'
+          : 'in_progress',
         score: a.score ?? '',
         total_points: a.total_points ?? '',
         percentage: pct ?? '',
@@ -407,7 +448,11 @@ export default function TutorQuizDetailPage() {
       { key: 'attempt_id', header: 'Attempt ID' },
     ]);
     const stamp = new Date().toISOString().slice(0, 10);
-    const safeTitle = quiz.title.replace(/[^a-zA-Z0-9-_]+/g, '-').replace(/^-|-$/g, '').slice(0, 60).toLowerCase();
+    const safeTitle = quiz.title
+      .replace(/[^a-zA-Z0-9-_]+/g, '-')
+      .replace(/^-|-$/g, '')
+      .slice(0, 60)
+      .toLowerCase();
     downloadCsv(csv, `${safeTitle || 'quiz'}-${stamp}.csv`);
     toast({ title: 'CSV exported', description: `${rows.length} attempts` });
   };
@@ -469,384 +514,389 @@ export default function TutorQuizDetailPage() {
 
   if (loading && !quiz) {
     return (
-      <PageFrame className="max-w-[1280px] pb-24">
-        <LoadingState />
-      </PageFrame>
+      <HubPage>
+        <HubMasthead section="College" title="Quiz" backTo="/college/quizzes" />
+        <HubBody pushContext="Get notified about marking, off-the-job hours and learners who need you">
+          <LoadingState />
+        </HubBody>
+      </HubPage>
     );
   }
   if (!quiz) {
     return (
-      <PageFrame className="max-w-[1280px] pb-24">
-        <div className="text-[13px] text-white">Quiz not found.</div>
-      </PageFrame>
+      <HubPage>
+        <HubMasthead section="College" title="Quiz" backTo="/college/quizzes" />
+        <HubBody pushContext="Get notified about marking, off-the-job hours and learners who need you">
+          <div
+            className={cn(
+              'rounded-2xl border border-elec-yellow/35 px-4 py-8 text-center text-[13px] text-white sm:px-5',
+              CARD_SURFACE
+            )}
+          >
+            Quiz not found. It may have been deleted.
+          </div>
+        </HubBody>
+      </HubPage>
     );
   }
 
-  const kindLabel =
-    quiz.kind === 'mock_exam' ? 'Mock exam' : quiz.kind === 'assessment' ? 'Assessment' : 'Quiz';
+  const kindLabel = KIND_LABEL[quiz.kind];
+  const metaLine = [
+    kindLabel,
+    !quiz.is_published ? 'Draft' : 'Published',
+    quiz.is_homework ? 'Homework' : null,
+    quiz.source === 'ai_authored' ? 'AI authored' : null,
+    quiz.source_document_id ? 'From document' : null,
+    plural(questions.length, 'question'),
+    quiz.time_limit_minutes ? `${quiz.time_limit_minutes} min` : null,
+    quiz.pass_mark != null ? `${quiz.pass_mark}% to pass` : null,
+    quiz.qualification_code,
+    quiz.due_date ? `Due ${quiz.due_date}` : null,
+  ]
+    .filter(Boolean)
+    .join(' · ');
+
+  const showQuestionPerformance = questionStats.length > 0 && stats.completed > 0;
 
   return (
-    <PageFrame className="max-w-[1280px] pb-24">
-      <button
-        onClick={() => navigate('/college/quizzes')}
-        className="text-[12px] font-medium text-white hover:text-elec-yellow inline-flex items-center gap-1 transition-colors"
-      >
-        <ChevronLeft className="h-4 w-4" />
-        All quizzes
-      </button>
-
-      {/* Hero */}
-      <div className="mt-4 flex items-start gap-3 flex-wrap">
-        <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-1.5 flex-wrap mb-1">
-            <span
-              className={cn(
-                'inline-flex items-center h-5 px-2 rounded-md border text-[10px] font-semibold tracking-[0.06em] uppercase',
-                quiz.kind === 'mock_exam'
-                  ? 'bg-orange-500/[0.10] border-orange-400/30 text-orange-200'
-                  : quiz.kind === 'assessment'
-                    ? 'bg-cyan-500/[0.10] border-cyan-400/30 text-cyan-200'
-                    : 'bg-blue-500/[0.10] border-blue-400/30 text-blue-200'
-              )}
-            >
-              {kindLabel}
-            </span>
-            {!quiz.is_published && (
-              <span className="inline-flex items-center h-5 px-2 rounded-md bg-amber-500/[0.10] border border-amber-400/30 text-[10px] font-semibold tracking-[0.06em] uppercase text-amber-200">
-                Draft
-              </span>
-            )}
-            {quiz.source === 'ai_authored' && (
-              <span className="inline-flex items-center gap-1 h-5 px-2 rounded-md bg-elec-yellow/[0.10] border border-elec-yellow/30 text-[10px] font-semibold tracking-[0.06em] uppercase text-elec-yellow">
-                <Sparkles className="h-3 w-3" />
-                AI authored
-              </span>
-            )}
-            {quiz.source_document_id && (
-              <span className="inline-flex items-center gap-1 h-5 px-2 rounded-md bg-white/[0.04] border border-white/[0.10] text-[10px] font-semibold tracking-[0.06em] uppercase text-white">
-                <FileText className="h-3 w-3" />
-                From document
-              </span>
-            )}
-            {quiz.is_homework && (
-              <span className="inline-flex items-center h-5 px-2 rounded-md bg-purple-500/[0.10] border border-purple-400/30 text-[10px] font-semibold tracking-[0.06em] uppercase text-purple-200">
-                Homework
-              </span>
-            )}
-          </div>
-          <h1 className="text-[24px] sm:text-[28px] font-semibold text-white tracking-tight leading-tight">
-            {quiz.title}
-          </h1>
-          {quiz.description && (
-            <p className="mt-1 text-[13px] text-white max-w-2xl leading-relaxed">{quiz.description}</p>
+    <HubPage>
+      <HubMasthead section="College" title={quiz.title} backTo="/college/quizzes" />
+      <HubBody pushContext="Get notified about marking, off-the-job hours and learners who need you">
+        {/* About the quiz — what it is and the actions on it. Publish is the
+            one solid volt control, and only while it is a draft: once it is
+            live the page has nothing that needs the tutor at that strength. */}
+        <motion.div
+          variants={itemVariants}
+          initial="hidden"
+          animate="visible"
+          className={cn(
+            'rounded-2xl border border-elec-yellow/35 px-4 py-4 sm:px-5 sm:py-5',
+            CARD_SURFACE
           )}
-          <div className="mt-2 text-[11px] text-white tabular-nums flex items-center gap-x-2 flex-wrap">
-            <span>{questions.length} questions</span>
-            {quiz.time_limit_minutes && (
-              <>
-                <span className="text-white/35">·</span>
-                <span>{quiz.time_limit_minutes}m</span>
-              </>
-            )}
-            {quiz.pass_mark != null && (
-              <>
-                <span className="text-white/35">·</span>
-                <span>{quiz.pass_mark}% pass</span>
-              </>
-            )}
-            {quiz.qualification_code && (
-              <>
-                <span className="text-white/35">·</span>
-                <span>{quiz.qualification_code}</span>
-              </>
-            )}
-            {quiz.due_date && (
-              <>
-                <span className="text-white/35">·</span>
-                <span>Due {quiz.due_date}</span>
-              </>
-            )}
-          </div>
-        </div>
-        <div className="flex items-center gap-2 flex-wrap">
-          <button
-            type="button"
-            onClick={handleTogglePublish}
-            disabled={busy !== null}
-            className={cn(
-              'h-9 px-3 rounded-full border text-[12px] font-semibold touch-manipulation transition-colors disabled:opacity-50',
-              quiz.is_published
-                ? 'bg-white/[0.04] border-white/[0.10] text-white hover:bg-white/[0.08]'
-                : 'bg-elec-yellow text-black border-elec-yellow hover:bg-elec-yellow/90'
-            )}
-          >
-            {busy === 'publish'
-              ? 'Working…'
-              : quiz.is_published
-                ? 'Unpublish'
-                : 'Publish to learners'}
-          </button>
-          {stats.pending > 0 && (
+        >
+          <h2 className="text-[17px] font-semibold leading-tight tracking-tight text-white">
+            {quiz.title}
+          </h2>
+          {quiz.description && (
+            <p className="mt-1.5 max-w-prose text-[13px] leading-relaxed text-white">
+              {quiz.description}
+            </p>
+          )}
+          <p className="mt-2 text-[12px] leading-snug tabular-nums text-white">{metaLine}</p>
+
+          <div className="mt-4 flex flex-col gap-2.5 sm:flex-row sm:items-center">
             <button
               type="button"
-              onClick={handleRegradeAll}
+              onClick={handleTogglePublish}
               disabled={busy !== null}
-              className="h-9 px-3 rounded-full bg-white/[0.04] border border-white/[0.10] text-white text-[12px] font-semibold hover:bg-white/[0.08] touch-manipulation disabled:opacity-50 inline-flex items-center gap-1.5"
+              className={cn(quiz.is_published ? cn(neutralButtonCn, 'w-full sm:w-auto') : primaryButtonCn)}
             >
-              <Brain className="h-3.5 w-3.5" />
-              {busy === 'regrade' ? 'Regrading…' : `Regrade ${stats.pending} pending`}
+              {busy === 'publish'
+                ? 'Working…'
+                : quiz.is_published
+                  ? 'Unpublish'
+                  : 'Publish to learners'}
             </button>
-          )}
-          <button
-            type="button"
-            onClick={handleExportCsv}
-            disabled={attempts.length === 0}
-            title="Export every attempt for this quiz to CSV (ESFA-friendly)"
-            className="h-9 px-3 rounded-full bg-white/[0.04] border border-white/[0.10] text-white text-[12px] font-semibold hover:bg-white/[0.08] touch-manipulation disabled:opacity-50 inline-flex items-center gap-1.5"
+            <button
+              type="button"
+              onClick={handleExportCsv}
+              disabled={attempts.length === 0}
+              className={cn(neutralButtonCn, 'w-full sm:w-auto')}
+            >
+              Export CSV
+            </button>
+          </div>
+        </motion.div>
+
+        <HubKpiRow>
+          <HubKpi
+            accent
+            label="Started"
+            value={String(stats.total)}
+            verdict={
+              stats.total === 0
+                ? quiz.is_published
+                  ? 'Nobody has opened it yet'
+                  : 'Publish it so learners can start'
+                : `${stats.inProgress} still in progress`
+            }
+          />
+          <HubKpi
+            label="Completed"
+            value={String(stats.completed)}
+            verdict={
+              stats.completed === 0
+                ? 'No submissions yet'
+                : stats.passRate == null
+                  ? 'No pass mark set'
+                  : `${stats.passRate}% passed`
+            }
+            sentiment={stats.completed > 0 ? 'good' : 'neutral'}
+          />
+          <HubKpi
+            label="AI marks pending"
+            value={String(stats.pending)}
+            verdict={
+              stats.pending > 0 ? 'Free-response answers waiting for a mark' : 'Nothing waiting'
+            }
+            sentiment={stats.pending > 0 ? 'bad' : 'neutral'}
+          />
+          <HubKpi
+            label="Average score"
+            value={stats.avg == null ? '—' : `${stats.avg}%`}
+            verdict={
+              stats.avg == null
+                ? 'No scored attempts yet'
+                : quiz.pass_mark != null
+                  ? stats.avg >= quiz.pass_mark
+                    ? 'Above the pass mark'
+                    : 'Below the pass mark'
+                  : 'Across every scored attempt'
+            }
+            sentiment={
+              stats.avg == null || quiz.pass_mark == null
+                ? 'neutral'
+                : stats.avg >= quiz.pass_mark
+                  ? 'good'
+                  : 'bad'
+            }
+          />
+        </HubKpiRow>
+
+        {/* Question performance */}
+        {showQuestionPerformance && (
+          <motion.section
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="space-y-3"
           >
-            <Download className="h-3.5 w-3.5" />
-            Export CSV
-          </button>
-        </div>
-      </div>
+            <HubSectionHeading>Where the cohort struggles</HubSectionHeading>
 
-      {/* Stats grid */}
-      <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-        <Tile label="Started" value={stats.total} icon={<Users className="h-3.5 w-3.5" />} />
-        <Tile
-          label="Completed"
-          value={stats.completed}
-          tone={stats.completed > 0 ? 'emerald' : undefined}
-          icon={<Check className="h-3.5 w-3.5" />}
-        />
-        <Tile
-          label="In progress"
-          value={stats.inProgress}
-          tone={stats.inProgress > 0 ? 'amber' : undefined}
-          icon={<Clock className="h-3.5 w-3.5" />}
-        />
-        <Tile
-          label="Avg score"
-          value={stats.avg ?? '—'}
-          suffix={stats.avg != null ? '%' : undefined}
-          tone={
-            stats.avg == null ? undefined : stats.avg >= 75 ? 'emerald' : stats.avg >= 50 ? 'amber' : 'red'
-          }
-          icon={<TrendingUp className="h-3.5 w-3.5" />}
-        />
-      </div>
-
-      {/* Question performance */}
-      {questionStats.length > 0 && stats.completed > 0 && (
-        <div className="mt-6">
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Question performance
-          </div>
-          <h2 className="mt-1 text-[18px] font-semibold text-white tracking-tight">
-            Where the cohort struggles
-          </h2>
-
-          {acStats.length > 0 && (
-            <div className="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-2">
-              {acStats.slice(0, 3).map((s) => (
-                <button
-                  key={s.ac_ref}
-                  type="button"
-                  onClick={() =>
-                    window.dispatchEvent(
-                      new CustomEvent('quiz:suggest-from-ac', {
-                        detail: { ac_codes: [s.ac_ref] },
-                      })
-                    )
-                  }
-                  className={cn(
-                    'rounded-2xl border px-4 py-3 text-left touch-manipulation transition-colors hover:ring-1 hover:ring-elec-yellow/40',
-                    (s.correctness ?? 100) < 50
-                      ? 'border-red-500/[0.30] bg-red-500/[0.05]'
-                      : (s.correctness ?? 100) < 75
-                        ? 'border-amber-500/[0.30] bg-amber-500/[0.05]'
-                        : 'border-emerald-500/[0.20] bg-emerald-500/[0.05]'
-                  )}
-                  title="Send a follow-up quiz on this AC"
-                >
-                  <div className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/85">
-                    AC {s.ac_ref}
-                  </div>
-                  <div className="mt-1 flex items-baseline gap-2">
-                    <span className="text-[20px] font-semibold tabular-nums text-white leading-none">
-                      {s.correctness ?? '—'}%
-                    </span>
-                    <span className="text-[10.5px] text-white/65 tabular-nums">
-                      across {s.questions}{' '}
-                      {s.questions === 1 ? 'question' : 'questions'}
-                    </span>
-                  </div>
-                  <div className="mt-1.5 text-[10.5px] text-white/85 inline-flex items-center gap-1">
-                    <Sparkles className="h-3 w-3" />
-                    Tap to send a quiz on this AC
-                  </div>
-                </button>
-              ))}
-            </div>
-          )}
-
-          <ol className="mt-3 space-y-2">
-            {questionStats.map((qs, i) => (
-              <li
-                key={qs.question.id}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-4 py-3"
+            {acStats.length > 0 && (
+              <motion.div
+                variants={itemVariants}
+                className={cn(
+                  'grid grid-cols-1 gap-2.5 sm:gap-3',
+                  acStats.length >= 3
+                    ? 'sm:grid-cols-3'
+                    : acStats.length === 2
+                      ? 'sm:grid-cols-2'
+                      : 'sm:grid-cols-1'
+                )}
               >
-                <div className="flex items-start gap-3">
-                  <div className="flex-shrink-0 inline-flex items-center justify-center h-9 w-9 rounded-xl bg-white/[0.04] border border-white/[0.10] text-[11px] font-semibold tabular-nums text-white">
-                    Q{i + 1}
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-1.5 flex-wrap mb-0.5">
-                      {qs.question.ac_ref && (
-                        <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-blue-500/[0.10] border border-blue-400/30 text-[9.5px] font-semibold tracking-[0.06em] uppercase text-blue-200">
-                          AC {qs.question.ac_ref}
-                        </span>
-                      )}
-                      <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-white/[0.04] border border-white/[0.10] text-[9.5px] font-semibold tracking-[0.06em] uppercase text-white">
-                        {qs.question.question_kind.replace('_', ' ')}
-                      </span>
-                    </div>
-                    <div className="text-[12.5px] text-white leading-snug truncate">
-                      {qs.question.question_text}
-                    </div>
-                    {/* Bar */}
-                    <div className="mt-2 h-2 rounded-full bg-white/[0.05] overflow-hidden flex">
-                      {qs.correct > 0 && (
-                        <div
-                          className="bg-emerald-400/85"
-                          style={{ width: `${(qs.correct / qs.total) * 100}%` }}
-                        />
-                      )}
-                      {qs.partial > 0 && (
-                        <div
-                          className="bg-amber-400/85"
-                          style={{ width: `${(qs.partial / qs.total) * 100}%` }}
-                        />
-                      )}
-                      {qs.incorrect > 0 && (
-                        <div
-                          className="bg-red-400/85"
-                          style={{ width: `${(qs.incorrect / qs.total) * 100}%` }}
-                        />
-                      )}
-                      {qs.pending > 0 && (
-                        <div
-                          className="bg-blue-400/85"
-                          style={{ width: `${(qs.pending / qs.total) * 100}%` }}
-                        />
-                      )}
-                      {qs.unanswered > 0 && (
-                        <div
-                          className="bg-white/[0.10]"
-                          style={{ width: `${(qs.unanswered / qs.total) * 100}%` }}
-                        />
-                      )}
-                    </div>
-                    <div className="mt-1.5 flex items-center gap-x-2 text-[10.5px] tabular-nums flex-wrap">
-                      <span className="text-emerald-300">{qs.correct} correct</span>
-                      {qs.partial > 0 && <span className="text-amber-300">· {qs.partial} partial</span>}
-                      <span className="text-red-300">· {qs.incorrect} wrong</span>
-                      {qs.pending > 0 && <span className="text-blue-300">· {qs.pending} pending</span>}
-                      {qs.unanswered > 0 && <span className="text-white/55">· {qs.unanswered} skipped</span>}
-                    </div>
-                  </div>
-                  <div className="flex-shrink-0 text-right">
-                    <div
+                {acStats.slice(0, 3).map((s) => {
+                  const weak = (s.correctness ?? 100) < 50;
+                  return (
+                    <button
+                      key={s.ac_ref}
+                      type="button"
+                      onClick={() =>
+                        window.dispatchEvent(
+                          new CustomEvent('quiz:suggest-from-ac', {
+                            detail: { ac_codes: [s.ac_ref] },
+                          })
+                        )
+                      }
                       className={cn(
-                        'text-[16px] font-semibold tabular-nums leading-none',
-                        qs.correctness == null
-                          ? 'text-white/55'
-                          : qs.correctness >= 75
-                            ? 'text-emerald-300'
-                            : qs.correctness >= 50
-                              ? 'text-amber-300'
-                              : 'text-red-300'
+                        CARD_BASE,
+                        CARD_NEUTRAL,
+                        'min-h-[104px] p-4',
+                        weak && 'border-elec-yellow/70'
                       )}
+                      title="Send a follow-up quiz on this AC"
                     >
-                      {qs.correctness ?? '—'}%
-                    </div>
-                    <div className="mt-0.5 text-[10px] text-white/55 tabular-nums">
-                      n={qs.total}
-                    </div>
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </div>
-      )}
+                      <span className="text-[14.5px] font-semibold leading-tight tracking-tight text-white">
+                        AC {s.ac_ref}
+                      </span>
+                      <span
+                        className={cn(
+                          'mt-2 text-[26px] font-semibold leading-none tabular-nums tracking-tight',
+                          weak ? 'text-elec-yellow' : 'text-white'
+                        )}
+                      >
+                        {s.correctness ?? '—'}%
+                      </span>
+                      <span className="mt-1.5 text-[11.5px] leading-snug text-white">
+                        across {plural(s.questions, 'question')}
+                      </span>
+                      <span className="flex-grow" />
+                      <span className="mt-2 text-[12px] font-medium text-elec-yellow">
+                        Send a quiz on this AC
+                      </span>
+                    </button>
+                  );
+                })}
+              </motion.div>
+            )}
 
-      {/* Attempts list */}
-      <div className="mt-6">
-        <div className="flex items-end justify-between gap-3 mb-3">
-          <div>
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              Attempts
+            <motion.div
+              variants={itemVariants}
+              className={cn(
+                '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
+                CARD_SURFACE
+              )}
+            >
+              <ol className="divide-y divide-white/[0.10]">
+                {questionStats.map((qs, i) => {
+                  const weak = qs.correctness != null && qs.correctness < 50;
+                  const breakdown = [
+                    `${qs.correct} right`,
+                    qs.partial > 0 ? `${qs.partial} partly` : null,
+                    `${qs.incorrect} wrong`,
+                    qs.pending > 0 ? `${qs.pending} pending` : null,
+                    qs.unanswered > 0 ? `${qs.unanswered} skipped` : null,
+                  ]
+                    .filter(Boolean)
+                    .join(' · ');
+                  return (
+                    <li key={qs.question.id} className="flex items-start gap-3 px-4 py-3.5 sm:px-5">
+                      <span
+                        aria-hidden="true"
+                        className={cn(
+                          'mt-0.5 h-8 w-[3px] shrink-0 rounded-full',
+                          weak ? 'bg-elec-yellow' : 'bg-white/[0.25]'
+                        )}
+                      />
+                      <div className="min-w-0 flex-1">
+                        <div className="text-[12px] leading-tight tabular-nums text-white">
+                          Q{i + 1}
+                          {qs.question.ac_ref ? ` · AC ${qs.question.ac_ref}` : ''}
+                          {` · ${qs.question.question_kind.replace(/_/g, ' ')}`}
+                        </div>
+                        <div className="mt-0.5 truncate text-[14px] font-semibold leading-tight text-white">
+                          {qs.question.question_text}
+                        </div>
+                        {/* Right / partly / wrong — real state, so it keeps
+                            its colour. Pending and skipped are white. */}
+                        <div className="mt-2 flex h-1.5 overflow-hidden rounded-full bg-white/[0.08]">
+                          {qs.correct > 0 && (
+                            <div
+                              className="bg-emerald-400"
+                              style={{ width: `${(qs.correct / qs.total) * 100}%` }}
+                            />
+                          )}
+                          {qs.partial > 0 && (
+                            <div
+                              className="bg-elec-yellow"
+                              style={{ width: `${(qs.partial / qs.total) * 100}%` }}
+                            />
+                          )}
+                          {qs.incorrect > 0 && (
+                            <div
+                              className="bg-red-400"
+                              style={{ width: `${(qs.incorrect / qs.total) * 100}%` }}
+                            />
+                          )}
+                          {qs.pending > 0 && (
+                            <div
+                              className="bg-white/[0.35]"
+                              style={{ width: `${(qs.pending / qs.total) * 100}%` }}
+                            />
+                          )}
+                        </div>
+                        <div className="mt-1.5 text-[12px] leading-tight tabular-nums text-white">
+                          {breakdown}
+                        </div>
+                      </div>
+                      <div className="shrink-0 text-right">
+                        <div
+                          className={cn(
+                            'text-[16px] font-semibold leading-none tabular-nums',
+                            weak ? 'text-elec-yellow' : 'text-white'
+                          )}
+                        >
+                          {qs.correctness ?? '—'}%
+                        </div>
+                        <div className="mt-1 text-[11px] tabular-nums text-white">
+                          of {qs.total}
+                        </div>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ol>
+            </motion.div>
+          </motion.section>
+        )}
+
+        {/* Attempts */}
+        <motion.section
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="space-y-3"
+        >
+          <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
+            <HubSectionHeading>Attempts</HubSectionHeading>
+            <div className="flex shrink-0 items-center gap-3">
+              <span
+                className={cn(
+                  'text-[11px] font-semibold tabular-nums',
+                  stats.pending > 0 ? 'text-elec-yellow' : 'text-white'
+                )}
+              >
+                {stats.pending > 0
+                  ? `${stats.pending} need AI marks`
+                  : plural(attempts.length, 'attempt')}
+              </span>
+              {/* Regrade is a volt text action, not a second volt button. */}
+              {stats.pending > 0 && (
+                <button
+                  type="button"
+                  onClick={() => void handleRegradeAll()}
+                  disabled={busy !== null}
+                  className="-my-2 -mr-2 flex h-11 items-center px-2 text-[12px] font-bold text-elec-yellow transition-colors touch-manipulation"
+                >
+                  {busy === 'regrade' ? 'Regrading…' : `Regrade ${stats.pending} pending`}
+                </button>
+              )}
             </div>
-            <h2 className="mt-1 text-[18px] font-semibold text-white tracking-tight">
-              {attempts.length === 0 ? 'No attempts yet' : `${attempts.length} attempts`}
-            </h2>
-          </div>
-          {stats.pending > 0 && (
-            <span className="inline-flex items-center gap-1 h-6 px-2 rounded-full bg-amber-500/[0.10] border border-amber-400/30 text-[10.5px] font-semibold text-amber-200">
-              <Brain className="h-3 w-3" />
-              {stats.pending} need AI marks
-            </span>
-          )}
-        </div>
+          </motion.div>
 
-        {attempts.length === 0 ? (
-          <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-6 py-10 text-center">
-            <p className="text-[13px] text-white max-w-md mx-auto leading-relaxed">
-              No-one has started this {kindLabel.toLowerCase()} yet.
-              {!quiz.is_published &&
-                ' Publish it so the learner / cohort can see and take it.'}
-            </p>
-          </div>
-        ) : (
-          <>
-            <ul className="space-y-2">
-              {attempts.slice(0, visibleAttempts).map((a) => (
-                <li key={a.id}>
+          <motion.div
+            variants={itemVariants}
+            className={cn(
+              '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
+              CARD_SURFACE
+            )}
+          >
+            {attempts.length === 0 ? (
+              <p className="px-4 py-8 text-center text-[13px] text-white sm:px-5">
+                Nobody has started this {kindLabel.toLowerCase()} yet.
+                {!quiz.is_published && ' Publish it so the learner or cohort can see and take it.'}
+              </p>
+            ) : (
+              <>
+                <ul className="divide-y divide-white/[0.10]">
+                  {attempts.slice(0, visibleAttempts).map((a) => (
+                    <li key={a.id}>
+                      <AttemptRowButton
+                        a={a}
+                        quiz={quiz}
+                        pendingCount={pendingByAttempt[a.id] ?? 0}
+                        onClick={() => {
+                          setReviewAttemptId(a.id);
+                          setReviewStudentName(a.student_name);
+                        }}
+                      />
+                    </li>
+                  ))}
+                </ul>
+                {attempts.length > visibleAttempts && (
                   <button
                     type="button"
-                    onClick={() => {
-                      setReviewAttemptId(a.id);
-                      setReviewStudentName(a.student_name);
-                    }}
-                    className="w-full text-left bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-4 py-3 hover:bg-white/[0.02] hover:border-white/[0.10] transition-colors touch-manipulation"
+                    onClick={() => setVisibleAttempts((n) => n + 50)}
+                    className="flex h-11 w-full items-center justify-center border-t border-white/[0.10] text-[12.5px] font-semibold text-white transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09]"
                   >
-                    <AttemptListRow
-                      a={a}
-                      quiz={quiz}
-                      pendingCount={pendingByAttempt[a.id] ?? 0}
-                    />
+                    {attempts.length - visibleAttempts} more
                   </button>
-                </li>
-              ))}
-            </ul>
-            {attempts.length > visibleAttempts && (
-              <div className="mt-4 flex items-center justify-between gap-3">
-                <p className="text-[11.5px] text-white/60 tabular-nums">
-                  Showing {Math.min(visibleAttempts, attempts.length)} of {attempts.length}
-                </p>
-                <button
-                  type="button"
-                  onClick={() => setVisibleAttempts((n) => n + 50)}
-                  className="h-11 px-4 text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
-                >
-                  Load more →
-                </button>
-              </div>
+                )}
+              </>
             )}
-          </>
-        )}
-      </div>
+          </motion.div>
+        </motion.section>
+      </HubBody>
 
       <QuizAttemptReviewSheet
         open={reviewAttemptId !== null}
@@ -859,18 +909,20 @@ export default function TutorQuizDetailPage() {
         attemptId={reviewAttemptId}
         studentName={reviewStudentName}
       />
-    </PageFrame>
+    </HubPage>
   );
 }
 
-function AttemptListRow({
+function AttemptRowButton({
   a,
   quiz,
   pendingCount,
+  onClick,
 }: {
   a: AttemptRow;
   quiz: QuizMeta;
   pendingCount: number;
+  onClick: () => void;
 }) {
   const pct =
     a.score != null && a.total_points != null && a.total_points > 0
@@ -878,100 +930,68 @@ function AttemptListRow({
       : null;
   const passed = quiz.pass_mark != null && pct != null ? pct >= quiz.pass_mark : null;
   const isComplete = !!a.completed_at;
+  const urgent = pendingCount > 0;
+
+  const status = !isComplete
+    ? 'In progress'
+    : passed
+      ? 'Passed'
+      : passed === false
+        ? 'Failed'
+        : 'Submitted';
+
+  const reason = [
+    status,
+    a.completed_at ? `submitted ${formatRelative(a.completed_at)}` : `started ${formatRelative(a.started_at)}`,
+    a.time_taken_seconds != null ? `${Math.round(a.time_taken_seconds / 60)} min` : null,
+    pendingCount > 0 ? `${pendingCount} AI ${pendingCount === 1 ? 'mark' : 'marks'} pending` : null,
+  ]
+    .filter(Boolean)
+    .join(' · ');
 
   return (
-    <div className="flex items-center gap-3 flex-wrap">
-      <div className="min-w-0 flex-1">
-        <div className="flex items-center gap-1.5 flex-wrap">
-          <span className="text-[13px] font-semibold text-white tracking-tight truncate">
-            {a.student_name}
-          </span>
-          {!isComplete ? (
-            <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-amber-500/[0.10] border border-amber-400/30 text-[9.5px] font-semibold tracking-[0.06em] uppercase text-amber-200">
-              In progress
-            </span>
-          ) : passed ? (
-            <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-emerald-500/[0.10] border border-emerald-400/30 text-[9.5px] font-semibold tracking-[0.06em] uppercase text-emerald-200">
-              Pass
-            </span>
-          ) : passed === false ? (
-            <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-red-500/[0.10] border border-red-400/30 text-[9.5px] font-semibold tracking-[0.06em] uppercase text-red-200">
-              Fail
-            </span>
-          ) : (
-            <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-white/[0.04] border border-white/[0.10] text-[9.5px] font-semibold tracking-[0.06em] uppercase text-white">
-              Submitted
-            </span>
-          )}
-          {pendingCount > 0 && (
-            <span className="inline-flex items-center gap-1 h-4 px-1.5 rounded-md bg-blue-500/[0.10] border border-blue-400/30 text-[9.5px] font-semibold tracking-[0.06em] uppercase text-blue-200">
-              <Brain className="h-2.5 w-2.5" />
-              {pendingCount} AI pending
-            </span>
-          )}
-        </div>
-        <div className="mt-0.5 text-[10.5px] text-white tabular-nums">
-          {a.completed_at ? `Submitted ${formatRelative(a.completed_at)}` : `Started ${formatRelative(a.started_at)}`}
-          {a.time_taken_seconds != null && (
-            <>
-              <span className="mx-1.5 text-white/35">·</span>
-              <span>{Math.round(a.time_taken_seconds / 60)}m</span>
-            </>
-          )}
-        </div>
-      </div>
-      <div className="flex-shrink-0 text-right">
-        {pct != null ? (
-          <>
-            <div className="text-[16px] font-semibold tabular-nums text-white leading-none">
-              {pct}%
-            </div>
-            {a.score != null && a.total_points != null && (
-              <div className="mt-0.5 text-[10px] text-white/65 tabular-nums">
-                {a.score}/{a.total_points}
-              </div>
-            )}
-          </>
-        ) : (
-          <div className="text-[10.5px] text-white/55">—</div>
-        )}
-      </div>
-    </div>
-  );
-}
-
-function Tile({
-  label,
-  value,
-  suffix,
-  tone,
-  icon,
-}: {
-  label: string;
-  value: number | string;
-  suffix?: string;
-  tone?: 'emerald' | 'amber' | 'red';
-  icon?: React.ReactNode;
-}) {
-  return (
-    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-4 py-3">
-      <div className="flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-[0.16em] text-white">
-        {icon}
-        {label}
-      </div>
-      <div
+    <button
+      type="button"
+      onClick={onClick}
+      className="flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5"
+    >
+      <span
+        aria-hidden="true"
         className={cn(
-          'mt-1 text-[24px] font-semibold tabular-nums leading-none',
-          tone === 'emerald' && 'text-emerald-300',
-          tone === 'amber' && 'text-amber-300',
-          tone === 'red' && 'text-red-300',
-          !tone && 'text-white'
+          'h-8 w-[3px] shrink-0 rounded-full',
+          passed === false ? 'bg-red-400' : urgent ? 'bg-elec-yellow' : 'bg-white/[0.25]'
         )}
-      >
-        {value}
-        {suffix && <span className="text-[14px] ml-0.5">{suffix}</span>}
-      </div>
-    </div>
+      />
+      <span className="min-w-0 flex-1">
+        <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+          {a.student_name}
+        </span>
+        <span
+          className={cn(
+            'mt-0.5 block truncate text-[12px] leading-tight',
+            passed === false ? 'text-red-300' : urgent ? 'text-elec-yellow' : 'text-white'
+          )}
+        >
+          {reason}
+        </span>
+      </span>
+      <span className="shrink-0 text-right">
+        <span
+          className={cn(
+            'block text-[13px] font-semibold tabular-nums',
+            urgent ? 'text-elec-yellow' : 'text-white'
+          )}
+        >
+          {pct != null ? `${pct}%` : '—'}
+        </span>
+        {a.score != null && a.total_points != null && (
+          <span className="mt-0.5 block text-[11px] tabular-nums text-white">
+            {a.score}/{a.total_points}
+          </span>
+        )}
+      </span>
+      <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
+    </button>
   );
 }
 

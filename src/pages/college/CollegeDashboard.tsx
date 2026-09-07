@@ -6,7 +6,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { CommandPalette } from '@/components/college/CommandPalette';
 import { NotificationCenter } from '@/components/college/NotificationCenter';
 import { CollegeBottomNav } from '@/components/college/CollegeBottomNav';
-import { BackButton } from '@/components/college/primitives';
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 import { SectionSkeleton } from '@/components/ui/page-skeleton';
 
@@ -552,7 +552,12 @@ const CollegeDashboard = () => {
     switch (activeSection) {
       // Overview
       case 'overview':
-        return <CollegeOverviewSection onNavigate={handleNavigate} />;
+        return (
+          <CollegeOverviewSection
+            onNavigate={handleNavigate}
+            onFindLearner={() => setCommandPaletteOpen(true)}
+          />
+        );
 
       // Hubs
       case 'peoplehub':
@@ -667,60 +672,57 @@ const CollegeDashboard = () => {
         return <TutorWorkloadSection />;
 
       default:
-        return <CollegeOverviewSection onNavigate={handleNavigate} />;
+        return (
+          <CollegeOverviewSection
+            onNavigate={handleNavigate}
+            onFindLearner={() => setCommandPaletteOpen(true)}
+          />
+        );
     }
   };
 
   return (
     <CollegeSupabaseProvider collegeId={profile?.college_id ?? undefined}>
-      <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-elec-dark pb-24">
-        {/* Sticky Header — editorial text-only nav. Uses bg-elec-dark to
-            match the main Dashboard (the editorial Index/home surface in
-            Layout.tsx) — the old hsl(0 0% 8%) was visibly greyer. */}
-        <div className="sticky top-0 z-50 bg-elec-dark/95 backdrop-blur-sm border-b border-white/[0.06]">
-          <div className="mx-auto max-w-7xl px-4">
-            <div className="flex items-center h-12 gap-4 sm:gap-6">
-              <BackButton
-                label={activeSection === 'overview' ? 'Exit College' : 'Back'}
-                onBack={activeSection === 'overview' ? handleGoHome : handleBack}
-              />
-              <div className="flex-1 min-w-0 flex items-baseline gap-2.5">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white hidden sm:inline">
-                  College
-                </span>
-                <span className="hidden sm:inline h-3 w-px bg-white/10" aria-hidden />
-                <h1 className="text-[13px] sm:text-sm font-semibold text-white truncate tracking-tight">
-                  {sectionTitles[activeSection]}
-                </h1>
-              </div>
-              <div className="flex items-center gap-3 sm:gap-4 shrink-0">
-                <button
-                  onClick={() => setCommandPaletteOpen(true)}
-                  aria-label="Search learners"
-                  className="flex items-center gap-2 h-8 px-2.5 sm:px-3 rounded-full border border-white/[0.12] bg-white/[0.04] hover:bg-white/[0.08] hover:border-white/25 text-white/65 hover:text-white transition-colors touch-manipulation"
-                >
-                  <Search className="h-3.5 w-3.5 shrink-0" />
-                  <span className="text-[12px] font-medium hidden sm:inline">Search learners</span>
-                  <kbd className="hidden lg:inline text-[10px] font-medium text-white/70 border border-white/15 rounded px-1 ml-0.5">
-                    ⌘K
-                  </kbd>
-                </button>
-                <NotificationCenter onNavigate={handleNavigate} />
-                <button
-                  onClick={() => setActiveSection('collegesettings')}
-                  className="text-[12.5px] font-medium text-white hover:text-white transition-colors touch-manipulation"
-                >
-                  Settings
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+      {/* Same shell as the Business Hub and Inspection & Testing: the shared
+          masthead with the college's own controls on the right of the rule,
+          and the shared body frame beneath it. The hand-rolled header this
+          replaces was a near-copy of HubMasthead that had already drifted —
+          a 32px search pill on a 48px bar, grey text, and a `max-w-7xl` that
+          did not match the page under it. */}
+      <HubPage>
+        <HubMasthead
+          section="College"
+          title={sectionTitles[activeSection]}
+          onBack={activeSection === 'overview' ? handleGoHome : handleBack}
+          trailing={
+            <>
+              <button
+                type="button"
+                onClick={() => setCommandPaletteOpen(true)}
+                aria-label="Search learners"
+                className="flex h-11 items-center gap-2 px-2 text-white transition-colors hover:text-elec-yellow touch-manipulation sm:px-2.5"
+              >
+                <Search className="h-4 w-4 shrink-0" aria-hidden />
+                <span className="hidden text-[12.5px] font-medium sm:inline">Search learners</span>
+                <kbd className="ml-0.5 hidden rounded border border-white/15 px-1 text-[10px] font-medium text-white lg:inline">
+                  ⌘K
+                </kbd>
+              </button>
+              <NotificationCenter onNavigate={handleNavigate} />
+              <button
+                type="button"
+                onClick={() => setActiveSection('collegesettings')}
+                className="flex h-11 items-center px-2 text-[12.5px] font-medium text-white transition-colors hover:text-elec-yellow touch-manipulation"
+              >
+                Settings
+              </button>
+            </>
+          }
+        />
 
-        {/* Main Content */}
-        <div className="px-4 py-4">
+        <HubBody pushContext="Get notified about marking, off-the-job hours and learners who need you">
           <Suspense fallback={<SectionLoader />}>{renderSection()}</Suspense>
-        </div>
+        </HubBody>
 
         {/* Command Palette */}
         <CommandPalette
@@ -731,7 +733,7 @@ const CollegeDashboard = () => {
 
         {/* Persistent native bottom nav (mobile) */}
         <CollegeBottomNav activeSection={activeSection} onSelect={setActiveSection} />
-      </div>
+      </HubPage>
     </CollegeSupabaseProvider>
   );
 };

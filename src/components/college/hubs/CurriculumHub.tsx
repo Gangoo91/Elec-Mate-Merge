@@ -1,261 +1,199 @@
-import { motion } from 'framer-motion';
+/**
+ * Curriculum Hub — courses, schemes of work, lesson plans and materials.
+ *
+ * Rebuilt on the shared hub shell (`@/components/hub/HubPrimitives`). The
+ * masthead is drawn by CollegeDashboard; this is only the body:
+ *
+ *   quick start → this week's lessons → build → deliver
+ *
+ * What went, and why:
+ *
+ * The STAT STRIP. Courses, Lessons, Drafts, Upcoming — every one of those
+ * numbers now sits on the card that owns it, so the strip was repeating the
+ * page back to itself.
+ *
+ * The "AI-Powered" section that held the Timetable. A timetable is not an AI
+ * tool; it was there because the group needed a second card.
+ *
+ * The QUICK ACTIONS grid at the bottom — four small cards that opened the
+ * same four sections as the big cards above them. They are the quick start
+ * now, at the top, where a tutor between classes can reach them.
+ *
+ * One bug fixed: the upcoming-lessons list read `lesson.scheduledDate` and
+ * `lesson.cohortName`, neither of which exists on `CollegeLessonPlan` (the
+ * columns are `scheduled_date` and `cohort_id`), so every row rendered
+ * "Invalid Date" with no cohort. The cohort name now comes from the cohorts
+ * already in context.
+ */
+import { useMemo } from 'react';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
-import { PullToRefresh } from '@/components/college/ui/PullToRefresh';
-import { useQueryClient } from '@tanstack/react-query';
 import {
-  PageFrame,
-  PageHero,
-  StatStrip,
-  SectionHeader,
-  HubGrid,
-  HubCard,
-  ListCard,
-  ListRow,
-  Pill,
-  itemVariants,
-} from '@/components/college/primitives';
+  HubQuickStart,
+  HubWorkList,
+  HubToolGrid,
+  type HubTool,
+  type HubQuickAction,
+  type HubWorkItem,
+} from '@/components/hub/HubPrimitives';
 
 interface CurriculumHubProps {
   onNavigate: (section: CollegeSection) => void;
 }
 
-export function CurriculumHub({ onNavigate }: CurriculumHubProps) {
-  const { courses, lessonPlans, getUpcomingLessonsData } = useCollegeSupabase();
-  const queryClient = useQueryClient();
+const DAY_MS = 86_400_000;
 
-  const handleRefresh = async () => {
-    await queryClient.invalidateQueries({ queryKey: ['college-courses'] });
-    await queryClient.invalidateQueries({ queryKey: ['college-lesson-plans'] });
-  };
+function fmtDay(iso: string): string {
+  const d = new Date(iso);
+  if (!Number.isFinite(d.getTime())) return '';
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const diff = Math.round((d.getTime() - today.getTime()) / DAY_MS);
+  if (diff === 0) return 'Today';
+  if (diff === 1) return 'Tomorrow';
+  return d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+}
+
+export function CurriculumHub({ onNavigate }: CurriculumHubProps) {
+  const { courses, lessonPlans, cohorts, getUpcomingLessonsData } = useCollegeSupabase();
 
   const activeCourses = courses.filter((c) => c.status === 'Active').length;
   const upcomingLessons = getUpcomingLessonsData();
   const draftLessons = lessonPlans.filter((lp) => lp.status === 'Draft').length;
   const totalLessons = lessonPlans.length;
 
+  const cohortName = useMemo(() => {
+    const map = new Map<string, string>();
+    for (const c of cohorts) map.set(c.id, c.name);
+    return (id: string | null) => (id ? map.get(id) : undefined);
+  }, [cohorts]);
+
+  /*
+   * ── This week ────────────────────────────────────────────────────────
+   * The next few scheduled lessons, soonest first (the context query already
+   * orders by date). Nothing is "urgent" here — a lesson happens whether or
+   * not you look at it — so no row wears the volt rule.
+   */
+  const work: HubWorkItem[] = useMemo(
+    () =>
+      upcomingLessons.slice(0, 5).map((lesson) => ({
+        id: lesson.id,
+        title: lesson.title,
+        reason: [cohortName(lesson.cohort_id), lesson.status].filter(Boolean).join(' · ') || 'Lesson',
+        trailing: lesson.scheduled_date ? fmtDay(lesson.scheduled_date) : undefined,
+        onClick: () => onNavigate('lessonplans'),
+      })),
+    [upcomingLessons, cohortName, onNavigate]
+  );
+
+  /*
+   * ── Start something ──────────────────────────────────────────────────
+   * A lesson plan is the thing a tutor most often comes here to begin, so it
+   * takes the single solid volt card.
+   */
+  const quickStart: HubQuickAction[] = [
+    {
+      title: 'New lesson plan',
+      description: 'Plan and publish a lesson',
+      onClick: () => onNavigate('lessonplans'),
+      primary: true,
+    },
+    {
+      title: 'Add a resource',
+      description: 'Upload slides or a handout',
+      onClick: () => onNavigate('teachingresources'),
+    },
+    {
+      title: 'New course',
+      description: 'Standard, off-the-job hours and status',
+      onClick: () => onNavigate('coursesetup'),
+    },
+    {
+      title: 'Open the notebook',
+      description: 'Notes, summaries and quizzes',
+      onClick: () => onNavigate('tutornotebook'),
+    },
+  ];
+
+  /*
+   * ── Tool groups ──────────────────────────────────────────────────────
+   * Four and four. A card reports a figure when it has one and says what it
+   * is for when it doesn't — never both. No eyebrows: "Courses you run /
+   * Course Setup" was a line of type repeating the line beneath it.
+   */
+  const build: HubTool[] = [
+    {
+      id: 'course-setup',
+      title: 'Course setup',
+      onClick: () => onNavigate('coursesetup'),
+      value: activeCourses > 0 ? String(activeCourses) : undefined,
+      valueLabel: activeCourses > 0 ? 'active courses' : undefined,
+      description: 'The courses learners enrol on — standard, off-the-job hours and status.',
+    },
+    {
+      id: 'curriculum-browser',
+      title: 'Curriculum browser',
+      onClick: () => onNavigate('courses'),
+      description: 'Qualification units, learning outcomes and assessment criteria.',
+    },
+    {
+      id: 'schemes-of-work',
+      title: 'Schemes of work',
+      onClick: () => onNavigate('schemesofwork'),
+      description: 'How each qualification is delivered to a cohort across the year.',
+    },
+    {
+      // Drafts are the figure worth showing: work started and not published.
+      // A total of every plan ever written is a number nobody acts on.
+      id: 'lesson-plans',
+      title: 'Lesson plans',
+      onClick: () => onNavigate('lessonplans'),
+      value: draftLessons > 0 ? String(draftLessons) : totalLessons > 0 ? String(totalLessons) : undefined,
+      valueLabel: draftLessons > 0 ? 'drafts, not published' : totalLessons > 0 ? 'plans on file' : undefined,
+      description: 'Create, sequence and publish lesson plans per cohort.',
+      alert: draftLessons > 0,
+    },
+  ];
+
+  const deliver: HubTool[] = [
+    {
+      id: 'timetable',
+      title: 'Timetable',
+      onClick: () => onNavigate('timetable'),
+      value: upcomingLessons.length > 0 ? String(upcomingLessons.length) : undefined,
+      valueLabel: upcomingLessons.length > 0 ? 'lessons this week' : undefined,
+      description: 'Weekly schedule across cohorts, rooms and tutors.',
+    },
+    {
+      id: 'teaching-resources',
+      title: 'Teaching resources',
+      onClick: () => onNavigate('teachingresources'),
+      description: 'Slides, handouts and reference materials for lessons.',
+    },
+    {
+      id: 'tutor-notebook',
+      title: 'Teaching notebook',
+      onClick: () => onNavigate('tutornotebook'),
+      description: 'Notes, lesson summaries and generated quizzes.',
+    },
+    {
+      id: 'compliance-docs',
+      title: 'Compliance docs',
+      onClick: () => onNavigate('compliancedocs'),
+      description: 'Policies, quality documentation and inspection-ready records.',
+    },
+  ];
+
   return (
-    <PullToRefresh onRefresh={handleRefresh}>
-      <PageFrame>
-        {/* HERO */}
-        <motion.div variants={itemVariants}>
-          <PageHero
-            eyebrow="Curriculum Hub"
-            title="Courses, lessons & materials"
-            description="Plan qualifications, lesson sequences and teaching resources — powered by AI where useful."
-            tone="emerald"
-            actions={
-              <button
-                onClick={() => onNavigate('lessonplans')}
-                className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap"
-              >
-                New lesson →
-              </button>
-            }
-          />
-        </motion.div>
+    <>
+      <HubQuickStart label="Start something" items={quickStart} />
 
-        {/* STATS */}
-        <motion.div variants={itemVariants}>
-          <StatStrip
-            columns={4}
-            stats={[
-              {
-                value: activeCourses,
-                label: 'Courses',
-                sub: 'Active qualifications',
-                onClick: () => onNavigate('courses'),
-              },
-              {
-                value: totalLessons,
-                label: 'Lessons',
-                sub: 'Planned',
-                onClick: () => onNavigate('lessonplans'),
-              },
-              {
-                value: draftLessons,
-                label: 'Drafts',
-                sub: 'Awaiting publish',
-                onClick: () => onNavigate('lessonplans'),
-                accent: draftLessons > 0,
-              },
-              {
-                value: upcomingLessons.length,
-                label: 'Upcoming',
-                sub: 'Scheduled this week',
-                onClick: () => onNavigate('timetable'),
-              },
-            ]}
-          />
-        </motion.div>
+      {/* Renders nothing when nothing is scheduled. */}
+      <HubWorkList label="This week" items={work} unit="lesson" />
 
-        {/* CONTENT MANAGEMENT */}
-        <motion.section variants={itemVariants} className="space-y-6 sm:space-y-7">
-          <SectionHeader eyebrow="Content Management" title="Build your curriculum" />
-          <HubGrid columns={4}>
-            <HubCard
-              number="01"
-              eyebrow="Courses you run"
-              title="Course Setup"
-              description="Set up the courses learners enrol on — standard, off-the-job hours and status."
-              tone="emerald"
-              meta={`${activeCourses} active`}
-              onClick={() => onNavigate('coursesetup')}
-            />
-            <HubCard
-              number="02"
-              eyebrow="Qualifications & Units"
-              title="Curriculum Browser"
-              description="Browse qualification units, LO/AC and BS 7671:2018+A4:2026 matching."
-              tone="emerald"
-              meta="C&G · EAL · ECS"
-              onClick={() => onNavigate('courses')}
-            />
-            <HubCard
-              number="03"
-              eyebrow="Year Plan"
-              title="Schemes of Work"
-              description="Plan how each qualification is delivered to a cohort across the academic year."
-              tone="cyan"
-              meta="Per cohort"
-              onClick={() => onNavigate('schemesofwork')}
-            />
-            <HubCard
-              number="04"
-              eyebrow="Plans & Delivery"
-              title="Lesson Plans"
-              description="Create, sequence and publish lesson plans per cohort."
-              tone="blue"
-              meta={draftLessons > 0 ? `${draftLessons} drafts` : `${totalLessons} plans`}
-              onClick={() => onNavigate('lessonplans')}
-            />
-            <HubCard
-              number="05"
-              eyebrow="Materials Library"
-              title="Teaching Resources"
-              description="Slides, handouts and reference materials for lessons."
-              tone="amber"
-              meta="Uploads & links"
-              onClick={() => onNavigate('teachingresources')}
-            />
-            <HubCard
-              number="06"
-              eyebrow="Quality & Policy"
-              title="Compliance & QA"
-              description="Policies, quality documentation and Ofsted-ready records."
-              tone="purple"
-              meta="Docs & reports"
-              onClick={() => onNavigate('compliancedocs')}
-            />
-          </HubGrid>
-        </motion.section>
+      <HubToolGrid label="Build the curriculum" cards={build} columns="four" />
 
-        {/* AI-POWERED */}
-        <motion.section variants={itemVariants} className="space-y-6 sm:space-y-7">
-          <SectionHeader eyebrow="AI-Powered" title="Intelligent tools" />
-          <HubGrid columns={2}>
-            <HubCard
-              number="07"
-              eyebrow="Notes & Summaries"
-              title="Teaching Notebook"
-              description="AI-assisted notes, lesson summaries and auto-generated quizzes."
-              tone="yellow"
-              meta="AI"
-              badge={<Pill tone="yellow">AI</Pill>}
-              onClick={() => onNavigate('tutornotebook')}
-            />
-            <HubCard
-              number="08"
-              eyebrow="Scheduled Delivery"
-              title="Timetable"
-              description="Weekly lesson schedule across cohorts, rooms and tutors."
-              tone="purple"
-              meta={`${upcomingLessons.length} this week`}
-              onClick={() => onNavigate('timetable')}
-            />
-          </HubGrid>
-        </motion.section>
-
-        {/* UPCOMING LESSONS */}
-        {upcomingLessons.length > 0 && (
-          <motion.section variants={itemVariants} className="space-y-5">
-            <SectionHeader
-              eyebrow="This Week"
-              title="Upcoming lessons"
-              action="View timetable"
-              onAction={() => onNavigate('timetable')}
-            />
-            <ListCard>
-              {upcomingLessons.slice(0, 5).map((lesson) => (
-                <ListRow
-                  key={lesson.id}
-                  onClick={() => onNavigate('lessonplans')}
-                  title={lesson.title}
-                  subtitle={lesson.cohortName}
-                  trailing={
-                    <div className="text-right shrink-0">
-                      <div className="text-[10px] uppercase tracking-[0.14em] text-white">
-                        {new Date(lesson.scheduledDate).toLocaleDateString('en-GB', {
-                          weekday: 'short',
-                        })}
-                      </div>
-                      <div className="mt-0.5 text-[13px] font-medium tabular-nums text-white">
-                        {new Date(lesson.scheduledDate).toLocaleDateString('en-GB', {
-                          day: 'numeric',
-                          month: 'short',
-                        })}
-                      </div>
-                    </div>
-                  }
-                />
-              ))}
-            </ListCard>
-          </motion.section>
-        )}
-
-        {/* QUICK ACTIONS */}
-        <motion.section variants={itemVariants} className="space-y-6 sm:space-y-7">
-          <SectionHeader eyebrow="Quick Actions" title="Create & capture" />
-          <HubGrid columns={4}>
-            <HubCard
-              size="sm"
-              eyebrow="Plan"
-              title="New lesson"
-              description="Start a lesson plan."
-              tone="blue"
-              onClick={() => onNavigate('lessonplans')}
-              cta="Create"
-            />
-            <HubCard
-              size="sm"
-              eyebrow="Upload"
-              title="Add resource"
-              description="Upload slides or handouts."
-              tone="amber"
-              onClick={() => onNavigate('teachingresources')}
-              cta="Upload"
-            />
-            <HubCard
-              size="sm"
-              eyebrow="Course"
-              title="New course"
-              description="Set up a course & OTJ hours."
-              tone="emerald"
-              onClick={() => onNavigate('coursesetup')}
-              cta="Add"
-            />
-            <HubCard
-              size="sm"
-              eyebrow="AI"
-              title="Notebook"
-              description="Generate from AI."
-              tone="yellow"
-              onClick={() => onNavigate('tutornotebook')}
-              cta="Open"
-            />
-          </HubGrid>
-        </motion.section>
-      </PageFrame>
-    </PullToRefresh>
+      <HubToolGrid label="Deliver it" cards={deliver} columns="four" />
+    </>
   );
 }

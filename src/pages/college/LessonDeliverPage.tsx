@@ -1,16 +1,22 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { LoadingState } from '@/components/college/primitives';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { HubMasthead } from '@/components/hub/HubPrimitives';
 import { useLessonPlan, type GeneratedActivity } from '@/hooks/useCurriculum';
 
 /* ==========================================================================
    LessonDeliverPage — presenter / "deliver" mode.
-   - Fullscreen dark canvas
-   - One activity at a time, big type
+   - Fullscreen dark canvas, one activity at a time, big type (projector use —
+     the teaching surface stays full-bleed on purpose)
    - Countdown timer per activity, auto-advances at zero
    - Keyboard: space = pause/play, ←/→ = nav, r = reset timer,
      f = fullscreen, Esc = exit
+
+   Chrome is the shared hub masthead (Back = exit to the plan, Fullscreen on
+   the right). Play is the one solid volt control; the timeline fills solid
+   volt as the session runs. The seven-hue phase palette on the timeline went
+   — blue/cyan/emerald/purple encoded nothing a tutor could read off it.
    ========================================================================== */
 
 export default function LessonDeliverPage() {
@@ -73,6 +79,8 @@ export default function LessonDeliverPage() {
     }
   }, []);
 
+  const exitToPlan = useCallback(() => navigate(`/college/lessons/${id}`), [navigate, id]);
+
   // Keyboard shortcuts
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -92,12 +100,12 @@ export default function LessonDeliverPage() {
       } else if (e.key === 'f' || e.key === 'F') {
         toggleFullscreen();
       } else if (e.key === 'Escape') {
-        if (!document.fullscreenElement) navigate(`/college/lessons/${id}`);
+        if (!document.fullscreenElement) exitToPlan();
       }
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [goPrev, goNext, resetTimer, toggleFullscreen, navigate, id]);
+  }, [goPrev, goNext, resetTimer, toggleFullscreen, exitToPlan]);
 
   // Elapsed time across the whole session
   const elapsedSeconds = useMemo(() => {
@@ -110,25 +118,22 @@ export default function LessonDeliverPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-black text-white flex items-center justify-center">
-        <LoadingState />
+      <div className="flex min-h-screen items-center justify-center bg-elec-dark text-white">
+        <div className="h-6 w-6 animate-spin rounded-full border-2 border-elec-yellow border-t-transparent" />
       </div>
     );
   }
 
   if (error || !plan) {
     return (
-      <div className="min-h-screen bg-black text-white flex items-center justify-center px-6">
-        <div className="max-w-md text-center space-y-4">
-          <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-red-300">
-            Couldn't load plan
-          </div>
-          <p className="text-white text-sm leading-relaxed">
-            {error ?? 'Lesson plan not found.'}
-          </p>
+      <div className="flex min-h-screen items-center justify-center bg-elec-dark px-6 text-white">
+        <div className="max-w-md space-y-4 text-center">
+          <h1 className="text-[15px] font-semibold text-red-300">Couldn't load plan</h1>
+          <p className="text-sm leading-relaxed text-white">{error ?? 'Lesson plan not found.'}</p>
           <button
+            type="button"
             onClick={() => navigate(-1)}
-            className="h-10 px-5 rounded-full border border-white/[0.15] text-white text-[13px] hover:bg-white/[0.06]"
+            className="h-11 rounded-full border border-white/[0.12] bg-white/[0.06] px-5 text-[13px] font-medium text-white transition-colors touch-manipulation hover:bg-white/[0.09]"
           >
             ← Back
           </button>
@@ -138,42 +143,27 @@ export default function LessonDeliverPage() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col">
-      {/* Top chrome */}
-      <header className="border-b border-white/[0.06] px-5 sm:px-8 py-4 flex items-center justify-between gap-4">
-        <div className="min-w-0 flex items-center gap-4">
+    <div className="flex min-h-screen flex-col bg-elec-dark text-white">
+      <HubMasthead
+        section="Deliver"
+        title={plan.title}
+        onBack={exitToPlan}
+        trailing={
           <button
-            onClick={() => navigate(`/college/lessons/${id}`)}
-            className="text-[12px] text-white/65 hover:text-white transition-colors shrink-0"
-          >
-            ← Exit
-          </button>
-          <div className="min-w-0">
-            <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-elec-yellow/80">
-              Deliver mode
-            </div>
-            <h1 className="text-[14px] sm:text-[15px] font-semibold text-white truncate max-w-[60ch]">
-              {plan.title}
-            </h1>
-          </div>
-        </div>
-        <div className="flex items-center gap-2 shrink-0">
-          <button
+            type="button"
             onClick={toggleFullscreen}
-            className="h-9 px-3.5 rounded-full border border-white/[0.1] text-[12px] text-white hover:bg-white/[0.06] transition-colors"
+            className="flex h-11 items-center px-2 text-[12.5px] font-medium text-white transition-colors touch-manipulation hover:text-elec-yellow"
           >
             Fullscreen
           </button>
-        </div>
-      </header>
+        }
+      />
 
       {/* Session progress bar */}
-      <div className="px-5 sm:px-8 pt-4">
-        <div className="flex items-baseline justify-between gap-3 mb-2">
-          <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white">
-            Session progress
-          </div>
-          <div className="text-[11px] font-mono tabular-nums text-white">
+      <div className="px-5 pt-4 sm:px-8">
+        <div className="mb-2 flex items-baseline justify-between gap-3">
+          <div className="text-[12px] font-semibold text-white">Session progress</div>
+          <div className="font-mono text-[11px] tabular-nums text-white">
             {formatClock(elapsedSeconds)} / {formatClock(totalSeconds)}
           </div>
         </div>
@@ -186,20 +176,20 @@ export default function LessonDeliverPage() {
         />
       </div>
 
-      {/* Main stage */}
-      <main className="flex-1 flex items-stretch justify-center px-5 sm:px-8 py-8">
-        <div className="w-full max-w-5xl grid grid-rows-[auto_1fr_auto] gap-8">
+      {/* Main stage — full-bleed teaching surface, unchanged on purpose */}
+      <main className="flex flex-1 items-stretch justify-center px-5 py-8 sm:px-8">
+        <div className="grid w-full max-w-5xl grid-rows-[auto_1fr_auto] gap-8">
           {/* Activity header */}
           {current && (
             <div>
-              <div className="flex items-center gap-3 mb-3 text-[10px] font-medium uppercase tracking-[0.22em] text-white">
-                <span className="text-elec-yellow tabular-nums">
+              <div className="mb-3 flex items-center gap-3 text-[10px] font-medium uppercase tracking-[0.22em] text-white">
+                <span className="tabular-nums text-elec-yellow">
                   {String(index + 1).padStart(2, '0')} / {String(activities.length).padStart(2, '0')}
                 </span>
-                <span className="text-white/25">·</span>
+                <span aria-hidden>·</span>
                 <span>{current.phase}</span>
               </div>
-              <h2 className="text-[28px] sm:text-[44px] lg:text-[56px] font-semibold tracking-tight leading-[1.05] text-white">
+              <h2 className="text-[28px] font-semibold leading-[1.05] tracking-tight text-white sm:text-[44px] lg:text-[56px]">
                 {current.title}
               </h2>
             </div>
@@ -208,23 +198,23 @@ export default function LessonDeliverPage() {
           {/* Activity body */}
           {current && (
             <div className="overflow-y-auto pr-1">
-              <p className="text-[16px] sm:text-[18px] leading-relaxed text-white max-w-[62ch]">
+              <p className="max-w-[62ch] text-[16px] leading-relaxed text-white sm:text-[18px]">
                 {current.description}
               </p>
 
               {current.teacher_moves && current.teacher_moves.length > 0 && (
                 <div className="mt-8">
-                  <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white mb-3">
+                  <div className="mb-3 text-[10px] font-medium uppercase tracking-[0.22em] text-white">
                     Teacher moves
                   </div>
-                  <ul className="space-y-3 max-w-[62ch]">
+                  <ul className="max-w-[62ch] space-y-3">
                     {current.teacher_moves.map((m, i) => (
                       <li key={i} className="flex items-start gap-3">
                         <span
-                          className="mt-[12px] h-1.5 w-1.5 rounded-full bg-elec-yellow shrink-0"
+                          className="mt-[12px] h-1.5 w-1.5 shrink-0 rounded-full bg-elec-yellow"
                           aria-hidden
                         />
-                        <span className="text-[15px] sm:text-[16px] text-white leading-relaxed">
+                        <span className="text-[15px] leading-relaxed text-white sm:text-[16px]">
                           {m}
                         </span>
                       </li>
@@ -234,19 +224,24 @@ export default function LessonDeliverPage() {
               )}
 
               {current.check_for_understanding && (
-                <div className="mt-8 rounded-xl border border-elec-yellow/30 bg-elec-yellow/[0.05] px-5 py-4 max-w-[62ch]">
-                  <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-elec-yellow mb-2">
+                <div
+                  className={cn(
+                    'mt-8 max-w-[62ch] rounded-2xl border border-elec-yellow/35 px-5 py-4',
+                    CARD_SURFACE
+                  )}
+                >
+                  <div className="mb-2 text-[10px] font-medium uppercase tracking-[0.22em] text-elec-yellow">
                     Check for understanding
                   </div>
-                  <div className="text-[15px] sm:text-[16px] text-white leading-relaxed">
+                  <div className="text-[15px] leading-relaxed text-white sm:text-[16px]">
                     {current.check_for_understanding}
                   </div>
                 </div>
               )}
 
               {current.resources_needed && current.resources_needed.length > 0 && (
-                <div className="mt-8 text-[12.5px] text-white/65 leading-relaxed">
-                  <span className="text-white font-medium">Resources · </span>
+                <div className="mt-8 text-[12.5px] leading-relaxed text-white">
+                  <span className="font-semibold">Resources · </span>
                   {current.resources_needed.join(' · ')}
                 </div>
               )}
@@ -254,8 +249,8 @@ export default function LessonDeliverPage() {
           )}
 
           {/* Transport controls */}
-          <div className="flex items-center justify-between gap-4 flex-wrap">
-            <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div className="flex flex-wrap items-center gap-2">
               <TransportBtn label="← Prev" onClick={goPrev} disabled={index === 0} />
               <TransportBtn
                 label={running ? 'Pause ❙❙' : 'Play ►'}
@@ -280,7 +275,7 @@ export default function LessonDeliverPage() {
       </main>
 
       {/* Bottom hint strip */}
-      <footer className="border-t border-white/[0.06] px-5 sm:px-8 py-2.5 flex items-center justify-center gap-5 text-[10.5px] text-white font-mono tracking-wide flex-wrap">
+      <footer className="flex flex-wrap items-center justify-center gap-5 border-t border-white/[0.06] px-5 py-2.5 font-mono text-[10.5px] tracking-wide text-white sm:px-8">
         <span>space play/pause</span>
         <span>← → nav</span>
         <span>r reset</span>
@@ -293,16 +288,12 @@ export default function LessonDeliverPage() {
 
 /* ---- Segmented timeline ---------------------------------------------- */
 
-const PHASE_TONE: Record<GeneratedActivity['phase'], string> = {
-  starter: 'bg-elec-yellow/75',
-  input: 'bg-blue-400/75',
-  modelling: 'bg-cyan-400/75',
-  practice: 'bg-emerald-400/75',
-  practical: 'bg-emerald-500/75',
-  afl: 'bg-purple-400/75',
-  plenary: 'bg-amber-400/75',
-};
-
+/**
+ * One segment per activity, width proportional to its minutes. Done and
+ * elapsed time fill SOLID volt from the left; what is still to come stays a
+ * quiet neutral. Volt here is a control fill, not a wash — the segments are
+ * buttons.
+ */
 function SegmentedTimeline({
   activities,
   total,
@@ -317,38 +308,42 @@ function SegmentedTimeline({
   onJump: (idx: number) => void;
 }) {
   return (
-    <div className="flex rounded-lg overflow-hidden h-6 bg-white/[0.04] border border-white/[0.06]">
-      {activities.map((a, i) => {
-        const pct = Math.max(2, (a.time_mins / total) * 100);
-        const isActive = i === activeIndex;
-        const isDone = i < activeIndex;
-        const innerFill = isActive
-          ? Math.min(1, currentElapsed / (a.time_mins * 60))
-          : isDone
-            ? 1
-            : 0;
-        return (
-          <button
-            key={i}
-            onClick={() => onJump(i)}
-            style={{ width: `${pct}%` }}
-            className={cn(
-              'relative group border-r border-black/30 last:border-r-0 transition-opacity',
-              isActive ? 'opacity-100' : 'opacity-55 hover:opacity-85'
-            )}
-            title={`${a.title} · ${a.time_mins} min`}
-          >
-            <div className={cn('absolute inset-0', PHASE_TONE[a.phase])} />
-            <div
+    <div className="flex h-11 items-center">
+      <div className="flex h-6 w-full overflow-hidden rounded-lg border border-white/[0.10] bg-white/[0.06]">
+        {activities.map((a, i) => {
+          const pct = Math.max(2, (a.time_mins / total) * 100);
+          const isActive = i === activeIndex;
+          const isDone = i < activeIndex;
+          const innerFill = isActive
+            ? Math.min(1, currentElapsed / (a.time_mins * 60))
+            : isDone
+              ? 1
+              : 0;
+          return (
+            <button
+              key={i}
+              type="button"
+              onClick={() => onJump(i)}
+              style={{ width: `${pct}%` }}
               className={cn(
-                'absolute top-0 bottom-0 left-0 bg-black/55',
-                !isDone && 'transition-[width] duration-500'
+                'relative border-r border-elec-dark last:border-r-0 transition-colors touch-manipulation',
+                isActive ? 'bg-white/[0.14]' : 'bg-transparent hover:bg-white/[0.10]'
               )}
-              style={{ width: `${(1 - innerFill) * 100}%` }}
-            />
-          </button>
-        );
-      })}
+              title={`${a.title} · ${a.time_mins} min`}
+              aria-label={`Jump to ${a.title}`}
+              aria-current={isActive ? 'step' : undefined}
+            >
+              <div
+                className={cn(
+                  'absolute inset-y-0 left-0 bg-elec-yellow',
+                  !isDone && 'transition-[width] duration-500'
+                )}
+                style={{ width: `${innerFill * 100}%` }}
+              />
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }
@@ -370,8 +365,9 @@ function CountdownRing({
   const c = 2 * Math.PI * r;
   const off = c * (1 - pct);
 
+  // Red only when the clock is genuinely about to run out.
   const low = remaining <= 30 && remaining > 0;
-  const colour = low ? 'stroke-red-400' : running ? 'stroke-elec-yellow' : 'stroke-white/70';
+  const colour = low ? 'stroke-red-400' : running ? 'stroke-elec-yellow' : 'stroke-white';
 
   return (
     <div className="relative" style={{ width: size, height: size }}>
@@ -380,7 +376,7 @@ function CountdownRing({
           cx={size / 2}
           cy={size / 2}
           r={r}
-          className="stroke-white/[0.08] fill-none"
+          className="fill-none stroke-white/[0.10]"
           strokeWidth="6"
         />
         <circle
@@ -397,7 +393,7 @@ function CountdownRing({
       <div className="absolute inset-0 flex items-center justify-center">
         <div
           className={cn(
-            'text-[18px] font-mono tabular-nums font-semibold',
+            'font-mono text-[18px] font-semibold tabular-nums',
             low ? 'text-red-300' : 'text-white'
           )}
         >
@@ -425,15 +421,16 @@ function TransportBtn({
 }) {
   return (
     <button
+      type="button"
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        'h-11 px-5 rounded-full text-[13px] font-medium transition-colors disabled:opacity-30 disabled:cursor-not-allowed touch-manipulation',
+        'h-11 rounded-full px-5 text-[13px] font-medium transition-colors touch-manipulation disabled:cursor-not-allowed disabled:opacity-40',
         primary
-          ? 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
+          ? 'bg-elec-yellow font-semibold text-black hover:bg-elec-yellow/90'
           : subtle
-            ? 'text-white hover:text-white hover:bg-white/[0.06]'
-            : 'border border-white/[0.12] text-white hover:bg-white/[0.06]'
+            ? 'text-white hover:bg-white/[0.06]'
+            : 'border border-white/[0.12] bg-white/[0.06] text-white hover:bg-white/[0.09]'
       )}
     >
       {label}

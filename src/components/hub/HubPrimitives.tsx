@@ -655,11 +655,22 @@ export const HubPage = ({ children }: { children: React.ReactNode }) => (
  * content with dead space beside it, and forced the tool grids down to three
  * columns when there was room for five.
  */
-export const HubBody = ({ children }: { children: React.ReactNode }) => (
+export const HubBody = ({
+  children,
+  pushContext = 'Get notified about quotes, invoices, tasks and messages',
+}: {
+  children: React.ReactNode;
+  /**
+   * What the push-permission prompt promises. The default is the
+   * electrician's; a college tutor is not waiting on quotes and invoices,
+   * so a hub for another audience says what it will actually send.
+   */
+  pushContext?: string;
+}) => (
   <div className="mx-auto max-w-[1600px] space-y-8 px-4 py-4 sm:space-y-10 lg:px-8">
     {/* Below the masthead, not above it. Rendering this in Layout put a
         dismissible permission prompt ahead of the page's own header. */}
-    <PushNotificationPrompt context="Get notified about quotes, invoices, tasks and messages" />
+    <PushNotificationPrompt context={pushContext} />
     {children}
   </div>
 );

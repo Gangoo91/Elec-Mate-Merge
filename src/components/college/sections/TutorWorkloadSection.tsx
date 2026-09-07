@@ -1,35 +1,39 @@
+/**
+ * TutorWorkloadSection — the head of department's "who is overloaded?" view,
+ * on the shared hub language. Content only.
+ *
+ * The four SummaryTiles with coloured dots and `bg-white/5` became a KPI row;
+ * the per-tutor tiles with a 2x2 grid of boxed metrics became one list card.
+ * Red is kept where it encodes a real problem (an overloaded tutor, no
+ * observation on record); heavy load is volt; balanced is quiet.
+ *
+ * Bands come from `useTutorWorkload` unchanged:
+ *   red   — more than 6 cohorts or more than 10 pieces of marking waiting
+ *   amber — more than 4 cohorts or more than 3 waiting
+ */
 import { motion } from 'framer-motion';
 import { useTutorWorkload, type WorkloadBand } from '@/hooks/useTutorWorkload';
-import {
-  PageFrame,
-  PageHero,
-  Pill,
-  SectionHeader,
-  itemVariants,
-  toneDot,
-  type Tone,
-} from '@/components/college/primitives';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { HubKpi, HubKpiRow, HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { containerVariants, itemVariants } from '@/components/college/primitives';
 
-/* ==========================================================================
-   TutorWorkloadSection — HoD heatmap of every active tutor's current load.
-
-   Tutors sorted red → amber → green so overloaded staff surface first.
-   Each tile shows: cohorts, lessons this week, pending marking, days
-   since last observation, recent comment activity.
-   ========================================================================== */
-
-const BAND_TONE: Record<WorkloadBand, Tone> = {
-  red: 'red',
-  amber: 'amber',
-  green: 'emerald',
-};
+const LIST_CARD = cn(
+  '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
+  CARD_SURFACE
+);
 
 const BAND_LABEL: Record<WorkloadBand, string> = {
   red: 'Overloaded',
   amber: 'Heavy',
   green: 'Balanced',
 };
+
+const BAND_ORDER: Record<WorkloadBand, number> = { red: 0, amber: 1, green: 2 };
+
+function plural(n: number, one: string, many = `${one}s`): string {
+  return `${n} ${n === 1 ? one : many}`;
+}
 
 export function TutorWorkloadSection() {
   const { rows, loading, error } = useTutorWorkload();
@@ -46,163 +50,135 @@ export function TutorWorkloadSection() {
     (r) => r.last_observed_days_ago === null || r.last_observed_days_ago > 365
   ).length;
 
+  const sorted = [...rows].sort((a, b) => {
+    const band = BAND_ORDER[a.load_band] - BAND_ORDER[b.load_band];
+    if (band !== 0) return band;
+    return b.pending_grading - a.pending_grading;
+  });
+
   return (
-    <PageFrame>
-      <motion.div variants={itemVariants} initial="hidden" animate="visible">
-        <PageHero
-          eyebrow="Workload heatmap"
-          title="Tutor load across the college"
-          description="Cohorts, lessons this week, marking backlog and recency of observation per tutor. Red rows first — overloaded staff need help before week-end."
-          tone="amber"
-        />
-      </motion.div>
-
-      {/* Top-line summary */}
-      <motion.div
-        variants={itemVariants}
-        initial="hidden"
-        animate="visible"
-        className="px-4 mt-4 grid grid-cols-2 sm:grid-cols-4 gap-3"
-      >
-        <SummaryTile
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="space-y-6 sm:space-y-8"
+    >
+      <HubKpiRow>
+        <HubKpi
+          accent
           label="Overloaded"
-          value={counts.red}
-          tone="red"
-          note=">6 cohorts or >10 pending"
+          value={String(counts.red)}
+          verdict={counts.red > 0 ? 'Move work off them this week' : 'Nobody overloaded'}
+          context="More than 6 cohorts or more than 10 to mark"
+          sentiment={counts.red > 0 ? 'bad' : 'neutral'}
         />
-        <SummaryTile
+        <HubKpi
           label="Heavy"
-          value={counts.amber}
-          tone="amber"
-          note=">4 cohorts or >3 pending"
+          value={String(counts.amber)}
+          verdict={counts.amber > 0 ? 'Watch before it tips over' : 'No one running heavy'}
+          context="More than 4 cohorts or more than 3 to mark"
         />
-        <SummaryTile label="Balanced" value={counts.green} tone="emerald" note="" />
-        <SummaryTile
-          label="Obs > 12 mo"
-          value={overdueObsCount}
-          tone={overdueObsCount > 0 ? 'red' : 'emerald'}
-          note="Ofsted-critical"
+        <HubKpi
+          label="Balanced"
+          value={String(counts.green)}
+          verdict={counts.green > 0 ? 'Room to take on more' : 'Nobody with headroom'}
         />
-      </motion.div>
+        <HubKpi
+          label="No observation in a year"
+          value={String(overdueObsCount)}
+          verdict={
+            overdueObsCount > 0 ? 'Book an observation — Ofsted will ask' : 'Every tutor observed'
+          }
+          sentiment={overdueObsCount > 0 ? 'bad' : 'neutral'}
+        />
+      </HubKpiRow>
 
-      <div className="px-4 mt-5 pb-16 space-y-4">
-        {loading && <div className="text-sm text-white/60">Loading workload…</div>}
-        {error && (
-          <div className="rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300">
-            {error}
-          </div>
-        )}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <div className="flex items-end justify-between gap-4">
+          <HubSectionHeading>By load</HubSectionHeading>
+          {!loading && rows.length > 0 && (
+            <span className="text-[11px] font-semibold tabular-nums text-white">
+              {plural(rows.length, 'tutor')}
+            </span>
+          )}
+        </div>
 
-        {!loading && rows.length === 0 && (
-          <div className="rounded-2xl border border-dashed border-white/10 px-4 py-10 text-center text-sm text-white/70">
-            No active tutors found in this college.
-          </div>
-        )}
-
-        {!loading && rows.length > 0 && (
-          <>
-            <SectionHeader eyebrow="Per tutor" title="By load band" />
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {rows.map((r) => (
-                <div
-                  key={r.tutor_staff_id}
-                  className={cn(
-                    'rounded-2xl border bg-white/5 p-4 space-y-3',
-                    r.load_band === 'red'
-                      ? 'border-red-400/30'
-                      : r.load_band === 'amber'
-                        ? 'border-amber-400/30'
-                        : 'border-white/10'
-                  )}
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <div className="text-sm font-medium text-white">{r.name}</div>
-                      <div className="text-[10px] uppercase tracking-wider text-white/50">
-                        {r.role.replace(/_/g, ' ')}
-                      </div>
-                    </div>
-                    <Pill tone={BAND_TONE[r.load_band]}>{BAND_LABEL[r.load_band]}</Pill>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-2 text-[12px]">
-                    <Metric label="Cohorts" value={r.active_cohorts} />
-                    <Metric label="Lessons this wk" value={r.lessons_this_week} />
-                    <Metric label="Pending marking" value={r.pending_grading} accent={r.pending_grading > 3 ? 'amber' : undefined} />
-                    <Metric
-                      label="Comments 7d"
-                      value={r.comments_last_7d}
-                    />
-                  </div>
-
-                  <div className="flex items-center gap-1.5 text-[11px] text-white/60">
+        <div className={LIST_CARD}>
+          {loading ? (
+            <div className="flex items-center gap-3 px-4 py-5 sm:px-5">
+              <div className="h-5 w-5 animate-spin rounded-full border-2 border-elec-yellow border-t-transparent" />
+              <span className="text-[12.5px] text-white">Working out each tutor’s load…</span>
+            </div>
+          ) : error ? (
+            <div className="px-4 py-5 sm:px-5">
+              <p className="text-[14px] font-semibold text-red-300">Couldn’t load workload</p>
+              <p className="mt-1 text-[12.5px] leading-snug text-white">{error}</p>
+            </div>
+          ) : rows.length === 0 ? (
+            <div className="px-4 py-5 sm:px-5">
+              <p className="text-[14px] font-semibold text-white">No active tutors</p>
+              <p className="mt-1 text-[12.5px] leading-snug text-white">
+                Add tutors under People and their load appears here.
+              </p>
+            </div>
+          ) : (
+            <ul className="divide-y divide-white/[0.10]">
+              {sorted.map((r) => {
+                const obs =
+                  r.last_observed_days_ago === null
+                    ? 'No observation on record'
+                    : `Observed ${r.last_observed_days_ago}d ago`;
+                const obsProblem =
+                  r.last_observed_days_ago === null || r.last_observed_days_ago > 365;
+                const reason = [
+                  r.role.replace(/_/g, ' '),
+                  plural(r.active_cohorts, 'cohort'),
+                  `${plural(r.lessons_this_week, 'lesson')} this week`,
+                  `${r.pending_grading} to mark`,
+                  `${r.comments_last_7d} comments in 7d`,
+                ].join(' · ');
+                return (
+                  <li key={r.tutor_staff_id} className="flex items-center gap-3 px-4 py-3.5 sm:px-5">
                     <span
+                      aria-hidden
                       className={cn(
-                        'inline-block h-1.5 w-1.5 rounded-full',
-                        r.last_observed_days_ago === null
-                          ? toneDot.red
-                          : r.last_observed_days_ago > 365
-                            ? toneDot.red
-                            : r.last_observed_days_ago > 180
-                              ? toneDot.amber
-                              : toneDot.emerald
+                        'h-8 w-[3px] shrink-0 rounded-full',
+                        r.load_band === 'red'
+                          ? 'bg-red-400'
+                          : r.load_band === 'amber'
+                            ? 'bg-elec-yellow'
+                            : 'bg-white/[0.25]'
                       )}
                     />
-                    {r.last_observed_days_ago === null
-                      ? 'No observation recorded'
-                      : `Last observed ${r.last_observed_days_ago}d ago`}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </>
-        )}
-      </div>
-    </PageFrame>
-  );
-}
-
-function SummaryTile({
-  label,
-  value,
-  tone,
-  note,
-}: {
-  label: string;
-  value: number;
-  tone: Tone;
-  note: string;
-}) {
-  return (
-    <div className="rounded-xl border border-white/10 bg-white/5 p-3">
-      <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-white/50">
-        <span className={cn('inline-block h-1.5 w-1.5 rounded-full', toneDot[tone])} />
-        {label}
-      </div>
-      <div className="mt-1 text-2xl font-semibold text-white">{value}</div>
-      {note && <div className="text-[10px] text-white/70 mt-0.5">{note}</div>}
-    </div>
-  );
-}
-
-function Metric({
-  label,
-  value,
-  accent,
-}: {
-  label: string;
-  value: number;
-  accent?: 'amber' | 'red';
-}) {
-  return (
-    <div
-      className={cn(
-        'rounded-lg border border-white/10 bg-black/20 px-2.5 py-2',
-        accent === 'amber' && 'border-amber-400/40 bg-amber-500/10'
-      )}
-    >
-      <div className="text-[10px] uppercase tracking-wider text-white/50">{label}</div>
-      <div className="mt-0.5 text-base font-semibold text-white">{value}</div>
-    </div>
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+                        {r.name}
+                      </span>
+                      <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
+                        {reason}
+                        {' · '}
+                        <span className={cn(obsProblem && 'font-semibold text-red-300')}>{obs}</span>
+                      </span>
+                    </span>
+                    <span
+                      className={cn(
+                        'shrink-0 text-[13px] font-semibold',
+                        r.load_band === 'red'
+                          ? 'text-red-300'
+                          : r.load_band === 'amber'
+                            ? 'text-elec-yellow'
+                            : 'text-white'
+                      )}
+                    >
+                      {BAND_LABEL[r.load_band]}
+                    </span>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </div>
+      </motion.section>
+    </motion.div>
   );
 }

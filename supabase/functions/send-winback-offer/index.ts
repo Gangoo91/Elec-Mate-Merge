@@ -2,6 +2,14 @@ import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 import { Resend } from '../_shared/mailer.ts';
 import { generateV11HTML, generateV11PlainText, v11Subject } from '../_shared/winback-v11.ts';
+import {
+  winbackTouch1,
+  winbackTouch2,
+  winbackTouch3,
+  WINBACK_FROM,
+  WINBACK_REPLY_TO,
+  type WinbackContext,
+} from '../_shared/winback-v13.ts';
 import { captureException } from '../_shared/sentry.ts';
 
 const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
@@ -1934,7 +1942,17 @@ Deno.serve(async (req) => {
       throw new Error('Unauthorized: Admin access required');
     }
 
-    const { action, userId, userIds, testEmail, manualEmail, recipientName, email_version } =
+    const {
+      action,
+      userId,
+      userIds,
+      testEmail,
+      manualEmail,
+      recipientName,
+      email_version,
+      /** v13 only: which touch of the three-part sequence to send (1/2/3). */
+      touch,
+    } =
       await req.json();
 
     console.log(
@@ -2097,7 +2115,9 @@ Deno.serve(async (req) => {
         const { data: profile, error: profileError } = await supabaseAdmin
           .from('profiles')
           .select(
-            'id, full_name, username, created_at, winback_offer_sent_at, subscribed, free_access_granted, role'
+            // subscription_tier + is_trial feed the v13 WinbackContext, which
+            // tier-matches the offer (apprentice £5.24 vs electrician £14.99).
+            'id, full_name, username, created_at, winback_offer_sent_at, subscribed, free_access_granted, role, subscription_tier, is_trial'
           )
           .eq('id', userId)
           .single();
@@ -2136,11 +2156,102 @@ Deno.serve(async (req) => {
           ).toISOString(),
         };
 
+        /*
+          V13 — now the default.
+          ────────────────────────────────────────────────────────────────
+          v11 was the default and its CTA is a BARE Stripe Payment Link: the
+          same URL for every recipient, carrying no metadata.userId and creating
+          a fresh Stripe customer. `findUserByCustomer` in the subscription
+          webhook then has only the email typed at checkout to go on, and Stripe
+          Link autofills whatever address the person has used at any other
+          merchant. Either it belongs to no account (they pay and get nothing —
+          Jake James, 2026-09-05) or to a DIFFERENT account of theirs and the
+          subscription lands on the wrong one.
+
+          v13 already solves this via `withIdentity()`, stamping
+          client_reference_id + prefilled_email onto every pay link. It was
+          written 2026-07-17 and never wired into any sender — this branch is
+          that wiring. v11/v10 remain reachable by passing email_version
+          explicitly, for anyone still holding an older email.
+
+          v13 is a three-touch sequence (1: check-in, no offer · 2: 25% off for
+          life · 3: deepest offer). A single on-demand send defaults to touch 2,
+          since that is the one carrying an offer.
+        */
+        if (email_version === 'v13' || !email_version) {
+          const recipient = userWithEmail.email.trim().toLowerCase();
+
+          if (await isSuppressed(supabaseAdmin, recipient)) {
+            throw new Error('Recipient is in the suppression list');
+          }
+
+          const touchNum = touch === 1 || touch === 3 ? touch : 2;
+          const ctx: WinbackContext = {
+            firstName: userWithEmail.full_name?.split(' ')[0] || 'mate',
+            tier: (profile.subscription_tier as string) || 'unknown',
+            wasTrial: profile.is_trial === true,
+            // The whole point: the webhook can match the payment to THIS
+            // account regardless of what address they type at checkout.
+            userId,
+            accountEmail: recipient,
+          };
+
+          const built =
+            touchNum === 1 ? winbackTouch1(ctx) : touchNum === 2 ? winbackTouch2(ctx) : winbackTouch3(ctx);
+
+          // v13's own footer offers a mailto opt-out; add the HMAC one-click
+          // header too, which is what Gmail and Outlook actually read.
+          const unsubscribeUrl = await buildUnsubscribeUrl(recipient);
+
+          await rateLimiter.acquire(1);
+          const { data: v13Data, error: v13Err } = await resend.emails.send({
+            from: WINBACK_FROM,
+            replyTo: WINBACK_REPLY_TO,
+            to: [recipient],
+            subject: built.subject,
+            html: built.html,
+            text: built.text,
+            headers: buildUnsubscribeHeaders(unsubscribeUrl),
+            tags: [
+              { name: 'campaign', value: 'winback' },
+              { name: 'version', value: `v13_t${touchNum}` },
+              { name: 'user_id', value: userId },
+            ],
+          });
+
+          if (v13Err) {
+            console.error('V13 send error:', v13Err);
+            throw new Error(`Failed to send: ${v13Err.message}`);
+          }
+
+          await supabaseAdmin
+            .from('profiles')
+            .update({ winback_offer_sent_at: new Date().toISOString() })
+            .eq('id', userId);
+
+          await supabaseAdmin.from('email_logs').insert({
+            to_email: recipient,
+            subject: built.subject,
+            template: `winback_offer_v13_t${touchNum}`,
+            status: 'sent',
+            metadata: {
+              user_id: userId,
+              email_version: `v13_t${touchNum}`,
+              tier: ctx.tier,
+              resend_id: v13Data?.id,
+            },
+          });
+
+          console.log(`V13 touch ${touchNum} sent to ${recipient} (tier ${ctx.tier})`);
+          result = { success: true, email: recipient, version: `v13_t${touchNum}` };
+          break;
+        }
+
         // V10 / V11 path — shared infra (suppression check, HMAC unsubscribe, plain text).
-        // v11 is the default (A4:2026 cheatsheet hero, what's-changed/in/coming).
-        // Pass email_version: 'v10' to send the previous template explicitly.
-        if (!email_version || email_version === 'v10' || email_version === 'v11') {
-          const useV11 = !email_version || email_version === 'v11';
+        // Reachable only by passing email_version explicitly now that v13 is the
+        // default. ⚠️ v11's pay link is bare — see the v13 comment above.
+        if (email_version === 'v10' || email_version === 'v11') {
+          const useV11 = email_version === 'v11';
           const versionTag = useV11 ? 'v11' : 'v10';
           const recipient = userWithEmail.email.trim().toLowerCase();
 
@@ -2322,12 +2433,23 @@ Deno.serve(async (req) => {
           throw new Error('User IDs array is required');
         }
 
-        // V10 / V11 batch path — Resend batch API, token-bucket rate limit, idempotency, retries, suppression
-        if (!email_version || email_version === 'v10' || email_version === 'v11') {
+        /*
+          Batch path — Resend batch API, token bucket, idempotency, retries,
+          suppression. v13 is the DEFAULT; v10/v11 remain reachable by passing
+          email_version explicitly.
+
+          v11's CTA is a bare Stripe Payment Link — identical for every
+          recipient, no metadata.userId, new Stripe customer per payment — so
+          the webhook can only match on the email typed at checkout, which
+          Stripe Link autofills from any other merchant. v13's `withIdentity()`
+          stamps client_reference_id + prefilled_email on every link instead.
+        */
+        if (!email_version || email_version === 'v10' || email_version === 'v11' || email_version === 'v13') {
           const { data: profiles, error: profilesErr } = await supabaseAdmin
             .from('profiles')
             .select(
-              'id, full_name, username, created_at, winback_offer_sent_at, subscribed, free_access_granted'
+              // subscription_tier + is_trial drive v13's tier-matched offer.
+              'id, full_name, username, created_at, winback_offer_sent_at, subscribed, free_access_granted, subscription_tier, is_trial'
             )
             .in('id', userIds);
           if (profilesErr) throw profilesErr;
@@ -2359,6 +2481,8 @@ Deno.serve(async (req) => {
             userId: string;
             email: string;
             firstName: string;
+            tier: string;
+            wasTrial: boolean;
           }
           const queue: QueuedRecipient[] = [];
           let skippedCount = 0;
@@ -2387,6 +2511,8 @@ Deno.serve(async (req) => {
               userId: p.id,
               email,
               firstName: (p.full_name as string | null)?.split(' ')[0] || 'mate',
+              tier: (p.subscription_tier as string | null) || 'unknown',
+              wasTrial: p.is_trial === true,
             });
           }
 
@@ -2411,8 +2537,12 @@ Deno.serve(async (req) => {
             chunks.push(withUnsub.slice(i, i + BATCH_MAX));
           }
 
-          const useV11 = !email_version || email_version === 'v11';
-          const versionTag = useV11 ? 'v11' : 'v10';
+          const useV13 = !email_version || email_version === 'v13';
+          const useV11 = email_version === 'v11';
+          // v13 is a three-touch sequence; a bulk send defaults to touch 2,
+          // the first one that actually carries an offer.
+          const touchNum: 1 | 2 | 3 = touch === 1 || touch === 3 ? touch : 2;
+          const versionTag = useV13 ? `v13_t${touchNum}` : useV11 ? 'v11' : 'v10';
           const dateStr = new Date().toISOString().slice(0, 10);
           let sentCount = 0;
           const sentNow = new Date().toISOString();
@@ -2420,22 +2550,47 @@ Deno.serve(async (req) => {
           for (let ci = 0; ci < chunks.length; ci++) {
             const chunk = chunks[ci];
             // Compute subjects per-recipient (v11 includes first name in subject)
-            const subjects: string[] = chunk.map((r) =>
-              useV11
-                ? v11Subject('winback', r.firstName)
-                : "We've been building. You should see it."
+            // v13 renders subject+html+text together per recipient, since the
+            // offer is tier-matched and the pay link carries their identity.
+            const v13Built = useV13
+              ? chunk.map((r) => {
+                  const ctx: WinbackContext = {
+                    firstName: r.firstName,
+                    tier: r.tier,
+                    wasTrial: r.wasTrial,
+                    userId: r.userId,
+                    accountEmail: r.email,
+                  };
+                  return touchNum === 1
+                    ? winbackTouch1(ctx)
+                    : touchNum === 2
+                      ? winbackTouch2(ctx)
+                      : winbackTouch3(ctx);
+                })
+              : null;
+
+            const subjects: string[] = chunk.map((r, i) =>
+              v13Built
+                ? v13Built[i].subject
+                : useV11
+                  ? v11Subject('winback', r.firstName)
+                  : "We've been building. You should see it."
             );
             const batchItems: ResendBatchItem[] = chunk.map((r, idx) => ({
-              from: FROM_V10,
-              replyTo: REPLY_TO,
+              from: useV13 ? WINBACK_FROM : FROM_V10,
+              replyTo: useV13 ? WINBACK_REPLY_TO : REPLY_TO,
               to: [r.email],
               subject: subjects[idx],
-              html: useV11
-                ? generateV11HTML('winback', r.firstName, r.unsubscribeUrl)
-                : generateV10WinbackHTML(r.firstName, r.unsubscribeUrl),
-              text: useV11
-                ? generateV11PlainText('winback', r.firstName, r.unsubscribeUrl)
-                : generateV10WinbackPlainText(r.firstName, r.unsubscribeUrl),
+              html: v13Built
+                ? v13Built[idx].html
+                : useV11
+                  ? generateV11HTML('winback', r.firstName, r.unsubscribeUrl)
+                  : generateV10WinbackHTML(r.firstName, r.unsubscribeUrl),
+              text: v13Built
+                ? v13Built[idx].text
+                : useV11
+                  ? generateV11PlainText('winback', r.firstName, r.unsubscribeUrl)
+                  : generateV10WinbackPlainText(r.firstName, r.unsubscribeUrl),
               headers: buildUnsubscribeHeaders(r.unsubscribeUrl),
               tags: [
                 { name: 'campaign', value: 'winback' },

@@ -1,72 +1,71 @@
 import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { ChevronRight } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import {
-  PageFrame,
-  PageHero,
-  FilterBar,
-  EmptyState,
-  HubGrid,
-  Pill,
-  SectionHeader,
+  containerVariants,
   itemVariants,
-  toneDot,
-  type Tone,
+  EmptyState,
+  LoadingState,
 } from '@/components/college/primitives';
+import { HubSectionHeading } from '@/components/hub/HubPrimitives';
 import { cn } from '@/lib/utils';
 
 /* ==========================================================================
    TutorNotebookSection — in-hub launcher into the real AI Notebook page
    (`/college/ai-notebook`).
 
-   Was a self-contained mock with hardcoded notebooks + fake AI delays.
    Real AI lives in AiNotebookPage where the notebook is grounded in a
    specific learner's data (ACs, quizzes, EPA verdicts, OTJ, observations).
+   This section lists the tutor's learners and a handful of ready-made
+   questions; every row navigates into the notebook with the learner and/or
+   prompt pre-selected.
 
-   This section now: shows the tutor's assigned learners as cards + quick
-   prompts, plus a generic "Open notebook" entry. Each tap navigates into
-   the real notebook with the learner pre-selected.
+   Renders CONTENT ONLY under the CollegeDashboard masthead: one solid volt
+   "Open notebook" → quick prompts → learners.
    ========================================================================== */
 
-interface LearnerCard {
+interface LearnerRow {
+  /** college_students.id — what AiNotebookPage's `student` param expects. */
   id: string;
   name: string;
   cohort_name: string | null;
-  tone: Tone;
 }
 
-const TONES: Tone[] = ['blue', 'emerald', 'purple', 'amber', 'yellow', 'cyan'];
-
-const QUICK_PROMPTS: Array<{ label: string; prompt: string; tone: Tone }> = [
-  {
-    label: 'Gateway readiness',
-    prompt: 'How is this learner tracking against gateway?',
-    tone: 'amber',
-  },
-  { label: 'Biggest AC gaps', prompt: 'Where are the biggest AC gaps?', tone: 'red' },
+const QUICK_PROMPTS: Array<{ label: string; prompt: string }> = [
+  { label: 'Gateway readiness', prompt: 'How is this learner tracking against gateway?' },
+  { label: 'Biggest AC gaps', prompt: 'Where are the biggest AC gaps?' },
   {
     label: '1-2-1 agenda',
     prompt: "Draft a 1-2-1 agenda focused on what they're behind on.",
-    tone: 'blue',
   },
-  {
-    label: 'Next observation',
-    prompt: 'What should I observe next time I see them?',
-    tone: 'emerald',
-  },
+  { label: 'Next observation', prompt: 'What should I observe next time I see them?' },
 ];
+
+const SEARCH =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white placeholder:text-white placeholder:opacity-40 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus:outline-none touch-manipulation';
+const PRIMARY =
+  'inline-flex h-11 w-full items-center justify-center rounded-full bg-elec-yellow px-5 text-[13px] font-semibold text-black transition-[filter,transform] touch-manipulation hover:brightness-105 active:scale-[0.98] sm:w-auto';
+const LIST_CARD = cn(
+  '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
+  CARD_SURFACE
+);
+const ROW =
+  'flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5';
 
 export function TutorNotebookSection() {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const [learners, setLearners] = useState<LearnerCard[]>([]);
+  const [learners, setLearners] = useState<LearnerRow[]>([]);
+  const [assigned, setAssigned] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState('');
 
-  // Mirrors the resolution logic in AiNotebookPage so the cards line up
+  // Mirrors the resolution logic in AiNotebookPage so the list lines up
   // with what the user sees when they actually open the notebook.
   useEffect(() => {
     if (!user?.id) return;
@@ -127,19 +126,19 @@ export function TutorNotebookSection() {
         return;
       }
 
-      const cards: LearnerCard[] = (
+      const rows: LearnerRow[] = (
         (data ?? []) as Array<{
           id: string;
           name: string;
           college_cohorts: { name: string } | null;
         }>
-      ).map((r, i) => ({
+      ).map((r) => ({
         id: r.id,
         name: r.name,
         cohort_name: r.college_cohorts?.name ?? null,
-        tone: TONES[i % TONES.length],
       }));
-      setLearners(cards);
+      setLearners(rows);
+      setAssigned(assignedIds.length > 0);
       setLoading(false);
     })();
 
@@ -166,132 +165,139 @@ export function TutorNotebookSection() {
   };
 
   return (
-    <PageFrame>
-      <motion.div variants={itemVariants}>
-        <PageHero
-          eyebrow="Curriculum · AI Notebook"
-          title="Teaching notebook"
-          description="Pick a learner to open the AI co-tutor — answers grounded in their real ACs, quizzes, OTJ, observations and EPA judgements."
-          tone="yellow"
-          actions={
-            <button
-              onClick={() => openNotebook()}
-              className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap"
-            >
-              Open notebook →
-            </button>
-          }
-        />
-      </motion.div>
+    <>
+      <motion.section
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="space-y-3"
+      >
+        <motion.p variants={itemVariants} className="max-w-prose text-[13px] leading-relaxed text-white">
+          The notebook answers from a learner's real record — criteria, quizzes, off-the-job,
+          observations and EPA judgements. Pick a learner below, or open it blank.
+        </motion.p>
+        <motion.div variants={itemVariants}>
+          <button type="button" onClick={() => openNotebook()} className={PRIMARY}>
+            Open notebook
+          </button>
+        </motion.div>
+      </motion.section>
 
-      {/* AI feature strip */}
-      <motion.div variants={itemVariants}>
-        <div className="relative overflow-hidden bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-6 sm:p-7">
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/80 via-amber-400/70 to-orange-400/70" />
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/60">
-            AI-Powered · Per-learner
-          </div>
-          <h3 className="mt-2 text-xl sm:text-2xl font-semibold text-white tracking-tight">
-            Quick prompts
-          </h3>
-          <p className="mt-2 text-[13px] text-white/70 max-w-2xl leading-relaxed">
-            Tap a prompt to open the notebook with that question pre-filled. The AI reads the
-            chosen learner's full college record before answering.
-          </p>
-          <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
+      <motion.section
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="space-y-3"
+      >
+        <HubSectionHeading>Ask about a learner</HubSectionHeading>
+        <motion.div variants={itemVariants} className={LIST_CARD}>
+          <ul className="divide-y divide-white/[0.10]">
             {QUICK_PROMPTS.map((p) => (
-              <button
-                key={p.label}
-                onClick={() => openNotebook(undefined, p.prompt)}
-                className="group flex items-center justify-between gap-3 px-4 py-3 min-h-[64px] bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.06] rounded-xl transition-colors touch-manipulation text-left focus:outline-none focus:ring-2 focus:ring-elec-yellow/40"
-              >
-                <div className="min-w-0">
-                  <div className="flex items-center gap-2">
-                    <span aria-hidden className={cn('h-1.5 w-1.5 rounded-full', toneDot[p.tone])} />
-                    <span className="text-[13.5px] font-medium text-white">{p.label}</span>
-                  </div>
-                  <p className="mt-0.5 text-[11.5px] text-white/60 truncate">{p.prompt}</p>
-                </div>
-                <span className="text-elec-yellow/70 group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all shrink-0">
-                  →
-                </span>
-              </button>
+              <li key={p.label}>
+                <button
+                  type="button"
+                  onClick={() => openNotebook(undefined, p.prompt)}
+                  className={ROW}
+                >
+                  <span
+                    aria-hidden="true"
+                    className="h-8 w-[3px] shrink-0 rounded-full bg-white/[0.25]"
+                  />
+                  <span className="min-w-0 flex-1">
+                    <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+                      {p.label}
+                    </span>
+                    <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
+                      {p.prompt}
+                    </span>
+                  </span>
+                  <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
+                </button>
+              </li>
             ))}
-          </div>
-        </div>
-      </motion.div>
+          </ul>
+        </motion.div>
+      </motion.section>
 
-      <motion.div variants={itemVariants}>
-        <FilterBar
-          search={search}
-          onSearchChange={setSearch}
-          searchPlaceholder="Search learners…"
-        />
-      </motion.div>
+      <motion.section
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="space-y-3"
+      >
+        <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
+          <HubSectionHeading>{assigned ? 'Your learners' : 'Learners'}</HubSectionHeading>
+          {!loading && !error && (
+            <span className="text-[11px] font-semibold tabular-nums text-white">
+              {filtered.length === learners.length
+                ? `${learners.length}`
+                : `${filtered.length} of ${learners.length}`}
+            </span>
+          )}
+        </motion.div>
 
-      <motion.section variants={itemVariants} className="space-y-5">
-        <SectionHeader
-          eyebrow={loading ? 'Loading…' : 'Your learners'}
-          title={loading ? '—' : `${filtered.length} learner${filtered.length === 1 ? '' : 's'}`}
-        />
+        {learners.length > 3 && (
+          <motion.div variants={itemVariants}>
+            <input
+              type="search"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search by name or cohort"
+              aria-label="Search learners"
+              className={SEARCH}
+            />
+          </motion.div>
+        )}
 
         {error ? (
-          <EmptyState title="Could not load learners" description={error} />
+          <motion.div variants={itemVariants}>
+            <EmptyState title="Could not load learners" description={error} />
+          </motion.div>
         ) : loading ? (
-          <HubGrid columns={3}>
-            {Array.from({ length: 3 }).map((_, i) => (
-              <div
-                key={i}
-                className="h-44 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl animate-pulse"
-              />
-            ))}
-          </HubGrid>
-        ) : filtered.length === 0 ? (
-          <EmptyState
-            title={learners.length === 0 ? 'No learners assigned yet' : 'No matches'}
-            description={
-              learners.length === 0
-                ? 'When learners are assigned to you (or join your college), they\'ll appear here so you can dive into their notebook.'
-                : 'Try a different search term.'
-            }
-            action={learners.length === 0 ? 'Open notebook anyway' : undefined}
-            onAction={learners.length === 0 ? () => openNotebook() : undefined}
-          />
+          <LoadingState />
+        ) : learners.length === 0 ? (
+          <motion.div variants={itemVariants}>
+            <EmptyState
+              title="No learners yet"
+              description="When learners join your college, or are assigned to you, they appear here and the notebook can answer about them."
+            />
+          </motion.div>
         ) : (
-          <HubGrid columns={3}>
-            {filtered.map((learner, i) => (
-              <button
-                key={learner.id}
-                onClick={() => openNotebook(learner.id)}
-                className="group relative bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-6 text-left touch-manipulation flex flex-col min-h-[180px] cursor-pointer focus:outline-none focus:ring-2 focus:ring-elec-yellow/40 rounded-2xl border border-white/[0.06]"
-              >
-                <div
-                  className={cn(
-                    'absolute inset-x-0 top-0 h-px opacity-70 group-hover:opacity-100 transition-opacity',
-                    toneDot[learner.tone]
-                  )}
-                />
-                <div className="flex items-start justify-between gap-2">
-                  <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/60">
-                    {String(i + 1).padStart(2, '0')} · Learner
-                  </div>
-                  {learner.cohort_name && <Pill tone={learner.tone}>{learner.cohort_name}</Pill>}
-                </div>
-                <h3 className="mt-4 text-lg font-semibold text-white tracking-tight leading-snug">
-                  {learner.name}
-                </h3>
-                <div className="flex-grow" />
-                <div className="mt-5 pt-4 border-t border-white/[0.06] flex items-center justify-between text-[11.5px] text-white/60">
-                  <span>Open AI notebook</span>
-                  <span className="text-elec-yellow/70 group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all">
-                    →
-                  </span>
-                </div>
-              </button>
-            ))}
-          </HubGrid>
+          <motion.div variants={itemVariants} className={LIST_CARD}>
+            {filtered.length === 0 ? (
+              <p className="px-4 py-5 text-[12.5px] text-white sm:px-5">
+                No learner matches that search.
+              </p>
+            ) : (
+              <ul className="divide-y divide-white/[0.10]">
+                {filtered.map((learner) => (
+                  <li key={learner.id}>
+                    <button
+                      type="button"
+                      onClick={() => openNotebook(learner.id)}
+                      className={ROW}
+                    >
+                      <span
+                        aria-hidden="true"
+                        className="h-8 w-[3px] shrink-0 rounded-full bg-white/[0.25]"
+                      />
+                      <span className="min-w-0 flex-1">
+                        <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+                          {learner.name}
+                        </span>
+                        <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
+                          {learner.cohort_name ?? 'No cohort'} · Open their notebook
+                        </span>
+                      </span>
+                      <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </motion.div>
         )}
       </motion.section>
-    </PageFrame>
+    </>
   );
 }

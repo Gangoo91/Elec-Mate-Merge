@@ -1,20 +1,13 @@
 import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { rowsToCsv, downloadCsv } from '@/lib/csv';
-import {
-  useCollegeActivity,
-  type ActivityFilters,
-} from '@/hooks/useCollegeActivity';
-import {
-  PageFrame,
-  PageHero,
-  Pill,
-  SecondaryButton,
-  itemVariants,
-} from '@/components/college/primitives';
-import { Input } from '@/components/ui/input';
+import { useCollegeActivity, type ActivityFilters } from '@/hooks/useCollegeActivity';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { buttonPrimaryCn, inputCn, labelCn, selectTriggerCn } from '@/components/forms/fieldStyles';
+import { containerVariants, itemVariants } from '@/components/college/primitives';
+import { HubSectionHeading } from '@/components/hub/HubPrimitives';
 
 /* ==========================================================================
    AuditLogSection — read-only view of college_activity.
@@ -23,8 +16,16 @@ import { cn } from '@/lib/utils';
    actor name, action type, entity type, date range. CSV export for the
    Ofsted "prove it" pack. The audit log itself is append-only — UI does
    not delete rows.
+
+   Content only — CollegeDashboard draws the masthead. Download is the one
+   solid volt control; the filters are underline fields; rows are white.
    ========================================================================== */
 
+/* The action keys that actually reach `college_activity` today are the
+   second group (reviewed_ilp, recorded_attendance, …). The first group was
+   written for a set of writers that never landed; kept so they label
+   correctly if they do. Anything else falls back to the raw key with
+   underscores replaced. */
 const FRIENDLY_ACTIONS: Record<string, string> = {
   cohort_broadcast_sent: 'Cohort broadcast sent',
   sar_generated: 'SAR generated',
@@ -36,6 +37,12 @@ const FRIENDLY_ACTIONS: Record<string, string> = {
   student_added: 'Student added',
   student_withdrawn: 'Student withdrawn',
   ilp_updated: 'Learning plan updated',
+  reviewed_ilp: 'Learning plan reviewed',
+  recorded_attendance: 'Attendance recorded',
+  approved_lesson_plan: 'Lesson plan approved',
+  created_lesson_plan: 'Lesson plan created',
+  updated_epa_status: 'EPA status updated',
+  graded_assessment: 'Assessment graded',
 };
 
 function actionLabel(a: string): string {
@@ -55,9 +62,7 @@ export function AuditLogSection() {
       action: filterAction,
       entityType: filterEntity,
       startDate: startDate ? new Date(startDate).toISOString() : null,
-      endDate: endDate
-        ? new Date(`${endDate}T23:59:59`).toISOString()
-        : null,
+      endDate: endDate ? new Date(`${endDate}T23:59:59`).toISOString() : null,
     }),
     [filterAction, filterEntity, startDate, endDate]
   );
@@ -71,6 +76,7 @@ export function AuditLogSection() {
       (r) =>
         (r.actor_name ?? '').toLowerCase().includes(q) ||
         r.action.toLowerCase().includes(q) ||
+        actionLabel(r.action).toLowerCase().includes(q) ||
         (r.entity_type ?? '').toLowerCase().includes(q)
     );
   }, [rows, search]);
@@ -83,9 +89,7 @@ export function AuditLogSection() {
   );
   const entityOptions = useMemo(
     () =>
-      Array.from(
-        new Set(rows.map((r) => r.entity_type).filter((e): e is string => !!e))
-      ).sort(),
+      Array.from(new Set(rows.map((r) => r.entity_type).filter((e): e is string => !!e))).sort(),
     [rows]
   );
 
@@ -117,42 +121,39 @@ export function AuditLogSection() {
   };
 
   return (
-    <PageFrame>
-      <motion.div variants={itemVariants} initial="hidden" animate="visible">
-        <PageHero
-          eyebrow="Audit log"
-          title="Who did what, when"
-          description="Append-only record of every sensitive action across the college: cohort broadcasts, SAR approvals, IQA samples, AC sign-offs. Built for Ofsted + funding audits."
-          tone="amber"
-          actions={
-            <SecondaryButton onClick={handleExport} disabled={filtered.length === 0}>
-              Download CSV ({filtered.length})
-            </SecondaryButton>
-          }
-        />
-      </motion.div>
-
-      <div className="px-4 pb-16 space-y-4">
-        {/* Filter strip */}
+    <div className="space-y-8 sm:space-y-10">
+      {/* Filters. Underline fields, one card. */}
+      <motion.section
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="space-y-3"
+      >
+        <HubSectionHeading>Filter</HubSectionHeading>
         <motion.div
           variants={itemVariants}
-          initial="hidden"
-          animate="visible"
-          className="rounded-2xl border border-white/10 bg-white/5 p-4 space-y-3"
+          className={cn(
+            '-mx-4 space-y-4 border-y border-elec-yellow/35 px-4 py-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:px-5',
+            CARD_SURFACE
+          )}
         >
-          <Input
+          <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Filter by actor, action or entity…"
-            className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500"
+            placeholder="Search by actor, action or entity…"
+            aria-label="Search the audit log"
+            className={inputCn}
           />
-          <div className="grid gap-3 sm:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-4">
             <div>
-              <label className="text-[10px] uppercase tracking-wider text-white/50">Action</label>
+              <label htmlFor="audit-action" className={labelCn}>
+                Action
+              </label>
               <select
+                id="audit-action"
                 value={filterAction ?? ''}
                 onChange={(e) => setFilterAction(e.target.value || null)}
-                className="mt-1 h-11 w-full rounded-md bg-elec-gray border border-white/30 px-3 text-sm text-white touch-manipulation"
+                className={cn(selectTriggerCn, 'w-full')}
               >
                 <option value="">All actions</option>
                 {actionOptions.map((a) => (
@@ -163,96 +164,140 @@ export function AuditLogSection() {
               </select>
             </div>
             <div>
-              <label className="text-[10px] uppercase tracking-wider text-white/50">Entity</label>
+              <label htmlFor="audit-entity" className={labelCn}>
+                Entity
+              </label>
               <select
+                id="audit-entity"
                 value={filterEntity ?? ''}
                 onChange={(e) => setFilterEntity(e.target.value || null)}
-                className="mt-1 h-11 w-full rounded-md bg-elec-gray border border-white/30 px-3 text-sm text-white touch-manipulation"
+                className={cn(selectTriggerCn, 'w-full')}
               >
                 <option value="">All entities</option>
                 {entityOptions.map((e) => (
                   <option key={e} value={e}>
-                    {e}
+                    {e.replace(/_/g, ' ')}
                   </option>
                 ))}
               </select>
             </div>
             <div>
-              <label className="text-[10px] uppercase tracking-wider text-white/50">From</label>
-              <Input
+              <label htmlFor="audit-from" className={labelCn}>
+                From
+              </label>
+              <input
+                id="audit-from"
                 type="date"
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
-                className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500"
+                className={inputCn}
               />
             </div>
             <div>
-              <label className="text-[10px] uppercase tracking-wider text-white/50">To</label>
-              <Input
+              <label htmlFor="audit-to" className={labelCn}>
+                To
+              </label>
+              <input
+                id="audit-to"
                 type="date"
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
-                className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500"
+                className={inputCn}
               />
             </div>
           </div>
+          <button
+            type="button"
+            onClick={handleExport}
+            disabled={filtered.length === 0}
+            className={cn(buttonPrimaryCn, 'w-full px-5 sm:w-auto')}
+          >
+            Download CSV{filtered.length > 0 ? ` (${filtered.length})` : ''}
+          </button>
+        </motion.div>
+      </motion.section>
+
+      <motion.section
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="space-y-3"
+      >
+        <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
+          <HubSectionHeading>Entries</HubSectionHeading>
+          {!loading && (
+            <span className="text-[11px] font-semibold tabular-nums text-white">
+              {filtered.length === 0
+                ? 'None'
+                : `${filtered.length} entr${filtered.length === 1 ? 'y' : 'ies'}`}
+            </span>
+          )}
         </motion.div>
 
         {error && (
-          <div className="rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300">
+          <div className="rounded-2xl border border-red-400/40 px-4 py-3 text-[13px] text-white">
             {error}
           </div>
         )}
 
-        {loading && <div className="text-sm text-white/60">Loading audit log…</div>}
-
-        {!loading && filtered.length === 0 && (
-          <div className="rounded-2xl border border-dashed border-white/10 px-4 py-10 text-center text-sm text-white/70">
-            No audit entries match the current filters.
-          </div>
-        )}
-
-        {!loading && filtered.length > 0 && (
-          <ul className="divide-y divide-white/[0.06] rounded-2xl border border-white/10 bg-white/5">
-            {filtered.map((row) => (
-              <li
-                key={row.id}
-                className={cn(
-                  'px-4 py-3 flex items-start justify-between gap-3'
-                )}
-              >
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <Pill tone="blue">{actionLabel(row.action)}</Pill>
-                    {row.entity_type && (
-                      <span className="text-[10px] uppercase tracking-wider text-white/50">
-                        {row.entity_type}
+        <motion.div
+          variants={itemVariants}
+          className={cn(
+            '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
+            CARD_SURFACE
+          )}
+        >
+          {loading ? (
+            <div className="flex items-center justify-center py-12">
+              <div className="h-6 w-6 animate-spin rounded-full border-2 border-elec-yellow border-t-transparent" />
+            </div>
+          ) : filtered.length === 0 ? (
+            <p className="px-4 py-4 text-[12.5px] leading-snug text-white sm:px-5">
+              {rows.length === 0
+                ? 'Nothing logged yet. Sensitive actions are recorded here as they happen.'
+                : 'No entries match the current filters.'}
+            </p>
+          ) : (
+            <ul className="divide-y divide-white/[0.10]">
+              {filtered.map((row) => (
+                <li key={row.id} className="flex items-start gap-3 px-4 py-3.5 sm:px-5">
+                  <span
+                    aria-hidden="true"
+                    className="mt-0.5 h-8 w-[3px] shrink-0 rounded-full bg-white/[0.25]"
+                  />
+                  <span className="min-w-0 flex-1">
+                    <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+                      {actionLabel(row.action)}
+                    </span>
+                    <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
+                      {[row.actor_name ?? 'Unknown actor', row.entity_type?.replace(/_/g, ' ')]
+                        .filter(Boolean)
+                        .join(' · ')}
+                    </span>
+                    {row.details && Object.keys(row.details).length > 0 && (
+                      <span className="mt-1.5 block whitespace-pre-wrap break-words font-mono text-[11px] leading-snug text-white">
+                        {JSON.stringify(row.details)}
                       </span>
                     )}
-                  </div>
-                  <div className="mt-1.5 text-sm text-white">
-                    {row.actor_name ?? 'Unknown actor'}
-                  </div>
-                  {row.details && Object.keys(row.details).length > 0 && (
-                    <div className="mt-1 text-[11px] text-white/50 font-mono whitespace-pre-wrap break-words">
-                      {JSON.stringify(row.details)}
-                    </div>
-                  )}
-                </div>
-                <div className="text-[11px] tabular-nums text-white/70 shrink-0">
-                  {new Date(row.created_at).toLocaleString('en-GB', {
-                    day: 'numeric',
-                    month: 'short',
-                    year: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                  })}
-                </div>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-    </PageFrame>
+                  </span>
+                  <span className="shrink-0 text-right text-[11.5px] leading-snug tabular-nums text-white">
+                    {new Date(row.created_at).toLocaleDateString('en-GB', {
+                      day: 'numeric',
+                      month: 'short',
+                      year: 'numeric',
+                    })}
+                    <br />
+                    {new Date(row.created_at).toLocaleTimeString('en-GB', {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                    })}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </motion.div>
+      </motion.section>
+    </div>
   );
 }

@@ -1,19 +1,29 @@
 import { useEffect, useState } from 'react';
-import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetDescription, SheetTitle } from '@/components/ui/sheet';
 import { useToast } from '@/hooks/use-toast';
 import { type Slide, type SlideKind, type DiagramKind } from '@/hooks/useSlideDeck';
+import {
+  buttonPrimaryCn,
+  inputCn,
+  labelCn,
+  selectTriggerCn,
+  textareaCn,
+} from '@/components/forms/fieldStyles';
 import { cn } from '@/lib/utils';
 
 /* ==========================================================================
-   SlideEditorSheet — kind-aware rich editor for a single slide.
+   SlideEditorSheet — kind-aware editor for a single slide.
 
    Exposes every field the slide schema supports (heading, body, bullets,
    key terms, reg cite, activity instructions, image prompt etc.) so the
    tutor can edit anything without dropping to the JSON. Save persists via
    the parent's updateSlide handler.
 
-   Also surfaces "AI tweak" — tutor types a one-liner ("more practical, less
-   academic") and the parent calls regenerateSlide.
+   A bottom sheet on the form design language: underline inputs, soft
+   textareas, sentence-case labels, one solid volt Save. The "AI tweak" box
+   that used to sit at the top of this sheet — a second volt button on the
+   same screen — now lives on the slide card's own Regenerate action, so
+   this sheet does one job.
 
    ELE-942 / [F1.3].
    ========================================================================== */
@@ -28,13 +38,13 @@ const KIND_LABELS: Record<SlideKind, string> = {
   big_stat: 'Big stat',
   two_column: 'Two-column compare',
   image_concept: 'Image concept',
-  diagram_caption: 'Diagram + caption',
+  diagram_caption: 'Diagram and caption',
   activity: 'Activity',
   worked_example: 'Worked example',
   check_understanding: 'Check for understanding',
   misconception: 'Misconception',
   summary: 'Summary',
-  plenary: 'Plenary (Q-of-the-day)',
+  plenary: 'Plenary',
 };
 
 const DIAGRAM_OPTIONS: DiagramKind[] = [
@@ -56,10 +66,8 @@ interface Props {
   slideIndex: number | null;
   totalSlides: number;
   onSave: (patch: Partial<Slide>) => Promise<void> | void;
-  onRegenerate?: (tweakPrompt: string) => Promise<boolean>;
   onDuplicate?: () => Promise<void> | void;
   onDelete?: () => Promise<void> | void;
-  regenerating?: boolean;
 }
 
 export function SlideEditorSheet({
@@ -69,22 +77,16 @@ export function SlideEditorSheet({
   slideIndex,
   totalSlides,
   onSave,
-  onRegenerate,
   onDuplicate,
   onDelete,
-  regenerating = false,
 }: Props) {
   const { toast } = useToast();
   const [draft, setDraft] = useState<Slide | null>(null);
-  const [tweak, setTweak] = useState('');
   const [busy, setBusy] = useState(false);
 
   // Hydrate the draft when the sheet opens with a different slide.
   useEffect(() => {
     if (open && slide) setDraft({ ...slide });
-    if (!open) {
-      setTweak('');
-    }
   }, [open, slide]);
 
   if (!slide || slideIndex == null) return null;
@@ -110,81 +112,49 @@ export function SlideEditorSheet({
     }
   };
 
-  const handleTweak = async () => {
-    if (!onRegenerate || !tweak.trim()) return;
-    setBusy(true);
-    const ok = await onRegenerate(tweak.trim());
-    setBusy(false);
-    if (ok) {
-      toast({ title: 'Slide regenerated', description: 'Photo will refresh if prompt changed.' });
-      setTweak('');
-      onOpenChange(false);
-    }
-  };
-
   const k = (draft ?? slide).kind;
+  const textAction =
+    'flex h-12 items-center px-3 text-[13px] font-semibold text-white transition-colors touch-manipulation hover:text-elec-yellow';
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent hideCloseButton
-        side="right"
-        className="w-full sm:max-w-[520px] p-0 bg-[hsl(0_0%_8%)] border-white/[0.06]"
+      <SheetContent
+        hideCloseButton
+        side="bottom"
+        className="h-[85vh] overflow-hidden rounded-t-2xl border-white/[0.06] bg-[hsl(0_0%_8%)] p-0"
       >
-        <SheetTitle className="sr-only">Edit slide</SheetTitle>
-        <div className="flex flex-col h-full">
+        <div className="flex h-full flex-col">
+          <div className="flex flex-shrink-0 justify-center pb-1 pt-2.5">
+            <div className="h-1 w-10 rounded-full bg-white/20" />
+          </div>
+
           {/* Header */}
-          <div className="px-5 py-4 border-b border-white/[0.06] flex items-center justify-between gap-3">
+          <div className="flex flex-shrink-0 items-start justify-between gap-3 border-b border-white/[0.06] px-5 pb-4">
             <div className="min-w-0">
-              <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-elec-yellow">
+              <SheetTitle className="text-[20px] font-semibold leading-tight text-white">
                 Edit slide
-              </div>
-              <div className="mt-0.5 text-[14px] font-semibold text-white">
-                {KIND_LABELS[k]} · {slideIndex + 1} of {totalSlides}
-              </div>
+              </SheetTitle>
+              <SheetDescription className="mt-1 text-[12.5px] text-white">
+                {KIND_LABELS[k]} · slide {slideIndex + 1} of {totalSlides}
+              </SheetDescription>
             </div>
             <button
+              type="button"
               onClick={() => onOpenChange(false)}
-              className="text-[12px] font-medium text-white/65 hover:text-white touch-manipulation"
+              className="-mr-2 flex h-11 shrink-0 items-center px-2 text-[12.5px] font-medium text-white touch-manipulation"
             >
               Cancel
             </button>
           </div>
 
           {/* Body — scrollable */}
-          <div className="flex-1 overflow-y-auto px-5 py-4 space-y-5">
-            {/* AI tweak */}
-            {onRegenerate && (
-              <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] px-4 py-3">
-                <div className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
-                  AI tweak
-                </div>
-                <p className="mt-1 text-[11.5px] text-white">
-                  Type how you'd like this slide changed. The AI rewrites the whole slide.
-                </p>
-                <textarea
-                  value={tweak}
-                  onChange={(e) => setTweak(e.target.value)}
-                  placeholder="e.g. make it more practical with a real on-site example, swap the reg cite for 411.3.2.1, make the image close-up of the consumer unit"
-                  rows={3}
-                  className="mt-2 w-full px-3 py-2 rounded-lg bg-white/[0.03] border border-white/[0.10] text-[12.5px] text-white placeholder:text-white/70 focus:outline-none focus:border-elec-yellow/50 touch-manipulation resize-none"
-                />
-                <button
-                  type="button"
-                  onClick={handleTweak}
-                  disabled={!tweak.trim() || busy || regenerating}
-                  className="mt-2 h-9 px-4 rounded-lg bg-elec-yellow text-black text-[12px] font-semibold hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 transition-colors touch-manipulation"
-                >
-                  {busy || regenerating ? 'Regenerating…' : 'Regenerate slide →'}
-                </button>
-              </div>
-            )}
-
+          <div className="flex-1 space-y-5 overflow-y-auto overscroll-contain p-5">
             {/* Common fields */}
             <Field label="Heading">
               <input
                 value={draft?.heading ?? ''}
                 onChange={(e) => set('heading', e.target.value)}
-                className={inputCls}
+                className={inputCn}
               />
             </Field>
             {(k === 'title' || k === 'concept' || k === 'image_concept') && (
@@ -192,7 +162,7 @@ export function SlideEditorSheet({
                 <input
                   value={draft?.subtitle ?? ''}
                   onChange={(e) => set('subtitle', e.target.value)}
-                  className={inputCls}
+                  className={inputCn}
                 />
               </Field>
             )}
@@ -205,12 +175,12 @@ export function SlideEditorSheet({
               k === 'plenary' ||
               k === 'big_stat' ||
               k === 'diagram_caption') && (
-              <Field label="Body" hint="2–4 sentences">
+              <Field label="Body" hint="Two to four sentences">
                 <textarea
                   value={draft?.body ?? ''}
                   onChange={(e) => set('body', e.target.value)}
                   rows={5}
-                  className={textareaCls}
+                  className={cn(textareaCn, 'w-full')}
                 />
               </Field>
             )}
@@ -222,7 +192,7 @@ export function SlideEditorSheet({
                   value={(draft?.bullets ?? []).join('\n')}
                   onChange={(e) => set('bullets', splitLines(e.target.value))}
                   rows={6}
-                  className={textareaCls}
+                  className={cn(textareaCn, 'w-full')}
                 />
               </Field>
             )}
@@ -234,7 +204,7 @@ export function SlideEditorSheet({
                   <input
                     value={draft?.reg_number ?? ''}
                     onChange={(e) => set('reg_number', e.target.value)}
-                    className={inputCls}
+                    className={inputCn}
                     placeholder="e.g. 411.3.2.1"
                   />
                 </Field>
@@ -246,7 +216,7 @@ export function SlideEditorSheet({
                       else set('clause', e.target.value);
                     }}
                     rows={4}
-                    className={textareaCls}
+                    className={cn(textareaCn, 'w-full')}
                   />
                 </Field>
                 <Field label="Why it matters">
@@ -254,7 +224,7 @@ export function SlideEditorSheet({
                     value={draft?.why_it_matters ?? ''}
                     onChange={(e) => set('why_it_matters', e.target.value)}
                     rows={3}
-                    className={textareaCls}
+                    className={cn(textareaCn, 'w-full')}
                   />
                 </Field>
                 {k === 'pull_quote' && (
@@ -262,7 +232,7 @@ export function SlideEditorSheet({
                     <input
                       value={draft?.attribution ?? ''}
                       onChange={(e) => set('attribution', e.target.value)}
-                      className={inputCls}
+                      className={inputCn}
                     />
                   </Field>
                 )}
@@ -276,7 +246,7 @@ export function SlideEditorSheet({
                   <input
                     value={draft?.stat_value ?? ''}
                     onChange={(e) => set('stat_value', e.target.value)}
-                    className={inputCls}
+                    className={inputCn}
                     placeholder="30 mA"
                   />
                 </Field>
@@ -285,14 +255,14 @@ export function SlideEditorSheet({
                     value={draft?.stat_caption ?? ''}
                     onChange={(e) => set('stat_caption', e.target.value)}
                     rows={2}
-                    className={textareaCls}
+                    className={cn(textareaCn, 'w-full')}
                   />
                 </Field>
                 <Field label="Source">
                   <input
                     value={draft?.stat_source ?? ''}
                     onChange={(e) => set('stat_source', e.target.value)}
-                    className={inputCls}
+                    className={inputCn}
                   />
                 </Field>
               </>
@@ -300,75 +270,61 @@ export function SlideEditorSheet({
 
             {/* Two-column */}
             {k === 'two_column' && (
-              <>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-3">
-                  <div className="space-y-3">
-                    <div className="text-[10.5px] font-semibold uppercase tracking-[0.16em] text-purple-300">
-                      Left column
+              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-4">
+                {(['left', 'right'] as const).map((side) => (
+                  <div key={side} className="space-y-3">
+                    <div className="text-[13px] font-semibold text-elec-yellow">
+                      {side === 'left' ? 'Left column' : 'Right column'}
                     </div>
                     <input
-                      value={draft?.left_heading ?? ''}
-                      onChange={(e) => set('left_heading', e.target.value)}
-                      className={inputCls}
+                      value={(side === 'left' ? draft?.left_heading : draft?.right_heading) ?? ''}
+                      onChange={(e) =>
+                        set(side === 'left' ? 'left_heading' : 'right_heading', e.target.value)
+                      }
+                      className={inputCn}
                       placeholder="Heading"
                     />
                     <textarea
-                      value={draft?.left_body ?? ''}
-                      onChange={(e) => set('left_body', e.target.value)}
+                      value={(side === 'left' ? draft?.left_body : draft?.right_body) ?? ''}
+                      onChange={(e) =>
+                        set(side === 'left' ? 'left_body' : 'right_body', e.target.value)
+                      }
                       rows={3}
                       placeholder="Body"
-                      className={textareaCls}
+                      className={cn(textareaCn, 'w-full')}
                     />
                     <textarea
-                      value={(draft?.left_bullets ?? []).join('\n')}
-                      onChange={(e) => set('left_bullets', splitLines(e.target.value))}
+                      value={(
+                        (side === 'left' ? draft?.left_bullets : draft?.right_bullets) ?? []
+                      ).join('\n')}
+                      onChange={(e) =>
+                        set(
+                          side === 'left' ? 'left_bullets' : 'right_bullets',
+                          splitLines(e.target.value)
+                        )
+                      }
                       rows={4}
                       placeholder="Bullets — one per line"
-                      className={textareaCls}
+                      className={cn(textareaCn, 'w-full')}
                     />
                   </div>
-                  <div className="space-y-3">
-                    <div className="text-[10.5px] font-semibold uppercase tracking-[0.16em] text-emerald-300">
-                      Right column
-                    </div>
-                    <input
-                      value={draft?.right_heading ?? ''}
-                      onChange={(e) => set('right_heading', e.target.value)}
-                      className={inputCls}
-                      placeholder="Heading"
-                    />
-                    <textarea
-                      value={draft?.right_body ?? ''}
-                      onChange={(e) => set('right_body', e.target.value)}
-                      rows={3}
-                      placeholder="Body"
-                      className={textareaCls}
-                    />
-                    <textarea
-                      value={(draft?.right_bullets ?? []).join('\n')}
-                      onChange={(e) => set('right_bullets', splitLines(e.target.value))}
-                      rows={4}
-                      placeholder="Bullets — one per line"
-                      className={textareaCls}
-                    />
-                  </div>
-                </div>
-              </>
+                ))}
+              </div>
             )}
 
             {/* Activity */}
             {k === 'activity' && (
               <>
-                <Field label="Instruction" hint="Full task brief">
+                <Field label="Instruction" hint="The full task brief">
                   <textarea
                     value={draft?.instruction ?? ''}
                     onChange={(e) => set('instruction', e.target.value)}
                     rows={5}
-                    className={textareaCls}
+                    className={cn(textareaCn, 'w-full')}
                   />
                 </Field>
-                <div className="grid grid-cols-2 gap-3">
-                  <Field label="Time (min)">
+                <div className="grid grid-cols-2 gap-x-3 gap-y-4 sm:gap-x-6">
+                  <Field label="Time (minutes)">
                     <input
                       type="number"
                       min={1}
@@ -377,7 +333,7 @@ export function SlideEditorSheet({
                       onChange={(e) =>
                         set('time_minutes', e.target.value ? Number(e.target.value) : undefined)
                       }
-                      className={inputCls}
+                      className={inputCn}
                     />
                   </Field>
                   <Field label="Group size">
@@ -386,9 +342,9 @@ export function SlideEditorSheet({
                       onChange={(e) =>
                         set('group_size', (e.target.value || undefined) as Slide['group_size'])
                       }
-                      className={inputCls}
+                      className={cn(selectTriggerCn, 'w-full [color-scheme:dark]')}
                     >
-                      <option value="">—</option>
+                      <option value="">Not set</option>
                       <option value="individual">Individual</option>
                       <option value="pairs">Pairs</option>
                       <option value="small_group">Small group</option>
@@ -401,7 +357,7 @@ export function SlideEditorSheet({
                     value={draft?.success_criteria ?? ''}
                     onChange={(e) => set('success_criteria', e.target.value)}
                     rows={2}
-                    className={textareaCls}
+                    className={cn(textareaCn, 'w-full')}
                   />
                 </Field>
               </>
@@ -415,7 +371,7 @@ export function SlideEditorSheet({
                     value={draft?.problem ?? ''}
                     onChange={(e) => set('problem', e.target.value)}
                     rows={4}
-                    className={textareaCls}
+                    className={cn(textareaCn, 'w-full')}
                   />
                 </Field>
                 <Field label="Solution steps" hint="One per line, in order">
@@ -423,7 +379,7 @@ export function SlideEditorSheet({
                     value={(draft?.solution_steps ?? []).join('\n')}
                     onChange={(e) => set('solution_steps', splitLines(e.target.value))}
                     rows={6}
-                    className={textareaCls}
+                    className={cn(textareaCn, 'w-full')}
                   />
                 </Field>
               </>
@@ -436,7 +392,7 @@ export function SlideEditorSheet({
                   value={(draft?.questions ?? []).join('\n')}
                   onChange={(e) => set('questions', splitLines(e.target.value))}
                   rows={6}
-                  className={textareaCls}
+                  className={cn(textareaCn, 'w-full')}
                 />
               </Field>
             )}
@@ -449,7 +405,7 @@ export function SlideEditorSheet({
                     value={draft?.belief ?? ''}
                     onChange={(e) => set('belief', e.target.value)}
                     rows={3}
-                    className={textareaCls}
+                    className={cn(textareaCn, 'w-full')}
                   />
                 </Field>
                 <Field label="Correction">
@@ -457,20 +413,46 @@ export function SlideEditorSheet({
                     value={draft?.correction ?? ''}
                     onChange={(e) => set('correction', e.target.value)}
                     rows={4}
-                    className={textareaCls}
+                    className={cn(textareaCn, 'w-full')}
                   />
                 </Field>
               </>
             )}
 
-            {/* Plenary exit ticket */}
+            {/* Plenary */}
             {k === 'plenary' && (
               <Field label="Exit ticket">
                 <textarea
                   value={draft?.exit_ticket ?? ''}
                   onChange={(e) => set('exit_ticket', e.target.value)}
                   rows={3}
-                  className={textareaCls}
+                  className={cn(textareaCn, 'w-full')}
+                />
+              </Field>
+            )}
+
+            {/* Key terms — concept kinds */}
+            {(k === 'concept' || k === 'image_concept') && (
+              <Field label="Key terms" hint="One per line as term: definition">
+                <textarea
+                  value={(draft?.key_terms ?? [])
+                    .map((t) => `${t.term}: ${t.definition}`)
+                    .join('\n')}
+                  onChange={(e) =>
+                    set(
+                      'key_terms',
+                      splitLines(e.target.value).map((line) => {
+                        const idx = line.indexOf(':');
+                        if (idx === -1) return { term: line, definition: '' };
+                        return {
+                          term: line.slice(0, idx).trim(),
+                          definition: line.slice(idx + 1).trim(),
+                        };
+                      })
+                    )
+                  }
+                  rows={4}
+                  className={cn(textareaCn, 'w-full')}
                 />
               </Field>
             )}
@@ -478,15 +460,15 @@ export function SlideEditorSheet({
             {/* Diagram */}
             {k === 'diagram_caption' && (
               <>
-                <Field label="Diagram template">
+                <Field label="Diagram">
                   <select
                     value={draft?.diagram_kind ?? ''}
                     onChange={(e) =>
                       set('diagram_kind', (e.target.value || undefined) as DiagramKind | undefined)
                     }
-                    className={inputCls}
+                    className={cn(selectTriggerCn, 'w-full [color-scheme:dark]')}
                   >
-                    <option value="">—</option>
+                    <option value="">Not set</option>
                     {DIAGRAM_OPTIONS.map((d) => (
                       <option key={d} value={d}>
                         {d.replace(/_/g, ' ')}
@@ -499,7 +481,7 @@ export function SlideEditorSheet({
                     value={draft?.diagram_caption ?? ''}
                     onChange={(e) => set('diagram_caption', e.target.value)}
                     rows={2}
-                    className={textareaCls}
+                    className={cn(textareaCn, 'w-full')}
                   />
                 </Field>
               </>
@@ -512,36 +494,36 @@ export function SlideEditorSheet({
               k === 'plenary' ||
               k === 'concept') && (
               <>
-                <Field label="Image prompt" hint="Specific, cinematic, 60–120 words">
+                <Field label="Image prompt" hint="Specific and visual, 60–120 words">
                   <textarea
                     value={draft?.image_prompt ?? ''}
                     onChange={(e) => set('image_prompt', e.target.value)}
                     rows={5}
-                    className={textareaCls}
+                    className={cn(textareaCn, 'w-full')}
                   />
                 </Field>
                 <Field label="Image caption">
                   <input
                     value={draft?.image_caption ?? ''}
                     onChange={(e) => set('image_caption', e.target.value)}
-                    className={inputCls}
+                    className={inputCn}
                   />
                 </Field>
               </>
             )}
 
-            {/* Speaker notes — required on every slide */}
-            <Field label="Speaker notes" hint="What the tutor SAYS off-slide">
+            {/* Speaker notes — every slide */}
+            <Field label="Speaker notes" hint="What the tutor says off-slide">
               <textarea
                 value={draft?.speaker_notes ?? ''}
                 onChange={(e) => set('speaker_notes', e.target.value)}
                 rows={4}
-                className={textareaCls}
+                className={cn(textareaCn, 'w-full')}
               />
             </Field>
 
             {/* AC mapping */}
-            <Field label="Maps to ACs" hint="Comma-separated AC codes">
+            <Field label="Maps to assessment criteria" hint="Comma-separated codes">
               <input
                 value={(draft?.slide_acs ?? []).join(', ')}
                 onChange={(e) =>
@@ -553,41 +535,39 @@ export function SlideEditorSheet({
                       .filter(Boolean)
                   )
                 }
-                className={inputCls}
+                className={inputCn}
                 placeholder="e.g. 1.1, 1.2"
               />
             </Field>
           </div>
 
-          {/* Footer */}
-          <div className="px-4 sm:px-5 py-3 border-t border-white/[0.06] bg-[hsl(0_0%_10%)] flex items-center justify-between gap-2 flex-wrap">
-            <div className="flex items-center gap-2 flex-wrap">
-              {onDuplicate && (
-                <button
-                  type="button"
-                  onClick={() => void onDuplicate()}
-                  className="h-10 px-3 rounded-lg bg-transparent border border-white/[0.10] hover:border-white/25 text-white text-[11.5px] font-medium touch-manipulation"
-                >
-                  Duplicate
-                </button>
-              )}
-              {onDelete && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (confirm('Delete this slide?')) void onDelete();
-                  }}
-                  className="h-10 px-3 rounded-lg bg-transparent border border-rose-500/30 hover:border-rose-500/50 text-rose-300 text-[11.5px] font-medium touch-manipulation"
-                >
-                  Delete
-                </button>
-              )}
-            </div>
+          {/* Footer — one solid volt Save; duplicate and delete are text actions */}
+          <div
+            className="flex flex-shrink-0 items-center gap-2 border-t border-white/[0.06] p-4"
+            style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}
+          >
+            {onDuplicate && (
+              <button type="button" onClick={() => void onDuplicate()} className={textAction}>
+                Duplicate
+              </button>
+            )}
+            {onDelete && (
+              <button
+                type="button"
+                onClick={() => {
+                  if (confirm('Delete this slide?')) void onDelete();
+                }}
+                className={textAction}
+              >
+                Delete
+              </button>
+            )}
+            <span className="flex-1" />
             <button
               type="button"
               onClick={handleSave}
               disabled={busy}
-              className="h-10 px-5 rounded-lg bg-elec-yellow text-black text-[12.5px] font-semibold hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 transition-colors touch-manipulation"
+              className={cn(buttonPrimaryCn, 'px-6')}
             >
               {busy ? 'Saving…' : 'Save changes'}
             </button>
@@ -611,11 +591,9 @@ function Field({
 }) {
   return (
     <label className="block">
-      <div className="flex items-baseline justify-between gap-2 mb-1">
-        <span className="text-[10.5px] font-semibold uppercase tracking-[0.16em] text-white">
-          {label}
-        </span>
-        {hint && <span className="text-[10.5px] text-white/55">{hint}</span>}
+      <div className="mb-1 flex items-baseline justify-between gap-2">
+        <span className={cn(labelCn, 'mb-0')}>{label}</span>
+        {hint && <span className="text-[11px] text-white">{hint}</span>}
       </div>
       {children}
     </label>
@@ -628,15 +606,3 @@ function splitLines(s: string): string[] {
     .map((l) => l.trim())
     .filter(Boolean);
 }
-
-const inputCls = cn(
-  'w-full h-10 px-3 rounded-lg bg-white/[0.03] border border-white/[0.10]',
-  'text-[13px] text-white placeholder:text-white/70',
-  'focus:outline-none focus:border-elec-yellow/50 touch-manipulation'
-);
-
-const textareaCls = cn(
-  'w-full px-3 py-2 rounded-lg bg-white/[0.03] border border-white/[0.10]',
-  'text-[13px] text-white placeholder:text-white/70 leading-relaxed',
-  'focus:outline-none focus:border-elec-yellow/50 touch-manipulation resize-y'
-);

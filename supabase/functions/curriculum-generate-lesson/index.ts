@@ -1252,7 +1252,7 @@ Deno.serve(withSentry('curriculum-generate-lesson', async (req: Request) => {
               duration_minutes: plan.duration_mins as number,
               objectives: JSON.stringify(plan.learning_objectives ?? []),
               content: plan, // jsonb column — pass object, not stringified JSON
-              status: 'Draft',
+              status: 'draft',
             })
             .select('id')
             .maybeSingle();

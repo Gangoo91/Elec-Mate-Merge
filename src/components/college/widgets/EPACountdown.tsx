@@ -1,10 +1,29 @@
 import { useState, useMemo } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
+import { ChevronRight } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
+
+/* ==========================================================================
+   EPACountdown — who is nearest the gateway, and how ready they are.
+
+   Hub card language: 15px volt title, a one-line status breakdown, then
+   HubWorkList rows (rule · learner · days to EPA · readiness · chevron).
+   "At risk" is the one word that stays red.
+
+   Data fix (2026-09-04): the calc read `epaRecord.studentId`,
+   `plannedEndDate`, `portfolioComplete`, `offJobHours`, `cohort.endDate`,
+   `student.progressPercentage` and `attendancePercentage` — none of which
+   exist on the rows the context exposes. The planned date therefore always
+   fell through to a made-up "180 days from now", so every active learner
+   was "within 6 months of EPA" at 180 days and ~14% ready. It now reads
+   `epa_date` → `gateway_date` → the learner's `expected_end_date` → the
+   cohort's `end_date`, and a learner with no planned date is left out
+   rather than given one. Off-the-job hours and "professional behaviours"
+   were a hard-coded 0/370 and a constant 85% — no data behind either — so
+   they no longer count toward readiness.
+   ========================================================================== */
 
 interface EPACountdownProps {
   onNavigate?: (section: CollegeSection) => void;
@@ -14,14 +33,14 @@ interface EPACountdownProps {
 
 interface GatewayRequirement {
   id: string;
-  category: 'knowledge' | 'skills' | 'behaviours' | 'portfolio' | 'attendance' | 'offjob';
+  category: 'knowledge' | 'skills' | 'portfolio' | 'attendance';
   title: string;
   description: string;
-  required: boolean;
   status: 'complete' | 'in_progress' | 'not_started' | 'at_risk';
   progress: number; // 0-100
-  dueDate?: string;
 }
+
+type GatewayStatus = 'ready' | 'almost' | 'needs_work' | 'at_risk';
 
 interface EPAStudent {
   id: string;
@@ -30,51 +49,71 @@ interface EPAStudent {
   plannedEndDate: string;
   daysRemaining: number;
   overallReadiness: number; // 0-100
-  gatewayStatus: 'ready' | 'almost' | 'needs_work' | 'at_risk';
+  gatewayStatus: GatewayStatus;
   requirements: GatewayRequirement[];
   gaps: string[];
   recommendations: string[];
 }
 
+const STATUS_LABEL: Record<GatewayStatus, string> = {
+  ready: 'Gateway ready',
+  almost: 'Almost ready',
+  needs_work: 'Needs work',
+  at_risk: 'At risk',
+};
+
+const CARD = cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE);
+const ROW =
+  'flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5';
+
 export function EPACountdown({ onNavigate, studentId, compact = false }: EPACountdownProps) {
-  const { students, epaRecords, ilps, cohorts } = useCollegeSupabase();
+  const { students, epaRecords, cohorts, attendance: attendanceRecords } = useCollegeSupabase();
   const [selectedStudent, setSelectedStudent] = useState<string | null>(studentId || null);
 
-  // Calculate EPA readiness for each student
+  const attendanceByStudent = useMemo(() => {
+    const map = new Map<string, { present: number; total: number }>();
+    for (const r of attendanceRecords) {
+      if (!r.student_id) continue;
+      const entry = map.get(r.student_id) ?? { present: 0, total: 0 };
+      entry.total += 1;
+      if (r.status === 'Present' || r.status === 'Late') entry.present += 1;
+      map.set(r.student_id, entry);
+    }
+    return map;
+  }, [attendanceRecords]);
+
   const epaStudents = useMemo(() => {
     const calculateStudentEPA = (studentIdToCalc: string): EPAStudent | null => {
       const student = students.find((s) => s.id === studentIdToCalc);
       if (!student || student.status !== 'Active') return null;
 
-      const epaRecord = epaRecords.find((e) => e.studentId === studentIdToCalc);
-      const studentILP = ilps.find((i) => i.studentId === studentIdToCalc);
-      const cohort = cohorts.find((c) => c.id === student.cohortId);
+      const epaRecord = epaRecords.find((e) => e.student_id === studentIdToCalc);
+      const cohort = cohorts.find((c) => c.id === student.cohort_id);
 
-      // Calculate planned end date (use EPA record or estimate from cohort)
       const plannedEndDate =
-        epaRecord?.plannedEndDate ||
-        cohort?.endDate ||
-        new Date(Date.now() + 180 * 24 * 60 * 60 * 1000).toISOString();
+        epaRecord?.epa_date ||
+        epaRecord?.gateway_date ||
+        student.expected_end_date ||
+        cohort?.end_date ||
+        null;
+      // No planned date means nothing to count down to. Inventing one would
+      // put every learner on the list at the same distance.
+      if (!plannedEndDate) return null;
 
       const endDate = new Date(plannedEndDate);
-      const today = new Date();
-      const daysRemaining = Math.ceil(
-        (endDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
-      );
+      const daysRemaining = Math.ceil((endDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
 
-      // Build gateway requirements
       const requirements: GatewayRequirement[] = [];
       const gaps: string[] = [];
       const recommendations: string[] = [];
 
-      // 1. Knowledge (Theory) - from assessments
-      const knowledgeProgress = student.progressPercentage || 0;
+      // 1. Knowledge (theory) — from recorded progress
+      const knowledgeProgress = student.progress_percent ?? 0;
       requirements.push({
         id: 'knowledge',
         category: 'knowledge',
-        title: 'Knowledge Criteria',
+        title: 'Knowledge criteria',
         description: 'All theory units completed and passed',
-        required: true,
         status:
           knowledgeProgress >= 100
             ? 'complete'
@@ -84,20 +123,19 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
         progress: Math.min(knowledgeProgress, 100),
       });
       if (knowledgeProgress < 100) {
-        gaps.push(`Knowledge at ${knowledgeProgress}% - need ${100 - knowledgeProgress}% more`);
+        gaps.push(`Knowledge at ${knowledgeProgress}% — needs ${100 - knowledgeProgress}% more`);
         if (knowledgeProgress < 80) {
           recommendations.push('Prioritise completing outstanding theory units');
         }
       }
 
-      // 2. Skills (Practical) - estimate from progress
-      const skillsProgress = Math.min((student.progressPercentage || 0) * 0.9, 100);
+      // 2. Skills (practical) — estimated from progress
+      const skillsProgress = Math.min(knowledgeProgress * 0.9, 100);
       requirements.push({
         id: 'skills',
         category: 'skills',
-        title: 'Practical Skills',
+        title: 'Practical skills',
         description: 'All practical assessments demonstrated',
-        required: true,
         status:
           skillsProgress >= 100 ? 'complete' : skillsProgress >= 70 ? 'in_progress' : 'at_risk',
         progress: skillsProgress,
@@ -106,16 +144,13 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
         gaps.push(`Practical skills at ${Math.round(skillsProgress)}%`);
       }
 
-      // 3. Portfolio Evidence
-      const portfolioProgress = epaRecord?.portfolioComplete
-        ? 100
-        : (student.progressPercentage || 0) * 0.7;
+      // 3. Portfolio evidence — estimated from progress
+      const portfolioProgress = knowledgeProgress * 0.7;
       requirements.push({
         id: 'portfolio',
         category: 'portfolio',
-        title: 'Portfolio Evidence',
+        title: 'Portfolio evidence',
         description: 'Complete portfolio with mapped evidence',
-        required: true,
         status:
           portfolioProgress >= 100
             ? 'complete'
@@ -129,66 +164,31 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
         recommendations.push('Upload remaining evidence and map to criteria');
       }
 
-      // 4. Off-the-Job Training (20% requirement)
-      const offJobHours = epaRecord?.offJobHours || 0;
-      const requiredOffJob = 370; // Approximate for 18-month apprenticeship
-      const offJobProgress = Math.min((offJobHours / requiredOffJob) * 100, 100);
-      requirements.push({
-        id: 'offjob',
-        category: 'offjob',
-        title: '20% Off-the-Job',
-        description: `${offJobHours}/${requiredOffJob} hours completed`,
-        required: true,
-        status:
-          offJobProgress >= 100 ? 'complete' : offJobProgress >= 80 ? 'in_progress' : 'at_risk',
-        progress: offJobProgress,
-      });
-      if (offJobProgress < 100) {
-        gaps.push(`Off-job training: ${offJobHours}/${requiredOffJob} hours`);
-        if (offJobProgress < 80) {
-          recommendations.push('Increase off-the-job training hours');
+      // 4. Attendance — only when something has been recorded
+      const att = attendanceByStudent.get(studentIdToCalc);
+      const attendance = att && att.total > 0 ? Math.round((att.present / att.total) * 100) : null;
+      if (attendance !== null) {
+        requirements.push({
+          id: 'attendance',
+          category: 'attendance',
+          title: 'Attendance',
+          description: `${attendance}% attendance rate`,
+          status: attendance >= 90 ? 'complete' : attendance >= 80 ? 'in_progress' : 'at_risk',
+          progress: Math.min(attendance, 100),
+        });
+        if (attendance < 90) {
+          gaps.push(`Attendance at ${attendance}% (target: 90%)`);
+          if (attendance < 80) {
+            recommendations.push('Address attendance issues urgently');
+          }
         }
       }
 
-      // 5. Attendance
-      const attendance = student.attendancePercentage || 0;
-      const attendanceStatus =
-        attendance >= 90 ? 'complete' : attendance >= 80 ? 'in_progress' : 'at_risk';
-      requirements.push({
-        id: 'attendance',
-        category: 'attendance',
-        title: 'Attendance',
-        description: `${attendance}% attendance rate`,
-        required: true,
-        status: attendanceStatus,
-        progress: Math.min(attendance, 100),
-      });
-      if (attendance < 90) {
-        gaps.push(`Attendance at ${attendance}% (target: 90%)`);
-        if (attendance < 80) {
-          recommendations.push('Address attendance issues urgently');
-        }
-      }
-
-      // 6. Behaviours
-      const behavioursProgress = 85; // Default assumption
-      requirements.push({
-        id: 'behaviours',
-        category: 'behaviours',
-        title: 'Professional Behaviours',
-        description: 'Demonstrated professional conduct',
-        required: true,
-        status: 'in_progress',
-        progress: behavioursProgress,
-      });
-
-      // Calculate overall readiness
       const overallReadiness = Math.round(
         requirements.reduce((sum, r) => sum + r.progress, 0) / requirements.length
       );
 
-      // Determine gateway status
-      let gatewayStatus: 'ready' | 'almost' | 'needs_work' | 'at_risk';
+      let gatewayStatus: GatewayStatus;
       const criticalGaps = requirements.filter((r) => r.status === 'at_risk').length;
 
       if (overallReadiness >= 95 && criticalGaps === 0) {
@@ -201,7 +201,6 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
         gatewayStatus = 'at_risk';
       }
 
-      // Add time-based recommendations
       if (daysRemaining < 30 && overallReadiness < 90) {
         recommendations.unshift('URGENT: Less than 30 days to planned EPA');
       } else if (daysRemaining < 60 && overallReadiness < 80) {
@@ -222,333 +221,268 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
       };
     };
 
-    // If specific student requested, only return that one
     if (studentId) {
       const result = calculateStudentEPA(studentId);
       return result ? [result] : [];
     }
 
-    // Otherwise return all students approaching gateway
     return students
       .map((s) => calculateStudentEPA(s.id))
       .filter((s): s is EPAStudent => s !== null)
       .filter((s) => s.daysRemaining <= 180) // Only show students within 6 months of EPA
       .sort((a, b) => a.daysRemaining - b.daysRemaining);
-  }, [students, epaRecords, ilps, cohorts, studentId]);
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'ready':
-      case 'complete':
-        return 'bg-success/20 text-success border-success/30';
-      case 'almost':
-      case 'in_progress':
-        return 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30';
-      case 'needs_work':
-      case 'not_started':
-        return 'bg-amber-500/20 text-amber-500 border-amber-500/30';
-      case 'at_risk':
-        return 'bg-red-500/20 text-red-500 border-red-500/30';
-      default:
-        return 'bg-white/10 text-white border-white/20';
-    }
-  };
-
-  const getStatusLabel = (status: string) => {
-    switch (status) {
-      case 'ready':
-        return 'Gateway Ready';
-      case 'almost':
-        return 'Almost Ready';
-      case 'needs_work':
-        return 'Needs Work';
-      case 'at_risk':
-        return 'At Risk';
-      default:
-        return status;
-    }
-  };
-
-  const getCategoryIcon = (category: string) => {
-    switch (category) {
-      case 'knowledge':
-        return BookOpen;
-      case 'skills':
-        return Target;
-      case 'portfolio':
-        return FileCheck;
-      case 'attendance':
-        return Clock;
-      case 'behaviours':
-        return CheckCircle2;
-      case 'offjob':
-        return Calendar;
-      default:
-        return AlertCircle;
-    }
-  };
+  }, [students, epaRecords, cohorts, attendanceByStudent, studentId]);
 
   const selectedStudentData = selectedStudent
     ? epaStudents.find((s) => s.id === selectedStudent)
     : epaStudents[0];
 
-  if (compact) {
-    const nearestEPA = epaStudents[0];
-    const readyCount = epaStudents.filter((s) => s.gatewayStatus === 'ready').length;
-    const atRiskCount = epaStudents.filter((s) => s.gatewayStatus === 'at_risk').length;
-    const almostCount = epaStudents.filter((s) => s.gatewayStatus === 'almost').length;
+  const counts = {
+    ready: epaStudents.filter((s) => s.gatewayStatus === 'ready').length,
+    almost: epaStudents.filter((s) => s.gatewayStatus === 'almost').length,
+    needsWork: epaStudents.filter((s) => s.gatewayStatus === 'needs_work').length,
+    atRisk: epaStudents.filter((s) => s.gatewayStatus === 'at_risk').length,
+  };
 
+  const Row = ({ student }: { student: EPAStudent }) => {
+    const urgent = student.gatewayStatus === 'at_risk' || student.daysRemaining < 30;
     return (
-      <div className="relative overflow-hidden bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl hover:bg-[hsl(0_0%_14%)] transition-colors">
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-green-500/70 via-emerald-400/70 to-green-500/70" />
-        <div className="p-5 sm:p-6">
-          {/* Header */}
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                EPA Gateway
-              </div>
-              <h3 className="mt-1.5 text-base sm:text-lg font-semibold text-white tracking-tight">
-                Gateway readiness
-              </h3>
-            </div>
-            <div className="text-right shrink-0">
-              <div className="text-3xl sm:text-4xl font-semibold tabular-nums leading-none text-elec-yellow">
-                {epaStudents.length}
-              </div>
-              <div className="mt-1 text-[10px] uppercase tracking-[0.14em] text-white">
-                tracking
-              </div>
-            </div>
-          </div>
-
-          {/* Status pills */}
-          {(readyCount > 0 || almostCount > 0 || atRiskCount > 0) && (
-            <div className="mt-4 flex flex-wrap gap-1.5">
-              {readyCount > 0 && (
-                <span className="text-[11px] font-medium px-2 py-0.5 rounded-full bg-green-500/10 text-green-400 border border-green-500/20 tabular-nums">
-                  {readyCount} ready
-                </span>
-              )}
-              {almostCount > 0 && (
-                <span className="text-[11px] font-medium px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 tabular-nums">
-                  {almostCount} almost
-                </span>
-              )}
-              {atRiskCount > 0 && (
-                <span className="text-[11px] font-medium px-2 py-0.5 rounded-full bg-red-500/10 text-red-400 border border-red-500/20 tabular-nums">
-                  {atRiskCount} at risk
-                </span>
-              )}
-            </div>
+      <button type="button" onClick={() => onNavigate?.('epatracking')} className={ROW}>
+        <span
+          aria-hidden="true"
+          className={cn(
+            'h-8 w-[3px] shrink-0 rounded-full',
+            urgent ? 'bg-elec-yellow' : 'bg-white/[0.25]'
           )}
-
-          {/* Nearest student */}
-          {nearestEPA && (
-            <div className="mt-5 pt-4 border-t border-white/[0.06]">
-              <div className="text-[10px] uppercase tracking-[0.14em] text-white mb-2">
-                Nearest EPA
-              </div>
-              <button
-                onClick={() => onNavigate?.('epatracking')}
-                className="w-full flex items-center justify-between gap-3 hover:bg-white/[0.02] transition-colors text-left touch-manipulation -mx-1 px-1 py-1 rounded"
-              >
-                <div className="min-w-0 flex-1">
-                  <div className="text-sm font-medium text-white truncate">{nearestEPA.name}</div>
-                  <div className="mt-0.5 text-[11px] text-white tabular-nums">
-                    {nearestEPA.daysRemaining} days remaining
-                  </div>
-                </div>
-                <div className="text-right shrink-0">
-                  <div className="text-lg font-semibold tabular-nums text-white">
-                    {nearestEPA.overallReadiness}%
-                  </div>
-                  <div className="text-[10px] text-white uppercase tracking-wider">ready</div>
-                </div>
-              </button>
-            </div>
+        />
+        <span className="min-w-0 flex-1">
+          <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+            {student.name}
+          </span>
+          <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
+            {student.daysRemaining} days to EPA ·{' '}
+            {student.gatewayStatus === 'at_risk' ? (
+              <span className="font-semibold text-red-300">At risk</span>
+            ) : (
+              STATUS_LABEL[student.gatewayStatus]
+            )}
+          </span>
+        </span>
+        <span
+          className={cn(
+            'shrink-0 text-[13px] font-semibold tabular-nums',
+            urgent ? 'text-elec-yellow' : 'text-white'
           )}
+        >
+          {student.overallReadiness}%
+        </span>
+        <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
+      </button>
+    );
+  };
 
-          <button
-            onClick={() => onNavigate?.('epatracking')}
-            className="mt-4 text-[12px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
+  const breakdown = (
+    [
+      counts.atRisk > 0 ? (
+        <span key="r" className="font-semibold text-red-300">
+          {counts.atRisk} at risk
+        </span>
+      ) : null,
+      counts.needsWork > 0 ? <span key="n">{counts.needsWork} need work</span> : null,
+      counts.almost > 0 ? <span key="a">{counts.almost} almost ready</span> : null,
+      counts.ready > 0 ? <span key="g">{counts.ready} ready</span> : null,
+    ] as Array<JSX.Element | null>
+  ).filter((n): n is JSX.Element => n !== null);
+
+  if (compact) {
+    return (
+      <section className={CARD}>
+        <div className="flex items-end justify-between gap-4 px-4 py-3.5 sm:px-5">
+          <h3 className="text-[15px] font-semibold tracking-tight text-elec-yellow">EPA gateway</h3>
+          <span
+            className={cn(
+              'text-[11px] font-semibold tabular-nums',
+              counts.atRisk > 0 ? 'text-elec-yellow' : 'text-white'
+            )}
           >
-            View EPA tracking →
-          </button>
+            {epaStudents.length} within 6 months
+          </span>
         </div>
-      </div>
+
+        {epaStudents.length > 0 ? (
+          <>
+            {breakdown.length > 0 && (
+              <p className="px-4 pb-3 text-[12px] leading-snug text-white sm:px-5">
+                {breakdown.map((node, i) => (
+                  <span key={node.key}>
+                    {i > 0 ? ' · ' : ''}
+                    {node}
+                  </span>
+                ))}
+              </p>
+            )}
+            <ul className="divide-y divide-white/[0.10] border-t border-white/[0.10]">
+              {epaStudents.slice(0, 3).map((student) => (
+                <li key={student.id}>
+                  <Row student={student} />
+                </li>
+              ))}
+            </ul>
+          </>
+        ) : (
+          <p className="border-t border-white/[0.10] px-4 py-4 text-[12.5px] leading-snug text-white sm:px-5">
+            No learners within 6 months of a planned EPA date.
+          </p>
+        )}
+
+        <button
+          type="button"
+          onClick={() => onNavigate?.('epatracking')}
+          className="flex h-11 w-full items-center justify-center border-t border-white/[0.10] text-[12.5px] font-semibold text-white transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09]"
+        >
+          View EPA tracking
+        </button>
+      </section>
     );
   }
 
   return (
-    <div className="relative overflow-hidden bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl">
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-green-500/70 via-emerald-400/70 to-green-500/70" />
-      <div className="p-5 sm:p-6">
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              EPA Gateway · Gap analysis
-            </div>
-            <h3 className="mt-1.5 text-xl sm:text-2xl font-semibold text-white tracking-tight">
-              Gateway countdown
-            </h3>
-          </div>
-        </div>
-
-        {epaStudents.length > 1 && !studentId && (
-          <div className="mt-5 flex gap-1.5 overflow-x-auto hide-scrollbar pb-1">
-            {epaStudents.slice(0, 5).map((student) => {
-              const selected =
-                selectedStudent === student.id ||
-                (!selectedStudent && student === epaStudents[0]);
-              return (
-                <button
-                  key={student.id}
-                  onClick={() => setSelectedStudent(student.id)}
-                  className={`shrink-0 h-11 px-3.5 rounded-full text-[12px] font-medium transition-colors touch-manipulation inline-flex items-center gap-2 ${
-                    selected
-                      ? 'bg-elec-yellow text-black'
-                      : 'bg-[hsl(0_0%_9%)] border border-white/[0.08] text-white hover:text-white'
-                  }`}
-                >
-                  {student.name.split(' ')[0]}
-                  <span className={selected ? 'text-black/60' : 'text-white'}>
-                    {student.daysRemaining}d
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        )}
-
-        {selectedStudentData && (
-          <>
-            {/* Countdown header */}
-            <div className="mt-5 bg-[hsl(0_0%_10%)] border border-white/[0.06] rounded-xl p-5 flex items-center justify-between">
-              <div>
-                <div className="text-[15px] font-medium text-white">{selectedStudentData.name}</div>
-                <div className="mt-0.5 text-[11.5px] text-white">
-                  {selectedStudentData.cohort}
-                </div>
-              </div>
-              <div className="text-right">
-                <div className="text-3xl font-semibold tabular-nums text-elec-yellow leading-none">
-                  {selectedStudentData.daysRemaining}
-                </div>
-                <div className="mt-1 text-[10px] uppercase tracking-[0.14em] text-white">
-                  days to EPA
-                </div>
-              </div>
-            </div>
-
-            {/* Overall Readiness */}
-            <div className="mt-4">
-              <div className="flex items-center justify-between mb-2">
-                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
-                  Gateway Readiness
-                </div>
-                <div className="flex items-center gap-2">
-                  <span
-                    className={`text-[11px] font-medium px-2 py-0.5 rounded-full border tabular-nums ${getStatusColor(selectedStudentData.gatewayStatus)}`}
-                  >
-                    {getStatusLabel(selectedStudentData.gatewayStatus)}
-                  </span>
-                  <span className="text-[15px] font-semibold tabular-nums text-white">
-                    {selectedStudentData.overallReadiness}%
-                  </span>
-                </div>
-              </div>
-              <div className="h-1 bg-white/[0.06] rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-green-400/80 rounded-full transition-all"
-                  style={{ width: `${selectedStudentData.overallReadiness}%` }}
-                />
-              </div>
-            </div>
-
-            {/* Requirements */}
-            <div className="mt-5">
-              <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white mb-3">
-                Gateway Requirements
-              </div>
-              <div className="space-y-2">
-                {selectedStudentData.requirements.map((req) => (
-                  <div
-                    key={req.id}
-                    className="bg-[hsl(0_0%_10%)] border border-white/[0.06] rounded-xl p-3"
-                  >
-                    <div className="flex items-baseline justify-between gap-2">
-                      <div className="text-[13px] font-medium text-white truncate">{req.title}</div>
-                      <span className="text-[13px] font-semibold tabular-nums text-white">
-                        {Math.round(req.progress)}%
-                      </span>
-                    </div>
-                    <div className="mt-0.5 text-[11px] text-white truncate">
-                      {req.description}
-                    </div>
-                    <div className="mt-2 h-1 bg-white/[0.06] rounded-full overflow-hidden">
-                      <div
-                        className="h-full bg-elec-yellow/80 rounded-full"
-                        style={{ width: `${req.progress}%` }}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Gaps */}
-            {selectedStudentData.gaps.length > 0 && (
-              <div className="mt-5">
-                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white mb-2">
-                  Gaps to address
-                </div>
-                <ul className="space-y-1.5">
-                  {selectedStudentData.gaps.map((gap, idx) => (
-                    <li
-                      key={idx}
-                      className="flex items-start gap-2 text-[12.5px] text-amber-400 bg-amber-500/10 border border-amber-500/20 rounded-lg px-3 py-2 leading-relaxed"
-                    >
-                      <span aria-hidden className="text-amber-400 mt-0.5 shrink-0">
-                        →
-                      </span>
-                      {gap}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {/* AI Recommendations */}
-            {selectedStudentData.recommendations.length > 0 && (
-              <div className="mt-5 pt-5 border-t border-white/[0.06]">
-                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white mb-2">
-                  AI Recommendations
-                </div>
-                <ul className="space-y-1.5">
-                  {selectedStudentData.recommendations.map((rec, idx) => (
-                    <li key={idx} className="flex items-start gap-2 text-[13px] text-white">
-                      <span aria-hidden className="text-elec-yellow mt-0.5 shrink-0">
-                        →
-                      </span>
-                      {rec}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </>
-        )}
-
-        {epaStudents.length === 0 && (
-          <div className="text-center py-10 text-white">
-            <div className="text-[14px] font-medium text-white">No students approaching EPA</div>
-            <p className="mt-1 text-[12px] text-white max-w-xs mx-auto">
-              Students will appear here within 6 months of their planned EPA date.
-            </p>
-          </div>
+    <section className={CARD}>
+      <div className="flex items-end justify-between gap-4 px-4 py-3.5 sm:px-5">
+        <h3 className="text-[15px] font-semibold tracking-tight text-elec-yellow">
+          Gateway countdown
+        </h3>
+        {epaStudents.length > 0 && (
+          <span className="text-[11px] font-semibold tabular-nums text-white">
+            {epaStudents.length} within 6 months
+          </span>
         )}
       </div>
-    </div>
+
+      {epaStudents.length > 1 && !studentId && (
+        <div className="hide-scrollbar flex gap-2 overflow-x-auto px-4 pb-3.5 sm:px-5">
+          {epaStudents.slice(0, 5).map((student) => {
+            const selected =
+              selectedStudent === student.id || (!selectedStudent && student === epaStudents[0]);
+            return (
+              <button
+                key={student.id}
+                type="button"
+                onClick={() => setSelectedStudent(student.id)}
+                className={cn(
+                  'inline-flex h-11 shrink-0 items-center gap-2 rounded-xl px-3.5 text-[12.5px] font-semibold transition-colors touch-manipulation',
+                  selected
+                    ? 'bg-elec-yellow text-black'
+                    : 'border border-white/[0.18] text-white hover:bg-white/[0.06]'
+                )}
+              >
+                {student.name.split(' ')[0]}
+                <span className={cn('tabular-nums', selected ? 'text-black/70' : 'text-white')}>
+                  {student.daysRemaining}d
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      )}
+
+      {selectedStudentData ? (
+        <>
+          <div className="flex items-center gap-3 border-t border-white/[0.10] px-4 py-3.5 sm:px-5">
+            <span
+              aria-hidden="true"
+              className={cn(
+                'h-8 w-[3px] shrink-0 rounded-full',
+                selectedStudentData.gatewayStatus === 'at_risk' ||
+                  selectedStudentData.daysRemaining < 30
+                  ? 'bg-elec-yellow'
+                  : 'bg-white/[0.25]'
+              )}
+            />
+            <span className="min-w-0 flex-1">
+              <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+                {selectedStudentData.name}
+              </span>
+              <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
+                {selectedStudentData.cohort} ·{' '}
+                {selectedStudentData.gatewayStatus === 'at_risk' ? (
+                  <span className="font-semibold text-red-300">At risk</span>
+                ) : (
+                  STATUS_LABEL[selectedStudentData.gatewayStatus]
+                )}
+              </span>
+            </span>
+            <span className="shrink-0 text-right">
+              <span className="block text-[22px] font-semibold leading-none tabular-nums text-elec-yellow">
+                {selectedStudentData.daysRemaining}
+              </span>
+              <span className="mt-1 block text-[11px] text-white">days to EPA</span>
+            </span>
+          </div>
+
+          <div className="border-t border-white/[0.10] px-4 py-3.5 sm:px-5">
+            <div className="flex items-baseline justify-between text-[12px] text-white">
+              <span className="font-semibold">Gateway readiness</span>
+              <span className="font-semibold tabular-nums">
+                {selectedStudentData.overallReadiness}%
+              </span>
+            </div>
+            <div className="mt-1.5 h-1 overflow-hidden rounded-full bg-white/[0.10]">
+              <div
+                className="h-full rounded-full bg-white transition-all"
+                style={{ width: `${selectedStudentData.overallReadiness}%` }}
+              />
+            </div>
+          </div>
+
+          <ul className="divide-y divide-white/[0.10] border-t border-white/[0.10]">
+            {selectedStudentData.requirements.map((req) => (
+              <li key={req.id} className="px-4 py-3 sm:px-5">
+                <div className="flex items-baseline justify-between gap-2">
+                  <div className="truncate text-[13px] font-semibold text-white">{req.title}</div>
+                  <span className="shrink-0 text-[13px] font-semibold tabular-nums text-white">
+                    {Math.round(req.progress)}%
+                  </span>
+                </div>
+                <div className="mt-0.5 truncate text-[12px] text-white">{req.description}</div>
+                <div className="mt-2 h-1 overflow-hidden rounded-full bg-white/[0.10]">
+                  <div
+                    className="h-full rounded-full bg-white"
+                    style={{ width: `${req.progress}%` }}
+                  />
+                </div>
+              </li>
+            ))}
+          </ul>
+
+          {selectedStudentData.gaps.length > 0 && (
+            <div className="border-t border-white/[0.10] px-4 py-3.5 sm:px-5">
+              <div className="text-[12px] font-semibold text-white">Gaps to address</div>
+              <ul className="mt-1.5 space-y-1 text-[12px] leading-snug text-white">
+                {selectedStudentData.gaps.map((gap, idx) => (
+                  <li key={idx}>— {gap}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {selectedStudentData.recommendations.length > 0 && (
+            <div className="border-t border-white/[0.10] px-4 py-3.5 sm:px-5">
+              <div className="text-[12px] font-semibold text-white">Recommended next steps</div>
+              <ul className="mt-1.5 space-y-1 text-[12px] leading-snug text-white">
+                {selectedStudentData.recommendations.map((rec, idx) => (
+                  <li key={idx}>— {rec}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </>
+      ) : (
+        <p className="border-t border-white/[0.10] px-4 py-4 text-[12.5px] leading-snug text-white sm:px-5">
+          No learners within 6 months of a planned EPA date. Learners appear here once an EPA
+          date, gateway date or expected end date is on their record.
+        </p>
+      )}
+    </section>
   );
 }

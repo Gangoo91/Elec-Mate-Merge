@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation, useParams } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { LazyRoute } from '@/components/LazyRoute';
 import { lazyWithRetry } from '@/utils/lazyWithRetry';
@@ -53,6 +53,18 @@ const ParentDigestPage = lazyWithRetry(() => import('@/pages/public/ParentDigest
 const CertExpiryRedirect = () => {
   const location = useLocation();
   return <Navigate to={`/electrician/renewals${location.search}`} replace />;
+};
+
+/** `/college/students/:id` → the learner page inside the College shell. */
+const LegacyStudentRedirect = () => {
+  const { id } = useParams();
+  const location = useLocation();
+  return (
+    <Navigate
+      to={`/college?section=student360&studentId=${encodeURIComponent(id ?? '')}${location.hash}`}
+      replace
+    />
+  );
 };
 
 const PublicBooking = lazyWithRetry(() => import('@/pages/public/PublicBooking'));
@@ -134,7 +146,6 @@ const LessonPlanPage = lazyWithRetry(() => import('@/pages/college/LessonPlanPag
 const LessonSlideDeckPage = lazyWithRetry(() => import('@/pages/college/LessonSlideDeckPage'));
 const LessonDeliverPage = lazyWithRetry(() => import('@/pages/college/LessonDeliverPage'));
 const LessonPrintPage = lazyWithRetry(() => import('@/pages/college/LessonPrintPage'));
-const Student360Page = lazyWithRetry(() => import('@/pages/college/Student360Page'));
 const Learner360PrintPage = lazyWithRetry(() => import('@/pages/college/Learner360PrintPage'));
 const PolicyDetailPage = lazyWithRetry(() => import('@/pages/college/PolicyDetailPage'));
 const CompliancePackPage = lazyWithRetry(() => import('@/pages/college/CompliancePackPage'));
@@ -2096,17 +2107,14 @@ const AppRouter = () => {
               }
             />
 
-            {/* People Hub — learner 360 profile */}
-            <Route
-              path="college/students/:id"
-              element={
-                <LazyRoute>
-                  <CollegeGuard>
-                    <Student360Page />
-                  </CollegeGuard>
-                </LazyRoute>
-              }
-            />
+            {/* People Hub — learner 360 profile.
+                The learner page now lives INSIDE the College dashboard shell
+                (`/college?section=student360&studentId=…`) so it shares the
+                masthead, search and bottom nav. This route survives only so
+                old links, bookmarks and push notifications still land
+                somewhere sensible; it forwards and keeps any #anchor. The
+                /print and /evidence sub-routes below are still real pages. */}
+            <Route path="college/students/:id" element={<LegacyStudentRedirect />} />
 
             {/* People Hub — printable Ofsted-ready Learner 360 PDF */}
             <Route

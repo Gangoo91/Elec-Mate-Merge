@@ -19,6 +19,15 @@
 
 import { Sentry } from '@/lib/sentry';
 
+/**
+ * Form-data keys that are never PDF fields on ANY certificate, so no formatter
+ * has to remember to ignore them:
+ *   - duplicatedFrom — provenance written by duplicateCertificate() so the
+ *     form can show the "duplicated from X" banner. Sentry DZ flagged it as a
+ *     dropped field on every duplicated EV cert.
+ */
+const ALWAYS_IGNORED = ['duplicatedFrom'];
+
 export interface UnmappedFieldOptions {
   /** form-data keys to ignore — UI-only state, or values resolved via another key */
   ignore?: string[];
@@ -62,7 +71,7 @@ export function reportUnmappedFields(
   accessedKeys: Set<string>,
   options: UnmappedFieldOptions = {}
 ): string[] {
-  const ignore = new Set(options.ignore ?? []);
+  const ignore = new Set([...ALWAYS_IGNORED, ...(options.ignore ?? [])]);
   const nested = new Set(options.nestedKeys ?? []);
   const dropped: string[] = [];
 

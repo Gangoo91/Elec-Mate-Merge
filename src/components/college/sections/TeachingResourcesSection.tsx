@@ -1,13 +1,22 @@
 import { useMemo, useRef, useState, type DragEvent } from 'react';
 import { motion } from 'framer-motion';
+import { ChevronRight } from 'lucide-react';
 import {
-  PageFrame,
-  PageHero,
-  FilterBar,
-  EmptyState,
-  PrimaryButton,
-  itemVariants,
-} from '@/components/college/primitives';
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { containerVariants, itemVariants, EmptyState } from '@/components/college/primitives';
+import {
+  HubKpi,
+  HubKpiRow,
+  HubQuickStart,
+  HubSectionHeading,
+  type HubQuickAction,
+} from '@/components/hub/HubPrimitives';
 import { cn } from '@/lib/utils';
 import {
   useCollegeResources,
@@ -16,20 +25,76 @@ import {
 } from '@/hooks/useCollegeResources';
 import { AddResourceLinkDialog } from '@/components/college/dialogs/AddResourceLinkDialog';
 import { EditResourceDialog } from '@/components/college/dialogs/EditResourceDialog';
-import { ResourceCard } from '@/components/college/ui/ResourceCard';
 import { ResourcePreviewSheet } from '@/components/college/sheets/ResourcePreviewSheet';
 import { ResourceLinksPanel } from '@/components/college/ui/ResourceLinksPanel';
 
-const KIND_TABS: { value: string; label: string }[] = [
-  { value: 'all', label: 'All' },
-  { value: 'document', label: 'Documents' },
-  { value: 'video', label: 'Videos' },
-  { value: 'slide', label: 'Slides' },
-  { value: 'sheet', label: 'Sheets' },
-  { value: 'image', label: 'Images' },
-  { value: 'audio', label: 'Audio' },
-  { value: 'link', label: 'Links' },
-];
+/**
+ * Teaching resources — the materials library a college manages: upload,
+ * link, tag, preview, delete. Renders CONTENT ONLY under the CollegeDashboard
+ * masthead: quick start (Upload files is the one solid volt card) → KPI row
+ * → filters → work-list rows. The whole list is a drop target on desktop.
+ */
+
+const KIND_LABEL: Record<ResourceKind, string> = {
+  document: 'Documents',
+  slide: 'Slides',
+  sheet: 'Spreadsheets',
+  image: 'Images',
+  video: 'Videos',
+  audio: 'Audio',
+  link: 'Links',
+  other: 'Other',
+};
+
+const KIND_ONE: Record<ResourceKind, string> = {
+  document: 'Document',
+  slide: 'Slides',
+  sheet: 'Spreadsheet',
+  image: 'Image',
+  video: 'Video',
+  audio: 'Audio',
+  link: 'Link',
+  other: 'File',
+};
+
+const CHIP =
+  'inline-flex h-11 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border px-4 text-[12.5px] font-medium transition-colors touch-manipulation';
+const CHIP_ON = 'border-white bg-white text-black';
+const CHIP_OFF = 'border-white/[0.14] text-white hover:bg-white/[0.06]';
+const SEARCH =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white placeholder:text-white placeholder:opacity-40 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus:outline-none touch-manipulation';
+const LIST_CARD = cn(
+  '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
+  CARD_SURFACE
+);
+
+function prettyBytes(n: number | null | undefined): string {
+  if (n === null || n === undefined || n <= 0) return '';
+  const units = ['B', 'KB', 'MB', 'GB'];
+  let i = 0;
+  let v = n;
+  while (v >= 1024 && i < units.length - 1) {
+    v /= 1024;
+    i++;
+  }
+  return `${v < 10 && i > 0 ? v.toFixed(1) : Math.round(v)} ${units[i]}`;
+}
+
+function prettyDuration(sec: number | null | undefined): string {
+  if (!sec) return '';
+  const m = Math.floor(sec / 60);
+  const s = sec % 60;
+  return `${m}:${String(s).padStart(2, '0')}`;
+}
+
+function hostFromUrl(url: string | null): string {
+  if (!url) return '';
+  try {
+    return new URL(url).hostname.replace(/^www\./, '');
+  } catch {
+    return url.slice(0, 30);
+  }
+}
 
 export function TeachingResourcesSection() {
   const {
@@ -44,17 +109,25 @@ export function TeachingResourcesSection() {
   } = useCollegeResources();
 
   const [searchQuery, setSearchQuery] = useState('');
-  const [filterKind, setFilterKind] = useState<string>('all');
+  const [filterKind, setFilterKind] = useState<ResourceKind | 'all'>('all');
   const [linkDialogOpen, setLinkDialogOpen] = useState(false);
   const [dragOver, setDragOver] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [previewResource, setPreviewResource] = useState<CollegeResource | null>(null);
   const [editResource, setEditResource] = useState<CollegeResource | null>(null);
 
+  const kinds = useMemo(() => {
+    const counts = new Map<ResourceKind, number>();
+    for (const r of resources) counts.set(r.kind, (counts.get(r.kind) ?? 0) + 1);
+    return Array.from(counts.entries())
+      .sort((a, b) => b[1] - a[1])
+      .map(([kind, count]) => ({ kind, count }));
+  }, [resources]);
+
   const filtered = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
     return resources.filter((r) => {
       const matchesKind = filterKind === 'all' || r.kind === filterKind;
-      const q = searchQuery.toLowerCase();
       const matchesSearch =
         q === '' ||
         r.title.toLowerCase().includes(q) ||
@@ -88,44 +161,26 @@ export function TeachingResourcesSection() {
 
   const inProgressUploads = uploads.filter((u) => u.status !== 'done');
   const hasResources = resources.length > 0;
+  const linkCount = resources.filter((r) => r.kind === 'link').length;
+  const taggedCount = resources.filter((r) => (r.ac_count ?? 0) > 0).length;
+
+  const quickStart: HubQuickAction[] = [
+    {
+      title: 'Upload files',
+      description: 'Slides, handouts, videos, sheets',
+      onClick: pickFiles,
+      primary: true,
+    },
+    {
+      title: 'Add a link',
+      description: 'YouTube, a manufacturer page, a PDF online',
+      onClick: () => setLinkDialogOpen(true),
+    },
+  ];
 
   return (
-    <PageFrame>
-      <motion.div variants={itemVariants}>
-        <PageHero
-          eyebrow="Curriculum · Teaching Resources"
-          title="Materials library"
-          description="Slides, handouts, videos, sheets and links — shared across courses and cohorts."
-          tone="amber"
-          actions={
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => setLinkDialogOpen(true)}
-                className="text-[12.5px] font-medium text-white hover:text-white transition-colors touch-manipulation whitespace-nowrap"
-              >
-                + Link
-              </button>
-              <button
-                onClick={pickFiles}
-                className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap"
-              >
-                Upload resource →
-              </button>
-            </div>
-          }
-        />
-      </motion.div>
-
-      <motion.div variants={itemVariants}>
-        <FilterBar
-          tabs={KIND_TABS}
-          activeTab={filterKind}
-          onTabChange={setFilterKind}
-          search={searchQuery}
-          onSearchChange={setSearchQuery}
-          searchPlaceholder="Search resources…"
-        />
-      </motion.div>
+    <>
+      <HubQuickStart label="Add to the library" items={quickStart} />
 
       {/* Hidden native file input */}
       <input
@@ -139,56 +194,83 @@ export function TeachingResourcesSection() {
         }}
       />
 
-      {/* Mobile: the drag-drop hint is hidden < sm, so give a thumb-friendly
-          full-width Add files button to reach the native picker. */}
-      <motion.div variants={itemVariants} className="sm:hidden">
-        <PrimaryButton fullWidth onClick={pickFiles}>
-          Add files
-        </PrimaryButton>
-      </motion.div>
+      {hasResources && (
+        <motion.section variants={containerVariants} initial="hidden" animate="visible">
+          <HubKpiRow>
+            <HubKpi
+              accent
+              label="Resources"
+              value={String(resources.length)}
+              verdict="Shared across courses and cohorts"
+              context={linkCount > 0 ? `${linkCount} of them links` : undefined}
+            />
+            <HubKpi
+              label="Tagged to criteria"
+              value={String(taggedCount)}
+              verdict={
+                taggedCount === resources.length
+                  ? 'Every resource maps to an AC'
+                  : `${resources.length - taggedCount} not yet mapped`
+              }
+            />
+            <HubKpi
+              label="Uploading"
+              value={String(inProgressUploads.length)}
+              verdict={inProgressUploads.length > 0 ? 'In progress now' : 'Nothing in flight'}
+            />
+          </HubKpiRow>
+        </motion.section>
+      )}
 
       {/* Upload in-flight panel */}
       {uploads.length > 0 && (
-        <motion.div variants={itemVariants}>
-          <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
-            <div className="px-5 py-3 border-b border-white/[0.06] flex items-center justify-between gap-3">
-              <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white">
-                Uploads ·{' '}
-                {inProgressUploads.length > 0
-                  ? `${inProgressUploads.length} in progress`
-                  : `${uploads.length} completed`}
-              </div>
-              {inProgressUploads.length === 0 && uploads.length > 0 && (
-                <button
-                  onClick={clearFinishedUploads}
-                  className="text-[11.5px] text-white/70 hover:text-white transition-colors"
-                >
-                  Dismiss
-                </button>
-              )}
-            </div>
-            <ul className="divide-y divide-white/[0.06]">
+        <motion.section
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="space-y-3"
+        >
+          <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
+            <HubSectionHeading>Uploads</HubSectionHeading>
+            {inProgressUploads.length === 0 ? (
+              <button
+                type="button"
+                onClick={clearFinishedUploads}
+                className="-my-2 flex h-11 items-center px-2 text-[12px] font-bold text-elec-yellow transition-colors touch-manipulation"
+              >
+                Dismiss
+              </button>
+            ) : (
+              <span className="text-[11px] font-semibold tabular-nums text-elec-yellow">
+                {inProgressUploads.length} in progress
+              </span>
+            )}
+          </motion.div>
+          <motion.div variants={itemVariants} className={LIST_CARD}>
+            <ul className="divide-y divide-white/[0.10]">
               {uploads.map((u) => {
                 const isActive = u.status === 'uploading' || u.status === 'saving';
+                const pct =
+                  u.status === 'done' || u.status === 'saving'
+                    ? 100
+                    : Math.max(Math.round(u.progress * 100), isActive ? 6 : 0);
                 return (
-                  <li
-                    key={u.token}
-                    className="px-4 sm:px-5 py-3 space-y-2 text-[12.5px] min-w-0"
-                  >
-                    <div className="flex items-center gap-3 min-w-0">
-                      <span className="flex-1 min-w-0 truncate text-white">
+                  <li key={u.token} className="space-y-2 px-4 py-3 sm:px-5">
+                    <div className="flex items-center gap-3">
+                      <span className="min-w-0 flex-1 truncate text-[13px] font-semibold text-white">
                         {u.file.name}
                       </span>
-                      <span className="hidden sm:inline text-white tabular-nums shrink-0">
+                      <span className="hidden shrink-0 text-[12px] tabular-nums text-white sm:inline">
                         {(u.file.size / 1024 / 1024).toFixed(2)} MB
                       </span>
                       <span
                         className={cn(
-                          'text-[11px] shrink-0 truncate max-w-[40%] sm:max-w-none',
-                          u.status === 'done' && 'text-emerald-300',
-                          u.status === 'error' && 'text-red-300',
-                          isActive && 'text-elec-yellow/85',
-                          u.status === 'queued' && 'text-white'
+                          'shrink-0 text-[12px] font-semibold tabular-nums',
+                          u.status === 'error'
+                            ? 'text-red-300'
+                            : u.status === 'done'
+                              ? 'text-emerald-300'
+                              : 'text-white'
                         )}
                         title={u.status === 'error' ? u.error : undefined}
                       >
@@ -197,95 +279,145 @@ export function TeachingResourcesSection() {
                           : u.status === 'error'
                             ? 'Failed'
                             : u.status === 'uploading'
-                              ? `Uploading… ${Math.round(u.progress * 100)}%`
+                              ? `${Math.round(u.progress * 100)}%`
                               : u.status === 'saving'
                                 ? 'Saving…'
                                 : 'Queued'}
                       </span>
                     </div>
-                    {/* Per-file progress bar */}
                     {u.status !== 'error' && (
-                      <div className="h-1 w-full rounded-full bg-white/[0.08] overflow-hidden">
+                      <div className="h-1 w-full overflow-hidden rounded-full bg-white/[0.10]">
                         <div
                           className={cn(
                             'h-full rounded-full transition-all',
                             u.status === 'done' ? 'bg-emerald-400' : 'bg-elec-yellow'
                           )}
-                          style={{
-                            width:
-                              u.status === 'done'
-                                ? '100%'
-                                : u.status === 'saving'
-                                  ? '100%'
-                                  : `${Math.max(u.progress * 100, isActive ? 6 : 0)}%`,
-                          }}
+                          style={{ width: `${pct}%` }}
                         />
                       </div>
+                    )}
+                    {u.status === 'error' && u.error && (
+                      <p className="text-[11.5px] leading-snug text-red-300">{u.error}</p>
                     )}
                   </li>
                 );
               })}
             </ul>
-          </div>
-        </motion.div>
+          </motion.div>
+        </motion.section>
       )}
 
-      {/* Drop zone + grid */}
-      <motion.div variants={itemVariants}>
-        <div
+      <motion.section
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="space-y-3"
+      >
+        <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
+          <HubSectionHeading>Library</HubSectionHeading>
+          {!loading && hasResources && (
+            <span className="text-[11px] font-semibold tabular-nums text-white">
+              {filtered.length === resources.length
+                ? `${resources.length} item${resources.length === 1 ? '' : 's'}`
+                : `${filtered.length} of ${resources.length}`}
+            </span>
+          )}
+        </motion.div>
+
+        {hasResources && (
+          <>
+            <motion.div variants={itemVariants}>
+              <input
+                type="search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search title, description or tags"
+                aria-label="Search resources"
+                className={SEARCH}
+              />
+            </motion.div>
+            {kinds.length > 1 && (
+              <motion.div
+                variants={itemVariants}
+                className="-mx-4 flex gap-2 overflow-x-auto px-4 hide-scrollbar sm:mx-0 sm:flex-wrap sm:px-0"
+              >
+                <button
+                  type="button"
+                  onClick={() => setFilterKind('all')}
+                  className={cn(CHIP, filterKind === 'all' ? CHIP_ON : CHIP_OFF)}
+                >
+                  All
+                  <span className="text-[11px] tabular-nums opacity-70">{resources.length}</span>
+                </button>
+                {kinds.map(({ kind, count }) => (
+                  <button
+                    key={kind}
+                    type="button"
+                    onClick={() => setFilterKind(kind)}
+                    className={cn(CHIP, filterKind === kind ? CHIP_ON : CHIP_OFF)}
+                  >
+                    {KIND_LABEL[kind]}
+                    <span className="text-[11px] tabular-nums opacity-70">{count}</span>
+                  </button>
+                ))}
+              </motion.div>
+            )}
+          </>
+        )}
+
+        {/* Drop zone wraps the list so files can be dropped anywhere on it.
+            The border switches to solid volt while a drag is over it — a line,
+            never a wash. */}
+        <motion.div
+          variants={itemVariants}
           onDragOver={onDragOver}
           onDragLeave={onDragLeave}
           onDrop={onDrop}
           className={cn(
-            'relative rounded-2xl border transition-colors',
-            dragOver
-              ? 'border-elec-yellow/60 bg-elec-yellow/[0.05]'
-              : 'border-white/[0.06] bg-transparent'
+            'relative',
+            dragOver && '[&>*:first-child]:border-elec-yellow'
           )}
         >
           {dragOver && (
-            <div className="hidden sm:flex absolute inset-0 z-10 items-center justify-center pointer-events-none rounded-2xl bg-elec-yellow/[0.03]">
-              <div className="text-center">
-                <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-elec-yellow">
-                  Drop to upload
-                </div>
-                <div className="mt-1 text-[13px] text-white">
-                  Release your files anywhere in the library
-                </div>
+            <div className="pointer-events-none absolute inset-0 z-10 hidden items-center justify-center sm:flex">
+              <div className="rounded-full bg-elec-yellow px-5 py-2.5 text-[13px] font-semibold text-black">
+                Drop to upload
               </div>
             </div>
           )}
 
           {loading && !hasResources ? (
-            <div className="px-6 py-16 text-center text-[12.5px] text-white">
-              Loading library…
+            <div className="flex items-center justify-center py-20">
+              <div className="h-6 w-6 animate-spin rounded-full border-2 border-elec-yellow border-t-transparent" />
             </div>
           ) : !hasResources ? (
             <EmptyState
               title="No teaching resources yet"
-              description="Drag and drop files here, pick them from your device, or paste an external link. They'll be organised by course and searchable by tag."
-              action="Upload files"
-              onAction={pickFiles}
-            />
-          ) : filtered.length === 0 ? (
-            <EmptyState
-              title="Nothing matches"
-              description="Try adjusting the filter or clearing the search."
+              description="Upload files or add a link above. Drag and drop works on a desktop. Everything is searchable by tag and can be mapped to assessment criteria."
             />
           ) : (
-            <div className="p-3 sm:p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
-              {filtered.map((r) => (
-                <ResourceCardCell
-                  key={r.id}
-                  resource={r}
-                  onOpen={() => setPreviewResource(r)}
-                  onDelete={() => deleteResource(r.id)}
-                />
-              ))}
+            <div className={LIST_CARD}>
+              {filtered.length === 0 ? (
+                <p className="px-4 py-5 text-[12.5px] text-white sm:px-5">
+                  Nothing matches — clear the search or pick another type.
+                </p>
+              ) : (
+                <ul className="divide-y divide-white/[0.10]">
+                  {filtered.map((r) => (
+                    <ResourceRow
+                      key={r.id}
+                      resource={r}
+                      onOpen={() => setPreviewResource(r)}
+                      onEdit={() => setEditResource(r)}
+                      onDelete={() => deleteResource(r.id)}
+                    />
+                  ))}
+                </ul>
+              )}
             </div>
           )}
-        </div>
-      </motion.div>
+        </motion.div>
+      </motion.section>
 
       <AddResourceLinkDialog
         open={linkDialogOpen}
@@ -318,25 +450,95 @@ export function TeachingResourcesSection() {
         onOpenChange={(v) => !v && setEditResource(null)}
         resource={editResource}
         onSaved={() => {
-          // The hook already refreshes on load; the card will pick up changes
+          // The hook already refreshes on load; the row will pick up changes
           // on next refetch. Close and clear.
           setEditResource(null);
         }}
       />
-    </PageFrame>
+    </>
   );
 }
 
-function ResourceCardCell({
+function ResourceRow({
   resource,
   onOpen,
+  onEdit,
   onDelete,
 }: {
   resource: CollegeResource;
-  onOpen: () => void | Promise<void>;
+  onOpen: () => void;
+  onEdit: () => void;
   onDelete: () => void;
 }) {
-  return <ResourceCard resource={resource} onOpen={onOpen} onDelete={onDelete} />;
+  const acCount = resource.ac_count ?? 0;
+  const tagging = Boolean(resource.ai_tagging);
+  const reason = [
+    KIND_ONE[resource.kind],
+    resource.kind === 'link'
+      ? hostFromUrl(resource.external_url)
+      : [prettyBytes(resource.size_bytes), prettyDuration(resource.duration_seconds)]
+          .filter(Boolean)
+          .join(' · '),
+    resource.uploader_name,
+    resource.tags.length > 0 ? resource.tags.slice(0, 3).join(', ') : null,
+  ]
+    .filter(Boolean)
+    .join(' · ');
+
+  return (
+    <li className="flex items-center gap-1 pr-2 sm:pr-3">
+      <button
+        type="button"
+        onClick={onOpen}
+        className="flex min-w-0 flex-1 items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5"
+      >
+        <span aria-hidden="true" className="h-8 w-[3px] shrink-0 rounded-full bg-white/[0.25]" />
+        <span className="min-w-0 flex-1">
+          <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+            {resource.title}
+          </span>
+          <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
+            {reason}
+          </span>
+        </span>
+        <span
+          className={cn(
+            'shrink-0 text-[13px] font-semibold tabular-nums',
+            tagging ? 'text-elec-yellow' : 'text-white'
+          )}
+        >
+          {tagging ? 'Tagging…' : acCount > 0 ? `${acCount} AC${acCount === 1 ? '' : 's'}` : ''}
+        </span>
+        <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
+      </button>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <button
+            type="button"
+            aria-label={`Options for ${resource.title}`}
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white transition-colors touch-manipulation hover:bg-white/[0.06]"
+          >
+            <span className="text-[18px] leading-none">⋯</span>
+          </button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="min-w-[170px]">
+          <DropdownMenuItem className="h-11 touch-manipulation" onClick={onOpen}>
+            {resource.kind === 'link' ? 'Open link' : 'Preview / download'}
+          </DropdownMenuItem>
+          <DropdownMenuItem className="h-11 touch-manipulation" onClick={onEdit}>
+            Edit details
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem
+            className="h-11 touch-manipulation text-red-400 focus:text-red-300"
+            onClick={onDelete}
+          >
+            Delete
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </li>
+  );
 }
 
 export type { ResourceKind };

@@ -20,7 +20,7 @@ const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
   'Access-Control-Allow-Headers':
-    'authorization, x-client-info, x-request-id, x-supabase-api-version, apikey, content-type',
+    'authorization, x-client-info, x-request-id, x-supabase-api-version, x-supabase-timeout, apikey, content-type',
 };
 
 const CHAT_MODEL = 'gpt-5.4-mini-2026-03-17';
@@ -502,8 +502,11 @@ Deno.serve(async (req: Request) => {
 
     // ELE-902 (B7) — pull college teaching resources tagged to any AC this
     // lesson covers so the model can recommend specific titles rather than
-    // inventing generic materials.
-    const acCodes = acs.map((a) => a.ac_code).filter(Boolean);
+    // inventing generic materials. `acs` is derived from `acRowMaps` above
+    // with the same ac_code values (the qualification_requirements lookup
+    // only adds ac_text), so the codes to search on are exactly `acCodes` —
+    // declared once at the AC-mapping step and reused here. Redeclaring it
+    // was a SyntaxError that stopped the worker booting (503 on every call).
     let resources: ResourceRow[] = [];
     if (acCodes.length > 0) {
       const { data: mapRows } = await supabase
@@ -516,7 +519,9 @@ Deno.serve(async (req: Request) => {
       if (resourceIds.length > 0) {
         const { data: resourceRows } = await supabase
           .from('teaching_resources')
-          .select('id, college_id, title, description, resource_type, external_url, is_student_visible')
+          .select(
+            'id, college_id, title, description, resource_type, external_url, is_student_visible'
+          )
           .in('id', resourceIds)
           .eq('college_id', profile.college_id)
           .eq('is_student_visible', true)
@@ -635,7 +640,11 @@ Deno.serve(async (req: Request) => {
       headers: { ...corsHeaders, 'content-type': 'application/json' },
     });
   } catch (e) {
-    await captureException(e, { functionName: 'ai-generate-slide-deck', requestUrl: req.url, requestMethod: req.method });
+    await captureException(e, {
+      functionName: 'ai-generate-slide-deck',
+      requestUrl: req.url,
+      requestMethod: req.method,
+    });
     return new Response(JSON.stringify({ error: 'unhandled', detail: (e as Error).message }), {
       status: 500,
       headers: { ...corsHeaders, 'content-type': 'application/json' },

@@ -1,12 +1,17 @@
 import { useMemo, useState } from 'react';
+import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { PeopleListRow, type AccentTone } from '@/components/college/primitives/PeopleListRow';
-import { EmptyState, ListCard, type Tone } from '@/components/college/primitives';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { chipBase, chipOff, chipOn } from '@/components/forms/fieldStyles';
 import { useCollegePolicies, type PolicyRow, type PolicyStatus } from '@/hooks/useCollegePolicies';
 
 /* ==========================================================================
-   PoliciesList — institution policies list. Triage: Action needed (drafts +
-   review-due) over Live policies. Mobile-first PeopleListRow pattern.
+   PoliciesList — institution policies list.
+
+   Hub work-list rows: rule · title · category / code / version / review /
+   acknowledgements · status word · chevron. A review that is overdue is the
+   red word; a draft or a review due within 30 days is volt; live and
+   archived are white.
    ========================================================================== */
 
 interface Props {
@@ -15,22 +20,12 @@ interface Props {
   onAdd: () => void;
 }
 
+type Filter = 'all' | 'action' | 'live' | 'draft' | 'archived';
+
 const STATUS_LABEL: Record<PolicyStatus, string> = {
   draft: 'Draft',
   live: 'Live',
   archived: 'Archived',
-};
-
-const STATUS_TONE: Record<PolicyStatus, Tone> = {
-  draft: 'amber',
-  live: 'green',
-  archived: 'blue',
-};
-
-const STATUS_ACCENT: Record<PolicyStatus, AccentTone> = {
-  draft: 'amber',
-  live: 'emerald',
-  archived: 'blue',
 };
 
 function daysUntil(date: string): number {
@@ -41,23 +36,17 @@ function daysUntil(date: string): number {
   return Math.round((d.getTime() - today.getTime()) / 86_400_000);
 }
 
-function formatReview(iso: string | null): {
-  text: string;
-  tone: 'red' | 'amber' | 'white';
-} {
-  if (!iso) return { text: 'No review date', tone: 'white' };
+function reviewText(iso: string | null): string {
+  if (!iso) return 'no review date';
   const days = daysUntil(iso);
-  if (days < 0) return { text: `Review ${Math.abs(days)}d overdue`, tone: 'red' };
-  if (days === 0) return { text: 'Review due today', tone: 'red' };
-  if (days <= 30) return { text: `Review in ${days}d`, tone: 'amber' };
-  return {
-    text: `Review ${new Date(iso).toLocaleDateString('en-GB', {
-      day: 'numeric',
-      month: 'short',
-      year: 'numeric',
-    })}`,
-    tone: 'white',
-  };
+  if (days < 0) return `review ${Math.abs(days)}d overdue`;
+  if (days === 0) return 'review due today';
+  if (days <= 30) return `review in ${days}d`;
+  return `review ${new Date(iso).toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  })}`;
 }
 
 function isReviewDue(iso: string | null): boolean {
@@ -65,9 +54,17 @@ function isReviewDue(iso: string | null): boolean {
   return daysUntil(iso) <= 30;
 }
 
+function isReviewOverdue(iso: string | null): boolean {
+  if (!iso) return false;
+  return daysUntil(iso) <= 0;
+}
+
+const LIST_CARD =
+  '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x';
+
 export function PoliciesList({ search, onOpen, onAdd }: Props) {
   const { policies, loading } = useCollegePolicies();
-  const [filter, setFilter] = useState<'all' | 'action' | 'live' | 'draft' | 'archived'>('all');
+  const [filter, setFilter] = useState<Filter>('all');
 
   // Archived policies are retired — they're never part of "action needed",
   // even if their review date is overdue.
@@ -101,105 +98,74 @@ export function PoliciesList({ search, onOpen, onAdd }: Props) {
 
   if (loading) {
     return (
-      <div className="space-y-3">
-        <FilterChipSkeletons />
-        <ListCard>
-          {Array.from({ length: 4 }).map((_, i) => (
-            <RowSkeleton key={i} />
-          ))}
-        </ListCard>
+      <div className="flex items-center justify-center py-12">
+        <div className="h-6 w-6 animate-spin rounded-full border-2 border-elec-yellow border-t-transparent" />
       </div>
     );
   }
 
   if (policies.length === 0) {
     return (
-      <EmptyState
-        title="No policies yet"
-        description="Add your safeguarding, Prevent, equality and other institutional policies. Version history and acknowledgement logs are kept automatically."
-        action="Add policy"
-        onAction={onAdd}
-      />
+      <div className={cn(LIST_CARD, 'px-4 py-5 sm:px-5', CARD_SURFACE)}>
+        <div className="text-[14px] font-semibold text-white">No policies yet</div>
+        <p className="mt-1 text-[12.5px] leading-snug text-white">
+          Add your safeguarding, Prevent, equality and other institutional policies. Version
+          history and acknowledgement logs are kept automatically.
+        </p>
+        <button
+          type="button"
+          onClick={onAdd}
+          className="-ml-2 mt-2 flex h-11 items-center px-2 text-[12.5px] font-bold text-elec-yellow transition-colors touch-manipulation"
+        >
+          Add the first policy
+        </button>
+      </div>
     );
   }
 
-  const filterChips: {
-    value: typeof filter;
-    label: string;
-    count: number;
-    tone?: 'red' | 'amber';
-  }[] = [
+  const allChips: { value: Filter; label: string; count: number }[] = [
     { value: 'all', label: 'All', count: counts.all },
-    { value: 'action', label: 'Action needed', count: counts.action, tone: 'red' },
+    { value: 'action', label: 'Action needed', count: counts.action },
     { value: 'live', label: 'Live', count: counts.live },
-    { value: 'draft', label: 'Drafts', count: counts.draft, tone: 'amber' },
-    counts.archived > 0
-      ? { value: 'archived' as const, label: 'Archived', count: counts.archived }
-      : null,
-  ].filter(Boolean) as {
-    value: typeof filter;
-    label: string;
-    count: number;
-    tone?: 'red' | 'amber';
-  }[];
+    { value: 'draft', label: 'Drafts', count: counts.draft },
+    { value: 'archived', label: 'Archived', count: counts.archived },
+  ];
+  const filterChips = allChips.filter((c) => c.value !== 'archived' || c.count > 0);
 
   return (
     <div className="space-y-4">
-      <div className="-mx-1 overflow-x-auto scrollbar-hide">
-        <div className="flex items-center gap-1.5 px-1 min-w-max">
-          {filterChips.map((c) => {
-            const active = c.value === filter;
-            return (
-              <button
-                key={c.value}
-                type="button"
-                onClick={() => setFilter(c.value)}
-                className={cn(
-                  'h-9 px-3.5 rounded-full text-[12.5px] font-medium transition-colors touch-manipulation whitespace-nowrap border inline-flex items-center gap-1.5',
-                  active
-                    ? c.tone === 'red'
-                      ? 'bg-red-500/[0.12] border-red-500/40 text-red-200'
-                      : c.tone === 'amber'
-                        ? 'bg-amber-500/[0.12] border-amber-500/40 text-amber-200'
-                        : 'bg-elec-yellow text-black border-elec-yellow'
-                    : 'bg-[hsl(0_0%_12%)] border-white/[0.08] text-white/80 hover:text-white hover:border-white/[0.18]'
-                )}
-              >
-                {c.label}
-                <span
-                  className={cn(
-                    'tabular-nums text-[10.5px] px-1.5 py-0.5 rounded-full',
-                    active && c.tone === 'red'
-                      ? 'bg-red-500/20 text-red-200'
-                      : active && c.tone === 'amber'
-                        ? 'bg-amber-500/20 text-amber-200'
-                        : active
-                          ? 'bg-black/15 text-black/70'
-                          : 'bg-white/[0.08] text-white/60'
-                  )}
-                >
-                  {c.count}
-                </span>
-              </button>
-            );
-          })}
-        </div>
+      <div className="flex flex-wrap gap-2">
+        {filterChips.map((c) => (
+          <button
+            key={c.value}
+            type="button"
+            onClick={() => setFilter(c.value)}
+            className={cn(
+              chipBase,
+              'px-4 text-[12.5px]',
+              c.value === filter ? chipOn : chipOff,
+              c.value === 'action' && c.count > 0 && c.value !== filter && 'text-elec-yellow'
+            )}
+          >
+            {c.label}
+            <span className="ml-1.5 tabular-nums">{c.count}</span>
+          </button>
+        ))}
       </div>
 
-      {filtered.length === 0 ? (
-        <EmptyState
-          title="Nothing matches"
-          description={
-            search.trim() ? `No policies match “${search}”.` : 'No policies in this filter.'
-          }
-        />
-      ) : (
-        <ListCard>
-          {filtered.map((p) => (
-            <PolicyRowItem key={p.id} policy={p} onOpen={onOpen} />
-          ))}
-        </ListCard>
-      )}
+      <div className={cn(LIST_CARD, CARD_SURFACE)}>
+        {filtered.length === 0 ? (
+          <p className="px-4 py-4 text-[12.5px] leading-snug text-white sm:px-5">
+            {search.trim() ? `No policies match “${search}”.` : 'No policies in this filter.'}
+          </p>
+        ) : (
+          <ul className="divide-y divide-white/[0.10]">
+            {filtered.map((p) => (
+              <PolicyRowItem key={p.id} policy={p} onOpen={onOpen} />
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
 }
@@ -207,115 +173,65 @@ export function PoliciesList({ search, onOpen, onAdd }: Props) {
 /* ──────────────────────────────────────────────────────── */
 
 function PolicyRowItem({ policy, onOpen }: { policy: PolicyRow; onOpen: (id: string) => void }) {
-  const review = formatReview(policy.review_due_at);
-  const reviewDue = isReviewDue(policy.review_due_at);
+  const retired = policy.status === 'archived';
+  const overdue = !retired && isReviewOverdue(policy.review_due_at);
+  const due = !retired && isReviewDue(policy.review_due_at);
   const isDraft = policy.status === 'draft';
-  const accent: AccentTone =
-    isDraft || reviewDue ? (reviewDue ? 'red' : 'amber') : STATUS_ACCENT[policy.status];
 
-  const ackPct =
-    policy.requires_acknowledgement && policy.ack_target > 0
-      ? Math.round((policy.ack_count / policy.ack_target) * 100)
+  const statusWord = overdue
+    ? 'Review overdue'
+    : isDraft
+      ? 'Draft'
+      : due
+        ? 'Review due'
+        : STATUS_LABEL[policy.status];
+  const statusTone = overdue ? 'text-red-300' : isDraft || due ? 'text-elec-yellow' : 'text-white';
+
+  const ackText =
+    policy.requires_acknowledgement && policy.status === 'live'
+      ? `${policy.ack_count}/${policy.ack_target} acknowledged`
+      : null;
+  const owner =
+    policy.owner_role && policy.owner_role.trim() !== ''
+      ? policy.owner_role.replace(/_/g, ' ')
       : null;
 
-  return (
-    <PeopleListRow
-      id={policy.id}
-      lead={{
-        kind: 'initials',
-        text: policy.title
-          .split(/\s+/)
-          .filter(Boolean)
-          .slice(0, 2)
-          .map((w) => w[0])
-          .join('')
-          .toUpperCase(),
-        tone: policy.status === 'live' ? 'emerald' : policy.status === 'draft' ? 'amber' : 'blue',
-      }}
-      title={<span className="text-white font-medium truncate">{policy.title}</span>}
-      subtitle={
-        <span className="truncate">
-          <span className="capitalize">{policy.category}</span>
-          {policy.code && ` · ${policy.code}`}
-          {' · '}v{policy.version}
-        </span>
-      }
-      meta={
-        <div className="flex items-center flex-wrap gap-x-3 gap-y-1 text-[11.5px] tabular-nums">
-          <span
-            className={cn(
-              review.tone === 'red'
-                ? 'text-red-300'
-                : review.tone === 'amber'
-                  ? 'text-amber-300'
-                  : 'text-white/65'
-            )}
-          >
-            {review.text}
-          </span>
-          {policy.requires_acknowledgement && policy.status === 'live' && (
-            <>
-              <span className="text-white/25">·</span>
-              <span className="text-white/65">
-                <span
-                  className={cn(
-                    ackPct !== null && ackPct >= 100
-                      ? 'text-emerald-300 font-medium'
-                      : 'text-white font-medium'
-                  )}
-                >
-                  {policy.ack_count}/{policy.ack_target}
-                </span>{' '}
-                acknowledged
-              </span>
-            </>
-          )}
-          {policy.owner_role && policy.owner_role.trim() !== '' && (
-            <>
-              <span className="text-white/25">·</span>
-              <span className="text-white/55 capitalize">
-                {policy.owner_role.replace(/_/g, ' ')}
-              </span>
-            </>
-          )}
-        </div>
-      }
-      status={{
-        label: STATUS_LABEL[policy.status],
-        tone: STATUS_TONE[policy.status],
-      }}
-      accent={accent}
-      onOpen={() => onOpen(policy.id)}
-      actions={[{ label: 'Open', onClick: () => onOpen(policy.id) }]}
-    />
-  );
-}
+  const reason = [
+    policy.category,
+    policy.code,
+    `v${policy.version}`,
+    reviewText(policy.review_due_at),
+    ackText,
+    owner,
+  ]
+    .filter(Boolean)
+    .join(' · ');
 
-/* ──────────────────────────────────────────────────────── */
-
-function FilterChipSkeletons() {
   return (
-    <div className="flex items-center gap-1.5 px-1">
-      {Array.from({ length: 4 }).map((_, i) => (
-        <div
-          key={i}
-          className="h-9 w-20 rounded-full bg-white/[0.04] border border-white/[0.06] animate-pulse"
+    <li>
+      <button
+        type="button"
+        onClick={() => onOpen(policy.id)}
+        className="flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5"
+      >
+        <span
+          aria-hidden="true"
+          className={cn(
+            'h-8 w-[3px] shrink-0 rounded-full',
+            overdue || isDraft || due ? 'bg-elec-yellow' : 'bg-white/[0.25]'
+          )}
         />
-      ))}
-    </div>
-  );
-}
-
-function RowSkeleton() {
-  return (
-    <div className="flex items-center gap-4 px-5 sm:px-6 py-4 border-b border-white/[0.04] last:border-b-0 animate-pulse">
-      <div className="h-10 w-10 rounded-full bg-white/[0.06] shrink-0" />
-      <div className="flex-1 min-w-0 space-y-2">
-        <div className="h-3 w-1/3 rounded bg-white/[0.06]" />
-        <div className="h-2 w-1/2 rounded bg-white/[0.04]" />
-        <div className="h-2 w-2/3 rounded bg-white/[0.04]" />
-      </div>
-      <div className="h-6 w-16 rounded-full bg-white/[0.04] shrink-0" />
-    </div>
+        <span className="min-w-0 flex-1">
+          <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+            {policy.title}
+          </span>
+          <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
+            {reason}
+          </span>
+        </span>
+        <span className={cn('shrink-0 text-[12px] font-semibold', statusTone)}>{statusWord}</span>
+        <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
+      </button>
+    </li>
   );
 }

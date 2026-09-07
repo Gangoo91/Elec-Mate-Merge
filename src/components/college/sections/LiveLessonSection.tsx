@@ -1,41 +1,34 @@
 /**
  * LiveLessonSection — in-lesson register + timer + observation notes for tutors.
  *
- * Improvements (2026-05-03):
- *  - Removed `(supabase as any)` casts that were hiding a real bug:
- *    `college_lesson_plans` has no `notes` column. Attendance notes live
- *    on `college_attendance.notes` per row.
- *  - Uses `student.name` (the actual schema field) instead of broken
- *    `first_name + last_name` concatenation.
- *  - Single bulk upsert for attendance instead of N round-trips.
- *  - Added realtime subscription so co-teaching tutors see each other's
- *    attendance edits live without manual refresh.
- *  - Hardened error handling on lesson load.
+ * Renders CONTENT ONLY under the CollegeDashboard masthead: KPI row (timer,
+ * present, absent) → register rows → notes → one solid volt "Save & mark
+ * delivered".
+ *
+ * Two saves were silently broken and are fixed here:
+ *  - `college_attendance`'s unique index is (student_id, date). The upsert
+ *    named `student_id,cohort_id,date` as its conflict target, which
+ *    PostgREST rejects outright — the register never saved.
+ *  - `college_lesson_plans.status` is CHECK-constrained to lowercase values;
+ *    'Delivered' was rejected. It is 'delivered' now.
+ *
+ * Earlier fixes kept: no `notes` column on college_lesson_plans (notes go on
+ * each attendance row), `student.name` is the schema field, one bulk upsert,
+ * realtime so co-teaching tutors see each other's edits.
  */
 
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Textarea } from '@/components/ui/textarea';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
-import {
-  PageFrame,
-  PageHero,
-  StatStrip,
-  SectionHeader,
-  ListCard,
-  Pill,
-  EmptyState,
-  PrimaryButton,
-  SecondaryButton,
-  textareaClass,
-  itemVariants,
-  type Tone,
-} from '@/components/college/primitives';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { containerVariants, itemVariants, EmptyState } from '@/components/college/primitives';
+import { HubKpi, HubKpiRow, HubSectionHeading } from '@/components/hub/HubPrimitives';
 
 interface LiveLessonSectionProps {
   lessonId?: string;
@@ -46,6 +39,7 @@ interface LiveLessonSectionProps {
 type AttendanceStatus = 'Present' | 'Absent' | 'Late' | 'Authorised';
 
 interface StudentAttendance {
+  /** college_students.id — the id space college_attendance.student_id uses. */
   studentId: string;
   name: string;
   status: AttendanceStatus;
@@ -59,23 +53,30 @@ function formatTime(seconds: number): string {
   return `${m}:${String(s).padStart(2, '0')}`;
 }
 
-const STATUS_TONE: Record<AttendanceStatus, Tone> = {
-  Present: 'green',
-  Absent: 'red',
-  Late: 'amber',
-  Authorised: 'blue',
-};
-
 // Segmented register control — one tap sets the status directly (no cycle).
+// Colour only where it encodes real state: absent is red. Present and
+// authorised are solid white; late is volt text.
 const REGISTER_OPTIONS: { status: AttendanceStatus; short: string; active: string }[] = [
-  { status: 'Present', short: 'P', active: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/50' },
-  { status: 'Late', short: 'L', active: 'bg-amber-500/20 text-amber-300 border-amber-500/50' },
-  { status: 'Absent', short: 'A', active: 'bg-red-500/20 text-red-300 border-red-500/50' },
-  { status: 'Authorised', short: 'Au', active: 'bg-blue-500/20 text-blue-300 border-blue-500/50' },
+  { status: 'Present', short: 'P', active: 'border-white bg-white text-black' },
+  { status: 'Late', short: 'L', active: 'border-elec-yellow text-elec-yellow' },
+  { status: 'Absent', short: 'A', active: 'border-red-400 text-red-300' },
+  { status: 'Authorised', short: 'Au', active: 'border-white bg-white text-black' },
 ];
 
+const PRIMARY =
+  'inline-flex h-11 w-full items-center justify-center rounded-full bg-elec-yellow px-5 text-[13px] font-semibold text-black transition-[filter,transform] touch-manipulation hover:brightness-105 active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white disabled:opacity-60 sm:w-auto';
+const SECONDARY =
+  'inline-flex h-11 w-full items-center justify-center rounded-full border border-white/[0.14] px-5 text-[13px] font-medium text-white transition-colors touch-manipulation hover:bg-white/[0.06] active:scale-[0.98] sm:w-auto';
+const LIST_CARD = cn(
+  '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
+  CARD_SURFACE
+);
+const TEXTAREA =
+  'min-h-[120px] w-full resize-none rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 py-2 text-base font-medium leading-relaxed text-white placeholder:text-white placeholder:opacity-40 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus:outline-none touch-manipulation';
+
 function isoToday(): string {
-  return new Date().toISOString().split('T')[0];
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 }
 
 export function LiveLessonSection({ lessonId, onBack }: LiveLessonSectionProps) {
@@ -125,8 +126,10 @@ export function LiveLessonSection({ lessonId, onBack }: LiveLessonSectionProps) 
       setCohortName(cohort?.name ?? 'Unknown cohort');
       setCohortId(resolvedCohortId);
 
+      // college_students.status is Capitalised ('Active') in the DB — compare
+      // case-insensitively rather than trusting the casing.
       const cohortStudents = students.filter(
-        (s) => s.cohort_id === resolvedCohortId && s.status === 'Active'
+        (s) => s.cohort_id === resolvedCohortId && (s.status ?? '').toLowerCase() === 'active'
       );
       setAttendance(
         cohortStudents.map((s) => ({
@@ -220,20 +223,23 @@ export function LiveLessonSection({ lessonId, onBack }: LiveLessonSectionProps) 
       }));
 
       if (rows.length > 0) {
+        // The unique index is college_attendance_unique_per_day (student_id,
+        // date). Naming cohort_id in the conflict target made PostgREST
+        // reject the whole request.
         const { error: attErr } = await supabase
           .from('college_attendance')
-          .upsert(rows, { onConflict: 'student_id,cohort_id,date' });
+          .upsert(rows, { onConflict: 'student_id,date' });
         if (attErr) throw attErr;
       }
 
       if (lessonId) {
         // college_lesson_plans has no `notes` column — only mark delivered
-        // and stamp duration. (The previous code wrote to a phantom column
-        // and was masked by an `as any` cast.)
+        // and stamp duration. Lowercase: the CHECK constraint allows only
+        // draft/ready/published/delivered/archived.
         const { error: lessErr } = await supabase
           .from('college_lesson_plans')
           .update({
-            status: 'Delivered',
+            status: 'delivered',
             duration_minutes: Math.floor(elapsedSeconds / 60) || null,
           })
           .eq('id', lessonId);
@@ -253,132 +259,179 @@ export function LiveLessonSection({ lessonId, onBack }: LiveLessonSectionProps) 
   const presentCount = attendance.filter(
     (a) => a.status === 'Present' || a.status === 'Late'
   ).length;
+  const lateCount = attendance.filter((a) => a.status === 'Late').length;
   const absentCount = attendance.filter((a) => a.status === 'Absent').length;
 
+  if (!lessonId) {
+    return (
+      <motion.div variants={itemVariants} initial="hidden" animate="visible">
+        <EmptyState
+          title="No lesson selected"
+          description="Open a lesson from the timetable or a lesson plan to take its register."
+          action="Back"
+          onAction={onBack}
+        />
+      </motion.div>
+    );
+  }
+
   return (
-    <PageFrame>
-      <motion.div variants={itemVariants}>
-        <PageHero
-          eyebrow={cohortName}
-          title={lessonTitle || 'Live lesson'}
-          description="In-lesson register with built-in timer and notes. Co-teaching tutors see each other's edits live."
-          tone="yellow"
-          actions={
-            <SecondaryButton onClick={onBack} size="sm">
-              ← Back
-            </SecondaryButton>
-          }
-        />
-      </motion.div>
-
-      {loadError && (
+    <>
+      <motion.section
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="space-y-3"
+      >
         <motion.div variants={itemVariants}>
-          <div className="bg-red-500/10 border border-red-500/30 rounded-2xl p-4 text-[13px] text-red-300">
-            {loadError}
-          </div>
+          <h2 className="text-[17px] font-semibold leading-snug tracking-tight text-white sm:text-[19px]">
+            {lessonTitle || 'Live lesson'}
+          </h2>
+          <p className="mt-1 text-[12.5px] leading-relaxed text-white">
+            {[cohortName, 'Co-teaching tutors see each other’s edits live'].filter(Boolean).join(' · ')}
+          </p>
         </motion.div>
-      )}
 
-      <motion.div variants={itemVariants}>
-        <StatStrip
-          columns={3}
-          stats={[
-            {
-              value: formatTime(elapsedSeconds),
-              label: timerRunning ? 'Running' : 'Timer',
-              sub: timerRunning ? 'Tap to pause' : 'Tap to start',
-              onClick: () => setTimerRunning(!timerRunning),
-              tone: timerRunning ? 'amber' : 'yellow',
-            },
-            { value: presentCount, label: 'Present', sub: 'In attendance', tone: 'green' },
-            {
-              value: absentCount,
-              label: 'Absent',
-              sub: 'No show',
-              tone: 'red',
-              accent: absentCount > 0,
-            },
-          ]}
-        />
-      </motion.div>
-
-      <motion.section variants={itemVariants} className="space-y-5">
-        <SectionHeader
-          eyebrow="Register"
-          title={`${attendance.length} student${attendance.length === 1 ? '' : 's'}`}
-        />
-        {attendance.length === 0 ? (
-          <EmptyState
-            title="No students in this cohort"
-            description="Add students to the cohort before starting the lesson."
-          />
-        ) : (
-          <ListCard>
-            {attendance.map((a) => (
-              <div
-                key={a.studentId}
-                className="flex items-center gap-3 px-4 sm:px-6 py-3"
-              >
-                <span className="text-[13.5px] font-medium text-white flex-1 truncate min-w-0">
-                  {a.name}
-                </span>
-                <div className="flex shrink-0 gap-1" role="group" aria-label={`Status for ${a.name}`}>
-                  {REGISTER_OPTIONS.map((opt) => {
-                    const active = a.status === opt.status;
-                    return (
-                      <button
-                        key={opt.status}
-                        type="button"
-                        onClick={() => setStatus(a.studentId, opt.status)}
-                        aria-pressed={active}
-                        aria-label={`${a.name}: ${opt.status}`}
-                        className={`h-9 min-w-[2.25rem] px-1.5 rounded-lg border text-[12px] font-semibold transition-colors touch-manipulation ${
-                          active
-                            ? opt.active
-                            : 'border-white/10 text-white/70 active:bg-white/[0.06]'
-                        }`}
-                      >
-                        {opt.short}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            ))}
-          </ListCard>
+        {loadError && (
+          <motion.div
+            variants={itemVariants}
+            className="rounded-2xl border border-red-400/40 px-4 py-3 text-[13px] font-medium text-red-300"
+          >
+            {loadError}
+          </motion.div>
         )}
+
+        <HubKpiRow>
+          <HubKpi
+            accent
+            label="Timer"
+            value={formatTime(elapsedSeconds)}
+            verdict={timerRunning ? 'Running — tap to pause' : 'Tap to start'}
+            onClick={() => setTimerRunning(!timerRunning)}
+          />
+          <HubKpi
+            label="Present"
+            value={String(presentCount)}
+            verdict={
+              attendance.length > 0 ? `of ${attendance.length} on the register` : 'No register'
+            }
+            context={lateCount > 0 ? `${lateCount} late` : undefined}
+          />
+          <HubKpi
+            label="Absent"
+            value={String(absentCount)}
+            sentiment={absentCount > 0 ? 'bad' : 'neutral'}
+            verdict={absentCount > 0 ? 'Follow up after the lesson' : 'Everyone accounted for'}
+          />
+        </HubKpiRow>
       </motion.section>
 
-      <motion.section variants={itemVariants} className="space-y-5">
-        <SectionHeader eyebrow="Observations" title="Lesson notes" />
-        <Textarea
-          value={notes}
-          onChange={(e) => setNotes(e.target.value)}
-          placeholder="Key observations, differentiation notes, student engagement…"
-          autoCapitalize="sentences"
-          autoCorrect="on"
-          spellCheck
-          className={`${textareaClass} min-h-[120px] max-w-2xl`}
-        />
-        <p className="text-[11px] text-white/50">
-          Notes are saved alongside each student's attendance row for the day.
-        </p>
+      <motion.section
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="space-y-3"
+      >
+        <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
+          <HubSectionHeading>Register</HubSectionHeading>
+          <span className="text-[11px] font-semibold tabular-nums text-white">
+            {attendance.length} learner{attendance.length === 1 ? '' : 's'}
+          </span>
+        </motion.div>
+        <motion.div variants={itemVariants} className={LIST_CARD}>
+          {attendance.length === 0 ? (
+            <p className="px-4 py-5 text-[12.5px] text-white sm:px-5">
+              No active learners in this cohort — add learners to the cohort before taking a
+              register.
+            </p>
+          ) : (
+            <ul className="divide-y divide-white/[0.10]">
+              {attendance.map((a) => (
+                <li key={a.studentId} className="flex items-center gap-3 px-4 py-2.5 sm:px-5">
+                  <span
+                    aria-hidden="true"
+                    className={cn(
+                      'h-8 w-[3px] shrink-0 rounded-full',
+                      a.status === 'Absent' ? 'bg-red-400' : 'bg-white/[0.25]'
+                    )}
+                  />
+                  <span className="min-w-0 flex-1 truncate text-[14px] font-semibold text-white">
+                    {a.name}
+                  </span>
+                  <div className="flex shrink-0 gap-1" role="group" aria-label={`Status for ${a.name}`}>
+                    {REGISTER_OPTIONS.map((opt) => {
+                      const active = a.status === opt.status;
+                      return (
+                        <button
+                          key={opt.status}
+                          type="button"
+                          onClick={() => setStatus(a.studentId, opt.status)}
+                          aria-pressed={active}
+                          aria-label={`${a.name}: ${opt.status}`}
+                          className={cn(
+                            'h-11 min-w-11 rounded-full border px-2 text-[12.5px] font-semibold transition-colors touch-manipulation',
+                            active
+                              ? opt.active
+                              : 'border-white/[0.14] text-white hover:bg-white/[0.06] active:bg-white/[0.09]'
+                          )}
+                        >
+                          {opt.short}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </motion.div>
+      </motion.section>
+
+      <motion.section
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="space-y-3"
+      >
+        <HubSectionHeading>Lesson notes</HubSectionHeading>
+        <motion.div variants={itemVariants} className="max-w-2xl">
+          <textarea
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
+            placeholder="Key observations, differentiation, engagement"
+            autoCapitalize="sentences"
+            autoCorrect="on"
+            spellCheck
+            aria-label="Lesson notes"
+            className={TEXTAREA}
+          />
+          <p className="mt-2 text-[11.5px] leading-snug text-white">
+            Saved against each learner’s attendance row for today.
+          </p>
+        </motion.div>
       </motion.section>
 
       {/* Sticky save bar — pinned bottom on mobile so the tutor never has
           to scroll past the register to commit. Stays inline on desktop. */}
       <motion.div
         variants={itemVariants}
-        className="sticky bottom-0 -mx-4 sm:mx-0 px-4 sm:px-0 py-3 sm:py-4 bg-elec-dark/90 backdrop-blur-sm border-t border-white/[0.06] sm:border-0 sm:bg-transparent sm:backdrop-blur-none flex items-center justify-end gap-3 z-10"
+        initial="hidden"
+        animate="visible"
+        className="sticky bottom-0 z-10 -mx-4 flex flex-col-reverse gap-2 border-t border-white/[0.10] bg-elec-dark/90 px-4 py-3 backdrop-blur-sm sm:mx-0 sm:flex-row sm:justify-end sm:gap-3 sm:border-0 sm:bg-transparent sm:px-0 sm:py-0 sm:backdrop-blur-none"
+        style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
       >
-        <SecondaryButton onClick={onBack}>Cancel</SecondaryButton>
-        <PrimaryButton
+        <button type="button" onClick={onBack} className={SECONDARY}>
+          Cancel
+        </button>
+        <button
+          type="button"
           onClick={handleSave}
           disabled={saving || attendance.length === 0 || !cohortId}
+          className={PRIMARY}
         >
-          {saving ? 'Saving…' : 'Save & mark delivered →'}
-        </PrimaryButton>
+          {saving ? 'Saving…' : 'Save & mark delivered'}
+        </button>
       </motion.div>
-    </PageFrame>
+    </>
   );
 }

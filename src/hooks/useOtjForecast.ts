@@ -35,12 +35,13 @@ function dayCount(from: Date, to: Date): number {
 export async function computeOtjForecast(studentId: string): Promise<OtjForecast> {
   const { data: studentRow, error: sErr } = await supabase
     .from('college_students')
-    .select('id, start_date, expected_end_date, cohort_id')
+    .select('id, user_id, start_date, expected_end_date, cohort_id')
     .eq('id', studentId)
     .maybeSingle();
   if (sErr) throw sErr;
   const student = studentRow as {
     id: string;
+    user_id: string | null;
     start_date: string | null;
     expected_end_date: string | null;
     cohort_id: string | null;
@@ -89,10 +90,17 @@ export async function computeOtjForecast(studentId: string): Promise<OtjForecast
   const daysRemaining = Math.max(0, totalDays - daysElapsed);
   const totalWeeks = totalDays / 7;
 
-  const { data: entryRows, error: eErr } = await supabase
-    .from('college_otj_entries')
-    .select('student_id, duration_minutes, verification_status')
-    .eq('student_id', studentId);
+  // college_otj_entries.student_id holds the learner's AUTH user id, not the
+  // college_students row id (see the college_student_summaries migration:
+  // `where student_id = cs.user_id`). Querying by the row id matched nothing,
+  // so every learner forecast as 0h logged and "red" regardless of what had
+  // actually been verified. A learner with no linked account has no entries.
+  const { data: entryRows, error: eErr } = student.user_id
+    ? await supabase
+        .from('college_otj_entries')
+        .select('student_id, duration_minutes, verification_status')
+        .eq('student_id', student.user_id)
+    : { data: [], error: null };
   if (eErr) {
     return {
       student_id: studentId,

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import {
   useAssessorStandardisation,
   type AssessorStandardisation,
@@ -15,6 +16,8 @@ import {
  *
  * Renders nothing unless there's enough calibration history AND at least one of
  * this learner's assessors is flagged, so it stays invisible until it matters.
+ * (Deliberate — this is a warning strip between sections, not a section of its
+ * own, so an empty state would be a card saying "no warning".)
  */
 export function StudentAssessmentConfidence({ studentId }: { studentId: string }) {
   const { byStaffId, hasEnoughData } = useAssessorStandardisation();
@@ -47,31 +50,28 @@ export function StudentAssessmentConfidence({ studentId }: { studentId: string }
   if (flagged.length === 0) return null;
 
   return (
-    <div className="rounded-xl border border-amber-400/30 bg-amber-500/[0.06] px-4 py-3 space-y-2">
-      <div className="text-[11px] font-semibold tracking-[0.06em] uppercase text-amber-200/90">
-        Assessment confidence
+    <div className={cn('overflow-hidden rounded-2xl border border-elec-yellow/70', CARD_SURFACE)}>
+      <div className="px-4 py-3 sm:px-5">
+        <div className="text-[13px] font-semibold text-elec-yellow">Assessment confidence</div>
+        <p className="mt-1 text-[12.5px] leading-snug text-white">
+          Some of this learner&apos;s ACs were signed off by{' '}
+          {flagged.length > 1 ? 'assessors' : 'an assessor'} who drift
+          {flagged.length > 1 ? '' : 's'} from the agreed standard. Consider IQA sampling their
+          sign-offs.
+        </p>
       </div>
-      <p className="text-[11.5px] text-white/60 leading-snug">
-        Some of this learner&apos;s ACs were signed off by assessor{flagged.length > 1 ? 's' : ''} who
-        drift from the agreed standard. Consider IQA sampling their sign-offs.
-      </p>
-      <ul className="space-y-1">
+      <ul className="divide-y divide-white/[0.10] border-t border-white/[0.10]">
         {flagged.map((a) => (
           <li
             key={a.assessorId}
-            className="flex items-center justify-between gap-3 text-[11.5px]"
+            className="flex items-center justify-between gap-3 px-4 py-2.5 text-[12.5px] sm:px-5"
           >
-            <span className="text-white/85 truncate">{a.assessorName ?? 'Unknown assessor'}</span>
-            <span
-              className={cn(
-                'shrink-0 inline-flex items-center h-5 px-1.5 rounded-md text-[9.5px] font-semibold uppercase tracking-[0.05em]',
-                a.driftLabel === 'lenient' && 'bg-amber-500/15 border border-amber-400/40 text-amber-200',
-                a.driftLabel === 'harsh' && 'bg-sky-500/15 border border-sky-400/40 text-sky-200',
-                a.driftLabel === 'aligned' && 'bg-white/[0.05] border border-white/10 text-white/50'
-              )}
-            >
+            <span className="min-w-0 truncate text-white">
+              {a.assessorName ?? 'Unknown assessor'}
+            </span>
+            <span className="shrink-0 font-semibold capitalize tabular-nums text-white">
               {a.driftLabel === 'aligned'
-                ? 'off-consensus'
+                ? 'Off consensus'
                 : `${a.driftLabel} +${Math.abs(a.avgSignedDrift).toFixed(1)}`}
             </span>
           </li>

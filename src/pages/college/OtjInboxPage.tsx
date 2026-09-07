@@ -1,11 +1,22 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import useSEO from '@/hooks/useSEO';
 import { supabase } from '@/integrations/supabase/client';
 import { fmtHours, fmtRel } from '@/lib/format';
+import { containerVariants, itemVariants } from '@/components/college/primitives';
+import {
+  HubPage,
+  HubBody,
+  HubMasthead,
+  HubKpi,
+  HubKpiRow,
+  HubSectionHeading,
+} from '@/components/hub/HubPrimitives';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { chipBase, chipOff, selectTriggerCn, textareaCn } from '@/components/forms/fieldStyles';
 import { useTutorOtjInbox, type InboxRow, type InboxScope } from '@/hooks/useTutorOtjInbox';
 import { SpagCheckButton } from '@/components/college/widgets/SpagCheckButton';
 import { EvidenceImage } from '@/components/shared/EvidenceImage';
@@ -14,12 +25,24 @@ import { useToast } from '@/hooks/use-toast';
 
 /* ==========================================================================
    OtjInboxPage — /college/otj/inbox
-   Cohort-level OTJ verification queue. Tutors see every pending
-   apprentice_submitted entry across their assigned learners (or whole
+
+   Cohort-level off-the-job verification queue. Tutors see every pending
+   apprentice-submitted entry across their assigned learners (or the whole
    college via the toggle), with the same Verify / Return controls + AI
-   verdict from the per-learner panel. Designed for tutors with 30+
-   apprentices to clear submissions without bouncing between Student 360
-   pages.
+   verdict as the per-learner panel. Built for a tutor with 30+ apprentices
+   to clear submissions without bouncing between Student 360 pages.
+
+   Rebuilt on the shared hub shell. The amber eyebrow, 40px "Inbox" headline
+   and paragraph went; what the page is for is now the masthead title and a
+   KPI row (submissions, hours claimed, learners, oldest waiting). Each
+   submission is a block inside one card, separated by rules, with a volt
+   rule on the left when it is selected.
+
+   Volt: exactly one solid control — "Verify N" in the bulk toolbar, which
+   only exists while rows are selected. Per-row Verify is a neutral button
+   (thirty of them in volt would be a wall) and Return is text. The AI
+   verdict is a word in a neutral box: red only when it would return the
+   entry, volt when it would ask first.
    ========================================================================== */
 
 interface AiVerdict {
@@ -35,10 +58,10 @@ const VERDICT_LABEL: Record<AiVerdict['verdict'], string> = {
   recommend_reject: 'AI: would return',
 };
 
-const VERDICT_TONE: Record<AiVerdict['verdict'], string> = {
-  recommend_verify: 'border-emerald-400/30 bg-emerald-500/[0.08] text-emerald-200',
-  recommend_question: 'border-amber-400/30 bg-amber-500/[0.08] text-amber-200',
-  recommend_reject: 'border-rose-400/30 bg-rose-500/[0.08] text-rose-200',
+const VERDICT_TEXT: Record<AiVerdict['verdict'], string> = {
+  recommend_verify: 'text-white',
+  recommend_question: 'text-elec-yellow',
+  recommend_reject: 'text-red-300',
 };
 
 const ACTIVITY_LABEL: Record<string, string> = {
@@ -57,6 +80,19 @@ const ACTIVITY_LABEL: Record<string, string> = {
   conference: 'Conference',
   other: 'Other',
 };
+
+const DAY_MS = 86_400_000;
+
+function daysOld(iso: string | null): number | null {
+  if (!iso) return null;
+  const t = new Date(iso).getTime();
+  if (!Number.isFinite(t)) return null;
+  return Math.max(0, Math.floor((Date.now() - t) / DAY_MS));
+}
+
+function plural(n: number, one: string, many = `${one}s`): string {
+  return `${n} ${n === 1 ? one : many}`;
+}
 
 // Module-level verdict cache — same Map the per-learner panel uses
 // patterning. New on this page; the existing panel's cache is a different
@@ -99,9 +135,17 @@ async function fetchVerdict(otjEntryId: string): Promise<AiVerdict> {
   }
 }
 
+/** Neutral in-row action — 44px, never volt. */
+const ROW_ACTION =
+  'inline-flex h-11 items-center justify-center rounded-xl border border-white/[0.12] bg-white/[0.06] px-4 text-[12.5px] font-semibold text-white transition-colors touch-manipulation hover:bg-white/[0.10] active:scale-[0.98] disabled:bg-white/[0.03] disabled:opacity-60';
+
+/** Quiet text action — 44px tall, no surface. */
+const TEXT_ACTION =
+  'inline-flex h-11 items-center justify-center px-3 text-[12.5px] font-semibold text-white transition-colors touch-manipulation disabled:opacity-60';
+
 export default function OtjInboxPage() {
   useSEO({
-    title: 'OTJ verification inbox',
+    title: 'Off-the-job verification inbox',
     description: 'Pending off-the-job training submissions awaiting tutor sign-off.',
     noindex: true,
   });
@@ -194,227 +238,279 @@ export default function OtjInboxPage() {
   };
 
   const totalMinutes = filteredRows.reduce((acc, r) => acc + (r.duration_minutes ?? 0), 0);
+  const learnerCount = useMemo(
+    () => new Set(filteredRows.map((r) => r.student_id)).size,
+    [filteredRows]
+  );
+  // The hook orders oldest first, so the first row has waited longest.
+  const oldestDays = filteredRows.length > 0 ? daysOld(filteredRows[0].created_at) : null;
+  const ready = !(inbox.loading && inbox.rows.length === 0);
 
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_8%)]">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-10 pb-24">
-        <motion.button
-          onClick={() => navigate(-1)}
-          whileTap={{ scale: 0.97 }}
-          className="inline-flex items-center gap-1 -ml-1 h-9 px-2 rounded-lg text-[13px] font-medium text-white/85 hover:text-white hover:bg-white/[0.04] transition-colors touch-manipulation"
-        >
-          <ChevronLeft className="h-4 w-4" />
-          Back
-        </motion.button>
-
-        <motion.div
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.2 }}
-          className="mt-3 sm:mt-4 lg:mt-6"
-        >
-          <div className="text-[10px] lg:text-[11px] font-medium uppercase tracking-[0.18em] text-amber-300/85">
-            OTJ verification
-          </div>
-          <h1 className="mt-1 sm:mt-1.5 text-[22px] sm:text-[28px] lg:text-[40px] font-semibold text-white tracking-tight leading-[1.1]">
-            Inbox
-          </h1>
-          <p className="mt-2 sm:mt-3 text-[12.5px] sm:text-[13px] text-white/85 leading-snug max-w-2xl">
-            Apprentice-submitted off-the-job entries waiting for your sign-off. Verifying the hours
-            here flips the apprentice's ESFA traffic light immediately.
-          </p>
-        </motion.div>
-
-        {/* Filters */}
-        <motion.div
-          initial={{ opacity: 0, y: 6 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.18, delay: 0.06 }}
-          className="mt-5 sm:mt-6 flex flex-wrap items-center gap-2"
-        >
-          <ScopeToggle value={inbox.scope} onChange={inbox.setScope} />
-          {cohorts.length > 1 && (
-            <CohortFilter cohorts={cohorts} value={cohortFilter} onChange={setCohortFilter} />
-          )}
-          <div className="ml-auto text-[11.5px] tabular-nums text-white/85">
-            {filteredRows.length} {filteredRows.length === 1 ? 'submission' : 'submissions'}
-            {totalMinutes > 0 && (
-              <span className="text-white/65"> · {fmtHours(totalMinutes)} total</span>
-            )}
-          </div>
-        </motion.div>
-
-        {/* Bulk-action toolbar — only when something is selected */}
-        {selected.size > 0 && (
+    <HubPage>
+      <HubMasthead section="College" title="Off-the-job to verify" backTo="/college" />
+      <HubBody pushContext="Get notified about marking, off-the-job hours and learners who need you">
+        {inbox.error && (
           <motion.div
-            initial={{ opacity: 0, y: -6 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mt-4 rounded-xl border border-elec-yellow/30 bg-elec-yellow/[0.08] p-3 sm:p-4 space-y-3"
-          >
-            <div className="flex items-center justify-between gap-3 flex-wrap">
-              <div className="text-[12.5px] font-semibold text-elec-yellow">
-                {selected.size} selected
-              </div>
-              <div className="flex flex-wrap gap-2">
-                <button
-                  type="button"
-                  onClick={() => setSelected(new Set())}
-                  className="h-9 px-3 rounded-md border border-white/15 bg-white/[0.04] text-[12px] font-medium text-white/90 hover:bg-white/[0.08] touch-manipulation"
-                >
-                  Clear
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setBulkReturning((v) => !v)}
-                  disabled={bulkActing}
-                  className="h-9 px-3 rounded-md border border-rose-400/30 bg-rose-500/[0.08] text-[12px] font-semibold text-rose-200 hover:bg-rose-500/15 disabled:opacity-40 touch-manipulation"
-                >
-                  Return for more info
-                </button>
-                <button
-                  type="button"
-                  onClick={handleBulkVerify}
-                  disabled={bulkActing}
-                  className="h-9 px-3 rounded-md bg-emerald-400 text-black text-[12px] font-semibold hover:bg-emerald-300 disabled:opacity-40 touch-manipulation"
-                >
-                  {bulkActing ? 'Verifying…' : `Verify ${selected.size}`}
-                </button>
-              </div>
-            </div>
-            {bulkReturning && (
-              <div className="space-y-2 border-t border-white/[0.08] pt-3">
-                <label className="text-[10.5px] uppercase tracking-wider text-white/60">
-                  Shared rationale — sent to every learner
-                </label>
-                <textarea
-                  rows={2}
-                  value={bulkRationale}
-                  onChange={(e) => setBulkRationale(e.target.value)}
-                  placeholder="e.g. Add the dates each task was carried out + how long each took."
-                  className="w-full rounded-lg bg-black/30 border border-white/20 px-3 py-2 text-[13px] text-white focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500/40 touch-manipulation"
-                />
-                <div className="flex justify-end gap-2">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setBulkReturning(false);
-                      setBulkRationale('');
-                    }}
-                    className="h-9 px-3 rounded-md text-[12px] font-medium text-white/80 hover:text-white touch-manipulation"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handleBulkReject}
-                    disabled={bulkActing || !bulkRationale.trim()}
-                    className="h-9 px-3 rounded-md bg-rose-400 text-black text-[12px] font-semibold hover:bg-rose-300 disabled:opacity-40 touch-manipulation"
-                  >
-                    {bulkActing ? 'Returning…' : `Return ${selected.size}`}
-                  </button>
-                </div>
-              </div>
+            variants={itemVariants}
+            initial="hidden"
+            animate="visible"
+            className={cn(
+              'flex min-h-11 items-center justify-between gap-3 rounded-2xl border border-red-400/40 px-4 py-3',
+              CARD_SURFACE
             )}
+          >
+            <span className="text-[13px] font-medium text-white">
+              Could not load the inbox — {inbox.error}
+            </span>
+            <button
+              type="button"
+              onClick={() => void inbox.refresh()}
+              className="-my-2 flex h-11 shrink-0 items-center px-2 text-[12px] font-bold text-elec-yellow touch-manipulation"
+            >
+              Retry
+            </button>
           </motion.div>
         )}
 
-        {/* Select-all checkbox + count, only when there's anything to select */}
-        {filteredRows.length > 0 && (
-          <div className="mt-4 flex items-center gap-2 text-[12px] text-white/70">
-            <label className="inline-flex items-center gap-2 touch-manipulation cursor-pointer">
-              <input
-                type="checkbox"
-                checked={allSelected}
-                onChange={toggleSelectAll}
-                className="h-4 w-4 rounded border-white/30 bg-transparent text-elec-yellow focus:ring-elec-yellow"
-              />
-              <span>{allSelected ? 'Deselect all' : 'Select all visible'}</span>
-            </label>
-          </div>
-        )}
+        {/* Four live figures for the current scope and cohort filter. */}
+        <HubKpiRow>
+          <HubKpi
+            accent
+            label="Submissions"
+            value={ready ? String(filteredRows.length) : '—'}
+            verdict={
+              !ready
+                ? undefined
+                : filteredRows.length === 0
+                  ? 'Nothing waiting'
+                  : inbox.scope === 'mine'
+                    ? 'From learners assigned to you'
+                    : 'Across the college'
+            }
+          />
+          <HubKpi
+            label="Hours claimed"
+            value={ready ? fmtHours(totalMinutes) : '—'}
+            verdict={
+              !ready
+                ? undefined
+                : totalMinutes > 0
+                  ? 'Counts toward their record once verified'
+                  : 'No hours waiting'
+            }
+          />
+          <HubKpi
+            label="Learners"
+            value={ready ? String(learnerCount) : '—'}
+            verdict={
+              !ready ? undefined : learnerCount > 0 ? 'With something to sign off' : 'None waiting'
+            }
+          />
+          <HubKpi
+            label="Oldest waiting"
+            value={ready && oldestDays !== null ? `${oldestDays}d` : '—'}
+            verdict={
+              !ready
+                ? undefined
+                : oldestDays === null
+                  ? 'Nothing waiting'
+                  : oldestDays >= 7
+                    ? 'A week unverified costs them their hours record'
+                    : 'Verify before it turns a week old'
+            }
+            sentiment={oldestDays !== null && oldestDays >= 7 ? 'bad' : 'neutral'}
+          />
+        </HubKpiRow>
 
-        <div className="mt-3">
-          {inbox.loading && inbox.rows.length === 0 ? (
-            <Skeleton />
-          ) : filteredRows.length === 0 ? (
-            <EmptyState scope={inbox.scope} hasAny={inbox.rows.length > 0} />
-          ) : (
-            <ul className="space-y-3">
-              {filteredRows.map((row) => (
-                <InboxRowCard
-                  key={row.id}
-                  row={row}
-                  selected={selected.has(row.id)}
-                  onToggleSelect={() => toggleSelect(row.id)}
-                  onVerify={() => inbox.verify(row.id)}
-                  onReject={(rationale) => inbox.reject(row.id, rationale)}
-                  onOpenStudent={
-                    row.college_student_row_id
-                      ? () => navigate(`/college/students/${row.college_student_row_id}#otj`)
-                      : null
-                  }
-                />
-              ))}
-            </ul>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function ScopeToggle({
-  value,
-  onChange,
-}: {
-  value: InboxScope;
-  onChange: (v: InboxScope) => void;
-}) {
-  return (
-    <div className="inline-flex h-8 rounded-lg border border-white/[0.10] bg-white/[0.02] p-0.5">
-      {(['mine', 'college'] as InboxScope[]).map((s) => (
-        <button
-          key={s}
-          type="button"
-          onClick={() => onChange(s)}
-          className={cn(
-            'h-7 px-3 rounded-md text-[11.5px] font-medium tabular-nums touch-manipulation transition-colors',
-            value === s ? 'bg-white text-black' : 'text-white/85 hover:text-white'
-          )}
+        <motion.section
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="space-y-3"
         >
-          {s === 'mine' ? 'Assigned to me' : 'All college'}
-        </button>
-      ))}
-    </div>
+          <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
+            <HubSectionHeading>Waiting for sign-off</HubSectionHeading>
+            <span
+              className={cn(
+                'text-[11px] font-semibold tabular-nums',
+                oldestDays !== null && oldestDays >= 7 ? 'text-elec-yellow' : 'text-white'
+              )}
+            >
+              {plural(filteredRows.length, 'submission')}
+              {totalMinutes > 0 ? ` · ${fmtHours(totalMinutes)}` : ''}
+            </span>
+          </motion.div>
+
+          {/* Scope chips + cohort picker. Active chip is solid white. */}
+          <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-2">
+            {(['mine', 'college'] as InboxScope[]).map((s) => {
+              const active = inbox.scope === s;
+              return (
+                <button
+                  key={s}
+                  type="button"
+                  onClick={() => inbox.setScope(s)}
+                  aria-pressed={active}
+                  className={cn(
+                    chipBase,
+                    'inline-flex items-center px-3.5 text-[12.5px]',
+                    active ? 'border-white bg-white font-semibold text-black' : chipOff
+                  )}
+                >
+                  {s === 'mine' ? 'Assigned to me' : 'All college'}
+                </button>
+              );
+            })}
+            {cohorts.length > 1 && (
+              <select
+                value={cohortFilter}
+                onChange={(e) => setCohortFilter(e.target.value)}
+                aria-label="Filter by cohort"
+                className={cn(selectTriggerCn, 'ml-auto max-w-[220px] text-[13px]')}
+              >
+                <option value="all">All cohorts</option>
+                {cohorts.map((c) => (
+                  <option key={c} value={c}>
+                    {c}
+                  </option>
+                ))}
+              </select>
+            )}
+          </motion.div>
+
+          {/* Bulk-action toolbar — only when something is selected. Neutral
+              surface; the volt lives on the Verify button. */}
+          {selected.size > 0 && (
+            <motion.div
+              variants={itemVariants}
+              className={cn(
+                'space-y-3 rounded-2xl border border-elec-yellow/35 p-3 sm:p-4',
+                CARD_SURFACE
+              )}
+            >
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div className="text-[13px] font-semibold tabular-nums text-elec-yellow">
+                  {selected.size} selected
+                </div>
+                <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:flex-wrap">
+                  <button
+                    type="button"
+                    onClick={() => setSelected(new Set())}
+                    disabled={bulkActing}
+                    className={TEXT_ACTION}
+                  >
+                    Clear
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setBulkReturning((v) => !v)}
+                    disabled={bulkActing}
+                    aria-expanded={bulkReturning}
+                    className={cn(ROW_ACTION, 'w-full sm:w-auto')}
+                  >
+                    Return for more info
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => void handleBulkVerify()}
+                    disabled={bulkActing}
+                    className="inline-flex h-11 w-full items-center justify-center rounded-xl bg-elec-yellow px-5 text-[13px] font-semibold text-black transition-colors touch-manipulation hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white sm:w-auto"
+                  >
+                    {bulkActing ? 'Verifying…' : `Verify ${selected.size}`}
+                  </button>
+                </div>
+              </div>
+              {bulkReturning && (
+                <div className="space-y-2 border-t border-white/[0.10] pt-3">
+                  <label className="block text-[12px] font-medium text-white">
+                    Shared rationale — sent to every learner
+                  </label>
+                  <textarea
+                    rows={2}
+                    value={bulkRationale}
+                    onChange={(e) => setBulkRationale(e.target.value)}
+                    placeholder="e.g. Add the dates each task was carried out and how long each took."
+                    className={cn(textareaCn, 'w-full resize-none')}
+                  />
+                  <div className="flex justify-end gap-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setBulkReturning(false);
+                        setBulkRationale('');
+                      }}
+                      className={TEXT_ACTION}
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => void handleBulkReject()}
+                      disabled={bulkActing || !bulkRationale.trim()}
+                      className={ROW_ACTION}
+                    >
+                      {bulkActing ? 'Returning…' : `Return ${selected.size}`}
+                    </button>
+                  </div>
+                </div>
+              )}
+            </motion.div>
+          )}
+
+          {/* Select-all, only when there's anything to select */}
+          {filteredRows.length > 0 && (
+            <motion.div variants={itemVariants}>
+              <label className="inline-flex min-h-11 cursor-pointer items-center gap-3 text-[12.5px] font-medium text-white touch-manipulation">
+                <input
+                  type="checkbox"
+                  checked={allSelected}
+                  onChange={toggleSelectAll}
+                  className="h-5 w-5 rounded border-white/40 bg-transparent text-elec-yellow focus:ring-elec-yellow"
+                />
+                <span>{allSelected ? 'Deselect all' : 'Select all shown'}</span>
+              </label>
+            </motion.div>
+          )}
+
+          <motion.div
+            variants={itemVariants}
+            className={cn(
+              '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
+              CARD_SURFACE
+            )}
+          >
+            {!ready ? (
+              <Skeleton />
+            ) : filteredRows.length === 0 ? (
+              <EmptyState scope={inbox.scope} hasAny={inbox.rows.length > 0} />
+            ) : (
+              <ul className="divide-y divide-white/[0.10]">
+                {filteredRows.map((row) => (
+                  <SubmissionBlock
+                    key={row.id}
+                    row={row}
+                    selected={selected.has(row.id)}
+                    onToggleSelect={() => toggleSelect(row.id)}
+                    onVerify={() => inbox.verify(row.id)}
+                    onReject={(rationale) => inbox.reject(row.id, rationale)}
+                    onOpenStudent={
+                      row.college_student_row_id
+                        ? () => navigate(`/college/students/${row.college_student_row_id}#otj`)
+                        : null
+                    }
+                  />
+                ))}
+              </ul>
+            )}
+          </motion.div>
+        </motion.section>
+      </HubBody>
+    </HubPage>
   );
 }
 
-function CohortFilter({
-  cohorts,
-  value,
-  onChange,
-}: {
-  cohorts: string[];
-  value: string;
-  onChange: (v: string) => void;
-}) {
-  return (
-    <select
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-      className="h-8 px-3 rounded-lg border border-white/[0.10] bg-white/[0.02] text-[11.5px] text-white/95 touch-manipulation"
-    >
-      <option value="all">All cohorts</option>
-      {cohorts.map((c) => (
-        <option key={c} value={c}>
-          {c}
-        </option>
-      ))}
-    </select>
-  );
-}
-
-function InboxRowCard({
+function SubmissionBlock({
   row,
   selected,
   onToggleSelect,
@@ -490,226 +586,235 @@ function InboxRowCard({
   };
 
   const photos = row.evidence_urls ?? (row.evidence_url ? [row.evidence_url] : []);
+  const age = daysOld(row.created_at);
+  const urgent = age !== null && age >= 7;
+  const meta = [
+    row.cohort_name,
+    ACTIVITY_LABEL[row.activity_type] ?? row.activity_type,
+    fmtHours(row.duration_minutes),
+    fmtRel(row.activity_date),
+  ]
+    .filter(Boolean)
+    .join(' · ');
 
   return (
-    <li
-      className={cn(
-        'rounded-2xl border bg-[hsl(0_0%_10%)] overflow-hidden transition-colors',
-        selected ? 'border-elec-yellow/60' : 'border-white/[0.06]'
-      )}
-    >
-      <div className="px-4 sm:px-5 py-4 sm:py-5">
-        {/* Header — checkbox + learner + activity meta */}
-        <div className="flex items-baseline justify-between gap-3 flex-wrap">
-          <label className="inline-flex items-center gap-2 -ml-1 mt-0.5 shrink-0 touch-manipulation cursor-pointer">
-            <input
-              type="checkbox"
-              checked={selected}
-              onChange={onToggleSelect}
-              aria-label="Select this submission"
-              className="h-4 w-4 rounded border-white/30 bg-transparent text-elec-yellow focus:ring-elec-yellow"
-            />
-          </label>
-          {onOpenStudent ? (
-            <button
-              type="button"
-              onClick={onOpenStudent}
-              className="group inline-flex items-baseline gap-1.5 text-left text-[14px] font-semibold text-white hover:text-amber-200 transition-colors touch-manipulation"
-            >
-              {row.student_name ?? 'Apprentice'}
-              {row.cohort_name && (
-                <span className="text-[11px] font-normal text-white/85">· {row.cohort_name}</span>
-              )}
-              <span
-                aria-hidden
-                className="text-[11px] font-normal text-white/55 group-hover:text-amber-200 transition-colors"
-              >
-                Open 360 →
-              </span>
-            </button>
-          ) : (
-            <span className="text-[14px] font-semibold text-white">
-              {row.student_name ?? 'Apprentice'}
-              {row.cohort_name && (
-                <span className="ml-2 text-[11px] font-normal text-white/85">
-                  · {row.cohort_name}
-                </span>
-              )}
-            </span>
-          )}
-          <span className="text-[10.5px] uppercase tracking-[0.14em] text-white/85 tabular-nums">
-            {ACTIVITY_LABEL[row.activity_type] ?? row.activity_type} ·{' '}
-            {fmtHours(row.duration_minutes)} · {fmtRel(row.activity_date)}
+    <li className={cn('transition-colors', selected && 'bg-white/[0.06]')}>
+      <div className="flex items-stretch">
+        {/* Selection — a 44px column down the left of the block. */}
+        <button
+          type="button"
+          role="checkbox"
+          aria-checked={selected}
+          aria-label="Select this submission"
+          onClick={onToggleSelect}
+          className="flex w-11 shrink-0 items-start justify-center pl-3 pt-4 touch-manipulation sm:pl-4"
+        >
+          <span
+            className={cn(
+              'flex h-6 w-6 items-center justify-center rounded-md border-2 transition-colors',
+              selected ? 'border-elec-yellow bg-elec-yellow text-black' : 'border-white/[0.35]'
+            )}
+          >
+            {selected && <span className="text-[13px] font-semibold leading-none">✓</span>}
           </span>
-        </div>
+        </button>
 
-        {/* Title + description */}
-        <div className="mt-1.5 text-[14px] font-medium text-white leading-snug">{row.title}</div>
-        {row.description && (
-          <p className="mt-2 text-[12.5px] text-white/95 leading-snug whitespace-pre-wrap">
-            {row.description}
-          </p>
-        )}
-
-        {/* SpaG check on apprentice's reflection */}
-        {row.description && row.description.length >= 30 && (
-          <div className="mt-2">
-            <SpagCheckButton
-              text={row.description}
-              sourceKind="otj"
-              sourceId={row.id}
-              studentId={row.college_student_row_id ?? undefined}
-              studentName={row.student_name ?? undefined}
-              variant="compact"
-            />
-          </div>
-        )}
-
-        {/* Unit codes */}
-        {row.unit_codes && row.unit_codes.length > 0 && (
-          <div className="mt-2 flex items-center flex-wrap gap-1.5">
-            {row.unit_codes.map((u) => (
-              <span
-                key={u}
-                className="inline-flex h-5 px-1.5 items-center rounded-md border border-white/[0.10] text-[10.5px] font-medium text-white/95 tabular-nums"
-              >
-                {u}
-              </span>
-            ))}
-          </div>
-        )}
-
-        {/* Photos */}
-        {photos.length > 0 && (
-          <div className="mt-3 flex items-center gap-2 flex-wrap">
-            {photos.map((url, i) => (
-              <button
-                key={`${url}-${i}`}
-                type="button"
-                onClick={() => void openEvidence(url)}
-                className="block h-16 w-16 rounded-lg overflow-hidden border border-white/[0.08] hover:border-white/[0.22] transition-colors touch-manipulation"
-              >
-                <EvidenceImage
-                  src={url}
-                  alt={`Evidence ${i + 1}`}
-                  className="h-full w-full object-cover"
-                />
-              </button>
-            ))}
-          </div>
-        )}
-
-        {/* AI verdict pill */}
-        {(verdictLoading || verdict || verdictError) && (
-          <div className="mt-3">
-            {verdictLoading && (
-              <div className="inline-flex items-center h-6 px-2 rounded-md border border-white/[0.08] bg-white/[0.02] text-[10.5px] text-white/85">
-                AI checking…
-              </div>
+        <div className="min-w-0 flex-1 px-4 py-4 sm:px-5">
+          {/* Learner row — the work-list row shape; taps through to Student 360 */}
+          <button
+            type="button"
+            onClick={onOpenStudent ?? undefined}
+            disabled={!onOpenStudent}
+            className={cn(
+              '-mx-1 flex w-full min-h-11 items-center gap-3 rounded-lg px-1 text-left touch-manipulation',
+              onOpenStudent && 'transition-colors hover:bg-white/[0.06]'
             )}
-            {verdictError && !verdictLoading && (
-              <div className="text-[10.5px] text-white/85">AI verdict unavailable</div>
-            )}
-            {verdict && !verdictLoading && (
-              <div className={cn('rounded-lg border px-2.5 py-2', VERDICT_TONE[verdict.verdict])}>
-                <div className="flex items-baseline justify-between gap-3">
-                  <span className="text-[10.5px] font-medium uppercase tracking-[0.14em]">
-                    {VERDICT_LABEL[verdict.verdict]}
-                  </span>
-                  <span className="text-[10.5px] tabular-nums opacity-90">
-                    {Math.round(verdict.confidence * 100)}% confident
-                  </span>
-                </div>
-                {verdict.feedback_for_tutor && (
-                  <p className="mt-1 text-[11.5px] leading-snug text-white/95">
-                    {verdict.feedback_for_tutor}
-                  </p>
-                )}
-                {verdict.suggested_ac_refs.length > 0 && (
-                  <div className="mt-1.5 flex items-center flex-wrap gap-1">
-                    <span className="text-[10px] uppercase tracking-[0.14em] text-white/85">
-                      Suggested ACs:
-                    </span>
-                    {verdict.suggested_ac_refs.map((ref) => (
-                      <span
-                        key={ref}
-                        className="inline-flex h-5 px-1.5 items-center rounded-md border border-white/[0.10] text-[10px] font-medium text-white/95 tabular-nums"
-                      >
-                        {ref}
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Actions */}
-        {!rejectingMode ? (
-          <div className="mt-4 flex items-center gap-2">
-            <button
-              type="button"
-              onClick={handleVerify}
-              disabled={acting !== null}
+          >
+            <span
+              aria-hidden="true"
               className={cn(
-                'flex-1 h-10 rounded-lg text-[12.5px] font-semibold transition-colors touch-manipulation',
-                acting === 'verify'
-                  ? 'bg-emerald-500/60 text-black/85'
-                  : 'bg-emerald-500 text-black hover:bg-emerald-400'
+                'h-8 w-[3px] shrink-0 rounded-full',
+                selected || urgent ? 'bg-elec-yellow' : 'bg-white/[0.25]'
               )}
-            >
-              {acting === 'verify' ? 'Verifying…' : 'Verify hours'}
-            </button>
-            <button
-              type="button"
-              onClick={() => setRejectingMode(true)}
-              disabled={acting !== null}
-              className="flex-1 h-10 rounded-lg border border-white/[0.10] bg-white/[0.02] text-[12.5px] font-medium text-white/95 hover:text-white hover:border-white/[0.22] transition-colors touch-manipulation disabled:opacity-50"
-            >
-              Return for more info
-            </button>
-          </div>
-        ) : (
-          <div className="mt-4 space-y-2">
-            <textarea
-              autoFocus
-              value={rationale}
-              onChange={(e) => setRationale(e.target.value)}
-              rows={2}
-              placeholder="What does the apprentice need to add or change?"
-              className="w-full px-3 py-2 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[12.5px] text-white placeholder:text-white/50 leading-relaxed focus:outline-none focus:border-rose-400/40 focus:ring-1 focus:ring-rose-400/20 touch-manipulation resize-none"
             />
-            <div className="flex items-center gap-2">
+            <span className="min-w-0 flex-1">
+              <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+                {row.student_name ?? 'Apprentice'}
+              </span>
+              <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
+                {meta}
+              </span>
+            </span>
+            {age !== null && (
+              <span
+                className={cn(
+                  'shrink-0 text-[13px] font-semibold tabular-nums',
+                  urgent ? 'text-elec-yellow' : 'text-white'
+                )}
+              >
+                {age === 0 ? 'today' : `${age}d`}
+              </span>
+            )}
+            {onOpenStudent && (
+              <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
+            )}
+          </button>
+
+          {/* Title + description */}
+          <div className="mt-2 text-[14px] font-medium leading-snug text-white">{row.title}</div>
+          {row.description && (
+            <p className="mt-1.5 whitespace-pre-wrap text-[12.5px] leading-snug text-white">
+              {row.description}
+            </p>
+          )}
+
+          {/* SpaG check on apprentice's reflection */}
+          {row.description && row.description.length >= 30 && (
+            <div className="mt-2">
+              <SpagCheckButton
+                text={row.description}
+                sourceKind="otj"
+                sourceId={row.id}
+                studentId={row.college_student_row_id ?? undefined}
+                studentName={row.student_name ?? undefined}
+                variant="compact"
+              />
+            </div>
+          )}
+
+          {/* Unit codes */}
+          {row.unit_codes && row.unit_codes.length > 0 && (
+            <div className="mt-2 flex flex-wrap items-center gap-1.5">
+              {row.unit_codes.map((u) => (
+                <span
+                  key={u}
+                  className="inline-flex h-6 items-center rounded-md border border-white/[0.12] px-1.5 text-[11px] font-medium tabular-nums text-white"
+                >
+                  {u}
+                </span>
+              ))}
+            </div>
+          )}
+
+          {/* Photos */}
+          {photos.length > 0 && (
+            <div className="mt-3 flex flex-wrap items-center gap-2">
+              {photos.map((url, i) => (
+                <button
+                  key={`${url}-${i}`}
+                  type="button"
+                  onClick={() => void openEvidence(url)}
+                  className="block h-16 w-16 overflow-hidden rounded-lg border border-white/[0.12] transition-colors touch-manipulation hover:border-white/[0.3]"
+                >
+                  <EvidenceImage
+                    src={url}
+                    alt={`Evidence ${i + 1}`}
+                    className="h-full w-full object-cover"
+                  />
+                </button>
+              ))}
+            </div>
+          )}
+
+          {/* AI verdict — a word in a neutral box, coloured only by what it means. */}
+          {(verdictLoading || verdict || verdictError) && (
+            <div className="mt-3">
+              {verdictLoading && (
+                <div className="text-[12px] font-medium text-white">AI checking…</div>
+              )}
+              {verdictError && !verdictLoading && (
+                <div className="text-[12px] font-medium text-white">AI verdict unavailable</div>
+              )}
+              {verdict && !verdictLoading && (
+                <div className="rounded-xl border border-white/[0.12] bg-white/[0.04] px-3 py-2.5">
+                  <div className="flex items-baseline justify-between gap-3">
+                    <span
+                      className={cn('text-[12px] font-semibold', VERDICT_TEXT[verdict.verdict])}
+                    >
+                      {VERDICT_LABEL[verdict.verdict]}
+                    </span>
+                    <span className="text-[11.5px] tabular-nums text-white">
+                      {Math.round(verdict.confidence * 100)}% confident
+                    </span>
+                  </div>
+                  {verdict.feedback_for_tutor && (
+                    <p className="mt-1 text-[12px] leading-snug text-white">
+                      {verdict.feedback_for_tutor}
+                    </p>
+                  )}
+                  {verdict.suggested_ac_refs.length > 0 && (
+                    <div className="mt-1.5 flex flex-wrap items-center gap-1">
+                      <span className="text-[11px] font-medium text-white">Suggested ACs:</span>
+                      {verdict.suggested_ac_refs.map((ref) => (
+                        <span
+                          key={ref}
+                          className="inline-flex h-6 items-center rounded-md border border-white/[0.12] px-1.5 text-[11px] font-medium tabular-nums text-white"
+                        >
+                          {ref}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Actions — Verify is a neutral button (one per row, never volt);
+              Return is text until it is chosen. */}
+          {!rejectingMode ? (
+            <div className="mt-3 flex items-center gap-2">
               <button
                 type="button"
-                onClick={() => {
-                  setRejectingMode(false);
-                  setRationale('');
-                }}
+                onClick={() => void handleVerify()}
                 disabled={acting !== null}
-                className="flex-1 h-10 rounded-lg border border-white/[0.10] bg-white/[0.02] text-[12.5px] font-medium text-white/95 hover:text-white hover:border-white/[0.22] transition-colors touch-manipulation disabled:opacity-50"
+                className={cn(ROW_ACTION, 'flex-1')}
               >
-                Cancel
+                {acting === 'verify' ? 'Verifying…' : 'Verify hours'}
               </button>
               <button
                 type="button"
-                onClick={handleReject}
-                disabled={acting !== null || rationale.trim().length === 0}
-                className={cn(
-                  'flex-1 h-10 rounded-lg text-[12.5px] font-semibold transition-colors touch-manipulation',
-                  acting === 'reject'
-                    ? 'bg-rose-500/60 text-white/85'
-                    : rationale.trim().length === 0
-                      ? 'bg-white/[0.05] text-white/70'
-                      : 'bg-rose-500 text-white hover:bg-rose-400'
-                )}
+                onClick={() => setRejectingMode(true)}
+                disabled={acting !== null}
+                className={cn(TEXT_ACTION, 'flex-1')}
               >
-                {acting === 'reject' ? 'Returning…' : 'Return to apprentice'}
+                Return for more info
               </button>
             </div>
-          </div>
-        )}
+          ) : (
+            <div className="mt-3 space-y-2">
+              <textarea
+                autoFocus
+                value={rationale}
+                onChange={(e) => setRationale(e.target.value)}
+                rows={2}
+                placeholder="What does the apprentice need to add or change?"
+                className={cn(textareaCn, 'w-full resize-none')}
+              />
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setRejectingMode(false);
+                    setRationale('');
+                  }}
+                  disabled={acting !== null}
+                  className={cn(TEXT_ACTION, 'flex-1')}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={() => void handleReject()}
+                  disabled={acting !== null || rationale.trim().length === 0}
+                  className={cn(ROW_ACTION, 'flex-1')}
+                >
+                  {acting === 'reject' ? 'Returning…' : 'Return to apprentice'}
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </li>
   );
@@ -717,16 +822,14 @@ function InboxRowCard({
 
 function EmptyState({ scope, hasAny }: { scope: InboxScope; hasAny: boolean }) {
   return (
-    <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] px-6 py-10 text-center">
-      <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-emerald-300/85">
-        All clear
-      </div>
-      <p className="mt-2 text-[13px] text-white/95 leading-snug max-w-md mx-auto">
+    <div className="px-4 py-6 sm:px-5">
+      <div className="text-[14px] font-semibold text-white">Nothing to verify</div>
+      <p className="mt-1 max-w-prose text-[12.5px] leading-snug text-white">
         {hasAny
-          ? 'Nothing pending in this cohort filter.'
+          ? 'Nothing pending in this cohort.'
           : scope === 'mine'
-            ? "No apprentice-submitted OTJ pending for the learners assigned to you. When they submit work activities you'll see them here."
-            : 'No apprentice-submitted OTJ pending across this college.'}
+            ? 'No apprentice-submitted off-the-job entries are waiting from the learners assigned to you. When they submit work activities, they appear here.'
+            : 'No apprentice-submitted off-the-job entries are waiting across the college.'}
       </p>
     </div>
   );
@@ -734,17 +837,14 @@ function EmptyState({ scope, hasAny }: { scope: InboxScope; hasAny: boolean }) {
 
 function Skeleton() {
   return (
-    <div className="space-y-3">
+    <ul className="divide-y divide-white/[0.10]">
       {[0, 1, 2].map((i) => (
-        <div
-          key={i}
-          className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] px-5 py-5 space-y-3"
-        >
-          <div className="h-4 w-48 rounded-md bg-white/[0.05]" />
-          <div className="h-3 w-2/3 rounded-md bg-white/[0.04]" />
-          <div className="h-10 rounded-lg bg-white/[0.04]" />
-        </div>
+        <li key={i} className="space-y-3 px-4 py-4 sm:px-5">
+          <div className="h-4 w-48 animate-pulse rounded-md bg-white/[0.10]" />
+          <div className="h-3 w-2/3 animate-pulse rounded-md bg-white/[0.07]" />
+          <div className="h-11 animate-pulse rounded-xl bg-white/[0.05]" />
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }

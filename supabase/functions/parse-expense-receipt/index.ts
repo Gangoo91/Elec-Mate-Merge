@@ -57,7 +57,14 @@ serve(async (req) => {
   const logger = createLogger(requestId, { function: 'parse-expense-receipt' });
 
   try {
-    const { image_base64, image_type }: ParseExpenseRequest = await req.json();
+    const body: ParseExpenseRequest = await req.json();
+    const image_base64 = body.image_base64;
+    // Browsers report "image/jpg" for some camera captures; treat it as JPEG
+    // rather than failing the whole scan on the alias (Sentry 46).
+    const image_type =
+      typeof body.image_type === 'string' && body.image_type.toLowerCase() === 'image/jpg'
+        ? 'image/jpeg'
+        : body.image_type;
 
     // Input validation
     if (!image_base64 || typeof image_base64 !== 'string') {

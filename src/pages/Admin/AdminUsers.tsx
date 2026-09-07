@@ -27,6 +27,8 @@ import {
   MessageSquare,
   Download,
   X,
+  MoreHorizontal,
+  Send,
 } from 'lucide-react';
 import {
   AlertDialog,
@@ -54,23 +56,26 @@ import SwipeableAdminRow from '@/components/admin/SwipeableAdminRow';
 import { useAdminUsersBase } from '@/hooks/useAdminUsersBase';
 import { useHaptic } from '@/hooks/useHaptic';
 import PullToRefresh from '@/components/admin/PullToRefresh';
+import { PageFrame, IconButton, EmptyState } from '@/components/admin/editorial';
 import {
-  PageFrame,
-  PageHero,
-  Eyebrow,
-  ListCard,
-  ListCardHeader,
-  ListBody,
-  Pill,
-  toneDot,
-  toneText,
-  IconButton,
-  LoadingBlocks,
-  EmptyState,
-  Dot,
-  TextAction,
-  type Tone,
-} from '@/components/admin/editorial';
+  AQUA,
+  BLUE,
+  GOOD,
+  ORANGE,
+  SERIOUS,
+  VIOLET,
+  YELLOW,
+  DE_EMPHASIS,
+  Delta,
+  KpiTile,
+  Legend,
+  Panel,
+  SectionHead,
+  Sparkline,
+  StackBar,
+  StateDot,
+} from '@/components/admin/overview/primitives';
+import { useAdminOverviewSeries } from '@/hooks/useAdminOverviewSeries';
 
 interface UserProfile {
   id: string;
@@ -101,43 +106,89 @@ interface UserProfile {
   } | null;
 }
 
-const roleColors: Record<string, { bg: string; text: string; border: string }> = Object.fromEntries(
-  Object.entries(ROLE_COLORS).map(([role, colors]) => [
-    role,
-    {
-      bg: colors.bg.replace('/20', '/10'),
-      text: colors.text,
-      border: colors.badge.split(' ').pop() || 'border-gray-500/30',
-    },
-  ])
-);
 
-const roleToneMap: Record<string, Tone> = {
-  apprentice: 'purple',
-  electrician: 'yellow',
-  employer: 'blue',
-  college: 'green',
-  visitor: 'cyan',
+/** One hue per role, fixed — the same hues the overview gives the plans. */
+const ROLES: Array<{ key: string; label: string; color: string }> = [
+  { key: 'electrician', label: 'Electricians', color: ORANGE },
+  { key: 'apprentice', label: 'Apprentices', color: BLUE },
+  { key: 'employer', label: 'Employers', color: AQUA },
+  { key: 'college', label: 'College', color: YELLOW },
+  { key: 'visitor', label: 'Visitors', color: VIOLET },
+];
+const roleColor = (role: string | null | undefined) =>
+  ROLES.find((r) => r.key === (role || 'visitor').toLowerCase())?.color ?? VIOLET;
+const roleLabel = (role: string | null | undefined) => {
+  const r = (role || 'visitor').toLowerCase();
+  return r.charAt(0).toUpperCase() + r.slice(1);
 };
 
 const roleFilters = [
-  { value: 'all', label: 'All' },
-  { value: 'electrician', label: 'Sparks' },
-  { value: 'apprentice', label: 'Apprentice' },
-  { value: 'employer', label: 'Employer' },
+  { value: 'all', label: 'All roles' },
+  { value: 'electrician', label: 'Electricians' },
+  { value: 'apprentice', label: 'Apprentices' },
+  { value: 'employer', label: 'Employers' },
 ];
 
-const quickFilters = [
+/*
+  Two kinds of filter. Status describes people; attention says what to do.
+  "Trials" used to mean "not paying" — 920 people, most of whom finished a
+  trial months ago. It now means a live trial in Stripe or the stores.
+*/
+const statusFilters = [
   { value: 'all', label: 'All' },
   { value: 'active_today', label: 'Active today' },
-  { value: 'trials', label: 'Trials' },
-  { value: 'subscribed', label: 'Subscribed' },
-  { value: 'free', label: 'Free access' },
-  { value: 'not_onboarded', label: 'Not onboarded' },
-  { value: 'never_logged_in', label: 'Never logged in' },
+  { value: 'subscribed', label: 'Paying' },
+  { value: 'trials', label: 'On trial' },
+  { value: 'free', label: 'Comped' },
+  { value: 'not_paying', label: 'Not paying' },
+  { value: 'not_onboarded', label: 'Never set up' },
+  { value: 'never_logged_in', label: 'Never opened' },
   { value: 'most_engaged', label: 'Most engaged' },
 ];
+const attentionViews = [
+  { value: 'trial_ending', label: 'Trial ends in 3 days' },
+  { value: 'paying_quiet', label: 'Paying, quiet 30 days+' },
+  { value: 'new_not_setup', label: 'New, never set up' },
+  { value: 'abandoned', label: 'Abandoned checkout' },
+];
+const quickFilters = [...statusFilters, ...attentionViews];
+const joinedWindows = [
+  { value: 'all', label: 'Any time' },
+  { value: '7', label: '7 days' },
+  { value: '30', label: '30 days' },
+  { value: '90', label: '90 days' },
+];
+type SortKey = 'name' | 'joined' | 'last_active' | 'engagement' | 'value';
+const SORTS: Array<{ value: SortKey; label: string }> = [
+  { value: 'joined', label: 'Newest first' },
+  { value: 'name', label: 'By name' },
+  { value: 'last_active', label: 'Last active' },
+  { value: 'engagement', label: 'Most engaged' },
+  { value: 'value', label: 'Most valuable' },
+];
+/** What a paying account is worth a month at list price. Comped accounts are £0 — they are cost, not revenue. */
+const TIER_MRR: Record<string, number> = {
+  founder: 3.99,
+  apprentice: 6.99,
+  apprentice_yearly: 69.99 / 12,
+  electrician: 19.99,
+  electrician_yearly: 199.99 / 12,
+  business_ai: 39.99,
+  business_ai_yearly: 399.99 / 12,
+  employer: 49.99,
+  employer_yearly: 499.99 / 12,
+};
+const gbp = (v: number, dp = 0) =>
+  '£' + v.toLocaleString('en-GB', { minimumFractionDigits: dp, maximumFractionDigits: dp });
 
+function untilTime(dateStr: string | undefined | null): string {
+  if (!dateStr) return '';
+  const ms = new Date(dateStr).getTime() - Date.now();
+  if (ms <= 0) return 'now';
+  if (ms < 3_600_000) return `in ${Math.max(1, Math.floor(ms / 60_000))}m`;
+  if (ms < 86_400_000) return `in ${Math.floor(ms / 3_600_000)}h`;
+  return `in ${Math.floor(ms / 86_400_000)}d`;
+}
 function relativeTime(dateStr: string | undefined | null): string {
   if (!dateStr) return 'never';
   const ms = Date.now() - new Date(dateStr).getTime();
@@ -154,14 +205,121 @@ function relativeTime(dateStr: string | undefined | null): string {
        --mode dark --surface "#1C1C1C"  -> all checks pass */
 const USER_SERIES = ['#3987E5', '#199E70', '#E66767'] as const;
 
+function BulkMessageSheet({
+  open,
+  onOpenChange,
+  count,
+  sending,
+  onSend,
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  count: number;
+  sending: boolean;
+  onSend: (subject: string, message: string, messageType: 'in_app' | 'both') => void;
+}) {
+  const [subject, setSubject] = useState('');
+  const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState<'in_app' | 'both'>('both');
+  const ready = subject.trim().length > 0 && message.trim().length > 0 && count > 0;
+  return (
+    <Sheet open={open} onOpenChange={(o) => !sending && onOpenChange(o)}>
+      <SheetContent side="bottom" className="h-[85vh] overflow-hidden rounded-t-2xl p-0">
+        <div className="flex h-full flex-col bg-background">
+          <div className="border-b border-white/[0.1] px-4 py-3">
+            <div className="text-[15px] font-semibold text-white">
+              Message {count.toLocaleString('en-GB')} {count === 1 ? 'person' : 'people'}
+            </div>
+            <div className="text-[12px] text-white">
+              Everyone selected gets the same message. It lands in their inbox
+              {messageType === 'both' ? ' and by email' : ''}.
+            </div>
+          </div>
+          <div className="flex-1 space-y-5 overflow-y-auto px-4 py-4">
+            <div>
+              <label className="mb-1 block text-[12px] font-medium text-white">Subject</label>
+              <input
+                value={subject}
+                onChange={(e) => setSubject(e.target.value)}
+                placeholder="What it is about"
+                className="input-underline h-11 w-full touch-manipulation rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white caret-elec-yellow placeholder:text-white/25 transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus:outline-none focus:ring-0 focus-visible:ring-0 [color-scheme:dark]"
+              />
+            </div>
+            <div>
+              <label className="mb-1 block text-[12px] font-medium text-white">Message</label>
+              <textarea
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                rows={6}
+                placeholder="Write it as you would to one person."
+                className="input-underline min-h-[140px] w-full touch-manipulation resize-none rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 py-2 text-base text-white caret-elec-yellow placeholder:text-white/25 transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus:outline-none focus:ring-0 focus-visible:ring-0 [color-scheme:dark]"
+              />
+            </div>
+            <div>
+              <label className="mb-1.5 block text-[12px] font-medium text-white">Send as</label>
+              <div className="flex gap-2">
+                {(
+                  [
+                    { v: 'both', l: 'Email and in-app' },
+                    { v: 'in_app', l: 'In-app only' },
+                  ] as const
+                ).map((o) => (
+                  <button
+                    key={o.v}
+                    type="button"
+                    onClick={() => setMessageType(o.v)}
+                    className={cn(
+                      'h-11 touch-manipulation rounded-full border px-4 text-[13px] transition-colors',
+                      messageType === o.v
+                        ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+                        : 'border-white/[0.12] bg-white/[0.06] font-medium text-white'
+                    )}
+                  >
+                    {o.l}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="border-t border-white/[0.1] px-4 pb-[max(env(safe-area-inset-bottom),12px)] pt-3">
+            <button
+              type="button"
+              disabled={!ready || sending}
+              onClick={() => onSend(subject.trim(), message.trim(), messageType)}
+              className="h-12 w-full touch-manipulation rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-opacity disabled:opacity-50"
+            >
+              {sending
+                ? 'Sending…'
+                : `Send to ${count.toLocaleString('en-GB')} ${count === 1 ? 'person' : 'people'}`}
+            </button>
+          </div>
+        </div>
+      </SheetContent>
+    </Sheet>
+  );
+}
+
 export default function AdminUsers() {
   const { profile } = useAuth();
   const queryClient = useQueryClient();
   const haptic = useHaptic();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [search, setSearch] = useState('');
-  const [roleFilter, setRoleFilter] = useState('all');
-  const [quickFilter, setQuickFilter] = useState('all');
+  // The view is the address: "electricians, never set up, newest first" is a link.
+  const [search, setSearch] = useState(() => searchParams.get('q') ?? '');
+  const [roleFilter, setRoleFilter] = useState(() => {
+    const r = searchParams.get('role');
+    return r && roleFilters.some((f) => f.value === r) ? r : 'all';
+  });
+  const [quickFilter, setQuickFilter] = useState(() => {
+    const f = searchParams.get('filter');
+    return f && quickFilters.some((q) => q.value === f) ? f : 'all';
+  });
+  const [joinedWindow, setJoinedWindow] = useState(() => {
+    const j = searchParams.get('joined');
+    return j && joinedWindows.some((w) => w.value === j) ? j : 'all';
+  });
+  const [bulkMessageOpen, setBulkMessageOpen] = useState(false);
+  const [rowActionsUser, setRowActionsUser] = useState<UserProfile | null>(null);
   const [selectedUser, setSelectedUser] = useState<UserProfile | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   // Two-step inline confirm for revoking comped access — the old revoke
@@ -183,16 +341,38 @@ export default function AdminUsers() {
   const [grantSheetUser, setGrantSheetUser] = useState<UserProfile | null>(null);
   const [grantTier, setGrantTier] = useState('');
   const [grantDuration, setGrantDuration] = useState('7');
-  const [sortBy, setSortBy] = useState<'name' | 'joined' | 'last_active' | 'engagement'>('joined');
-
+  const [sortBy, setSortBy] = useState<SortKey>(() => {
+    const v = searchParams.get('sort');
+    return v && SORTS.some((o) => o.value === v) ? (v as SortKey) : 'joined';
+  });
   useEffect(() => {
-    const urlFilter = searchParams.get('filter');
-    if (urlFilter && quickFilters.some((f) => f.value === urlFilter)) {
-      setQuickFilter(urlFilter);
-    }
+    const p = new URLSearchParams(searchParams);
+    const put = (k: string, v: string, def: string) => (v === def ? p.delete(k) : p.set(k, v));
+    put('filter', quickFilter, 'all');
+    put('role', roleFilter, 'all');
+    put('sort', sortBy, 'joined');
+    put('joined', joinedWindow, 'all');
+    put('q', search, '');
+    if (p.toString() !== searchParams.toString()) setSearchParams(p, { replace: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [quickFilter, roleFilter, sortBy, joinedWindow, search]);
+
+  // Links from other pages (?filter=active_today) arrive after mount.
+  useEffect(() => {
+    const f = searchParams.get('filter');
+    if (f && f !== quickFilter && quickFilters.some((q) => q.value === f)) setQuickFilter(f);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
 
   const isSuperAdmin = profile?.admin_role === 'super_admin';
+  const { data: series } = useAdminOverviewSeries();
+  const signupsDaily = series?.signups_daily ?? [];
+  const signups30 = signupsDaily.slice(-30).reduce((t, d) => t + d.n, 0);
+  const signupsPrev30 = signupsDaily.slice(-60, -30).reduce((t, d) => t + d.n, 0);
+  const signupsPct =
+    signupsDaily.length >= 60 && signupsPrev30 > 0
+      ? Math.round(((signups30 - signupsPrev30) / signupsPrev30) * 100)
+      : null;
 
   const {
     data: baseUsers,
@@ -201,21 +381,28 @@ export default function AdminUsers() {
     isFetching: baseFetching,
   } = useAdminUsersBase();
 
+  /*
+    Enrich once, filter in memory.
+
+    This query used to carry the search text, role and status in its key, so
+    every keystroke re-ran two batched queries over all 1,788 accounts. The
+    join with presence and Elec-ID depends only on the account list; filters
+    are a useMemo below and cost nothing.
+  */
   const {
-    data: users,
+    data: enriched,
     isLoading: enrichmentLoading,
     refetch: refetchEnrichment,
     isFetching: enrichmentFetching,
   } = useQuery({
-    queryKey: ['admin-users-enriched', search, roleFilter, quickFilter],
+    queryKey: ['admin-users-enriched', baseUsers?.length ?? 0],
     enabled: !!baseUsers,
     refetchInterval: 60000,
     refetchOnWindowFocus: false,
     staleTime: 30000,
     queryFn: async () => {
-      let allUsers = [...(baseUsers || [])];
-      const userIds = allUsers.map((u: UserProfile) => u.id);
-
+      const allUsers = [...(baseUsers || [])] as UserProfile[];
+      const userIds = allUsers.map((u) => u.id);
       const [presenceData, elecIdData] = await Promise.all([
         batchedInQuery('user_presence', 'user_id', userIds, 'user_id, last_seen'),
         batchedInQuery(
@@ -225,9 +412,7 @@ export default function AdminUsers() {
           'id, employee_id, elec_id_number, is_verified, activated, ecs_card_type'
         ),
       ]);
-
       const presenceMap = new Map(presenceData?.map((p) => [p.user_id, p.last_seen]) || []);
-
       const elecIdMap = new Map(
         elecIdData?.map((p) => [
           p.employee_id,
@@ -240,71 +425,191 @@ export default function AdminUsers() {
           },
         ]) || []
       );
-
-      allUsers = allUsers.map((user: UserProfile) => ({
+      return allUsers.map((user) => ({
         ...user,
         last_seen: presenceMap.get(user.id) || user.last_seen,
         isOnline:
-          presenceMap.get(user.id) &&
+          !!presenceMap.get(user.id) &&
           new Date(presenceMap.get(user.id)!).getTime() > Date.now() - 5 * 60 * 1000,
         elec_id_profile: elecIdMap.get(user.id) || null,
-      }));
-
-      if (search) {
-        const searchLower = search.toLowerCase();
-        allUsers = allUsers.filter(
-          (u: UserProfile) =>
-            u.full_name?.toLowerCase().includes(searchLower) ||
-            u.username?.toLowerCase().includes(searchLower) ||
-            u.email?.toLowerCase().includes(searchLower)
-        );
-      }
-
-      if (roleFilter !== 'all') {
-        allUsers = allUsers.filter((u: UserProfile) => u.role === roleFilter);
-      }
-
-      if (quickFilter !== 'all') {
-        const now = new Date();
-        const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
-
-        switch (quickFilter) {
-          case 'active_today':
-            allUsers = allUsers.filter(
-              (u: UserProfile) => u.last_seen && new Date(u.last_seen).getTime() >= todayStart
-            );
-            break;
-          case 'trials':
-            allUsers = allUsers.filter((u: UserProfile) => !u.subscribed && !u.free_access_granted);
-            break;
-          case 'subscribed':
-            allUsers = allUsers.filter((u: UserProfile) => u.subscribed);
-            break;
-          case 'free':
-            allUsers = allUsers.filter((u: UserProfile) => u.free_access_granted);
-            break;
-          case 'not_onboarded':
-            /*
-             * 363 of 1,484 accounts (24.5%) never finished onboarding. The
-             * flag was already coming back from `get_admin_users` on every
-             * load — it just was not declared on the type, so nothing could
-             * read it and this segment was impossible to list.
-             */
-            allUsers = allUsers.filter((u: UserProfile) => !u.onboarding_completed);
-            break;
-          case 'never_logged_in':
-            // profiles.last_sign_in is a dead column (always NULL) — never gate on it.
-            // No presence record (last_seen) is the real "never active" signal.
-            allUsers = allUsers.filter((u: UserProfile) => !u.last_seen);
-            break;
-        }
-      }
-
-      return allUsers as UserProfile[];
+      })) as UserProfile[];
     },
   });
+  // Rows appear from the base list at once; presence and Elec-ID fill in when the join lands.
+  const enrichmentPending = !!baseUsers && !enriched;
+  const everyone = useMemo<UserProfile[]>(
+    () => enriched ?? ((baseUsers ?? []) as UserProfile[]),
+    [enriched, baseUsers]
+  );
 
-  const isLoading = baseLoading || enrichmentLoading;
+  /*
+    Live trials from the billing rails, not a guess from profile flags.
+    Stripe reports trialing subscriptions by customer email; RevenueCat by
+    account id. Both carry the trial end, which "Trial ends in 3 days" needs.
+  */
+  const { data: liveSubs } = useQuery({
+    queryKey: ['admin-users-live-subs'],
+    staleTime: 60_000,
+    refetchInterval: 60_000,
+    queryFn: async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      if (!session) return null;
+      const headers = { Authorization: `Bearer ${session.access_token}` };
+      const [stripeRes, rcRes] = await Promise.all([
+        supabase.functions.invoke('admin-stripe-stats', { headers }),
+        supabase.functions.invoke('admin-revenuecat-stats', { headers }),
+      ]);
+      const stripe = stripeRes.data as {
+        stripe?: { activeSubscriptions?: number };
+        trialingList?: Array<{ customerEmail: string; trialEnd: string | null }>;
+        subscriptions?: Array<{ customerEmail: string; monthlyAmount: number; status: string }>;
+      } | null;
+      const rc = rcRes.data as {
+        subscribersBySource?: { app_store?: number; play_store?: number };
+        revenuecat?: { activeSubscriptions?: number };
+        trialUsers?: Array<{ id: string; trial_end: string | null; is_cancelled: boolean }>;
+        paidUsers?: Array<{ id: string; subscription_tier: string }>;
+      } | null;
+      const playStore = rc?.subscribersBySource?.play_store ?? 0;
+      const appStoreDb = rc?.subscribersBySource?.app_store ?? 0;
+      const rcLivePaid = rc?.revenuecat?.activeSubscriptions ?? 0;
+      const appStore = rcLivePaid > 0 ? Math.max(rcLivePaid - playStore, appStoreDb) : appStoreDb;
+      const trialByEmail = new Map<string, string | null>();
+      for (const t of stripe?.trialingList ?? []) {
+        if (t.customerEmail) trialByEmail.set(t.customerEmail.toLowerCase(), t.trialEnd);
+      }
+      const trialById = new Map<string, string | null>();
+      for (const t of rc?.trialUsers ?? []) {
+        if (!t.is_cancelled) trialById.set(t.id, t.trial_end);
+      }
+      // Who is actually billing, and for how much. profiles.subscribed
+      // overcounts (stale rows, trials), so value comes from the rails.
+      const paidByEmail = new Map<string, number>();
+      for (const sub of stripe?.subscriptions ?? []) {
+        if (sub.customerEmail && sub.status === 'active') {
+          const e = sub.customerEmail.toLowerCase();
+          paidByEmail.set(e, (paidByEmail.get(e) ?? 0) + (sub.monthlyAmount || 0));
+        }
+      }
+      const paidById = new Map<string, number>();
+      for (const u of rc?.paidUsers ?? []) {
+        paidById.set(u.id, TIER_MRR[(u.subscription_tier ?? '').toLowerCase()] ?? 0);
+      }
+      return {
+        paying: (stripe?.stripe?.activeSubscriptions ?? 0) + appStore + playStore,
+        trialByEmail,
+        trialById,
+        paidByEmail,
+        paidById,
+      };
+    },
+  });
+  const realPaying = liveSubs?.paying;
+  /** Monthly value from the billing rails; 0 when not billing. undefined while the rails load. */
+  const liveValue = useCallback(
+    (u: UserProfile): number | undefined => {
+      if (!liveSubs) return undefined;
+      if (u.free_access_granted) return 0;
+      if (liveSubs.paidById.has(u.id)) return liveSubs.paidById.get(u.id) ?? 0;
+      const e = u.email?.toLowerCase();
+      if (e && liveSubs.paidByEmail.has(e)) return liveSubs.paidByEmail.get(e) ?? 0;
+      return 0;
+    },
+    [liveSubs]
+  );
+  const trialEnd = useCallback(
+    (u: UserProfile): string | null | undefined => {
+      if (!liveSubs) return undefined;
+      if (liveSubs.trialById.has(u.id)) return liveSubs.trialById.get(u.id) ?? null;
+      const e = u.email?.toLowerCase();
+      if (e && liveSubs.trialByEmail.has(e)) return liveSubs.trialByEmail.get(e) ?? null;
+      return undefined;
+    },
+    [liveSubs]
+  );
+
+  const users = useMemo<UserProfile[]>(() => {
+    let list = everyone;
+    if (search) {
+      const q = search.toLowerCase();
+      list = list.filter(
+        (u) =>
+          u.full_name?.toLowerCase().includes(q) ||
+          u.username?.toLowerCase().includes(q) ||
+          u.email?.toLowerCase().includes(q)
+      );
+    }
+    if (roleFilter !== 'all') list = list.filter((u) => u.role === roleFilter);
+    if (joinedWindow !== 'all') {
+      const since = Date.now() - Number(joinedWindow) * 86400 * 1000;
+      list = list.filter((u) => u.created_at && new Date(u.created_at).getTime() >= since);
+    }
+    const now = Date.now();
+    const todayStart = new Date(new Date().setHours(0, 0, 0, 0)).getTime();
+    const sevenDaysAgo = now - 7 * 86400 * 1000;
+    const thirtyDaysAgo = now - 30 * 86400 * 1000;
+    const in3d = now + 3 * 86400 * 1000;
+    switch (quickFilter) {
+      case 'active_today':
+        list = list.filter((u) => u.last_seen && new Date(u.last_seen).getTime() >= todayStart);
+        break;
+      case 'subscribed':
+        list = list.filter((u) => (liveValue(u) ?? (u.subscribed && !u.free_access_granted ? 1 : 0)) > 0);
+        break;
+      case 'trials':
+        list = list.filter((u) => trialEnd(u) !== undefined);
+        break;
+      case 'free':
+        list = list.filter((u) => u.free_access_granted);
+        break;
+      case 'not_paying':
+        list = list.filter(
+          (u) => !u.free_access_granted && (liveValue(u) ?? 0) === 0 && trialEnd(u) === undefined
+        );
+        break;
+      case 'not_onboarded':
+        list = list.filter((u) => !u.onboarding_completed);
+        break;
+      case 'never_logged_in':
+        // profiles.last_sign_in is a dead column — no presence record is the real signal.
+        list = list.filter((u) => !u.last_seen);
+        break;
+      case 'trial_ending':
+        list = list.filter((u) => {
+          const end = trialEnd(u);
+          if (!end) return false;
+          const t = new Date(end).getTime();
+          return t >= now && t <= in3d;
+        });
+        break;
+      case 'paying_quiet':
+        list = list.filter(
+          (u) =>
+            (liveValue(u) ?? 0) > 0 &&
+            (!u.last_seen || new Date(u.last_seen).getTime() < thirtyDaysAgo)
+        );
+        break;
+      case 'new_not_setup':
+        list = list.filter(
+          (u) => !u.onboarding_completed && new Date(u.created_at).getTime() >= sevenDaysAgo
+        );
+        break;
+      case 'abandoned':
+        list = list.filter(
+          (u) =>
+            !!u.stripe_customer_id &&
+            !u.subscribed &&
+            !u.free_access_granted &&
+            new Date(u.created_at).getTime() >= sevenDaysAgo
+        );
+        break;
+    }
+    return list;
+  }, [everyone, search, roleFilter, joinedWindow, quickFilter, trialEnd, liveValue]);
+  const isLoading = baseLoading;
+  void enrichmentLoading;
   const isFetching = baseFetching || enrichmentFetching;
   const refetch = async () => {
     await refetchBase();
@@ -366,41 +671,13 @@ export default function AdminUsers() {
           const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
           return u.created_at && new Date(u.created_at) >= weekAgo;
         }).length || 0,
+      byRole: ROLES.map((r) => ({
+        ...r,
+        count: everyone.filter((u) => (u.role || 'visitor').toLowerCase() === r.key).length,
+      })).filter((r) => r.count > 0),
     }),
-    [users]
+    [users, everyone]
   );
-
-  // Real paying customers — read from the same live source as the dashboard
-  // (Stripe active + App Store + Play Store), NOT the profiles.subscribed flag,
-  // which overcounts (stale rows + comped accounts). Matches the dashboard figure.
-  const { data: realPaying } = useQuery({
-    queryKey: ['admin-users-real-paying'],
-    staleTime: 60_000,
-    refetchInterval: 60_000,
-    queryFn: async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-      if (!session) return null;
-      const headers = { Authorization: `Bearer ${session.access_token}` };
-      const [stripeRes, rcRes] = await Promise.all([
-        supabase.functions.invoke('admin-stripe-stats', { headers }),
-        supabase.functions.invoke('admin-revenuecat-stats', { headers }),
-      ]);
-      const stripe =
-        (stripeRes.data as { stripe?: { activeSubscriptions?: number } } | null)?.stripe
-          ?.activeSubscriptions ?? 0;
-      const rc = rcRes.data as {
-        subscribersBySource?: { app_store?: number; play_store?: number };
-        revenuecat?: { activeSubscriptions?: number };
-      } | null;
-      const playStore = rc?.subscribersBySource?.play_store ?? 0;
-      const appStoreDb = rc?.subscribersBySource?.app_store ?? 0;
-      const rcLivePaid = rc?.revenuecat?.activeSubscriptions ?? 0;
-      const appStore = rcLivePaid > 0 ? Math.max(rcLivePaid - playStore, appStoreDb) : appStoreDb;
-      return stripe + appStore + playStore;
-    },
-  });
 
   const sortedUsers = useMemo(() => {
     if (!users) return [];
@@ -431,9 +708,30 @@ export default function AdminUsers() {
       case 'engagement':
         sorted.sort((a, b) => (engagementMap?.get(b.id) || 0) - (engagementMap?.get(a.id) || 0));
         break;
+      case 'value':
+        sorted.sort((a, b) => (liveValue(b) ?? 0) - (liveValue(a) ?? 0));
+        break;
     }
     return sorted;
-  }, [users, sortBy, engagementMap, quickFilter]);
+  }, [users, sortBy, engagementMap, quickFilter, liveValue]);
+  // What the people in view bring in a month, and what the trialists among them would.
+  const filteredValue = useMemo(
+    () => sortedUsers.reduce((t, u) => t + (liveValue(u) ?? 0), 0),
+    [sortedUsers, liveValue]
+  );
+  const filteredTrials = useMemo(
+    () =>
+      sortedUsers.reduce(
+        (acc, u) => {
+          if (trialEnd(u) === undefined) return acc;
+          acc.count += 1;
+          acc.value += TIER_MRR[(u.subscription_tier ?? '').toLowerCase()] ?? 0;
+          return acc;
+        },
+        { count: 0, value: 0 }
+      ),
+    [sortedUsers, trialEnd]
+  );
 
   const totalPages = Math.ceil((sortedUsers.length || 0) / itemsPerPage);
   const paginatedUsers = useMemo(() => {
@@ -483,7 +781,7 @@ export default function AdminUsers() {
   useEffect(() => {
     setCurrentPage(1);
     setSelectedIds(new Set());
-  }, [search, roleFilter, quickFilter, sortBy]);
+  }, [search, roleFilter, quickFilter, sortBy, joinedWindow]);
 
   const toggleSelection = useCallback((id: string) => {
     setSelectedIds((prev) => {
@@ -629,22 +927,17 @@ export default function AdminUsers() {
         action: 'grant_subscription',
         entity_type: 'profile',
         entity_id: userId,
-        details: { tier, expires_at: expiresAt },
+        new_values: { tier, expires_at: expiresAt },
       });
 
       return data;
     },
     onMutate: async ({ userId }) => {
       await queryClient.cancelQueries({ queryKey: ['admin-users-enriched'] });
-      const previousUsers = queryClient.getQueryData([
-        'admin-users-enriched',
-        search,
-        roleFilter,
-        quickFilter,
-      ]);
+      const previousUsers = queryClient.getQueryData(['admin-users-enriched', baseUsers?.length ?? 0]);
 
       queryClient.setQueryData(
-        ['admin-users-enriched', search, roleFilter, quickFilter],
+        ['admin-users-enriched', baseUsers?.length ?? 0],
         (old: UserProfile[] | undefined) =>
           old?.map((u) =>
             u.id === userId ? { ...u, subscribed: true, free_access_granted: true } : u
@@ -664,7 +957,7 @@ export default function AdminUsers() {
     onError: (error, _variables, context) => {
       if (context?.previousUsers) {
         queryClient.setQueryData(
-          ['admin-users-enriched', search, roleFilter, quickFilter],
+          ['admin-users-enriched', baseUsers?.length ?? 0],
           context.previousUsers
         );
       }
@@ -702,15 +995,10 @@ export default function AdminUsers() {
     },
     onMutate: async (userId) => {
       await queryClient.cancelQueries({ queryKey: ['admin-users-enriched'] });
-      const previousUsers = queryClient.getQueryData([
-        'admin-users-enriched',
-        search,
-        roleFilter,
-        quickFilter,
-      ]);
+      const previousUsers = queryClient.getQueryData(['admin-users-enriched', baseUsers?.length ?? 0]);
 
       queryClient.setQueryData(
-        ['admin-users-enriched', search, roleFilter, quickFilter],
+        ['admin-users-enriched', baseUsers?.length ?? 0],
         (old: UserProfile[] | undefined) =>
           old?.map((u) =>
             u.id === userId ? { ...u, subscribed: false, free_access_granted: false } : u
@@ -730,7 +1018,7 @@ export default function AdminUsers() {
     onError: (error, _variables, context) => {
       if (context?.previousUsers) {
         queryClient.setQueryData(
-          ['admin-users-enriched', search, roleFilter, quickFilter],
+          ['admin-users-enriched', baseUsers?.length ?? 0],
           context.previousUsers
         );
       }
@@ -784,9 +1072,6 @@ export default function AdminUsers() {
     },
   });
 
-  const getRoleStyle = useCallback((role: string | null) => {
-    return roleColors[role || 'visitor'] || roleColors.visitor;
-  }, []);
 
   const handleUserClick = useCallback((user: UserProfile) => {
     setSelectedUser(user);
@@ -814,6 +1099,60 @@ export default function AdminUsers() {
       expiresAt,
     });
   }, [grantSheetUser, grantTier, grantDuration, grantSubscriptionMutation]);
+
+  /*
+    One message to many. Rows go in as a single array insert — the same
+    shape the single-message sheet uses, so email delivery and in-app
+    notifications behave identically — and the audit log records the batch.
+  */
+  const bulkMessageMutation = useMutation({
+    mutationFn: async ({
+      recipientIds,
+      subject,
+      message,
+      messageType,
+    }: {
+      recipientIds: string[];
+      subject: string;
+      message: string;
+      messageType: 'in_app' | 'both';
+    }) => {
+      if (!profile?.id) throw new Error('Not signed in');
+      for (let i = 0; i < recipientIds.length; i += 100) {
+        const chunk = recipientIds.slice(i, i + 100);
+        const { error } = await supabase.from('admin_messages').insert(
+          chunk.map((recipient_id) => ({
+            sender_id: profile.id,
+            recipient_id,
+            subject,
+            message,
+            message_type: messageType,
+          }))
+        );
+        if (error) throw error;
+      }
+      // admin_audit_logs has no `details` column — old_values / new_values only.
+      // The generated types lag the table, hence the cast.
+      await supabase.from('admin_audit_logs').insert({
+        user_id: profile.id,
+        action: 'bulk_message',
+        entity_type: 'profile',
+        entity_id: profile.id,
+        new_values: { recipients: recipientIds.length, subject, message_type: messageType },
+      } as never);
+      return recipientIds.length;
+    },
+    onSuccess: (n) => {
+      haptic.success();
+      setBulkMessageOpen(false);
+      setSelectedIds(new Set());
+      toast({ title: `Sent to ${n} ${n === 1 ? 'person' : 'people'}` });
+    },
+    onError: (error) => {
+      haptic.error();
+      toast({ title: 'Failed to send', description: error.message, variant: 'destructive' });
+    },
+  });
 
   const exportCSV = () => {
     if (!users || users.length === 0) return;
@@ -846,11 +1185,26 @@ export default function AdminUsers() {
 
   // Clear, non-redundant status (role is already shown separately, so don't
   // repeat the tier name here). Comped takes priority over the subscribed flag.
-  const statusBadge = (user: UserProfile): { tone: Tone; label: string } => {
-    if (user.free_access_granted) return { tone: 'emerald', label: 'Comped' };
-    if (user.subscribed) return { tone: 'amber', label: 'Paying' };
-    return { tone: 'cyan', label: 'Free' };
+  // A trialist carries subscribed=true in profiles; the billing rail knows better.
+  const billing = (user: UserProfile): { label: string; color: string } => {
+    if (user.free_access_granted) return { label: 'Comped', color: YELLOW };
+    if (trialEnd(user) !== undefined) return { label: 'On trial', color: BLUE };
+    const v = liveValue(user);
+    if (v === undefined) return { label: user.subscribed ? 'Paying' : 'Free', color: DE_EMPHASIS };
+    if (v > 0) return { label: 'Paying', color: GOOD };
+    // profiles.subscribed says yes, neither rail is billing them: worth a look.
+    if (user.subscribed) return { label: 'Flag, not billing', color: SERIOUS };
+    return { label: 'Free', color: DE_EMPHASIS };
   };
+  const setQuick = (value: string) => {
+    setQuickFilter(value);
+    if (value === 'all') searchParams.delete('filter');
+    else searchParams.set('filter', value);
+    setSearchParams(searchParams);
+  };
+  const total = stats.total;
+  const setUpNotPaying = Math.max(0, total - (realPaying ?? 0) - stats.notOnboarded);
+  const filtered = users?.length !== allUsersCount || quickFilter !== 'all' || roleFilter !== 'all' || !!search;
 
   return (
     <PullToRefresh
@@ -858,314 +1212,380 @@ export default function AdminUsers() {
         await refetch();
       }}
     >
-      <PageFrame>
-        <PageHero
-          eyebrow="Directory"
-          title="Users"
-          description="Manage every registered electrician, apprentice and employer on the platform."
-          tone="yellow"
-          actions={
-            <>
-              <IconButton onClick={exportCSV} aria-label="Export CSV">
-                <Download className="h-4 w-4" />
-              </IconButton>
-              <IconButton onClick={() => refetch()} disabled={isFetching} aria-label="Refresh">
-                <RefreshCw className={`h-4 w-4 ${isFetching ? 'animate-spin' : ''}`} />
-              </IconButton>
-            </>
-          }
-        />
-
-        {/*
-          The base, what it is made of, and the figures you check it against.
-
-          This was a five-cell strip — Total / Paying / New this week / Online /
-          Not onboarded — every number the same size, so 1,487 registered
-          accounts and 12 people currently online carried identical weight. Same
-          shape as Revenue, Trials and the Dashboard now: the headline leads, a
-          proportional bar shows the split, and a 2x2 holds the rest.
-        */}
-        <section className="relative -mx-4 overflow-hidden rounded-none border-y border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-6">
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/70 via-elec-yellow/20 to-transparent" />
-          <div className="grid gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-10">
-            <div className="min-w-0">
-              <Eyebrow>Registered accounts</Eyebrow>
-              <div className="mt-4 text-[38px] font-semibold leading-none tracking-tight text-white sm:text-[52px]">
-                {stats.total.toLocaleString('en-GB')}
-              </div>
-              <div className="mt-2 text-[13px] text-white">
-                {realPaying ?? '…'} paying · {stats.notOnboarded} never finished setting up
-              </div>
-
-              {/*
-                Paying / set up but not paying / never set up. Three states that
-                add to the whole, which the five-cell strip could not show —
-                "Not onboarded 364" sat beside "Total 1487" with no indication
-                that one was a quarter of the other.
-              */}
-              <div className="mt-5">
-                <div className="flex w-full rounded-full" style={{ height: 10, gap: 2 }}>
-                  {[
-                    { k: 'paying', v: realPaying ?? 0, fill: USER_SERIES[0], l: 'Paying' },
-                    {
-                      k: 'setup',
-                      v: Math.max(0, stats.total - (realPaying ?? 0) - stats.notOnboarded),
-                      fill: USER_SERIES[1],
-                      l: 'Set up, not paying',
-                    },
-                    { k: 'never', v: stats.notOnboarded, fill: USER_SERIES[2], l: 'Never set up' },
-                  ]
-                    .filter((x) => x.v > 0)
-                    .map((x, i, seg) => (
-                      <div
-                        key={x.k}
-                        title={`${x.l}: ${x.v}`}
-                        style={{
-                          width: `calc(${(x.v / Math.max(stats.total, 1)) * 100}% - ${
-                            (2 * (seg.length - 1)) / seg.length
-                          }px)`,
-                          background: x.fill,
-                          borderTopLeftRadius: i === 0 ? 999 : 2,
-                          borderBottomLeftRadius: i === 0 ? 999 : 2,
-                          borderTopRightRadius: i === seg.length - 1 ? 999 : 2,
-                          borderBottomRightRadius: i === seg.length - 1 ? 999 : 2,
-                        }}
-                      />
-                    ))}
-                </div>
-                <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-[12px] text-white">
-                  {[
-                    { c: USER_SERIES[0], n: realPaying ?? 0, l: 'paying' },
-                    {
-                      c: USER_SERIES[1],
-                      n: Math.max(0, stats.total - (realPaying ?? 0) - stats.notOnboarded),
-                      l: 'set up, not paying',
-                    },
-                    { c: USER_SERIES[2], n: stats.notOnboarded, l: 'never set up' },
-                  ].map((x) => (
-                    <span key={x.l} className="flex items-center gap-2">
-                      <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: x.c }} />
-                      <span className="font-medium tabular-nums text-white">{x.n}</span> {x.l}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-px self-start overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.08]">
-              {[
-                {
-                  label: 'Paying',
-                  value: realPaying ?? '…',
-                  sub: 'Stripe + App + Play',
-                  accent: true,
-                  filter: 'subscribed',
-                },
-                {
-                  label: 'New this week',
-                  value: stats.thisWeek,
-                  sub: 'joined in 7 days',
-                  filter: 'all',
-                },
-                { label: 'Online', value: stats.online, sub: 'right now', filter: 'active_today' },
-                {
-                  label: 'Never set up',
-                  value: stats.notOnboarded,
-                  sub: `${Math.round((stats.notOnboarded / Math.max(1, stats.total)) * 100)}% of all accounts`,
-                  filter: 'not_onboarded',
-                },
-              ].map((c) => (
-                <button
-                  key={c.label}
-                  onClick={() => {
-                    setQuickFilter(c.filter);
-                    if (c.filter === 'all') searchParams.delete('filter');
-                    else searchParams.set('filter', c.filter);
-                    setSearchParams(searchParams);
-                  }}
-                  className="touch-manipulation bg-[hsl(0_0%_9%)] px-4 py-5 text-left transition-colors hover:bg-[hsl(0_0%_12%)]"
-                >
-                  <div
-                    className={cn(
-                      'text-[22px] font-semibold leading-none sm:text-[26px]',
-                      c.accent ? 'text-elec-yellow' : 'text-white'
-                    )}
-                  >
-                    {c.value}
-                  </div>
-                  <div className="mt-2 text-[10px] font-medium uppercase tracking-[0.14em] text-white">
-                    {c.label}
-                  </div>
-                  <div className="mt-1 text-[11px] text-white/60">{c.sub}</div>
-                </button>
-              ))}
+      <PageFrame className="space-y-5 sm:space-y-6">
+        {/* Title row */}
+        <div className="flex items-center justify-between gap-3">
+          <div className="min-w-0">
+            <h1 className="text-[22px] font-semibold leading-7 tracking-[-0.02em] text-white lg:text-[26px] lg:leading-[30px]">
+              Users
+            </h1>
+            <div className="mt-0.5 text-[12px] text-white">
+              {baseLoading ? 'Loading accounts…' : `${(baseUsers?.length ?? 0).toLocaleString('en-GB')} accounts · every electrician, apprentice and employer`}
             </div>
           </div>
-        </section>
+          <div className="flex shrink-0 items-center gap-2">
+            <IconButton onClick={exportCSV} aria-label="Export CSV" className="h-9 w-9">
+              <Download className="h-4 w-4" />
+            </IconButton>
+            <IconButton
+              onClick={() => refetch()}
+              disabled={isFetching}
+              aria-label="Refresh"
+              className="hidden h-9 w-9 lg:flex"
+            >
+              <RefreshCw className={cn('h-4 w-4', isFetching && 'animate-spin')} />
+            </IconButton>
+          </div>
+        </div>
 
-        {/*
-          One filter row.
+        {/* The base: how many, how they split, how fast it grows */}
+        <Panel tone="accent">
+          <div className="grid gap-5 lg:grid-cols-[380px_minmax(0,1fr)] lg:gap-10">
+            <div className="flex min-w-0 flex-col gap-2 text-white">
+              <div className="text-[13px] font-medium leading-4">Registered accounts</div>
+              <div className="text-[44px] font-semibold leading-[46px] tracking-[-0.03em] lg:text-[56px] lg:leading-[56px]">
+                {baseLoading ? <span className="opacity-40">—</span> : total.toLocaleString('en-GB')}
+              </div>
+              <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[13px]">
+                {signupsDaily.length > 0 ? (
+                  <>
+                    <Delta dir="up" tone="good" size={13}>
+                      {signups30} in 30 days
+                    </Delta>
+                    {signupsPct != null && (
+                      <span>
+                        {signupsPct >= 0 ? '+' : ''}
+                        {signupsPct}% on the 30 before
+                      </span>
+                    )}
+                  </>
+                ) : (
+                  <span>loading history</span>
+                )}
+              </div>
 
-          Status chips sat on one full-width rail, role chips on a second
-          beneath it, and the sort control floated at the end of the first —
-          two near-empty tracks costing about 90px before the list even began.
-          Status stays as chips because it is what you switch between; role and
-          sort become compact selects on the same line, with search at the end.
-        */}
-        <div className="-mx-4 rounded-none border-y border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] px-4 py-3 sm:mx-0 sm:rounded-2xl sm:border-x sm:px-5">
-          <div className="flex flex-wrap items-center gap-2">
-            <div className="flex min-w-0 flex-1 flex-wrap items-center gap-1.5">
-              {quickFilters.map((f) => (
-                <button
-                  key={f.value}
-                  type="button"
-                  onClick={() => {
-                    setQuickFilter(f.value);
-                    if (f.value === 'all') searchParams.delete('filter');
-                    else searchParams.set('filter', f.value);
-                    setSearchParams(searchParams);
-                  }}
-                  className={cn(
-                    'h-9 touch-manipulation rounded-full px-3 text-[12px] font-medium transition-colors',
-                    quickFilter === f.value
-                      ? 'bg-elec-yellow text-black'
-                      : 'text-white hover:bg-white/[0.08]'
-                  )}
-                >
-                  {f.label}
-                </button>
-              ))}
+              <div className="mt-2">
+                <StackBar
+                  segments={[
+                    { value: realPaying ?? 0, color: GOOD, label: 'Paying' },
+                    { value: setUpNotPaying, color: DE_EMPHASIS, label: 'Set up, not paying' },
+                    { value: stats.notOnboarded, color: SERIOUS, label: 'Never set up' },
+                  ]}
+                  height={8}
+                />
+                <Legend
+                  items={[
+                    { label: 'Paying', value: realPaying ?? '…', color: GOOD },
+                    { label: 'Set up, not paying', value: setUpNotPaying, color: DE_EMPHASIS },
+                    { label: 'Never set up', value: stats.notOnboarded, color: SERIOUS },
+                  ]}
+                />
+              </div>
+
+              {stats.byRole.length > 0 && (
+                <div className="mt-4 border-t border-white/[0.1] pt-4">
+                  <div className="flex items-baseline justify-between gap-3">
+                    <div className="text-[13px] font-semibold">Who they are</div>
+                    <div className="text-[12px]">tap a role to filter</div>
+                  </div>
+                  <div className="mt-2.5">
+                    <StackBar
+                      segments={stats.byRole.map((r) => ({
+                        value: r.count,
+                        color: r.color,
+                        label: `${r.label} ${r.count}`,
+                      }))}
+                    />
+                  </div>
+                  <div className="mt-2.5 flex flex-wrap gap-x-4 gap-y-1.5">
+                    {stats.byRole.map((r) => {
+                      const on = roleFilter === r.key;
+                      return (
+                        <button
+                          key={r.key}
+                          onClick={() => setRoleFilter(on ? 'all' : r.key)}
+                          className={cn(
+                            'inline-flex min-h-8 touch-manipulation items-center gap-1.5 rounded-full px-2 text-[12px] text-white transition-colors -ml-2',
+                            on ? 'bg-white/[0.12]' : 'hover:bg-white/[0.06] active:bg-white/[0.1]'
+                          )}
+                        >
+                          <span className="h-2 w-2 shrink-0 rounded-[2px]" style={{ background: r.color }} />
+                          {r.label} <b className="font-semibold tabular-nums">{r.count}</b>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
             </div>
 
+            <div className="grid grid-cols-2 self-start [&>*:nth-child(-n+2)]:border-b [&>*:nth-child(-n+2)]:border-white/[0.08] [&>*:nth-child(odd)]:border-r [&>*:nth-child(odd)]:border-white/[0.08] [&>*:nth-child(odd)]:pr-4 [&>*:nth-child(even)]:pl-4">
+              <KpiTile
+                label="Paying"
+                value={realPaying ?? '—'}
+                definition="Stripe + App Store + Play Store"
+                onClick={() => setQuick('subscribed')}
+              />
+              <KpiTile
+                label="New this week"
+                value={stats.thisWeek}
+                definition="joined in the last 7 days"
+                viz={<Sparkline series={signupsDaily.slice(-30).map((d) => d.n)} accent={BLUE} />}
+                onClick={() => {
+                  setSortBy('joined');
+                  setQuick('all');
+                }}
+              />
+              <KpiTile
+                label="Online now"
+                value={stats.online}
+                definition="seen in the last 5 minutes"
+                delta={
+                  stats.online > 0 ? (
+                    <span className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-white">
+                      <span className="h-1.5 w-1.5 animate-pulse rounded-full" style={{ background: GOOD }} />
+                      live
+                    </span>
+                  ) : undefined
+                }
+                onClick={() => setQuick('active_today')}
+              />
+              <KpiTile
+                label="Never set up"
+                value={stats.notOnboarded}
+                definition={`${Math.round((stats.notOnboarded / Math.max(1, total)) * 100)}% of all accounts`}
+                onClick={() => setQuick('not_onboarded')}
+              />
+            </div>
+          </div>
+        </Panel>
+
+        {/* Find people */}
+        <Panel padded={false} className="px-4 py-3 sm:px-5 lg:px-6">
+          <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
+            <div className="relative min-w-0 lg:w-72">
+              <input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search name, email or username"
+                aria-label="Search users"
+                className="input-underline h-11 w-full touch-manipulation rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base text-white caret-elec-yellow placeholder:text-white/25 transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus:outline-none focus:ring-0 focus-visible:ring-0 [color-scheme:dark]"
+              />
+            </div>
+            <div className="flex min-w-0 flex-1 flex-col gap-2">
+              <div className="-mx-4 flex gap-1.5 overflow-x-auto px-4 pb-0.5 [scrollbar-width:none] sm:-mx-5 sm:px-5 lg:mx-0 lg:flex-wrap lg:overflow-visible lg:px-0 [&::-webkit-scrollbar]:hidden">
+                {statusFilters.map((f) => {
+                  const on = quickFilter === f.value;
+                  return (
+                    <button
+                      key={f.value}
+                      type="button"
+                      onClick={() => setQuick(f.value)}
+                      className={cn(
+                        'h-11 shrink-0 touch-manipulation whitespace-nowrap rounded-full px-3.5 text-[13px] font-medium transition-colors lg:h-9 lg:px-3 lg:text-[12px]',
+                        on
+                          ? 'bg-elec-yellow font-semibold text-black'
+                          : 'bg-white/[0.06] text-white hover:bg-white/[0.1] active:bg-white/[0.14]'
+                      )}
+                    >
+                      {f.label}
+                    </button>
+                  );
+                })}
+              </div>
+              <div className="-mx-4 flex items-center gap-1.5 overflow-x-auto px-4 pb-0.5 [scrollbar-width:none] sm:-mx-5 sm:px-5 lg:mx-0 lg:flex-wrap lg:overflow-visible lg:px-0 [&::-webkit-scrollbar]:hidden">
+                <span className="shrink-0 pr-1 text-[12px] font-semibold text-white">Needs you</span>
+                {attentionViews.map((f) => {
+                  const on = quickFilter === f.value;
+                  return (
+                    <button
+                      key={f.value}
+                      type="button"
+                      onClick={() => setQuick(on ? 'all' : f.value)}
+                      className={cn(
+                        'inline-flex h-11 shrink-0 touch-manipulation items-center gap-1.5 whitespace-nowrap rounded-full px-3.5 text-[13px] font-medium transition-colors lg:h-9 lg:px-3 lg:text-[12px]',
+                        on
+                          ? 'bg-elec-yellow font-semibold text-black'
+                          : 'bg-white/[0.06] text-white hover:bg-white/[0.1] active:bg-white/[0.14]'
+                      )}
+                    >
+                      <span
+                        className="h-1.5 w-1.5 shrink-0 rounded-full"
+                        style={{ background: on ? '#000' : SERIOUS }}
+                      />
+                      {f.label}
+                    </button>
+                  );
+                })}
+                <span className="shrink-0 pl-2 pr-1 text-[12px] font-semibold text-white">Joined</span>
+                {joinedWindows.map((w) => {
+                  const on = joinedWindow === w.value;
+                  return (
+                    <button
+                      key={w.value}
+                      type="button"
+                      onClick={() => setJoinedWindow(w.value)}
+                      className={cn(
+                        'h-11 shrink-0 touch-manipulation whitespace-nowrap rounded-full px-3 text-[13px] font-medium transition-colors lg:h-9 lg:px-2.5 lg:text-[12px]',
+                        on
+                          ? 'bg-white/[0.16] font-semibold text-white'
+                          : 'text-white hover:bg-white/[0.08] active:bg-white/[0.12]'
+                      )}
+                    >
+                      {w.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
             <div className="flex shrink-0 items-center gap-2">
               <select
                 value={roleFilter}
                 onChange={(e) => setRoleFilter(e.target.value)}
                 aria-label="Filter by role"
-                className="h-9 touch-manipulation rounded-full border border-white/[0.12] bg-white/[0.04] px-3 text-[12px] font-medium text-white [color-scheme:dark] focus:border-elec-yellow focus:outline-none"
+                className="h-11 flex-1 touch-manipulation rounded-full border border-white/[0.12] bg-white/[0.04] px-3 text-[13px] font-medium text-white [color-scheme:dark] focus:border-elec-yellow focus:outline-none lg:h-9 lg:flex-none lg:text-[12px]"
               >
                 {roleFilters.map((f) => (
                   <option key={f.value} value={f.value}>
-                    {f.value === 'all' ? 'All roles' : f.label}
+                    {f.label}
                   </option>
                 ))}
               </select>
-
               <select
                 value={sortBy}
-                onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
+                onChange={(e) => setSortBy(e.target.value as SortKey)}
                 aria-label="Sort by"
-                className="h-9 touch-manipulation rounded-full border border-white/[0.12] bg-white/[0.04] px-3 text-[12px] font-medium text-white [color-scheme:dark] focus:border-elec-yellow focus:outline-none"
+                className="h-11 flex-1 touch-manipulation rounded-full border border-white/[0.12] bg-white/[0.04] px-3 text-[13px] font-medium text-white [color-scheme:dark] focus:border-elec-yellow focus:outline-none lg:h-9 lg:flex-none lg:text-[12px]"
               >
-                <option value="joined">Joined</option>
-                <option value="name">Name</option>
-                <option value="last_active">Last active</option>
-                <option value="engagement">Engagement</option>
+                {SORTS.map((o) => (
+                  <option key={o.value} value={o.value}>
+                    {o.label}
+                  </option>
+                ))}
               </select>
-
-              <input
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search name or email…"
-                aria-label="Search users"
-                className="h-9 w-[10rem] touch-manipulation rounded-full border border-white/[0.12] bg-white/[0.04] px-3.5 text-[12px] text-white caret-elec-yellow placeholder:text-white/40 focus:border-elec-yellow focus:outline-none sm:w-56"
-              />
             </div>
           </div>
-        </div>
+        </Panel>
 
         {selectedIds.size > 0 && (
-          <div className="sticky top-0 z-10 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
-            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/80 via-amber-400/70 to-orange-400/70" />
-            <div className="flex items-center justify-between gap-3 px-4 sm:px-5 py-3">
-              <div className="flex items-center gap-3">
-                <Checkbox
-                  checked={isAllSelected}
-                  onCheckedChange={toggleSelectAll}
-                  className="border-white/30 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
-                />
-                <span className="text-[13px] font-semibold text-white tabular-nums">
-                  {selectedIds.size} selected
-                </span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Button
-                  size="sm"
-                  className="h-10 rounded-full bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation font-medium"
-                  onClick={() => bulkGrantMutation.mutate([...selectedIds])}
-                  disabled={bulkActionPending}
-                >
-                  {bulkActionPending ? (
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                  ) : (
-                    <Gift className="h-4 w-4 mr-1.5" />
+          <div className="sticky top-2 z-10">
+            <Panel padded={false} className="px-4 py-2.5 sm:px-5">
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <Checkbox
+                    checked={isAllSelected}
+                    onCheckedChange={toggleSelectAll}
+                    className="border-white/30 data-[state=checked]:border-elec-yellow data-[state=checked]:bg-elec-yellow data-[state=checked]:text-black"
+                  />
+                  <span className="text-[13px] font-semibold tabular-nums text-white">
+                    {selectedIds.size} selected
+                  </span>
+                  {sortedUsers.length > selectedIds.size && (
+                    <button
+                      onClick={() => setSelectedIds(new Set(sortedUsers.map((u) => u.id)))}
+                      className="hidden h-9 touch-manipulation text-[12px] font-semibold text-elec-yellow sm:inline"
+                    >
+                      Select all {sortedUsers.length.toLocaleString('en-GB')} matching
+                    </button>
                   )}
-                  Grant
-                </Button>
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  className="h-10 rounded-full text-white hover:text-white hover:bg-white/[0.06] touch-manipulation"
-                  onClick={() => bulkRevokeMutation.mutate([...selectedIds])}
-                  disabled={bulkActionPending}
-                >
-                  <XCircle className="h-4 w-4 mr-1.5" />
-                  Revoke
-                </Button>
-                <IconButton onClick={() => setSelectedIds(new Set())} aria-label="Clear selection">
-                  <X className="h-4 w-4" />
-                </IconButton>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Button
+                    size="sm"
+                    className="h-10 touch-manipulation rounded-full bg-elec-yellow font-semibold text-black hover:bg-elec-yellow/90"
+                    onClick={() => setBulkMessageOpen(true)}
+                  >
+                    <Send className="mr-1.5 h-4 w-4" />
+                    Message
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    className="h-10 touch-manipulation rounded-full text-white hover:bg-white/[0.06] hover:text-white"
+                    onClick={() => bulkGrantMutation.mutate([...selectedIds])}
+                    disabled={bulkActionPending}
+                  >
+                    {bulkActionPending ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <Gift className="mr-1.5 h-4 w-4" />
+                    )}
+                    Grant
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    className="h-10 touch-manipulation rounded-full text-white hover:bg-white/[0.06] hover:text-white"
+                    onClick={() => bulkRevokeMutation.mutate([...selectedIds])}
+                    disabled={bulkActionPending}
+                  >
+                    <XCircle className="mr-1.5 h-4 w-4" />
+                    Revoke
+                  </Button>
+                  <IconButton onClick={() => setSelectedIds(new Set())} aria-label="Clear selection" className="h-9 w-9">
+                    <X className="h-4 w-4" />
+                  </IconButton>
+                </div>
               </div>
-            </div>
+            </Panel>
           </div>
         )}
 
-        {isLoading ? (
-          <LoadingBlocks />
-        ) : users?.length === 0 ? (
-          <EmptyState title="No users found" description="Try adjusting your search or filters." />
-        ) : (
-          <ListCard>
-            <ListCardHeader
-              tone="yellow"
-              title={users?.length === allUsersCount ? 'All users' : 'Filtered users'}
-              meta={
-                <div className="flex items-center gap-2">
-                  <Pill tone="yellow">
-                    {users?.length === allUsersCount
-                      ? `${users?.length || 0}`
-                      : `${users?.length || 0} / ${allUsersCount}`}
-                  </Pill>
-                  {paginatedUsers.length > 0 && (
-                    <TextAction onClick={toggleSelectAll}>
-                      {isAllSelected ? 'Deselect all' : 'Select all'}
-                    </TextAction>
-                  )}
-                </div>
-              }
-            />
-            {/*
-              One column, not two.
+        {/* The people */}
+        <Panel padded={false} className="px-4 pb-2 pt-2 sm:px-5 lg:px-6">
+          <SectionHead
+            title={filtered ? 'Matching people' : 'Everyone'}
+            meta={
+              isLoading
+                ? 'loading'
+                : `${
+                    filtered
+                      ? `${(users?.length ?? 0).toLocaleString('en-GB')} of ${(baseUsers?.length ?? 0).toLocaleString('en-GB')}`
+                      : (users?.length ?? 0).toLocaleString('en-GB')
+                  }${filteredValue > 0 ? ` · ${gbp(filteredValue)} a month` : ''}${
+                    filteredTrials.count > 0
+                      ? ` · ${filteredTrials.count} on trial, ${gbp(filteredTrials.value)} if they convert`
+                      : ''
+                  }`
+            }
+            action={paginatedUsers.length > 0 ? (isAllSelected ? 'Deselect page' : 'Select page') : undefined}
+            onAction={toggleSelectAll}
+          />
+          {/* Column heads — desktop only; the phone card carries its own labels */}
+          {paginatedUsers.length > 0 && (
+            <div className="hidden items-center gap-3 border-b border-white/[0.08] pb-2 pl-[38px] text-[11px] font-medium text-white lg:flex">
+              <span className="min-w-0 flex-1">Name</span>
+              <span className="w-24 shrink-0">Role</span>
+              <span className="w-20 shrink-0">Joined</span>
+              <span className="w-[5.5rem] shrink-0">Last active</span>
+              <span className="w-[4.5rem] shrink-0">Engagement</span>
+              <span className="w-[8.5rem] shrink-0">Billing</span>
+            </div>
+          )}
 
-              Two-up looked like it used the width, but each row then had about
-              470px to hold a checkbox, five fixed-width signal columns totalling
-              488px, and the person's name — so the name column, the only
-              flexible one, collapsed to nothing and 1,487 people rendered
-              anonymously. One row per line gives the name the room it needs and
-              the signals still fit with space over.
-            */}
-            <ListBody className="divide-y-[1.5px] divide-black/60">
+          {isLoading ? (
+            <div className="space-y-px py-2">
+              {Array.from({ length: 8 }).map((_, i) => (
+                <div key={i} className="h-14 animate-pulse rounded-lg bg-white/[0.04]" />
+              ))}
+            </div>
+          ) : users?.length === 0 ? (
+            <EmptyState title="No one matches" description="Try a different filter or search." />
+          ) : (
+            <div>
               {paginatedUsers.map((user) => {
-                const roleKey = user.role?.toLowerCase() || 'visitor';
-                const accentTone = roleToneMap[roleKey] || 'cyan';
                 const joinedDays = user.created_at
                   ? differenceInDays(new Date(), new Date(user.created_at))
                   : null;
-                const status = statusBadge(user);
+                const state = billing(user);
+                const endsAt = trialEnd(user);
+                const value =
+                  endsAt !== undefined
+                    ? (TIER_MRR[(user.subscription_tier ?? '').toLowerCase()] ?? 0)
+                    : (liveValue(user) ?? 0);
                 const engagementScore = effectiveEngagementMap?.get(user.id);
-                const rawEngagement = effectiveEngagementRawMap?.get(user.id);
                 const isSelected = selectedIds.has(user.id);
-
+                const rc = roleColor(user.role);
                 return (
                   <SwipeableAdminRow
                     key={user.id}
@@ -1193,222 +1613,201 @@ export default function AdminUsers() {
                       },
                     ]}
                   >
-                    <div className={`relative ${isSelected ? 'bg-white/[0.04]' : ''}`}>
-                      {/*
-                        Purpose-built mobile card. The old ListRow spent ~80px of
-                        a 390px screen on a lead column before any content, then
-                        stacked email, pills and meta in a nowrap box — names and
-                        emails truncated, the meta line sliced off mid-character,
-                        ~190px per card, roughly three users on screen out of
-                        1,373.
-
-                        Two columns now: a narrow rail (role bar + checkbox) and
-                        everything else. No initials badge — it carried no
-                        information the name doesn't already give, and it cost
-                        40px of the width the email actually needed. Online state
-                        lives in the meta line, so nothing is lost with it gone.
-                      */}
-                      <div
+                    <div
+                      role="button"
+                      tabIndex={0}
+                      onClick={() => handleUserClick(user)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          handleUserClick(user);
+                        }
+                      }}
+                      className={cn(
+                        'group flex min-h-[60px] w-full cursor-pointer touch-manipulation items-center gap-2.5 border-t border-white/[0.08] py-2 text-left text-white transition-colors hover:bg-white/[0.03] active:bg-white/[0.06] focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-elec-yellow/60 lg:min-h-14',
+                        isSelected && 'bg-white/[0.04]'
+                      )}
+                    >
+                      <span
                         role="button"
                         tabIndex={0}
-                        onClick={() => handleUserClick(user)}
+                        className="-my-2 flex min-h-11 min-w-[28px] shrink-0 cursor-pointer touch-manipulation items-center justify-center"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleSelection(user.id);
+                        }}
                         onKeyDown={(e) => {
                           if (e.key === 'Enter' || e.key === ' ') {
                             e.preventDefault();
-                            handleUserClick(user);
-                          }
-                        }}
-                        className="group flex w-full gap-2.5 bg-[hsl(0_0%_15%)] px-3 py-2.5 text-left touch-manipulation cursor-pointer transition-colors hover:bg-[hsl(0_0%_18%)] active:bg-[hsl(0_0%_20%)] focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-elec-yellow/60 sm:px-5 sm:py-3"
-                      >
-                        {/* Rail — role colour and selection, 3px + 32px total */}
-                        <span
-                          aria-hidden
-                          className={`w-[3px] self-stretch shrink-0 rounded-full ${toneDot[accentTone]}`}
-                        />
-                        <span
-                          role="button"
-                          tabIndex={0}
-                          className="-my-2 min-h-[44px] min-w-[30px] shrink-0 flex items-start justify-center pt-2.5 touch-manipulation cursor-pointer"
-                          onClick={(e) => {
                             e.stopPropagation();
                             toggleSelection(user.id);
-                          }}
-                          onKeyDown={(e) => {
-                            if (e.key === 'Enter' || e.key === ' ') {
-                              e.preventDefault();
-                              e.stopPropagation();
-                              toggleSelection(user.id);
-                            }
-                          }}
-                          aria-label={isSelected ? 'Deselect' : 'Select'}
-                        >
-                          <Checkbox
-                            checked={isSelected}
-                            className="h-4 w-4 border-white/30 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black pointer-events-none"
-                          />
-                        </span>
+                          }
+                        }}
+                        aria-label={isSelected ? 'Deselect' : 'Select'}
+                      >
+                        <Checkbox
+                          checked={isSelected}
+                          className="pointer-events-none h-4 w-4 border-white/30 data-[state=checked]:border-elec-yellow data-[state=checked]:bg-elec-yellow data-[state=checked]:text-black"
+                        />
+                      </span>
 
-                        {/*
-                          One responsive grid, not a stack.
-
-                          Every field lived in a single narrow column — name,
-                          email, then a six-fragment meta chain at 10.5px
-                          ("electrician · today · online · 4h 19m · 1 logins").
-                          On a 2,600px monitor that used maybe a third of the
-                          row and made the smallest type on the page carry the
-                          most information.
-
-                          From lg the fields get their own columns, so you can
-                          read down any one of them; below that it collapses to
-                          the stacked form, which is right on a phone. Type
-                          sizes went up with the space: 10.5px → 12px.
-                        */}
-                        <div className="flex min-w-0 flex-1 items-center gap-x-3 gap-y-1">
-                          {/* Name + email — first, and never optional. */}
-                          <div className="min-w-0 flex-1 basis-[14rem]">
-                            <span className="flex items-center gap-1.5">
-                              <span className="truncate text-[14.5px] font-semibold text-white">
-                                {user.full_name || 'No name'}
-                              </span>
-                              {user.admin_role && (
-                                <Shield className="h-3 w-3 shrink-0 text-elec-yellow" />
-                              )}
-                              {!user.onboarding_completed && (
-                                <span
-                                  title="Never finished onboarding"
-                                  className="shrink-0 rounded-full bg-orange-500/15 px-1.5 py-0.5 text-[9.5px] font-semibold uppercase tracking-[0.08em] text-orange-300"
-                                >
-                                  Setup
-                                </span>
-                              )}
+                      <div className="flex min-w-0 flex-1 items-center gap-x-3">
+                        <div className="min-w-0 flex-1">
+                          <span className="flex items-center gap-1.5">
+                            <span className="truncate text-[14px] font-medium leading-[18px]">
+                              {user.full_name || 'No name'}
                             </span>
-                            <p className="truncate text-[12px] text-white">
-                              {user.email || (user.username ? `@${user.username}` : '—')}
-                            </p>
-                          </div>
-
-                          {/* Role — its own column from lg, inline on mobile */}
-                          <span
-                            className={`hidden w-24 shrink-0 truncate text-[12px] font-medium lg:block ${toneText[accentTone]}`}
-                          >
-                            {user.role || 'visitor'}
-                          </span>
-
-                          {/* Joined */}
-                          <span className="hidden w-20 shrink-0 text-[12px] text-white tabular-nums lg:block">
-                            {joinedDays !== null
-                              ? joinedDays === 0
-                                ? 'Today'
-                                : `${joinedDays}d ago`
-                              : '—'}
-                          </span>
-
-                          {/* Last active */}
-                          <span className="hidden w-[5.5rem] shrink-0 text-[12px] tabular-nums lg:block">
-                            {user.isOnline ? (
-                              <span className="flex items-center gap-1 text-green-400">
-                                <Dot tone="green" />
-                                Online
-                              </span>
-                            ) : (
-                              <span className="text-white">
-                                {user.last_seen ? relativeTime(user.last_seen) : 'Never'}
-                              </span>
+                            {user.admin_role && (
+                              <Shield className="h-3 w-3 shrink-0 text-elec-yellow" />
+                            )}
+                            {user.isOnline && (
+                              <span
+                                className="h-1.5 w-1.5 shrink-0 rounded-full"
+                                style={{ background: GOOD }}
+                                title="Online now"
+                              />
                             )}
                           </span>
-
-                          {/* Engagement */}
-                          <span className="hidden w-[4.5rem] shrink-0 items-center gap-2 lg:flex">
-                            {engagementScore !== undefined ? (
-                              <>
-                                <span
-                                  className="h-1 w-12 overflow-hidden rounded-full bg-white/[0.12]"
-                                  title={`Engagement ${engagementScore} of 100`}
-                                >
-                                  <span
-                                    className={`block h-full rounded-full ${SCORE_COLOR_MAP[getScoreColor(engagementScore)].bar}`}
-                                    style={{
-                                      width: `${Math.max(4, Math.min(100, engagementScore))}%`,
-                                    }}
-                                  />
-                                </span>
-                                <span className="text-[12px] font-semibold tabular-nums text-white">
-                                  {engagementScore}
-                                </span>
-                              </>
-                            ) : (
-                              <span className="text-[12px] text-white">—</span>
-                            )}
-                          </span>
-
-                          {/* Billing + grant */}
-                          <span className="flex w-[6.5rem] shrink-0 items-center justify-between gap-1.5">
-                            <span
-                              className={`text-[11.5px] font-semibold tracking-tight ${toneText[status.tone]}`}
-                            >
-                              {status.label}
-                            </span>
-                            <button
-                              type="button"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                openGrantSheet(user);
-                              }}
-                              className="-mr-1 flex h-9 w-9 items-center justify-center rounded-full text-emerald-400 hover:bg-emerald-500/10 active:bg-emerald-500/15 touch-manipulation"
-                              aria-label={`Grant free access to ${user.full_name || 'user'}`}
-                              title="Grant free access"
-                            >
-                              <Gift className="h-4 w-4" />
-                            </button>
-                          </span>
-
-                          {/* Mobile-only meta line. Below lg the columns above
-                              are hidden, so this carries the same facts in the
-                              stacked form a phone needs. */}
-                          <div className="mt-0.5 flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-0.5 text-[11.5px] leading-tight text-white lg:hidden">
-                            <span className={`font-medium ${toneText[accentTone]}`}>
-                              {user.role || 'visitor'}
+                          <p className="truncate text-[12px] leading-4">
+                            {user.email || (user.username ? `@${user.username}` : '—')}
+                          </p>
+                          {/* Phone: the columns below fold into one line here */}
+                          <div className="mt-0.5 flex min-w-0 flex-wrap items-center gap-x-1.5 text-[11.5px] leading-4 lg:hidden">
+                            <span className="inline-flex items-center gap-1">
+                              <span className="h-1.5 w-1.5 rounded-[2px]" style={{ background: rc }} />
+                              {roleLabel(user.role)}
                             </span>
                             <span aria-hidden>·</span>
                             <span>
-                              {joinedDays !== null
-                                ? joinedDays === 0
-                                  ? 'today'
-                                  : `${joinedDays}d`
-                                : '—'}
+                              {joinedDays === 0
+                                ? 'joined today'
+                                : joinedDays != null
+                                  ? `joined ${joinedDays}d ago`
+                                  : '—'}
                             </span>
-                            {user.isOnline ? (
+                            {enrichmentPending ? null : user.isOnline ? (
                               <>
                                 <span aria-hidden>·</span>
-                                <span className="flex items-center gap-1 text-green-400">
-                                  <Dot tone="green" />
-                                  online
-                                </span>
+                                <span>online</span>
                               </>
                             ) : user.last_seen ? (
                               <>
                                 <span aria-hidden>·</span>
                                 <span>{relativeTime(user.last_seen)}</span>
                               </>
-                            ) : null}
-                            {engagementScore !== undefined && (
+                            ) : (
                               <>
                                 <span aria-hidden>·</span>
-                                <span className="font-semibold tabular-nums">
-                                  {engagementScore}/100
-                                </span>
+                                <span>never opened</span>
+                              </>
+                            )}
+                            {endsAt && (
+                              <>
+                                <span aria-hidden>·</span>
+                                <span>trial ends {untilTime(endsAt)}</span>
+                              </>
+                            )}
+                            {!user.onboarding_completed && (
+                              <>
+                                <span aria-hidden>·</span>
+                                <span style={{ color: SERIOUS }}>never set up</span>
                               </>
                             )}
                           </div>
                         </div>
+
+                        <span className="hidden w-24 shrink-0 items-center gap-1.5 text-[12px] lg:inline-flex">
+                          <span className="h-2 w-2 shrink-0 rounded-[2px]" style={{ background: rc }} />
+                          <span className="truncate">{roleLabel(user.role)}</span>
+                        </span>
+                        <span className="hidden w-20 shrink-0 text-[12px] tabular-nums lg:block">
+                          {joinedDays !== null ? (joinedDays === 0 ? 'Today' : `${joinedDays}d ago`) : '—'}
+                        </span>
+                        <span className="hidden w-[5.5rem] shrink-0 text-[12px] tabular-nums lg:block">
+                          {enrichmentPending ? (
+                            <span className="opacity-40">…</span>
+                          ) : user.isOnline ? (
+                            <span className="inline-flex items-center gap-1.5">
+                              <span className="h-1.5 w-1.5 rounded-full" style={{ background: GOOD }} />
+                              Online
+                            </span>
+                          ) : user.last_seen ? (
+                            relativeTime(user.last_seen)
+                          ) : (
+                            'Never'
+                          )}
+                        </span>
+                        <span className="hidden w-[4.5rem] shrink-0 items-center gap-2 lg:flex">
+                          {engagementScore !== undefined ? (
+                            <>
+                              <span
+                                className="h-1 w-10 overflow-hidden rounded-full bg-white/[0.1]"
+                                title={`Engagement ${engagementScore} of 100`}
+                              >
+                                <span
+                                  className="block h-full rounded-full"
+                                  style={{
+                                    width: `${Math.max(4, Math.min(100, engagementScore))}%`,
+                                    background: BLUE,
+                                  }}
+                                />
+                              </span>
+                              <span className="text-[12px] font-semibold tabular-nums">{engagementScore}</span>
+                            </>
+                          ) : (
+                            <span className="text-[12px]">—</span>
+                          )}
+                        </span>
+                        <span className="flex shrink-0 items-center justify-between gap-1.5 lg:w-[8.5rem]">
+                          <span className="hidden items-center gap-2 lg:inline-flex">
+                            <StateDot label={state.label} color={state.color} />
+                            {value > 0 && (
+                              <span className="text-[12px] tabular-nums text-white">
+                                {gbp(value, 2)}
+                              </span>
+                            )}
+                          </span>
+                          <span className="inline-flex flex-col items-end gap-0.5 lg:hidden">
+                            <StateDot label={state.label} color={state.color} />
+                            {value > 0 && (
+                              <span className="text-[11px] tabular-nums text-white">
+                                {gbp(value, 2)}
+                              </span>
+                            )}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              openGrantSheet(user);
+                            }}
+                            className="-mr-1 hidden h-9 w-9 items-center justify-center rounded-full text-white transition-colors hover:bg-white/[0.08] active:bg-white/[0.12] touch-manipulation lg:flex"
+                            aria-label={`Grant free access to ${user.full_name || 'user'}`}
+                            title="Grant free access"
+                          >
+                            <Gift className="h-4 w-4" />
+                          </button>
+                          {/* Swipe is invisible; a phone gets a button. */}
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setRowActionsUser(user);
+                            }}
+                            className="-mr-2 flex h-11 w-11 items-center justify-center rounded-full text-white active:bg-white/[0.12] touch-manipulation lg:hidden"
+                            aria-label={`Actions for ${user.full_name || 'user'}`}
+                          >
+                            <MoreHorizontal className="h-5 w-5" />
+                          </button>
+                        </span>
                       </div>
                     </div>
                   </SwipeableAdminRow>
                 );
               })}
-            </ListBody>
-          </ListCard>
-        )}
+            </div>
+          )}
+        </Panel>
 
         {totalPages > 1 && !isLoading && users && users.length > 0 && (
           <AdminPagination
@@ -1423,7 +1822,6 @@ export default function AdminUsers() {
             }}
           />
         )}
-
         <UserManagementSheet
           user={
             selectedUser
@@ -1561,6 +1959,71 @@ export default function AdminUsers() {
             if (!open) setMessageUser(null);
           }}
           user={messageUser}
+        />
+
+        {/* Phone row actions */}
+        <Sheet open={!!rowActionsUser} onOpenChange={(o) => !o && setRowActionsUser(null)}>
+          <SheetContent side="bottom" className="h-auto rounded-t-2xl border-t border-white/[0.06] bg-[hsl(0_0%_10%)] p-0">
+            <div className="px-4 pb-[max(env(safe-area-inset-bottom),16px)] pt-3">
+              <div className="mx-auto mb-3 h-1.5 w-12 rounded-full bg-white/15" />
+              <div className="text-[15px] font-semibold text-white">{rowActionsUser?.full_name || 'No name'}</div>
+              <div className="text-[12px] text-white">{rowActionsUser?.email || ''}</div>
+              <div className="mt-4 flex flex-col gap-2">
+                <button
+                  className="h-12 w-full touch-manipulation rounded-xl bg-elec-yellow text-[15px] font-semibold text-black active:opacity-80"
+                  onClick={() => {
+                    const u = rowActionsUser;
+                    setRowActionsUser(null);
+                    if (u) handleUserClick(u);
+                  }}
+                >
+                  Open profile
+                </button>
+                <button
+                  className="h-12 w-full touch-manipulation rounded-xl bg-white/[0.08] text-[15px] font-semibold text-white active:bg-white/[0.14]"
+                  onClick={() => {
+                    const u = rowActionsUser;
+                    setRowActionsUser(null);
+                    if (u)
+                      setMessageUser({
+                        id: u.id,
+                        full_name: u.full_name || undefined,
+                        email: u.email || undefined,
+                        role: u.role || undefined,
+                      });
+                  }}
+                >
+                  Message
+                </button>
+                <button
+                  className="h-12 w-full touch-manipulation rounded-xl bg-white/[0.08] text-[15px] font-semibold text-white active:bg-white/[0.14]"
+                  onClick={() => {
+                    const u = rowActionsUser;
+                    setRowActionsUser(null);
+                    if (u) openGrantSheet(u);
+                  }}
+                >
+                  Grant free access
+                </button>
+              </div>
+            </div>
+          </SheetContent>
+        </Sheet>
+
+        {/* Message the selection */}
+        <BulkMessageSheet
+          open={bulkMessageOpen}
+          onOpenChange={setBulkMessageOpen}
+          count={selectedIds.size}
+          sending={bulkMessageMutation.isPending}
+          onSend={(subject, message, messageType) =>
+            bulkMessageMutation.mutate({
+              recipientIds: [...selectedIds],
+              subject,
+              message,
+              messageType,
+            })
+          }
         />
 
         <Sheet

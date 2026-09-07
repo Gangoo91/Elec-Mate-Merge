@@ -16,11 +16,7 @@ import { realtimeChannelName } from '@/lib/realtimeChannel';
    ========================================================================== */
 
 export type OtjSource =
-  | 'learning_activity'
-  | 'study_session'
-  | 'video_watch'
-  | 'college'
-  | 'time_entry';
+  'learning_activity' | 'study_session' | 'video_watch' | 'college' | 'time_entry';
 
 export interface OtjEntry {
   id: string;
@@ -82,15 +78,7 @@ function startOfThisWeekIso(): string {
   const dayUtc = now.getUTCDay(); // 0 Sun .. 6 Sat
   const diffToMonday = (dayUtc + 6) % 7;
   const monday = new Date(
-    Date.UTC(
-      now.getUTCFullYear(),
-      now.getUTCMonth(),
-      now.getUTCDate() - diffToMonday,
-      0,
-      0,
-      0,
-      0
-    )
+    Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() - diffToMonday, 0, 0, 0, 0)
   );
   return monday.toISOString();
 }
@@ -142,7 +130,7 @@ export function useApprenticeOtj(
         supabase
           .from('college_otj_entries')
           .select(
-            'id, activity_date, activity_type, title, description, duration_minutes, unit_codes, evidence_url, recorded_by_name_snapshot, verified_at, created_at'
+            'id, activity_date, activity_type, title, description, duration_minutes, unit_codes, evidence_url, recorded_by_name_snapshot, verified_at, verification_status, created_at'
           )
           .eq('student_id', userId)
           .order('activity_date', { ascending: false })
@@ -256,8 +244,13 @@ export function useApprenticeOtj(
           evidence_url: string | null;
           recorded_by_name_snapshot: string | null;
           verified_at: string | null;
+          verification_status: string | null;
           created_at: string | null;
         }>) {
+          // A rejected entry was sent back to the learner to redo. It is not
+          // hours they have, so it must not reach the weekly or all-time
+          // totals — it did, and showed a learner on target who was not.
+          if (row.verification_status === 'rejected') continue;
           merged.push({
             id: `col_${row.id}`,
             source: 'college',
@@ -304,9 +297,7 @@ export function useApprenticeOtj(
             unit_codes: [],
             evidence_url: null,
             recorded_by_name: null,
-            verified_at: row.is_supervisor_verified
-              ? (row.created_at ?? row.date)
-              : null,
+            verified_at: row.is_supervisor_verified ? (row.created_at ?? row.date) : null,
           });
         }
       }

@@ -1,14 +1,30 @@
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
+import { CARD_NEUTRAL, CARD_SURFACE } from '@/components/ui/card-recipe';
 import { useMyComplianceSummary } from '@/hooks/useMyComplianceSummary';
 import { StaffComplianceDrawer } from '@/components/college/sheets/StaffComplianceDrawer';
 
 /* ==========================================================================
    MyComplianceWidget — personal compliance card for the College home.
-   Auto-scoped to the logged-in user via college_staff.user_id. Opens the
-   shared StaffComplianceDrawer in-place so tutors never leave home to
-   manage their own DBS / qualifications / CPD.
+   Auto-scoped to the logged-in user via college_staff.user_id. The whole
+   card is the button and opens the shared StaffComplianceDrawer in place,
+   so tutors never leave home to manage their own DBS / qualifications / CPD.
+
+   Hub card language: CARD_NEUTRAL (it is tappable), 15px volt title, the
+   state word on the right, a figure row divided by hairlines. Red is kept
+   for one thing only — an expired record, which is a real problem. The old
+   red / amber / purple / blue / emerald borders, ring and cells are gone.
    ========================================================================== */
+
+const CARD_BUTTON = cn(
+  // flex-col, not block: a <button> centres its content vertically, so when
+  // the grid stretched this card to match a taller neighbour the whole body
+  // floated to the middle with dead space above and below. Top-aligned, with
+  // the footer pinned to the bottom edge.
+  'group flex w-full flex-col overflow-hidden rounded-2xl border text-left transition-colors touch-manipulation',
+  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/60',
+  CARD_NEUTRAL
+);
 
 export function MyComplianceWidget() {
   const { summary, loading, linked } = useMyComplianceSummary();
@@ -17,28 +33,22 @@ export function MyComplianceWidget() {
   if (linked === false) return null; // user not linked to a college_staff row
   if (loading || !summary) return <Skeleton />;
 
-  // No applicable requirements — show a friendly null-state instead of a
-  // misleading "0/0 in date · 0%" donut.
+  // No applicable requirements — say so instead of a misleading "0/0 · 0%".
   if (summary.totals.total === 0) {
     return (
       <>
-        <button
-          type="button"
-          onClick={() => setOpen(true)}
-          className="group w-full text-left bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-5 py-5 hover:bg-[hsl(0_0%_14%)] active:bg-[hsl(0_0%_16%)] hover:border-white/[0.12] transition-colors touch-manipulation"
-        >
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-            Your compliance
+        <button type="button" onClick={() => setOpen(true)} className={CARD_BUTTON}>
+          <div className="px-4 py-3.5 sm:px-5">
+            <h3 className="text-[15px] font-semibold tracking-tight text-elec-yellow">
+              Your compliance
+            </h3>
           </div>
-          <div className="mt-1 text-[20px] sm:text-[22px] font-semibold text-white tracking-tight leading-tight truncate">
-            {summary.name.split(' ')[0]}, your vault
-          </div>
-          <p className="mt-2 text-[12.5px] text-white/65 leading-relaxed max-w-prose">
+          <p className="border-t border-white/[0.10] px-4 py-4 text-[12.5px] leading-relaxed text-white sm:px-5">
             No statutory or training requirements are mapped to your role yet. Open the vault to log
             CPD or upload qualifications.
           </p>
-          <span className="mt-3 inline-flex text-[12px] font-medium text-white/55 group-hover:text-white transition-colors">
-            Open vault →
+          <span className="flex h-11 items-center justify-end border-t border-white/[0.10] px-4 text-[12px] font-bold text-elec-yellow sm:px-5">
+            Open vault
           </span>
         </button>
         <StaffComplianceDrawer open={open} onOpenChange={setOpen} staffId={summary.staffId} />
@@ -47,26 +57,16 @@ export function MyComplianceWidget() {
   }
 
   const { name, totals, percent, needsAction, awaitingVerification, nextExpiry } = summary;
-  // Setup-pending = no evidence anywhere yet (everything missing). This is
-  // an *action* state, not a neutral one — show in amber so it reads as
-  // "do this" rather than "info".
+  // Setup-pending = no evidence anywhere yet (everything missing).
   const allMissing =
     totals.total > 0 &&
     totals.valid === 0 &&
     totals.expiring === 0 &&
     totals.expired === 0 &&
     totals.missing === totals.total;
-  const tone = needsAction
-    ? totals.expired > 0
-      ? ('red' as const)
-      : ('amber' as const)
-    : awaitingVerification
-      ? ('purple' as const)
-      : totals.expiring > 0
-        ? ('amber' as const)
-        : ('emerald' as const);
+  const hasExpired = totals.expired > 0;
   const headlineLabel = needsAction
-    ? totals.expired > 0
+    ? hasExpired
       ? 'Action needed'
       : 'Setup pending'
     : awaitingVerification
@@ -77,109 +77,64 @@ export function MyComplianceWidget() {
 
   return (
     <>
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        className={cn(
-          'group w-full text-left bg-[hsl(0_0%_12%)] border rounded-2xl px-5 py-5 transition-colors touch-manipulation',
-          'hover:bg-[hsl(0_0%_14%)] active:bg-[hsl(0_0%_16%)]',
-          tone === 'red'
-            ? 'border-red-500/25 hover:border-red-500/40'
-            : tone === 'amber'
-              ? 'border-amber-500/25 hover:border-amber-500/40'
-              : tone === 'blue'
-                ? 'border-blue-500/25 hover:border-blue-500/40'
-                : tone === 'purple'
-                  ? 'border-purple-500/25 hover:border-purple-500/40'
-                  : 'border-emerald-500/25 hover:border-emerald-500/40'
-        )}
-      >
-        <div className="flex items-start justify-between gap-4">
-          <div className="min-w-0">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-              Your compliance
-            </div>
-            <div className="mt-1 text-[20px] sm:text-[22px] font-semibold text-white tracking-tight leading-tight truncate">
-              {name.split(' ')[0]}, your vault
-            </div>
-            <div
-              className={cn(
-                'mt-1 text-[12.5px] font-medium',
-                tone === 'red'
-                  ? 'text-red-300'
-                  : tone === 'amber'
-                    ? 'text-amber-300'
-                    : tone === 'blue'
-                      ? 'text-blue-300'
-                      : tone === 'purple'
-                        ? 'text-purple-300'
-                        : 'text-emerald-300'
-              )}
-            >
-              {headlineLabel}
-            </div>
-          </div>
-          <Ring percent={percent} tone={tone} />
-        </div>
-
-        {allMissing ? (
-          // Fresh vault — every cell would be 0 except Missing. Replace the
-          // 4-zero grid with a focused amber CTA so the screen has one
-          // clear next action instead of three quiet zeros.
-          <div className="mt-4 rounded-xl border border-amber-500/25 bg-amber-500/[0.06] px-4 py-3.5 flex items-center gap-3">
-            <div className="shrink-0 h-9 w-9 rounded-full bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-300 font-semibold text-[13px] tabular-nums">
-              {totals.missing}
-            </div>
-            <div className="min-w-0 flex-1">
-              <div className="text-[13px] font-semibold text-white leading-tight">
-                {totals.missing} document{totals.missing === 1 ? '' : 's'} to upload
-              </div>
-              <div className="mt-0.5 text-[11.5px] text-white leading-snug">
-                DBS, ID, qualifications — start your vault.
-              </div>
-            </div>
-            <span className="shrink-0 inline-flex items-center h-9 px-3.5 rounded-lg bg-amber-400 text-black text-[12px] font-semibold group-hover:bg-amber-300 transition-colors">
-              Upload →
-            </span>
-          </div>
-        ) : (
-          <div
+      <button type="button" onClick={() => setOpen(true)} className={CARD_BUTTON}>
+        <div className="flex items-end justify-between gap-4 px-4 py-3.5 sm:px-5">
+          <h3 className="text-[15px] font-semibold tracking-tight text-elec-yellow">
+            Your compliance
+          </h3>
+          <span
             className={cn(
-              'mt-4 grid gap-px bg-white/[0.04] border border-white/[0.06] rounded-xl overflow-hidden',
-              totals.pending_verification > 0
-                ? 'grid-cols-2 sm:grid-cols-5'
-                : 'grid-cols-2 sm:grid-cols-4'
+              'shrink-0 text-[11px] font-semibold',
+              hasExpired ? 'text-red-300' : 'text-white'
             )}
           >
-            <Cell value={totals.valid + totals.expiring} label="In date" tone="emerald" />
-            <Cell value={totals.expiring} label="Expiring" tone="amber" />
-            <Cell value={totals.expired} label="Expired" tone="red" />
-            <Cell value={totals.missing} label="Missing" tone="blue" />
+            {headlineLabel}
+          </span>
+        </div>
+
+        <div className="flex items-center justify-between gap-4 border-t border-white/[0.10] px-4 py-3.5 sm:px-5">
+          <div className="min-w-0">
+            <div className="truncate text-[14px] font-semibold leading-tight text-white">
+              {name}
+            </div>
+            <div className="mt-0.5 text-[12px] leading-snug text-white">
+              {allMissing ? (
+                `${totals.missing} document${totals.missing === 1 ? '' : 's'} to upload — DBS, ID, qualifications.`
+              ) : nextExpiry && totals.expiring > 0 ? (
+                <>
+                  Next expiry{' '}
+                  <span className="font-semibold text-elec-yellow">{formatExpiry(nextExpiry)}</span>
+                </>
+              ) : needsAction ? (
+                'Open the vault to upload missing evidence.'
+              ) : (
+                'Fully covered — keep CPD ticking over.'
+              )}
+            </div>
+          </div>
+          <Ring percent={percent} bad={hasExpired} />
+        </div>
+
+        {!allMissing && (
+          <div
+            className={cn(
+              'grid divide-x divide-white/[0.10] border-t border-white/[0.10]',
+              totals.pending_verification > 0 ? 'grid-cols-5' : 'grid-cols-4'
+            )}
+          >
+            <Cell value={totals.valid + totals.expiring} label="In date" />
+            <Cell value={totals.expiring} label="Expiring" />
+            <Cell value={totals.expired} label="Expired" bad={hasExpired} />
+            <Cell value={totals.missing} label="Missing" />
             {totals.pending_verification > 0 && (
-              <Cell value={totals.pending_verification} label="Pending" tone="purple" />
+              <Cell value={totals.pending_verification} label="Pending" />
             )}
           </div>
         )}
 
-        {!allMissing && (
-          <div className="mt-3 flex items-center justify-between gap-3 text-[11.5px]">
-            <div className="text-white truncate">
-              {nextExpiry && totals.expiring > 0 ? (
-                <>
-                  <span className="text-white">Next expiry: </span>
-                  <span className="text-amber-300 font-medium">{formatExpiry(nextExpiry)}</span>
-                </>
-              ) : needsAction ? (
-                <span>Open vault to upload missing evidence.</span>
-              ) : (
-                <span>You're fully covered — keep CPD ticking over.</span>
-              )}
-            </div>
-            <span className="shrink-0 text-[12px] font-medium text-white group-hover:text-white transition-colors">
-              Open →
-            </span>
-          </div>
-        )}
+        <span className="mt-auto flex h-11 items-center justify-end border-t border-white/[0.10] px-4 text-[12px] font-bold text-elec-yellow sm:px-5">
+          {allMissing ? 'Upload' : 'Open vault'}
+        </span>
       </button>
 
       <StaffComplianceDrawer open={open} onOpenChange={setOpen} staffId={summary.staffId} />
@@ -189,32 +144,16 @@ export function MyComplianceWidget() {
 
 /* ──────────────────────────────────────────────────────── */
 
-function Ring({
-  percent,
-  tone,
-}: {
-  percent: number;
-  tone: 'red' | 'amber' | 'emerald' | 'blue' | 'purple';
-}) {
-  const size = 56;
-  const stroke = 5;
+function Ring({ percent, bad }: { percent: number; bad: boolean }) {
+  const size = 52;
+  const stroke = 4;
   const r = (size - stroke) / 2;
   const c = 2 * Math.PI * r;
   const off = c * (1 - Math.max(0, Math.min(100, percent)) / 100);
-  const ringClass =
-    tone === 'red'
-      ? 'stroke-red-400'
-      : tone === 'amber'
-        ? 'stroke-amber-400'
-        : tone === 'blue'
-          ? 'stroke-blue-400'
-          : tone === 'purple'
-            ? 'stroke-purple-400'
-            : 'stroke-emerald-400';
   return (
     <span
       aria-hidden
-      className="relative shrink-0 inline-flex items-center justify-center"
+      className="relative inline-flex shrink-0 items-center justify-center"
       style={{ width: size, height: size }}
     >
       <svg width={size} height={size} className="rotate-[-90deg]">
@@ -222,54 +161,39 @@ function Ring({
           cx={size / 2}
           cy={size / 2}
           r={r}
-          className="stroke-white/[0.08] fill-none"
+          className="fill-none stroke-white/[0.10]"
           strokeWidth={stroke}
         />
         <circle
           cx={size / 2}
           cy={size / 2}
           r={r}
-          className={cn('fill-none transition-all', ringClass)}
+          className={cn('fill-none transition-all', bad ? 'stroke-red-400' : 'stroke-white')}
           strokeWidth={stroke}
           strokeLinecap="round"
           strokeDasharray={c}
           strokeDashoffset={off}
         />
       </svg>
-      <span className="absolute inset-0 flex items-center justify-center text-[13px] font-semibold text-white tabular-nums">
+      <span className="absolute inset-0 flex items-center justify-center text-[12px] font-semibold tabular-nums text-white">
         {percent}
       </span>
     </span>
   );
 }
 
-function Cell({
-  value,
-  label,
-  tone,
-}: {
-  value: number;
-  label: string;
-  tone: 'emerald' | 'amber' | 'red' | 'blue' | 'purple';
-}) {
-  const valueClass =
-    value === 0
-      ? 'text-white/45'
-      : tone === 'red'
-        ? 'text-red-300'
-        : tone === 'amber'
-          ? 'text-amber-300'
-          : tone === 'blue'
-            ? 'text-blue-300'
-            : tone === 'purple'
-              ? 'text-purple-300'
-              : 'text-emerald-300';
+function Cell({ value, label, bad = false }: { value: number; label: string; bad?: boolean }) {
   return (
-    <div className="bg-[hsl(0_0%_10%)] px-3 py-3">
-      <div className={cn('text-[18px] font-semibold tabular-nums leading-none', valueClass)}>
+    <div className="px-3 py-3">
+      <div
+        className={cn(
+          'text-[18px] font-semibold leading-none tabular-nums',
+          bad && value > 0 ? 'text-red-300' : 'text-white'
+        )}
+      >
         {value}
       </div>
-      <div className="mt-1 text-[10px] uppercase tracking-[0.16em] text-white/55">{label}</div>
+      <div className="mt-1 text-[11px] text-white">{label}</div>
     </div>
   );
 }
@@ -292,16 +216,22 @@ function formatExpiry(iso: string): string {
 
 function Skeleton() {
   return (
-    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-5 py-5 animate-pulse">
-      <div className="flex items-start justify-between gap-4">
-        <div className="flex-1 space-y-2">
-          <div className="h-2 w-24 bg-white/[0.06] rounded" />
-          <div className="h-5 w-2/3 bg-white/[0.06] rounded" />
-          <div className="h-3 w-1/3 bg-white/[0.04] rounded" />
-        </div>
-        <div className="h-14 w-14 rounded-full bg-white/[0.06]" />
+    <section
+      className={cn(
+        'animate-pulse overflow-hidden rounded-2xl border border-elec-yellow/35',
+        CARD_SURFACE
+      )}
+    >
+      <div className="px-4 py-3.5 sm:px-5">
+        <div className="h-4 w-32 rounded bg-white/[0.10]" />
       </div>
-      <div className="mt-4 h-12 bg-white/[0.04] rounded-xl" />
-    </div>
+      <div className="flex items-center justify-between gap-4 border-t border-white/[0.10] px-4 py-3.5 sm:px-5">
+        <div className="flex-1 space-y-2">
+          <div className="h-3.5 w-1/3 rounded bg-white/[0.10]" />
+          <div className="h-2.5 w-1/2 rounded bg-white/[0.10]" />
+        </div>
+        <div className="h-[52px] w-[52px] rounded-full bg-white/[0.10]" />
+      </div>
+    </section>
   );
 }

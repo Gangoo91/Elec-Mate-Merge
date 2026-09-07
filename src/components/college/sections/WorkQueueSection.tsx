@@ -1,41 +1,63 @@
-import { useState } from 'react';
+/**
+ * WorkQueueSection — everything waiting on a tutor, ranked.
+ *
+ * Rebuilt on the shared hub language. CollegeDashboard draws the masthead;
+ * this is content only:
+ *
+ *   KPI row → filters → the queue
+ *
+ * What went: the PageHero, the amber StatStrip, two `bg-[hsl(0_0%_9%)]`
+ * selects, and a solid volt "Start work" pill on EVERY pending row — a page
+ * of twelve items had twelve maximum-emphasis buttons on it. The row is now
+ * the action (it opens the item's home section) and Start / Complete / Note
+ * live in the row's menu. Colour encodes state only: red for overdue, a volt
+ * rule for Urgent.
+ *
+ * The hub's card already shows the queue total, so this row carries what the
+ * total hides — how many are urgent, how many are past their due date, and
+ * how many are already started or done (per-tutor state from
+ * `useWorkQueueState`).
+ */
+import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Input } from '@/components/ui/input';
+import { ChevronRight, MoreHorizontal } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { containerVariants, itemVariants } from '@/components/college/primitives';
+import { HubKpi, HubKpiRow, HubSectionHeading } from '@/components/hub/HubPrimitives';
 import { useWorkQueue } from '@/hooks/college/useWorkQueue';
 import type { WorkItemPriority, WorkItemStatus, WorkQueueItem } from '@/hooks/college/useWorkQueue';
-import {
-  useWorkQueueState,
-  type WorkQueueSourceType,
-} from '@/hooks/college/useWorkQueueState';
+import { useWorkQueueState, type WorkQueueSourceType } from '@/hooks/college/useWorkQueueState';
 import { useToast } from '@/hooks/use-toast';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
+import { PullToRefresh } from '@/components/college/ui/PullToRefresh';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { WorkQueueCardSkeletonList } from '@/components/college/ui/WorkQueueCardSkeleton';
-import { PullToRefresh } from '@/components/college/ui/PullToRefresh';
-import {
-  PageFrame,
-  PeopleListRow,
-  PageHero,
-  StatStrip,
-  FilterBar,
-  ListCard,
-  Pill,
-  EmptyState,
-  PrimaryButton,
-  statusTone,
-  inputClass,
-  itemVariants,
-  type Tone,
-} from '@/components/college/primitives';
-import { cn } from '@/lib/utils';
 
 interface WorkQueueSectionProps {
   onNavigate: (section: CollegeSection) => void;
+}
+
+const DAY_MS = 86_400_000;
+
+const chipCn = (active: boolean) =>
+  cn(
+    'inline-flex h-11 shrink-0 items-center whitespace-nowrap rounded-full border px-3.5 text-[12.5px] font-medium transition-colors touch-manipulation',
+    active
+      ? 'border-elec-yellow text-elec-yellow'
+      : 'border-white/[0.12] text-white hover:bg-white/[0.06]'
+  );
+
+const typeLabel = (type: WorkQueueItem['type']) =>
+  type === 'grade' ? 'Grade' : type === 'ilp' ? 'ILP' : type === 'gateway' ? 'Gateway' : 'Portfolio';
+
+function shortDate(iso: string): string {
+  return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
 }
 
 export function WorkQueueSection({ onNavigate }: WorkQueueSectionProps) {
@@ -44,9 +66,8 @@ export function WorkQueueSection({ onNavigate }: WorkQueueSectionProps) {
   const canPersist = !!staffId;
   const { toast } = useToast();
   const [searchQuery, setSearchQuery] = useState('');
-  const [filterPriority, setFilterPriority] = useState<string>('all');
-  const [filterStatus, setFilterStatus] = useState<string>('all');
-  const [filterType, setFilterType] = useState<string>('all');
+  const [filterStatus, setFilterStatus] = useState<'all' | WorkItemStatus>('Pending');
+  const [filterType, setFilterType] = useState<'all' | WorkQueueItem['type']>('all');
   const [noteItemId, setNoteItemId] = useState<string | null>(null);
   const [noteText, setNoteText] = useState('');
   const [savingItemId, setSavingItemId] = useState<string | null>(null);
@@ -58,10 +79,11 @@ export function WorkQueueSection({ onNavigate }: WorkQueueSectionProps) {
 
   // Merge persisted per-tutor state on top of the source-derived 'Pending'.
   // Composite key matches what useWorkQueueState builds: `${type}:${sourceId}`.
-  const getItemStatus = (item: WorkQueueItem): WorkItemStatus => {
-    const stateKey = `${item.type}:${item.sourceId}`;
-    return stateMap.get(stateKey)?.status ?? item.status;
-  };
+  const getItemStatus = (item: WorkQueueItem): WorkItemStatus =>
+    stateMap.get(`${item.type}:${item.sourceId}`)?.status ?? item.status;
+
+  const isOverdue = (item: WorkQueueItem) =>
+    !!item.dueDate && new Date(item.dueDate).getTime() < Date.now() && getItemStatus(item) !== 'Completed';
 
   const persistStatus = async (item: WorkQueueItem, status: 'In Progress' | 'Completed') => {
     setSavingItemId(item.id);
@@ -71,23 +93,13 @@ export function WorkQueueSection({ onNavigate }: WorkQueueSectionProps) {
         sourceId: item.sourceId,
         status,
       });
-      toast({
-        title: status === 'In Progress' ? 'Started' : 'Marked complete',
-        description: item.title,
-      });
+      toast({ title: status === 'In Progress' ? 'Started' : 'Marked complete', description: item.title });
     } catch (e) {
-      toast({
-        title: 'Could not update status',
-        description: (e as Error).message,
-        variant: 'destructive',
-      });
+      toast({ title: 'Could not update status', description: (e as Error).message, variant: 'destructive' });
     } finally {
       setSavingItemId(null);
     }
   };
-
-  const handleStartWork = (item: WorkQueueItem) => persistStatus(item, 'In Progress');
-  const handleCompleteWork = (item: WorkQueueItem) => persistStatus(item, 'Completed');
 
   const handleViewDetails = (item: WorkQueueItem) => {
     switch (item.type) {
@@ -106,250 +118,254 @@ export function WorkQueueSection({ onNavigate }: WorkQueueSectionProps) {
     }
   };
 
-  const filteredItems = items.filter((item) => {
-    const matchesSearch =
-      item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.studentName.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesPriority = filterPriority === 'all' || item.priority === filterPriority;
-    const matchesStatus = filterStatus === 'all' || getItemStatus(item) === filterStatus;
-    const matchesType = filterType === 'all' || item.type === filterType;
-    return matchesSearch && matchesPriority && matchesStatus && matchesType;
-  });
+  const overdueCount = items.filter(isOverdue).length;
+  const inProgressCount = items.filter((i) => getItemStatus(i) === 'In Progress').length;
+  const completedCount = items.filter((i) => getItemStatus(i) === 'Completed').length;
+  const openCount = items.filter((i) => getItemStatus(i) === 'Pending').length;
+  const countOfStatus = (s: WorkItemStatus) =>
+    s === 'Pending' ? openCount : s === 'In Progress' ? inProgressCount : completedCount;
+  const countOfType = (t: WorkQueueItem['type']) => items.filter((i) => i.type === t).length;
 
-  const sortedItems = [...filteredItems].sort((a, b) => {
+  const q = searchQuery.trim().toLowerCase();
+  const sortedItems = useMemo(() => {
     const priorityOrder: Record<WorkItemPriority, number> = { Urgent: 0, High: 1, Normal: 2 };
-    if (priorityOrder[a.priority] !== priorityOrder[b.priority])
-      return priorityOrder[a.priority] - priorityOrder[b.priority];
-    if (a.dueDate && b.dueDate)
-      return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime();
-    return 0;
-  });
-
-  const priorityTone = (priority: WorkItemPriority): Tone =>
-    priority === 'Urgent' ? 'red' : priority === 'High' ? 'amber' : 'blue';
-  // Canonical work-queue status tones: Pending → blue, In Progress → blue,
-  // Completed → emerald (via the shared statusTone map). 'Pending' surfaces as
-  // amber attention in the map's absence, so map it to the attention token.
-  const workItemStatusTone = (status: WorkItemStatus): Tone =>
-    status === 'Pending' ? 'amber' : statusTone('workQueue', status);
-  const typeLabel = (type: WorkQueueItem['type']) =>
-    type === 'grade' ? 'Grade' : type === 'ilp' ? 'ILP' : type === 'gateway' ? 'Gateway' : 'Portfolio';
-
-  const isOverdue = (dueDate?: string) => !!dueDate && new Date(dueDate) < new Date();
+    return items
+      .filter((item) => {
+        const matchesSearch =
+          !q || item.title.toLowerCase().includes(q) || item.studentName.toLowerCase().includes(q);
+        const matchesStatus = filterStatus === 'all' || getItemStatus(item) === filterStatus;
+        const matchesType = filterType === 'all' || item.type === filterType;
+        return matchesSearch && matchesStatus && matchesType;
+      })
+      .sort((a, b) => {
+        const oa = isOverdue(a) ? 0 : 1;
+        const ob = isOverdue(b) ? 0 : 1;
+        if (oa !== ob) return oa - ob;
+        if (priorityOrder[a.priority] !== priorityOrder[b.priority])
+          return priorityOrder[a.priority] - priorityOrder[b.priority];
+        if (a.dueDate && b.dueDate) return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime();
+        return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [items, stateMap, q, filterStatus, filterType]);
 
   return (
-    <PullToRefresh onRefresh={handleRefresh}>
-      <PageFrame>
-        <motion.div variants={itemVariants}>
-          <PageHero
-            eyebrow="Assessment · Work Queue"
-            title="Review queue"
-            description={`${stats.pending} item${stats.pending === 1 ? '' : 's'} awaiting action.`}
-            tone="amber"
-            actions={
+    <PullToRefresh onRefresh={handleRefresh} className="space-y-8 sm:space-y-10">
+      {/* The hub card shows the total; this row shows what the total hides. */}
+      <HubKpiRow>
+        <HubKpi
+          accent
+          label="Urgent"
+          value={String(stats.urgent)}
+          verdict={stats.urgent > 0 ? 'Overdue ILP reviews — do these first' : 'Nothing urgent'}
+          context={stats.high > 0 ? `${stats.high} high priority` : undefined}
+          sentiment={stats.urgent > 0 ? 'bad' : 'neutral'}
+          onClick={() => {
+            setFilterStatus('Pending');
+            setFilterType('ilp');
+          }}
+        />
+        <HubKpi
+          label="Overdue"
+          value={String(overdueCount)}
+          verdict={overdueCount > 0 ? 'Past their due date' : 'Nothing past due'}
+          sentiment={overdueCount > 0 ? 'bad' : 'neutral'}
+        />
+        <HubKpi
+          label="In progress"
+          value={String(inProgressCount)}
+          verdict={inProgressCount > 0 ? 'Started, not yet finished' : 'Nothing started'}
+          onClick={() => setFilterStatus('In Progress')}
+        />
+        <HubKpi
+          label="Done"
+          value={String(completedCount)}
+          verdict={completedCount > 0 ? 'Marked complete by you' : 'Nothing marked complete yet'}
+          context={!canPersist ? 'Sign in as staff to track progress' : undefined}
+          onClick={() => setFilterStatus('Completed')}
+        />
+      </HubKpiRow>
+
+      <motion.section
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="space-y-3"
+      >
+        <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
+          <HubSectionHeading>Queue</HubSectionHeading>
+          <button
+            type="button"
+            onClick={refresh}
+            className="-my-2 flex h-11 items-center px-2 text-[12px] font-bold text-elec-yellow transition-colors touch-manipulation"
+          >
+            Refresh
+          </button>
+        </motion.div>
+
+        <motion.div variants={itemVariants} className="space-y-3">
+          <input
+            type="search"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search by item or learner"
+            aria-label="Search the queue"
+            className="h-11 w-full border-0 border-b border-white/[0.18] bg-transparent px-0 text-[14px] text-white placeholder:text-white placeholder:opacity-60 focus:border-elec-yellow focus:outline-none"
+          />
+          <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0">
+            {(
+              [
+                ['Pending', 'Open'],
+                ['In Progress', 'In progress'],
+                ['Completed', 'Done'],
+              ] as const
+            ).map(([value, label]) => (
               <button
-                onClick={refresh}
-                className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap"
+                key={value}
+                type="button"
+                onClick={() => setFilterStatus(value)}
+                className={chipCn(filterStatus === value)}
               >
-                Refresh →
+                {label} · {countOfStatus(value)}
               </button>
-            }
-          />
+            ))}
+            <button type="button" onClick={() => setFilterStatus('all')} className={chipCn(filterStatus === 'all')}>
+              All · {items.length}
+            </button>
+          </div>
+          <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0">
+            <button type="button" onClick={() => setFilterType('all')} className={chipCn(filterType === 'all')}>
+              All types
+            </button>
+            {(['grade', 'ilp', 'gateway', 'portfolio'] as const).map((t) => (
+              <button key={t} type="button" onClick={() => setFilterType(t)} className={chipCn(filterType === t)}>
+                {typeLabel(t)} · {countOfType(t)}
+              </button>
+            ))}
+          </div>
         </motion.div>
 
-        <motion.div variants={itemVariants}>
-          <StatStrip
-            columns={4}
-            stats={[
-              {
-                value: stats.pending,
-                label: 'Pending',
-                sub: 'Awaiting action',
-                accent: stats.pending > 0,
-              },
-              { value: stats.urgent, label: 'Urgent', sub: 'Immediate', tone: 'red' },
-              { value: stats.high, label: 'High', sub: 'Priority', tone: 'amber' },
-              { value: stats.total, label: 'Total', sub: 'All items' },
-            ]}
-          />
-        </motion.div>
-
-        <motion.div variants={itemVariants}>
-          <FilterBar
-            tabs={[
-              { value: 'all', label: 'All', count: items.length },
-              { value: 'Urgent', label: 'Urgent', count: stats.urgent },
-              { value: 'High', label: 'High', count: stats.high },
-              { value: 'Normal', label: 'Normal' },
-            ]}
-            activeTab={filterPriority}
-            onTabChange={setFilterPriority}
-            search={searchQuery}
-            onSearchChange={setSearchQuery}
-            searchPlaceholder="Search work items…"
-            actions={
-              <>
-                <select
-                  value={filterStatus}
-                  onChange={(e) => setFilterStatus(e.target.value)}
-                  className="h-10 px-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-full text-[13px] text-white focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
-                >
-                  <option value="all">All Status</option>
-                  <option value="Pending">Pending</option>
-                  <option value="In Progress">In Progress</option>
-                  <option value="Completed">Completed</option>
-                </select>
-                <select
-                  value={filterType}
-                  onChange={(e) => setFilterType(e.target.value)}
-                  className="h-10 px-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-full text-[13px] text-white focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
-                >
-                  <option value="all">All Types</option>
-                  <option value="grade">Grades</option>
-                  <option value="ilp">ILP</option>
-                  <option value="gateway">Gateway</option>
-                  <option value="portfolio">Portfolio</option>
-                </select>
-              </>
-            }
-          />
-        </motion.div>
-
-        {isLoading ? (
-          <WorkQueueCardSkeletonList count={4} />
-        ) : sortedItems.length === 0 ? (
-          <EmptyState
-            title="Queue is clear"
-            description="No work items match your criteria. Your queue is empty or all items are filtered out."
-          />
-        ) : (
-          <motion.div variants={itemVariants}>
-            <ListCard>
+        <motion.div
+          variants={itemVariants}
+          className={cn(
+            '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
+            CARD_SURFACE
+          )}
+        >
+          {isLoading ? (
+            <div className="flex items-center justify-center py-12">
+              <div className="h-6 w-6 animate-spin rounded-full border-2 border-elec-yellow border-t-transparent" />
+            </div>
+          ) : sortedItems.length === 0 ? (
+            <p className="px-4 py-6 text-[13px] text-white sm:px-5">
+              {items.length === 0
+                ? 'Queue is clear — nothing waiting on you.'
+                : filterStatus === 'Pending' && filterType === 'all' && !q
+                  ? 'Nothing open — everything is started or done.'
+                  : 'Nothing matches these filters.'}
+            </p>
+          ) : (
+            <ul className="divide-y divide-white/[0.10]">
               {sortedItems.map((item) => {
                 const currentStatus = getItemStatus(item);
-                const overdue = isOverdue(item.dueDate) && currentStatus !== 'Completed';
-                const accent = overdue ? 'red' : item.priority === 'Urgent' ? 'amber' : 'none';
-                const leadInitials = (item.studentName || '?')
-                  .split(/\s+/)
-                  .slice(0, 2)
-                  .map((w) => w[0])
-                  .join('')
-                  .toUpperCase();
+                const overdue = isOverdue(item);
+                const urgent = item.priority === 'Urgent' && currentStatus !== 'Completed';
+                const age = Math.max(0, Math.floor((Date.now() - new Date(item.createdAt).getTime()) / DAY_MS));
+                const reason = [
+                  typeLabel(item.type),
+                  item.studentName,
+                  item.dueDate ? `${overdue ? 'was due' : 'due'} ${shortDate(item.dueDate)}` : null,
+                  currentStatus !== 'Pending' ? currentStatus : null,
+                ]
+                  .filter(Boolean)
+                  .join(' · ');
+                const noteOpen = noteItemId === item.id;
+                const saving = savingItemId === item.id;
+
                 return (
-                  <div key={item.id}>
-                    <PeopleListRow
-                      id={item.id}
-                      accent={accent}
-                      lead={{
-                        kind: 'initials',
-                        text: leadInitials,
-                        tone: accent === 'none' ? 'yellow' : accent,
-                      }}
-                      title={item.title}
-                      subtitle={
-                        <>
-                          <span className="uppercase tracking-[0.16em] text-white/50 text-[10px] mr-2">
-                            {typeLabel(item.type)}
+                  <li key={item.id}>
+                    <div className="flex items-stretch">
+                      <button
+                        type="button"
+                        onClick={() => handleViewDetails(item)}
+                        className="flex min-w-0 flex-1 items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5"
+                      >
+                        <span
+                          aria-hidden="true"
+                          className={cn(
+                            'h-8 w-[3px] shrink-0 rounded-full',
+                            overdue ? 'bg-red-400' : urgent ? 'bg-elec-yellow' : 'bg-white/[0.25]'
+                          )}
+                        />
+                        <span className="min-w-0 flex-1">
+                          <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+                            {item.title}
                           </span>
-                          {item.studentName}
-                        </>
-                      }
-                      titleChips={<Pill tone={priorityTone(item.priority)}>{item.priority}</Pill>}
-                      status={{ label: currentStatus, tone: workItemStatusTone(currentStatus) }}
-                      meta={
-                        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] text-white">
-                          <span className="tabular-nums">
-                            Created{' '}
-                            {new Date(item.createdAt).toLocaleDateString('en-GB', {
-                              day: 'numeric',
-                              month: 'short',
-                            })}
+                          <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
+                            {reason}
                           </span>
-                          {item.dueDate && (
-                            <span
-                              className={cn('tabular-nums', overdue && 'text-red-400')}
-                            >
-                              Due{' '}
-                              {new Date(item.dueDate).toLocaleDateString('en-GB', {
-                                day: 'numeric',
-                                month: 'short',
-                              })}
-                              {overdue && ' · overdue'}
-                            </span>
+                        </span>
+                        <span
+                          className={cn(
+                            'shrink-0 text-[12px] font-semibold tabular-nums',
+                            overdue ? 'text-red-300' : urgent ? 'text-elec-yellow' : 'text-white'
                           )}
-                          {canPersist && currentStatus === 'Pending' && (
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleStartWork(item);
-                              }}
-                              disabled={savingItemId === item.id}
-                              className="ml-auto inline-flex items-center h-9 px-3.5 rounded-full bg-elec-yellow text-black text-[12px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70"
-                            >
-                              {savingItemId === item.id ? 'Saving…' : 'Start work →'}
-                            </button>
+                        >
+                          {overdue ? 'Overdue' : item.priority === 'Normal' ? `${age}d` : item.priority}
+                        </span>
+                        <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
+                      </button>
+
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <button
+                            type="button"
+                            aria-label="More actions"
+                            disabled={saving}
+                            className="flex h-11 w-11 shrink-0 items-center justify-center self-center text-white transition-colors touch-manipulation hover:bg-white/[0.06] disabled:opacity-60"
+                          >
+                            <MoreHorizontal className="h-4 w-4" aria-hidden />
+                          </button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuItem className="h-11" onClick={() => handleViewDetails(item)}>
+                            View details
+                          </DropdownMenuItem>
+                          {canPersist && (
+                            <>
+                              <DropdownMenuSeparator />
+                              {currentStatus === 'Pending' && (
+                                <DropdownMenuItem className="h-11" onClick={() => persistStatus(item, 'In Progress')}>
+                                  Start work
+                                </DropdownMenuItem>
+                              )}
+                              {currentStatus === 'In Progress' && (
+                                <DropdownMenuItem className="h-11" onClick={() => persistStatus(item, 'Completed')}>
+                                  Mark complete
+                                </DropdownMenuItem>
+                              )}
+                              <DropdownMenuItem
+                                className="h-11"
+                                onClick={() => {
+                                  const existing = stateMap.get(`${item.type}:${item.sourceId}`);
+                                  setNoteItemId(noteOpen ? null : item.id);
+                                  setNoteText(noteOpen ? '' : (existing?.notes ?? ''));
+                                }}
+                              >
+                                {noteOpen ? 'Close note' : 'Add note'}
+                              </DropdownMenuItem>
+                            </>
                           )}
-                          {canPersist && currentStatus === 'In Progress' && (
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleCompleteWork(item);
-                              }}
-                              disabled={savingItemId === item.id}
-                              className="ml-auto inline-flex items-center h-9 px-3.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 text-[12px] font-semibold hover:bg-emerald-500/25 active:scale-[0.98] transition-all touch-manipulation disabled:opacity-50"
-                            >
-                              {savingItemId === item.id ? 'Saving…' : 'Mark complete →'}
-                            </button>
-                          )}
-                        </div>
-                      }
-                      onOpen={() => handleViewDetails(item)}
-                      actions={[
-                        {
-                          label: 'View details',
-                          onClick: () => handleViewDetails(item),
-                        },
-                        ...(canPersist && currentStatus === 'Pending'
-                          ? [
-                              {
-                                label: 'Start work',
-                                onClick: () => handleStartWork(item),
-                                divider: true,
-                              },
-                            ]
-                          : []),
-                        ...(canPersist && currentStatus === 'In Progress'
-                          ? [
-                              {
-                                label: 'Mark complete',
-                                onClick: () => handleCompleteWork(item),
-                                variant: 'success' as const,
-                                divider: true,
-                              },
-                            ]
-                          : []),
-                        ...(canPersist
-                          ? [
-                              {
-                                label: 'Add note',
-                                onClick: () => {
-                                  const stateKey = `${item.type}:${item.sourceId}`;
-                                  const existing = stateMap.get(stateKey);
-                                  setNoteItemId(noteItemId === item.id ? null : item.id);
-                                  setNoteText(
-                                    noteItemId === item.id ? '' : existing?.notes ?? ''
-                                  );
-                                },
-                                divider: true,
-                              },
-                            ]
-                          : []),
-                      ]}
-                    />
-                    {noteItemId === item.id && (
-                      <div className="px-4 sm:px-6 pb-4 -mt-1 flex items-center gap-2">
-                        <Input
-                          placeholder="Add a note…"
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
+
+                    {noteOpen && (
+                      <div className="flex items-end gap-3 px-4 pb-4 sm:px-5">
+                        <input
+                          type="text"
+                          placeholder="Add a note"
+                          aria-label="Note"
                           value={noteText}
                           onChange={(e) => setNoteText(e.target.value)}
                           autoFocus
@@ -359,17 +375,16 @@ export function WorkQueueSection({ onNavigate }: WorkQueueSectionProps) {
                             // Scroll into view so the mobile keyboard doesn't
                             // hide the input when it slides up from the bottom.
                             if (el) {
-                              setTimeout(() => {
-                                el.scrollIntoView({
-                                  block: 'center',
-                                  behavior: 'smooth',
-                                });
-                              }, 50);
+                              setTimeout(() => el.scrollIntoView({ block: 'center', behavior: 'smooth' }), 50);
                             }
                           }}
-                          className={`${inputClass} flex-1`}
+                          className="h-11 min-w-0 flex-1 border-0 border-b border-white/[0.18] bg-transparent px-0 text-[14px] text-white placeholder:text-white placeholder:opacity-60 focus:border-elec-yellow focus:outline-none"
                         />
-                        <PrimaryButton
+                        {/* The one solid volt control on this screen, and only
+                            while a note is open. */}
+                        <button
+                          type="button"
+                          disabled={!noteText.trim() || saveNotes.isPending}
                           onClick={async () => {
                             try {
                               await saveNotes.mutateAsync({
@@ -388,20 +403,19 @@ export function WorkQueueSection({ onNavigate }: WorkQueueSectionProps) {
                               });
                             }
                           }}
-                          disabled={!noteText.trim() || saveNotes.isPending}
-                          size="sm"
+                          className="inline-flex h-11 shrink-0 items-center justify-center rounded-full bg-elec-yellow px-5 text-[13px] font-semibold text-black transition-colors touch-manipulation hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white disabled:opacity-60"
                         >
-                          {saveNotes.isPending ? 'Saving…' : 'Save'}
-                        </PrimaryButton>
+                          {saveNotes.isPending ? 'Saving…' : 'Save note'}
+                        </button>
                       </div>
                     )}
-                  </div>
+                  </li>
                 );
               })}
-            </ListCard>
-          </motion.div>
-        )}
-      </PageFrame>
+            </ul>
+          )}
+        </motion.div>
+      </motion.section>
     </PullToRefresh>
   );
 }

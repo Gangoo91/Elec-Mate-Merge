@@ -1,11 +1,29 @@
 import { useState, useMemo } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
+import { ChevronRight } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import { useCurrentRiskForStudents, useRecomputeRisk } from '@/hooks/useStudentRisk';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
+
+/* ==========================================================================
+   AtRiskPredictor — who is drifting, and why.
+
+   Hub card language: 15px volt title, a one-line severity breakdown, then
+   HubWorkList rows (rule · learner · top factor · score · chevron). Critical
+   and high learners get the volt rule and figure; "critical" is the one
+   word that stays red because it encodes a real state.
+
+   Data fix (2026-09-04): the local heuristic read `attendancePercentage`,
+   `progressPercentage`, `cohortId`, `studentId` and `lastReviewDate` from
+   rows the context exposes in snake_case (`progress_percent`, `cohort_id`,
+   `student_id`, `last_reviewed`) — and `college_students` has no attendance
+   column at all. Every active learner therefore scored attendance 0 (+40),
+   progress 0 (+30) and engagement 0 (+10) = 80 = "critical", cohort
+   "Unknown". Attendance is now derived from the attendance records the
+   widget already subscribed to, progress from `progress_percent`, and a
+   signal with no data is skipped rather than scored as zero.
+   ========================================================================== */
 
 interface AtRiskPredictorProps {
   onNavigate?: (section: CollegeSection) => void;
@@ -19,30 +37,40 @@ interface RiskFactor {
   description: string;
 }
 
+type RiskLevel = 'critical' | 'high' | 'medium' | 'watch';
+
 interface AtRiskStudent {
   id: string;
   name: string;
   cohort: string;
   riskScore: number; // 0-100, higher = more at risk
-  riskLevel: 'critical' | 'high' | 'medium' | 'watch';
+  riskLevel: RiskLevel;
   riskFactors: RiskFactor[];
-  attendance: number;
+  /** null when no attendance has been recorded for the learner. */
+  attendance: number | null;
   progressPercentage: number;
-  lastILPReview?: string;
+  lastILPReview?: string | null;
   recommendedActions: string[];
   /** Where this score came from. Server scoring includes signals the local
       calc can't see — AC velocity, portfolio staleness, grade trend. */
   source: 'server' | 'local';
 }
 
+const LEVEL_LABEL: Record<RiskLevel, string> = {
+  critical: 'Critical',
+  high: 'High',
+  medium: 'Medium',
+  watch: 'Watch',
+};
+
+const CARD = cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE);
+const ROW =
+  'flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5';
+const FOOT =
+  'flex h-11 flex-1 items-center justify-center px-3 text-[12.5px] font-semibold transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09]';
+
 export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictorProps) {
-  const {
-    students,
-    cohorts,
-    ilps,
-    attendance: attendanceRecords,
-    grades: assessments,
-  } = useCollegeSupabase();
+  const { students, cohorts, ilps, attendance: attendanceRecords } = useCollegeSupabase();
   const [selectedFilter, setSelectedFilter] = useState<'all' | 'critical' | 'high' | 'medium'>(
     'all'
   );
@@ -64,7 +92,20 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
     await refreshServerRisk();
   };
 
-  // Calculate at-risk students with AI-style predictive scoring
+  // Attendance rate per learner from the records on hand. Present and Late
+  // count as attended; Absent and Authorised do not.
+  const attendanceByStudent = useMemo(() => {
+    const map = new Map<string, { present: number; total: number }>();
+    for (const r of attendanceRecords) {
+      if (!r.student_id) continue;
+      const entry = map.get(r.student_id) ?? { present: 0, total: 0 };
+      entry.total += 1;
+      if (r.status === 'Present' || r.status === 'Late') entry.present += 1;
+      map.set(r.student_id, entry);
+    }
+    return map;
+  }, [attendanceRecords]);
+
   const atRiskStudents = useMemo(() => {
     const calculateRiskScore = (studentId: string): AtRiskStudent | null => {
       const student = students.find((s) => s.id === studentId);
@@ -73,44 +114,44 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
       const riskFactors: RiskFactor[] = [];
       let riskScore = 0;
 
-      // Get student's cohort
-      const cohort = cohorts.find((c) => c.id === student.cohortId);
+      const cohort = cohorts.find((c) => c.id === student.cohort_id);
+      const studentILP = ilps.find((i) => i.student_id === studentId);
 
-      // Get student's ILP
-      const studentILP = ilps.find((i) => i.studentId === studentId);
-
-      // 1. Attendance Risk (40% weight)
+      // 1. Attendance (40% weight) — only when something has been recorded.
       const attendanceWeight = 40;
-      const attendance = student.attendancePercentage || 0;
-      if (attendance < 70) {
-        riskScore += attendanceWeight;
-        riskFactors.push({
-          type: 'attendance',
-          label: 'Critical Attendance',
-          severity: 'high',
-          description: `Attendance at ${attendance}% (below 70% threshold)`,
-        });
-      } else if (attendance < 85) {
-        riskScore += attendanceWeight * 0.6;
-        riskFactors.push({
-          type: 'attendance',
-          label: 'Low Attendance',
-          severity: 'medium',
-          description: `Attendance at ${attendance}% (below 85% target)`,
-        });
-      } else if (attendance < 90) {
-        riskScore += attendanceWeight * 0.3;
-        riskFactors.push({
-          type: 'attendance',
-          label: 'Attendance Watch',
-          severity: 'low',
-          description: `Attendance at ${attendance}% (monitor closely)`,
-        });
+      const att = attendanceByStudent.get(studentId);
+      const attendance = att && att.total > 0 ? Math.round((att.present / att.total) * 100) : null;
+      if (attendance !== null) {
+        if (attendance < 70) {
+          riskScore += attendanceWeight;
+          riskFactors.push({
+            type: 'attendance',
+            label: 'Critical attendance',
+            severity: 'high',
+            description: `Attendance at ${attendance}% (below 70% threshold)`,
+          });
+        } else if (attendance < 85) {
+          riskScore += attendanceWeight * 0.6;
+          riskFactors.push({
+            type: 'attendance',
+            label: 'Low attendance',
+            severity: 'medium',
+            description: `Attendance at ${attendance}% (below 85% target)`,
+          });
+        } else if (attendance < 90) {
+          riskScore += attendanceWeight * 0.3;
+          riskFactors.push({
+            type: 'attendance',
+            label: 'Attendance watch',
+            severity: 'low',
+            description: `Attendance at ${attendance}% (monitor closely)`,
+          });
+        }
       }
 
-      // 2. Progress Risk (30% weight)
+      // 2. Progress (30% weight)
       const progressWeight = 30;
-      const progress = student.progressPercentage || 0;
+      const progress = student.progress_percent ?? 0;
       const expectedProgress = 65; // Expected at this point in year
       const progressDelta = expectedProgress - progress;
 
@@ -118,7 +159,7 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
         riskScore += progressWeight;
         riskFactors.push({
           type: 'progress',
-          label: 'Behind Schedule',
+          label: 'Behind schedule',
           severity: 'high',
           description: `${progressDelta}% behind expected progress`,
         });
@@ -126,66 +167,67 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
         riskScore += progressWeight * 0.5;
         riskFactors.push({
           type: 'progress',
-          label: 'Progress Concern',
+          label: 'Progress concern',
           severity: 'medium',
           description: `${progressDelta}% below target progress`,
         });
       }
 
-      // 3. ILP Review Risk (20% weight)
+      // 3. ILP review (20% weight)
       const ilpWeight = 20;
       if (studentILP) {
-        const lastReview = studentILP.lastReviewDate ? new Date(studentILP.lastReviewDate) : null;
+        const lastReview = studentILP.last_reviewed ? new Date(studentILP.last_reviewed) : null;
         const daysSinceReview = lastReview
           ? Math.floor((Date.now() - lastReview.getTime()) / (1000 * 60 * 60 * 24))
-          : 999;
+          : null;
 
-        if (daysSinceReview > 42) {
-          // More than 6 weeks
+        if (daysSinceReview === null || daysSinceReview > 42) {
+          // More than 6 weeks, or never reviewed
           riskScore += ilpWeight;
           riskFactors.push({
             type: 'ilp',
-            label: 'Overdue ILP Review',
+            label: 'Overdue ILP review',
             severity: 'high',
-            description: `Last ILP review ${daysSinceReview} days ago`,
+            description:
+              daysSinceReview === null
+                ? 'No ILP review recorded'
+                : `Last ILP review ${daysSinceReview} days ago`,
           });
         } else if (daysSinceReview > 28) {
           // More than 4 weeks
           riskScore += ilpWeight * 0.5;
           riskFactors.push({
             type: 'ilp',
-            label: 'ILP Review Due',
+            label: 'ILP review due',
             severity: 'medium',
             description: `ILP review due (${daysSinceReview} days since last)`,
           });
         }
       }
 
-      // 4. Engagement Risk (10% weight) - Based on pattern analysis
+      // 4. Engagement (10% weight) — needs both signals to say anything.
       const engagementWeight = 10;
-      // Simulate engagement analysis (in production, this would look at login patterns, submission rates, etc.)
-      const engagementScore = attendance * 0.4 + progress * 0.6;
-      if (engagementScore < 50) {
-        riskScore += engagementWeight;
-        riskFactors.push({
-          type: 'engagement',
-          label: 'Low Engagement',
-          severity: 'medium',
-          description: 'Pattern indicates reduced engagement',
-        });
+      if (attendance !== null) {
+        const engagementScore = attendance * 0.4 + progress * 0.6;
+        if (engagementScore < 50) {
+          riskScore += engagementWeight;
+          riskFactors.push({
+            type: 'engagement',
+            label: 'Low engagement',
+            severity: 'medium',
+            description: 'Pattern indicates reduced engagement',
+          });
+        }
       }
 
-      // Only include students with risk factors
       if (riskFactors.length === 0) return null;
 
-      // Determine risk level
-      let riskLevel: 'critical' | 'high' | 'medium' | 'watch';
+      let riskLevel: RiskLevel;
       if (riskScore >= 70) riskLevel = 'critical';
       else if (riskScore >= 50) riskLevel = 'high';
       else if (riskScore >= 30) riskLevel = 'medium';
       else riskLevel = 'watch';
 
-      // Generate recommended actions based on risk factors
       const recommendedActions: string[] = [];
 
       if (riskFactors.some((f) => f.type === 'attendance' && f.severity === 'high')) {
@@ -217,9 +259,9 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
         riskScore: Math.round(riskScore),
         riskLevel,
         riskFactors,
-        attendance: attendance,
+        attendance,
         progressPercentage: progress,
-        lastILPReview: studentILP?.lastReviewDate,
+        lastILPReview: studentILP?.last_reviewed,
         recommendedActions,
         source: 'local',
       };
@@ -235,8 +277,7 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
         const server = serverRisk.get(s.id);
         if (!server) return local;
 
-        // Map server level → widget level vocabulary
-        const widgetLevel: AtRiskStudent['riskLevel'] =
+        const widgetLevel: RiskLevel =
           server.level === 'critical'
             ? 'critical'
             : server.level === 'high'
@@ -266,8 +307,6 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
               : typeof f.weight === 'number'
                 ? f.weight
                 : 0;
-          // Bucket by key if present, else fall back to label keywords so
-          // we still pick a sensible icon group for rows without a key.
           const haystack = key || label.toLowerCase();
           const type: RiskFactor['type'] = haystack.includes('attend')
             ? 'attendance'
@@ -287,7 +326,7 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
           };
         });
 
-        const cohort = cohorts.find((c) => c.id === s.cohortId);
+        const cohort = cohorts.find((c) => c.id === s.cohort_id);
         return {
           id: s.id,
           name: s.name,
@@ -295,8 +334,8 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
           riskScore: Math.round(server.score),
           riskLevel: widgetLevel,
           riskFactors: serverFactors.length > 0 ? serverFactors : (local?.riskFactors ?? []),
-          attendance: local?.attendance ?? s.attendancePercentage ?? 0,
-          progressPercentage: local?.progressPercentage ?? s.progressPercentage ?? 0,
+          attendance: local?.attendance ?? null,
+          progressPercentage: local?.progressPercentage ?? s.progress_percent ?? 0,
           lastILPReview: local?.lastILPReview,
           recommendedActions: local?.recommendedActions ?? [],
           source: 'server' as const,
@@ -304,7 +343,7 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
       })
       .filter((s): s is AtRiskStudent => s !== null && s.riskFactors.length > 0)
       .sort((a, b) => b.riskScore - a.riskScore);
-  }, [students, cohorts, ilps, attendanceRecords, assessments, serverRisk]);
+  }, [students, cohorts, ilps, attendanceByStudent, serverRisk]);
 
   const filteredStudents =
     selectedFilter === 'all'
@@ -318,298 +357,238 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
     watch: atRiskStudents.filter((s) => s.riskLevel === 'watch').length,
   };
 
-  const getRiskColor = (level: string) => {
-    switch (level) {
-      case 'critical':
-        return 'bg-red-500/20 text-red-500 border-red-500/30';
-      case 'high':
-        return 'bg-orange-500/20 text-orange-500 border-orange-500/30';
-      case 'medium':
-        return 'bg-amber-500/20 text-amber-500 border-amber-500/30';
-      case 'watch':
-        return 'bg-yellow-500/20 text-yellow-500 border-yellow-500/30';
-      default:
-        return 'bg-white/10 text-white border-white/20';
-    }
-  };
+  const flagged = atRiskStudents.length;
+  const urgentCount = riskCounts.critical + riskCounts.high;
 
-  const getRiskIcon = (type: string) => {
-    switch (type) {
-      case 'attendance':
-        return Clock;
-      case 'progress':
-        return TrendingDown;
-      case 'ilp':
-        return Target;
-      case 'engagement':
-        return UserX;
-      default:
-        return AlertTriangle;
-    }
+  // "2 critical · 3 high · 1 medium" — critical is the one word that stays
+  // red, because it encodes a real state rather than a category.
+  const breakdown = (
+    [
+      riskCounts.critical > 0 ? (
+        <span key="c" className="font-semibold text-red-300">
+          {riskCounts.critical} critical
+        </span>
+      ) : null,
+      riskCounts.high > 0 ? <span key="h">{riskCounts.high} high</span> : null,
+      riskCounts.medium > 0 ? <span key="m">{riskCounts.medium} medium</span> : null,
+      riskCounts.watch > 0 ? <span key="w">{riskCounts.watch} to watch</span> : null,
+    ] as Array<JSX.Element | null>
+  ).filter((n): n is JSX.Element => n !== null);
+
+  const Row = ({ student }: { student: AtRiskStudent }) => {
+    const urgent = student.riskLevel === 'critical' || student.riskLevel === 'high';
+    return (
+      <button type="button" onClick={() => onNavigate?.('progresstracking')} className={ROW}>
+        <span
+          aria-hidden="true"
+          className={cn(
+            'h-8 w-[3px] shrink-0 rounded-full',
+            urgent ? 'bg-elec-yellow' : 'bg-white/[0.25]'
+          )}
+        />
+        <span className="min-w-0 flex-1">
+          <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+            {student.name}
+          </span>
+          <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
+            {student.riskLevel === 'critical' ? (
+              <span className="font-semibold text-red-300">Critical</span>
+            ) : (
+              LEVEL_LABEL[student.riskLevel]
+            )}
+            {' · '}
+            {student.riskFactors[0]?.label ?? student.cohort}
+          </span>
+        </span>
+        <span
+          className={cn(
+            'shrink-0 text-[13px] font-semibold tabular-nums',
+            urgent ? 'text-elec-yellow' : 'text-white'
+          )}
+        >
+          {student.riskScore}
+        </span>
+        <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
+      </button>
+    );
   };
 
   if (compact) {
     return (
-      <div className="relative overflow-hidden bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl hover:bg-[hsl(0_0%_14%)] transition-colors">
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-orange-500/70 via-amber-400/70 to-orange-500/70" />
-        <div className="p-5 sm:p-6">
-          {/* Header */}
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                At-Risk · AI
-              </div>
-              <h3 className="mt-1.5 text-base sm:text-lg font-semibold text-white tracking-tight">
-                At-risk predictor
-              </h3>
+      <section className={CARD}>
+        <div className="flex items-end justify-between gap-4 px-4 py-3.5 sm:px-5">
+          <h3 className="text-[15px] font-semibold tracking-tight text-elec-yellow">At risk</h3>
+          <span
+            className={cn(
+              'text-[11px] font-semibold tabular-nums',
+              urgentCount > 0 ? 'text-elec-yellow' : 'text-white'
+            )}
+          >
+            {flagged} flagged
+          </span>
+        </div>
+
+        {flagged > 0 ? (
+          <>
+            {breakdown.length > 0 && (
+              <p className="px-4 pb-3 text-[12px] leading-snug text-white sm:px-5">
+                {breakdown.map((node, i) => (
+                  <span key={node.key}>
+                    {i > 0 ? ' · ' : ''}
+                    {node}
+                  </span>
+                ))}
+              </p>
+            )}
+            <ul className="divide-y divide-white/[0.10] border-t border-white/[0.10]">
+              {filteredStudents.slice(0, 3).map((student) => (
+                <li key={student.id}>
+                  <Row student={student} />
+                </li>
+              ))}
+            </ul>
+            <div className="flex border-t border-white/[0.10]">
               <button
                 type="button"
                 onClick={handleRefreshAi}
                 disabled={recomputing}
-                className="mt-1.5 text-[10.5px] font-medium text-elec-yellow/85 hover:text-elec-yellow transition-colors disabled:opacity-40 touch-manipulation"
+                className={cn(FOOT, 'text-elec-yellow disabled:opacity-60')}
               >
-                {recomputing ? 'Refreshing AI signals…' : 'Refresh AI signals →'}
+                {recomputing ? 'Refreshing…' : 'Refresh AI signals'}
+              </button>
+              <span aria-hidden="true" className="w-px bg-white/[0.10]" />
+              <button
+                type="button"
+                onClick={() => onNavigate?.('progresstracking')}
+                className={cn(FOOT, 'text-white')}
+              >
+                View all {flagged}
               </button>
             </div>
-            <div className="text-right shrink-0">
-              <div className="text-3xl sm:text-4xl font-semibold tabular-nums leading-none text-orange-400">
-                {atRiskStudents.length}
-              </div>
-              <div className="mt-1 text-[10px] uppercase tracking-[0.14em] text-white">flagged</div>
-            </div>
-          </div>
-
-          {/* Severity pills */}
-          {(riskCounts.critical > 0 || riskCounts.high > 0 || riskCounts.medium > 0) && (
-            <div className="mt-4 flex flex-wrap gap-1.5">
-              {riskCounts.critical > 0 && (
-                <span className="text-[11px] font-medium px-2 py-0.5 rounded-full bg-red-500/10 text-red-400 border border-red-500/20 tabular-nums">
-                  {riskCounts.critical} critical
-                </span>
-              )}
-              {riskCounts.high > 0 && (
-                <span className="text-[11px] font-medium px-2 py-0.5 rounded-full bg-orange-500/10 text-orange-400 border border-orange-500/20 tabular-nums">
-                  {riskCounts.high} high
-                </span>
-              )}
-              {riskCounts.medium > 0 && (
-                <span className="text-[11px] font-medium px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 tabular-nums">
-                  {riskCounts.medium} medium
-                </span>
-              )}
-            </div>
-          )}
-
-          {/* Top students */}
-          {filteredStudents.length > 0 && (
-            <div className="mt-5 divide-y divide-white/[0.06] border-t border-white/[0.06]">
-              {filteredStudents.slice(0, 2).map((student) => (
-                <button
-                  key={student.id}
-                  onClick={() => onNavigate?.('progresstracking')}
-                  className="w-full flex items-center justify-between gap-3 py-3 hover:bg-white/[0.02] transition-colors text-left touch-manipulation"
-                >
-                  <div className="min-w-0 flex-1">
-                    <div className="text-sm font-medium text-white truncate">{student.name}</div>
-                    <div className="mt-0.5 text-[11px] text-white truncate">
-                      {student.riskFactors[0]?.label}
-                    </div>
-                  </div>
-                  <span className="text-sm font-semibold tabular-nums text-white shrink-0">
-                    {student.riskScore}%
-                  </span>
-                </button>
-              ))}
-            </div>
-          )}
-
-          {/* CTA */}
-          {atRiskStudents.length > 0 && (
-            <button
-              onClick={() => onNavigate?.('progresstracking')}
-              className="mt-4 text-[12px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
-            >
-              View all {atRiskStudents.length} at-risk students →
-            </button>
-          )}
-
-          {atRiskStudents.length === 0 && (
-            <div className="mt-5 pt-4 border-t border-white/[0.06] text-[12px] text-white">
-              No at-risk students detected — all learners on track.
-            </div>
-          )}
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="relative overflow-hidden bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl">
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-orange-500/70 via-amber-400/70 to-orange-500/70" />
-      <div className="p-5 sm:p-6">
-        {/* Header */}
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              At-Risk · AI
-            </div>
-            <h3 className="mt-1.5 text-xl sm:text-2xl font-semibold text-white tracking-tight">
-              At-risk predictor
-            </h3>
+          </>
+        ) : (
+          <>
+            <p className="border-t border-white/[0.10] px-4 py-4 text-[12.5px] leading-snug text-white sm:px-5">
+              Nothing flagged. All learners on track.
+            </p>
             <button
               type="button"
               onClick={handleRefreshAi}
               disabled={recomputing}
-              className="mt-1.5 text-[11px] font-medium text-elec-yellow/85 hover:text-elec-yellow transition-colors disabled:opacity-40 touch-manipulation"
+              className={cn(
+                FOOT,
+                'w-full border-t border-white/[0.10] text-elec-yellow disabled:opacity-60'
+              )}
             >
-              {recomputing ? 'Refreshing AI signals…' : 'Refresh AI signals →'}
+              {recomputing ? 'Refreshing…' : 'Refresh AI signals'}
             </button>
-          </div>
-          <div className="text-right shrink-0">
-            <div className="text-3xl sm:text-4xl font-semibold tabular-nums leading-none text-orange-400">
-              {atRiskStudents.length}
-            </div>
-            <div className="mt-1 text-[10px] uppercase tracking-[0.14em] text-white">
-              total flagged
-            </div>
-          </div>
-        </div>
+          </>
+        )}
+      </section>
+    );
+  }
 
-        {/* Risk Level Filter */}
-        <div className="mt-5 grid grid-cols-4 gap-px bg-white/[0.06] border border-white/[0.06] rounded-xl overflow-hidden">
-          {[
-            {
-              key: 'critical' as const,
-              value: riskCounts.critical,
-              label: 'Critical',
-              color: 'text-red-400',
-            },
-            {
-              key: 'high' as const,
-              value: riskCounts.high,
-              label: 'High',
-              color: 'text-orange-400',
-            },
-            {
-              key: 'medium' as const,
-              value: riskCounts.medium,
-              label: 'Medium',
-              color: 'text-amber-400',
-            },
-            {
-              key: 'all' as const,
-              value: atRiskStudents.length,
-              label: 'All',
-              color: 'text-elec-yellow',
-            },
-          ].map((f) => (
+  return (
+    <section className={CARD}>
+      <div className="flex items-end justify-between gap-4 px-4 py-3.5 sm:px-5">
+        <h3 className="text-[15px] font-semibold tracking-tight text-elec-yellow">At risk</h3>
+        <button
+          type="button"
+          onClick={handleRefreshAi}
+          disabled={recomputing}
+          className="-my-2 flex h-11 items-center px-2 text-[12px] font-bold text-elec-yellow transition-colors touch-manipulation disabled:opacity-60"
+        >
+          {recomputing ? 'Refreshing…' : 'Refresh AI signals'}
+        </button>
+      </div>
+
+      {/* Filter — four counts, the selected one in volt. */}
+      <div className="grid grid-cols-4 divide-x divide-white/[0.10] border-t border-white/[0.10]">
+        {(
+          [
+            { key: 'critical', value: riskCounts.critical, label: 'Critical' },
+            { key: 'high', value: riskCounts.high, label: 'High' },
+            { key: 'medium', value: riskCounts.medium, label: 'Medium' },
+            { key: 'all', value: flagged, label: 'All' },
+          ] as const
+        ).map((f) => {
+          const selected = selectedFilter === f.key;
+          return (
             <button
               key={f.key}
-              onClick={() => setSelectedFilter(selectedFilter === f.key ? 'all' : f.key)}
-              className={`bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-3 text-center ${selectedFilter === f.key ? 'bg-[hsl(0_0%_15%)]' : ''}`}
+              type="button"
+              onClick={() => setSelectedFilter(selected ? 'all' : f.key)}
+              className="min-h-11 py-2.5 text-center transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09]"
             >
-              <div className={`text-2xl font-semibold tabular-nums ${f.color}`}>{f.value}</div>
-              <div className="mt-1 text-[10px] uppercase tracking-[0.14em] text-white">
-                {f.label}
+              <div
+                className={cn(
+                  'text-[20px] font-semibold leading-none tabular-nums',
+                  selected ? 'text-elec-yellow' : 'text-white'
+                )}
+              >
+                {f.value}
               </div>
+              <div className="mt-1 text-[11px] text-white">{f.label}</div>
             </button>
-          ))}
-        </div>
+          );
+        })}
+      </div>
 
-        {/* Student List */}
-        <div className="mt-5 space-y-3 max-h-[480px] overflow-y-auto">
+      {filteredStudents.length === 0 ? (
+        <p className="border-t border-white/[0.10] px-4 py-4 text-[12.5px] leading-snug text-white sm:px-5">
+          Nothing flagged. All learners on track.
+        </p>
+      ) : (
+        <ul className="max-h-[520px] divide-y divide-white/[0.10] overflow-y-auto border-t border-white/[0.10]">
           {filteredStudents.map((student) => (
-            <div
-              key={student.id}
-              className="p-4 rounded-xl bg-[hsl(0_0%_10%)] border border-white/[0.06] hover:bg-[hsl(0_0%_13%)] transition-colors cursor-pointer"
-              onClick={() => onNavigate?.('progresstracking')}
-            >
-              <div className="flex items-start justify-between gap-3 mb-3">
-                <div className="min-w-0">
-                  <h4 className="text-[15px] font-medium text-white truncate">{student.name}</h4>
-                  <p className="mt-0.5 text-[11.5px] text-white truncate">{student.cohort}</p>
-                </div>
-                <div className="text-right shrink-0">
-                  <p className="text-xl font-semibold tabular-nums text-white leading-none">
-                    {student.riskScore}%
-                  </p>
-                  <p className="mt-1 text-[10px] uppercase tracking-[0.14em] text-white">Risk</p>
-                </div>
-              </div>
-
-              {/* Risk Factors */}
-              <div className="flex flex-wrap gap-1">
-                {student.riskFactors.map((factor, idx) => (
-                  <span
-                    key={idx}
-                    className={`text-[11px] font-medium px-2 py-0.5 rounded-full border tabular-nums ${getRiskColor(factor.severity)}`}
-                    title={factor.description}
-                  >
-                    {factor.label}
-                  </span>
-                ))}
-              </div>
-
-              {/* Metrics */}
-              <div className="mt-3 grid grid-cols-2 gap-4">
-                <div>
-                  <div className="flex items-baseline justify-between text-[11px]">
-                    <span className="text-white uppercase tracking-[0.12em]">Attendance</span>
-                    <span
-                      className={`font-medium tabular-nums ${student.attendance < 85 ? 'text-orange-400' : 'text-white'}`}
-                    >
-                      {student.attendance}%
-                    </span>
-                  </div>
-                  <div className="mt-1.5 h-1 bg-white/[0.06] rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-emerald-400/80 rounded-full"
-                      style={{ width: `${student.attendance}%` }}
-                    />
-                  </div>
-                </div>
-                <div>
-                  <div className="flex items-baseline justify-between text-[11px]">
-                    <span className="text-white uppercase tracking-[0.12em]">Progress</span>
-                    <span
-                      className={`font-medium tabular-nums ${student.progressPercentage < 50 ? 'text-orange-400' : 'text-white'}`}
-                    >
-                      {student.progressPercentage}%
-                    </span>
-                  </div>
-                  <div className="mt-1.5 h-1 bg-white/[0.06] rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-elec-yellow/80 rounded-full"
-                      style={{ width: `${student.progressPercentage}%` }}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Recommended Actions */}
-              <div className="mt-3 pt-3 border-t border-white/[0.06]">
-                <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-white mb-2">
-                  AI Recommended Actions
+            <li key={student.id}>
+              <Row student={student} />
+              <div className="px-4 pb-4 pl-[31px] sm:px-5 sm:pl-[35px]">
+                <p className="text-[12px] leading-snug text-white">
+                  {student.cohort}
+                  {student.riskFactors.length > 0
+                    ? ` · ${student.riskFactors.map((f) => f.label).join(' · ')}`
+                    : ''}
                 </p>
-                <ul className="space-y-1.5">
-                  {student.recommendedActions.slice(0, 2).map((action, idx) => (
-                    <li key={idx} className="text-[12px] text-white flex items-start gap-2">
-                      <span className="text-elec-yellow mt-0.5 shrink-0">→</span>
-                      {action}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          ))}
 
-          {filteredStudents.length === 0 && (
-            <div className="text-center py-10 text-white">
-              <p className="text-[14px] font-medium text-white">No at-risk students detected</p>
-              <p className="text-[12px] mt-1 text-white">All learners on track.</p>
-            </div>
-          )}
-        </div>
+                <div className="mt-3 grid grid-cols-2 gap-4">
+                  <Meter label="Attendance" value={student.attendance} />
+                  <Meter label="Progress" value={student.progressPercentage} />
+                </div>
+
+                {student.recommendedActions.length > 0 && (
+                  <ul className="mt-3 space-y-1 text-[12px] leading-snug text-white">
+                    {student.recommendedActions.slice(0, 2).map((action, idx) => (
+                      <li key={idx}>— {action}</li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+    </section>
+  );
+}
+
+/** A labelled bar. `null` means no data, which is said rather than drawn as 0. */
+function Meter({ label, value }: { label: string; value: number | null }) {
+  return (
+    <div>
+      <div className="flex items-baseline justify-between text-[11px] text-white">
+        <span>{label}</span>
+        <span className="font-semibold tabular-nums">
+          {value === null ? 'No data' : `${Math.round(value)}%`}
+        </span>
+      </div>
+      <div className="mt-1.5 h-1 overflow-hidden rounded-full bg-white/[0.10]">
+        {value !== null && (
+          <div
+            className="h-full rounded-full bg-white"
+            style={{ width: `${Math.max(0, Math.min(100, value))}%` }}
+          />
+        )}
       </div>
     </div>
   );

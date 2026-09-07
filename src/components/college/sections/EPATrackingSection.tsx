@@ -1,40 +1,73 @@
-import { useState } from 'react';
+/**
+ * EPATrackingSection — EPA admin: status records, gateway dates, outcomes.
+ *
+ * Rebuilt on the shared hub language. CollegeDashboard draws the masthead;
+ * this is content only:
+ *
+ *   KPI row → gateway-ready alert → readiness widget → add a record →
+ *   filters → records
+ *
+ * What went: the PageHero, the five-cell colour-toned StatStrip, the
+ * `bg-[hsl(0_0%_12%)]` "action required" panel with its blue rule, the
+ * emerald avatar rings and the volt-washed progress segments.
+ *
+ * The hub's "At gateway" KPI already counts Pre-Gateway + Gateway Ready, and
+ * its card carries "ready to submit". This row carries the dates instead:
+ * gateway meetings falling in the next 30 days, EPA dates actually booked,
+ * and the two ends of the pipeline.
+ */
+import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { ChevronRight, MoreHorizontal } from 'lucide-react';
+import { useQueryClient } from '@tanstack/react-query';
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { containerVariants, itemVariants } from '@/components/college/primitives';
+import { HubAlertLine, HubKpi, HubKpiRow, HubSectionHeading } from '@/components/hub/HubPrimitives';
 import { EPACountdown } from '@/components/college/widgets/EPACountdown';
 import { useCollegeEPAs } from '@/hooks/college/useCollegeEPA';
+import type { EPAStatus } from '@/services/college/collegeEPAService';
 import { useCollegeStudents } from '@/hooks/college/useCollegeStudents';
 import { useCollegeCohorts } from '@/hooks/college/useCollegeCohorts';
 import { EPADetailSheet } from '@/components/college/sheets/EPADetailSheet';
 import { GatewayMeetingSheet } from '@/components/college/sheets/GatewayMeetingSheet';
 import { AddEPARecordSheet } from '@/components/college/sheets/AddEPARecordSheet';
-import { EPACardSkeletonList } from '@/components/college/ui/EPACardSkeleton';
 import { PullToRefresh } from '@/components/college/ui/PullToRefresh';
-import { useQueryClient } from '@tanstack/react-query';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import {
-  PageFrame,
-  PeopleListRow,
-  PageHero,
-  StatStrip,
-  FilterBar,
-  ListCard,
-  Pill,
-  EmptyState,
-  SectionHeader,
-  statusTone,
-  itemVariants,
-  type Tone,
-} from '@/components/college/primitives';
 
 interface EPATrackingSectionProps {
   onNavigate?: (section: string) => void;
 }
+
+const DAY_MS = 86_400_000;
+
+const STEPS: EPAStatus[] = ['Not Started', 'In Progress', 'Pre-Gateway', 'Gateway Ready', 'Complete'];
+
+function shortDate(iso: string): string {
+  return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+}
+
+const chipCn = (active: boolean) =>
+  cn(
+    'inline-flex h-11 shrink-0 items-center whitespace-nowrap rounded-full border px-3.5 text-[12.5px] font-medium transition-colors touch-manipulation',
+    active
+      ? 'border-elec-yellow text-elec-yellow'
+      : 'border-white/[0.12] text-white hover:bg-white/[0.06]'
+  );
+
+const statusChipCn = (status: string | null) =>
+  cn(
+    'inline-flex h-6 shrink-0 items-center rounded-full border px-2 text-[11px] font-medium',
+    status === 'Gateway Ready'
+      ? 'border-elec-yellow/40 text-elec-yellow'
+      : 'border-white/[0.15] text-white'
+  );
 
 export function EPATrackingSection({ onNavigate }: EPATrackingSectionProps) {
   const { data: epaRecords = [], isLoading: epasLoading } = useCollegeEPAs();
@@ -55,290 +88,281 @@ export function EPATrackingSection({ onNavigate }: EPATrackingSectionProps) {
     await queryClient.invalidateQueries({ queryKey: ['college-epa'] });
   };
 
-  const filteredRecords = epaRecords.filter((epa) => {
-    const student = students.find((s) => s.id === epa.student_id);
-    const matchesSearch = student?.name.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesStatus = filterStatus === 'all' || epa.status === filterStatus;
-    const matchesCohort = filterCohort === 'all' || student?.cohort_id === filterCohort;
-    return matchesSearch && matchesStatus && matchesCohort;
-  });
-
-  const statusCounts = {
-    notStarted: epaRecords.filter((r) => r.status === 'Not Started').length,
-    inProgress: epaRecords.filter((r) => r.status === 'In Progress').length,
-    preGateway: epaRecords.filter((r) => r.status === 'Pre-Gateway').length,
-    gatewayReady: epaRecords.filter((r) => r.status === 'Gateway Ready').length,
-    complete: epaRecords.filter((r) => r.status === 'Complete').length,
-  };
-
-  // Canonical EPA tones from the shared map — never the action accent.
-  const epaStatusTone = (status: string | null): Tone =>
-    status === 'Complete' ? 'emerald' : statusTone('epa', status);
-  const gradeTone = (grade?: string): Tone => statusTone('gradeValue', grade);
-
-  const getStudentInfo = (studentId: string | null) => {
-    if (!studentId) return { name: 'Unknown', initials: '?', photoUrl: undefined, cohortId: undefined };
-    const student = students.find((s) => s.id === studentId);
-    const name = student?.name || 'Unknown';
-    const parts = name.split(' ').filter(Boolean);
-    const initials =
-      parts.length >= 2
-        ? `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase()
-        : name.substring(0, 2).toUpperCase();
-    return {
-      name,
-      initials,
-      photoUrl: student?.photo_url ?? undefined,
-      cohortId: student?.cohort_id ?? undefined,
-    };
-  };
-  const getCohortName = (cohortId?: string) =>
+  const studentById = useMemo(() => new Map(students.map((s) => [s.id, s])), [students]);
+  const activeCohorts = useMemo(
+    () => cohorts.filter((c) => (c.status ?? '').toLowerCase() === 'active'),
+    [cohorts]
+  );
+  const cohortName = (cohortId?: string | null) =>
     !cohortId ? 'Unassigned' : cohorts.find((c) => c.id === cohortId)?.name || 'Unknown';
 
-  const getStatusStep = (status: string | null): number =>
-    status === 'Not Started'
-      ? 1
-      : status === 'In Progress'
-        ? 2
-        : status === 'Pre-Gateway'
-          ? 3
-          : status === 'Gateway Ready'
-            ? 4
-            : status === 'Complete'
-              ? 5
-              : 0;
-  const getProgressPercent = (status: string | null) => (getStatusStep(status) / 5) * 100;
+  const countOf = (status: EPAStatus) => epaRecords.filter((r) => r.status === status).length;
+  const gatewayReady = countOf('Gateway Ready');
+  const notStarted = countOf('Not Started');
+  const complete = countOf('Complete');
+
+  const now = Date.now();
+  const gatewayIn30 = epaRecords.filter((r) => {
+    if (!r.gateway_date || r.status === 'Complete') return false;
+    const t = new Date(r.gateway_date).getTime();
+    return t >= now - DAY_MS && t <= now + 30 * DAY_MS;
+  }).length;
+  const epaBooked = epaRecords.filter(
+    (r) => r.epa_date && r.status !== 'Complete' && new Date(r.epa_date).getTime() >= now - DAY_MS
+  ).length;
+
+  const q = searchQuery.trim().toLowerCase();
+  const filteredRecords = useMemo(
+    () =>
+      epaRecords
+        .filter((epa) => {
+          const student = epa.student_id ? studentById.get(epa.student_id) : undefined;
+          const matchesSearch = !q || (student?.name ?? '').toLowerCase().includes(q);
+          const matchesStatus = filterStatus === 'all' || epa.status === filterStatus;
+          const matchesCohort = filterCohort === 'all' || student?.cohort_id === filterCohort;
+          return matchesSearch && matchesStatus && matchesCohort;
+        })
+        // Furthest along first — gateway-ready apprentices are the ones an
+        // assessor has to act on.
+        .sort((a, b) => STEPS.indexOf(b.status ?? 'Not Started') - STEPS.indexOf(a.status ?? 'Not Started')),
+    [epaRecords, studentById, q, filterStatus, filterCohort]
+  );
+
+  const openDetail = (epaId: string) => {
+    setSelectedEpaId(epaId);
+    setDetailSheetOpen(true);
+  };
 
   return (
-    <PullToRefresh onRefresh={handleRefresh}>
-      <PageFrame>
+    <PullToRefresh onRefresh={handleRefresh} className="space-y-8 sm:space-y-10">
+      <HubKpiRow>
+        <HubKpi
+          accent
+          label="Gateway in 30 days"
+          value={String(gatewayIn30)}
+          verdict={gatewayIn30 > 0 ? 'Get the gateway meetings booked' : 'No gateway dates this month'}
+          sentiment={gatewayIn30 > 0 ? 'bad' : 'neutral'}
+        />
+        <HubKpi
+          label="EPA dates booked"
+          value={String(epaBooked)}
+          verdict={epaBooked > 0 ? 'Assessment dates in the diary' : 'No EPA dates booked yet'}
+          context={gatewayReady > 0 ? `${gatewayReady} gateway ready` : undefined}
+        />
+        <HubKpi
+          label="Not started"
+          value={String(notStarted)}
+          verdict={notStarted > 0 ? 'Records with no EPA activity yet' : 'Everyone has begun'}
+          onClick={() => setFilterStatus('Not Started')}
+        />
+        <HubKpi
+          label="Complete"
+          value={String(complete)}
+          verdict={complete > 0 ? 'Through EPA' : 'None through EPA yet'}
+          context={epaRecords.length > 0 ? `${epaRecords.length} in the pipeline` : undefined}
+          onClick={() => setFilterStatus('Complete')}
+        />
+      </HubKpiRow>
+
+      {gatewayReady > 0 && (
+        <HubAlertLine
+          text={`${gatewayReady} apprentice${gatewayReady === 1 ? '' : 's'} gateway ready — review and schedule EPA`}
+          onClick={() => setFilterStatus('Gateway Ready')}
+        />
+      )}
+
+      <motion.section
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="space-y-3"
+      >
+        <HubSectionHeading>Gateway readiness</HubSectionHeading>
         <motion.div variants={itemVariants}>
-          <PageHero
-            eyebrow="Assessment · EPA"
-            title="End point assessment"
-            description={`${epaRecords.length} apprentice${epaRecords.length === 1 ? '' : 's'} in EPA pipeline.`}
-            tone="green"
-            actions={
-              <button
-                onClick={() => setAddRecordSheetOpen(true)}
-                className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap"
-              >
-                Add EPA record →
-              </button>
-            }
-          />
-        </motion.div>
-
-        {/* Pipeline */}
-        <motion.div variants={itemVariants}>
-          <StatStrip
-            columns={5}
-            stats={[
-              { value: statusCounts.notStarted, label: 'Not Started', sub: 'Pre-pipeline' },
-              { value: statusCounts.inProgress, label: 'In Progress', sub: 'Training', tone: 'amber' },
-              { value: statusCounts.preGateway, label: 'Pre-Gateway', sub: 'Preparing', tone: 'blue' },
-              {
-                value: statusCounts.gatewayReady,
-                label: 'Gateway Ready',
-                sub: 'Ready to assess',
-                tone: 'yellow',
-                accent: statusCounts.gatewayReady > 0,
-              },
-              { value: statusCounts.complete, label: 'Complete', sub: 'EPA passed', tone: 'green' },
-            ]}
-          />
-        </motion.div>
-
-        {statusCounts.gatewayReady > 0 && (
-          <motion.div variants={itemVariants}>
-            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6 flex items-center gap-4">
-              <span aria-hidden className="w-[3px] h-10 rounded-full bg-blue-400 shrink-0" />
-              <div className="flex-1 min-w-0">
-                <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                  Action required
-                </div>
-                <div className="mt-1 text-[15px] font-medium text-white">
-                  {statusCounts.gatewayReady} apprentice
-                  {statusCounts.gatewayReady !== 1 ? 's' : ''} gateway ready
-                </div>
-                <div className="mt-0.5 text-[12px] text-white">
-                  Review and schedule EPA assessments.
-                </div>
-              </div>
-              <button
-                onClick={() => setFilterStatus('Gateway Ready')}
-                className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap shrink-0"
-              >
-                View →
-              </button>
-            </div>
-          </motion.div>
-        )}
-
-        <motion.section variants={itemVariants} className="space-y-5">
-          <SectionHeader eyebrow="Insights" title="Gateway readiness analysis" />
           <EPACountdown />
-        </motion.section>
+        </motion.div>
+      </motion.section>
 
-        <motion.div variants={itemVariants}>
-          <FilterBar
-            tabs={[
-              { value: 'all', label: 'All', count: epaRecords.length },
-              { value: 'In Progress', label: 'In Progress', count: statusCounts.inProgress },
-              { value: 'Pre-Gateway', label: 'Pre-Gateway', count: statusCounts.preGateway },
-              { value: 'Gateway Ready', label: 'Gateway Ready', count: statusCounts.gatewayReady },
-              { value: 'Complete', label: 'Complete', count: statusCounts.complete },
-            ]}
-            activeTab={filterStatus}
-            onTabChange={setFilterStatus}
-            search={searchQuery}
-            onSearchChange={setSearchQuery}
-            searchPlaceholder="Search apprentices…"
-            actions={
-              <select
-                value={filterCohort}
-                onChange={(e) => setFilterCohort(e.target.value)}
-                className="h-10 px-3 bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-full text-[13px] text-white focus:outline-none focus:border-elec-yellow/60 touch-manipulation data-[state=open]:border-elec-yellow/60"
-              >
-                <option value="all">All Cohorts</option>
-                {cohorts
-                  .filter((c) => c.status === 'Active')
-                  .map((cohort) => (
-                    <option key={cohort.id} value={cohort.id}>
-                      {cohort.name}
-                    </option>
-                  ))}
-              </select>
-            }
-          />
+      <motion.section
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="space-y-3"
+      >
+        <motion.div
+          variants={itemVariants}
+          className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between"
+        >
+          <HubSectionHeading>EPA records</HubSectionHeading>
+          {/* The one solid volt control on this screen. */}
+          <button
+            type="button"
+            onClick={() => setAddRecordSheetOpen(true)}
+            className="inline-flex h-11 w-full items-center justify-center rounded-full bg-elec-yellow px-5 text-[13px] font-semibold text-black transition-colors touch-manipulation hover:bg-elec-yellow/90 sm:w-auto"
+          >
+            Add an EPA record
+          </button>
         </motion.div>
 
-        {epasLoading ? (
-          <EPACardSkeletonList count={4} />
-        ) : filteredRecords.length === 0 ? (
-          <EmptyState title="No EPA records" description="Try adjusting filters, or add a new record." />
-        ) : (
-          <motion.div variants={itemVariants}>
-            <ListCard>
+        <motion.div variants={itemVariants} className="space-y-3">
+          <input
+            type="search"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search by apprentice"
+            aria-label="Search apprentices"
+            className="h-11 w-full border-0 border-b border-white/[0.18] bg-transparent px-0 text-[14px] text-white placeholder:text-white placeholder:opacity-60 focus:border-elec-yellow focus:outline-none"
+          />
+          <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0">
+            <button type="button" onClick={() => setFilterStatus('all')} className={chipCn(filterStatus === 'all')}>
+              All · {epaRecords.length}
+            </button>
+            {STEPS.map((s) => (
+              <button
+                key={s}
+                type="button"
+                onClick={() => setFilterStatus(s)}
+                className={chipCn(filterStatus === s)}
+              >
+                {s} · {countOf(s)}
+              </button>
+            ))}
+          </div>
+          {activeCohorts.length > 1 && (
+            <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0">
+              <button
+                type="button"
+                onClick={() => setFilterCohort('all')}
+                className={chipCn(filterCohort === 'all')}
+              >
+                All cohorts
+              </button>
+              {activeCohorts.map((cohort) => (
+                <button
+                  key={cohort.id}
+                  type="button"
+                  onClick={() => setFilterCohort(cohort.id)}
+                  className={chipCn(filterCohort === cohort.id)}
+                >
+                  {cohort.name}
+                </button>
+              ))}
+            </div>
+          )}
+        </motion.div>
+
+        <motion.div
+          variants={itemVariants}
+          className={cn(
+            '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
+            CARD_SURFACE
+          )}
+        >
+          {epasLoading ? (
+            <div className="flex items-center justify-center py-12">
+              <div className="h-6 w-6 animate-spin rounded-full border-2 border-elec-yellow border-t-transparent" />
+            </div>
+          ) : filteredRecords.length === 0 ? (
+            <p className="px-4 py-6 text-[13px] text-white sm:px-5">
+              {epaRecords.length === 0
+                ? 'No EPA records yet — add one when an apprentice enters the pipeline.'
+                : 'Nothing matches these filters.'}
+            </p>
+          ) : (
+            <ul className="divide-y divide-white/[0.10]">
               {filteredRecords.map((epa) => {
-                const studentInfo = getStudentInfo(epa.student_id);
-                const progressPercent = getProgressPercent(epa.status);
-                const step = getStatusStep(epa.status);
+                const student = epa.student_id ? studentById.get(epa.student_id) : undefined;
+                const step = STEPS.indexOf(epa.status ?? 'Not Started') + 1;
+                const ready = epa.status === 'Gateway Ready';
+                const reason = [
+                  cohortName(student?.cohort_id),
+                  `Step ${step} of ${STEPS.length}`,
+                  epa.gateway_date ? `Gateway ${shortDate(epa.gateway_date)}` : null,
+                  epa.epa_date ? `EPA ${shortDate(epa.epa_date)}` : null,
+                ]
+                  .filter(Boolean)
+                  .join(' · ');
 
                 return (
-                  <PeopleListRow
-                    key={epa.id}
-                    id={epa.id}
-                    lead={{
-                      kind: 'avatar',
-                      name: studentInfo.name,
-                      photoUrl: studentInfo.photoUrl ?? null,
-                      ringTone: 'emerald',
-                    }}
-                    title={studentInfo.name}
-                    titleChips={
-                      epa.result ? (
-                        <Pill tone={gradeTone(epa.result)}>{epa.result}</Pill>
-                      ) : null
-                    }
-                    subtitle={getCohortName(studentInfo.cohortId)}
-                    status={{
-                      label: epa.status ?? 'Unknown',
-                      tone: epaStatusTone(epa.status),
-                    }}
-                    meta={
-                      <div className="space-y-2.5">
-                        <div>
-                          <div className="flex items-baseline justify-between text-[10.5px]">
-                            <span className="text-white uppercase tracking-[0.12em]">
-                              EPA progress
-                            </span>
-                            <span className="font-medium text-white tabular-nums">
-                              {Math.round(progressPercent)}%
-                            </span>
-                          </div>
-                          <div className="mt-1.5 flex items-center gap-1.5">
-                            {[1, 2, 3, 4, 5].map((s) => (
-                              <span
-                                key={s}
-                                aria-hidden
-                                className={
-                                  step >= s
-                                    ? 'flex-1 h-1 rounded-full bg-elec-yellow/80'
-                                    : 'flex-1 h-1 rounded-full bg-white/[0.08]'
-                                }
-                              />
-                            ))}
-                          </div>
-                        </div>
-                        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white">
-                          {epa.gateway_date && (
-                            <span className="tabular-nums">
-                              Gateway{' '}
-                              {new Date(epa.gateway_date).toLocaleDateString('en-GB', {
-                                day: 'numeric',
-                                month: 'short',
-                              })}
-                            </span>
-                          )}
-                          {epa.epa_date && (
-                            <span className="tabular-nums">
-                              EPA{' '}
-                              {new Date(epa.epa_date).toLocaleDateString('en-GB', {
-                                day: 'numeric',
-                                month: 'short',
-                              })}
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    }
-                    onOpen={() => {
-                      setSelectedEpaId(epa.id);
-                      setDetailSheetOpen(true);
-                    }}
-                    actions={[
-                      {
-                        label: 'View details',
-                        onClick: () => {
-                          setSelectedEpaId(epa.id);
-                          setDetailSheetOpen(true);
-                        },
-                      },
-                      {
-                        label: 'Gateway meeting',
-                        onClick: () => {
-                          setSelectedEpaId(epa.id);
-                          setSelectedStudentId(epa.student_id);
-                          setGatewaySheetOpen(true);
-                        },
-                        divider: true,
-                      },
-                      {
-                        label: 'Add assessment',
-                        onClick: () => onNavigate?.('grading'),
-                      },
-                      {
-                        label: 'View portfolio',
-                        onClick: () => onNavigate?.('portfolio'),
-                      },
-                    ]}
-                  />
+                  <li key={epa.id} className="flex items-stretch">
+                    <button
+                      type="button"
+                      onClick={() => openDetail(epa.id)}
+                      className="flex min-w-0 flex-1 items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5"
+                    >
+                      <span
+                        aria-hidden="true"
+                        className={cn(
+                          'h-8 w-[3px] shrink-0 rounded-full',
+                          ready ? 'bg-elec-yellow' : 'bg-white/[0.25]'
+                        )}
+                      />
+                      <span className="min-w-0 flex-1">
+                        <span className="flex min-w-0 items-center gap-2">
+                          <span className="truncate text-[14px] font-semibold leading-tight text-white">
+                            {student?.name ?? 'Unknown apprentice'}
+                          </span>
+                          <span className={statusChipCn(epa.status)}>{epa.status ?? 'Unknown'}</span>
+                        </span>
+                        <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
+                          {reason}
+                        </span>
+                      </span>
+                      {epa.result && (
+                        <span className="shrink-0 text-[13px] font-semibold text-white">{epa.result}</span>
+                      )}
+                      <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
+                    </button>
+
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <button
+                          type="button"
+                          aria-label="More actions"
+                          className="flex h-11 w-11 shrink-0 items-center justify-center self-center text-white transition-colors touch-manipulation hover:bg-white/[0.06]"
+                        >
+                          <MoreHorizontal className="h-4 w-4" aria-hidden />
+                        </button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem className="h-11" onClick={() => openDetail(epa.id)}>
+                          View details
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem
+                          className="h-11"
+                          onClick={() => {
+                            setSelectedEpaId(epa.id);
+                            setSelectedStudentId(epa.student_id);
+                            setGatewaySheetOpen(true);
+                          }}
+                        >
+                          Gateway meeting
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="h-11" onClick={() => onNavigate?.('grading')}>
+                          Add assessment
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="h-11" onClick={() => onNavigate?.('portfolio')}>
+                          View portfolio
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </li>
                 );
               })}
-            </ListCard>
-          </motion.div>
-        )}
+            </ul>
+          )}
+        </motion.div>
+      </motion.section>
 
-        <EPADetailSheet epaId={selectedEpaId} open={detailSheetOpen} onOpenChange={setDetailSheetOpen} />
-        <GatewayMeetingSheet
-          epaId={selectedEpaId}
-          studentId={selectedStudentId}
-          open={gatewaySheetOpen}
-          onOpenChange={setGatewaySheetOpen}
-        />
-        <AddEPARecordSheet open={addRecordSheetOpen} onOpenChange={setAddRecordSheetOpen} />
-      </PageFrame>
+      <EPADetailSheet epaId={selectedEpaId} open={detailSheetOpen} onOpenChange={setDetailSheetOpen} />
+      <GatewayMeetingSheet
+        epaId={selectedEpaId}
+        studentId={selectedStudentId}
+        open={gatewaySheetOpen}
+        onOpenChange={setGatewaySheetOpen}
+      />
+      <AddEPARecordSheet open={addRecordSheetOpen} onOpenChange={setAddRecordSheetOpen} />
     </PullToRefresh>
   );
 }

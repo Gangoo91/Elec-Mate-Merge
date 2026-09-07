@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import useSEO from '@/hooks/useSEO';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
@@ -7,12 +8,25 @@ import { useNotebook } from '@/hooks/useNotebook';
 import { NotebookShell } from '@/components/notebook/NotebookShell';
 import { CohortThisWeekCard } from '@/components/college/CohortThisWeekCard';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { itemVariants } from '@/components/college/primitives';
+import {
+  HubPage,
+  HubBody,
+  HubMasthead,
+  HubWorkList,
+  HubSectionHeading,
+  type HubWorkItem,
+} from '@/components/hub/HubPrimitives';
 
 /* ==========================================================================
    AiNotebookPage — /college/ai-notebook
    Tutor's analytical AI co-tutor — answers questions about a specific
    learner using their actual data. Top-level surface, mirrors the
    apprentice's College AI on the other side of the loop.
+
+   The learner picker is now on the shared hub shell (masthead → list). The
+   chat itself is NotebookShell, which owns its own header and back button.
    ========================================================================== */
 
 const STARTER_CARDS = [
@@ -21,6 +35,9 @@ const STARTER_CARDS = [
   { category: '1-2-1', prompt: "Draft a 1-2-1 agenda focused on what they're behind on." },
   { category: 'Observe', prompt: 'What should I observe next time I see them?' },
 ];
+
+const BACK_TO = '/college?section=curriculumhub';
+const PUSH_CONTEXT = 'Get notified about marking, off-the-job hours and learners who need you';
 
 interface LearnerOption {
   id: string;
@@ -68,7 +85,8 @@ export default function AiNotebookPage() {
         }
         return;
       }
-      // Try assignments first
+      // Try assignments first. tutor_id / assessor_id / iqa_id are auth uids
+      // (FK → profiles.id), so user.id is the right key here.
       const { data: assignments } = await supabase
         .from('college_student_assignments')
         .select('student_id')
@@ -83,7 +101,10 @@ export default function AiNotebookPage() {
         .eq('college_id', collegeId)
         .order('name');
       if (assignedIds.length > 0) {
-        q = q.in('id', assignedIds);
+        // college_student_assignments.student_id is the learner's AUTH UID
+        // (FK → profiles.id), not the college row id. This filtered on `id`,
+        // so a tutor with assignments always saw "No learners assigned".
+        q = q.in('user_id', assignedIds);
       }
       const { data } = await q;
       if (cancelled) return;
@@ -145,54 +166,52 @@ export default function AiNotebookPage() {
 
   // Render the picker as a standalone view when no learner selected.
   if (pickerOpen || !subjectStudentId) {
+    const items: HubWorkItem[] = learners.map((l) => ({
+      id: l.id,
+      title: l.name,
+      reason: l.cohort_name ?? 'No cohort',
+      onClick: () => {
+        setSubjectStudentId(l.id);
+        setPickerOpen(false);
+        setSearchParams({ student: l.id });
+      },
+    }));
+
     return (
-      <div className="min-h-screen bg-[hsl(0_0%_8%)]">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
-          <div className="text-[10px] lg:text-[11px] font-medium uppercase tracking-[0.18em] text-amber-300/85">
-            AI Notebook
-          </div>
-          <h1 className="mt-1 text-[22px] sm:text-[28px] lg:text-[36px] font-semibold text-white tracking-tight leading-[1.1]">
-            Pick a learner to ask about
-          </h1>
-          <p className="mt-2 text-[12.5px] sm:text-[13px] text-white/85 leading-snug max-w-2xl">
-            The notebook grounds every answer in this learner's actual data — ACs, quiz history,
-            OTJ, observations, EPA verdicts. Pick who you want to focus on.
+      <HubPage>
+        <HubMasthead section="College" title="AI Notebook" backTo={BACK_TO} />
+        <HubBody pushContext={PUSH_CONTEXT}>
+          <p className="-mb-4 max-w-prose text-[13px] leading-relaxed text-white sm:-mb-6">
+            Every answer is grounded in one learner's actual record — ACs, quiz history,
+            off-the-job hours, observations, EPA verdicts. Pick who to focus on.
           </p>
 
-          <div className="mt-6 rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden">
-            {loadingLearners ? (
-              <div className="px-5 py-6 text-[12.5px] text-white/85">Loading learners…</div>
-            ) : learners.length === 0 ? (
-              <div className="px-5 py-6 text-[12.5px] text-white/85">
-                No learners assigned to you yet. Ask your college admin to add you to the cohort.
-              </div>
-            ) : (
-              <ul className="divide-y divide-white/[0.05] max-h-[60vh] overflow-y-auto">
-                {learners.map((l) => (
-                  <li key={l.id}>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setSubjectStudentId(l.id);
-                        setPickerOpen(false);
-                        setSearchParams({ student: l.id });
-                      }}
-                      className="w-full text-left px-4 sm:px-5 py-3.5 hover:bg-white/[0.02] transition-colors touch-manipulation"
-                    >
-                      <div className="text-[13.5px] font-medium text-white leading-snug">
-                        {l.name}
-                      </div>
-                      {l.cohort_name && (
-                        <div className="mt-0.5 text-[11px] text-white/85">{l.cohort_name}</div>
-                      )}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        </div>
-      </div>
+          {loadingLearners ? (
+            <div className="flex items-center justify-center py-24">
+              <div className="h-6 w-6 animate-spin rounded-full border-2 border-elec-yellow border-t-transparent" />
+            </div>
+          ) : items.length === 0 ? (
+            <section className="space-y-3">
+              <HubSectionHeading>Learners</HubSectionHeading>
+              <motion.div
+                variants={itemVariants}
+                initial="hidden"
+                animate="visible"
+                className={cn(
+                  '-mx-4 border-y border-elec-yellow/35 px-4 py-5 sm:mx-0 sm:rounded-2xl sm:border-x sm:px-5',
+                  CARD_SURFACE
+                )}
+              >
+                <p className="text-[13px] leading-relaxed text-white">
+                  No learners assigned to you yet. Ask your college admin to add you to a cohort.
+                </p>
+              </motion.div>
+            </section>
+          ) : (
+            <HubWorkList label="Learners" unit="learner" items={items} visible={items.length} />
+          )}
+        </HubBody>
+      </HubPage>
     );
   }
 
@@ -227,15 +246,13 @@ export default function AiNotebookPage() {
               nb.newConversation();
               setSearchParams({});
             }}
-            className={cn(
-              'inline-flex items-center h-7 px-2.5 rounded-full border border-amber-400/30 bg-amber-500/[0.08] text-[11px] font-medium text-amber-200 hover:bg-amber-500/[0.14] transition-colors touch-manipulation'
-            )}
+            className="inline-flex h-11 items-center gap-1.5 rounded-full border border-white/[0.12] bg-white/[0.06] px-3 text-[12px] font-medium text-white transition-colors touch-manipulation hover:bg-white/[0.09]"
           >
-            {activeLearner.name}
+            <span className="truncate">{activeLearner.name}</span>
             {activeLearner.cohort_name && (
-              <span className="ml-1.5 text-amber-100/85">· {activeLearner.cohort_name}</span>
+              <span className="hidden sm:inline">· {activeLearner.cohort_name}</span>
             )}
-            <span className="ml-1.5 text-amber-200/65">change ↓</span>
+            <span className="font-semibold text-elec-yellow">Change</span>
           </button>
         )
       }

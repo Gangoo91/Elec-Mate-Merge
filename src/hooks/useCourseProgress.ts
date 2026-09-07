@@ -103,7 +103,13 @@ export function useCourseProgress() {
 
   const recordProgress = useCallback(
     (courseKey: string, sectionKey: string | null, progressPct: number, completed?: boolean) => {
-      return recordMutation.mutateAsync({ courseKey, sectionKey, progressPct, completed });
+      // Progress ticks fire as the reader scrolls. When the network drops the
+      // upsert rejects, and with nothing awaiting it the rejection was
+      // unhandled — Sentry 65, "Object captured as promise rejection". The
+      // next tick retries naturally, so swallow it here.
+      return recordMutation
+        .mutateAsync({ courseKey, sectionKey, progressPct, completed })
+        .catch(() => undefined);
     },
     [recordMutation]
   );

@@ -1,7 +1,25 @@
+/**
+ * StudentsSection — the enrolled-learner list, on the shared hub language.
+ *
+ * Renders CONTENT ONLY: the masthead comes from CollegeDashboard. What went:
+ * the PageHero (eyebrow, 40px title, a sentence restating the count), the
+ * pill-shaped tab bar, the boxed `<select>` for cohorts, avatars with
+ * risk-coloured rings, a three-colour progress bar per row and the
+ * `bg-[hsl(…)]` surfaces.
+ *
+ * Shape now: KPI row → the one solid volt action → filters → activation →
+ * the list as HubWorkList rows (rule · name · reason · figure · chevron).
+ * Tapping a row opens Student 360 at
+ * `/college?section=student360&studentId=<college_students.id>`.
+ *
+ * Everything is `text-white`. Red survives only for a critical-risk learner;
+ * volt marks high risk, exactly as the rest of the hub does.
+ */
 import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { ChevronRight } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,33 +40,44 @@ import { StudentCardSkeletonList } from '@/components/college/ui/StudentCardSkel
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import type { CollegeStudent } from '@/contexts/CollegeSupabaseContext';
 import { useCollegeSettings } from '@/hooks/college/useCollegeSettings';
-import { getInitials, formatUKDateShort } from '@/utils/collegeHelpers';
+import { formatUKDateShort } from '@/utils/collegeHelpers';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
-import {
-  PageFrame,
-  PageHero,
-  ListCard,
-  Pill,
-  EmptyState,
-  FilterBar,
-  PrimaryButton,
-  SecondaryButton,
-  IconButton,
-  statusTone,
-  itemVariants,
-} from '@/components/college/primitives';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { HubKpi, HubKpiRow, HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { containerVariants, itemVariants } from '@/components/college/primitives';
+
+/* Hub-language atoms, kept local so this file has no dependency on the old
+   college primitives beyond the motion variants. */
+const CHIP =
+  'inline-flex h-11 shrink-0 items-center gap-1.5 rounded-full border px-4 text-[12.5px] transition-colors touch-manipulation';
+const CHIP_ON = 'border-elec-yellow bg-elec-yellow font-semibold text-black';
+const CHIP_OFF = 'border-white/[0.12] bg-white/[0.06] font-medium text-white hover:bg-white/[0.10]';
+const SEARCH =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white placeholder:opacity-60 hover:border-white/[0.3] focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation';
+const PRIMARY =
+  'inline-flex h-11 w-full items-center justify-center rounded-full bg-elec-yellow px-5 text-[13px] font-semibold text-black transition-[opacity,transform] hover:opacity-90 active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white disabled:opacity-60 touch-manipulation sm:w-auto';
+const TEXT_ACTION =
+  'flex h-11 shrink-0 items-center px-2 text-[12px] font-bold text-elec-yellow transition-colors touch-manipulation';
+const LIST_CARD = cn(
+  '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
+  CARD_SURFACE
+);
+
+type StatusFilter = 'all' | 'active' | 'withdrawn' | 'completed' | 'risk' | 'attendance';
+
+const norm = (s: string | null | undefined) => (s ?? '').trim().toLowerCase();
 
 export function StudentsSection() {
   const { students, cohorts, attendance, isLoading, updateStudent } = useCollegeSupabase();
   const { settings } = useCollegeSettings();
   const lowAttendance = settings.low_attendance_threshold_percent;
-  const highAttendance = settings.high_attendance_threshold_percent;
   const { toast } = useToast();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchQuery, setSearchQuery] = useState('');
-  const [filterStatus, setFilterStatus] = useState<string>('all');
+  const [filterStatus, setFilterStatus] = useState<StatusFilter>('all');
   const [filterCohort, setFilterCohort] = useState<string>('all');
   const [addStudentOpen, setAddStudentOpen] = useState(false);
   const [bulkAddOpen, setBulkAddOpen] = useState(false);
@@ -62,7 +91,7 @@ export function StudentsSection() {
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
 
   // Seed the cohort filter from a ?cohort=<id> deep-link (e.g. tapping a cohort
-  // card), then strip it so refreshes don't re-pin the filter.
+  // row), then strip it so refreshes don't re-pin the filter.
   useEffect(() => {
     const cohortParam = searchParams.get('cohort');
     if (cohortParam) {
@@ -79,8 +108,9 @@ export function StudentsSection() {
       toggleSelection(student.id);
       return;
     }
-    // Dedicated Student 360 page is the primary profile view.
-    navigate(`/college/students/${student.id}`);
+    // Student 360 is the learner profile. `student.id` is the college row id,
+    // which is what the section expects — never the auth uid.
+    navigate(`/college?section=student360&studentId=${student.id}`);
   };
 
   const handleCall = (student: CollegeStudent) => {
@@ -150,59 +180,189 @@ export function StudentsSection() {
     setSelectedIds(new Set());
   };
 
-  const getAttendanceRate = (studentId: string): number => {
-    const records = attendance.filter((a) => a.student_id === studentId);
-    if (records.length === 0) return 100;
-    const present = records.filter((a) => a.status === 'Present' || a.status === 'Late').length;
-    return Math.round((present / records.length) * 100);
-  };
+  /*
+   * Attendance rate, or null when no register has been marked. The old
+   * helper returned 100 for a learner with no records, which showed a brand
+   * new enrolment as "100% att" — a figure nobody had measured.
+   * `college_attendance.student_id` is the college row id, and the status
+   * words are Capitalised in the table; compared case-insensitively here.
+   */
+  const attendanceRate = useMemo(() => {
+    const totals = new Map<string, { n: number; attended: number }>();
+    for (const a of attendance) {
+      const t = totals.get(a.student_id) ?? { n: 0, attended: 0 };
+      t.n += 1;
+      const s = norm(a.status);
+      if (s === 'present' || s === 'late') t.attended += 1;
+      totals.set(a.student_id, t);
+    }
+    return (studentId: string): number | null => {
+      const t = totals.get(studentId);
+      if (!t || t.n === 0) return null;
+      return Math.round((t.attended / t.n) * 100);
+    };
+  }, [attendance]);
 
-  const filteredStudents = useMemo(
-    () =>
-      students.filter((student) => {
-        const matchesSearch =
-          student.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          (student.uln ?? '').toLowerCase().includes(searchQuery.toLowerCase()) ||
-          student.email.toLowerCase().includes(searchQuery.toLowerCase());
-        const matchesStatus = filterStatus === 'all' || student.status === filterStatus;
-        const matchesCohort = filterCohort === 'all' || student.cohort_id === filterCohort;
-        return matchesSearch && matchesStatus && matchesCohort;
-      }),
-    [students, searchQuery, filterStatus, filterCohort]
+  const isAtRisk = (s: CollegeStudent) => ['high', 'critical'].includes(norm(s.risk_level));
+  const isCritical = (s: CollegeStudent) => norm(s.risk_level) === 'critical';
+  const isActive = (s: CollegeStudent) => norm(s.status) === 'active';
+
+  const active = useMemo(() => students.filter(isActive), [students]);
+  const withdrawnCount = students.filter((s) => norm(s.status) === 'withdrawn').length;
+  const completedCount = students.filter((s) => norm(s.status) === 'completed').length;
+  const atRisk = active.filter(isAtRisk);
+  const criticalCount = atRisk.filter(isCritical).length;
+  const lowAttendanceLearners = active.filter((s) => {
+    const r = attendanceRate(s.id);
+    return r !== null && r < lowAttendance;
+  });
+  const unassigned = active.filter((s) => !s.cohort_id);
+
+  const activeCohorts = useMemo(
+    () => cohorts.filter((c) => norm(c.status) === 'active'),
+    [cohorts]
   );
 
+  const filteredStudents = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+    return students.filter((student) => {
+      const matchesSearch =
+        !q ||
+        student.name.toLowerCase().includes(q) ||
+        (student.uln ?? '').toLowerCase().includes(q) ||
+        student.email.toLowerCase().includes(q);
+      const status = norm(student.status);
+      const matchesStatus =
+        filterStatus === 'all'
+          ? true
+          : filterStatus === 'risk'
+            ? status === 'active' && isAtRisk(student)
+            : filterStatus === 'attendance'
+              ? status === 'active' &&
+                (() => {
+                  const r = attendanceRate(student.id);
+                  return r !== null && r < lowAttendance;
+                })()
+              : status === filterStatus;
+      const matchesCohort =
+        filterCohort === 'all'
+          ? true
+          : filterCohort === 'none'
+            ? !student.cohort_id
+            : student.cohort_id === filterCohort;
+      return matchesSearch && matchesStatus && matchesCohort;
+    });
+  }, [students, searchQuery, filterStatus, filterCohort, attendanceRate, lowAttendance]);
+
   const getCohortName = (cohortId: string | null) => {
-    if (!cohortId) return 'Unassigned';
-    return cohorts.find((c) => c.id === cohortId)?.name || 'Unknown';
+    if (!cohortId) return 'No cohort';
+    return cohorts.find((c) => c.id === cohortId)?.name || 'Unknown cohort';
   };
 
+  // A real refresh: the context has no refetch, so invalidate every active
+  // query. The previous handler waited 800ms and changed nothing.
   const handleRefresh = async () => {
-    await new Promise((resolve) => setTimeout(resolve, 800));
+    await queryClient.invalidateQueries();
   };
 
-  const hasActiveFilters = searchQuery || filterStatus !== 'all' || filterCohort !== 'all';
-  const activeCount = students.filter((s) => s.status === 'Active').length;
+  const hasActiveFilters = !!searchQuery || filterStatus !== 'all' || filterCohort !== 'all';
+
+  const statusChips: { value: StatusFilter; label: string; count: number }[] = [
+    { value: 'all', label: 'All', count: students.length },
+    { value: 'active', label: 'Active', count: active.length },
+    { value: 'risk', label: 'At risk', count: atRisk.length },
+    { value: 'attendance', label: 'Low attendance', count: lowAttendanceLearners.length },
+    { value: 'withdrawn', label: 'Withdrawn', count: withdrawnCount },
+    { value: 'completed', label: 'Completed', count: completedCount },
+  ];
+
+  const riskWord = (s: CollegeStudent): JSX.Element | string | null => {
+    const level = norm(s.risk_level);
+    if (level === 'critical') return <span className="font-semibold text-red-300">Critical risk</span>;
+    if (level === 'high') return 'High risk';
+    if (level === 'medium') return 'Medium risk';
+    return null;
+  };
 
   return (
-    <PageFrame>
-      {/* HERO */}
-      <motion.div variants={itemVariants}>
-        <PageHero
-          eyebrow="People · Students"
-          title="Enrolled learners"
-          description={`${activeCount} active student${activeCount === 1 ? '' : 's'} enrolled.`}
-          tone="yellow"
-          actions={
-            <div className="flex items-center gap-2 flex-wrap justify-end">
-              <SecondaryButton onClick={() => setInviteOpen(true)}>Invite</SecondaryButton>
-              <SecondaryButton onClick={() => setBulkAddOpen(true)}>Bulk enrol</SecondaryButton>
-              <PrimaryButton onClick={() => setAddStudentOpen(true)}>Enrol student</PrimaryButton>
-            </div>
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="space-y-6 sm:space-y-8"
+    >
+      {/* Four KPIs, the first in volt. Each one is also a filter. */}
+      <HubKpiRow>
+        <HubKpi
+          accent
+          label="Learners"
+          value={String(active.length)}
+          verdict={active.length > 0 ? 'Active on the roll' : 'No active learners yet'}
+          context={
+            withdrawnCount + completedCount > 0
+              ? [
+                  withdrawnCount > 0 ? `${withdrawnCount} withdrawn` : null,
+                  completedCount > 0 ? `${completedCount} completed` : null,
+                ]
+                  .filter(Boolean)
+                  .join(' · ')
+              : undefined
           }
+          onClick={() => setFilterStatus('active')}
         />
+        <HubKpi
+          label="At risk"
+          value={String(atRisk.length)}
+          verdict={
+            criticalCount > 0
+              ? `${criticalCount} critical — check in today`
+              : atRisk.length > 0
+                ? 'Worth a check-in this week'
+                : 'Nothing flagged'
+          }
+          sentiment={atRisk.length > 0 ? 'bad' : 'neutral'}
+          onClick={() => setFilterStatus('risk')}
+        />
+        <HubKpi
+          label="Low attendance"
+          value={String(lowAttendanceLearners.length)}
+          verdict={
+            lowAttendanceLearners.length > 0
+              ? `Below the ${lowAttendance}% target`
+              : `Everyone at or above ${lowAttendance}%`
+          }
+          context={attendance.length === 0 ? 'No register marked yet' : undefined}
+          sentiment={lowAttendanceLearners.length > 0 ? 'bad' : 'neutral'}
+          onClick={() => setFilterStatus('attendance')}
+        />
+        <HubKpi
+          label="Not in a cohort"
+          value={String(unassigned.length)}
+          verdict={unassigned.length > 0 ? 'Assign them to a cohort' : 'Everyone is in a cohort'}
+          onClick={() => setFilterCohort('none')}
+        />
+      </HubKpiRow>
+
+      {/* The one solid volt action. Bulk enrol and invite are volt TEXT. */}
+      <motion.div
+        variants={itemVariants}
+        className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between"
+      >
+        <button type="button" onClick={() => setAddStudentOpen(true)} className={PRIMARY}>
+          Enrol learner
+        </button>
+        <div className="-mx-2 flex items-center gap-1 sm:mx-0">
+          <button type="button" onClick={() => setBulkAddOpen(true)} className={TEXT_ACTION}>
+            Bulk enrol
+          </button>
+          <button type="button" onClick={() => setInviteOpen(true)} className={TEXT_ACTION}>
+            Invite by code
+          </button>
+        </div>
       </motion.div>
 
-      {/* ACTIVATION — how many enrolled learners are actually in the app */}
+      {/* How many enrolled learners are actually in the app. Renders nothing
+          until there is a roster to measure. */}
       <motion.div variants={itemVariants}>
         <StudentActivationStrip
           collegeId={students[0]?.college_id ?? undefined}
@@ -210,328 +370,304 @@ export function StudentsSection() {
         />
       </motion.div>
 
-      {/* FILTER BAR */}
-      <motion.div variants={itemVariants}>
-        <FilterBar
-          tabs={[
-            { value: 'all', label: 'All', count: students.length },
-            {
-              value: 'Active',
-              label: 'Active',
-              count: students.filter((s) => s.status === 'Active').length,
-            },
-            {
-              value: 'Withdrawn',
-              label: 'Withdrawn',
-              count: students.filter((s) => s.status === 'Withdrawn').length,
-            },
-            {
-              value: 'Completed',
-              label: 'Completed',
-              count: students.filter((s) => s.status === 'Completed').length,
-            },
-          ]}
-          activeTab={filterStatus}
-          onTabChange={setFilterStatus}
-          search={searchQuery}
-          onSearchChange={setSearchQuery}
-          searchPlaceholder="Search name, ULN or email…"
-          actions={
-            <select
-              value={filterCohort}
-              onChange={(e) => setFilterCohort(e.target.value)}
-              className="h-10 px-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-full text-[13px] text-white focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
-            >
-              <option value="all">All Cohorts</option>
-              {cohorts
-                .filter((c) => c.status === 'Active')
-                .map((cohort) => (
-                  <option key={cohort.id} value={cohort.id}>
-                    {cohort.name}
-                  </option>
-                ))}
-            </select>
-          }
+      {/* Filters: underline search, then chips that wrap rather than scroll. */}
+      <motion.div variants={itemVariants} className="space-y-3">
+        <input
+          type="search"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search name, ULN or email…"
+          aria-label="Search learners"
+          className={SEARCH}
         />
+        <div className="flex flex-wrap gap-2">
+          {statusChips.map((chip) => (
+            <button
+              key={chip.value}
+              type="button"
+              onClick={() => setFilterStatus(chip.value)}
+              className={cn(CHIP, filterStatus === chip.value ? CHIP_ON : CHIP_OFF)}
+            >
+              {chip.label}
+              <span className="tabular-nums opacity-70">{chip.count}</span>
+            </button>
+          ))}
+        </div>
+        {(activeCohorts.length > 0 || unassigned.length > 0) && (
+          <div className="flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={() => setFilterCohort('all')}
+              className={cn(CHIP, filterCohort === 'all' ? CHIP_ON : CHIP_OFF)}
+            >
+              All cohorts
+            </button>
+            {activeCohorts.map((cohort) => (
+              <button
+                key={cohort.id}
+                type="button"
+                onClick={() => setFilterCohort(cohort.id)}
+                className={cn(CHIP, filterCohort === cohort.id ? CHIP_ON : CHIP_OFF)}
+              >
+                {cohort.name}
+              </button>
+            ))}
+            <button
+              type="button"
+              onClick={() => setFilterCohort('none')}
+              className={cn(CHIP, filterCohort === 'none' ? CHIP_ON : CHIP_OFF)}
+            >
+              No cohort
+              <span className="tabular-nums opacity-70">{unassigned.length}</span>
+            </button>
+          </div>
+        )}
       </motion.div>
 
-      {/* LIST */}
-      {isLoading ? (
-        <StudentCardSkeletonList count={4} />
-      ) : (
-        <PullToRefresh onRefresh={handleRefresh}>
-          {filteredStudents.length === 0 ? (
-            <EmptyState
-              title="No students found"
-              description={
-                hasActiveFilters
-                  ? 'Try adjusting your search or filters.'
-                  : 'Get started by enrolling your first student.'
-              }
-              action={hasActiveFilters ? undefined : 'Enrol student'}
-              onAction={() => setAddStudentOpen(true)}
-            />
-          ) : (
-            <motion.div variants={itemVariants}>
-              <ListCard>
-                {filteredStudents.map((student) => {
-                  const attendanceRate = getAttendanceRate(student.id);
-                  const progressPercent = student.progress_percent ?? 0;
-                  const isAtRisk = student.risk_level === 'High' || student.risk_level === 'Medium';
-                  const isCritical =
-                    student.risk_level === 'Critical' || student.risk_level === 'High';
-                  const isSelected = selectedIds.has(student.id);
+      {/* The list */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <div className="flex items-end justify-between gap-4">
+          <HubSectionHeading>
+            {batchMode ? `${selectedIds.size} selected` : 'Learners'}
+          </HubSectionHeading>
+          <span className="text-[11px] font-semibold tabular-nums text-white">
+            {filteredStudents.length === students.length
+              ? `${students.length} on the roll`
+              : `${filteredStudents.length} of ${students.length}`}
+          </span>
+        </div>
 
-                  const attendanceTone =
-                    attendanceRate < lowAttendance
-                      ? 'text-red-400'
-                      : attendanceRate < highAttendance
-                        ? 'text-amber-400'
-                        : 'text-emerald-400';
+        {isLoading ? (
+          <StudentCardSkeletonList count={4} />
+        ) : (
+          <PullToRefresh onRefresh={handleRefresh}>
+            <div className={LIST_CARD}>
+              {filteredStudents.length === 0 ? (
+                <div className="px-4 py-5 sm:px-5">
+                  <p className="text-[14px] font-semibold text-white">
+                    {students.length === 0
+                      ? 'No learners enrolled yet'
+                      : hasActiveFilters
+                        ? 'No learners match these filters'
+                        : 'No learners'}
+                  </p>
+                  <p className="mt-1 text-[12.5px] leading-snug text-white">
+                    {students.length === 0
+                      ? 'Enrol a learner above, bulk enrol from a spreadsheet, or share a join code.'
+                      : 'Clear the search or pick another chip.'}
+                  </p>
+                </div>
+              ) : (
+                <ul className="divide-y divide-white/[0.10]">
+                  {filteredStudents.map((student) => {
+                    const rate = attendanceRate(student.id);
+                    const progressPercent = student.progress_percent ?? 0;
+                    const risk = isAtRisk(student);
+                    const critical = isCritical(student);
+                    const isSelected = selectedIds.has(student.id);
+                    const statusWord = isActive(student) ? null : student.status;
+                    const reason = [
+                      student.uln ? `ULN ${student.uln}` : null,
+                      getCohortName(student.cohort_id),
+                      rate !== null ? `${rate}% attendance` : 'No register yet',
+                      student.expected_end_date
+                        ? `Due ${formatUKDateShort(student.expected_end_date)}`
+                        : null,
+                      statusWord,
+                    ].filter(Boolean);
+                    const riskLabel = riskWord(student);
 
-                  return (
-                    <div
-                      key={student.id}
-                      className={cn(
-                        'relative group grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 sm:gap-4 px-4 sm:px-6 py-4 sm:py-5 transition-colors',
-                        isSelected ? 'bg-elec-yellow/[0.06]' : 'hover:bg-[hsl(0_0%_14%)]'
-                      )}
-                      onTouchStart={() => startLongPress(student.id)}
-                      onTouchEnd={cancelLongPress}
-                      onTouchCancel={cancelLongPress}
-                      onTouchMove={cancelLongPress}
-                    >
-                      {/* Risk accent rail — visible left edge for at-risk */}
-                      {isAtRisk && !batchMode && (
-                        <span
-                          aria-hidden
-                          className={cn(
-                            'absolute left-0 top-3 bottom-3 w-[3px] rounded-full',
-                            isCritical ? 'bg-red-400/80' : 'bg-amber-400/80'
-                          )}
-                        />
-                      )}
-
-                      {/* Avatar / checkbox (col 1) */}
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          if (longPressFiredRef.current) {
-                            longPressFiredRef.current = false;
-                            return;
-                          }
-                          handleSelectStudent(student);
-                        }}
-                        className="shrink-0 touch-manipulation"
-                        aria-label={`Open ${student.name}`}
-                      >
-                        {batchMode ? (
-                          <div
-                            className={cn(
-                              'h-10 w-10 rounded-full flex items-center justify-center border-2 transition-colors',
-                              isSelected
-                                ? 'bg-elec-yellow border-elec-yellow text-black'
-                                : 'border-white/20'
-                            )}
-                          >
-                            {isSelected && <span className="text-sm font-semibold">✓</span>}
-                          </div>
-                        ) : (
-                          <Avatar
-                            className={cn(
-                              'h-10 w-10 ring-1 transition-colors',
-                              isCritical
-                                ? 'ring-red-500/40'
-                                : isAtRisk
-                                  ? 'ring-amber-500/40'
-                                  : 'ring-white/[0.08]'
-                            )}
-                          >
-                            <AvatarImage src={student.photo_url ?? undefined} />
-                            <AvatarFallback className="bg-elec-yellow/10 text-elec-yellow text-xs font-semibold">
-                              {getInitials(student.name)}
-                            </AvatarFallback>
-                          </Avatar>
+                    return (
+                      <li
+                        key={student.id}
+                        className={cn(
+                          'flex items-center gap-2 pr-2 transition-colors sm:pr-3',
+                          isSelected && 'bg-white/[0.06]'
                         )}
-                      </button>
-
-                      {/* Body (col 2) — tappable row */}
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          if (longPressFiredRef.current) {
-                            longPressFiredRef.current = false;
-                            return;
-                          }
-                          handleSelectStudent(student);
-                        }}
-                        className="text-left min-w-0 touch-manipulation"
+                        onTouchStart={() => startLongPress(student.id)}
+                        onTouchEnd={cancelLongPress}
+                        onTouchCancel={cancelLongPress}
+                        onTouchMove={cancelLongPress}
                       >
-                        <div className="flex items-baseline gap-2 flex-wrap">
-                          <span className="text-[14.5px] sm:text-[15px] font-semibold text-white truncate max-w-full">
-                            {student.name}
-                          </span>
-                          {isAtRisk && (
-                            <Pill tone={isCritical ? 'red' : 'amber'}>{student.risk_level}</Pill>
-                          )}
-                        </div>
-                        <div className="mt-0.5 text-[11.5px] text-white truncate tabular-nums">
-                          {student.uln ? `ULN · ${student.uln}` : getCohortName(student.cohort_id)}
-                        </div>
-
-                        {/* Progress + meta — single responsive line */}
-                        <div className="mt-2.5 flex items-center gap-3">
-                          <div className="flex-1 max-w-[180px] h-1 bg-white/[0.06] rounded-full overflow-hidden">
-                            <div
+                        <button
+                          type="button"
+                          onClick={() => {
+                            if (longPressFiredRef.current) {
+                              longPressFiredRef.current = false;
+                              return;
+                            }
+                            handleSelectStudent(student);
+                          }}
+                          aria-label={batchMode ? `Select ${student.name}` : `Open ${student.name}`}
+                          className="flex min-w-0 flex-1 items-center gap-3 py-3.5 pl-4 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:pl-5"
+                        >
+                          {batchMode ? (
+                            <span
+                              aria-hidden
                               className={cn(
-                                'h-full rounded-full transition-all',
-                                progressPercent >= 66
-                                  ? 'bg-emerald-400/80'
-                                  : progressPercent >= 33
-                                    ? 'bg-elec-yellow/80'
-                                    : 'bg-red-400/70'
+                                'flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 text-[13px] font-bold',
+                                isSelected
+                                  ? 'border-elec-yellow bg-elec-yellow text-black'
+                                  : 'border-white/[0.25] text-transparent'
                               )}
-                              style={{ width: `${progressPercent}%` }}
+                            >
+                              ✓
+                            </span>
+                          ) : (
+                            /* A rule, not an avatar. Red only when critical;
+                               volt for high risk; neutral otherwise. */
+                            <span
+                              aria-hidden
+                              className={cn(
+                                'h-8 w-[3px] shrink-0 rounded-full',
+                                critical ? 'bg-red-400' : risk ? 'bg-elec-yellow' : 'bg-white/[0.25]'
+                              )}
                             />
-                          </div>
-                          <span className="text-[11.5px] font-medium text-white tabular-nums shrink-0">
+                          )}
+
+                          <span className="min-w-0 flex-1">
+                            <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+                              {student.name}
+                            </span>
+                            <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
+                              {riskLabel ? (
+                                <>
+                                  {riskLabel}
+                                  {reason.length > 0 ? ' · ' : ''}
+                                </>
+                              ) : null}
+                              {reason.join(' · ')}
+                            </span>
+                          </span>
+
+                          <span
+                            className={cn(
+                              'shrink-0 text-[13px] font-semibold tabular-nums',
+                              risk ? 'text-elec-yellow' : 'text-white'
+                            )}
+                          >
                             {progressPercent}%
                           </span>
-                          <span className={cn('text-[11px] tabular-nums shrink-0', attendanceTone)}>
-                            {attendanceRate}% att
-                          </span>
-                          <span className="hidden sm:inline text-[11px] text-white truncate">
-                            {getCohortName(student.cohort_id)}
-                          </span>
-                          {student.expected_end_date && (
-                            <span className="hidden lg:inline text-[11px] text-white tabular-nums">
-                              Due {formatUKDateShort(student.expected_end_date)}
-                            </span>
+                          {!batchMode && (
+                            <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden />
                           )}
-                        </div>
-                      </button>
+                        </button>
 
-                      {/* Trailing (col 3) — status + actions */}
-                      <div className="flex items-center gap-1.5 shrink-0">
-                        <Pill tone={statusTone('student', student.status)}>
-                          <span className="hidden sm:inline">{student.status}</span>
-                          <span className="sm:hidden">
-                            {student.status === 'Active'
-                              ? '●'
-                              : student.status === 'Withdrawn'
-                                ? '○'
-                                : '◐'}
-                          </span>
-                        </Pill>
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <IconButton
-                              aria-label="More actions"
-                              onClick={(e) => e.stopPropagation()}
-                            >
-                              <span className="text-[15px] font-semibold tracking-[0.12em]">⋯</span>
-                            </IconButton>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent
-                            align="end"
-                            className="bg-[hsl(0_0%_11%)] border border-white/[0.08] text-white min-w-[180px]"
-                          >
-                            <DropdownMenuItem
-                              onClick={() => handleSelectStudent(student)}
-                              className="text-[13px]"
-                            >
-                              Open profile
-                            </DropdownMenuItem>
-                            <DropdownMenuSeparator className="bg-white/[0.06]" />
-                            {student.phone && (
-                              <DropdownMenuItem
-                                onClick={() => handleCall(student)}
-                                className="text-[13px]"
+                        {/* ⋯ sits outside the row button so a menu isn't
+                            nested inside a button. */}
+                        {!batchMode && (
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <button
+                                type="button"
+                                aria-label={`More actions for ${student.name}`}
+                                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white transition-colors touch-manipulation hover:bg-white/[0.06]"
                               >
-                                Call · {student.phone}
-                              </DropdownMenuItem>
-                            )}
-                            {student.email && (
+                                <span className="text-[15px] font-semibold tracking-[0.12em]">⋯</span>
+                              </button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end" className="min-w-[180px]">
                               <DropdownMenuItem
-                                onClick={() => handleEmail(student)}
-                                className="text-[13px]"
+                                className="h-11 touch-manipulation"
+                                onClick={() => handleSelectStudent(student)}
                               >
-                                Email
+                                Open profile
                               </DropdownMenuItem>
-                            )}
-                            <DropdownMenuSeparator className="bg-white/[0.06]" />
-                            {!isAtRisk && (
+                              <DropdownMenuSeparator />
+                              {student.phone && (
+                                <DropdownMenuItem
+                                  className="h-11 touch-manipulation"
+                                  onClick={() => handleCall(student)}
+                                >
+                                  Call · {student.phone}
+                                </DropdownMenuItem>
+                              )}
+                              {student.email && (
+                                <DropdownMenuItem
+                                  className="h-11 touch-manipulation"
+                                  onClick={() => handleEmail(student)}
+                                >
+                                  Email
+                                </DropdownMenuItem>
+                              )}
+                              <DropdownMenuSeparator />
+                              {!risk && (
+                                <DropdownMenuItem
+                                  className="h-11 touch-manipulation"
+                                  onClick={() => handleFlagAtRisk(student)}
+                                >
+                                  Flag as at risk
+                                </DropdownMenuItem>
+                              )}
+                              {student.user_id && (
+                                <DropdownMenuItem
+                                  className="h-11 touch-manipulation"
+                                  onClick={() => handleAssignStaff(student)}
+                                >
+                                  Assign staff
+                                </DropdownMenuItem>
+                              )}
                               <DropdownMenuItem
-                                onClick={() => handleFlagAtRisk(student)}
-                                className="text-[13px] text-amber-300 focus:text-amber-200"
+                                className="h-11 touch-manipulation"
+                                onClick={() => handleEditStudent(student)}
                               >
-                                Flag as at risk
+                                Edit details
                               </DropdownMenuItem>
-                            )}
-                            {student.user_id && (
+                              <DropdownMenuSeparator />
                               <DropdownMenuItem
-                                onClick={() => handleAssignStaff(student)}
-                                className="text-[13px]"
+                                className="h-11 text-red-300 touch-manipulation focus:text-red-200"
+                                onClick={() => handleWithdrawStudent(student)}
                               >
-                                Assign staff
+                                Withdraw
                               </DropdownMenuItem>
-                            )}
-                            <DropdownMenuItem
-                              onClick={() => handleEditStudent(student)}
-                              className="text-[13px]"
-                            >
-                              Edit details
-                            </DropdownMenuItem>
-                            <DropdownMenuSeparator className="bg-white/[0.06]" />
-                            <DropdownMenuItem
-                              onClick={() => handleWithdrawStudent(student)}
-                              className="text-[13px] text-red-300 focus:text-red-200"
-                            >
-                              Withdraw
-                            </DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </div>
-                    </div>
-                  );
-                })}
-              </ListCard>
-            </motion.div>
-          )}
-        </PullToRefresh>
-      )}
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        )}
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
+            </div>
+          </PullToRefresh>
+        )}
+      </motion.section>
 
-      {/* BATCH BAR */}
+      {/* Batch bar — appears on long-press. While it is up it carries the
+          screen's one action; Cancel is text. */}
       {batchMode && selectedIds.size > 0 && (
         <motion.div
           initial={{ y: 80, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 80, opacity: 0 }}
-          className="fixed bottom-0 inset-x-0 z-50 p-4 bg-[hsl(0_0%_8%)]/95 backdrop-blur-sm border-t border-white/[0.06]"
+          className="fixed inset-x-0 bottom-0 z-50 border-t border-white/[0.10] bg-elec-dark/95 p-4 backdrop-blur-sm"
+          style={{ paddingBottom: 'calc(1rem + env(safe-area-inset-bottom, 0px))' }}
         >
-          <div className="flex items-center justify-between gap-3 max-w-2xl mx-auto">
-            <p className="text-sm text-white font-medium tabular-nums">
+          <div className="mx-auto flex max-w-2xl items-center justify-between gap-3">
+            <p className="text-sm font-medium tabular-nums text-white">
               {selectedIds.size} selected
             </p>
             <div className="flex items-center gap-2">
-              <SecondaryButton onClick={exitBatchMode}>Cancel</SecondaryButton>
-              <PrimaryButton
+              <button type="button" onClick={exitBatchMode} className={cn(TEXT_ACTION, 'text-white')}>
+                Cancel
+              </button>
+              <button
+                type="button"
+                className={cn(PRIMARY, 'w-auto')}
                 onClick={async () => {
                   const ids = Array.from(selectedIds);
                   for (const id of ids) {
                     await updateStudent(id, { risk_level: 'High' });
                   }
                   toast({
-                    title: 'Students flagged',
-                    description: `${ids.length} student${ids.length !== 1 ? 's' : ''} flagged as high risk.`,
+                    title: 'Learners flagged',
+                    description: `${ids.length} learner${ids.length !== 1 ? 's' : ''} flagged as high risk.`,
                   });
                   exitBatchMode();
                 }}
               >
                 Flag as at risk
-              </PrimaryButton>
+              </button>
             </div>
           </div>
         </motion.div>
@@ -566,6 +702,6 @@ export function StudentsSection() {
           setWithdrawOpen(false);
         }}
       />
-    </PageFrame>
+    </motion.div>
   );
 }

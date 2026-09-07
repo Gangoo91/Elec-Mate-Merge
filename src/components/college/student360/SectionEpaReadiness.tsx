@@ -1,7 +1,9 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Wand2, ShieldCheck, AlertTriangle, Sparkles, User2, Bot } from 'lucide-react';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { HubSectionHeading } from '@/components/hub/HubPrimitives';
 import { useStudentEpa } from '@/hooks/useStudentEpa';
 import { useEpaReadiness, type EpaJudgement, type EpaSource } from '@/hooks/useEpaReadiness';
 import { TutorEpaJudgementSheet } from '@/components/college/sheets/TutorEpaJudgementSheet';
@@ -17,10 +19,26 @@ import { useEpaCohortContext } from '@/hooks/useEpaCohortContext';
 
 /* ==========================================================================
    SectionEpaReadiness — tri-perspective EPA panel.
-   Three columns: Learner self-assessment / Tutor judgement / AI verdict.
-   Agreement banner above. Beneath: AI citation-grade gaps,
-   tutor blockers, gateway checklist (from existing useStudentEpa).
+
+   Learner self-assessment / tutor judgement / AI verdict on one readiness
+   gauge, then the three verdicts side by side, then the AI's gap analysis,
+   the gateway checklist and the mock-session record.
+
+   Rebuilt on the hub design language (CARD_SURFACE cards, HubSectionHeading,
+   everything text-white). The old header carried five actions in a row —
+   one volt pill and four grey links — which on a phone wrapped into a
+   three-line tangle above a 26px headline. The heading now carries the two
+   actions a tutor reaches for (their own verdict, the AI's); the rest live
+   as rows in a small action list at the foot of the section, where each one
+   has a full-width 44px target and a line saying what it does.
    ========================================================================== */
+
+const CARD = cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE);
+const CARD_HEAD =
+  'flex items-center justify-between gap-3 border-b border-white/[0.10] px-4 py-3 sm:px-5';
+const CARD_TITLE = 'text-[13px] font-semibold text-white';
+const TEXT_BTN =
+  'inline-flex h-11 shrink-0 items-center px-2 text-[12px] font-semibold transition-colors touch-manipulation';
 
 function formatDate(iso: string | null): string {
   if (!iso) return '—';
@@ -106,88 +124,102 @@ export function SectionEpaReadiness({
     };
   }, [judge.mocks]);
 
+  const firstName = studentName.split(' ')[0];
+  const mockCount = judge.mocks.length;
+  const mockWord = `${mockCount} session${mockCount === 1 ? '' : 's'}`;
+
   if (!collegeStudentId) {
     return (
-      <section id={id} className="scroll-mt-6">
-        <Header />
-        <div className="mt-5 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-6 py-8 text-center">
-          <p className="text-[12.5px] text-white/65 max-w-md mx-auto leading-relaxed">
-            No EPA data linked to this learner yet.
+      <section id={id} className="scroll-mt-6 space-y-3">
+        <HubSectionHeading>EPA readiness</HubSectionHeading>
+        <div className={cn(CARD, 'px-4 py-6 sm:px-5')}>
+          <p className="text-[13px] leading-relaxed text-white">
+            No EPA record is linked to this learner yet.
           </p>
         </div>
       </section>
     );
   }
 
+  const ai = judge.ai;
+  const checklist = epa.checklist;
+  const canRecordOutcome = !!(judge.ai || judge.tutor || judge.learner);
+
   return (
-    <section id={id} className="scroll-mt-6">
-      <Header
-        onAi={() => setAiOpen(true)}
-        onTutor={() => setTutorSheet({ mode: judge.tutor ? 'edit' : 'create' })}
-        onOutcome={() => setOutcomeOpen(true)}
-        onBrief={() => setBriefOpen(true)}
-        onCohort={() => navigate('/college/epa')}
-        canRecordOutcome={!!(judge.ai || judge.tutor || judge.learner)}
-      />
-
-      {/* Agreement banner */}
-      <AgreementBanner
-        headline={judge.agreement.headline}
-        consensus={judge.agreement.full_consensus}
-        outlier={judge.agreement.outlier_source}
-      />
-
-      {/* Unified readiness gauge */}
-      <div className="mt-4">
-        <EpaReadinessGauge
-          cohort={{
-            percentileLabel: cohortCtx.percentileLabel,
-            cohortSize: cohortCtx.cohortSize,
-            trajectory: cohortCtx.trajectory,
-          }}
-          voices={[
-            {
-              source: 'learner',
-              judgement:
-                judge.learner ??
-                (inferredLearner
-                  ? {
-                      verdict: inferredLearner.verdict,
-                      predicted_grade: inferredLearner.predicted_grade,
-                      confidence: inferredLearner.confidence,
-                      source_name_snapshot: studentName,
-                    }
-                  : null),
-              synthetic: !judge.learner && !!inferredLearner,
-              subtitle: judge.learner
-                ? 'Submitted as self-assessment'
-                : inferredLearner
-                  ? `Inferred from latest mock (${judge.mocks.length} session${judge.mocks.length === 1 ? '' : 's'})`
-                  : `${studentName.split(' ')[0]} hasn't run the simulator yet`,
-            },
-            {
-              source: 'tutor',
-              judgement: judge.tutor,
-              subtitle: judge.tutor
-                ? `${judge.tutor.source_name_snapshot ?? 'Tutor'} · ${formatDate(judge.tutor.created_at)}${judge.tutor.cosign_kind === 'cosigned' ? ' · co-signed AI' : judge.tutor.cosign_kind === 'overridden' ? ' · overrode AI' : ''}`
-                : 'Tap "Tutor verdict" above to record',
-            },
-            {
-              source: 'ai',
-              judgement: judge.ai,
-              subtitle: judge.ai
-                ? `${judge.ai.source_name_snapshot ?? 'AI'} · ${formatDate(judge.ai.created_at)}`
-                : 'Tap "AI verdict" above to generate',
-            },
-          ]}
-        />
+    <section id={id} className="scroll-mt-6 space-y-3">
+      {/* Heading + the two actions a tutor actually reaches for. */}
+      <div className="flex items-end justify-between gap-3">
+        <HubSectionHeading>EPA readiness</HubSectionHeading>
+        <div className="no-print -my-2 -mr-2 flex items-center">
+          <button
+            type="button"
+            onClick={() => setAiOpen(true)}
+            className={cn(TEXT_BTN, 'text-white')}
+          >
+            {ai ? 'Re-run AI' : 'AI verdict'}
+          </button>
+          <button
+            type="button"
+            onClick={() => setTutorSheet({ mode: judge.tutor ? 'edit' : 'create' })}
+            className={cn(TEXT_BTN, 'text-elec-yellow')}
+          >
+            {judge.tutor ? 'Update verdict' : 'Tutor verdict'}
+          </button>
+        </div>
       </div>
 
+      {/* Unified readiness gauge. The agreement line lives inside it — the
+          old banner was a separate tinted card restating what the gauge shows. */}
+      <EpaReadinessGauge
+        headline={judge.agreement.headline}
+        outlier={judge.agreement.outlier_source}
+        consensus={judge.agreement.full_consensus}
+        cohort={{
+          percentileLabel: cohortCtx.percentileLabel,
+          cohortSize: cohortCtx.cohortSize,
+          trajectory: cohortCtx.trajectory,
+        }}
+        voices={[
+          {
+            source: 'learner',
+            judgement:
+              judge.learner ??
+              (inferredLearner
+                ? {
+                    verdict: inferredLearner.verdict,
+                    predicted_grade: inferredLearner.predicted_grade,
+                    confidence: inferredLearner.confidence,
+                    source_name_snapshot: studentName,
+                  }
+                : null),
+            synthetic: !judge.learner && !!inferredLearner,
+            subtitle: judge.learner
+              ? 'Submitted as self-assessment'
+              : inferredLearner
+                ? `Inferred from latest mock (${mockWord})`
+                : `${firstName} hasn't run the simulator yet`,
+          },
+          {
+            source: 'tutor',
+            judgement: judge.tutor,
+            subtitle: judge.tutor
+              ? `${judge.tutor.source_name_snapshot ?? 'Tutor'} · ${formatDate(judge.tutor.created_at)}${judge.tutor.cosign_kind === 'cosigned' ? ' · co-signed AI' : judge.tutor.cosign_kind === 'overridden' ? ' · overrode AI' : ''}`
+              : 'No tutor verdict yet',
+          },
+          {
+            source: 'ai',
+            judgement: judge.ai,
+            subtitle: judge.ai
+              ? `${judge.ai.source_name_snapshot ?? 'AI'} · ${formatDate(judge.ai.created_at)}`
+              : 'No AI verdict yet',
+          },
+        ]}
+      />
+
       {/* Tri-pane verdicts */}
-      <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
         <VerdictColumn
           source="learner"
-          studentName={studentName}
           judgement={
             judge.learner ??
             (inferredLearner
@@ -200,66 +232,65 @@ export function SectionEpaReadiness({
                 } as Partial<EpaJudgement>)
               : null)
           }
+          draft={!judge.learner && !!inferredLearner}
           subtitle={
             judge.learner
               ? 'Submitted as self-assessment'
               : inferredLearner
-                ? `From latest mock (${judge.mocks.length} session${judge.mocks.length === 1 ? '' : 's'})`
+                ? `From latest mock (${mockWord})`
                 : 'No simulator runs yet'
           }
           empty={
             !judge.learner && !inferredLearner
-              ? `${studentName.split(' ')[0]} hasn't run the EPA simulator yet.`
+              ? `${firstName} hasn't run the EPA simulator yet.`
               : null
           }
         />
         <VerdictColumn
           source="tutor"
-          studentName={studentName}
           judgement={judge.tutor}
           subtitle={
             judge.tutor
               ? `${judge.tutor.source_name_snapshot ?? 'Tutor'} · ${formatDate(judge.tutor.created_at)}${judge.tutor.cosign_kind === 'cosigned' ? ' · co-signed AI' : judge.tutor.cosign_kind === 'overridden' ? ' · overrode AI' : ''}`
-              : 'Tap "Record verdict" to capture your judgement'
+              : 'Your own judgement of readiness'
           }
           empty={!judge.tutor ? 'No tutor verdict recorded.' : null}
           action={
             judge.tutor
-              ? { label: 'Update →', onClick: () => setTutorSheet({ mode: 'edit' }) }
-              : { label: 'Record verdict →', onClick: () => setTutorSheet({ mode: 'create' }) }
+              ? { label: 'Update', onClick: () => setTutorSheet({ mode: 'edit' }) }
+              : { label: 'Record verdict', onClick: () => setTutorSheet({ mode: 'create' }) }
           }
         />
         <VerdictColumn
           source="ai"
-          studentName={studentName}
           judgement={judge.ai}
           subtitle={
             judge.ai
               ? `${judge.ai.source_name_snapshot ?? 'AI'} · ${formatDate(judge.ai.created_at)}`
-              : 'No AI verdict yet — generate from cross-hub data'
+              : 'Generated from cross-hub data'
           }
           empty={!judge.ai ? 'No AI verdict generated yet.' : null}
           action={
             judge.ai
-              ? { label: 'Re-run →', onClick: () => setAiOpen(true) }
-              : { label: 'Generate →', onClick: () => setAiOpen(true), accent: true }
+              ? { label: 'Re-run', onClick: () => setAiOpen(true) }
+              : { label: 'Generate', onClick: () => setAiOpen(true) }
           }
           extra={
-            judge.ai ? (
-              <div className="mt-3 flex items-center gap-2 flex-wrap">
+            ai ? (
+              <div className="-mb-2 mt-1 flex flex-wrap items-center gap-x-1">
                 {judge.tutor == null && (
                   <>
                     <button
                       type="button"
-                      onClick={() => setTutorSheet({ mode: 'cosign', aiTarget: judge.ai! })}
-                      className="inline-flex items-center gap-1.5 h-8 px-3 rounded-full bg-emerald-500/[0.12] border border-emerald-400/40 text-emerald-200 text-[11.5px] font-semibold hover:bg-emerald-500/[0.18] touch-manipulation"
+                      onClick={() => setTutorSheet({ mode: 'cosign', aiTarget: ai })}
+                      className={cn(TEXT_BTN, '-ml-2 text-white')}
                     >
-                      <ShieldCheck className="h-3 w-3" /> Co-sign
+                      Co-sign
                     </button>
                     <button
                       type="button"
-                      onClick={() => setTutorSheet({ mode: 'override', aiTarget: judge.ai! })}
-                      className="inline-flex items-center gap-1.5 h-8 px-3 rounded-full bg-white/[0.04] border border-white/[0.12] text-white/85 text-[11.5px] font-semibold hover:bg-white/[0.08] touch-manipulation"
+                      onClick={() => setTutorSheet({ mode: 'override', aiTarget: ai })}
+                      className={cn(TEXT_BTN, 'text-white')}
                     >
                       Override
                     </button>
@@ -268,9 +299,9 @@ export function SectionEpaReadiness({
                 <button
                   type="button"
                   onClick={() => setSignalsOpen(true)}
-                  className="text-[11.5px] font-medium text-white/65 hover:text-white transition-colors touch-manipulation"
+                  className={cn(TEXT_BTN, judge.tutor != null && '-ml-2', 'text-white')}
                 >
-                  What did the AI see? →
+                  What did the AI see?
                 </button>
               </div>
             ) : null
@@ -279,39 +310,37 @@ export function SectionEpaReadiness({
       </div>
 
       {/* AI citation-grade gaps */}
-      {judge.ai && judge.ai.blockers && judge.ai.blockers.length > 0 && (
-        <div className="mt-4 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
-          <div className="px-5 py-3 border-b border-white/[0.06] flex items-center justify-between">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-              AI gap analysis
-            </div>
-            <div className="text-[10.5px] text-white/55 tabular-nums">
-              {judge.ai.citations?.length ?? 0} citation
-              {(judge.ai.citations?.length ?? 0) === 1 ? '' : 's'}
+      {ai && ai.blockers && ai.blockers.length > 0 && (
+        <div className={CARD}>
+          <div className={CARD_HEAD}>
+            <div className={CARD_TITLE}>AI gap analysis</div>
+            <div className="text-[12px] tabular-nums text-white">
+              {ai.citations?.length ?? 0} citation
+              {(ai.citations?.length ?? 0) === 1 ? '' : 's'}
             </div>
           </div>
-          <ul className="divide-y divide-white/[0.04]">
-            {judge.ai.blockers.map((b, i) => {
-              const matched = (judge.ai!.citations ?? []).filter((c) =>
+          <ul className="divide-y divide-white/[0.10]">
+            {ai.blockers.map((b, i) => {
+              const matched = (ai.citations ?? []).filter((c) =>
                 b
                   .toLowerCase()
                   .includes((c.applies_to ?? '').toLowerCase().split(' ').slice(0, 3).join(' '))
               );
               return (
-                <li key={i} className="px-5 py-3 flex items-start gap-3">
+                <li key={i} className="flex items-start gap-3 px-4 py-3 sm:px-5">
                   <span
-                    aria-hidden
-                    className="mt-1.5 inline-block h-1.5 w-1.5 rounded-full bg-amber-400/85 flex-shrink-0"
+                    aria-hidden="true"
+                    className="mt-0.5 h-8 w-[3px] shrink-0 rounded-full bg-elec-yellow"
                   />
                   <div className="min-w-0 flex-1">
-                    <p className="text-[12.5px] text-white/85 leading-snug">{b}</p>
+                    <p className="text-[12.5px] leading-snug text-white">{b}</p>
                     {matched.length > 0 && (
                       <div className="mt-1.5 flex flex-wrap gap-1.5">
                         {matched.map((c, j) => (
                           <span
                             key={j}
                             title={c.snippet}
-                            className="inline-flex items-center h-5 px-1.5 rounded-md bg-blue-500/[0.12] border border-blue-500/30 text-[9.5px] font-semibold tracking-[0.06em] uppercase text-blue-200"
+                            className="inline-flex h-6 items-center rounded-md border border-white/[0.14] px-1.5 text-[10.5px] font-semibold tabular-nums text-white"
                           >
                             BS 7671 {c.ref}
                           </span>
@@ -323,17 +352,14 @@ export function SectionEpaReadiness({
               );
             })}
           </ul>
-          {/* Citations not matched to any blocker */}
-          {judge.ai.citations && judge.ai.citations.length > 0 && (
-            <div className="px-5 py-3 border-t border-white/[0.04]">
-              <div className="text-[10px] uppercase tracking-[0.16em] text-white/45 mb-1.5">
-                All citations
-              </div>
+          {ai.citations && ai.citations.length > 0 && (
+            <div className="border-t border-white/[0.10] px-4 py-3 sm:px-5">
+              <div className="mb-1.5 text-[12px] font-semibold text-white">All citations</div>
               <ul className="space-y-1.5">
-                {judge.ai.citations.map((c, i) => (
-                  <li key={i} className="text-[11.5px] text-white/75 leading-snug">
-                    <span className="text-blue-200 font-semibold">{c.ref}</span>
-                    {c.snippet && <span className="text-white/55"> — {c.snippet}</span>}
+                {ai.citations.map((c, i) => (
+                  <li key={i} className="text-[12px] leading-snug text-white">
+                    <span className="font-semibold tabular-nums">{c.ref}</span>
+                    {c.snippet && <span> — {c.snippet}</span>}
                   </li>
                 ))}
               </ul>
@@ -343,40 +369,41 @@ export function SectionEpaReadiness({
       )}
 
       {/* Gateway checklist */}
-      {epa.checklist && (
-        <div className="mt-4 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
-          <div className="px-5 py-3 border-b border-white/[0.06]">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-              Gateway checklist
+      {checklist && (
+        <div className={CARD}>
+          <div className={CARD_HEAD}>
+            <div className={CARD_TITLE}>Gateway checklist</div>
+            <div className="text-[12px] tabular-nums text-white">
+              {GATEWAY_LABELS.filter(({ key }) => Boolean(checklist[key])).length}/
+              {GATEWAY_LABELS.length} done
             </div>
           </div>
-          <ul className="divide-y divide-white/[0.04]">
+          <ul className="divide-y divide-white/[0.10]">
             {GATEWAY_LABELS.map(({ key, label }) => {
-              const complete = Boolean((epa.checklist as Record<string, unknown>)[key]);
+              const complete = Boolean(checklist[key]);
+              const hours =
+                key === 'ojt_hours_verified' && checklist.ojt_hours_required != null
+                  ? `${Math.round(checklist.ojt_hours_completed ?? 0)}h / ${Math.round(checklist.ojt_hours_required)}h`
+                  : null;
               return (
-                <li key={String(key)} className="px-5 py-3 flex items-center gap-3">
+                <li key={String(key)} className="flex items-center gap-3 px-4 py-3 sm:px-5">
                   <span
-                    aria-hidden
+                    aria-hidden="true"
                     className={cn(
-                      'inline-flex items-center justify-center h-5 w-5 rounded-full text-[10px] font-bold flex-shrink-0',
-                      complete
-                        ? 'bg-emerald-500/20 text-emerald-300'
-                        : 'bg-white/[0.04] text-white/35'
+                      'h-8 w-[3px] shrink-0 rounded-full',
+                      complete ? 'bg-elec-yellow' : 'bg-white/[0.25]'
+                    )}
+                  />
+                  <div className="min-w-0 flex-1 text-[13px] text-white">{label}</div>
+                  {hours && <div className="text-[12px] tabular-nums text-white">{hours}</div>}
+                  <span
+                    className={cn(
+                      'w-14 shrink-0 text-right text-[12px] font-semibold',
+                      complete ? 'text-elec-yellow' : 'text-white'
                     )}
                   >
-                    {complete ? '✓' : '·'}
+                    {complete ? 'Done' : 'Not yet'}
                   </span>
-                  <div className="min-w-0 flex-1">
-                    <div className={cn('text-[12.5px]', complete ? 'text-white' : 'text-white/65')}>
-                      {label}
-                    </div>
-                  </div>
-                  {key === 'ojt_hours_verified' && epa.checklist?.ojt_hours_required != null && (
-                    <div className="text-[10.5px] text-white/55 tabular-nums">
-                      {Math.round(epa.checklist.ojt_hours_completed ?? 0)}h /{' '}
-                      {Math.round(epa.checklist.ojt_hours_required)}h
-                    </div>
-                  )}
                 </li>
               );
             })}
@@ -384,99 +411,73 @@ export function SectionEpaReadiness({
         </div>
       )}
 
-      {/* Mock sessions strip — combined AI simulator runs + tutor-recorded mocks */}
-      <div className="mt-4 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
-        <div className="px-5 py-3 border-b border-white/[0.06] flex items-center justify-between gap-3">
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      {/* Mock sessions — combined AI simulator runs + tutor-recorded mocks */}
+      <div className={CARD}>
+        <div className={cn(CARD_HEAD, 'py-1.5')}>
+          <div className={CARD_TITLE}>
             Mock sessions
+            <span className="ml-2 font-normal tabular-nums">{mockWord}</span>
           </div>
-          <div className="flex items-center gap-3">
-            <div className="text-[10.5px] text-white/55 tabular-nums">
-              {judge.mocks.length} session{judge.mocks.length === 1 ? '' : 's'}
-            </div>
-            <button
-              type="button"
-              onClick={() => setMockOpen(true)}
-              disabled={!userId}
-              className="inline-flex items-center h-7 px-2.5 rounded-full bg-elec-yellow/[0.12] border border-elec-yellow/40 text-elec-yellow text-[11px] font-semibold hover:bg-elec-yellow/[0.18] disabled:opacity-40 touch-manipulation"
-            >
-              + Record mock
-            </button>
-          </div>
+          <button
+            type="button"
+            onClick={() => setMockOpen(true)}
+            disabled={!userId}
+            title={userId ? undefined : 'Needs a linked apprentice account'}
+            className={cn(TEXT_BTN, '-mr-2', userId ? 'text-elec-yellow' : 'text-white opacity-50')}
+          >
+            Record mock
+          </button>
         </div>
-        {judge.mocks.length === 0 ? (
-          <div className="px-5 py-6 text-[11.5px] text-white/45 leading-snug">
+        {mockCount === 0 ? (
+          <div className="px-4 py-5 text-[12.5px] leading-snug text-white sm:px-5">
             No mock sessions yet. Record a tutor-led mock (portfolio walkthrough, professional
             discussion, practical or knowledge review) to start tracking dry-run performance.
           </div>
         ) : (
           <>
             {mockTrend && (
-              <div className="px-5 py-3 border-b border-white/[0.04] grid grid-cols-3 gap-3 text-center">
-                <div className="flex flex-col gap-0.5">
-                  <span className="text-[9px] uppercase tracking-[0.14em] text-white/45">Best</span>
-                  <span className="text-[15px] font-semibold tabular-nums text-white leading-none">
-                    {mockTrend.best}%
-                  </span>
-                  {mockTrend.bestGrade && (
-                    <span className="text-[10px] font-medium text-elec-yellow/85 capitalize">
-                      {mockTrend.bestGrade}
-                    </span>
-                  )}
-                </div>
-                <div className="flex flex-col gap-0.5">
-                  <span className="text-[9px] uppercase tracking-[0.14em] text-white/45">
-                    Latest
-                  </span>
-                  <span className="text-[15px] font-semibold tabular-nums text-white leading-none">
-                    {mockTrend.latest}%
-                  </span>
-                  {mockTrend.delta !== null && (
-                    <span
-                      className={cn(
-                        'text-[10px] font-medium tabular-nums',
-                        mockTrend.delta > 0
-                          ? 'text-elec-yellow'
-                          : mockTrend.delta < 0
-                            ? 'text-red-300'
-                            : 'text-white/45'
-                      )}
-                    >
-                      {mockTrend.delta > 0
-                        ? `▲ +${mockTrend.delta}`
+              <div className="grid grid-cols-3 gap-3 border-b border-white/[0.10] px-4 py-3 sm:px-5">
+                <MockStat
+                  label="Best"
+                  value={`${mockTrend.best}%`}
+                  sub={mockTrend.bestGrade}
+                  accent
+                />
+                <MockStat
+                  label="Latest"
+                  value={`${mockTrend.latest}%`}
+                  sub={
+                    mockTrend.delta === null
+                      ? null
+                      : mockTrend.delta > 0
+                        ? `up ${mockTrend.delta}`
                         : mockTrend.delta < 0
-                          ? `▼ ${mockTrend.delta}`
-                          : 'no change'}
-                    </span>
-                  )}
-                </div>
-                <div className="flex flex-col gap-0.5">
-                  <span className="text-[9px] uppercase tracking-[0.14em] text-white/45">Runs</span>
-                  <span className="text-[15px] font-semibold tabular-nums text-white leading-none">
-                    {mockTrend.count}
-                  </span>
-                  <span className="text-[10px] text-white/45">scored</span>
-                </div>
+                          ? `down ${Math.abs(mockTrend.delta)}`
+                          : 'no change'
+                  }
+                  subTone={mockTrend.delta !== null && mockTrend.delta < 0 ? 'bad' : 'neutral'}
+                />
+                <MockStat label="Scored runs" value={String(mockTrend.count)} sub={null} />
               </div>
             )}
-            <ul className="divide-y divide-white/[0.04]">
+            <ul className="divide-y divide-white/[0.10]">
               {judge.mocks.slice(0, 5).map((m) => (
-                <li key={m.id} className="px-5 py-3 flex items-center gap-3">
+                <li key={m.id} className="flex items-center gap-3 px-4 py-3 sm:px-5">
                   <div className="min-w-0 flex-1">
-                    <div className="text-[12.5px] text-white capitalize">
+                    <div className="text-[13px] capitalize leading-tight text-white">
                       {m.session_type.replace(/_/g, ' ')}
                       {m.predicted_grade && (
-                        <span className="ml-2 text-[11px] font-medium text-elec-yellow/85 capitalize">
+                        <span className="ml-2 text-[12px] font-semibold capitalize text-elec-yellow">
                           {m.predicted_grade}
                         </span>
                       )}
                     </div>
-                    <div className="text-[10.5px] text-white/55 tabular-nums">
+                    <div className="mt-0.5 text-[12px] tabular-nums leading-tight text-white">
                       {formatDate(m.completed_at)}
                     </div>
                   </div>
                   {m.overall_score != null && (
-                    <div className="text-[14px] font-semibold text-white tabular-nums">
+                    <div className="text-[14px] font-semibold tabular-nums text-white">
                       {m.overall_score}%
                     </div>
                   )}
@@ -488,16 +489,36 @@ export function SectionEpaReadiness({
       </div>
 
       {/* Verdict history timeline */}
-      <div className="mt-4">
-        <EpaVerdictHistory
-          current={{ learner: judge.learner, tutor: judge.tutor, ai: judge.ai }}
-          past={judge.history}
-        />
-      </div>
+      <EpaVerdictHistory
+        current={{ learner: judge.learner, tutor: judge.tutor, ai: judge.ai }}
+        past={judge.history}
+      />
 
       {/* Calibration card */}
-      <div className="mt-4">
-        <EpaCalibrationCard collegeId={null} />
+      <EpaCalibrationCard collegeId={null} />
+
+      {/* The remaining tutor actions, as rows — each a 44px target with a
+          line saying what it does, rather than four grey links in a header. */}
+      <div className={cn(CARD, 'no-print')}>
+        <ul className="divide-y divide-white/[0.10]">
+          <ActionRow
+            title="Pre-EPA brief"
+            reason={`A personalised briefing ${firstName} can read before the assessment`}
+            onClick={() => setBriefOpen(true)}
+          />
+          {canRecordOutcome && (
+            <ActionRow
+              title="Record EPA outcome"
+              reason="Seal the actual grade against every verdict on record"
+              onClick={() => setOutcomeOpen(true)}
+            />
+          )}
+          <ActionRow
+            title="View cohort"
+            reason="Where this learner sits against the rest of the group"
+            onClick={() => navigate('/college/epa')}
+          />
+        </ul>
       </div>
 
       {/* Sheets */}
@@ -563,109 +584,75 @@ export function SectionEpaReadiness({
 }
 
 /* ────────────────────────────────────────────────────────
-   Header
+   Small parts
    ──────────────────────────────────────────────────────── */
 
-function Header({
-  onAi,
-  onTutor,
-  onOutcome,
-  onBrief,
-  onCohort,
-  canRecordOutcome,
+function MockStat({
+  label,
+  value,
+  sub,
+  subTone = 'neutral',
+  accent = false,
 }: {
-  onAi?: () => void;
-  onTutor?: () => void;
-  onOutcome?: () => void;
-  onBrief?: () => void;
-  onCohort?: () => void;
-  canRecordOutcome?: boolean;
+  label: string;
+  value: string;
+  sub: string | null | undefined;
+  subTone?: 'neutral' | 'bad';
+  accent?: boolean;
 }) {
   return (
-    <div className="flex items-end justify-between gap-4 flex-wrap">
-      <div>
-        <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          End-Point Assessment
-        </div>
-        <h2 className="mt-1.5 text-xl sm:text-[26px] font-semibold text-white tracking-tight leading-tight">
-          EPA readiness
-        </h2>
-      </div>
-      <div className="flex items-center gap-2 no-print">
-        {onAi && (
-          <button
-            onClick={onAi}
-            className="inline-flex items-center gap-1.5 h-9 px-3 rounded-full bg-elec-yellow/[0.08] border border-elec-yellow/30 text-elec-yellow text-[12px] font-semibold hover:bg-elec-yellow/[0.14] transition-colors touch-manipulation"
-          >
-            <Wand2 className="h-3 w-3" strokeWidth={2.5} />
-            AI verdict
-          </button>
+    <div className="flex flex-col gap-0.5">
+      <span className="text-[11px] font-medium text-white">{label}</span>
+      <span
+        className={cn(
+          'text-[18px] font-semibold leading-none tabular-nums',
+          accent ? 'text-elec-yellow' : 'text-white'
         )}
-        {onTutor && (
-          <button
-            onClick={onTutor}
-            className="text-[12px] font-medium text-white/85 hover:text-white transition-colors touch-manipulation"
-          >
-            Tutor verdict →
-          </button>
-        )}
-        {onBrief && (
-          <button
-            onClick={onBrief}
-            className="text-[12px] font-medium text-white/85 hover:text-white transition-colors touch-manipulation"
-          >
-            Pre-EPA brief →
-          </button>
-        )}
-        {canRecordOutcome && onOutcome && (
-          <button
-            onClick={onOutcome}
-            className="text-[12px] font-medium text-white/55 hover:text-white transition-colors touch-manipulation"
-          >
-            Record outcome →
-          </button>
-        )}
-        {onCohort && (
-          <button
-            onClick={onCohort}
-            className="text-[12px] font-medium text-white/55 hover:text-white transition-colors touch-manipulation"
-          >
-            View cohort →
-          </button>
-        )}
-      </div>
+      >
+        {value}
+      </span>
+      {sub && (
+        <span
+          className={cn(
+            'text-[11px] font-medium capitalize tabular-nums',
+            subTone === 'bad' ? 'text-red-300' : 'text-white'
+          )}
+        >
+          {sub}
+        </span>
+      )}
     </div>
   );
 }
 
-/* ────────────────────────────────────────────────────────
-   Agreement banner
-   ──────────────────────────────────────────────────────── */
-
-function AgreementBanner({
-  headline,
-  consensus,
-  outlier,
+function ActionRow({
+  title,
+  reason,
+  onClick,
 }: {
-  headline: string;
-  consensus: boolean;
-  outlier: EpaSource | null;
+  title: string;
+  reason: string;
+  onClick: () => void;
 }) {
-  const tone = consensus
-    ? 'border-emerald-500/[0.25] bg-emerald-500/[0.05]'
-    : outlier
-      ? 'border-amber-500/[0.25] bg-amber-500/[0.05]'
-      : 'border-white/[0.06] bg-[hsl(0_0%_12%)]';
   return (
-    <div className={cn('mt-5 rounded-2xl border px-5 py-3 flex items-center gap-3', tone)}>
-      <Sparkles
-        className={cn(
-          'h-4 w-4 flex-shrink-0',
-          consensus ? 'text-emerald-300' : outlier ? 'text-amber-300' : 'text-white/55'
-        )}
-      />
-      <p className="text-[12.5px] text-white/90 leading-snug">{headline}</p>
-    </div>
+    <li>
+      <button
+        type="button"
+        onClick={onClick}
+        className="flex min-h-11 w-full items-center gap-3 px-4 py-3 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5"
+      >
+        <span aria-hidden="true" className="h-8 w-[3px] shrink-0 rounded-full bg-white/[0.25]" />
+        <span className="min-w-0 flex-1">
+          <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+            {title}
+          </span>
+          <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
+            {reason}
+          </span>
+        </span>
+        <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
+      </button>
+    </li>
   );
 }
 
@@ -673,21 +660,11 @@ function AgreementBanner({
    Verdict column
    ──────────────────────────────────────────────────────── */
 
-const SOURCE_META: Record<
-  EpaSource,
-  { label: string; icon: React.ComponentType<{ className?: string }>; tint: string }
-> = {
-  learner: { label: 'Learner', icon: User2, tint: 'text-blue-200' },
-  tutor: { label: 'Tutor', icon: ShieldCheck, tint: 'text-elec-yellow' },
-  ai: { label: 'AI', icon: Bot, tint: 'text-purple-200' },
-  employer: { label: 'Employer', icon: User2, tint: 'text-emerald-200' },
-};
-
-const VERDICT_PILL: Record<string, string> = {
-  ready: 'bg-emerald-500/15 text-emerald-200 border-emerald-400/40',
-  almost: 'bg-amber-500/15 text-amber-200 border-amber-400/40',
-  not_yet: 'bg-orange-500/15 text-orange-200 border-orange-400/40',
-  refer: 'bg-red-500/15 text-red-200 border-red-400/40',
+const SOURCE_LABEL: Record<EpaSource, string> = {
+  learner: 'Learner',
+  tutor: 'Tutor',
+  ai: 'AI',
+  employer: 'Employer',
 };
 
 const VERDICT_LABEL: Record<string, string> = {
@@ -700,71 +677,67 @@ const VERDICT_LABEL: Record<string, string> = {
 function VerdictColumn({
   source,
   judgement,
+  draft = false,
   subtitle,
   empty,
   action,
   extra,
 }: {
   source: EpaSource;
-  studentName: string;
   judgement: EpaJudgement | Partial<EpaJudgement> | null;
+  /** Inferred from a mock rather than submitted — say so, and don't dress it up. */
+  draft?: boolean;
   subtitle?: string;
   empty?: string | null;
-  action?: { label: string; onClick: () => void; accent?: boolean };
+  action?: { label: string; onClick: () => void };
   extra?: React.ReactNode;
 }) {
-  const meta = SOURCE_META[source];
-  const Icon = meta.icon;
   const verdict = judgement?.verdict;
   const grade = judgement?.predicted_grade;
   const conf = judgement?.confidence ?? null;
 
   return (
-    <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-5 py-4">
-      <div className="flex items-center gap-2">
-        <Icon className={cn('h-3.5 w-3.5', meta.tint)} />
-        <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-          {meta.label}
-        </div>
+    <div className={cn(CARD, 'px-4 py-4 sm:px-5')}>
+      <div className="flex items-center justify-between gap-2">
+        <div className={CARD_TITLE}>{SOURCE_LABEL[source]}</div>
+        {draft && (
+          <span className="inline-flex h-6 items-center rounded-md border border-white/[0.14] px-1.5 text-[10.5px] font-semibold text-white">
+            Inferred
+          </span>
+        )}
       </div>
       {verdict ? (
         <>
-          <div className="mt-3 flex items-center gap-2 flex-wrap">
+          <div className="mt-2 flex items-baseline gap-2">
+            {/* Refer is the one verdict that is a genuine problem; the rest
+                are positions on a scale and read in white. */}
             <span
               className={cn(
-                'inline-flex items-center h-6 px-2 rounded-full border text-[11px] font-semibold tracking-[0.06em] uppercase',
-                VERDICT_PILL[verdict] ?? 'bg-white/[0.04] border-white/[0.12] text-white/65'
+                'text-[22px] font-semibold leading-none tracking-tight',
+                verdict === 'refer' ? 'text-red-300' : 'text-white'
               )}
             >
               {VERDICT_LABEL[verdict] ?? verdict}
             </span>
             {grade && (
-              <span className="inline-flex items-center h-6 px-2 rounded-full bg-elec-yellow/[0.12] border border-elec-yellow/30 text-[11px] font-semibold tracking-[0.06em] uppercase text-elec-yellow">
-                {grade}
-              </span>
+              <span className="text-[13px] font-semibold capitalize text-elec-yellow">{grade}</span>
             )}
           </div>
           {conf != null && (
-            <div className="mt-2 flex items-center gap-2 text-[11px] text-white/55">
-              <div className="h-1.5 w-full max-w-[100px] rounded-full bg-white/[0.06] overflow-hidden">
-                <div
-                  className={cn(
-                    'h-full rounded-full',
-                    conf >= 70 ? 'bg-emerald-400' : conf >= 40 ? 'bg-elec-yellow' : 'bg-amber-400'
-                  )}
-                  style={{ width: `${conf}%` }}
-                />
+            <div className="mt-2 flex items-center gap-2 text-[12px] text-white">
+              <div className="h-1.5 w-full max-w-[120px] overflow-hidden rounded-full bg-white/[0.10]">
+                <div className="h-full rounded-full bg-white" style={{ width: `${conf}%` }} />
               </div>
-              <span className="tabular-nums">{conf}%</span>
+              <span className="tabular-nums">{conf}% confident</span>
             </div>
           )}
         </>
       ) : (
-        <p className="mt-3 text-[12px] text-white/55 leading-snug">{empty ?? 'No verdict.'}</p>
+        <p className="mt-2 text-[12.5px] leading-snug text-white">{empty ?? 'No verdict.'}</p>
       )}
-      {subtitle && <p className="mt-2 text-[10.5px] text-white/45">{subtitle}</p>}
+      {subtitle && <p className="mt-2 text-[12px] leading-snug text-white">{subtitle}</p>}
       {judgement?.rationale && (
-        <p className="mt-3 text-[12px] text-white/85 leading-relaxed line-clamp-4">
+        <p className="mt-3 line-clamp-4 text-[12.5px] leading-relaxed text-white">
           {judgement.rationale}
         </p>
       )}
@@ -772,12 +745,7 @@ function VerdictColumn({
         <button
           type="button"
           onClick={action.onClick}
-          className={cn(
-            'mt-3 text-[11.5px] font-semibold tracking-tight transition-colors touch-manipulation',
-            action.accent
-              ? 'text-elec-yellow hover:text-elec-yellow/85'
-              : 'text-white/85 hover:text-white'
-          )}
+          className={cn(TEXT_BTN, '-mb-2 -ml-2 mt-1 text-elec-yellow')}
         >
           {action.label}
         </button>

@@ -1,8 +1,9 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Brain, FileUp, Sparkles } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Pill, type Tone } from '@/components/college/primitives';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { HubSectionHeading } from '@/components/hub/HubPrimitives';
 import {
   useStudentQuizzes,
   type AssessmentEntry,
@@ -13,15 +14,13 @@ import { CreateQuizSheet } from '@/components/college/sheets/CreateQuizSheet';
 import { UploadAssessmentDocSheet } from '@/components/college/sheets/UploadAssessmentDocSheet';
 
 /* ==========================================================================
-   SectionQuizzes — assessment + quiz history with pass-rate sparkline.
-   ========================================================================== */
+   SectionQuizzes — assessment + quiz history.
 
-const SOURCE_TONE: Record<AssessmentSource, Tone> = {
-  quiz_attempt: 'blue',
-  quiz_result: 'cyan',
-  tutor_quiz: 'purple',
-  ojt_assessment: 'amber',
-};
+   Hub language: heading with two quiet volt text actions (New quiz, From
+   doc), a four-figure strip, and ONE card of divided rows. The four source
+   colours (blue/cyan/purple/amber) went — the source is a word on the row.
+   Pass is emerald, fail is red, everything else is white.
+   ========================================================================== */
 
 const SOURCE_LABEL: Record<AssessmentSource, string> = {
   quiz_attempt: 'Auto-quiz',
@@ -30,12 +29,17 @@ const SOURCE_LABEL: Record<AssessmentSource, string> = {
   ojt_assessment: 'OJT assessment',
 };
 
-const SOURCE_DOT: Record<AssessmentSource, string> = {
-  quiz_attempt: 'bg-blue-400/85',
-  quiz_result: 'bg-cyan-400/85',
-  tutor_quiz: 'bg-purple-400/85',
-  ojt_assessment: 'bg-amber-400/85',
-};
+const ACTION_BTN =
+  '-my-2 flex h-11 shrink-0 items-center px-2 text-[12px] font-bold text-elec-yellow transition-colors touch-manipulation';
+
+const CHIP =
+  'inline-flex items-center rounded-full border px-2 py-0.5 text-[10.5px] font-semibold tabular-nums';
+const CHIP_NEUTRAL = 'border-white/[0.14] bg-white/[0.06] text-white';
+const CHIP_RED = 'border-red-400/30 bg-red-500/[0.08] text-red-300';
+const CHIP_GOOD = 'border-emerald-400/30 bg-emerald-500/[0.08] text-emerald-300';
+const CHIP_VOLT = 'border-elec-yellow/35 text-elec-yellow';
+
+const CARD = cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE);
 
 function formatRelative(iso: string | null): string {
   if (!iso) return '—';
@@ -75,102 +79,114 @@ export function SectionQuizzes({
   const [reviewAttemptId, setReviewAttemptId] = useState<string | null>(null);
   const [createQuiz, setCreateQuiz] = useState(false);
   const [uploadDoc, setUploadDoc] = useState(false);
+  const first = studentName.split(' ')[0];
 
   const visible = useMemo(
     () => (expanded ? attempts : attempts.slice(0, 8)),
     [attempts, expanded]
   );
 
+  const heading = (
+    <div className="flex items-end justify-between gap-4">
+      <HubSectionHeading>Quizzes &amp; assessments</HubSectionHeading>
+      {collegeStudentId && (
+        <div className="flex items-center gap-1 no-print">
+          <button type="button" onClick={() => setCreateQuiz(true)} className={ACTION_BTN}>
+            New quiz
+          </button>
+          <button type="button" onClick={() => setUploadDoc(true)} className={ACTION_BTN}>
+            From doc
+          </button>
+        </div>
+      )}
+    </div>
+  );
+
+  const sheets = collegeStudentId ? (
+    <>
+      <CreateQuizSheet
+        open={createQuiz}
+        onOpenChange={setCreateQuiz}
+        collegeStudentId={collegeStudentId}
+        studentName={studentName}
+      />
+      <UploadAssessmentDocSheet
+        open={uploadDoc}
+        onOpenChange={setUploadDoc}
+        collegeStudentId={collegeStudentId}
+        studentName={studentName}
+      />
+    </>
+  ) : null;
+
   if (!userId) {
     return (
-      <section id={id} className="scroll-mt-6">
-        <Header />
-        <div className="mt-5 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-6 py-8 text-center">
-          <p className="text-[12.5px] text-white/65 max-w-md mx-auto leading-relaxed">
-            No linked apprentice account — connect this learner's app sign-in to see quiz
-            and assessment results.
+      <section id={id} className="scroll-mt-20 space-y-3">
+        {heading}
+        <div className={cn(CARD, 'px-4 py-5 sm:px-5')}>
+          <p className="text-[12.5px] leading-relaxed text-white">
+            No linked apprentice account — connect this learner's app sign-in to see quiz and
+            assessment results. You can still send a quiz from here.
           </p>
         </div>
+        {sheets}
       </section>
     );
   }
 
-  return (
-    <section id={id} className="scroll-mt-6">
-      <Header
-        onCreateQuiz={() => setCreateQuiz(true)}
-        onUploadDoc={() => setUploadDoc(true)}
-      />
+  const sources = (Object.keys(rollUp.by_source) as AssessmentSource[]).filter(
+    (s) => rollUp.by_source[s].count > 0
+  );
 
-      <div className="mt-5 grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-        <StatCard
+  return (
+    <section id={id} className="scroll-mt-20 space-y-3">
+      {heading}
+
+      <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4 sm:gap-3">
+        <StatCell
           label="Attempts"
           value={String(rollUp.total_attempts)}
-          sub={rollUp.last_attempt_at ? `Last ${formatRelative(rollUp.last_attempt_at)}` : '—'}
+          sub={rollUp.last_attempt_at ? `Last ${formatRelative(rollUp.last_attempt_at)}` : 'None yet'}
         />
-        <StatCard
+        <StatCell
           label="Pass rate"
-          value={`${rollUp.pass_rate_percent}%`}
-          tone={rollUp.pass_rate_percent >= 80 ? 'emerald' : rollUp.pass_rate_percent >= 50 ? 'amber' : 'red'}
+          value={rollUp.total_attempts > 0 ? `${rollUp.pass_rate_percent}%` : '—'}
+          bad={rollUp.total_attempts > 0 && rollUp.pass_rate_percent < 50}
         />
-        <StatCard
-          label="Avg score"
-          value={rollUp.avg_percent != null ? `${rollUp.avg_percent}%` : '—'}
-          tone={
-            rollUp.avg_percent != null && rollUp.avg_percent >= 75
-              ? 'emerald'
-              : rollUp.avg_percent != null && rollUp.avg_percent >= 50
-                ? 'amber'
-                : undefined
-          }
-        />
-        <StatCard
+        <StatCell label="Average score" value={rollUp.avg_percent != null ? `${rollUp.avg_percent}%` : '—'} />
+        <StatCell
           label="Streak"
           value={String(rollUp.recent_streak)}
           sub="passes in a row"
-          tone={rollUp.recent_streak >= 3 ? 'emerald' : undefined}
+          good={rollUp.recent_streak >= 3}
         />
       </div>
 
-      {/* Source breakdown */}
-      <div className="mt-3 grid grid-cols-2 sm:grid-cols-4 gap-2">
-        {(Object.keys(rollUp.by_source) as AssessmentSource[]).map((s) => {
-          const stat = rollUp.by_source[s];
-          if (stat.count === 0) return null;
-          return (
-            <div key={s} className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-xl px-3 py-2.5">
-              <div className="flex items-center gap-2">
-                <span className={cn('inline-block h-1.5 w-1.5 rounded-full', SOURCE_DOT[s])} />
-                <span className="text-[10.5px] font-medium text-white/85">
-                  {SOURCE_LABEL[s]}
-                </span>
-              </div>
-              <div className="mt-1 flex items-baseline gap-1.5">
-                <span className="text-[15px] font-semibold text-white tabular-nums leading-none">
-                  {stat.count}
-                </span>
-                {stat.avg_percent != null && (
-                  <span className="text-[10.5px] text-white/55 tabular-nums">
-                    {stat.avg_percent}% avg
-                  </span>
-                )}
-              </div>
-            </div>
-          );
-        })}
-      </div>
+      {sources.length > 0 && (
+        <div className="flex flex-wrap gap-1.5">
+          {sources.map((s) => {
+            const stat = rollUp.by_source[s];
+            return (
+              <span key={s} className={cn(CHIP, CHIP_NEUTRAL, 'py-1')}>
+                {SOURCE_LABEL[s]} · {stat.count}
+                {stat.avg_percent != null ? ` · ${stat.avg_percent}% avg` : ''}
+              </span>
+            );
+          })}
+        </div>
+      )}
 
-      <div className="mt-5">
-        {loading && attempts.length === 0 ? (
-          <Skeleton />
-        ) : attempts.length === 0 ? (
-          <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-6 py-8 text-center">
-            <p className="text-[12.5px] text-white/65 max-w-md mx-auto leading-relaxed">
-              No quiz or assessment history for {studentName.split(' ')[0]} yet.
-            </p>
-          </div>
-        ) : (
-          <div className="space-y-2.5">
+      {loading && attempts.length === 0 ? (
+        <Skeleton />
+      ) : attempts.length === 0 ? (
+        <div className={cn(CARD, 'px-4 py-5 sm:px-5')}>
+          <p className="text-[12.5px] leading-relaxed text-white">
+            No quiz or assessment history for {first} yet.
+          </p>
+        </div>
+      ) : (
+        <div className={CARD}>
+          <ul className="divide-y divide-white/[0.10]">
             {visible.map((a) => {
               // Tutor-authored attempts → open the review sheet (use the raw
               // attempt_id, NOT the namespaced `tq_` id).
@@ -186,18 +202,18 @@ export function SectionQuizzes({
               }
               return <AttemptRow key={a.id} attempt={a} onClick={onClick} />;
             })}
-            {attempts.length > 8 && (
-              <button
-                type="button"
-                onClick={() => setExpanded((v) => !v)}
-                className="w-full h-11 rounded-xl border border-white/[0.08] text-[12px] font-medium text-white/75 hover:text-white hover:border-white/[0.18] transition-colors touch-manipulation"
-              >
-                {expanded ? 'Show fewer' : `Show all ${attempts.length} attempts`}
-              </button>
-            )}
-          </div>
-        )}
-      </div>
+          </ul>
+          {attempts.length > 8 && (
+            <button
+              type="button"
+              onClick={() => setExpanded((v) => !v)}
+              className="flex h-11 w-full items-center justify-center border-t border-white/[0.10] text-[12.5px] font-semibold text-white transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09]"
+            >
+              {expanded ? 'Show fewer' : `Show all ${attempts.length} attempts`}
+            </button>
+          )}
+        </div>
+      )}
 
       <QuizAttemptReviewSheet
         open={reviewAttemptId !== null}
@@ -208,222 +224,122 @@ export function SectionQuizzes({
         studentName={studentName}
       />
 
-      {collegeStudentId && (
-        <>
-          <CreateQuizSheet
-            open={createQuiz}
-            onOpenChange={setCreateQuiz}
-            collegeStudentId={collegeStudentId}
-            studentName={studentName}
-          />
-          <UploadAssessmentDocSheet
-            open={uploadDoc}
-            onOpenChange={setUploadDoc}
-            collegeStudentId={collegeStudentId}
-            studentName={studentName}
-          />
-        </>
-      )}
+      {sheets}
     </section>
   );
 }
 
-function Header({
-  onCreateQuiz,
-  onUploadDoc,
-}: {
-  onCreateQuiz: () => void;
-  onUploadDoc: () => void;
-}) {
-  return (
-    <div className="flex items-end justify-between gap-4 flex-wrap">
-      <div>
-        <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Knowledge checks
-        </div>
-        <h2 className="mt-1.5 text-xl sm:text-[26px] font-semibold text-white tracking-tight leading-tight">
-          Quizzes &amp; assessments
-        </h2>
-      </div>
-      <div className="flex items-center gap-1.5">
-        <button
-          type="button"
-          onClick={onCreateQuiz}
-          className="inline-flex items-center gap-1.5 h-9 px-3 rounded-full bg-elec-yellow text-black text-[12px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation"
-        >
-          <Sparkles className="h-3.5 w-3.5" />
-          New quiz
-        </button>
-        <button
-          type="button"
-          onClick={onUploadDoc}
-          className="inline-flex items-center gap-1.5 h-9 px-3 rounded-full bg-white/[0.04] border border-white/[0.10] text-white text-[12px] font-semibold hover:bg-white/[0.08] transition-colors touch-manipulation"
-        >
-          <FileUp className="h-3.5 w-3.5" />
-          From doc
-        </button>
-      </div>
-    </div>
-  );
-}
-
-function AttemptRow({
-  attempt,
-  onClick,
-}: {
-  attempt: AssessmentEntry;
-  onClick?: () => void;
-}) {
+function AttemptRow({ attempt, onClick }: { attempt: AssessmentEntry; onClick?: () => void }) {
   const isSent = attempt.status === 'sent';
   const isInProgress = attempt.status === 'in_progress';
   const verdict = isSent
-    ? { label: 'Sent', class: 'text-blue-300', dot: 'bg-blue-400' }
+    ? { label: 'Sent', chip: CHIP_VOLT }
     : isInProgress
-      ? { label: 'In progress', class: 'text-amber-300', dot: 'bg-amber-400' }
+      ? { label: 'In progress', chip: CHIP_NEUTRAL }
       : attempt.passed === true
-        ? { label: 'Pass', class: 'text-emerald-300', dot: 'bg-emerald-400' }
+        ? { label: 'Pass', chip: CHIP_GOOD }
         : attempt.passed === false
-          ? { label: 'Fail', class: 'text-red-300', dot: 'bg-red-400' }
+          ? { label: 'Fail', chip: CHIP_RED }
           : null;
 
-  const Wrapper: React.ElementType = onClick ? 'button' : 'div';
-  const wrapperProps = onClick
-    ? {
-        type: 'button' as const,
-        onClick,
-        className:
-          'w-full text-left bg-[hsl(0_0%_12%)] border border-white/[0.06] hover:bg-white/[0.02] hover:border-white/[0.10] rounded-2xl px-4 sm:px-5 py-3.5 flex items-start gap-3 transition-colors touch-manipulation',
-      }
-    : {
-        className: 'bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-4 sm:px-5 py-3.5 flex items-start gap-3',
-      };
+  const inner = (
+    <>
+      <span className="min-w-0 flex-1">
+        <span className="flex flex-wrap items-center gap-1.5">
+          <span className="truncate text-[13.5px] font-semibold leading-tight text-white">{attempt.title}</span>
+          {attempt.kind === 'assessment' && <span className={cn(CHIP, CHIP_NEUTRAL)}>Assessment</span>}
+          {attempt.kind === 'mock_exam' && <span className={cn(CHIP, CHIP_NEUTRAL)}>Mock exam</span>}
+          {verdict && <span className={cn(CHIP, verdict.chip)}>{verdict.label}</span>}
+          {attempt.grade && (
+            <span className="text-[11px] font-semibold tabular-nums text-white">{attempt.grade}</span>
+          )}
+        </span>
+        <span className="mt-0.5 flex flex-wrap items-center gap-x-2 text-[11px] tabular-nums text-white">
+          <span>{formatRelative(attempt.taken_at)}</span>
+          <span>{SOURCE_LABEL[attempt.source]}</span>
+          {attempt.unit_code && <span className="font-mono">{attempt.unit_code}</span>}
+          {attempt.time_seconds != null && <span>{fmtSecs(attempt.time_seconds)}</span>}
+        </span>
+      </span>
+      <span className="shrink-0 text-right">
+        {attempt.percentage != null ? (
+          <>
+            <span className="block text-[14px] font-semibold leading-none tabular-nums text-white">
+              {attempt.percentage}%
+            </span>
+            {attempt.score != null && attempt.total != null && (
+              <span className="mt-0.5 block text-[11px] tabular-nums text-white">
+                {attempt.score}/{attempt.total}
+              </span>
+            )}
+          </>
+        ) : attempt.status ? (
+          <span className="block text-[11px] capitalize text-white">
+            {attempt.status.replace(/_/g, ' ')}
+          </span>
+        ) : (
+          <span className="block text-[11px] text-white">—</span>
+        )}
+      </span>
+      {onClick && <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden />}
+    </>
+  );
+
+  const rowCn = 'flex w-full items-center gap-3 px-4 py-3.5 text-left sm:px-5';
 
   return (
-    <Wrapper {...wrapperProps}>
-      <span
-        aria-hidden
-        className={cn('mt-1.5 inline-block h-2 w-2 rounded-full flex-shrink-0', SOURCE_DOT[attempt.source])}
-      />
-      <div className="min-w-0 flex-1">
-        <div className="flex items-start justify-between gap-3 flex-wrap">
-          <div className="min-w-0 flex-1">
-            <div className="flex items-center gap-2 flex-wrap">
-              <h3 className="text-[13.5px] font-medium text-white leading-tight truncate">
-                {attempt.title}
-              </h3>
-              {attempt.kind === 'assessment' && (
-                <span className="inline-flex items-center h-5 px-1.5 rounded-md bg-cyan-500/[0.10] border border-cyan-400/30 text-[9.5px] font-semibold tracking-[0.06em] uppercase text-cyan-200">
-                  Assessment
-                </span>
-              )}
-              {attempt.kind === 'mock_exam' && (
-                <span className="inline-flex items-center h-5 px-1.5 rounded-md bg-orange-500/[0.10] border border-orange-400/30 text-[9.5px] font-semibold tracking-[0.06em] uppercase text-orange-200">
-                  Mock exam
-                </span>
-              )}
-              {verdict && (
-                <span
-                  className={cn(
-                    'inline-flex items-center h-5 px-1.5 rounded-md border text-[10px] font-semibold tracking-[0.06em] uppercase',
-                    verdict.label === 'Pass'
-                      ? 'border-emerald-500/30 bg-emerald-500/[0.1] text-emerald-200'
-                      : verdict.label === 'Fail'
-                        ? 'border-red-500/30 bg-red-500/[0.1] text-red-200'
-                        : verdict.label === 'In progress'
-                          ? 'border-amber-500/30 bg-amber-500/[0.1] text-amber-200'
-                          : 'border-blue-500/30 bg-blue-500/[0.1] text-blue-200'
-                  )}
-                >
-                  {verdict.label}
-                </span>
-              )}
-              {attempt.grade && (
-                <span className="text-[11px] font-medium text-elec-yellow/85 tabular-nums">
-                  {attempt.grade}
-                </span>
-              )}
-            </div>
-            <div className="mt-0.5 flex items-center flex-wrap gap-x-2 gap-y-0.5 text-[10.5px] text-white/55 tabular-nums">
-              <span>{formatRelative(attempt.taken_at)}</span>
-              <span className="text-white/25">·</span>
-              <Pill tone={SOURCE_TONE[attempt.source]}>{SOURCE_LABEL[attempt.source]}</Pill>
-              {attempt.unit_code && (
-                <>
-                  <span className="text-white/25">·</span>
-                  <span className="font-mono">{attempt.unit_code}</span>
-                </>
-              )}
-              {attempt.time_seconds != null && (
-                <>
-                  <span className="text-white/25">·</span>
-                  <span>{fmtSecs(attempt.time_seconds)}</span>
-                </>
-              )}
-            </div>
-          </div>
-          <div className="flex-shrink-0 text-right">
-            {attempt.percentage != null ? (
-              <>
-                <div className="text-[14px] font-semibold text-white tabular-nums leading-none">
-                  {attempt.percentage}%
-                </div>
-                {attempt.score != null && attempt.total != null && (
-                  <div className="mt-0.5 text-[10px] text-white/55 tabular-nums">
-                    {attempt.score}/{attempt.total}
-                  </div>
-                )}
-              </>
-            ) : attempt.status ? (
-              <div className="text-[10.5px] text-white/65 capitalize">{attempt.status.replace(/_/g, ' ')}</div>
-            ) : (
-              <div className="text-[10.5px] text-white/45">—</div>
-            )}
-          </div>
-        </div>
-      </div>
-    </Wrapper>
+    <li>
+      {onClick ? (
+        <button
+          type="button"
+          onClick={onClick}
+          className={cn(rowCn, 'transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09]')}
+        >
+          {inner}
+        </button>
+      ) : (
+        <div className={rowCn}>{inner}</div>
+      )}
+    </li>
   );
 }
 
-function StatCard({
+function StatCell({
   label,
   value,
   sub,
-  tone,
+  bad,
+  good,
 }: {
   label: string;
   value: string;
   sub?: string;
-  tone?: 'emerald' | 'amber' | 'red';
+  bad?: boolean;
+  good?: boolean;
 }) {
   return (
-    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-4 py-3.5">
-      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
-        {label}
-      </div>
+    <div className={cn(CARD, 'px-4 py-3.5')}>
+      <div className="text-[12px] font-medium text-white">{label}</div>
       <div
         className={cn(
-          'mt-1 text-[18px] font-semibold tabular-nums leading-none',
-          tone === 'emerald' ? 'text-emerald-300' :
-          tone === 'amber' ? 'text-amber-300' :
-          tone === 'red' ? 'text-red-300' :
-          'text-white'
+          'mt-1 text-[22px] font-semibold leading-none tabular-nums tracking-tight',
+          bad ? 'text-red-300' : good ? 'text-emerald-300' : 'text-white'
         )}
       >
         {value}
       </div>
-      {sub && <div className="mt-1 text-[10.5px] text-white/55 tabular-nums">{sub}</div>}
+      {sub && <div className="mt-1 text-[11px] tabular-nums text-white">{sub}</div>}
     </div>
   );
 }
 
 function Skeleton() {
   return (
-    <div className="space-y-2.5 animate-pulse">
+    <div className={cn(CARD, 'space-y-3 px-4 py-4 animate-pulse sm:px-5')}>
       {[0, 1, 2].map((i) => (
-        <div key={i} className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-5 py-3.5">
-          <div className="h-3 w-2/3 rounded bg-white/[0.06]" />
-          <div className="mt-2 h-2 w-1/3 rounded bg-white/[0.04]" />
+        <div key={i}>
+          <div className="h-3 w-2/3 rounded bg-white/[0.08]" />
+          <div className="mt-2 h-2 w-1/3 rounded bg-white/[0.05]" />
         </div>
       ))}
     </div>

@@ -144,6 +144,42 @@ function getLaunchPaymentUrl(role: 'electrician' | 'apprentice'): string {
   return url;
 }
 
+/**
+ * Tie a Stripe payment link to the person we sent it to.
+ *
+ * 🔴 A bare payment link is identical for every recipient, so the only thing the
+ * webhook can identify the buyer by is the email typed at checkout — and Stripe
+ * Link autofills whatever address they've used at ANY other Stripe merchant.
+ * `findUserByCustomer` then resolves in the order metadata.userId → existing
+ * stripe_customer_id → customer email, and a payment link supplies neither of
+ * the first two, so a Link-autofilled personal address is the entire basis for
+ * the match. When it belongs to no account they pay and get nothing (Jake
+ * James, 2026-09-05: paid £9.99 at 21:17, hand-granted free access at 21:30);
+ * when it belongs to a DIFFERENT account of theirs, the access silently lands
+ * on the wrong one.
+ *
+ * `prefilled_email` locks the field to their account address so Link cannot
+ * override it — verified against the live link 2026-09-07, the field renders
+ * pre-populated. `client_reference_id` gives the webhook a second, exact signal;
+ * note it deliberately loses to the paying email on conflict (see the
+ * checkout.session.completed handler), so the prefill is the load-bearing half.
+ */
+function personalisePaymentUrl(baseUrl: string, email: string, userId: string): string {
+  try {
+    const u = new URL(baseUrl);
+    u.searchParams.set('prefilled_email', email);
+    // Stripe allows [A-Za-z0-9_-], max 200 chars. A UUID passes as-is; strip
+    // anything else rather than send a value Stripe will reject silently.
+    const safeRef = userId.replace(/[^A-Za-z0-9_-]/g, '').slice(0, 200);
+    if (safeRef) u.searchParams.set('client_reference_id', safeRef);
+    return u.toString();
+  } catch {
+    // A malformed base URL must not stop the send — an un-personalised link
+    // still works, it just falls back to the old email-matching behaviour.
+    return baseUrl;
+  }
+}
+
 // ── V11 send infrastructure ──────────────────────────────────────
 //
 // The V10 campaign path sent strictly one-at-a-time with a 500ms sleep between
@@ -194,7 +230,9 @@ async function sendOneV11(
   variant: 'main' | 'nudge'
 ): Promise<string | null> {
   try {
-    const paymentUrl = getLaunchPaymentUrl(r.role);
+    // Personalised so the webhook can identify the payer even if Stripe Link
+    // would otherwise autofill an address belonging to another account.
+    const paymentUrl = personalisePaymentUrl(getLaunchPaymentUrl(r.role), r.email, r.userId);
     const unsubscribeUrl = await buildUnsubscribeUrl(r.email);
     const isNudge = variant === 'nudge';
 
@@ -2415,7 +2453,11 @@ Deno.serve(async (req) => {
         if (!testEmail) throw new Error('testEmail is required');
         const testRole: 'electrician' | 'apprentice' =
           bodyRole === 'apprentice' ? 'apprentice' : 'electrician';
-        const paymentUrl = getLaunchPaymentUrl(testRole);
+        const paymentUrl = personalisePaymentUrl(
+          getLaunchPaymentUrl(testRole),
+          testEmail.trim().toLowerCase(),
+          ''
+        );
         const deadline = bodyDeadline || V10_DEADLINE_LABEL;
         const firstName = recipientName?.split(' ')[0] || 'Test';
 
@@ -2475,10 +2517,16 @@ Deno.serve(async (req) => {
         if (bodyRole === 'apprentice') resolvedRole = 'apprentice';
         if (bodyRole === 'electrician') resolvedRole = 'electrician';
 
-        const paymentUrl = getLaunchPaymentUrl(resolvedRole);
+        const v10ManualEmail = manualEmail.trim().toLowerCase();
+        // Same personalisation as V11 — V10 is retired but still sendable, and
+        // it carries the identical bare-payment-link fault.
+        const paymentUrl = personalisePaymentUrl(
+          getLaunchPaymentUrl(resolvedRole),
+          v10ManualEmail,
+          resolvedProfileId ?? ''
+        );
         const deadline = bodyDeadline || V10_DEADLINE_LABEL;
 
-        const v10ManualEmail = manualEmail.trim().toLowerCase();
         const v10ManualSuppressed = await getSuppressedEmails(supabaseAdmin);
         if (v10ManualSuppressed.has(v10ManualEmail)) {
           throw new Error('Recipient has unsubscribed from Elec-Mate marketing emails');
@@ -2610,12 +2658,15 @@ Deno.serve(async (req) => {
             try {
               const profileRole: 'electrician' | 'apprentice' =
                 (profile as { role?: string }).role === 'apprentice' ? 'apprentice' : 'electrician';
-              const paymentUrl = getLaunchPaymentUrl(profileRole);
+              const v10Email = (profile as { email: string }).email.trim().toLowerCase();
+              const paymentUrl = personalisePaymentUrl(
+                getLaunchPaymentUrl(profileRole),
+                v10Email,
+                (profile as unknown as { id: string }).id
+              );
               const firstName =
                 ((profile as { full_name?: string }).full_name?.split(' ')[0]) || 'mate';
-              const v10UnsubUrl = await buildUnsubscribeUrl(
-                (profile as { email: string }).email.trim().toLowerCase()
-              );
+              const v10UnsubUrl = await buildUnsubscribeUrl(v10Email);
               const html = generateV10LaunchPriceHTML(
                 firstName,
                 profileRole,
@@ -2839,7 +2890,8 @@ Deno.serve(async (req) => {
         const isNudge = bodyRole === 'nudge' || recipientName === 'nudge';
         const to = testEmail.trim().toLowerCase();
 
-        const paymentUrl = getLaunchPaymentUrl(testRole);
+        // Prefill so a test send behaves exactly like a real one.
+        const paymentUrl = personalisePaymentUrl(getLaunchPaymentUrl(testRole), to, '');
         const unsubUrl = await buildUnsubscribeUrl(to);
         const html = isNudge
           ? generateV11NudgeHTML(firstName, testRole, paymentUrl, deadline, unsubUrl)

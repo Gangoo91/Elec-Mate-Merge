@@ -1,7 +1,33 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
+/**
+ * Assessment Hub — marking, attendance, learning plans, off-the-job and EPA.
+ *
+ * Rebuilt on the shared hub shell (`@/components/hub/HubPrimitives`). The
+ * masthead is drawn by CollegeDashboard; this is only the body:
+ *
+ *   quick start → KPI row → mark & record → learner progress → OTJ & EPA →
+ *   quality & reports
+ *
+ * What went, and why:
+ *
+ * The HERO and the numbered, colour-toned cards (amber, green, orange, blue,
+ * purple, emerald, cyan, yellow — eight tones on one page, none of them
+ * meaning anything). Colour now only encodes state: a volt figure means work
+ * outstanding.
+ *
+ * The "AI" PILLS on four cards. A chip saying AI is not information; the
+ * description says what the tool does.
+ *
+ * A group of NINE cards and a group of SIX. The grid is auto-fit, and auto-fit
+ * only collapses tracks that are empty for the whole grid, so nine drew
+ * 4 + 4 + 1 with three holes. Every group is now exactly four.
+ *
+ * One figure corrected: "Attendance — rolling average" was every attendance
+ * row the college has ever recorded. It is now the last 30 days, and says so;
+ * it falls back to all-time (and says that) only when there is nothing in
+ * the window.
+ */
+import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { PullToRefresh } from '@/components/college/ui/PullToRefresh';
 import { RecordGradeSheet } from '@/components/college/sheets/RecordGradeSheet';
 import { CalibrationSessionSheet } from '@/components/college/sheets/CalibrationSessionSheet';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
@@ -10,314 +36,278 @@ import { useOverdueILPReviews } from '@/hooks/college/useCollegeILP';
 import { useCollegeEPAs } from '@/hooks/college/useCollegeEPA';
 import { useCollegeAttendance } from '@/hooks/college/useCollegeAttendance';
 import { useWorkQueue } from '@/hooks/college/useWorkQueue';
-import { useQueryClient } from '@tanstack/react-query';
 import {
-  PageFrame,
-  PageHero,
-  StatStrip,
-  SectionHeader,
-  HubGrid,
-  HubCard,
-  Pill,
-  itemVariants,
-} from '@/components/college/primitives';
+  HubQuickStart,
+  HubKpi,
+  HubKpiRow,
+  HubToolGrid,
+  type HubTool,
+  type HubQuickAction,
+} from '@/components/hub/HubPrimitives';
 
 interface AssessmentHubProps {
   onNavigate: (section: CollegeSection) => void;
 }
 
+const DAY_MS = 86_400_000;
+
 export function AssessmentHub({ onNavigate }: AssessmentHubProps) {
+  const navigate = useNavigate();
   const { data: pendingGrades = [] } = usePendingGrades();
   const { data: overdueILPs = [] } = useOverdueILPReviews();
   const { data: epaRecords = [] } = useCollegeEPAs();
   const { data: attendance = [] } = useCollegeAttendance();
   const { stats: workStats } = useWorkQueue();
-  const queryClient = useQueryClient();
   const [gradeSheetOpen, setGradeSheetOpen] = useState(false);
   const [calibrationOpen, setCalibrationOpen] = useState(false);
-  const navigate = useNavigate();
-
-  const handleRefresh = async () => {
-    await Promise.all([
-      queryClient.invalidateQueries({ queryKey: ['college-grades'] }),
-      queryClient.invalidateQueries({ queryKey: ['college-ilps'] }),
-      queryClient.invalidateQueries({ queryKey: ['college-epa'] }),
-      queryClient.invalidateQueries({ queryKey: ['college-attendance'] }),
-    ]);
-  };
 
   const pendingAssessments = pendingGrades.length;
   const overdueILPReviews = overdueILPs.length;
+  const gatewayReady = epaRecords.filter((e) => e.status === 'Gateway Ready').length;
   const studentsAtGateway = epaRecords.filter(
     (e) => e.status === 'Pre-Gateway' || e.status === 'Gateway Ready'
   ).length;
   const pendingWork = workStats.total;
-  const avgAttendance =
-    attendance.length > 0
-      ? Math.round(
-          (attendance.filter((a) => a.status === 'Present' || a.status === 'Late').length /
-            attendance.length) *
-            100
-        )
-      : 0;
+
+  /*
+   * Present or Late counts as attended — the same rule the per-learner and
+   * per-cohort rates in collegeAttendanceService use, so this figure agrees
+   * with the ones on the Attendance page.
+   */
+  const attendanceRate = useMemo(() => {
+    const since = new Date(Date.now() - 30 * DAY_MS).toISOString().slice(0, 10);
+    const recent = attendance.filter((a) => a.date >= since);
+    const rows = recent.length > 0 ? recent : attendance;
+    if (rows.length === 0) return null;
+    const attended = rows.filter((a) => a.status === 'Present' || a.status === 'Late').length;
+    return {
+      pct: Math.round((attended / rows.length) * 100),
+      window: recent.length > 0 ? 'last 30 days' : 'all recorded sessions',
+      sessions: rows.length,
+    };
+  }, [attendance]);
+
+  /*
+   * ── Start something ──────────────────────────────────────────────────
+   * Recording a grade is the thing an assessor most often comes here to do,
+   * so it takes the single solid volt card.
+   */
+  const quickStart: HubQuickAction[] = [
+    {
+      title: 'Record a grade',
+      description: 'Mark a piece of work',
+      onClick: () => setGradeSheetOpen(true),
+      primary: true,
+    },
+    {
+      title: 'Take a register',
+      description: 'Attendance for a class',
+      onClick: () => onNavigate('attendance'),
+    },
+    {
+      title: 'Calibration session',
+      description: 'Every tutor marks the same sample',
+      onClick: () => setCalibrationOpen(true),
+    },
+    {
+      title: 'Generate an ILP',
+      description: 'A learning plan from live data',
+      onClick: () => onNavigate('aiilpgenerator'),
+    },
+  ];
+
+  /*
+   * ── Tool groups ──────────────────────────────────────────────────────
+   * Four groups of four. A card reports a figure when it has one and says
+   * what it is for when it doesn't — never both.
+   */
+  const markAndRecord: HubTool[] = [
+    {
+      id: 'grading',
+      title: 'Grading',
+      onClick: () => onNavigate('grading'),
+      // No figure: the "To mark" KPI directly above already shows it. A card
+      // repeats what its KPI does NOT say (BusinessHub's rule).
+      description: 'Mark work, record outcomes and feedback.',
+      alert: pendingAssessments > 0,
+    },
+    {
+      id: 'attendance',
+      title: 'Attendance',
+      onClick: () => onNavigate('attendance'),
+      description: 'Registers, patterns and attendance concerns.',
+    },
+    {
+      id: 'work-queue',
+      title: 'Work queue',
+      onClick: () => onNavigate('workqueue'),
+      value: pendingWork > 0 ? String(pendingWork) : undefined,
+      valueLabel: pendingWork > 0 ? 'reviews and tasks open' : undefined,
+      description: 'Nothing in the queue.',
+      alert: pendingWork > 0,
+    },
+    {
+      id: 'batch-operations',
+      title: 'Batch operations',
+      onClick: () => onNavigate('batchoperations'),
+      description: 'Grades, attendance or status for many learners in one pass.',
+    },
+  ];
+
+  const learnerProgress: HubTool[] = [
+    {
+      id: 'ilp-management',
+      title: 'ILP management',
+      onClick: () => onNavigate('ilpmanagement'),
+      description: 'Learning plans, SMART targets and review cycles.',
+      alert: overdueILPReviews > 0,
+    },
+    {
+      id: 'progress-tracking',
+      title: 'Progress tracking',
+      onClick: () => onNavigate('progresstracking'),
+      description: 'RAG ratings, progress scores and at-risk flags.',
+    },
+    {
+      id: 'portfolio',
+      title: 'Portfolios',
+      onClick: () => onNavigate('portfolio'),
+      description: 'Evidence, assisted reviews and resubmissions.',
+    },
+    {
+      id: 'mastery-queue',
+      title: 'AC sign-off queue',
+      onClick: () => onNavigate('masteryqueue'),
+      description: 'Approve a proposed criterion sign-off once the evidence clears the threshold.',
+    },
+  ];
+
+  const otjAndEpa: HubTool[] = [
+    {
+      id: 'otj-training',
+      title: 'Off-the-job training',
+      onClick: () => onNavigate('otjtraining'),
+      description: "Each learner's verified hours against their required total.",
+    },
+    {
+      id: 'gateway-readiness',
+      title: 'Gateway readiness',
+      to: '/college/epa',
+      // The "At gateway" KPI above shows how many are there; this card
+      // carries the figure the KPI only mentions in passing — how many are
+      // actually ready to submit.
+      value: gatewayReady > 0 ? String(gatewayReady) : undefined,
+      valueLabel: gatewayReady > 0 ? 'ready to submit' : undefined,
+      description: 'Learner, tutor and assisted verdicts side by side for every apprentice.',
+      alert: gatewayReady > 0,
+    },
+    {
+      id: 'epa-admin',
+      title: 'EPA admin',
+      onClick: () => onNavigate('epatracking'),
+      description: 'Status records, gateway dates, outcomes and Functional Skills.',
+    },
+    {
+      id: 'assessment-calendar',
+      title: 'Assessment calendar',
+      onClick: () => onNavigate('assessmentcalendar'),
+      description: 'Assessment, IQA and observation dates across cohorts.',
+    },
+  ];
+
+  const qualityAndReports: HubTool[] = [
+    {
+      id: 'iqa-dashboard',
+      title: 'IQA dashboard',
+      to: '/college/iqa',
+      description: 'Sampling plans, findings and standardisation meetings.',
+    },
+    {
+      id: 'iqa-otj-audit',
+      title: 'IQA off-the-job verdicts',
+      onClick: () => onNavigate('iqaotjaudit'),
+      description: 'Sample verified entries and track assessor agreement.',
+    },
+    {
+      id: 'lesson-observations',
+      title: 'Lesson observations',
+      onClick: () => onNavigate('tutorobs'),
+      description: 'Peer, HoD, IQA and learning-walk observations for every tutor.',
+    },
+    {
+      id: 'reports',
+      title: 'Reports',
+      to: '/college/reports',
+      description: 'Funding, Ofsted, awarding-body and quality exports.',
+    },
+  ];
 
   return (
-    <PullToRefresh onRefresh={handleRefresh}>
-      <PageFrame>
-        {/* HERO */}
-        <motion.div variants={itemVariants}>
-          <PageHero
-            eyebrow="Assessment Hub"
-            title="Grading, progress & EPA"
-            description="Mark assessments, track attendance, run ILP reviews and drive learners to EPA gateway."
-            tone="amber"
-            actions={
-              <button
-                onClick={() => setGradeSheetOpen(true)}
-                className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap"
-              >
-                Record grade →
-              </button>
-            }
-          />
-        </motion.div>
+    <>
+      <HubQuickStart label="Start something" items={quickStart} />
 
-        {/* STATS */}
-        <motion.div variants={itemVariants}>
-          <StatStrip
-            columns={4}
-            stats={[
-              {
-                value: pendingAssessments,
-                label: 'Pending',
-                sub: 'Awaiting grading',
-                onClick: () => onNavigate('grading'),
-                accent: pendingAssessments > 0,
-              },
-              {
-                value: `${avgAttendance}%`,
-                label: 'Attendance',
-                sub: 'Rolling average',
-                onClick: () => onNavigate('attendance'),
-                tone: avgAttendance >= 85 ? 'green' : avgAttendance >= 70 ? 'amber' : 'red',
-              },
-              {
-                value: studentsAtGateway,
-                label: 'Gateway',
-                sub: 'Ready / pre-gateway',
-                onClick: () => onNavigate('epatracking'),
-              },
-              {
-                value: overdueILPReviews,
-                label: 'Overdue ILPs',
-                sub: 'Reviews outstanding',
-                onClick: () => onNavigate('ilpmanagement'),
-                accent: overdueILPReviews > 0,
-              },
-            ]}
-          />
-        </motion.div>
+      {/* Four KPIs, capped at four on purpose. One accent, the first. */}
+      <HubKpiRow>
+        <HubKpi
+          accent
+          label="To mark"
+          value={String(pendingAssessments)}
+          verdict={pendingAssessments > 0 ? 'Clear the oldest first' : 'All caught up'}
+          context={pendingWork > 0 ? `${pendingWork} in the work queue overall` : undefined}
+          sentiment={pendingAssessments > 0 ? 'bad' : 'neutral'}
+          onClick={() => onNavigate('grading')}
+        />
+        <HubKpi
+          label="Attendance"
+          value={attendanceRate ? `${attendanceRate.pct}%` : '—'}
+          verdict={
+            !attendanceRate
+              ? 'No registers taken yet'
+              : attendanceRate.pct >= 85
+                ? 'Holding up'
+                : attendanceRate.pct >= 70
+                  ? 'Slipping — look at the patterns'
+                  : 'Low — act on it this week'
+          }
+          context={
+            attendanceRate
+              ? `${attendanceRate.sessions} marks, ${attendanceRate.window}`
+              : undefined
+          }
+          sentiment={attendanceRate && attendanceRate.pct < 85 ? 'bad' : 'neutral'}
+          onClick={() => onNavigate('attendance')}
+        />
+        <HubKpi
+          label="At gateway"
+          value={String(studentsAtGateway)}
+          verdict={
+            gatewayReady > 0
+              ? `${gatewayReady} ready to submit`
+              : studentsAtGateway > 0
+                ? 'Approaching — check the blockers'
+                : 'Nobody at gateway yet'
+          }
+          onClick={() => navigate('/college/epa')}
+        />
+        <HubKpi
+          label="ILP reviews overdue"
+          value={String(overdueILPReviews)}
+          verdict={overdueILPReviews > 0 ? 'Book the reviews in' : 'All reviews on schedule'}
+          sentiment={overdueILPReviews > 0 ? 'bad' : 'neutral'}
+          onClick={() => onNavigate('ilpmanagement')}
+        />
+      </HubKpiRow>
 
-        {/* GRADING & ATTENDANCE */}
-        <motion.section variants={itemVariants} className="space-y-6 sm:space-y-7">
-          <SectionHeader eyebrow="Grading & Attendance" title="Capture assessment data" />
-          <HubGrid columns={2}>
-            <HubCard
-              number="01"
-              eyebrow="Marking & Grades"
-              title="Grading"
-              description="Mark assessments, record grades and review assessor feedback."
-              tone="amber"
-              meta={pendingAssessments > 0 ? `${pendingAssessments} pending` : 'All caught up'}
-              badge={pendingAssessments > 0 ? <Pill tone="amber">{pendingAssessments}</Pill> : undefined}
-              onClick={() => onNavigate('grading')}
-            />
-            <HubCard
-              number="02"
-              eyebrow="Registers & Records"
-              title="Attendance"
-              description="Take registers, view patterns and flag attendance concerns."
-              tone="green"
-              meta={`${avgAttendance}% average`}
-              onClick={() => onNavigate('attendance')}
-            />
-          </HubGrid>
-        </motion.section>
+      <HubToolGrid label="Mark & record" cards={markAndRecord} columns="four" />
 
-        {/* PROGRESS & ILP */}
-        <motion.section variants={itemVariants} className="space-y-6 sm:space-y-7">
-          <SectionHeader eyebrow="Progress & Learning Plans" title="Track learner journeys" />
-          <HubGrid columns={3}>
-            <HubCard
-              number="03"
-              eyebrow="Individual Plans"
-              title="ILP Management"
-              description="Learning plans, SMART targets and review cycles."
-              tone="orange"
-              meta={overdueILPReviews > 0 ? `${overdueILPReviews} overdue` : 'On schedule'}
-              badge={overdueILPReviews > 0 ? <Pill tone="orange">{overdueILPReviews}</Pill> : undefined}
-              onClick={() => onNavigate('ilpmanagement')}
-            />
-            <HubCard
-              number="04"
-              eyebrow="RAG Status"
-              title="Progress Tracking"
-              description="Learner RAG ratings, progress scores and at-risk flags."
-              tone="blue"
-              meta="Cohort progress"
-              onClick={() => onNavigate('progresstracking')}
-            />
-            <HubCard
-              number="05"
-              eyebrow="Evidence & Submissions"
-              title="Portfolios"
-              description="Portfolio evidence, AI-assisted reviews and resubmissions."
-              tone="purple"
-              meta="AI-reviewed"
-              badge={<Pill tone="yellow">AI</Pill>}
-              onClick={() => onNavigate('portfolio')}
-            />
-            <HubCard
-              number="06"
-              eyebrow="Mastery Loop"
-              title="AC Sign-off Queue"
-              description="When a learner clears the mastery threshold on evidence, approve the AC sign-off in one tap."
-              tone="emerald"
-              meta="Auto-proposed"
-              badge={<Pill tone="yellow">AI</Pill>}
-              onClick={() => onNavigate('masteryqueue')}
-            />
-            <HubCard
-              number="07"
-              eyebrow="Bulk actions"
-              title="Batch Operations"
-              description="Apply grades, attendance or status to many learners in one pass."
-              tone="blue"
-              meta="Many at once"
-              onClick={() => onNavigate('batchoperations')}
-            />
-            <HubCard
-              number="08"
-              eyebrow="AI-assisted"
-              title="AI ILP Generator"
-              description="Generate a tailored individual learning plan for a learner from their live data."
-              tone="purple"
-              meta="AI"
-              badge={<Pill tone="yellow">AI</Pill>}
-              onClick={() => onNavigate('aiilpgenerator')}
-            />
-            <HubCard
-              number="09"
-              eyebrow="Off-the-job hours"
-              title="OTJ Training"
-              description="Each learner's verified off-the-job hours against their required total."
-              tone="cyan"
-              meta="Hours & progress"
-              onClick={() => onNavigate('otjtraining')}
-            />
-          </HubGrid>
-        </motion.section>
+      <HubToolGrid label="Learner progress" cards={learnerProgress} columns="four" />
 
-        {/* QUALITY ASSURANCE */}
-        <motion.section variants={itemVariants} className="space-y-6 sm:space-y-7">
-          <SectionHeader eyebrow="Quality Assurance" title="IQA, observation & audit" />
-          <HubGrid columns={2}>
-            <HubCard
-              number="07"
-              eyebrow="Internal Quality Assurance"
-              title="IQA Dashboard"
-              description="Sampling plans, findings log and standardisation meetings."
-              tone="purple"
-              meta="Sampling + verdicts"
-              onClick={() => navigate('/college/iqa')}
-            />
-            <HubCard
-              number="08"
-              eyebrow="OTJ Audit"
-              title="IQA · OTJ verdicts"
-              description="Sample assessor-verified OTJ entries. Track per-assessor agreement rate."
-              tone="amber"
-              meta="Assessor agreement"
-              onClick={() => onNavigate('iqaotjaudit')}
-            />
-            <HubCard
-              number="09"
-              eyebrow="Teaching Quality"
-              title="Lesson observations"
-              description="Peer, HoD, IQA and learning walk observations across every tutor."
-              tone="emerald"
-              meta="360 view"
-              onClick={() => onNavigate('tutorobs')}
-            />
-            <HubCard
-              number="10"
-              eyebrow="Schedule"
-              title="Assessment calendar"
-              description="Assessment, IQA and observation dates across cohorts."
-              tone="blue"
-              meta="Cross-cohort timeline"
-              onClick={() => onNavigate('assessmentcalendar')}
-            />
-            <HubCard
-              number="11"
-              eyebrow="Exports · Funding · Ofsted"
-              title="Reports"
-              description="Funding, Ofsted, awarding-body and quality CSVs. Filter, preview, download."
-              tone="yellow"
-              meta="7 reports"
-              onClick={() => navigate('/college/reports')}
-            />
-            <HubCard
-              number="12"
-              eyebrow="Inter-rater calibration"
-              title="Calibration sessions"
-              description="Post an anonymised sample. Every tutor marks it independently. Agreement % and outliers surface automatically."
-              tone="purple"
-              meta="Standardise grading"
-              onClick={() => setCalibrationOpen(true)}
-            />
-          </HubGrid>
-        </motion.section>
+      <HubToolGrid label="Off-the-job & EPA" cards={otjAndEpa} columns="four" />
 
-        {/* EPA */}
-        <motion.section variants={itemVariants} className="space-y-6 sm:space-y-7">
-          <SectionHeader eyebrow="End Point Assessment" title="Gateway to EPA" />
-          <HubGrid columns={3}>
-            <HubCard
-              number="13"
-              eyebrow="Cohort Readiness"
-              title="Gateway readiness"
-              description="Every active apprentice on one page — learner, tutor and AI verdicts side by side. Sort by readiness, filter by blocker."
-              tone="green"
-              meta={studentsAtGateway > 0 ? `${studentsAtGateway} at gateway` : 'Cohort view'}
-              badge={<Pill tone="yellow">AI</Pill>}
-              onClick={() => navigate('/college/epa')}
-            />
-            <HubCard
-              number="14"
-              eyebrow="EPA Records"
-              title="EPA admin"
-              description="Status records, gateway dates, outcomes and Functional Skills tracking — per learner."
-              tone="blue"
-              meta="Records & dates"
-              onClick={() => onNavigate('epatracking')}
-            />
-            <HubCard
-              number="15"
-              eyebrow="Review Queue"
-              title="Work Queue"
-              description="Pending reviews, assignments and assessor tasks."
-              tone="amber"
-              meta={pendingWork > 0 ? `${pendingWork} items` : 'Clear'}
-              badge={pendingWork > 0 ? <Pill tone="amber">{pendingWork}</Pill> : undefined}
-              onClick={() => onNavigate('workqueue')}
-            />
-          </HubGrid>
-        </motion.section>
+      <HubToolGrid label="Quality & reports" cards={qualityAndReports} columns="four" />
 
-        <RecordGradeSheet open={gradeSheetOpen} onOpenChange={setGradeSheetOpen} />
-        <CalibrationSessionSheet open={calibrationOpen} onOpenChange={setCalibrationOpen} />
-      </PageFrame>
-    </PullToRefresh>
+      <RecordGradeSheet open={gradeSheetOpen} onOpenChange={setGradeSheetOpen} />
+      <CalibrationSessionSheet open={calibrationOpen} onOpenChange={setCalibrationOpen} />
+    </>
   );
 }

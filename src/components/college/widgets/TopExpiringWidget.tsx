@@ -1,27 +1,22 @@
 import { useState } from 'react';
+import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { useTopExpiring, type ExpiringItem } from '@/hooks/useTopExpiring';
 import { useVerifierAuthority } from '@/hooks/useVerifierAuthority';
 import { StaffComplianceDrawer } from '@/components/college/sheets/StaffComplianceDrawer';
 
 /* ==========================================================================
-   TopExpiringWidget — verifier/admin only. Surfaces the next n records that
-   need action, sorted by urgency. Tap → opens that staff's drawer.
+   TopExpiringWidget — verifier/admin only. The next n records that need
+   action, sorted by urgency. Tap → opens that staff member's drawer.
+
+   Hub card language: rule · name · role and requirement · time to expiry ·
+   chevron. Expired is a real problem, so its figure stays red and its
+   rule goes volt; "expiring" is plain white.
    ========================================================================== */
 
 interface Props {
   limit?: number;
-}
-
-function getInitials(name: string): string {
-  return name
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((w) => w[0])
-    .join('')
-    .toUpperCase();
 }
 
 function formatExpiry(item: ExpiringItem): string {
@@ -43,39 +38,43 @@ export function TopExpiringWidget({ limit = 5 }: Props) {
   if (authLoading) return null;
   if (!isVerifier) return null;
   if (loading) return null;
-  if (items.length === 0) return null;
 
   const expiredCount = items.filter((i) => i.computed_status === 'expired').length;
 
   return (
     <>
-      <div className="bg-[hsl(0_0%_12%)] border border-amber-500/25 rounded-2xl overflow-hidden">
-        <div className="px-5 sm:px-6 py-4 border-b border-white/[0.06] flex items-center justify-between gap-3 flex-wrap">
-          <div>
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-amber-300/85">
-              Action soon
-            </div>
-            <div className="mt-0.5 text-[15px] sm:text-[16px] font-semibold text-white tracking-tight">
-              Top {items.length} expiring across your college
-            </div>
-          </div>
-          {expiredCount > 0 && (
-            <span className="inline-flex items-center justify-center min-w-[28px] h-7 px-2 rounded-full bg-red-500/[0.12] border border-red-500/30 text-[12px] font-semibold tabular-nums text-red-200">
+      <section
+        className={cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}
+      >
+        <div className="flex items-end justify-between gap-4 px-4 py-3.5 sm:px-5">
+          <h3 className="text-[15px] font-semibold tracking-tight text-elec-yellow">
+            Expiring across the college
+          </h3>
+          {expiredCount > 0 ? (
+            <span className="text-[11px] font-semibold tabular-nums text-red-300">
               {expiredCount} overdue
+            </span>
+          ) : (
+            <span className="text-[11px] font-semibold tabular-nums text-white">
+              {items.length}
             </span>
           )}
         </div>
 
-        <div className="divide-y divide-white/[0.04]">
-          {items.map((item) => (
-            <ItemRow
-              key={`${item.college_staff_id}:${item.requirement_code}`}
-              item={item}
-              onOpen={() => setOpenStaffId(item.college_staff_id)}
-            />
-          ))}
-        </div>
-      </div>
+        {items.length === 0 ? (
+          <p className="border-t border-white/[0.10] px-4 py-4 text-[12.5px] leading-snug text-white sm:px-5">
+            Nothing expiring soon.
+          </p>
+        ) : (
+          <ul className="divide-y divide-white/[0.10] border-t border-white/[0.10]">
+            {items.map((item) => (
+              <li key={`${item.college_staff_id}:${item.requirement_code}`}>
+                <ItemRow item={item} onOpen={() => setOpenStaffId(item.college_staff_id)} />
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
 
       <StaffComplianceDrawer
         open={!!openStaffId}
@@ -97,38 +96,33 @@ function ItemRow({ item, onOpen }: { item: ExpiringItem; onOpen: () => void }) {
     <button
       type="button"
       onClick={onOpen}
-      className="group w-full text-left px-5 sm:px-6 py-3.5 flex items-center gap-3 hover:bg-white/[0.02] active:bg-white/[0.04] transition-colors touch-manipulation"
+      className="flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5"
     >
-      <Avatar
-        className={cn('h-9 w-9 ring-1 shrink-0', expired ? 'ring-red-500/40' : 'ring-amber-500/40')}
-      >
-        <AvatarFallback className="bg-elec-yellow/10 text-elec-yellow text-[11px] font-semibold">
-          {getInitials(item.staff_name)}
-        </AvatarFallback>
-      </Avatar>
-      <div className="flex-1 min-w-0">
-        <div className="text-[13px] font-medium text-white truncate">{item.staff_name}</div>
-        <div className="mt-0.5 flex items-center flex-wrap gap-x-2 gap-y-0.5 text-[11px] text-white/55">
-          <span className="capitalize truncate">{item.staff_role.replace(/_/g, ' ')}</span>
-          <span className="text-white/25">·</span>
-          <span className="truncate">{item.requirement_label}</span>
-        </div>
-      </div>
-      <div className="shrink-0 text-right">
-        <span
-          className={cn(
-            'inline-flex items-center h-6 px-2 rounded-full border text-[10.5px] font-semibold tracking-[0.04em] uppercase tabular-nums',
-            expired
-              ? 'bg-red-500/[0.08] border-red-500/30 text-red-200'
-              : 'bg-amber-500/[0.08] border-amber-500/30 text-amber-200'
-          )}
-        >
-          {formatExpiry(item)}
+      <span
+        aria-hidden="true"
+        className={cn(
+          'h-8 w-[3px] shrink-0 rounded-full',
+          expired ? 'bg-elec-yellow' : 'bg-white/[0.25]'
+        )}
+      />
+      <span className="min-w-0 flex-1">
+        <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+          {item.staff_name}
         </span>
-        <div className="mt-1 text-[10.5px] text-white/55 group-hover:text-white transition-colors">
-          Open vault →
-        </div>
-      </div>
+        <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
+          <span className="capitalize">{item.staff_role.replace(/_/g, ' ')}</span> ·{' '}
+          {item.requirement_label}
+        </span>
+      </span>
+      <span
+        className={cn(
+          'shrink-0 text-[13px] font-semibold tabular-nums',
+          expired ? 'text-red-300' : 'text-white'
+        )}
+      >
+        {formatExpiry(item)}
+      </span>
+      <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
     </button>
   );
 }

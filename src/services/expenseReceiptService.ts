@@ -221,6 +221,39 @@ export async function getSignedReceiptUrl(
   }
 }
 
+const PARSEABLE_RECEIPT_TYPES = ['image/jpeg', 'image/png', 'image/heic', 'image/webp'] as const;
+export type ParseableReceiptType = (typeof PARSEABLE_RECEIPT_TYPES)[number];
+
+/**
+ * Map whatever the browser reports for a receipt file onto a type the
+ * parse-expense-receipt function accepts, or null when the file cannot be read
+ * by the AI step (PDFs upload fine but are not images).
+ *
+ * Browsers report "image/jpg" for some camera captures, "" or
+ * "application/octet-stream" for files without a type, and HEIF variants for
+ * iPhone photos. Anything unrecognised was being sent as-is and rejected
+ * server-side (Sentry 46, 31 times since March), and the user was told the AI
+ * had failed when it never ran.
+ */
+export function normaliseReceiptMimeType(file: {
+  type?: string;
+  name?: string;
+}): ParseableReceiptType | null {
+  const reported = (file.type || '').toLowerCase();
+  const ext = (file.name || '').toLowerCase().split('.').pop() || '';
+  if (reported === 'application/pdf' || ext === 'pdf') return null;
+  if (reported === 'image/jpg' || reported === 'image/pjpeg') return 'image/jpeg';
+  if (reported === 'image/heif' || reported === 'image/heic') return 'image/heic';
+  if ((PARSEABLE_RECEIPT_TYPES as readonly string[]).includes(reported)) {
+    return reported as ParseableReceiptType;
+  }
+  // No usable type — infer from the extension, default to JPEG (the camera path).
+  if (ext === 'png') return 'image/png';
+  if (ext === 'webp') return 'image/webp';
+  if (ext === 'heic' || ext === 'heif') return 'image/heic';
+  return 'image/jpeg';
+}
+
 /**
  * Convert a File object to base64 for preview
  */

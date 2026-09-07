@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { HubSectionHeading } from '@/components/hub/HubPrimitives';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
-import { Pill, type Tone } from '@/components/college/primitives';
 import {
   useCollegeObservations,
   type CollegeObservation,
@@ -11,14 +12,15 @@ import {
 
 /* ==========================================================================
    SectionObservations — assessor evidence timeline on the Student 360 page.
-   ========================================================================== */
 
-const OUTCOME_TONE: Record<ObservationOutcome, Tone> = {
-  passed: 'green',
-  partial: 'amber',
-  referred: 'red',
-  not_yet: 'blue',
-};
+   Hub language: heading + quiet volt text action, ONE card of divided rows
+   that expand in place. Outcome is a chip: passed emerald, referred red,
+   partial volt text, not-yet neutral. Every button is 44px.
+
+   `data` lets a parent that already runs `useCollegeObservations` share the
+   instance (the dashboard's Student 360 needs follow-ups for its "Needs
+   you" list); when supplied, the section's own hook is given a null id.
+   ========================================================================== */
 
 const OUTCOME_LABEL: Record<ObservationOutcome, string> = {
   passed: 'Passed',
@@ -27,12 +29,27 @@ const OUTCOME_LABEL: Record<ObservationOutcome, string> = {
   not_yet: 'Not yet',
 };
 
-const OUTCOME_ACCENT: Record<ObservationOutcome, string> = {
-  passed: 'bg-emerald-400/80',
-  partial: 'bg-amber-400/80',
-  referred: 'bg-red-400/80',
-  not_yet: 'bg-blue-400/80',
+const CHIP =
+  'inline-flex items-center rounded-full border px-2 py-0.5 text-[10.5px] font-semibold tabular-nums';
+const CHIP_NEUTRAL = 'border-white/[0.14] bg-white/[0.06] text-white';
+const CHIP_RED = 'border-red-400/30 bg-red-500/[0.08] text-red-300';
+const CHIP_GOOD = 'border-emerald-400/30 bg-emerald-500/[0.08] text-emerald-300';
+const CHIP_VOLT = 'border-elec-yellow/35 text-elec-yellow';
+
+const OUTCOME_CHIP: Record<ObservationOutcome, string> = {
+  passed: CHIP_GOOD,
+  partial: CHIP_VOLT,
+  referred: CHIP_RED,
+  not_yet: CHIP_NEUTRAL,
 };
+
+const ACTION_BTN =
+  '-my-2 flex h-11 shrink-0 items-center px-2 text-[12px] font-bold text-elec-yellow transition-colors touch-manipulation';
+
+const TEXT_BTN =
+  'flex h-11 items-center px-2 text-[12px] font-semibold text-white transition-colors touch-manipulation';
+
+const CARD = cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE);
 
 function formatDate(iso: string | null): string {
   if (!iso) return '—';
@@ -43,25 +60,19 @@ function formatDate(iso: string | null): string {
   });
 }
 
-function formatDateTime(iso: string): string {
-  const d = new Date(iso);
-  return d.toLocaleDateString('en-GB', {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-  });
-}
-
 export function SectionObservations({
   id,
   studentId,
   onAdd,
+  data: shared,
 }: {
   id: string;
   studentId: string;
   onAdd: () => void;
+  data?: ReturnType<typeof useCollegeObservations>;
 }) {
-  const { observations, loading, remove } = useCollegeObservations(studentId);
+  const own = useCollegeObservations(shared ? null : studentId);
+  const { observations, loading, remove } = shared ?? own;
   const { toast } = useToast();
 
   const onView = async (path: string) => {
@@ -80,38 +91,28 @@ export function SectionObservations({
   };
 
   return (
-    <section id={id} className="scroll-mt-6">
-      <div className="flex items-end justify-between gap-4 flex-wrap">
-        <div>
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Assessment evidence
-          </div>
-          <h2 className="mt-1.5 text-xl sm:text-[26px] font-semibold text-white tracking-tight leading-tight">
-            Observations
-          </h2>
-        </div>
-        <button
-          onClick={onAdd}
-          className="text-[12px] font-medium text-elec-yellow/85 hover:text-elec-yellow transition-colors touch-manipulation no-print"
-        >
-          Record observation →
+    <section id={id} className="scroll-mt-20 space-y-3">
+      <div className="flex items-end justify-between gap-4">
+        <HubSectionHeading>Observations</HubSectionHeading>
+        <button type="button" onClick={onAdd} className={cn(ACTION_BTN, 'no-print')}>
+          Record observation
         </button>
       </div>
 
-      <div className="mt-5">
-        {loading && observations.length === 0 ? (
-          <Skeleton />
-        ) : observations.length === 0 ? (
-          <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-6 py-8 text-center">
-            <p className="text-[12.5px] text-white/65 max-w-md mx-auto leading-relaxed">
-              No observations yet. Record your first to start building this learner's assessment
-              evidence trail.
-            </p>
-          </div>
-        ) : (
-          <div className="space-y-2.5">
+      {loading && observations.length === 0 ? (
+        <Skeleton />
+      ) : observations.length === 0 ? (
+        <div className={cn(CARD, 'px-4 py-5 sm:px-5')}>
+          <p className="text-[12.5px] leading-relaxed text-white">
+            No observations yet. Record the first to start this learner's assessment evidence
+            trail.
+          </p>
+        </div>
+      ) : (
+        <div className={CARD}>
+          <ul className="divide-y divide-white/[0.10]">
             {observations.map((o) => (
-              <ObservationCard
+              <ObservationRow
                 key={o.id}
                 obs={o}
                 onView={onView}
@@ -133,16 +134,16 @@ export function SectionObservations({
                 }}
               />
             ))}
-          </div>
-        )}
-      </div>
+          </ul>
+        </div>
+      )}
     </section>
   );
 }
 
 /* ──────────────────────────────────────────────────────── */
 
-function ObservationCard({
+function ObservationRow({
   obs,
   onView,
   onDelete,
@@ -152,8 +153,6 @@ function ObservationCard({
   onDelete: () => void;
 }) {
   const [expanded, setExpanded] = useState(false);
-  const tone = OUTCOME_TONE[obs.outcome];
-  const accent = OUTCOME_ACCENT[obs.outcome];
 
   const settingLabel =
     obs.location_type === 'classroom'
@@ -169,223 +168,156 @@ function ObservationCard({
               : null;
 
   const acsCount = obs.acs_evidenced.length;
+  const followUpOverdue =
+    obs.follow_up_required && !!obs.follow_up_date && new Date(obs.follow_up_date).getTime() < Date.now();
 
   return (
-    <div className="relative bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
-      <span
-        aria-hidden
-        className={cn('absolute left-0 top-3 bottom-3 w-[3px] rounded-full', accent)}
-      />
-      <div className="px-5 sm:px-6 py-4">
-        <div className="flex items-start justify-between gap-3 flex-wrap">
-          <div className="min-w-0 flex-1">
-            <div className="flex items-center gap-2 flex-wrap">
-              <Pill tone={tone}>{OUTCOME_LABEL[obs.outcome]}</Pill>
-              {obs.grade && (
-                <span className="text-[11px] font-medium text-elec-yellow/85 tabular-nums">
-                  {obs.grade}
-                </span>
-              )}
-              {obs.assessor_signed && (
-                <span className="inline-flex items-center gap-1 text-[10.5px] text-emerald-300/85">
-                  <span
-                    aria-hidden
-                    className="inline-flex items-center justify-center h-3.5 w-3.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[9px] font-bold leading-none"
-                  >
-                    ✓
-                  </span>
-                  Signed
-                </span>
-              )}
-              {obs.follow_up_required && (
-                <span className="inline-flex items-center h-5 px-1.5 rounded-md bg-amber-500/[0.1] border border-amber-500/30 text-[10px] font-semibold tracking-[0.06em] uppercase text-amber-200">
-                  Follow-up{obs.follow_up_date ? ` · ${formatDate(obs.follow_up_date)}` : ''}
-                </span>
-              )}
-            </div>
-            <h3 className="mt-1.5 text-[14.5px] font-semibold text-white leading-tight">
-              {obs.activity_title}
-            </h3>
-            <div className="mt-1 flex items-center flex-wrap gap-x-2.5 gap-y-0.5 text-[11px] text-white/65 tabular-nums">
-              <span>{formatDateTime(obs.observed_at)}</span>
-              {obs.observed_time && (
-                <>
-                  <span className="text-white/25">·</span>
-                  <span>{obs.observed_time.slice(0, 5)}</span>
-                </>
-              )}
-              {obs.duration_minutes && (
-                <>
-                  <span className="text-white/25">·</span>
-                  <span>{obs.duration_minutes}m</span>
-                </>
-              )}
-              {settingLabel && (
-                <>
-                  <span className="text-white/25">·</span>
-                  <span className="capitalize">{settingLabel}</span>
-                </>
-              )}
-              {obs.location && (
-                <>
-                  <span className="text-white/25">·</span>
-                  <span className="truncate max-w-[180px]">{obs.location}</span>
-                </>
-              )}
-            </div>
-            {obs.assessor_name_snapshot && (
-              <div className="mt-1 text-[11px] text-white/55">
-                by <span className="text-white/85">{obs.assessor_name_snapshot}</span>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* AC chips — most compact summary */}
-        {acsCount > 0 && (
-          <div className="mt-3 flex items-center flex-wrap gap-1">
-            <span className="text-[10px] uppercase tracking-[0.16em] text-white/55 mr-1">
-              ACs evidenced
-            </span>
-            {obs.acs_evidenced.slice(0, expanded ? undefined : 8).map((ac) => (
-              <span
-                key={ac}
-                className="inline-flex items-center h-5 px-1.5 rounded-md bg-white/[0.04] border border-white/[0.08] text-[10.5px] font-mono tabular-nums text-white/85"
-              >
-                {ac}
-              </span>
-            ))}
-            {!expanded && acsCount > 8 && (
-              <span className="text-[10.5px] text-white/55 tabular-nums">+{acsCount - 8} more</span>
-            )}
-          </div>
+    <li className="px-4 py-3.5 sm:px-5">
+      <div className="flex flex-wrap items-center gap-1.5">
+        <span className={cn(CHIP, OUTCOME_CHIP[obs.outcome])}>{OUTCOME_LABEL[obs.outcome]}</span>
+        {obs.grade && (
+          <span className="text-[11px] font-semibold tabular-nums text-white">{obs.grade}</span>
         )}
-
-        {/* Activity summary (line-clamped when collapsed) */}
-        {obs.activity_summary && (
-          <p
+        {obs.assessor_signed && (
+          <span className="text-[11px] font-semibold text-emerald-300">Signed</span>
+        )}
+        {obs.follow_up_required && (
+          <span
             className={cn(
-              'mt-3 text-[12.5px] text-white/80 leading-relaxed whitespace-pre-line',
-              !expanded && 'line-clamp-2'
+              'text-[11px] font-semibold tabular-nums',
+              followUpOverdue ? 'text-red-300' : 'text-elec-yellow'
             )}
           >
-            {obs.activity_summary}
-          </p>
+            Follow-up{obs.follow_up_date ? ` · ${formatDate(obs.follow_up_date)}` : ''}
+            {followUpOverdue ? ' · overdue' : ''}
+          </span>
         )}
+      </div>
+      <h3 className="mt-1.5 text-[14px] font-semibold leading-tight text-white">
+        {obs.activity_title}
+      </h3>
+      <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] tabular-nums text-white">
+        <span>{formatDate(obs.observed_at)}</span>
+        {obs.observed_time && <span>{obs.observed_time.slice(0, 5)}</span>}
+        {obs.duration_minutes && <span>{obs.duration_minutes}m</span>}
+        {settingLabel && <span>{settingLabel}</span>}
+        {obs.location && <span className="max-w-[180px] truncate">{obs.location}</span>}
+        {obs.assessor_name_snapshot && <span>by {obs.assessor_name_snapshot}</span>}
+      </div>
 
-        {/* Expanded detail */}
-        {expanded && (
-          <div className="mt-4 pt-4 border-t border-white/[0.06] space-y-4">
-            {obs.feedback_strengths && (
-              <FeedbackBlock label="Strengths" tone="emerald" text={obs.feedback_strengths} />
-            )}
-            {obs.feedback_areas && (
-              <FeedbackBlock label="Areas for development" tone="amber" text={obs.feedback_areas} />
-            )}
-            {obs.action_points.length > 0 && (
-              <div>
-                <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 mb-1.5">
-                  Action points
-                </div>
-                <ul className="space-y-1">
-                  {obs.action_points.map((ap, i) => (
-                    <li key={i} className="text-[12.5px] text-white/85 leading-snug pl-4 relative">
-                      <span
-                        aria-hidden
-                        className="absolute left-0 top-[7px] inline-block h-1.5 w-1.5 rounded-full bg-elec-yellow/85"
-                      />
-                      {ap}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            {obs.ksbs_observed.length > 0 && (
-              <div className="text-[11px] text-white/65">
-                <span className="text-white/45">KSBs: </span>
-                <span className="font-mono tabular-nums text-white/85">
-                  {obs.ksbs_observed.join(', ')}
+      {acsCount > 0 && (
+        <div className="mt-2.5 flex flex-wrap items-center gap-1">
+          <span className="mr-1 text-[11px] font-medium text-white">ACs evidenced</span>
+          {obs.acs_evidenced.slice(0, expanded ? undefined : 8).map((ac) => (
+            <span
+              key={ac}
+              className="inline-flex items-center rounded-md border border-white/[0.14] bg-white/[0.06] px-1.5 py-0.5 font-mono text-[10.5px] tabular-nums text-white"
+            >
+              {ac}
+            </span>
+          ))}
+          {!expanded && acsCount > 8 && (
+            <span className="text-[11px] tabular-nums text-white">+{acsCount - 8} more</span>
+          )}
+        </div>
+      )}
+
+      {obs.activity_summary && (
+        <p
+          className={cn(
+            'mt-2.5 whitespace-pre-line text-[12.5px] leading-relaxed text-white',
+            !expanded && 'line-clamp-2'
+          )}
+        >
+          {obs.activity_summary}
+        </p>
+      )}
+
+      {expanded && (
+        <div className="mt-3 space-y-3.5 border-t border-white/[0.10] pt-3">
+          {obs.feedback_strengths && <FeedbackBlock label="Strengths" text={obs.feedback_strengths} />}
+          {obs.feedback_areas && (
+            <FeedbackBlock label="Areas for development" text={obs.feedback_areas} />
+          )}
+          {obs.action_points.length > 0 && (
+            <div>
+              <div className="text-[11px] font-semibold text-elec-yellow">Action points</div>
+              <ul className="mt-1 space-y-1">
+                {obs.action_points.map((ap, i) => (
+                  <li key={i} className="relative pl-4 text-[12.5px] leading-snug text-white">
+                    <span
+                      aria-hidden
+                      className="absolute left-0 top-[7px] inline-block h-1.5 w-1.5 rounded-full bg-elec-yellow"
+                    />
+                    {ap}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {obs.ksbs_observed.length > 0 && (
+            <div className="text-[11.5px] text-white">
+              KSBs:{' '}
+              <span className="font-mono tabular-nums">{obs.ksbs_observed.join(', ')}</span>
+            </div>
+          )}
+          {(obs.qualification_code || obs.unit_code) && (
+            <div className="text-[11.5px] text-white">
+              {obs.qualification_code && (
+                <span>
+                  Qualification <span className="font-mono">{obs.qualification_code}</span>
                 </span>
-              </div>
-            )}
-            {(obs.qualification_code || obs.unit_code) && (
-              <div className="text-[11px] text-white/65">
-                {obs.qualification_code && (
-                  <span>
-                    <span className="text-white/45">Qual: </span>
-                    <span className="font-mono text-white/85">{obs.qualification_code}</span>
-                  </span>
-                )}
-                {obs.qualification_code && obs.unit_code && (
-                  <span className="text-white/25"> · </span>
-                )}
-                {obs.unit_code && (
-                  <span>
-                    <span className="text-white/45">Unit: </span>
-                    <span className="font-mono text-white/85">{obs.unit_code}</span>
-                  </span>
-                )}
-              </div>
-            )}
-          </div>
-        )}
+              )}
+              {obs.qualification_code && obs.unit_code && <span> · </span>}
+              {obs.unit_code && (
+                <span>
+                  Unit <span className="font-mono">{obs.unit_code}</span>
+                </span>
+              )}
+            </div>
+          )}
+        </div>
+      )}
 
-        {/* Footer actions */}
-        <div className="mt-3 flex items-center justify-between gap-2 flex-wrap">
-          <button
-            type="button"
-            onClick={() => setExpanded((v) => !v)}
-            className="text-[11.5px] font-medium text-white/65 hover:text-white transition-colors touch-manipulation"
-          >
-            {expanded ? 'Show less' : 'Show more →'}
-          </button>
-          <div className="flex items-center gap-2">
-            {obs.evidence_path && (
-              <button
-                type="button"
-                onClick={() => obs.evidence_path && onView(obs.evidence_path)}
-                className="h-7 px-2.5 rounded-full bg-[hsl(0_0%_14%)] border border-white/[0.08] text-[11px] font-medium text-white/80 hover:text-white hover:border-white/[0.18] transition-colors touch-manipulation"
-              >
-                View evidence
-              </button>
-            )}
+      <div className="-mb-2 mt-1.5 flex flex-wrap items-center justify-between gap-2">
+        <button
+          type="button"
+          onClick={() => setExpanded((v) => !v)}
+          className={cn(TEXT_BTN, '-ml-2 text-elec-yellow')}
+        >
+          {expanded ? 'Show less' : 'Show more'}
+        </button>
+        <div className="-mr-2 flex items-center gap-1">
+          {obs.evidence_path && (
             <button
               type="button"
-              onClick={onDelete}
-              className="h-7 px-2.5 rounded-full text-[11px] font-medium text-white/55 hover:text-red-300 hover:bg-red-500/[0.06] transition-colors touch-manipulation"
-              aria-label="Delete observation"
+              onClick={() => obs.evidence_path && onView(obs.evidence_path)}
+              className={TEXT_BTN}
             >
-              Delete
+              View evidence
             </button>
-          </div>
+          )}
+          <button
+            type="button"
+            onClick={onDelete}
+            className={cn(TEXT_BTN, 'hover:text-red-300')}
+            aria-label="Delete observation"
+          >
+            Delete
+          </button>
         </div>
       </div>
-    </div>
+    </li>
   );
 }
 
 /* ──────────────────────────────────────────────────────── */
 
-function FeedbackBlock({
-  label,
-  tone,
-  text,
-}: {
-  label: string;
-  tone: 'emerald' | 'amber';
-  text: string;
-}) {
+function FeedbackBlock({ label, text }: { label: string; text: string }) {
   return (
     <div>
-      <div
-        className={cn(
-          'text-[10px] font-medium uppercase tracking-[0.18em] mb-1',
-          tone === 'emerald' ? 'text-emerald-300/85' : 'text-amber-300/85'
-        )}
-      >
-        {label}
-      </div>
-      <p className="text-[12.5px] text-white/85 leading-relaxed whitespace-pre-line">{text}</p>
+      <div className="text-[11px] font-semibold text-elec-yellow">{label}</div>
+      <p className="mt-0.5 whitespace-pre-line text-[12.5px] leading-relaxed text-white">{text}</p>
     </div>
   );
 }
@@ -394,19 +326,15 @@ function FeedbackBlock({
 
 function Skeleton() {
   return (
-    <div className="space-y-2.5 animate-pulse">
+    <div className={cn(CARD, 'space-y-4 px-4 py-4 animate-pulse sm:px-5')}>
       {[0, 1].map((i) => (
-        <div
-          key={i}
-          className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-5 py-4"
-        >
-          <div className="flex items-center gap-2 mb-2">
-            <div className="h-5 w-16 rounded-full bg-white/[0.06]" />
-            <div className="h-5 w-20 rounded-full bg-white/[0.04]" />
+        <div key={i}>
+          <div className="mb-2 flex items-center gap-2">
+            <div className="h-5 w-16 rounded-full bg-white/[0.08]" />
+            <div className="h-5 w-20 rounded-full bg-white/[0.05]" />
           </div>
-          <div className="h-3 w-2/3 rounded bg-white/[0.06]" />
-          <div className="mt-2 h-2 w-1/2 rounded bg-white/[0.04]" />
-          <div className="mt-3 h-2 w-full rounded bg-white/[0.04]" />
+          <div className="h-3 w-2/3 rounded bg-white/[0.08]" />
+          <div className="mt-2 h-2 w-1/2 rounded bg-white/[0.05]" />
         </div>
       ))}
     </div>

@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import {
   useMyPendingAcknowledgements,
   type PendingPolicy,
@@ -7,8 +9,10 @@ import {
 import { PolicyAcknowledgeSheet } from '@/components/college/sheets/PolicyAcknowledgeSheet';
 
 /* ==========================================================================
-   MyAcknowledgementsWidget — surfaces live policies the user hasn't signed
-   yet. Hidden when the user isn't a staff member or has nothing pending.
+   MyAcknowledgementsWidget — live policies the user hasn't signed yet.
+   Hidden when the user isn't a staff member. Says "Nothing to sign" rather
+   than vanishing when the list is empty, so the Compliance section never
+   looks like it failed to load.
    ========================================================================== */
 
 export function MyAcknowledgementsWidget() {
@@ -16,33 +20,43 @@ export function MyAcknowledgementsWidget() {
   const [openId, setOpenId] = useState<string | null>(null);
 
   if (linked === false) return null;
-  if (loading || pending.length === 0) return null;
+  if (loading) return null;
 
   const total = pending.length;
 
   return (
     <>
-      <div className="bg-[hsl(0_0%_12%)] border border-amber-500/30 rounded-2xl overflow-hidden">
-        <div className="px-5 sm:px-6 py-4 border-b border-white/[0.06] flex items-center justify-between gap-3 flex-wrap">
-          <div className="min-w-0">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-amber-300/85">
-              Sign off
-            </div>
-            <div className="mt-0.5 text-[15px] sm:text-[16px] font-semibold text-white tracking-tight">
-              {total} polic{total === 1 ? 'y' : 'ies'} awaiting your sign-off
-            </div>
-          </div>
-          <span className="inline-flex items-center justify-center min-w-[28px] h-7 px-2 rounded-full bg-amber-500/[0.12] border border-amber-500/30 text-[12px] font-semibold tabular-nums text-amber-200">
-            {total}
+      <section
+        className={cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}
+      >
+        <div className="flex items-end justify-between gap-4 px-4 py-3.5 sm:px-5">
+          <h3 className="text-[15px] font-semibold tracking-tight text-elec-yellow">
+            Policies to sign
+          </h3>
+          <span
+            className={cn(
+              'text-[11px] font-semibold tabular-nums',
+              total > 0 ? 'text-elec-yellow' : 'text-white'
+            )}
+          >
+            {total} {total === 1 ? 'policy' : 'policies'}
           </span>
         </div>
 
-        <div className="divide-y divide-white/[0.04]">
-          {pending.map((p) => (
-            <PolicyRow key={p.id} policy={p} onOpen={() => setOpenId(p.id)} />
-          ))}
-        </div>
-      </div>
+        {total === 0 ? (
+          <p className="border-t border-white/[0.10] px-4 py-4 text-[12.5px] leading-snug text-white sm:px-5">
+            Nothing to sign. You are up to date with every live policy.
+          </p>
+        ) : (
+          <ul className="divide-y divide-white/[0.10] border-t border-white/[0.10]">
+            {pending.map((p) => (
+              <li key={p.id}>
+                <PolicyRow policy={p} onOpen={() => setOpenId(p.id)} />
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
 
       <PolicyAcknowledgeSheet
         open={!!openId}
@@ -58,44 +72,37 @@ export function MyAcknowledgementsWidget() {
 /* ──────────────────────────────────────────────────────── */
 
 function PolicyRow({ policy, onOpen }: { policy: PendingPolicy; onOpen: () => void }) {
+  const reason = [
+    policy.category.replace(/_/g, ' '),
+    policy.code,
+    `v${policy.version}`,
+    policy.effective_from
+      ? `Effective ${new Date(policy.effective_from).toLocaleDateString('en-GB', {
+          day: 'numeric',
+          month: 'short',
+        })}`
+      : null,
+  ]
+    .filter(Boolean)
+    .join(' · ');
+
   return (
     <button
       type="button"
       onClick={onOpen}
-      className={cn(
-        'group w-full text-left px-5 sm:px-6 py-3.5 flex items-center gap-3',
-        'hover:bg-white/[0.02] active:bg-white/[0.04] transition-colors touch-manipulation'
-      )}
+      className="flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5"
     >
-      <div className="flex-1 min-w-0">
-        <div className="text-[13.5px] font-medium text-white truncate">{policy.title}</div>
-        <div className="mt-0.5 flex items-center flex-wrap gap-x-2 gap-y-0.5 text-[11px] text-white/55">
-          <span className="capitalize">{policy.category.replace(/_/g, ' ')}</span>
-          {policy.code && (
-            <>
-              <span className="text-white/25">·</span>
-              <span className="font-mono">{policy.code}</span>
-            </>
-          )}
-          <span className="text-white/25">·</span>
-          <span className="tabular-nums">v{policy.version}</span>
-          {policy.effective_from && (
-            <>
-              <span className="text-white/25">·</span>
-              <span>
-                Effective{' '}
-                {new Date(policy.effective_from).toLocaleDateString('en-GB', {
-                  day: 'numeric',
-                  month: 'short',
-                })}
-              </span>
-            </>
-          )}
-        </div>
-      </div>
-      <span className="shrink-0 h-8 px-3 rounded-full bg-elec-yellow/[0.1] border border-elec-yellow/40 text-[11.5px] font-semibold text-elec-yellow group-hover:bg-elec-yellow/[0.18] transition-colors inline-flex items-center">
-        Read & sign →
+      <span aria-hidden="true" className="h-8 w-[3px] shrink-0 rounded-full bg-white/[0.25]" />
+      <span className="min-w-0 flex-1">
+        <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+          {policy.title}
+        </span>
+        <span className="mt-0.5 block truncate text-[12px] capitalize leading-tight text-white">
+          {reason}
+        </span>
       </span>
+      <span className="shrink-0 text-[12px] font-bold text-elec-yellow">Read &amp; sign</span>
+      <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
     </button>
   );
 }

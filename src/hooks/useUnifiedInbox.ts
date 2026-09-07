@@ -86,11 +86,16 @@ export function useUnifiedInbox() {
         user_id: string | null;
         cohort_id: string | null;
       }>;
-      const studentIds = students.map((s) => s.id);
       const studentByCollegeId = new Map(students.map((s) => [s.id, s]));
       const studentByAuthUid = new Map(
         students.filter((s) => s.user_id).map((s) => [s.user_id as string, s])
       );
+      // Auth uids of this college's learners. Both `portfolio_comments.user_id`
+      // and `college_otj_entries.student_id` are auth uids, and the queries
+      // below scope on them SERVER-SIDE before the row limit — filtering after
+      // a global limit(60) silently dropped our items on a busy multi-college
+      // instance (same fix useTutorToday carries).
+      const studentAuthUids = students.map((s) => s.user_id).filter((u): u is string => Boolean(u));
 
       // Cohorts for name lookup.
       const { data: cohortRows } = await supabase
@@ -125,19 +130,25 @@ export function useUnifiedInbox() {
 
       // Fan-out queries — wider window than Today (no date cap).
       const [commentsRes, otjRes, iqaRes, conversationsRes] = await Promise.all([
-        supabase
-          .from('portfolio_comments')
-          .select('id, user_id, content, author_role, created_at, evidence_id')
-          .eq('requires_action', true)
-          .eq('is_resolved', false)
-          .order('created_at', { ascending: false })
-          .limit(60),
-        supabase
-          .from('college_otj_entries')
-          .select('id, student_id, title, activity_date, duration_minutes, created_at')
-          .eq('verification_status', 'pending')
-          .order('activity_date', { ascending: false })
-          .limit(60),
+        studentAuthUids.length > 0
+          ? supabase
+              .from('portfolio_comments')
+              .select('id, user_id, content, author_role, created_at, evidence_id')
+              .in('user_id', studentAuthUids)
+              .eq('requires_action', true)
+              .eq('is_resolved', false)
+              .order('created_at', { ascending: false })
+              .limit(60)
+          : Promise.resolve({ data: [] as unknown[] }),
+        studentAuthUids.length > 0
+          ? supabase
+              .from('college_otj_entries')
+              .select('id, student_id, title, activity_date, duration_minutes, created_at')
+              .in('student_id', studentAuthUids)
+              .eq('verification_status', 'pending')
+              .order('activity_date', { ascending: false })
+              .limit(60)
+          : Promise.resolve({ data: [] as unknown[] }),
         planIds.length > 0
           ? supabase
               .from('college_iqa_samples')
@@ -200,8 +211,13 @@ export function useUnifiedInbox() {
         duration_minutes: number | null;
         created_at: string | null;
       };
+      // 🔴 `college_otj_entries.student_id` is the learner's AUTH uid, not
+      // `college_students.id` (verified against the live table: every pending
+      // row matches `college_students.user_id`, none match `.id`). This looked
+      // rows up by the wrong key, so no off-the-job entry ever reached the
+      // inbox — the OTJ filter, its count and the dashboard KPI all read 0.
       for (const o of (otjRes.data ?? []) as OtjRow[]) {
-        const student = studentByCollegeId.get(o.student_id);
+        const student = studentByAuthUid.get(o.student_id);
         if (!student) continue;
         const cohortName = student.cohort_id
           ? (cohortNameById.get(student.cohort_id) ?? null)

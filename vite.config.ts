@@ -272,22 +272,42 @@ export default defineConfig(({ mode }) => ({
     rollupOptions: {
       output: {
         /**
-         * 🔴 Keep cross-chunk export names readable.
+         * 🔴 Chunk filenames must not look like tracking scripts.
          *
-         * EVERY chunk error in Sentry over 30 days named one module —
-         * `analytics-events` — around 94 events, e.g. "The requested module
-         * './analytics-events-q4lkqSOe.js' does not provide an export named 'x'".
-         * That same filename also appears expecting 'e' and 'v', which is the
-         * tell: one filename, different mangled export names across builds. A
-         * browser holding a cached importer from an earlier build then asks the
-         * newer file for a binding that no longer carries that letter.
+         * Every "does not provide an export named …" chunk error in Sentry
+         * over a month named ONE file: `/assets/analytics-events-<hash>.js`,
+         * one issue per build, seventeen in all. It was read as a stale-deploy
+         * problem and patched three times (network-first service worker,
+         * cache-busting reloads, readable export names below). Vercel build
+         * logs show every build emits a uniquely named file and the live copy
+         * always carried the export — so the browser was being handed a
+         * different, export-less module for that URL.
          *
-         * Rollup mangles exported bindings between chunks by default. Turning
-         * that off costs a little bundle size and makes the names stable, so an
-         * importer and its dependency can no longer disagree.
+         * EasyPrivacy — the list inside uBlock Origin, AdGuard and Brave — has
+         * the generic rule `/analytics-events-`. It matches the filename.
+         * Blockers that answer with an empty stub give the browser a valid
+         * module with no exports, and every importer fails at link time with
+         * the first binding it asked for ("trackStoreBadgeClicked", or "x"
+         * when names were mangled). The list even carries whitelist entries
+         * for two other sites' `/assets/analytics-events-` bundles.
          *
-         * The error boundary force-reloads to recover from this, which used to
-         * wipe an in-progress mock exam — see the resume logic in SEOMockExam.
+         * Vite names a chunk after its module, so the fix is to emit that one
+         * chunk under a name no filter list matches. Checked against
+         * EasyPrivacy, AdGuard Tracking Protection, uBO privacy and Brave:
+         * `product-events` matches nothing, and none of the other 5,795
+         * emitted chunk names match any rule either. The source file keeps
+         * its name so imports are untouched; do not name a NEW module
+         * `analytics-*`, `tracking-*` or `pixel-*` if it can become a chunk.
+         */
+        chunkFileNames: (chunk) =>
+          chunk.name === 'analytics-events'
+            ? 'assets/product-events-[hash].js'
+            : 'assets/[name]-[hash].js',
+        /**
+         * Keep cross-chunk export names readable. Added while chasing the
+         * chunk errors above on a theory that turned out to be wrong; left on
+         * because it is harmless and makes any future filter-list collision
+         * report a real name ("trackStoreBadgeClicked") rather than "x".
          */
         minifyInternalExports: false,
         manualChunks: {

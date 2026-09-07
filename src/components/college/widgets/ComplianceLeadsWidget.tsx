@@ -1,21 +1,27 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { useComplianceLeads, type LeadStaff, type LeadRoleKey } from '@/hooks/useComplianceLeads';
 import { StaffComplianceDrawer } from '@/components/college/sheets/StaffComplianceDrawer';
 
 /* ==========================================================================
-   ComplianceLeadsWidget — "Who to ask" directory of college's safeguarding
-   & compliance leads. Surfaces names + contact for the staff with role flags
+   ComplianceLeadsWidget — "Who to ask": the college's safeguarding and
+   compliance leads. Surfaces names + contact for the staff with role flags
    set on college_staff. Public-to-college (RLS-scoped via college_staff).
+
+   Hub card language: one row per named lead (rule · name · role · Email /
+   Call), and one row per role nobody holds, which taps through to the
+   staff list. "Not set" on the statutory safeguarding roles is the one
+   thing on this card that stays red.
    ========================================================================== */
 
 interface RoleDef {
   key: LeadRoleKey;
   label: string;
-  short: string;
-  tone: 'red' | 'amber' | 'emerald' | 'blue';
+  /** Statutory — a gap here is a real problem, not a to-do. */
+  statutory: boolean;
   fallbackHelp: string;
 }
 
@@ -23,46 +29,46 @@ const ROLES: RoleDef[] = [
   {
     key: 'is_dsl',
     label: 'Designated Safeguarding Lead',
-    short: 'DSL',
-    tone: 'red',
+    statutory: true,
     fallbackHelp: 'Statutory — every college needs one.',
   },
   {
     key: 'is_deputy_dsl',
     label: 'Deputy DSL',
-    short: 'Dep. DSL',
-    tone: 'red',
+    statutory: true,
     fallbackHelp: 'Cover when the DSL is unavailable.',
   },
   {
     key: 'is_prevent_lead',
     label: 'Prevent Lead',
-    short: 'Prevent',
-    tone: 'amber',
+    statutory: false,
     fallbackHelp: 'Owns Prevent duty implementation.',
   },
   {
     key: 'is_h_and_s_lead',
     label: 'Health & Safety Lead',
-    short: 'H&S',
-    tone: 'emerald',
+    statutory: false,
     fallbackHelp: 'First point of call for safety incidents.',
   },
   {
     key: 'is_mental_health_lead',
     label: 'Mental Health Lead',
-    short: 'MH Lead',
-    tone: 'emerald',
+    statutory: false,
     fallbackHelp: 'Senior mental health champion.',
   },
   {
     key: 'is_quality_nominee',
     label: 'Quality Nominee',
-    short: 'QN',
-    tone: 'blue',
+    statutory: false,
     fallbackHelp: 'EQA / awarding body quality lead.',
   },
 ];
+
+const CARD = cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE);
+const ROW =
+  'flex min-h-11 w-full items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5';
+const LINK =
+  'flex h-11 shrink-0 items-center px-3 text-[12px] font-bold text-elec-yellow transition-colors touch-manipulation hover:bg-white/[0.06]';
 
 export function ComplianceLeadsWidget() {
   const navigate = useNavigate();
@@ -85,248 +91,171 @@ export function ComplianceLeadsWidget() {
 
   if (loading) return <Skeleton />;
 
-  // Empty state: nothing assigned yet — show a single soft prompt instead of
-  // 6 stacked "Not set" rows.
+  const drawer = (
+    <StaffComplianceDrawer
+      open={!!openStaffId}
+      onOpenChange={(o) => {
+        if (!o) setOpenStaffId(null);
+      }}
+      staffId={openStaffId}
+    />
+  );
+
+  // Nothing assigned yet — one prompt instead of six stacked "Not set" rows.
   if (totalAssigned === 0) {
     return (
       <>
-        <div className="bg-[hsl(0_0%_12%)] border border-amber-500/20 rounded-2xl overflow-hidden">
-          <div className="px-5 sm:px-6 py-4 border-b border-white/[0.06]">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-              Need help?
-            </div>
-            <div className="mt-0.5 text-[15px] sm:text-[16px] font-semibold text-white tracking-tight">
-              Your safeguarding & compliance leads
-            </div>
+        <section className={CARD}>
+          <div className="px-4 py-3.5 sm:px-5">
+            <h3 className="text-[15px] font-semibold tracking-tight text-elec-yellow">Who to ask</h3>
           </div>
-          <div className="px-5 sm:px-6 py-5">
-            <p className="text-[12.5px] text-white leading-relaxed max-w-prose">
-              No leads assigned yet. Open a staff member's compliance vault and toggle the right
-              roles (DSL, Prevent, H&amp;S etc.).
+          <div className="border-t border-white/[0.10] px-4 py-4 sm:px-5">
+            <p className="max-w-prose text-[12.5px] leading-relaxed text-white">
+              No safeguarding or compliance leads assigned yet. Open a staff member's compliance
+              vault and set their roles (DSL, Prevent, H&amp;S and so on). A named Designated
+              Safeguarding Lead is statutory for every FE college.
             </p>
-            <p className="mt-2 text-[11.5px] text-amber-300/85 leading-relaxed">
-              DSL is statutory — every UK FE college needs at least one named Designated
-              Safeguarding Lead.
-            </p>
-            <div className="mt-4 flex items-center gap-2 flex-wrap">
+            <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center">
               <button
                 type="button"
                 onClick={() => navigate('/college?section=tutors')}
-                className="h-10 px-4 rounded-lg bg-amber-400 hover:bg-amber-300 active:bg-amber-300 text-black text-[12.5px] font-semibold transition-colors touch-manipulation"
-                title="Open the Tutors list, tap a staff member to open their compliance vault, then toggle the lead role."
+                className="inline-flex h-11 w-full items-center justify-center rounded-xl border border-elec-yellow/35 px-4 text-[12.5px] font-bold text-elec-yellow transition-colors touch-manipulation hover:border-elec-yellow/60 hover:bg-white/[0.06] sm:w-auto"
               >
-                Assign leads →
+                Assign leads
               </button>
               <button
                 type="button"
                 onClick={() => navigate('/college?section=compliancedocs')}
-                className="h-10 px-4 rounded-lg bg-transparent border border-white/[0.10] hover:border-white/25 text-white text-[12.5px] font-medium transition-colors touch-manipulation"
+                className="inline-flex h-11 w-full items-center justify-center px-4 text-[12.5px] font-semibold text-white transition-colors touch-manipulation hover:bg-white/[0.06] sm:w-auto"
               >
                 View policies
               </button>
             </div>
           </div>
-        </div>
-        <StaffComplianceDrawer
-          open={!!openStaffId}
-          onOpenChange={(o) => {
-            if (!o) setOpenStaffId(null);
-          }}
-          staffId={openStaffId}
-        />
+        </section>
+        {drawer}
       </>
     );
   }
 
   return (
     <>
-      <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
-        <div className="px-5 sm:px-6 py-4 border-b border-white/[0.06] flex items-center justify-between gap-3 flex-wrap">
-          <div>
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-              Need help?
-            </div>
-            <div className="mt-0.5 text-[15px] sm:text-[16px] font-semibold text-white tracking-tight">
-              Your safeguarding & compliance leads
-            </div>
-          </div>
-          <div className="text-[10.5px] tabular-nums text-white/55">
-            <span className="text-white font-medium">{totalAssigned}</span>
-            <span className="text-white/45"> people</span>
+      <section className={CARD}>
+        <div className="flex items-end justify-between gap-4 px-4 py-3.5 sm:px-5">
+          <h3 className="text-[15px] font-semibold tracking-tight text-elec-yellow">Who to ask</h3>
+          <span className="text-[11px] font-semibold tabular-nums text-white">
+            {totalAssigned} {totalAssigned === 1 ? 'person' : 'people'}
             {rolesUnassigned > 0 && (
-              <>
-                <span className="text-white/60"> · </span>
-                <span className="text-amber-300/85">
-                  {rolesUnassigned} role{rolesUnassigned === 1 ? '' : 's'} unset
-                </span>
-              </>
+              <span className="text-elec-yellow">
+                {' '}
+                · {rolesUnassigned} role{rolesUnassigned === 1 ? '' : 's'} unset
+              </span>
             )}
-          </div>
+          </span>
         </div>
 
-        <div className="divide-y divide-white/[0.04]">
-          {ROLES.map((def) => {
+        <ul className="divide-y divide-white/[0.10] border-t border-white/[0.10]">
+          {ROLES.flatMap((def) => {
             const holders = byRole.get(def.key) ?? [];
-            return (
-              <RoleRow
-                key={def.key}
-                def={def}
-                holders={holders}
-                onOpenLead={(id) => setOpenStaffId(id)}
-              />
-            );
+            if (holders.length === 0) {
+              return [
+                <li key={def.key}>
+                  <button
+                    type="button"
+                    onClick={() => navigate('/college?section=tutors')}
+                    className={ROW}
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="h-8 w-[3px] shrink-0 rounded-full bg-white/[0.25]"
+                    />
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+                        {def.label}
+                      </span>
+                      <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
+                        <span className={cn('font-semibold', def.statutory && 'text-red-300')}>
+                          Not set
+                        </span>
+                        {' · '}
+                        {def.fallbackHelp}
+                      </span>
+                    </span>
+                    <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
+                  </button>
+                </li>,
+              ];
+            }
+            return holders.map((lead) => (
+              <li key={`${def.key}:${lead.id}`} className="flex items-stretch">
+                <button
+                  type="button"
+                  onClick={() => setOpenStaffId(lead.id)}
+                  className={cn(ROW, 'min-w-0 flex-1')}
+                >
+                  <span
+                    aria-hidden="true"
+                    className="h-8 w-[3px] shrink-0 rounded-full bg-white/[0.25]"
+                  />
+                  <span className="min-w-0 flex-1">
+                    <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+                      {lead.name}
+                    </span>
+                    <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
+                      {def.label}
+                      {' · '}
+                      <span className="capitalize">{lead.role.replace(/_/g, ' ')}</span>
+                      {lead.department ? ` · ${lead.department}` : ''}
+                    </span>
+                  </span>
+                  {!lead.email && !lead.phone && (
+                    <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
+                  )}
+                </button>
+                {/* Contact is external (mailto/tel), so a plain anchor is
+                    right here. Sits beside the row button rather than
+                    inside it — a link inside a button is invalid HTML. */}
+                {lead.email && (
+                  <a href={`mailto:${lead.email}`} className={cn(LINK, 'self-center')} title={lead.email}>
+                    Email
+                  </a>
+                )}
+                {lead.phone && (
+                  <a
+                    href={`tel:${lead.phone}`}
+                    className={cn(LINK, 'self-center pr-4 sm:pr-5')}
+                    title={lead.phone}
+                  >
+                    Call
+                  </a>
+                )}
+              </li>
+            ));
           })}
-        </div>
-      </div>
-      <StaffComplianceDrawer
-        open={!!openStaffId}
-        onOpenChange={(o) => {
-          if (!o) setOpenStaffId(null);
-        }}
-        staffId={openStaffId}
-      />
+        </ul>
+      </section>
+      {drawer}
     </>
-  );
-}
-
-/* ──────────────────────────────────────────────────────── */
-
-function RoleRow({
-  def,
-  holders,
-  onOpenLead,
-}: {
-  def: RoleDef;
-  holders: LeadStaff[];
-  onOpenLead: (id: string) => void;
-}) {
-  return (
-    <div className="px-5 sm:px-6 py-4 flex items-start gap-4 flex-wrap sm:flex-nowrap">
-      <div className="shrink-0 sm:w-[180px]">
-        <div
-          className={cn(
-            'inline-flex items-center h-6 px-2 rounded-md border text-[10.5px] font-semibold tracking-[0.06em] uppercase',
-            def.tone === 'red' && 'bg-red-500/[0.08] border-red-500/30 text-red-200',
-            def.tone === 'amber' && 'bg-amber-500/[0.08] border-amber-500/30 text-amber-200',
-            def.tone === 'emerald' &&
-              'bg-emerald-500/[0.08] border-emerald-500/30 text-emerald-200',
-            def.tone === 'blue' && 'bg-blue-500/[0.08] border-blue-500/30 text-blue-200'
-          )}
-        >
-          {def.short}
-        </div>
-        <div className="mt-1 text-[12px] text-white/80 leading-snug">{def.label}</div>
-      </div>
-      <div className="flex-1 min-w-0">
-        {holders.length === 0 ? (
-          <div className="text-[12px] text-white/55 leading-snug">
-            <span className="text-white/65 italic">Not set.</span> {def.fallbackHelp}
-          </div>
-        ) : (
-          <div className="space-y-2.5">
-            {holders.map((h) => (
-              <LeadCard key={h.id} lead={h} onOpen={() => onOpenLead(h.id)} />
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
-function LeadCard({ lead, onOpen }: { lead: LeadStaff; onOpen: () => void }) {
-  const initials = lead.name
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((w) => w[0])
-    .join('')
-    .toUpperCase();
-
-  return (
-    <div
-      role="button"
-      tabIndex={0}
-      onClick={onOpen}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          onOpen();
-        }
-      }}
-      className="flex items-center gap-3 -mx-2 px-2 py-1.5 rounded-lg cursor-pointer hover:bg-white/[0.03] active:bg-white/[0.05] transition-colors touch-manipulation"
-    >
-      <Avatar className="h-10 w-10 ring-1 ring-white/[0.08] shrink-0">
-        <AvatarImage src={lead.photo_url ?? undefined} />
-        <AvatarFallback className="bg-elec-yellow/10 text-elec-yellow text-[11px] font-semibold">
-          {initials}
-        </AvatarFallback>
-      </Avatar>
-      <div className="flex-1 min-w-0">
-        <div className="text-[13px] font-medium text-white truncate">{lead.name}</div>
-        <div className="mt-0.5 flex items-center flex-wrap gap-x-2 gap-y-0.5 text-[11px] text-white/55">
-          <span className="capitalize truncate">{lead.role.replace(/_/g, ' ')}</span>
-          {lead.department && (
-            <>
-              <span className="text-white/25">·</span>
-              <span className="truncate">{lead.department}</span>
-            </>
-          )}
-        </div>
-      </div>
-      <div className="shrink-0 flex items-center gap-1.5">
-        {lead.email && (
-          <a
-            href={`mailto:${lead.email}`}
-            onClick={(e) => e.stopPropagation()}
-            className="h-8 px-3 rounded-full bg-[hsl(0_0%_14%)] border border-white/[0.08] text-[11.5px] font-medium text-white/80 hover:text-white hover:border-white/[0.18] transition-colors touch-manipulation"
-            title={lead.email}
-          >
-            Email
-          </a>
-        )}
-        {lead.phone && (
-          <a
-            href={`tel:${lead.phone}`}
-            onClick={(e) => e.stopPropagation()}
-            className="h-8 px-3 rounded-full bg-[hsl(0_0%_14%)] border border-white/[0.08] text-[11.5px] font-medium text-white/80 hover:text-white hover:border-white/[0.18] transition-colors touch-manipulation"
-            title={lead.phone}
-          >
-            Call
-          </a>
-        )}
-      </div>
-    </div>
   );
 }
 
 function Skeleton() {
   return (
-    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden animate-pulse">
-      <div className="px-5 sm:px-6 py-4 border-b border-white/[0.06]">
-        <div className="h-2 w-16 bg-white/[0.06] rounded" />
-        <div className="mt-2 h-4 w-2/3 bg-white/[0.06] rounded" />
+    <section className={cn(CARD, 'animate-pulse')}>
+      <div className="px-4 py-3.5 sm:px-5">
+        <div className="h-4 w-24 rounded bg-white/[0.10]" />
       </div>
-      <div className="divide-y divide-white/[0.04]">
+      <div className="divide-y divide-white/[0.10] border-t border-white/[0.10]">
         {Array.from({ length: 3 }).map((_, i) => (
-          <div
-            key={i}
-            className="px-5 sm:px-6 py-4 flex items-start gap-4 flex-wrap sm:flex-nowrap"
-          >
-            <div className="shrink-0 sm:w-[180px] space-y-2">
-              <div className="h-5 w-16 bg-white/[0.06] rounded" />
-              <div className="h-2 w-32 bg-white/[0.04] rounded" />
-            </div>
-            <div className="flex-1 flex items-center gap-3">
-              <div className="h-10 w-10 rounded-full bg-white/[0.06]" />
-              <div className="flex-1 space-y-2">
-                <div className="h-3 w-1/3 bg-white/[0.06] rounded" />
-                <div className="h-2 w-1/2 bg-white/[0.04] rounded" />
-              </div>
+          <div key={i} className="flex items-center gap-3 px-4 py-3.5 sm:px-5">
+            <div className="h-8 w-[3px] rounded-full bg-white/[0.10]" />
+            <div className="flex-1 space-y-2">
+              <div className="h-3 w-1/3 rounded bg-white/[0.10]" />
+              <div className="h-2.5 w-1/2 rounded bg-white/[0.10]" />
             </div>
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 }

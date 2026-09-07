@@ -1,29 +1,31 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import {
-  useResourceAnalytics,
-  setResourceGoldStandard,
-} from '@/hooks/useResourceAnalytics';
+import { useResourceAnalytics, setResourceGoldStandard } from '@/hooks/useResourceAnalytics';
 import { useToast } from '@/hooks/use-toast';
-import {
-  Pill,
-  SectionHeader,
-  StatStrip,
-  ListCard,
-  ListRow,
-  EmptyState,
-  LoadingState,
-  SecondaryButton,
-  itemVariants,
-} from '@/components/college/primitives';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { chipBase, chipOff, chipOn } from '@/components/forms/fieldStyles';
+import { containerVariants, itemVariants } from '@/components/college/primitives';
+import { HubKpi, HubKpiRow, HubSectionHeading } from '@/components/hub/HubPrimitives';
 
 /* ==========================================================================
    ResourceAnalyticsSection — tutor analytics panel.
    ELE-905 (B10). Shows top resources, view trend, gold-standard toggle.
+
+   Content only — CollegeDashboard draws the masthead. Four KPIs, one sort
+   row of 44px chips, one list. "Gold" is volt text on the row, and the
+   toggle is a quiet text control — there is nothing to START on this page,
+   so it has no solid volt button.
    ========================================================================== */
 
 type SortKey = 'views_total' | 'views_30d' | 'unique_30d' | 'downloads';
+
+const SORTS: { key: SortKey; label: string }[] = [
+  { key: 'views_30d', label: 'Views (30 days)' },
+  { key: 'unique_30d', label: 'Unique viewers (30 days)' },
+  { key: 'views_total', label: 'Views (all time)' },
+  { key: 'downloads', label: 'Downloads' },
+];
 
 export function ResourceAnalyticsSection() {
   const { rows, loading, error, refetch } = useResourceAnalytics();
@@ -44,7 +46,6 @@ export function ResourceAnalyticsSection() {
     }
   });
 
-  // Aggregate totals for the stat strip.
   const totals = rows.reduce(
     (acc, r) => {
       acc.views30d += r.view_count_30d;
@@ -61,9 +62,7 @@ export function ResourceAnalyticsSection() {
     setBusyId(resourceId);
     try {
       await setResourceGoldStandard(resourceId, next);
-      toast({
-        title: next ? 'Marked as gold standard' : 'Removed gold standard',
-      });
+      toast({ title: next ? 'Marked as gold standard' : 'Removed gold standard' });
       await refetch();
     } catch (e) {
       toast({
@@ -76,107 +75,148 @@ export function ResourceAnalyticsSection() {
     }
   };
 
-  return (
-    <motion.section variants={itemVariants} initial="hidden" animate="visible" className="space-y-4">
-      <SectionHeader eyebrow="Resources" title="Resource analytics" />
-      <p className="text-[13px] text-white/70 leading-relaxed -mt-2">
-        What's actually being used. Tag the top performers as gold standard for the rest of the cohort.
-      </p>
-
-      {!loading && !error && rows.length > 0 && (
-        <StatStrip
-          columns={4}
-          stats={[
-            { label: 'Views · 30d', value: totals.views30d, tone: 'blue' },
-            { label: 'Unique · 30d', value: totals.unique30d, tone: 'cyan' },
-            { label: 'Views · all', value: totals.viewsAll },
-            { label: 'Gold standard', value: totals.gold, tone: 'yellow' },
-          ]}
-        />
-      )}
-
-      <div className="flex flex-wrap gap-2">
-        {(
-          [
-            { key: 'views_30d', label: 'Views (30d)' },
-            { key: 'unique_30d', label: 'Unique viewers (30d)' },
-            { key: 'views_total', label: 'Views (all-time)' },
-            { key: 'downloads', label: 'Downloads' },
-          ] as { key: SortKey; label: string }[]
-        ).map((s) => (
-          <button
-            key={s.key}
-            type="button"
-            onClick={() => setSort(s.key)}
-            className={cn(
-              'h-11 rounded-full border px-4 text-[12.5px] font-medium touch-manipulation transition-colors',
-              sort === s.key
-                ? 'border-elec-yellow bg-elec-yellow/10 text-elec-yellow'
-                : 'border-white/10 bg-white/5 text-white/70 hover:bg-white/10'
-            )}
-          >
-            {s.label}
-          </button>
-        ))}
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-24">
+        <div className="h-6 w-6 animate-spin rounded-full border-2 border-elec-yellow border-t-transparent" />
       </div>
+    );
+  }
 
-      {loading && <LoadingState />}
+  return (
+    <div className="space-y-8 sm:space-y-10">
       {error && (
-        <div className="rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300">
+        <div className="rounded-2xl border border-red-400/40 px-4 py-3 text-[13px] text-white">
           {error}
         </div>
       )}
 
-      {!loading && sorted.length === 0 && (
-        <EmptyState
-          title="No resource activity yet"
-          description="Once learners start opening and downloading your resources, usage shows up here."
-        />
+      {rows.length > 0 && (
+        <HubKpiRow>
+          <HubKpi
+            accent
+            label="Views"
+            value={String(totals.views30d)}
+            verdict="Last 30 days"
+            context={`${totals.viewsAll} all time`}
+          />
+          <HubKpi
+            label="Unique viewers"
+            value={String(totals.unique30d)}
+            verdict="Last 30 days"
+          />
+          <HubKpi
+            label="Downloads"
+            value={String(totals.downloads)}
+            verdict="All time"
+          />
+          <HubKpi
+            label="Gold standard"
+            value={String(totals.gold)}
+            verdict={totals.gold > 0 ? 'Flagged for the cohort' : 'None flagged yet'}
+          />
+        </HubKpiRow>
       )}
 
-      {!loading && sorted.length > 0 && (
-        <ListCard>
-          {sorted.slice(0, 25).map((r) => (
-            <ListRow
-              key={r.resource_id}
-              title={
-                <span className="flex items-center gap-2">
-                  <span className="truncate">{r.title || 'Untitled resource'}</span>
-                  {r.gold_standard && <Pill tone="yellow">Gold</Pill>}
-                </span>
-              }
-              subtitle={
-                <span className="flex flex-wrap gap-3 text-white/70">
-                  <span>{r.view_count_30d} views (30d)</span>
-                  <span>{r.unique_viewers_30d} unique (30d)</span>
-                  <span>{r.views_count} all-time</span>
-                  <span>{r.downloads_count} downloads</span>
-                  {r.last_viewed_at && (
-                    <span>last {new Date(r.last_viewed_at).toLocaleDateString('en-GB')}</span>
-                  )}
-                </span>
-              }
-              trailing={
-                <SecondaryButton
-                  size="md"
-                  disabled={busyId === r.resource_id}
-                  onClick={() => toggleGold(r.resource_id, !r.gold_standard)}
-                  className={cn(
-                    r.gold_standard &&
-                      'border-elec-yellow/40 bg-elec-yellow/15 text-elec-yellow hover:bg-elec-yellow/20'
-                  )}
-                >
-                  {busyId === r.resource_id
-                    ? '…'
-                    : r.gold_standard
-                      ? 'Remove gold'
-                      : 'Mark gold standard'}
-                </SecondaryButton>
-              }
-            />
-          ))}
-        </ListCard>
-      )}
-    </motion.section>
+      <motion.section
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="space-y-3"
+      >
+        <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
+          <HubSectionHeading>Resources</HubSectionHeading>
+          {rows.length > 0 && (
+            <span className="text-[11px] font-semibold tabular-nums text-white">
+              {rows.length} on file
+            </span>
+          )}
+        </motion.div>
+
+        {rows.length > 0 && (
+          <motion.div variants={itemVariants} className="flex flex-wrap gap-2">
+            {SORTS.map((s) => (
+              <button
+                key={s.key}
+                type="button"
+                onClick={() => setSort(s.key)}
+                className={cn(chipBase, 'px-4 text-[12.5px]', sort === s.key ? chipOn : chipOff)}
+              >
+                {s.label}
+              </button>
+            ))}
+          </motion.div>
+        )}
+
+        <motion.div
+          variants={itemVariants}
+          className={cn(
+            '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
+            CARD_SURFACE
+          )}
+        >
+          {sorted.length === 0 ? (
+            <p className="px-4 py-4 text-[12.5px] leading-snug text-white sm:px-5">
+              No resource activity yet. Once learners start opening and downloading your
+              resources, usage shows up here.
+            </p>
+          ) : (
+            <ul className="divide-y divide-white/[0.10]">
+              {sorted.slice(0, 25).map((r) => {
+                const busy = busyId === r.resource_id;
+                return (
+                  <li
+                    key={r.resource_id}
+                    className="flex items-center gap-3 px-4 py-2.5 sm:px-5"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className={cn(
+                        'h-8 w-[3px] shrink-0 rounded-full',
+                        r.gold_standard ? 'bg-elec-yellow' : 'bg-white/[0.25]'
+                      )}
+                    />
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+                        {r.title || 'Untitled resource'}
+                        {r.gold_standard && (
+                          <span className="ml-2 text-[11px] font-semibold text-elec-yellow">
+                            Gold standard
+                          </span>
+                        )}
+                      </span>
+                      <span className="mt-0.5 block truncate text-[12px] leading-tight tabular-nums text-white">
+                        {[
+                          `${r.view_count_30d} views (30d)`,
+                          `${r.unique_viewers_30d} unique`,
+                          `${r.views_count} all time`,
+                          `${r.downloads_count} downloads`,
+                          r.last_viewed_at
+                            ? `last ${new Date(r.last_viewed_at).toLocaleDateString('en-GB')}`
+                            : null,
+                        ]
+                          .filter(Boolean)
+                          .join(' · ')}
+                      </span>
+                    </span>
+                    <button
+                      type="button"
+                      disabled={busy}
+                      onClick={() => toggleGold(r.resource_id, !r.gold_standard)}
+                      className={cn(
+                        '-mr-2 flex h-11 shrink-0 items-center px-2 text-[12px] font-bold transition-colors touch-manipulation disabled:text-white',
+                        r.gold_standard ? 'text-white' : 'text-elec-yellow'
+                      )}
+                    >
+                      {busy ? '…' : r.gold_standard ? 'Remove gold' : 'Mark gold'}
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </motion.div>
+      </motion.section>
+    </div>
   );
 }

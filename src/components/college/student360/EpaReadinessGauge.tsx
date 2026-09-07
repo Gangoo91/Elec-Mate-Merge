@@ -1,12 +1,20 @@
 import { cn } from '@/lib/utils';
-import { User2, ShieldCheck, Bot, TrendingUp, TrendingDown, Minus } from 'lucide-react';
+import {
+  User2,
+  ShieldCheck,
+  Bot,
+  TrendingUp,
+  TrendingDown,
+  Minus,
+  type LucideIcon,
+} from 'lucide-react';
 import type { EpaJudgement, EpaSource } from '@/hooks/useEpaReadiness';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { useCollegeSettings } from '@/hooks/college/useCollegeSettings';
 import { epaJudgementPosition } from '@/lib/epaBands';
 
 /* ==========================================================================
-   EpaReadinessGauge — unified visualisation of every voice's verdict on a
-   single readiness scale.
+   EpaReadinessGauge — every voice's verdict on one readiness scale.
 
    Maps verdict → band start, confidence → position within the band:
      refer    →  0–25
@@ -14,8 +22,17 @@ import { epaJudgementPosition } from '@/lib/epaBands';
      almost   → 50–75
      ready    → 75–100
 
-   Each voice (Learner / Tutor / AI / Employer) becomes a marker on the track.
-   Markers stack visually if they cluster.
+   Each voice (Learner / Tutor / AI / Employer) is a marker on the track.
+   Markers stack if they cluster.
+
+   Palette, not a rainbow. The old track was four translucent colour bands
+   (red / orange / amber / emerald) with blue, purple and emerald markers on
+   top — five hues to say "three people, one scale". The track is now one
+   neutral rule with tick marks at the band boundaries; the tutor's marker is
+   solid volt because in this hub the tutor's judgement is the one that
+   counts, the learner's is solid white, the AI's is outlined. The icon
+   inside each marker is what tells them apart, so the colour is not doing
+   that job alone.
    ========================================================================== */
 
 const BAND_LABELS = ['Refer', 'Not yet', 'Almost', 'Ready'];
@@ -24,44 +41,36 @@ const VOICE_META: Record<
   EpaSource,
   {
     label: string;
-    icon: React.ComponentType<{ className?: string }>;
-    colour: string;
-    ring: string;
-    bg: string;
-    border: string;
+    icon: LucideIcon;
+    /** The filled marker on the track and in the legend. */
+    marker: string;
+    /** Icon colour inside that marker. */
+    glyph: string;
   }
 > = {
   learner: {
     label: 'Learner',
     icon: User2,
-    colour: 'text-blue-200',
-    ring: 'ring-blue-400/60',
-    bg: 'bg-blue-500',
-    border: 'border-blue-400/60',
+    marker: 'bg-white',
+    glyph: 'text-black',
   },
   tutor: {
     label: 'Tutor',
     icon: ShieldCheck,
-    colour: 'text-elec-yellow',
-    ring: 'ring-elec-yellow/60',
-    bg: 'bg-elec-yellow',
-    border: 'border-elec-yellow/60',
+    marker: 'bg-elec-yellow',
+    glyph: 'text-black',
   },
   ai: {
     label: 'AI',
     icon: Bot,
-    colour: 'text-purple-200',
-    ring: 'ring-purple-400/60',
-    bg: 'bg-purple-400',
-    border: 'border-purple-400/60',
+    marker: 'border-2 border-white bg-elec-dark',
+    glyph: 'text-white',
   },
   employer: {
     label: 'Employer',
     icon: User2,
-    colour: 'text-emerald-200',
-    ring: 'ring-emerald-400/60',
-    bg: 'bg-emerald-400',
-    border: 'border-emerald-400/60',
+    marker: 'border-2 border-elec-yellow bg-elec-dark',
+    glyph: 'text-elec-yellow',
   },
 };
 
@@ -78,7 +87,7 @@ interface Voice {
     EpaJudgement,
     'verdict' | 'predicted_grade' | 'confidence' | 'source_name_snapshot'
   > | null;
-  /** Synthetic from a mock — counts visually but smaller marker */
+  /** Synthetic from a mock — drawn, but dimmed and not counted as a verdict. */
   synthetic?: boolean;
   /** Optional override for label below */
   subtitle?: string | null;
@@ -87,6 +96,9 @@ interface Voice {
 export function EpaReadinessGauge({
   voices,
   cohort,
+  headline,
+  outlier = null,
+  consensus = false,
 }: {
   voices: Voice[];
   /** Optional cohort context for percentile + sparkline */
@@ -95,6 +107,11 @@ export function EpaReadinessGauge({
     cohortSize: number;
     trajectory: number[];
   };
+  /** The agreement line — "All three judges agree: Ready · Merit". */
+  headline?: string;
+  /** Which voice disagrees with the other two, if exactly one does. */
+  outlier?: EpaSource | null;
+  consensus?: boolean;
 }) {
   const { settings } = useCollegeSettings();
   const bands = settings.epa_verdict_bands;
@@ -105,50 +122,58 @@ export function EpaReadinessGauge({
     .map((v) => ({ voice: v, position: judgementToPosition(v.judgement) }))
     .filter((p): p is { voice: Voice; position: number } => p.position !== null);
 
+  // A verdict inferred from a mock is drawn so the tutor can see where the
+  // learner's practice puts them, but it is NOT a recorded verdict and the
+  // count must not say it is. The old "3/3 verdicts" counted it.
+  const recorded = placed.filter((p) => !p.voice.synthetic).length;
+
   return (
-    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-5 py-5">
-      <div className="flex items-center justify-between gap-4 flex-wrap">
-        <div className="flex items-center gap-2 flex-wrap">
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-            Readiness gauge
-          </div>
+    <div
+      className={cn(
+        'overflow-hidden rounded-2xl border border-elec-yellow/35 px-4 py-4 sm:px-5',
+        CARD_SURFACE
+      )}
+    >
+      <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
+        <div className="flex flex-wrap items-center gap-2">
+          <div className="text-[13px] font-semibold text-white">Readiness</div>
           {cohort?.percentileLabel && cohort.cohortSize > 1 && (
             <span
-              className={cn(
-                'inline-flex items-center h-5 px-1.5 rounded-md border text-[9.5px] font-semibold tracking-[0.06em] uppercase',
-                cohort.percentileLabel.startsWith('Top 25')
-                  ? 'bg-emerald-500/[0.12] border-emerald-400/40 text-emerald-200'
-                  : cohort.percentileLabel.startsWith('Top 50')
-                    ? 'bg-amber-500/[0.12] border-amber-400/40 text-amber-200'
-                    : 'bg-orange-500/[0.10] border-orange-400/30 text-orange-200'
-              )}
+              className="inline-flex h-6 items-center rounded-md border border-white/[0.14] px-1.5 text-[10.5px] font-semibold text-white"
               title={`Cohort of ${cohort.cohortSize}`}
             >
-              {cohort.percentileLabel}
+              {cohort.percentileLabel} of cohort
             </span>
           )}
           {cohort && cohort.trajectory.length >= 2 && <Sparkline points={cohort.trajectory} />}
         </div>
-        <div className="text-[10px] uppercase tracking-[0.16em] text-white/45">
-          {placed.length}/{voices.length} verdict{placed.length === 1 ? '' : 's'}
+        <div className="text-[12px] tabular-nums text-white">
+          {recorded}/{voices.length} verdict{recorded === 1 ? '' : 's'}
         </div>
       </div>
 
+      {/* Agreement line. Volt when one voice is the odd one out — that is
+          the one thing here a tutor should act on. */}
+      {headline && (
+        <p
+          className={cn(
+            'mt-1 text-[12.5px] leading-snug',
+            outlier && !consensus ? 'font-semibold text-elec-yellow' : 'text-white'
+          )}
+        >
+          {headline}
+        </p>
+      )}
+
       {/* Track */}
-      <div className="mt-5">
-        {/* Band background */}
+      <div className="mt-4">
         <div className="relative h-14">
-          <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-3 rounded-full overflow-hidden flex">
-            <div className="flex-1 bg-red-500/[0.14]" />
-            <div className="flex-1 bg-orange-500/[0.14]" />
-            <div className="flex-1 bg-amber-500/[0.14]" />
-            <div className="flex-1 bg-emerald-500/[0.14]" />
-          </div>
+          <div className="absolute inset-x-0 top-1/2 h-1.5 -translate-y-1/2 rounded-full bg-white/[0.10]" />
           {/* Tick marks at band boundaries */}
           {[25, 50, 75].map((x) => (
             <div
               key={x}
-              className="absolute top-1/2 -translate-y-1/2 w-px h-3 bg-white/[0.14]"
+              className="absolute top-1/2 h-3 w-px -translate-y-1/2 bg-white/[0.25]"
               style={{ left: `${x}%` }}
               aria-hidden
             />
@@ -174,19 +199,18 @@ export function EpaReadinessGauge({
               >
                 <div
                   className={cn(
-                    'h-7 w-7 rounded-full ring-2 flex items-center justify-center shadow-lg shadow-black/40',
-                    meta.bg,
-                    meta.ring,
+                    'flex h-7 w-7 items-center justify-center rounded-full shadow-[0_2px_10px_-4px_rgba(0,0,0,0.7)]',
+                    meta.marker,
                     p.voice.synthetic && 'opacity-60'
                   )}
                   title={`${meta.label}: ${p.voice.judgement?.verdict?.replace('_', ' ')}${p.voice.judgement?.predicted_grade ? ` · ${p.voice.judgement.predicted_grade}` : ''}`}
                 >
-                  <Icon className="h-3.5 w-3.5 text-black" strokeWidth={2.5} />
+                  <Icon className={cn('h-3.5 w-3.5', meta.glyph)} strokeWidth={2.5} />
                 </div>
-                {/* Verdical line down to track */}
+                {/* Vertical line down to track */}
                 <div
                   className={cn(
-                    'absolute left-1/2 top-full -translate-x-1/2 w-px bg-white/15',
+                    'absolute left-1/2 top-full w-px -translate-x-1/2 bg-white/[0.25]',
                     stack > 0 ? 'h-3' : 'h-2'
                   )}
                   aria-hidden
@@ -197,18 +221,9 @@ export function EpaReadinessGauge({
         </div>
 
         {/* Band labels under track */}
-        <div className="mt-1 flex text-[9.5px] font-medium uppercase tracking-[0.12em] text-white/55">
-          {BAND_LABELS.map((l, i) => (
-            <div
-              key={l}
-              className={cn(
-                'flex-1 text-center',
-                i === 0 && 'text-red-300/85',
-                i === 1 && 'text-orange-300/85',
-                i === 2 && 'text-amber-300/85',
-                i === 3 && 'text-emerald-300/85'
-              )}
-            >
+        <div className="mt-1 flex text-[11px] font-medium text-white">
+          {BAND_LABELS.map((l) => (
+            <div key={l} className="flex-1 text-center">
               {l}
             </div>
           ))}
@@ -216,73 +231,70 @@ export function EpaReadinessGauge({
       </div>
 
       {/* Voice legend rows */}
-      <div className="mt-5 space-y-2">
+      <ul className="mt-4 divide-y divide-white/[0.10]">
         {voices.map((v) => {
           const meta = VOICE_META[v.source];
           const Icon = meta.icon;
           const j = v.judgement;
           return (
-            <div key={v.source} className="flex items-center gap-3">
+            <li key={v.source} className="flex items-center gap-3 py-2.5">
               <div
                 className={cn(
-                  'h-7 w-7 rounded-full flex items-center justify-center flex-shrink-0',
-                  j ? meta.bg : 'bg-white/[0.04]',
-                  j ? '' : 'border border-dashed border-white/[0.12]'
+                  'flex h-7 w-7 shrink-0 items-center justify-center rounded-full',
+                  j ? meta.marker : 'border border-dashed border-white/[0.25]'
                 )}
               >
                 <Icon
-                  className={cn('h-3.5 w-3.5', j ? 'text-black' : 'text-white/35')}
+                  className={cn('h-3.5 w-3.5', j ? meta.glyph : 'text-white')}
                   strokeWidth={2.5}
                 />
               </div>
               <div className="min-w-0 flex-1">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <span className={cn('text-[12px] font-semibold tracking-tight', meta.colour)}>
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-[13px] font-semibold tracking-tight text-white">
                     {meta.label}
                   </span>
                   {v.synthetic && (
-                    <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-white/[0.06] border border-white/[0.12] text-[9px] font-semibold tracking-[0.06em] uppercase text-white/55">
-                      Draft
+                    <span className="inline-flex h-5 items-center rounded-md border border-white/[0.14] px-1.5 text-[10px] font-semibold text-white">
+                      Inferred
                     </span>
                   )}
                   {j?.verdict && (
-                    <span className="text-[11px] text-white/85 capitalize">
+                    <span
+                      className={cn(
+                        'text-[12px] capitalize',
+                        j.verdict === 'refer' ? 'font-semibold text-red-300' : 'text-white'
+                      )}
+                    >
                       {j.verdict.replace('_', ' ')}
                     </span>
                   )}
                   {j?.predicted_grade && (
-                    <span className="inline-flex items-center h-5 px-1.5 rounded-md bg-elec-yellow/[0.10] border border-elec-yellow/30 text-[10px] font-semibold tracking-[0.06em] uppercase text-elec-yellow">
+                    <span className="text-[12px] font-semibold text-elec-yellow">
                       {GRADE_LABEL[j.predicted_grade] ?? j.predicted_grade}
                     </span>
                   )}
                 </div>
                 {v.subtitle && (
-                  <div className="mt-0.5 text-[10.5px] text-white/45">{v.subtitle}</div>
+                  <div className="mt-0.5 text-[12px] leading-tight text-white">{v.subtitle}</div>
                 )}
               </div>
               {j?.confidence != null && (
-                <div className="flex items-center gap-2 flex-shrink-0">
-                  <div className="h-1.5 w-[60px] rounded-full bg-white/[0.06] overflow-hidden">
+                <div className="flex shrink-0 items-center gap-2">
+                  <div className="h-1.5 w-[60px] overflow-hidden rounded-full bg-white/[0.10]">
                     <div
-                      className={cn(
-                        'h-full rounded-full',
-                        j.confidence >= 70
-                          ? 'bg-emerald-400'
-                          : j.confidence >= 40
-                            ? 'bg-elec-yellow'
-                            : 'bg-amber-400'
-                      )}
+                      className="h-full rounded-full bg-white"
                       style={{ width: `${j.confidence}%` }}
                     />
                   </div>
-                  <span className="text-[10.5px] text-white/65 tabular-nums">{j.confidence}%</span>
+                  <span className="text-[12px] tabular-nums text-white">{j.confidence}%</span>
                 </div>
               )}
-              {!j && <span className="text-[10.5px] text-white/35 italic">No verdict yet</span>}
-            </div>
+              {!j && <span className="text-[12px] text-white">No verdict yet</span>}
+            </li>
           );
         })}
-      </div>
+      </ul>
     </div>
   );
 }
@@ -309,7 +321,8 @@ function Sparkline({ points }: { points: number[] }) {
   const prev = points[points.length - 2];
   const delta = last - prev;
   const TrendIcon = delta > 2 ? TrendingUp : delta < -2 ? TrendingDown : Minus;
-  const trendTone = delta > 2 ? 'text-emerald-300' : delta < -2 ? 'text-red-300' : 'text-white/55';
+  // Falling readiness is a real problem; rising is just the line.
+  const trendTone = delta < -2 ? 'text-red-300' : 'text-white';
   return (
     <span
       className="inline-flex items-center gap-1 align-middle"
@@ -318,7 +331,7 @@ function Sparkline({ points }: { points: number[] }) {
       <svg width={W} height={H} className="overflow-visible">
         <path
           d={path}
-          className="stroke-elec-yellow/85 fill-none"
+          className="fill-none stroke-elec-yellow"
           strokeWidth="1.4"
           strokeLinecap="round"
         />
@@ -331,7 +344,7 @@ function Sparkline({ points }: { points: number[] }) {
               cx={x}
               cy={y}
               r={i === points.length - 1 ? 1.8 : 1.1}
-              className={i === points.length - 1 ? 'fill-elec-yellow' : 'fill-elec-yellow/50'}
+              className={i === points.length - 1 ? 'fill-elec-yellow' : 'fill-white/[0.25]'}
             />
           );
         })}

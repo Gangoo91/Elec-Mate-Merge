@@ -1,18 +1,24 @@
 import { useState } from 'react';
-import { ChevronDown, User2, ShieldCheck, Bot } from 'lucide-react';
+import { ChevronDown, User2, ShieldCheck, Bot, type LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import type { EpaJudgement, EpaSource } from '@/hooks/useEpaReadiness';
 
 /* ==========================================================================
-   EpaVerdictHistory — every prior judgement, grouped by source.
-   Most recent first per source. Shows supersede chain visually.
+   EpaVerdictHistory — every prior judgement, grouped by day.
+   Most recent first. Shows the supersede chain.
+
+   Collapsed by default: the current verdicts are already on the cards
+   above, so this is the audit trail, not the headline. The card still
+   renders when there is nothing in it, saying so — a section that vanished
+   made the page look as if the history had failed to load.
    ========================================================================== */
 
-const SOURCE_META: Record<EpaSource, { label: string; icon: React.ComponentType<{ className?: string }>; tint: string }> = {
-  learner: { label: 'Learner', icon: User2, tint: 'text-blue-200' },
-  tutor: { label: 'Tutor', icon: ShieldCheck, tint: 'text-elec-yellow' },
-  ai: { label: 'AI', icon: Bot, tint: 'text-purple-200' },
-  employer: { label: 'Employer', icon: User2, tint: 'text-emerald-200' },
+const SOURCE_META: Record<EpaSource, { label: string; icon: LucideIcon }> = {
+  learner: { label: 'Learner', icon: User2 },
+  tutor: { label: 'Tutor', icon: ShieldCheck },
+  ai: { label: 'AI', icon: Bot },
+  employer: { label: 'Employer', icon: User2 },
 };
 
 const VERDICT_LABEL: Record<string, string> = {
@@ -22,16 +28,16 @@ const VERDICT_LABEL: Record<string, string> = {
   refer: 'Refer',
 };
 
-const VERDICT_DOT: Record<string, string> = {
-  ready: 'bg-emerald-400',
-  almost: 'bg-amber-400',
-  not_yet: 'bg-orange-400',
-  refer: 'bg-red-400',
-};
+const CHIP =
+  'inline-flex h-5 items-center rounded-md border border-white/[0.14] px-1.5 text-[10px] font-semibold text-white';
 
 function formatDate(iso: string | null): string {
   if (!iso) return '—';
-  return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+  return new Date(iso).toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  });
 }
 
 function formatTime(iso: string | null): string {
@@ -54,8 +60,6 @@ export function EpaVerdictHistory({
     ...past,
   ].sort((a, b) => (b.created_at ?? '').localeCompare(a.created_at ?? ''));
 
-  if (all.length === 0) return null;
-
   // Group by date for cleaner timeline
   const grouped = new Map<string, EpaJudgement[]>();
   for (const j of all) {
@@ -65,113 +69,111 @@ export function EpaVerdictHistory({
     grouped.set(day, list);
   }
 
+  const count = `${all.length} entr${all.length === 1 ? 'y' : 'ies'}`;
+
   return (
-    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
+    <div className={cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        className="w-full px-5 py-3 flex items-center justify-between gap-3 hover:bg-white/[0.02] transition-colors touch-manipulation"
+        disabled={all.length === 0}
+        aria-expanded={open}
+        className="flex min-h-11 w-full items-center justify-between gap-3 px-4 py-3 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] disabled:hover:bg-transparent sm:px-5"
       >
-        <div className="flex items-center gap-2">
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-            Verdict history
-          </div>
-          <span className="text-[10.5px] text-white/45 tabular-nums">
-            {all.length} entr{all.length === 1 ? 'y' : 'ies'}
+        <div className="text-[13px] font-semibold text-white">
+          Verdict history
+          <span className="ml-2 font-normal tabular-nums">
+            {all.length === 0 ? 'Nothing recorded yet' : count}
           </span>
         </div>
-        <ChevronDown
-          className={cn(
-            'h-4 w-4 text-white/55 transition-transform',
-            open && 'rotate-180'
-          )}
-        />
+        {all.length > 0 && (
+          <ChevronDown
+            className={cn('h-4 w-4 shrink-0 text-white transition-transform', open && 'rotate-180')}
+            aria-hidden="true"
+          />
+        )}
       </button>
-      {open && (
-        <div className="px-5 pb-5 pt-1 space-y-4 border-t border-white/[0.04]">
+      {open && all.length > 0 && (
+        <div className="space-y-4 border-t border-white/[0.10] px-4 pb-5 pt-4 sm:px-5">
           {Array.from(grouped.entries()).map(([day, items]) => (
             <div key={day}>
-              <div className="text-[10px] uppercase tracking-[0.16em] text-white/45 mb-2 tabular-nums">
+              <div className="mb-2 text-[12px] font-semibold tabular-nums text-white">
                 {formatDate(day)}
               </div>
-              <ol className="relative border-l border-white/[0.08] pl-4 space-y-3">
+              <ol className="relative space-y-3 border-l border-white/[0.25] pl-4">
                 {items.map((j) => {
                   const meta = SOURCE_META[j.source as EpaSource];
                   const Icon = meta.icon;
                   return (
                     <li key={j.id} className="relative">
-                      {/* Timeline node */}
+                      {/* Timeline node — volt ring for the current verdict,
+                          neutral for the superseded ones. */}
                       <span
                         className={cn(
-                          'absolute -left-[21px] top-[2px] inline-flex items-center justify-center h-4 w-4 rounded-full border',
-                          j.is_current
-                            ? 'bg-[hsl(0_0%_8%)] border-white/40'
-                            : 'bg-[hsl(0_0%_8%)] border-white/15'
+                          'absolute -left-[25px] top-[1px] inline-flex h-4 w-4 items-center justify-center rounded-full border bg-elec-dark',
+                          j.is_current ? 'border-elec-yellow' : 'border-white/[0.25]'
                         )}
                       >
-                        <Icon className={cn('h-2.5 w-2.5', meta.tint)} strokeWidth={2.5} />
+                        <Icon
+                          className={cn(
+                            'h-2.5 w-2.5',
+                            j.is_current ? 'text-elec-yellow' : 'text-white'
+                          )}
+                          strokeWidth={2.5}
+                        />
                       </span>
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <span className={cn('text-[12px] font-semibold tracking-tight', meta.tint)}>
+                      <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                        <span className="text-[12.5px] font-semibold tracking-tight text-white">
                           {meta.label}
                         </span>
                         <span
                           className={cn(
-                            'inline-flex items-center gap-1 text-[11px] text-white/85 capitalize'
+                            'text-[12px]',
+                            j.verdict === 'refer' ? 'font-semibold text-red-300' : 'text-white'
                           )}
                         >
-                          <span aria-hidden className={cn('inline-block h-1.5 w-1.5 rounded-full', VERDICT_DOT[j.verdict] ?? 'bg-white/35')} />
                           {VERDICT_LABEL[j.verdict] ?? j.verdict}
                         </span>
                         {j.predicted_grade && (
-                          <span className="text-[10.5px] uppercase tracking-[0.06em] text-elec-yellow/85">
+                          <span className="text-[12px] font-semibold capitalize text-elec-yellow">
                             {j.predicted_grade}
                           </span>
                         )}
                         {j.confidence != null && (
-                          <span className="text-[10.5px] text-white/55 tabular-nums">{j.confidence}%</span>
+                          <span className="text-[12px] tabular-nums text-white">
+                            {j.confidence}%
+                          </span>
                         )}
                         {j.cosign_kind && (
-                          <span
-                            className={cn(
-                              'inline-flex items-center h-4 px-1.5 rounded-md border text-[9px] font-semibold tracking-[0.06em] uppercase',
-                              j.cosign_kind === 'cosigned'
-                                ? 'bg-emerald-500/[0.10] border-emerald-400/30 text-emerald-200'
-                                : 'bg-orange-500/[0.10] border-orange-400/30 text-orange-200'
-                            )}
-                          >
+                          <span className={CHIP}>
                             {j.cosign_kind === 'cosigned' ? 'Co-signed' : 'Override'}
                           </span>
                         )}
-                        {!j.is_current && (
-                          <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-white/[0.04] border border-white/[0.10] text-[9px] font-semibold tracking-[0.06em] uppercase text-white/50">
-                            Superseded
-                          </span>
-                        )}
+                        {!j.is_current && <span className={CHIP}>Superseded</span>}
                         {j.actual_outcome && (
-                          <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-purple-500/[0.10] border border-purple-400/30 text-[9px] font-semibold tracking-[0.06em] uppercase text-purple-200">
-                            Actual: {j.actual_outcome}
-                          </span>
+                          <span className={cn(CHIP, 'capitalize')}>Actual: {j.actual_outcome}</span>
                         )}
                       </div>
                       {j.source_name_snapshot && (
-                        <div className="mt-0.5 text-[10.5px] text-white/45">
+                        <div className="mt-0.5 text-[12px] text-white">
                           {j.source_name_snapshot}
                           {j.created_at && (
                             <>
-                              <span className="text-white/25 mx-1.5">·</span>
+                              <span aria-hidden="true" className="mx-1.5">
+                                ·
+                              </span>
                               <span className="tabular-nums">{formatTime(j.created_at)}</span>
                             </>
                           )}
                         </div>
                       )}
                       {j.rationale && (
-                        <p className="mt-1 text-[11.5px] text-white/75 leading-snug line-clamp-3">
+                        <p className="mt-1 line-clamp-3 text-[12px] leading-snug text-white">
                           {j.rationale}
                         </p>
                       )}
                       {j.cosign_rationale && (
-                        <p className="mt-1 text-[11.5px] text-white/75 leading-snug italic">
+                        <p className="mt-1 text-[12px] italic leading-snug text-white">
                           “{j.cosign_rationale}”
                         </p>
                       )}

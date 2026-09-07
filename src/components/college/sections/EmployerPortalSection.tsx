@@ -1,43 +1,45 @@
 /**
- * EmployerPortalSection — Employer-facing dashboard for managing apprentices.
- * card-surface-interactive cards, KPI strip, framer-motion, mobile-first.
+ * EmployerPortalSection — employer engagement, on the shared hub language.
+ * Content only; the masthead is CollegeDashboard's.
+ *
+ * What went: the 48–60px hero, the numbered `01 · EMPLOYERS` KPI strip on
+ * `bg-[hsl(…)]`, the blue/cyan hairline on each employer card, the blue
+ * initials discs and the three-colour progress pills. What stayed: every
+ * query and derivation (verified off-the-job minutes keyed on the AUTH uid,
+ * attendance and ILPs keyed on the college row id), the share-link sheet and
+ * the honest "no visit log yet" note.
+ *
+ * Learner rows now go to Student 360 — `ApprenticeRow.id` is
+ * `college_students.id`, which is what that section expects.
  */
 
 import { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link as LinkIcon } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
-import { useToast } from '@/hooks/use-toast';
 import { useCollegeEmployers } from '@/hooks/useCollegeEmployers';
 import { EmployerLinkSheet } from '@/components/college/sheets/EmployerLinkSheet';
 import { DEFAULT_OTJ_STANDARD } from '@/data/otjStandards';
-import {
-  SectionHeader,
-  ListCard,
-  ListRow,
-  Pill,
-  EmptyState,
-  LoadingState,
-  inputClass,
-  type Tone,
-} from '@/components/college/primitives';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { HubKpi, HubKpiRow, HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { containerVariants, itemVariants } from '@/components/college/primitives';
 
-/* ------------------------------------------------------------------ */
-/*  Framer motion variants                                            */
-/* ------------------------------------------------------------------ */
+const SEARCH =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white placeholder:opacity-60 hover:border-white/[0.3] focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation';
+const TEXT_ACTION =
+  'flex h-11 shrink-0 items-center px-2 text-[12px] font-bold text-elec-yellow transition-colors touch-manipulation';
+const LIST_CARD = cn(
+  '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
+  CARD_SURFACE
+);
+const ROW =
+  'flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5';
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.04 } },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 8 },
-  visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 24 } },
-};
+const norm = (s: string | null | undefined) => (s ?? '').trim().toLowerCase();
 
 /* ------------------------------------------------------------------ */
 /*  Derived types                                                     */
@@ -46,10 +48,9 @@ const itemVariants = {
 interface ApprenticeRow {
   id: string;
   name: string;
-  initials: string;
   courseId: string | null;
   courseName: string;
-  attendancePercent: number;
+  attendancePercent: number | null;
   progressPercent: number;
   epaStatus: string;
   otjCompleted: number;
@@ -64,30 +65,19 @@ interface EmployerGroup {
   id: string;
   label: string;
   apprentices: ApprenticeRow[];
-  avgAttendance: number;
+  avgAttendance: number | null;
   avgProgress: number;
   totalOtjRequired: number;
   totalOtjCompleted: number;
-}
-
-/* ------------------------------------------------------------------ */
-/*  Helpers                                                           */
-/* ------------------------------------------------------------------ */
-
-function getInitials(name: string): string {
-  return name
-    .split(' ')
-    .filter(Boolean)
-    .map((n) => n[0])
-    .join('')
-    .toUpperCase()
-    .slice(0, 2);
 }
 
 function daysBetween(a: Date, b: Date): number {
   return Math.floor(Math.abs(b.getTime() - a.getTime()) / (1000 * 60 * 60 * 24));
 }
 
+function plural(n: number, one: string, many = `${one}s`): string {
+  return `${n} ${n === 1 ? one : many}`;
+}
 
 /* ------------------------------------------------------------------ */
 /*  Component                                                         */
@@ -95,7 +85,7 @@ function daysBetween(a: Date, b: Date): number {
 
 export function EmployerPortalSection() {
   const { students, courses, attendance, epaRecords, ilps, isLoading } = useCollegeSupabase();
-  const { toast } = useToast();
+  const navigate = useNavigate();
 
   const [searchQuery, setSearchQuery] = useState('');
   const [expandedEmployer, setExpandedEmployer] = useState<string | null>(null);
@@ -109,7 +99,7 @@ export function EmployerPortalSection() {
 
   const now = useMemo(() => new Date(), []);
 
-  // Verified off-the-job minutes per learner — keyed by auth uid
+  // Verified off-the-job minutes per learner — keyed by AUTH uid
   // (college_otj_entries.student_id = profiles.id = college_students.user_id).
   const userIds = useMemo(
     () => students.filter((s) => s.user_id).map((s) => s.user_id as string),
@@ -139,19 +129,22 @@ export function EmployerPortalSection() {
     const map = new Map<string, ApprenticeRow[]>();
 
     students.forEach((s) => {
-      if (s.status !== 'Active' || !s.employer_id) return;
+      if (norm(s.status) !== 'active' || !s.employer_id) return;
 
-      // Attendance: count records for this student
+      // Attendance: college_attendance.student_id is the college row id.
+      // Null when no register has been marked — the old code reported 0%,
+      // which read as "never turned up".
       const studentAtt = attendance.filter((a) => a.student_id === s.id);
-      const presentCount = studentAtt.filter(
-        (a) => a.status === 'Present' || a.status === 'Late'
-      ).length;
+      const presentCount = studentAtt.filter((a) => {
+        const st = norm(a.status);
+        return st === 'present' || st === 'late';
+      }).length;
       const attendancePercent =
-        studentAtt.length > 0 ? Math.round((presentCount / studentAtt.length) * 100) : 0;
+        studentAtt.length > 0 ? Math.round((presentCount / studentAtt.length) * 100) : null;
 
       // EPA
       const epa = epaRecords.find((e) => e.student_id === s.id);
-      const epaStatus = epa?.status ?? 'Not Started';
+      const epaStatus = epa?.status ?? 'Not started';
 
       // Progress
       const progress = s.progress_percent ?? 0;
@@ -187,9 +180,8 @@ export function EmployerPortalSection() {
       const row: ApprenticeRow = {
         id: s.id,
         name: s.name,
-        initials: getInitials(s.name),
         courseId: s.course_id,
-        courseName: course?.name ?? 'Unknown Course',
+        courseName: course?.name ?? 'No course set',
         attendancePercent,
         progressPercent: progress,
         epaStatus,
@@ -208,12 +200,14 @@ export function EmployerPortalSection() {
 
     const groups: EmployerGroup[] = [];
     map.forEach((apprentices, id) => {
+      const withAttendance = apprentices.filter((a) => a.attendancePercent !== null);
       const avgAttendance =
-        apprentices.length > 0
+        withAttendance.length > 0
           ? Math.round(
-              apprentices.reduce((s, a) => s + a.attendancePercent, 0) / apprentices.length
+              withAttendance.reduce((s, a) => s + (a.attendancePercent ?? 0), 0) /
+                withAttendance.length
             )
-          : 0;
+          : null;
       const avgProgress =
         apprentices.length > 0
           ? Math.round(
@@ -223,8 +217,9 @@ export function EmployerPortalSection() {
       const totalOtjRequired = apprentices.reduce((s, a) => s + a.otjTarget, 0);
       const totalOtjCompleted = apprentices.reduce((s, a) => s + a.otjCompleted, 0);
       const registered = registeredMap.get(id);
-      const label = registered?.company_name
-        ?? (id.length > 8 ? `Employer ${id.slice(0, 8)}` : `Employer ${id}`);
+      const label =
+        registered?.company_name ??
+        (id.length > 8 ? `Employer ${id.slice(0, 8)}` : `Employer ${id}`);
 
       groups.push({
         id,
@@ -254,6 +249,9 @@ export function EmployerPortalSection() {
   const reviewsDue = allApprentices.filter(
     (a) => a.daysSinceReview === null || a.daysSinceReview >= 84
   );
+  const reviewsOverdue = reviewsDue.filter(
+    (a) => a.daysSinceReview !== null && a.daysSinceReview > 84
+  ).length;
 
   /* ---------- search filter ---------- */
 
@@ -269,10 +267,17 @@ export function EmployerPortalSection() {
     );
   }, [employers, searchQuery]);
 
+  const openLearner = (id: string) =>
+    navigate(`/college?section=student360&studentId=${encodeURIComponent(id)}`);
+
   /* ---------- render ---------- */
 
   if (isLoading) {
-    return <LoadingState />;
+    return (
+      <div className="flex items-center justify-center py-24">
+        <div className="h-6 w-6 animate-spin rounded-full border-2 border-elec-yellow border-t-transparent" />
+      </div>
+    );
   }
 
   return (
@@ -280,334 +285,345 @@ export function EmployerPortalSection() {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="mx-auto max-w-7xl space-y-10 sm:space-y-14 pb-12"
+      className="space-y-6 sm:space-y-8"
     >
-      {/* Hero */}
-      <motion.div variants={itemVariants}>
-        <div className="pt-6 sm:pt-8 lg:pt-10 pb-2">
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            People · Employer Portal
-          </div>
-          <h1 className="mt-1.5 text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight leading-[1.05]">
-            Employer engagement
-          </h1>
-          <p className="mt-3 text-[13px] sm:text-sm text-white max-w-2xl leading-relaxed">
-            {totalEmployers} employer{totalEmployers !== 1 ? 's' : ''} with {totalPlaced} active apprentice
-            {totalPlaced !== 1 ? 's' : ''}. Workplace engagement, reviews and OTJ compliance.
-          </p>
-        </div>
-      </motion.div>
+      <HubKpiRow>
+        <HubKpi
+          accent
+          label="Employers"
+          value={String(totalEmployers)}
+          verdict={totalEmployers > 0 ? 'With active apprentices' : 'No employers linked yet'}
+          context={
+            registeredEmployers.length > 0
+              ? `${registeredEmployers.length} registered for the portal`
+              : undefined
+          }
+        />
+        <HubKpi
+          label="Placed"
+          value={String(totalPlaced)}
+          verdict={totalPlaced > 0 ? 'Active apprentices with an employer' : 'Nobody placed yet'}
+        />
+        <HubKpi
+          label="Off-the-job on track"
+          value={allApprentices.length > 0 ? `${otjCompliancePercent}%` : '—'}
+          verdict={
+            allApprentices.length === 0
+              ? 'No apprentices to measure'
+              : otjCompliancePercent >= 80
+                ? 'Most are keeping pace'
+                : 'Chase the verified hours'
+          }
+          context={
+            allApprentices.length > 0
+              ? `${otjCompliantCount} of ${allApprentices.length} within 90% of expected`
+              : undefined
+          }
+          sentiment={
+            allApprentices.length === 0 ? 'neutral' : otjCompliancePercent >= 80 ? 'good' : 'bad'
+          }
+        />
+        <HubKpi
+          label="Reviews due"
+          value={String(reviewsDue.length)}
+          verdict={
+            reviewsOverdue > 0
+              ? `${reviewsOverdue} past the 12-week mark`
+              : reviewsDue.length > 0
+                ? 'Book the tri-partite reviews'
+                : 'All reviews up to date'
+          }
+          sentiment={reviewsDue.length > 0 ? 'bad' : 'neutral'}
+        />
+      </HubKpiRow>
 
-      {/* KPI Strip */}
-      <motion.div variants={itemVariants}>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/[0.06] border border-white/[0.06] rounded-2xl overflow-hidden">
-          {[
-            { value: totalEmployers, label: 'Employers', sub: 'Active partners', colour: 'text-blue-400' },
-            { value: totalPlaced, label: 'Placed', sub: 'Active apprentices', colour: 'text-emerald-400' },
-            {
-              value: `${otjCompliancePercent}%`,
-              label: 'OTJ Compliance',
-              sub: 'On target',
-              colour:
-                otjCompliancePercent >= 80
-                  ? 'text-emerald-400'
-                  : otjCompliancePercent >= 50
-                    ? 'text-amber-400'
-                    : 'text-red-400',
-            },
-            {
-              value: reviewsDue.length,
-              label: 'Reviews Due',
-              sub: 'Awaiting employer',
-              colour: reviewsDue.length > 0 ? 'text-amber-400' : 'text-emerald-400',
-            },
-          ].map((kpi, i) => (
-            <div
-              key={kpi.label}
-              className="bg-[hsl(0_0%_12%)] px-5 py-6 sm:px-6 sm:py-8 lg:px-7 lg:py-9"
-            >
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                {String(i + 1).padStart(2, '0')} · {kpi.label}
-              </div>
-              <div
-                className={cn(
-                  'mt-3 sm:mt-4 font-semibold tabular-nums tracking-tight leading-none',
-                  'text-4xl sm:text-5xl lg:text-6xl',
-                  kpi.colour
-                )}
-              >
-                {kpi.value}
-              </div>
-              <div className="mt-3 text-[11px] text-white">{kpi.sub}</div>
-            </div>
-          ))}
-        </div>
-      </motion.div>
-
-      {/* Search */}
       <motion.div variants={itemVariants}>
         <input
-          type="text"
-          placeholder="Search employers or apprentices…"
+          type="search"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className={cn(inputClass, 'rounded-full')}
+          placeholder="Search employers or apprentices…"
+          aria-label="Search employers or apprentices"
+          className={SEARCH}
         />
       </motion.div>
 
-      {/* Employer Directory */}
-      <motion.section variants={itemVariants} className="space-y-5">
-        <SectionHeader eyebrow="Employer Directory" title="Active employers" />
+      {/* Employer directory — tap a row to open its apprentices in place. */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <div className="flex items-end justify-between gap-4">
+          <HubSectionHeading>Employers</HubSectionHeading>
+          <span className="text-[11px] font-semibold tabular-nums text-white">
+            {plural(filteredEmployers.length, 'employer')}
+          </span>
+        </div>
 
-        {filteredEmployers.length === 0 ? (
-          <EmptyState
-            title={searchQuery ? 'No employers match your search' : 'No employers with active apprentices'}
-          />
-        ) : (
-          <div className="space-y-3">
-            {filteredEmployers.map((employer) => {
-              const isExpanded = expandedEmployer === employer.id;
-              const progressTone: Tone =
-                employer.avgProgress >= 70 ? 'green' : employer.avgProgress >= 40 ? 'amber' : 'red';
+        <div className={LIST_CARD}>
+          {filteredEmployers.length === 0 ? (
+            <div className="px-4 py-5 sm:px-5">
+              <p className="text-[14px] font-semibold text-white">
+                {searchQuery ? 'No employers match' : 'No employers with active apprentices'}
+              </p>
+              <p className="mt-1 text-[12.5px] leading-snug text-white">
+                {searchQuery
+                  ? 'Clear the search to see every employer.'
+                  : 'Set an employer on a learner’s record and they appear here.'}
+              </p>
+            </div>
+          ) : (
+            <ul className="divide-y divide-white/[0.10]">
+              {filteredEmployers.map((employer) => {
+                const isExpanded = expandedEmployer === employer.id;
+                const behind = employer.apprentices.filter((a) => !a.otjOnTrack).length;
+                const reason = [
+                  plural(employer.apprentices.length, 'apprentice'),
+                  employer.avgAttendance !== null
+                    ? `${employer.avgAttendance}% attendance`
+                    : 'No register yet',
+                  behind > 0 ? `${behind} behind on off-the-job` : null,
+                ]
+                  .filter(Boolean)
+                  .join(' · ');
 
-              return (
-                <div key={employer.id}>
-                  <button
-                    onClick={() => setExpandedEmployer(isExpanded ? null : employer.id)}
-                    className="group w-full bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] border border-white/[0.06] rounded-2xl overflow-hidden text-left touch-manipulation transition-colors"
-                  >
-                    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-blue-400/60 via-cyan-400/60 to-blue-400/60 opacity-70" />
-                    <div className="relative z-10 p-5 flex items-center gap-4">
-                      <div className="flex-1 min-w-0">
-                        <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
-                          Employer
-                        </div>
-                        <h3 className="mt-1 text-[15px] font-semibold text-white truncate">
-                          {employer.label}
-                        </h3>
-                        <div className="mt-1 flex flex-wrap gap-x-4 gap-y-0.5 text-[11.5px] text-white tabular-nums">
-                          <span>
-                            {employer.apprentices.length} apprentice
-                            {employer.apprentices.length !== 1 ? 's' : ''}
-                          </span>
-                          <span>{employer.avgAttendance}% attendance</span>
-                          <span>{employer.avgProgress}% progress</span>
-                        </div>
-                      </div>
-                      <Pill tone={progressTone}>{employer.avgProgress}%</Pill>
+                return (
+                  <li key={employer.id}>
+                    <button
+                      type="button"
+                      onClick={() => setExpandedEmployer(isExpanded ? null : employer.id)}
+                      aria-expanded={isExpanded}
+                      className={ROW}
+                    >
                       <span
                         aria-hidden
                         className={cn(
-                          'text-[18px] leading-none text-white transition-transform',
+                          'h-8 w-[3px] shrink-0 rounded-full',
+                          behind > 0 ? 'bg-elec-yellow' : 'bg-white/[0.25]'
+                        )}
+                      />
+                      <span className="min-w-0 flex-1">
+                        <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+                          {employer.label}
+                        </span>
+                        <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
+                          {reason}
+                        </span>
+                      </span>
+                      <span className="shrink-0 text-[13px] font-semibold tabular-nums text-white">
+                        {employer.avgProgress}%
+                      </span>
+                      <ChevronRight
+                        className={cn(
+                          'h-4 w-4 shrink-0 text-white transition-transform',
                           isExpanded && 'rotate-90'
                         )}
-                      >
-                        ›
-                      </span>
-                    </div>
-                  </button>
+                        aria-hidden
+                      />
+                    </button>
 
-                  <AnimatePresence>
-                    {isExpanded && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                        className="overflow-hidden"
-                      >
-                        <div className="mt-2 ml-4 sm:ml-6 space-y-3">
-                          <div className="flex items-center justify-end">
+                    <AnimatePresence initial={false}>
+                      {isExpanded && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                          className="overflow-hidden"
+                        >
+                          <ul className="divide-y divide-white/[0.10] border-t border-white/[0.10]">
+                            {employer.apprentices.map((a) => {
+                              const detail = [
+                                a.courseName,
+                                a.attendancePercent !== null
+                                  ? `${a.attendancePercent}% attendance`
+                                  : null,
+                                `${a.progressPercent}% progress`,
+                                `${a.otjCompleted}/${a.otjTarget}h off-the-job${a.otjOnTrack ? '' : ' · behind'}`,
+                              ]
+                                .filter(Boolean)
+                                .join(' · ');
+                              return (
+                                <li key={a.id}>
+                                  <button
+                                    type="button"
+                                    onClick={() => openLearner(a.id)}
+                                    className={cn(ROW, 'pl-8 sm:pl-10')}
+                                  >
+                                    <span
+                                      aria-hidden
+                                      className={cn(
+                                        'h-8 w-[3px] shrink-0 rounded-full',
+                                        a.otjOnTrack ? 'bg-white/[0.25]' : 'bg-elec-yellow'
+                                      )}
+                                    />
+                                    <span className="min-w-0 flex-1">
+                                      <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+                                        {a.name}
+                                      </span>
+                                      <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
+                                        {detail}
+                                      </span>
+                                    </span>
+                                    <span className="hidden shrink-0 text-[12px] font-semibold text-white sm:inline">
+                                      EPA · {a.epaStatus}
+                                    </span>
+                                    <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden />
+                                  </button>
+                                </li>
+                              );
+                            })}
+                          </ul>
+                          <div className="flex justify-end border-t border-white/[0.10] px-2 sm:px-3">
                             <button
                               type="button"
                               onClick={() => setLinkSheetEmployerId(employer.id)}
-                              className="inline-flex items-center gap-1.5 h-8 px-3 rounded-full bg-elec-yellow/[0.10] border border-elec-yellow/40 text-elec-yellow text-[11.5px] font-semibold hover:bg-elec-yellow/[0.18] touch-manipulation"
+                              className={TEXT_ACTION}
                             >
-                              <LinkIcon className="h-3 w-3" />
                               {registeredMap.has(employer.id)
                                 ? 'Manage share link'
                                 : 'Set up share link'}
                             </button>
                           </div>
-                          <ListCard>
-                            {employer.apprentices.map((a) => {
-                              const epaTone: Tone = a.epaStatus === 'Complete'
-                                ? 'green'
-                                : a.epaStatus === 'Gateway Ready'
-                                  ? 'yellow'
-                                  : a.epaStatus === 'Pre-Gateway'
-                                    ? 'blue'
-                                    : a.epaStatus === 'In Progress'
-                                      ? 'amber'
-                                      : 'yellow';
-                              return (
-                                <div
-                                  key={a.id}
-                                  className="flex items-start gap-4 px-5 sm:px-6 py-4"
-                                >
-                                  <div className="h-9 w-9 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0">
-                                    <span className="text-[11px] font-semibold text-blue-400">
-                                      {a.initials}
-                                    </span>
-                                  </div>
-                                  <div className="flex-1 min-w-0">
-                                    <div className="flex items-baseline justify-between gap-2">
-                                      <div className="min-w-0">
-                                        <div className="text-[14px] font-medium text-white truncate">
-                                          {a.name}
-                                        </div>
-                                        <div className="mt-0.5 text-[11.5px] text-white truncate">
-                                          {a.courseName}
-                                        </div>
-                                      </div>
-                                      <Pill tone={epaTone}>{a.epaStatus}</Pill>
-                                    </div>
-                                    <div className="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white tabular-nums">
-                                      <span>Attendance {a.attendancePercent}%</span>
-                                      <span>Progress {a.progressPercent}%</span>
-                                      <span className={a.otjOnTrack ? 'text-emerald-400' : 'text-amber-400'}>
-                                        OTJ {a.otjCompleted}/{a.otjTarget}h
-                                        {a.otjOnTrack ? '' : ' · behind'}
-                                      </span>
-                                    </div>
-                                  </div>
-                                </div>
-                              );
-                            })}
-                          </ListCard>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              );
-            })}
-          </div>
-        )}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </div>
       </motion.section>
 
-      {/* Tri-Partite Reviews */}
-      <motion.section variants={itemVariants} className="space-y-5">
-        <SectionHeader eyebrow="Compliance" title="Tri-partite reviews" />
-        {reviewsDue.length === 0 ? (
-          <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6 flex items-center gap-4">
-            <span aria-hidden className="w-[3px] h-10 rounded-full bg-emerald-400 shrink-0" />
-            <div>
-              <div className="text-[15px] font-medium text-white">All reviews up to date</div>
-              <div className="mt-0.5 text-[12px] text-white">
-                No apprentices are overdue for a tri-partite review.
-              </div>
-            </div>
-          </div>
-        ) : (
-          <ListCard>
-            {reviewsDue.slice(0, 10).map((a) => {
-              const employer = employers.find((e) =>
-                e.apprentices.some((ap) => ap.id === a.id)
-              );
-              const overdueDays = a.daysSinceReview !== null ? a.daysSinceReview - 84 : null;
-              const tone: Tone = overdueDays !== null && overdueDays > 0 ? 'red' : 'amber';
-              return (
-                <ListRow
-                  key={a.id}
-                  accent={tone}
-                  title={a.name}
-                  subtitle={`${employer?.label ?? 'Unknown employer'} · Last: ${a.lastReviewDate ?? 'Never'}`}
-                  trailing={
-                    <Pill tone={tone}>
-                      {overdueDays !== null && overdueDays > 0
-                        ? `${overdueDays}d overdue`
-                        : 'Due now'}
-                    </Pill>
-                  }
-                />
-              );
-            })}
-            {reviewsDue.length > 10 && (
-              <div className="px-5 sm:px-6 py-3 text-center text-[11px] text-white">
-                + {reviewsDue.length - 10} more reviews due
-              </div>
+      {/* Tri-partite reviews */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <div className="flex items-end justify-between gap-4">
+          <HubSectionHeading>Tri-partite reviews</HubSectionHeading>
+          <span
+            className={cn(
+              'text-[11px] font-semibold tabular-nums',
+              reviewsOverdue > 0 ? 'text-elec-yellow' : 'text-white'
             )}
-          </ListCard>
-        )}
+          >
+            {plural(reviewsDue.length, 'review')} due
+          </span>
+        </div>
+        <div className={LIST_CARD}>
+          {reviewsDue.length === 0 ? (
+            <div className="px-4 py-5 sm:px-5">
+              <p className="text-[14px] font-semibold text-white">All reviews up to date</p>
+              <p className="mt-1 text-[12.5px] leading-snug text-white">
+                No apprentice is past 12 weeks since their last ILP review.
+              </p>
+            </div>
+          ) : (
+            <ul className="divide-y divide-white/[0.10]">
+              {reviewsDue.slice(0, 10).map((a) => {
+                const employer = employers.find((e) => e.apprentices.some((ap) => ap.id === a.id));
+                const overdueDays = a.daysSinceReview !== null ? a.daysSinceReview - 84 : null;
+                const overdue = overdueDays !== null && overdueDays > 0;
+                return (
+                  <li key={a.id}>
+                    <button type="button" onClick={() => openLearner(a.id)} className={ROW}>
+                      <span
+                        aria-hidden
+                        className={cn(
+                          'h-8 w-[3px] shrink-0 rounded-full',
+                          overdue ? 'bg-red-400' : 'bg-elec-yellow'
+                        )}
+                      />
+                      <span className="min-w-0 flex-1">
+                        <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+                          {a.name}
+                        </span>
+                        <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
+                          {employer?.label ?? 'No employer'} ·{' '}
+                          {a.lastReviewDate ? `Last review ${a.lastReviewDate}` : 'Never reviewed'}
+                        </span>
+                      </span>
+                      <span
+                        className={cn(
+                          'shrink-0 text-[13px] font-semibold tabular-nums',
+                          overdue ? 'text-red-300' : 'text-elec-yellow'
+                        )}
+                      >
+                        {overdue ? `${overdueDays}d overdue` : 'Due now'}
+                      </span>
+                      <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden />
+                    </button>
+                  </li>
+                );
+              })}
+              {reviewsDue.length > 10 && (
+                <li className="px-4 py-3 text-[12px] font-semibold text-white sm:px-5">
+                  +{reviewsDue.length - 10} more due
+                </li>
+              )}
+            </ul>
+          )}
+        </div>
       </motion.section>
 
-      {/* Workplace Visit Log — there's no top-level Observations route or
-          college_workplace_visits table yet, so we surface this honestly
-          as a parked feature pointing at the existing per-learner
-          Observations workflow. No misleading action button. */}
-      <motion.section variants={itemVariants} className="space-y-5">
-        <SectionHeader
-          eyebrow="Workplace Visits"
-          title="Employer site visits"
-        />
-        <EmptyState
-          title="Log workplace visits per learner"
-          description="A dedicated visit log isn't shipped yet. For now, open a learner from the People hub → Observations to record employer site visits — the same audit chain (activity, ACs evidenced, assessor signature) covers visits."
-        />
+      {/* Workplace visits — no visit log table or route exists yet, so say
+          so rather than draw an empty tool. */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <HubSectionHeading>Workplace visits</HubSectionHeading>
+        <div className={LIST_CARD}>
+          <div className="px-4 py-5 sm:px-5">
+            <p className="text-[14px] font-semibold text-white">No visit log yet</p>
+            <p className="mt-1 text-[12.5px] leading-snug text-white">
+              Record employer site visits as observations on the learner’s profile — the same
+              audit chain (activity, criteria evidenced, assessor signature) covers a visit.
+            </p>
+          </div>
+        </div>
       </motion.section>
 
-      {/* OTJ Summary */}
-      <motion.section variants={itemVariants} className="space-y-5">
-        <SectionHeader eyebrow="Off-the-Job Training" title="OTJ hours by employer" />
-        {employers.length === 0 ? (
-          <EmptyState title="No employer data available" />
-        ) : (
-          <div className="space-y-3">
-            {employers.map((employer) => {
-              const pct =
-                employer.totalOtjRequired > 0
-                  ? Math.round((employer.totalOtjCompleted / employer.totalOtjRequired) * 100)
-                  : 0;
-              const tone: Tone = pct >= 80 ? 'green' : pct >= 50 ? 'amber' : 'red';
-              return (
-                <div
-                  key={employer.id}
-                  className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6"
-                >
-                  <div className="flex items-baseline justify-between gap-3">
-                    <div className="min-w-0">
-                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
-                        Employer
-                      </div>
-                      <div className="mt-1 text-[14px] font-medium text-white truncate">
-                        {employer.label}
-                      </div>
-                    </div>
-                    <Pill tone={tone}>{pct}%</Pill>
-                  </div>
-
-                  <div className="mt-4">
-                    <div className="flex items-baseline justify-between text-[11px]">
-                      <span className="text-white uppercase tracking-[0.12em]">Hours</span>
-                      <span className="font-medium text-white tabular-nums">
-                        {employer.totalOtjCompleted}h / {employer.totalOtjRequired}h
+      {/* Off-the-job hours by employer */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <HubSectionHeading>Off-the-job hours by employer</HubSectionHeading>
+        <div className={LIST_CARD}>
+          {employers.length === 0 ? (
+            <div className="px-4 py-5 sm:px-5">
+              <p className="text-[14px] font-semibold text-white">Nothing to total yet</p>
+              <p className="mt-1 text-[12.5px] leading-snug text-white">
+                Verified off-the-job hours roll up here once apprentices are linked to employers.
+              </p>
+            </div>
+          ) : (
+            <ul className="divide-y divide-white/[0.10]">
+              {employers.map((employer) => {
+                const pct =
+                  employer.totalOtjRequired > 0
+                    ? Math.round((employer.totalOtjCompleted / employer.totalOtjRequired) * 100)
+                    : 0;
+                return (
+                  <li key={employer.id} className="px-4 py-3.5 sm:px-5">
+                    <div className="flex items-center gap-3">
+                      <span aria-hidden className="h-8 w-[3px] shrink-0 rounded-full bg-white/[0.25]" />
+                      <span className="min-w-0 flex-1">
+                        <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+                          {employer.label}
+                        </span>
+                        <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
+                          {employer.totalOtjCompleted}h verified of {employer.totalOtjRequired}h ·{' '}
+                          {plural(employer.apprentices.length, 'apprentice')}
+                        </span>
+                      </span>
+                      <span className="shrink-0 text-[13px] font-semibold tabular-nums text-white">
+                        {pct}%
                       </span>
                     </div>
-                    <div className="mt-1.5 h-1 bg-white/[0.06] rounded-full overflow-hidden">
+                    <div className="ml-[15px] mt-2.5 h-1 overflow-hidden rounded-full bg-white/[0.10]">
                       <div
-                        className={cn(
-                          'h-full rounded-full',
-                          tone === 'green'
-                            ? 'bg-emerald-400/80'
-                            : tone === 'amber'
-                              ? 'bg-amber-400/80'
-                              : 'bg-red-400/80'
-                        )}
+                        className="h-full rounded-full bg-white"
                         style={{ width: `${Math.min(pct, 100)}%` }}
                       />
                     </div>
-                  </div>
-
-                  <div className="mt-3 text-[11px] text-white tabular-nums">
-                    {employer.apprentices.length} apprentice
-                    {employer.apprentices.length !== 1 ? 's' : ''}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        )}
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </div>
       </motion.section>
 
       <EmployerLinkSheet

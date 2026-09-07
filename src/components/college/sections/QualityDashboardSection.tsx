@@ -6,20 +6,26 @@
  * compliance docs, EPA pass-rate report) so an inspector can move from
  * a top-line number to the underlying evidence in two clicks.
  *
- * Edits May 2026:
- *   - Achievement rate corrected to Completed / (Completed + Withdrawn),
- *     the Ofsted norm. Previous calc counted active learners against the
- *     enrolled total which always understated the figure.
- *   - KPIs now show their target alongside the actual + a small gap chip.
- *   - Ofsted EIF section now wires SAR + QIP + Compliance Docs + EPA
- *     pass-rate so the evidence chain is one click away.
- *   - "Print pack" trigger — prints the page as the inspector hand-over.
+ * Rebuilt on the shared hub language. CollegeDashboard draws the masthead,
+ * so this is content only:
+ *
+ *   print (the one solid volt control) → four KPIs with their gap to target
+ *   → needs you → the three secondary measures → direction of travel
+ *   → evidence, in two groups of three
+ *
+ * The hero ("Ofsted-ready metrics" at 48px and a paragraph explaining the
+ * page), the numbered `01 · ATTENDANCE` eyebrows, the hairline grid of
+ * flat cells and the six colour-toned evidence cards all went. Colour now
+ * only encodes state: a KPI below target carries a red gap chip, a declining
+ * attendance trend is the red word, everything else is white.
+ *
+ * Status comparisons are case-insensitive — `college_students.status` and
+ * `college_attendance.status` are Capitalised in the live table.
  */
 
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Printer } from 'lucide-react';
 import {
   ResponsiveContainer,
   LineChart,
@@ -34,30 +40,22 @@ import { cn } from '@/lib/utils';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import { useCollegeSettings } from '@/hooks/college/useCollegeSettings';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { buttonPrimaryCn } from '@/components/forms/fieldStyles';
+import { containerVariants, itemVariants } from '@/components/college/primitives';
 import {
-  ListCard,
-  ListRow,
-  HubGrid,
-  HubCard,
-  SectionHeader,
-  Pill,
-  Arrow,
-  LoadingState,
-} from '@/components/college/primitives';
+  HubKpi,
+  HubKpiRow,
+  HubSectionHeading,
+  HubToolGrid,
+  HubWorkList,
+  type HubTool,
+  type HubWorkItem,
+} from '@/components/hub/HubPrimitives';
 
 interface QualityDashboardSectionProps {
   onNavigate: (section: CollegeSection) => void;
 }
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.04 } },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 8 },
-  visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 24 } },
-};
 
 /* Hard-coded Ofsted/awarding-body benchmarks. Attendance target comes from
    per-college settings; the others are sector norms that don't typically
@@ -66,7 +64,11 @@ const itemVariants = {
 const ILP_COMPLIANCE_TARGET = 95;
 const EPA_ON_TRACK_TARGET = 90;
 const ACHIEVEMENT_TARGET = 90;
+const RETENTION_TARGET = 90;
 const TURNAROUND_TARGET_DAYS = 7;
+
+const lc = (s: string | null | undefined) => (s ?? '').toLowerCase();
+const isPresent = (s: string | null | undefined) => lc(s) === 'present' || lc(s) === 'late';
 
 export function QualityDashboardSection({ onNavigate }: QualityDashboardSectionProps) {
   const navigate = useNavigate();
@@ -86,16 +88,13 @@ export function QualityDashboardSection({ onNavigate }: QualityDashboardSectionP
 
   // ----- Derived metrics -----
   const metrics = useMemo(() => {
-    const activeStudents = students.filter((s) => s.status === 'Active');
-    const totalEnrolled = students.length;
+    const activeStudents = students.filter((s) => lc(s.status) === 'active');
 
     // Overall Attendance %
     const totalRecords = attendance.length;
-    const presentRecords = attendance.filter(
-      (a) => a.status === 'Present' || a.status === 'Late'
-    ).length;
+    const presentRecords = attendance.filter((a) => isPresent(a.status)).length;
     const attendancePercent =
-      totalRecords > 0 ? Math.round((presentRecords / totalRecords) * 100) : 0;
+      totalRecords > 0 ? Math.round((presentRecords / totalRecords) * 100) : null;
 
     // ILP Compliance % — students with ILP reviewed in last 6 weeks vs total active
     const sixWeeksAgo = new Date();
@@ -108,7 +107,7 @@ export function QualityDashboardSection({ onNavigate }: QualityDashboardSectionP
     const ilpCompliancePercent =
       activeStudents.length > 0
         ? Math.round((studentsWithRecentILP.size / activeStudents.length) * 100)
-        : 0;
+        : null;
 
     // EPA On Track %
     const epaStudents = epaRecords.length;
@@ -119,21 +118,19 @@ export function QualityDashboardSection({ onNavigate }: QualityDashboardSectionP
         e.status === 'Gateway Ready' ||
         e.status === 'Complete'
     ).length;
-    const epaOnTrackPercent = epaStudents > 0 ? Math.round((epaOnTrack / epaStudents) * 100) : 0;
+    const epaOnTrackPercent =
+      epaStudents > 0 ? Math.round((epaOnTrack / epaStudents) * 100) : null;
 
     // Achievement Rate % — Ofsted norm is Completed / (Completed + Withdrawn).
-    // Counting against total enrolled (the prior calc) silently included
-    // every active learner mid-course, so the number always undershot.
-    const completedStudents = students.filter((s) => s.status === 'Completed').length;
-    const withdrawnStudents = students.filter((s) => s.status === 'Withdrawn').length;
+    const completedStudents = students.filter((s) => lc(s.status) === 'completed').length;
+    const withdrawnStudents = students.filter((s) => lc(s.status) === 'withdrawn').length;
     const achievementDenominator = completedStudents + withdrawnStudents;
     const achievementPercent =
       achievementDenominator > 0
         ? Math.round((completedStudents / achievementDenominator) * 100)
         : null; // null = no leavers yet → render as "—" not "0%"
 
-    // Retention Rate — same population, different question. Active + completed
-    // out of (active + completed + withdrawn). Excludes long-term suspended.
+    // Retention Rate — same population, different question.
     const retentionDenominator = activeStudents.length + completedStudents + withdrawnStudents;
     const retentionPercent =
       retentionDenominator > 0
@@ -154,9 +151,7 @@ export function QualityDashboardSection({ onNavigate }: QualityDashboardSectionP
         const d = new Date(a.date);
         return d >= weekStart && d < weekEnd;
       });
-      const weekPresent = weekRecords.filter(
-        (a) => a.status === 'Present' || a.status === 'Late'
-      ).length;
+      const weekPresent = weekRecords.filter((a) => isPresent(a.status)).length;
       const pct = weekRecords.length > 0 ? (weekPresent / weekRecords.length) * 100 : 0;
       weeks.push(pct);
       weeklyPoints.push({
@@ -165,8 +160,6 @@ export function QualityDashboardSection({ onNavigate }: QualityDashboardSectionP
         sessions: weekRecords.length,
       });
     }
-    // weeks[0] is most recent → reverse the chart series so X axis reads
-    // oldest → newest left-to-right.
     weeklyPoints.reverse();
 
     let attendanceTrend: 'Improving' | 'Stable' | 'Declining' = 'Stable';
@@ -176,10 +169,11 @@ export function QualityDashboardSection({ onNavigate }: QualityDashboardSectionP
       if (recentAvg - olderAvg > 2) attendanceTrend = 'Improving';
       else if (olderAvg - recentAvg > 2) attendanceTrend = 'Declining';
     }
+    const sessionsCharted = weeklyPoints.reduce((sum, p) => sum + p.sessions, 0);
 
     // Assessment Turnaround (average days from created_at to assessed_at)
     const gradedAssessments = grades.filter((g) => g.assessed_at && g.created_at);
-    let avgTurnaround = 0;
+    let avgTurnaround: number | null = null;
     if (gradedAssessments.length > 0) {
       const totalDays = gradedAssessments.reduce((sum, g) => {
         const created = new Date(g.created_at!);
@@ -194,9 +188,7 @@ export function QualityDashboardSection({ onNavigate }: QualityDashboardSectionP
     const lowAttendanceStudents = activeStudents.filter((student) => {
       const studentRecords = attendance.filter((a) => a.student_id === student.id);
       if (studentRecords.length === 0) return false;
-      const present = studentRecords.filter(
-        (a) => a.status === 'Present' || a.status === 'Late'
-      ).length;
+      const present = studentRecords.filter((a) => isPresent(a.status)).length;
       return (present / studentRecords.length) * 100 < lowAttendance;
     });
     const pendingAssessments = getPendingGradesData();
@@ -222,8 +214,10 @@ export function QualityDashboardSection({ onNavigate }: QualityDashboardSectionP
       epaGatewayDueSoon,
       completedStudents,
       withdrawnStudents,
-      totalEnrolled,
       weeklyPoints,
+      sessionsCharted,
+      epaStudents,
+      gradedCount: gradedAssessments.length,
     };
   }, [
     students,
@@ -236,471 +230,410 @@ export function QualityDashboardSection({ onNavigate }: QualityDashboardSectionP
     lowAttendance,
   ]);
 
-  if (isLoading) return <LoadingState />;
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center py-24">
+        <div className="h-6 w-6 animate-spin rounded-full border-2 border-elec-yellow border-t-transparent" />
+      </div>
+    );
+  }
 
-  const kpiColor = (val: number | null, target: number) => {
-    if (val == null) return 'text-white/50';
-    if (val >= target) return 'text-green-400';
-    if (val >= target - 15) return 'text-amber-400';
-    return 'text-red-400';
-  };
+  /* ── Needs you ─────────────────────────────────────────────────────── */
+  const work: HubWorkItem[] = [
+    metrics.lowAttendanceStudents.length > 0 && {
+      id: 'low-attendance',
+      title: 'Low attendance',
+      reason: `${metrics.lowAttendanceStudents.length} learner${metrics.lowAttendanceStudents.length === 1 ? '' : 's'} below ${lowAttendance}%`,
+      trailing: String(metrics.lowAttendanceStudents.length),
+      urgent: true,
+      onClick: () => onNavigate('attendance'),
+    },
+    metrics.overdueILPs.length > 0 && {
+      id: 'overdue-ilps',
+      title: 'Overdue ILP reviews',
+      reason: `${metrics.overdueILPs.length} review${metrics.overdueILPs.length === 1 ? '' : 's'} past due`,
+      trailing: String(metrics.overdueILPs.length),
+      urgent: true,
+      onClick: () => onNavigate('ilpmanagement'),
+    },
+    metrics.epaGatewayDueSoon.length > 0 && {
+      id: 'epa-gateway',
+      title: 'EPA gateway due soon',
+      reason: `${metrics.epaGatewayDueSoon.length} within the next two weeks`,
+      trailing: String(metrics.epaGatewayDueSoon.length),
+      onClick: () => onNavigate('epatracking'),
+    },
+    metrics.pendingAssessments.length > 0 && {
+      id: 'pending-assessments',
+      title: 'Assessments to mark',
+      reason: `${metrics.pendingAssessments.length} awaiting a grade`,
+      trailing: String(metrics.pendingAssessments.length),
+      onClick: () => onNavigate('grading'),
+    },
+  ].filter(Boolean) as HubWorkItem[];
+
+  /* ── Evidence, two groups of three ─────────────────────────────────── */
+  const judgementAreas: HubTool[] = [
+    {
+      id: 'intent',
+      title: 'Intent',
+      description: 'Curriculum planning, sequencing and coverage — courses and schemes of work.',
+      onClick: () => onNavigate('courses'),
+    },
+    {
+      id: 'implementation',
+      title: 'Implementation',
+      description: 'Teaching, learning and assessment — lesson plans and feedback.',
+      onClick: () => onNavigate('lessonplans'),
+    },
+    {
+      id: 'impact',
+      title: 'Impact',
+      description: 'Achievement, progression and destinations — grades and EPA outcomes.',
+      onClick: () => onNavigate('grading'),
+    },
+  ];
+
+  const documents: HubTool[] = [
+    {
+      id: 'sar',
+      title: 'SAR draft',
+      description: 'The current self-assessment report. Draft, edit, approve.',
+      onClick: () => navigate('/college/compliance/sar'),
+    },
+    {
+      id: 'qip',
+      title: 'QIP tracker',
+      description: 'Open QIP actions, owners and due dates.',
+      onClick: () => navigate('/college/compliance/qip'),
+    },
+    {
+      id: 'pass-rate',
+      title: 'Pass-rate report',
+      description: 'Per-cohort distinction / merit / pass / fail roll-up, exportable as CSV.',
+      onClick: () => navigate('/college/reports?r=epa_pass_rate'),
+    },
+  ];
+
+  const trendTone =
+    metrics.attendanceTrend === 'Declining'
+      ? 'text-red-300'
+      : metrics.attendanceTrend === 'Improving'
+        ? 'text-emerald-300'
+        : 'text-white';
 
   return (
-    <motion.div
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      className="mx-auto max-w-7xl space-y-10 sm:space-y-14 pb-12"
-    >
-      {/* Hero */}
-      <motion.div variants={itemVariants}>
-        <div className="pt-6 sm:pt-8 lg:pt-10 pb-2 flex items-start justify-between gap-4 flex-wrap">
-          <div>
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              Tools · Quality Dashboard
-            </div>
-            <h1 className="mt-1.5 text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight leading-[1.05]">
-              Ofsted-ready metrics
-            </h1>
-            <p className="mt-3 text-[13px] sm:text-sm text-white max-w-2xl leading-relaxed">
-              Auto-generated KPIs from students, attendance, ILPs, EPA and grades. Each KPI shows
-              its sector benchmark so the gap is visible at a glance.
-            </p>
-          </div>
-          {/* Inspector hand-over: native print → "Save as PDF" gives a
-              clean snapshot of the whole dashboard. Cheaper than building
-              a bespoke PDF generator and matches the dashboard 1:1. */}
-          <button
-            type="button"
-            onClick={() => window.print()}
-            className="inline-flex items-center gap-1.5 h-8 px-3 rounded-full bg-blue-500/[0.10] border border-blue-400/40 text-[11.5px] font-semibold text-blue-200 hover:bg-blue-500/[0.18] no-print touch-manipulation"
-            title="Print this dashboard as a Quality pack snapshot — use the browser's 'Save as PDF' to hand over"
+    <div className="space-y-8 sm:space-y-10">
+      {/* Inspector hand-over: native print → "Save as PDF" gives a clean
+          snapshot of the whole dashboard. */}
+      <motion.div variants={itemVariants} initial="hidden" animate="visible" className="no-print">
+        <button
+          type="button"
+          onClick={() => window.print()}
+          className={cn(buttonPrimaryCn, 'w-full px-5 sm:w-auto')}
+          title="Print this dashboard as a quality pack snapshot — use the browser's 'Save as PDF' to hand over"
+        >
+          Print quality pack
+        </button>
+      </motion.div>
+
+      <HubKpiRow>
+        <KpiWithTarget
+          accent
+          label="Attendance"
+          value={metrics.attendancePercent}
+          target={attendanceTarget}
+          context={
+            attendance.length > 0
+              ? `${attendance.length} register entries`
+              : 'No registers taken yet'
+          }
+          onClick={() => onNavigate('attendance')}
+        />
+        <KpiWithTarget
+          label="ILP compliance"
+          value={metrics.ilpCompliancePercent}
+          target={ILP_COMPLIANCE_TARGET}
+          context="Reviewed in the last six weeks"
+          onClick={() => onNavigate('ilpmanagement')}
+        />
+        <KpiWithTarget
+          label="EPA on track"
+          value={metrics.epaOnTrackPercent}
+          target={EPA_ON_TRACK_TARGET}
+          context={
+            metrics.epaStudents > 0
+              ? `${metrics.epaStudents} learner${metrics.epaStudents === 1 ? '' : 's'} on an EPA record`
+              : 'No EPA records yet'
+          }
+          onClick={() => onNavigate('epatracking')}
+        />
+        <KpiWithTarget
+          label="Achievement"
+          value={metrics.achievementPercent}
+          target={ACHIEVEMENT_TARGET}
+          context={
+            metrics.completedStudents + metrics.withdrawnStudents === 0
+              ? 'No leavers yet'
+              : `${metrics.completedStudents} of ${metrics.completedStudents + metrics.withdrawnStudents} leavers achieved`
+          }
+        />
+      </HubKpiRow>
+
+      {work.length > 0 ? (
+        <HubWorkList items={work} unit="alert" />
+      ) : (
+        <motion.section
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="space-y-3"
+        >
+          <HubSectionHeading>Needs you</HubSectionHeading>
+          <motion.div
+            variants={itemVariants}
+            className={cn(
+              '-mx-4 border-y border-elec-yellow/35 px-4 py-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:px-5',
+              CARD_SURFACE
+            )}
           >
-            <Printer className="h-3 w-3" />
-            Print quality pack
-          </button>
-        </div>
-      </motion.div>
+            <p className="text-[12.5px] leading-snug text-white">
+              Nothing outstanding. No overdue ILP reviews, no learner below {lowAttendance}%
+              attendance, nothing waiting to be marked.
+            </p>
+          </motion.div>
+        </motion.section>
+      )}
 
-      {/* KPI Strip */}
-      <motion.div variants={itemVariants}>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/[0.06] border border-white/[0.06] rounded-2xl overflow-hidden">
-          <KpiTile
-            label="Attendance"
-            value={metrics.attendancePercent}
-            target={attendanceTarget}
-            valueColour={kpiColor(metrics.attendancePercent, attendanceTarget)}
-            index={1}
-          />
-          <KpiTile
-            label="ILP Compliance"
-            value={metrics.ilpCompliancePercent}
-            target={ILP_COMPLIANCE_TARGET}
-            valueColour={kpiColor(metrics.ilpCompliancePercent, ILP_COMPLIANCE_TARGET)}
-            index={2}
-          />
-          <KpiTile
-            label="EPA On Track"
-            value={metrics.epaOnTrackPercent}
-            target={EPA_ON_TRACK_TARGET}
-            valueColour={kpiColor(metrics.epaOnTrackPercent, EPA_ON_TRACK_TARGET)}
-            index={3}
-          />
-          <KpiTile
-            label="Achievement"
-            value={metrics.achievementPercent}
-            target={ACHIEVEMENT_TARGET}
-            valueColour={kpiColor(metrics.achievementPercent, ACHIEVEMENT_TARGET)}
-            index={4}
-            sub={
-              metrics.completedStudents + metrics.withdrawnStudents === 0
-                ? 'No leavers yet'
-                : `${metrics.completedStudents}/${metrics.completedStudents + metrics.withdrawnStudents} leavers achieved`
-            }
-          />
-        </div>
-      </motion.div>
-
-      {/* Compliance Alerts */}
-      {(() => {
-        const alerts = [
-          {
-            title: 'Overdue ILP reviews',
-            count: metrics.overdueILPs.length,
-            desc: `${metrics.overdueILPs.length} reviews need completing`,
-            tone: 'amber' as const,
-            section: 'ilpmanagement' as CollegeSection,
-          },
-          {
-            title: 'Low attendance students',
-            count: metrics.lowAttendanceStudents.length,
-            desc: `${metrics.lowAttendanceStudents.length} below ${lowAttendance}% attendance`,
-            tone: 'red' as const,
-            section: 'attendance' as CollegeSection,
-          },
-          {
-            title: 'Pending assessments',
-            count: metrics.pendingAssessments.length,
-            desc: `${metrics.pendingAssessments.length} awaiting grading`,
-            tone: 'amber' as const,
-            section: 'grading' as CollegeSection,
-          },
-          {
-            title: 'EPA gateway due soon',
-            count: metrics.epaGatewayDueSoon.length,
-            desc: `${metrics.epaGatewayDueSoon.length} within next 2 weeks`,
-            tone: 'purple' as const,
-            section: 'epatracking' as CollegeSection,
-          },
-        ].filter((a) => a.count > 0);
-
-        if (alerts.length === 0) {
-          return (
-            <motion.section variants={itemVariants} className="space-y-5">
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Compliance
-              </div>
-              <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6 flex items-center gap-4">
-                <span aria-hidden className="w-[3px] h-10 rounded-full bg-green-400 shrink-0" />
-                <div className="min-w-0">
-                  <div className="text-[15px] font-medium text-white">All clear</div>
-                  <div className="mt-0.5 text-[12px] text-white">
-                    No outstanding compliance alerts.
-                  </div>
-                </div>
-              </div>
-            </motion.section>
-          );
-        }
-
-        return (
-          <motion.section variants={itemVariants} className="space-y-5">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              Compliance Alerts
-            </div>
-            <ListCard>
-              {alerts.map((alert) => (
-                <ListRow
-                  key={alert.title}
-                  onClick={() => onNavigate(alert.section)}
-                  accent={alert.tone}
-                  title={alert.title}
-                  subtitle={alert.desc}
-                  trailing={
-                    <>
-                      <Pill tone={alert.tone}>{alert.count}</Pill>
-                      <Arrow />
-                    </>
-                  }
-                />
-              ))}
-            </ListCard>
-          </motion.section>
-        );
-      })()}
-
-      {/* Key Metrics */}
-      <motion.section variants={itemVariants} className="space-y-5">
-        <SectionHeader eyebrow="Key Metrics" title="Beyond the headline KPIs" />
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-white/[0.06] border border-white/[0.06] rounded-2xl overflow-hidden">
-          {[
-            {
-              title: 'Retention',
-              sub: metrics.retentionPercent == null ? '—' : 'Active + completed / population',
-              value: metrics.retentionPercent == null ? '—' : `${metrics.retentionPercent}%`,
-              color:
-                metrics.retentionPercent == null
-                  ? 'text-white/50'
-                  : kpiColor(metrics.retentionPercent, 90),
-            },
-            {
-              title: 'Attendance',
-              sub: 'Direction over 4 weeks',
-              value: metrics.attendanceTrend,
-              color:
-                metrics.attendanceTrend === 'Improving'
-                  ? 'text-green-400'
-                  : metrics.attendanceTrend === 'Declining'
-                    ? 'text-red-400'
-                    : 'text-white',
-            },
-            {
-              title: 'Turnaround',
-              sub: `Avg days to grade · target ≤${TURNAROUND_TARGET_DAYS}d`,
-              value: `${metrics.avgTurnaround}d`,
-              color:
-                metrics.avgTurnaround === 0
-                  ? 'text-white/50'
-                  : metrics.avgTurnaround <= TURNAROUND_TARGET_DAYS
-                    ? 'text-green-400'
-                    : 'text-amber-400',
-            },
-          ].map((metric) => (
-            <div
-              key={metric.title}
-              className="bg-[hsl(0_0%_12%)] px-5 py-5 sm:px-6 sm:py-6"
-            >
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                {metric.title}
-              </div>
-              <div
-                className={cn(
-                  'mt-2 text-2xl sm:text-3xl font-semibold tabular-nums tracking-tight leading-none',
-                  metric.color
-                )}
-              >
-                {metric.value}
-              </div>
-              <div className="mt-2 text-[11px] text-white">{metric.sub}</div>
-            </div>
-          ))}
-        </div>
+      {/* Secondary measures — a list, not a second scoreboard. */}
+      <motion.section
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="space-y-3"
+      >
+        <HubSectionHeading>Beyond the headline</HubSectionHeading>
+        <motion.div
+          variants={itemVariants}
+          className={cn(
+            '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
+            CARD_SURFACE
+          )}
+        >
+          <ul className="divide-y divide-white/[0.10]">
+            <MeasureRow
+              title="Retention"
+              reason="Active and completed learners out of everyone who started"
+              value={metrics.retentionPercent == null ? '—' : `${metrics.retentionPercent}%`}
+              tone={
+                metrics.retentionPercent != null && metrics.retentionPercent < RETENTION_TARGET
+                  ? 'text-elec-yellow'
+                  : 'text-white'
+              }
+            />
+            <MeasureRow
+              title="Attendance direction"
+              reason="Last two weeks against the two before"
+              value={metrics.attendanceTrend}
+              tone={trendTone}
+            />
+            <MeasureRow
+              title="Marking turnaround"
+              reason={
+                metrics.gradedCount > 0
+                  ? `Average days from submission to grade · target ${TURNAROUND_TARGET_DAYS} days or fewer`
+                  : 'Nothing graded yet'
+              }
+              value={metrics.avgTurnaround == null ? '—' : `${metrics.avgTurnaround}d`}
+              tone={
+                metrics.avgTurnaround != null && metrics.avgTurnaround > TURNAROUND_TARGET_DAYS
+                  ? 'text-elec-yellow'
+                  : 'text-white'
+              }
+            />
+          </ul>
+        </motion.div>
       </motion.section>
 
-      {/* Attendance trend — 12-week line chart with low/target reference
-          lines. Gives the inspector the "direction of travel" Ofsted asks
-          for as a one-glance question. */}
-      <motion.section variants={itemVariants} className="space-y-5">
-        <SectionHeader eyebrow="Direction of travel" title="Attendance · last 12 weeks" />
-        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-4 sm:px-5 py-5">
-          <div className="h-56 sm:h-64 w-full -mx-1">
-            <ResponsiveContainer>
-              <LineChart
-                data={metrics.weeklyPoints}
-                margin={{ top: 8, right: 16, left: -10, bottom: 0 }}
-              >
-                <CartesianGrid stroke="rgba(255,255,255,0.04)" strokeDasharray="2 4" />
-                <XAxis
-                  dataKey="week_ending"
-                  tick={{ fontSize: 10, fill: 'rgba(255,255,255,0.45)' }}
-                  tickLine={false}
-                  axisLine={{ stroke: 'rgba(255,255,255,0.08)' }}
-                  minTickGap={20}
-                />
-                <YAxis
-                  domain={[0, 100]}
-                  tick={{ fontSize: 10, fill: 'rgba(255,255,255,0.45)' }}
-                  tickLine={false}
-                  axisLine={{ stroke: 'rgba(255,255,255,0.08)' }}
-                  label={{
-                    value: '%',
-                    angle: 0,
-                    position: 'insideTopLeft',
-                    offset: 8,
-                    style: { fontSize: 10, fill: 'rgba(255,255,255,0.45)' },
-                  }}
-                />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: 'hsl(0 0% 8%)',
-                    border: '1px solid rgba(255,255,255,0.08)',
-                    borderRadius: '0.5rem',
-                    fontSize: 11,
-                  }}
-                  labelStyle={{ color: 'rgba(255,255,255,0.55)' }}
-                  itemStyle={{ color: 'rgba(255,255,255,0.85)' }}
-                  formatter={(v: number, _name: string, item: { payload?: { sessions?: number } }) =>
-                    item.payload?.sessions === 0
-                      ? '— no sessions'
-                      : `${v}% (${item.payload?.sessions ?? 0} sessions)`
-                  }
-                />
-                {/* Low threshold (red) and target (green) reference lines —
-                    instantly readable as "danger / pass" without checking
-                    the legend. */}
-                <ReferenceLine
-                  y={lowAttendance}
-                  stroke="rgba(248,113,113,0.45)"
-                  strokeDasharray="3 4"
-                  label={{
-                    value: `Low ${lowAttendance}%`,
-                    position: 'right',
-                    fill: 'rgba(248,113,113,0.65)',
-                    fontSize: 9,
-                  }}
-                />
-                <ReferenceLine
-                  y={attendanceTarget}
-                  stroke="rgba(52,211,153,0.45)"
-                  strokeDasharray="3 4"
-                  label={{
-                    value: `Target ${attendanceTarget}%`,
-                    position: 'right',
-                    fill: 'rgba(52,211,153,0.7)',
-                    fontSize: 9,
-                  }}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="attendance_pct"
-                  stroke="rgb(96,165,250)"
-                  strokeWidth={2.2}
-                  dot={{ r: 2.5, fill: 'rgb(96,165,250)', stroke: 'none' }}
-                  name="Attendance"
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-          <div className="mt-2 text-[10.5px] text-white/45 flex items-center gap-3 flex-wrap">
-            <span>
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-blue-400 mr-1" />
-              Weekly attendance
-            </span>
-            <span>
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-red-400/70 mr-1" />
-              Low threshold ({lowAttendance}%)
-            </span>
-            <span>
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-400/70 mr-1" />
-              Target ({attendanceTarget}%)
-            </span>
-            <span className="ml-auto capitalize">
-              Current direction:{' '}
-              <span
-                className={cn(
-                  'font-semibold',
-                  metrics.attendanceTrend === 'Improving'
-                    ? 'text-emerald-300'
-                    : metrics.attendanceTrend === 'Declining'
-                      ? 'text-red-300'
-                      : 'text-white/85'
-                )}
-              >
-                {metrics.attendanceTrend}
-              </span>
-            </span>
-          </div>
-        </div>
+      {/* Direction of travel — the one chart on the page. Single series, so
+          no legend: the heading names it. The low threshold is the only
+          coloured line, because it is the only one that means "problem". */}
+      <motion.section
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="space-y-3"
+      >
+        <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
+          <HubSectionHeading>Attendance, last 12 weeks</HubSectionHeading>
+          <span className={cn('text-[11px] font-semibold', trendTone)}>
+            {metrics.attendanceTrend}
+          </span>
+        </motion.div>
+        <motion.div
+          variants={itemVariants}
+          className={cn(
+            '-mx-4 border-y border-elec-yellow/35 px-3 py-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:px-5',
+            CARD_SURFACE
+          )}
+        >
+          {metrics.sessionsCharted === 0 ? (
+            <p className="text-[12.5px] leading-snug text-white">
+              No register entries in the last 12 weeks, so there is no trend to draw yet.
+            </p>
+          ) : (
+            <>
+              <div className="h-56 w-full sm:h-64">
+                <ResponsiveContainer>
+                  <LineChart
+                    data={metrics.weeklyPoints}
+                    margin={{ top: 8, right: 12, left: -16, bottom: 0 }}
+                  >
+                    <CartesianGrid stroke="rgba(255,255,255,0.06)" strokeDasharray="2 4" vertical={false} />
+                    <XAxis
+                      dataKey="week_ending"
+                      tick={{ fontSize: 10, fill: 'rgba(255,255,255,0.85)' }}
+                      tickLine={false}
+                      axisLine={{ stroke: 'rgba(255,255,255,0.12)' }}
+                      minTickGap={20}
+                    />
+                    <YAxis
+                      domain={[0, 100]}
+                      tick={{ fontSize: 10, fill: 'rgba(255,255,255,0.85)' }}
+                      tickLine={false}
+                      axisLine={false}
+                      tickFormatter={(v: number) => `${v}%`}
+                    />
+                    <Tooltip
+                      cursor={{ stroke: 'rgba(255,255,255,0.25)', strokeWidth: 1 }}
+                      contentStyle={{
+                        backgroundColor: 'hsl(0 0% 8%)',
+                        border: '1px solid rgba(255,255,255,0.12)',
+                        borderRadius: '0.75rem',
+                        fontSize: 11,
+                        color: '#fff',
+                      }}
+                      labelStyle={{ color: '#fff', fontWeight: 600 }}
+                      itemStyle={{ color: '#fff' }}
+                      formatter={(v: number, _name: string, item: { payload?: { sessions?: number } }) =>
+                        item.payload?.sessions === 0
+                          ? ['no sessions', 'Attendance']
+                          : [`${v}% (${item.payload?.sessions ?? 0} sessions)`, 'Attendance']
+                      }
+                    />
+                    <ReferenceLine
+                      y={lowAttendance}
+                      stroke="rgba(252,165,165,0.8)"
+                      strokeDasharray="3 4"
+                      label={{
+                        value: `Low ${lowAttendance}%`,
+                        position: 'insideTopRight',
+                        fill: 'rgba(252,165,165,0.95)',
+                        fontSize: 10,
+                      }}
+                    />
+                    <ReferenceLine
+                      y={attendanceTarget}
+                      stroke="rgba(255,255,255,0.35)"
+                      strokeDasharray="3 4"
+                      label={{
+                        value: `Target ${attendanceTarget}%`,
+                        position: 'insideTopRight',
+                        fill: 'rgba(255,255,255,0.9)',
+                        fontSize: 10,
+                      }}
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="attendance_pct"
+                      stroke="hsl(47 100% 52%)"
+                      strokeWidth={2}
+                      dot={{ r: 3, fill: 'hsl(47 100% 52%)', stroke: 'hsl(0 0% 8%)', strokeWidth: 2 }}
+                      activeDot={{ r: 5, fill: 'hsl(47 100% 52%)', stroke: 'hsl(0 0% 8%)', strokeWidth: 2 }}
+                      name="Attendance"
+                      isAnimationActive={false}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+              <p className="mt-2 text-[11px] leading-snug text-white">
+                Weekly attendance across every register. Weeks with no sessions read as 0%.
+              </p>
+            </>
+          )}
+        </motion.div>
       </motion.section>
 
-      {/* Ofsted Evidence — six cards covering the full EIF evidence chain.
-          Each one is a click-through to the source-of-truth surface. */}
-      <motion.section variants={itemVariants} className="space-y-5">
-        <SectionHeader eyebrow="Ofsted Framework" title="Evidence by judgement area" />
-        <HubGrid columns={3}>
-          <HubCard
-            number="01"
-            eyebrow="Curriculum Design"
-            title="Intent"
-            description="Curriculum planning, sequencing and coverage evidence."
-            tone="blue"
-            meta="Courses · schemes of work"
-            onClick={() => onNavigate('courses')}
-            cta="Open"
-          />
-          <HubCard
-            number="02"
-            eyebrow="Delivery"
-            title="Implementation"
-            description="Teaching, learning and assessment evidence."
-            tone="emerald"
-            meta="Lesson plans · feedback"
-            onClick={() => onNavigate('lessonplans')}
-            cta="Open"
-          />
-          <HubCard
-            number="03"
-            eyebrow="Outcomes"
-            title="Impact"
-            description="Achievement, progression and destination evidence."
-            tone="purple"
-            meta="Grades · EPA outcomes"
-            onClick={() => onNavigate('grading')}
-            cta="Open"
-          />
-          <HubCard
-            number="04"
-            eyebrow="Self-Assessment"
-            title="SAR draft"
-            description="The current Self-Assessment Report. Draft, edit, approve."
-            tone="amber"
-            meta="Ofsted prep"
-            onClick={() => navigate('/college/compliance/sar')}
-            cta="Open"
-          />
-          <HubCard
-            number="05"
-            eyebrow="Improvement Plan"
-            title="QIP tracker"
-            description="Open QIP actions, owners and due dates."
-            tone="orange"
-            meta="Track follow-through"
-            onClick={() => navigate('/college/compliance/qip')}
-            cta="Open"
-          />
-          <HubCard
-            number="06"
-            eyebrow="EPA Outcomes"
-            title="Pass-rate report"
-            description="Per-cohort Distinction / Merit / Pass / Fail roll-up. Source data for the Impact judgement."
-            tone="green"
-            meta="CSV export"
-            onClick={() => navigate('/college/reports?r=epa_pass_rate')}
-            cta="Open"
-          />
-        </HubGrid>
-      </motion.section>
-    </motion.div>
+      <HubToolGrid label="Evidence by judgement area" cards={judgementAreas} columns="three" />
+
+      <HubToolGrid label="Inspection documents" cards={documents} columns="three" />
+    </div>
   );
 }
 
 /* ──────────────────────────────────────────────────────── */
 
-/** A single KPI tile showing actual + target + gap chip. Renders "—" when
- *  there's no underlying data (so the inspector sees an honest "not yet"
- *  rather than a misleading 0%). */
-function KpiTile({
+/** A KPI with its sector target. The gap is the delta chip — red below
+ *  target, emerald at or above — so the row reads at a glance. Renders "—"
+ *  when there is no underlying data, never a misleading 0%. */
+function KpiWithTarget({
   label,
   value,
   target,
-  valueColour,
-  index,
-  sub,
+  context,
+  accent,
+  onClick,
 }: {
   label: string;
   value: number | null;
   target: number;
-  valueColour: string;
-  index: number;
-  sub?: string;
+  context?: string;
+  accent?: boolean;
+  onClick?: () => void;
 }) {
-  const display = value == null ? '—' : `${value}%`;
   const gap = value == null ? null : value - target;
-  const onTarget = gap !== null && gap >= 0;
-
   return (
-    <div className="bg-[hsl(0_0%_12%)] px-5 py-6 sm:px-6 sm:py-8 lg:px-7 lg:py-9">
-      <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-        {String(index).padStart(2, '0')} · {label}
-      </div>
-      <div
-        className={cn(
-          'mt-3 sm:mt-4 font-semibold tabular-nums tracking-tight leading-none',
-          'text-4xl sm:text-5xl lg:text-6xl',
-          valueColour
-        )}
-      >
-        {display}
-      </div>
-      <div className="mt-3 flex items-center gap-2 flex-wrap text-[10.5px] text-white/65">
-        <span className="uppercase tracking-[0.14em]">Target {target}%</span>
-        {gap !== null && (
-          <span
-            className={cn(
-              'inline-flex items-center h-5 px-1.5 rounded-md border text-[10px] font-semibold tabular-nums',
-              onTarget
-                ? 'bg-emerald-500/[0.08] border-emerald-400/30 text-emerald-200'
-                : Math.abs(gap) >= 15
-                  ? 'bg-red-500/[0.08] border-red-400/30 text-red-200'
-                  : 'bg-amber-500/[0.08] border-amber-400/30 text-amber-200'
-            )}
-          >
-            {gap > 0 ? '+' : ''}
-            {gap}pp
-          </span>
-        )}
-      </div>
-      {sub && <div className="mt-1 text-[10.5px] text-white/55">{sub}</div>}
-    </div>
+    <HubKpi
+      accent={accent}
+      label={label}
+      value={value == null ? '—' : `${value}%`}
+      delta={gap == null ? undefined : `${gap > 0 ? '+' : ''}${gap}pp`}
+      direction={gap == null ? 'flat' : gap >= 0 ? 'up' : 'down'}
+      sentiment={gap == null ? 'neutral' : gap >= 0 ? 'good' : 'bad'}
+      verdict={
+        gap == null
+          ? `Target ${target}% — no data yet`
+          : gap >= 0
+            ? `On target (${target}%)`
+            : `${Math.abs(gap)}pp below the ${target}% target`
+      }
+      context={context}
+      onClick={onClick}
+    />
+  );
+}
+
+function MeasureRow({
+  title,
+  reason,
+  value,
+  tone,
+}: {
+  title: string;
+  reason: string;
+  value: string;
+  tone: string;
+}) {
+  return (
+    <li className="flex items-center gap-3 px-4 py-3.5 sm:px-5">
+      <span aria-hidden="true" className="h-8 w-[3px] shrink-0 rounded-full bg-white/[0.25]" />
+      <span className="min-w-0 flex-1">
+        <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+          {title}
+        </span>
+        <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">{reason}</span>
+      </span>
+      <span className={cn('shrink-0 text-[15px] font-semibold tabular-nums', tone)}>{value}</span>
+    </li>
   );
 }

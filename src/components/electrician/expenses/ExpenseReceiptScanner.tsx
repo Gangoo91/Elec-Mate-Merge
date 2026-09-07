@@ -10,7 +10,11 @@ import {
   ExpenseExtractionResult,
   EXPENSE_CATEGORIES,
 } from '@/types/expense';
-import { uploadReceipt, fileToBase64 } from '@/services/expenseReceiptService';
+import {
+  uploadReceipt,
+  fileToBase64,
+  normaliseReceiptMimeType,
+} from '@/services/expenseReceiptService';
 import { cn } from '@/lib/utils';
 
 type ScannerState = 'idle' | 'capturing' | 'processing' | 'review' | 'error';
@@ -50,15 +54,31 @@ export function ExpenseReceiptScanner({ onComplete, onCancel }: ExpenseReceiptSc
 
       setReceiptUrl(uploadResult.url);
 
+      // PDFs upload fine but the AI step reads images only. Go straight to
+      // manual entry rather than sending a type the parser will reject.
+      const imageType = normaliseReceiptMimeType(file);
+      if (!imageType) {
+        setExtractedData({
+          vendor: null,
+          amount: null,
+          date: null,
+          category: null,
+          vat_amount: null,
+          description: null,
+          confidence: 0,
+        });
+        setState('review');
+        setProgress('');
+        toast({
+          title: 'Receipt saved',
+          description: 'PDF receipts cannot be read automatically yet. Enter the details below.',
+        });
+        return;
+      }
+
       // Convert to base64 for AI processing
       setProgress('Extracting details with AI...');
       const base64 = await fileToBase64(file);
-
-      // Determine image type - default to jpeg for HEIC
-      let imageType = file.type || 'image/jpeg';
-      if (imageType === 'image/heic' || imageType === 'image/heif') {
-        imageType = 'image/jpeg'; // Convert type for API compatibility
-      }
 
       // Call the edge function for OCR extraction
       const { data, error } = await supabase.functions.invoke('parse-expense-receipt', {

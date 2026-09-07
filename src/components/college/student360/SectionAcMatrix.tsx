@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { HubSectionHeading } from '@/components/hub/HubPrimitives';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import {
@@ -48,33 +50,41 @@ const STATUS_LABEL: Record<AcStatus, string> = {
   confirmed: 'Confirmed',
 };
 
+/*
+ * Status is TEXT. Not started and in progress are neutral (the learner's own
+ * activity); evidenced is volt (something for an assessor to look at);
+ * assessed and IQA-confirmed are emerald — the two genuinely good states.
+ * The old blue/amber/emerald/volt washes were four colours for a scale.
+ */
 const STATUS_TONE: Record<AcStatus, { dot: string; text: string; chipBg: string }> = {
   not_started: {
-    dot: 'bg-white/30',
+    dot: 'bg-white/[0.3]',
     text: 'text-white',
-    chipBg: 'bg-white/[0.04] border-white/[0.10]',
+    chipBg: 'bg-white/[0.06] border-white/[0.14]',
   },
   in_progress: {
-    dot: 'bg-blue-400',
-    text: 'text-blue-300',
-    chipBg: 'bg-blue-500/[0.08] border-blue-500/30',
+    dot: 'bg-white/[0.6]',
+    text: 'text-white',
+    chipBg: 'bg-white/[0.06] border-white/[0.14]',
   },
   evidenced: {
-    dot: 'bg-amber-400',
-    text: 'text-amber-300',
-    chipBg: 'bg-amber-500/[0.08] border-amber-500/30',
-  },
-  assessed: {
-    dot: 'bg-emerald-400',
-    text: 'text-emerald-300',
-    chipBg: 'bg-emerald-500/[0.08] border-emerald-500/30',
-  },
-  confirmed: {
     dot: 'bg-elec-yellow',
     text: 'text-elec-yellow',
-    chipBg: 'bg-elec-yellow/[0.08] border-elec-yellow/30',
+    chipBg: 'border-elec-yellow/35',
+  },
+  assessed: {
+    dot: 'bg-emerald-400/60',
+    text: 'text-emerald-300',
+    chipBg: 'bg-emerald-500/[0.08] border-emerald-400/30',
+  },
+  confirmed: {
+    dot: 'bg-emerald-400',
+    text: 'text-emerald-300',
+    chipBg: 'bg-emerald-500/[0.08] border-emerald-400/30',
   },
 };
+
+const CARD = cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE);
 
 type ViewMode = 'matrix' | 'list';
 
@@ -116,7 +126,11 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
 
   // Persistent collapsed state, keyed per-student in localStorage so a
   // tutor returning to the same learner gets back their last layout.
-  const collapseStorageKey = `acMatrix.collapsed.${studentId}`;
+  // `.v2`: the old key had been written by the previous Student 360 page for
+  // every learner a tutor had opened, with an EMPTY set (all expanded) — so
+  // the new collapsed-by-default rule never fired for anyone with history.
+  // A new key gives everybody the new default exactly once.
+  const collapseStorageKey = `acMatrix.collapsed.v2.${studentId}`;
   const [collapsed, setCollapsed] = useState<Set<string>>(() => {
     if (typeof window === 'undefined') return new Set();
     try {
@@ -127,8 +141,14 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
     }
     return new Set();
   });
+  // Declared BEFORE the persistence effect on purpose: that effect used to
+  // write the initial empty set to storage on mount, before the data had
+  // arrived — so by the time the first-load rule below ran, a "stored
+  // preference" always existed and every unit opened expanded.
+  const initialisedRef = useRef(false);
   useEffect(() => {
     if (typeof window === 'undefined') return;
+    if (!initialisedRef.current) return;
     try {
       window.localStorage.setItem(collapseStorageKey, JSON.stringify(Array.from(collapsed)));
     } catch {
@@ -137,9 +157,11 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
   }, [collapsed, collapseStorageKey]);
 
   // First-load collapse: when the data lands and there's NO stored
-  // preference for this student, auto-collapse all units except the first
-  // — avoids drowning the user in 200+ ACs.
-  const initialisedRef = useRef(false);
+  // preference for this student, auto-collapse EVERY unit. It used to leave
+  // the first one open, but on the 5357 standard the "first unit" is the
+  // whole qualification — 340 criteria — so the page opened as a wall of
+  // "Not started" rows that swallowed everything beneath it (portfolio,
+  // quizzes, observations, EPA). A tutor opens a unit on purpose.
   useEffect(() => {
     if (initialisedRef.current) return;
     if (!data || data.units.length === 0) return;
@@ -148,7 +170,7 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
       hadStored = window.localStorage.getItem(collapseStorageKey) !== null;
     }
     if (!hadStored) {
-      const next = new Set(data.units.slice(1).map((u) => u.unit_code));
+      const next = new Set(data.units.map((u) => u.unit_code));
       setCollapsed(next);
     }
     initialisedRef.current = true;
@@ -397,45 +419,51 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
 
   if (loading && !data) {
     return (
-      <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6 animate-pulse">
-        <div className="h-3 w-24 bg-white/[0.06] rounded mb-3" />
-        <div className="h-6 w-2/3 bg-white/[0.06] rounded" />
-        <div className="mt-6 space-y-2">
-          {Array.from({ length: 5 }).map((_, i) => (
-            <div key={i} className="h-10 bg-white/[0.04] rounded-lg" />
-          ))}
+      <section className="space-y-3">
+        <HubSectionHeading>AC coverage</HubSectionHeading>
+        <div className={cn(CARD, 'p-4 animate-pulse sm:p-5')}>
+          <div className="mb-3 h-3 w-24 rounded bg-white/[0.08]" />
+          <div className="h-6 w-2/3 rounded bg-white/[0.08]" />
+          <div className="mt-6 space-y-2">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <div key={i} className="h-10 rounded-lg bg-white/[0.05]" />
+            ))}
+          </div>
         </div>
-      </div>
+      </section>
     );
   }
 
   if (error) {
     return (
-      <div className="bg-[hsl(0_0%_12%)] border border-rose-500/25 rounded-2xl p-5 text-rose-200 text-[13px]">
-        {error}
-        <button
-          type="button"
-          onClick={() => void refresh()}
-          className="ml-3 text-rose-100 underline"
-        >
-          Retry
-        </button>
-      </div>
+      <section className="space-y-3">
+        <HubSectionHeading>AC coverage</HubSectionHeading>
+        <div className={cn(CARD, 'flex items-center gap-3 border-red-400/30 px-4 py-3 sm:px-5')}>
+          <p className="min-w-0 flex-1 text-[13px] text-white">{error}</p>
+          <button
+            type="button"
+            onClick={() => void refresh()}
+            className="flex h-11 shrink-0 items-center px-2 text-[12px] font-bold text-elec-yellow touch-manipulation"
+          >
+            Retry
+          </button>
+        </div>
+      </section>
     );
   }
 
   if (!data || data.units.length === 0) {
     return (
-      <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
-        <div className="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white">
-          Coverage matrix
+      <section className="space-y-3">
+        <HubSectionHeading>AC coverage</HubSectionHeading>
+        <div className={cn(CARD, 'px-4 py-5 sm:px-5')}>
+          <div className="text-[14px] font-semibold text-white">No qualification mapped</div>
+          <p className="mt-1.5 max-w-prose text-[12.5px] leading-relaxed text-white">
+            This learner doesn't have a course assigned, or the qualification has no AC catalogue.
+            Set their course to populate the matrix.
+          </p>
         </div>
-        <div className="mt-1 text-[14px] font-semibold text-white">No qualification mapped</div>
-        <p className="mt-2 text-[12.5px] text-white max-w-prose">
-          This learner doesn't have a course assigned, or the qualification has no AC catalogue. Set
-          their course on the identity strip to populate the matrix.
-        </p>
-      </div>
+      </section>
     );
   }
 
@@ -444,28 +472,37 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
     t.total > 0 ? Math.round(((t.evidenced + t.assessed + t.confirmed) / t.total) * 100) : 0;
 
   return (
-    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
+    <section className="space-y-3">
+      <div className="flex items-end justify-between gap-4">
+        <HubSectionHeading>AC coverage</HubSectionHeading>
+        <span
+          className={cn(
+            'text-[11px] font-semibold tabular-nums',
+            t.gaps > 0 ? 'text-red-300' : 'text-white'
+          )}
+        >
+          {t.gaps > 0 ? `${t.gaps} gap${t.gaps === 1 ? '' : 's'}` : `${completionPct}% complete`}
+        </span>
+      </div>
+    <div className={CARD}>
       {/* Header */}
-      <div className="px-5 sm:px-6 pt-5 sm:pt-6 pb-4 border-b border-white/[0.06]">
+      <div className="px-4 sm:px-5 pt-4 pb-4 border-b border-white/[0.10]">
         <div className="flex items-end justify-between gap-4 flex-wrap">
           <div className="min-w-0">
-            <div className="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-elec-yellow">
-              Coverage matrix
-            </div>
-            <h3 className="mt-1 text-[18px] sm:text-[22px] font-semibold text-white tracking-tight leading-tight">
+            <h3 className="text-[13px] font-semibold text-white">
               {data.qualification_code} · {t.total} criteria
             </h3>
             <p className="mt-1 text-[12px] text-white">
               {completionPct}% complete · {t.confirmed} confirmed · {t.evidenced + t.assessed}{' '}
               evidenced · {t.in_progress} in progress ·{' '}
-              <span className={t.gaps ? 'text-rose-300' : ''}>
+              <span className={t.gaps ? 'text-red-300' : ''}>
                 {t.gaps} gap{t.gaps === 1 ? '' : 's'}
               </span>
             </p>
             {/* Progress bar */}
-            <div className="mt-3 h-1.5 w-full max-w-md rounded-full bg-white/[0.06] overflow-hidden">
+            <div className="mt-3 h-1.5 w-full max-w-md rounded-full bg-white/[0.08] overflow-hidden">
               <div
-                className="h-full bg-gradient-to-r from-elec-yellow via-amber-300 to-elec-yellow rounded-full transition-all"
+                className="h-full bg-elec-yellow rounded-full transition-all"
                 style={{ width: `${completionPct}%` }}
               />
             </div>
@@ -473,7 +510,7 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
 
           {/* View mode + filters */}
           <div className="flex items-center gap-2 flex-wrap">
-            <div className="inline-flex h-9 rounded-lg border border-white/[0.10] overflow-hidden">
+            <div className="inline-flex h-11 rounded-lg border border-white/[0.10] overflow-hidden">
               <button
                 type="button"
                 onClick={() => setMode('matrix')}
@@ -503,9 +540,9 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
               type="button"
               onClick={() => setFilterGapsOnly((x) => !x)}
               className={cn(
-                'h-9 px-3 rounded-lg border text-[11.5px] font-medium transition-colors touch-manipulation',
+                'h-11 px-3 rounded-lg border text-[11.5px] font-medium transition-colors touch-manipulation',
                 filterGapsOnly
-                  ? 'border-rose-500/40 bg-rose-500/[0.06] text-rose-200'
+                  ? 'border-red-400/40 bg-red-500/[0.06] text-red-300'
                   : 'border-white/[0.10] text-white hover:border-white/[0.20]'
               )}
             >
@@ -515,9 +552,9 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
               type="button"
               onClick={() => setBulkMode((x) => !x)}
               className={cn(
-                'h-9 px-3 rounded-lg border text-[11.5px] font-medium transition-colors touch-manipulation',
+                'h-11 px-3 rounded-lg border text-[11.5px] font-medium transition-colors touch-manipulation',
                 bulkMode
-                  ? 'border-elec-yellow/40 bg-elec-yellow/[0.08] text-elec-yellow'
+                  ? 'border-elec-yellow text-elec-yellow'
                   : 'border-white/[0.10] text-white hover:border-white/[0.20]'
               )}
               title="Tick a batch of ACs and sign them off in one go"
@@ -532,7 +569,7 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
                 if (allCollapsed) setCollapsed(new Set());
                 else setCollapsed(new Set(data.units.map((u) => u.unit_code)));
               }}
-              className="h-9 px-3 rounded-lg border border-white/[0.10] text-[11.5px] font-medium text-white hover:border-white/[0.20] touch-manipulation"
+              className="h-11 px-3 rounded-lg border border-white/[0.10] text-[11.5px] font-medium text-white hover:border-white/[0.20] touch-manipulation"
             >
               {data && data.units.every((u) => collapsed.has(u.unit_code))
                 ? 'Expand all'
@@ -541,7 +578,7 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
             <button
               type="button"
               onClick={() => window.print()}
-              className="h-9 px-3 rounded-lg border border-white/[0.10] text-[11.5px] font-medium text-white hover:border-white/[0.20] touch-manipulation"
+              className="h-11 px-3 rounded-lg border border-white/[0.10] text-[11.5px] font-medium text-white hover:border-white/[0.20] touch-manipulation"
               title="Print the matrix (Ofsted-day handy)"
             >
               Print
@@ -550,7 +587,7 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
               type="button"
               onClick={() => void refresh()}
               disabled={loading}
-              className="h-9 px-3 rounded-lg border border-white/[0.10] text-[11.5px] font-medium text-white hover:border-white/[0.20] touch-manipulation disabled:opacity-50"
+              className="h-11 px-3 rounded-lg border border-white/[0.10] text-[11.5px] font-medium text-white hover:border-white/[0.20] touch-manipulation disabled:opacity-50"
             >
               {loading ? 'Refreshing…' : 'Refresh'}
             </button>
@@ -564,15 +601,15 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Filter by AC code, criterion text or unit"
-            className="w-full h-10 px-3 rounded-lg bg-[hsl(0_0%_8%)] border border-white/[0.10] text-[12.5px] text-white placeholder:text-white/70 focus:outline-none focus:border-white/30 touch-manipulation"
+            className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-[14px] font-medium text-white placeholder:text-white/25 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none [color-scheme:dark] touch-manipulation"
           />
         </div>
       </div>
 
       {/* Body */}
-      <div className="divide-y divide-white/[0.04]">
+      <div className="divide-y divide-white/[0.10]">
         {filteredUnits.length === 0 && (
-          <div className="px-5 sm:px-6 py-8 text-center text-[12.5px] text-white">
+          <div className="px-4 sm:px-5 py-8 text-center text-[12.5px] text-white">
             No criteria match the current filter.
           </div>
         )}
@@ -584,7 +621,7 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
               <button
                 type="button"
                 onClick={() => toggleUnit(unit.unit_code)}
-                className="w-full flex items-center justify-between gap-4 px-5 sm:px-6 py-3.5 text-left hover:bg-white/[0.02] transition-colors touch-manipulation"
+                className="w-full flex items-center justify-between gap-4 px-4 sm:px-5 py-3.5 text-left hover:bg-white/[0.06] transition-colors touch-manipulation"
               >
                 <div className="min-w-0 flex-1">
                   <div className="flex items-baseline gap-2 flex-wrap">
@@ -594,7 +631,7 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
                   <div className="mt-1 flex items-center gap-3 text-[10.5px] text-white">
                     <UnitMiniBar stats={unit.stats} total={unit.stats.total} />
                     {unit.stats.gaps > 0 && (
-                      <span className="text-rose-300 tabular-nums">
+                      <span className="text-red-300 tabular-nums">
                         {unit.stats.gaps} gap{unit.stats.gaps === 1 ? '' : 's'}
                       </span>
                     )}
@@ -612,10 +649,10 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
               </button>
 
               {!isCollapsed && (
-                <div className="px-5 sm:px-6 pb-4">
+                <div className="px-4 sm:px-5 pb-4">
                   {unit.los.map((lo) => (
                     <div key={lo.lo_number} className="mt-3">
-                      <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white mb-2">
+                      <div className="mb-2 text-[12px] font-semibold text-white">
                         LO {lo.lo_number} · {lo.lo_text}
                       </div>
                       {mode === 'matrix' ? (
@@ -647,7 +684,7 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
 
       {/* Bulk mode helper strip — visible whenever bulk mode is on */}
       {bulkMode && (
-        <div className="border-t border-elec-yellow/20 bg-elec-yellow/[0.04] px-5 sm:px-6 py-2.5 flex items-center justify-between gap-3 flex-wrap text-[11.5px] text-white">
+        <div className="border-t border-white/[0.10] px-4 sm:px-5 py-2.5 flex items-center justify-between gap-3 flex-wrap text-[11.5px] text-white">
           <span>
             <strong className="text-elec-yellow">Bulk mode</strong> — tap rows to select. Each AC
             still gets its own audit row.
@@ -656,7 +693,7 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
             <button
               type="button"
               onClick={selectAllVisible}
-              className="h-7 px-2 rounded-md border border-white/[0.10] text-[11px] hover:border-white/[0.20] touch-manipulation"
+              className="h-11 px-3 rounded-lg border border-white/[0.10] text-[11px] hover:border-white/[0.20] touch-manipulation"
             >
               Select all visible
             </button>
@@ -664,7 +701,7 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
               type="button"
               onClick={clearSelection}
               disabled={selectedAcs.size === 0}
-              className="h-7 px-2 rounded-md border border-white/[0.10] text-[11px] hover:border-white/[0.20] touch-manipulation disabled:opacity-40"
+              className="h-11 px-3 rounded-lg border border-white/[0.10] text-[11px] hover:border-white/[0.20] touch-manipulation disabled:opacity-40"
             >
               Clear
             </button>
@@ -676,13 +713,13 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
           card so it scrolls with the section, but the action group is
           sticky-bottom on mobile. */}
       {bulkMode && selectedAcs.size > 0 && (
-        <div className="border-t border-white/[0.06] bg-[hsl(0_0%_10%)] px-5 sm:px-6 py-4 space-y-3">
+        <div className="border-t border-white/[0.10] bg-white/[0.04] px-4 sm:px-5 py-4 space-y-3">
           <div className="flex items-center justify-between gap-3 flex-wrap">
             <div className="flex items-center gap-3 flex-wrap">
               <span className="text-[12.5px] font-semibold text-white">
                 {selectedAcs.size} AC{selectedAcs.size === 1 ? '' : 's'} selected
               </span>
-              <div className="inline-flex h-9 rounded-lg border border-white/[0.10] overflow-hidden text-[11.5px]">
+              <div className="inline-flex h-11 rounded-lg border border-white/[0.10] overflow-hidden text-[11.5px]">
                 {(['evidenced', 'assessed', 'confirmed'] as const).map((s) => (
                   <button
                     key={s}
@@ -692,10 +729,10 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
                       'px-3 font-medium transition-colors touch-manipulation',
                       bulkStatus === s
                         ? s === 'confirmed'
-                          ? 'bg-elec-yellow/[0.12] text-elec-yellow'
+                          ? 'bg-white/[0.12] text-elec-yellow'
                           : s === 'assessed'
-                            ? 'bg-emerald-500/[0.12] text-emerald-200'
-                            : 'bg-amber-500/[0.12] text-amber-200'
+                            ? 'bg-white/[0.12] text-emerald-300'
+                            : 'bg-white/[0.12] text-white'
                         : 'bg-transparent text-white hover:text-white'
                     )}
                   >
@@ -710,10 +747,10 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
                 onClick={() => void handleBulkDraftAi()}
                 disabled={bulkDrafting || bulkSaving}
                 className={cn(
-                  'h-9 px-3 rounded-lg border text-[11.5px] font-semibold transition-colors touch-manipulation',
+                  'h-11 px-3 rounded-lg border text-[11.5px] font-semibold transition-colors touch-manipulation',
                   bulkDrafting || bulkSaving
-                    ? 'border-white/[0.06] text-white/45'
-                    : 'border-elec-yellow/30 bg-elec-yellow/[0.06] text-elec-yellow hover:bg-elec-yellow/[0.10]'
+                    ? 'border-white/[0.10] text-white opacity-50'
+                    : 'border-elec-yellow/50 text-elec-yellow hover:bg-white/[0.06]'
                 )}
                 title="Drafts a per-AC narrative for each selected row, then joins them. You edit before saving."
               >
@@ -726,9 +763,9 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
                 onClick={() => void handleBulkSave()}
                 disabled={bulkSaving}
                 className={cn(
-                  'h-9 px-3.5 rounded-lg text-[11.5px] font-semibold transition-colors touch-manipulation',
+                  'h-11 px-3.5 rounded-lg text-[11.5px] font-semibold transition-colors touch-manipulation',
                   bulkSaving
-                    ? 'bg-white/[0.06] text-white/45'
+                    ? 'bg-white/[0.08] text-white opacity-50'
                     : 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
                 )}
               >
@@ -741,9 +778,9 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
             onChange={(e) => setBulkNarrative(e.target.value)}
             placeholder="One shared narrative across these ACs (optional but recommended). Tip: 'AI draft for all' fills this in from the evidence on each AC."
             rows={3}
-            className="w-full px-3 py-2 rounded-lg bg-white/[0.03] border border-white/[0.10] text-[12.5px] text-white placeholder:text-white/70 leading-relaxed focus:outline-none focus:border-elec-yellow/50 touch-manipulation resize-y"
+            className="w-full rounded-xl border border-white/[0.14] bg-transparent px-3 py-2.5 text-[13px] leading-relaxed text-white placeholder:text-white/25 caret-elec-yellow focus:border-elec-yellow focus:outline-none touch-manipulation resize-y"
           />
-          <p className="text-[10.5px] text-white/55 italic">
+          <p className="text-[11px] text-white">
             Saving stamps "signed by you, today" on each AC + flips status. The IQA will see the
             full list when sampling.
           </p>
@@ -763,6 +800,7 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
         onChanged={() => void refresh()}
       />
     </div>
+    </section>
   );
 }
 
@@ -789,7 +827,7 @@ function MatrixGrid({
         <thead>
           <tr>
             {bulkMode && <th className="w-7 pb-1.5 align-bottom" aria-label="Select" />}
-            <th className="text-left font-medium text-white pb-1.5 pr-3 align-bottom min-w-[80px] sticky left-0 bg-[hsl(0_0%_12%)]">
+            <th className="text-left font-medium text-white pb-1.5 pr-3 align-bottom min-w-[80px]">
               AC
             </th>
             <th className="text-left font-medium text-white pb-1.5 pr-3 align-bottom min-w-[200px]">
@@ -806,7 +844,7 @@ function MatrixGrid({
             <th className="text-center font-medium text-white pb-1.5 pl-2 align-bottom">Status</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-white/[0.04]">
+        <tbody className="divide-y divide-white/[0.10]">
           {rows.map((cell) => {
             const k = `${cell.unit_code}:${cell.ac_code}`;
             const isSelected = selectedAcs.has(k);
@@ -824,9 +862,9 @@ function MatrixGrid({
                   }
                 }}
                 className={cn(
-                  'cursor-pointer hover:bg-white/[0.03] transition-colors',
-                  cell.requirement?.is_mandatory && !cell.meets_requirement && 'bg-rose-500/[0.03]',
-                  isSelected && 'bg-elec-yellow/[0.06]'
+                  'cursor-pointer hover:bg-white/[0.06] transition-colors',
+                  cell.requirement?.is_mandatory && !cell.meets_requirement && '',
+                  isSelected && 'bg-white/[0.08]'
                 )}
               >
                 {bulkMode && (
@@ -844,7 +882,7 @@ function MatrixGrid({
                     </span>
                   </td>
                 )}
-                <td className="py-2 pr-3 sticky left-0 bg-[hsl(0_0%_12%)] group-hover:bg-transparent">
+                <td className="py-2 pr-3 ">
                   <div className="font-mono text-[12px] font-semibold text-white">
                     {cell.ac_code}
                   </div>
@@ -852,7 +890,7 @@ function MatrixGrid({
                 <td className="py-2 pr-3 text-[12px] text-white max-w-[300px]">
                   <div className="line-clamp-2">{cell.ac_text}</div>
                   {cell.requirement?.is_mandatory && cell.missing_types.length > 0 && (
-                    <div className="mt-0.5 text-[10.5px] text-rose-300">
+                    <div className="mt-0.5 text-[10.5px] text-red-300">
                       Missing:{' '}
                       {cell.missing_types.map((m) => EVIDENCE_TYPE_LABEL[m] ?? m).join(', ')}
                     </div>
@@ -901,14 +939,14 @@ function CountCell({
     if (isRequired && isMandatoryAc) {
       return (
         <span
-          className="inline-flex items-center justify-center h-6 w-6 rounded border border-rose-500/40 bg-rose-500/[0.04] text-rose-300 text-[10px] font-semibold"
+          className="inline-flex items-center justify-center h-6 w-6 rounded border border-red-400/40 bg-red-500/[0.06] text-red-300 text-[10px] font-semibold"
           title="Required type, no evidence"
         >
           ·
         </span>
       );
     }
-    return <span className="text-white/25 text-[11px]">–</span>;
+    return <span className="text-white/[0.35] text-[11px]">–</span>;
   }
   return (
     <span
@@ -970,9 +1008,9 @@ function ListView({
               className={cn(
                 'w-full text-left flex items-start gap-3 px-3 py-2.5 rounded-lg border transition-colors touch-manipulation',
                 cell.requirement?.is_mandatory && !cell.meets_requirement
-                  ? 'border-rose-500/25 hover:border-rose-500/40 bg-rose-500/[0.03]'
-                  : 'border-white/[0.06] hover:border-white/[0.14] bg-[hsl(0_0%_10%)]',
-                isSelected && 'border-elec-yellow/40 bg-elec-yellow/[0.06]'
+                  ? 'border-red-400/30 bg-white/[0.04] hover:border-red-400/50'
+                  : 'border-white/[0.10] bg-white/[0.04] hover:border-white/[0.20]',
+                isSelected && 'border-elec-yellow/60 bg-white/[0.08]'
               )}
             >
               {bulkMode && (
@@ -1000,7 +1038,7 @@ function ListView({
                   {cell.requirement?.is_mandatory && cell.missing_types.length > 0 && (
                     <>
                       <span className="text-white">·</span>
-                      <span className="text-rose-300">
+                      <span className="text-red-300">
                         Missing{' '}
                         {cell.missing_types.map((m) => EVIDENCE_TYPE_LABEL[m] ?? m).join(', ')}
                       </span>
@@ -1037,12 +1075,12 @@ function UnitMiniBar({
   if (total === 0) return null;
   const seg = (n: number) => `${(n / total) * 100}%`;
   return (
-    <span className="inline-flex h-1.5 w-32 rounded-full bg-white/[0.06] overflow-hidden">
-      <span style={{ width: seg(stats.confirmed) }} className="bg-elec-yellow" />
-      <span style={{ width: seg(stats.assessed) }} className="bg-emerald-400" />
-      <span style={{ width: seg(stats.evidenced) }} className="bg-amber-400" />
-      <span style={{ width: seg(stats.in_progress) }} className="bg-blue-400" />
-      <span style={{ width: seg(stats.not_started) }} className="bg-white/15" />
+    <span className="inline-flex h-1.5 w-32 rounded-full bg-white/[0.08] overflow-hidden">
+      <span style={{ width: seg(stats.confirmed) }} className="bg-emerald-400" />
+      <span style={{ width: seg(stats.assessed) }} className="bg-emerald-400/60" />
+      <span style={{ width: seg(stats.evidenced) }} className="bg-elec-yellow" />
+      <span style={{ width: seg(stats.in_progress) }} className="bg-white/[0.4]" />
+      <span style={{ width: seg(stats.not_started) }} className="bg-white/[0.12]" />
     </span>
   );
 }

@@ -290,15 +290,25 @@ export const useInvoiceStorage = () => {
             //     beforeSend filter, so it cannot come back through a
             //     different channel.
             const isSocketClose = /socket closed: \d+/.test(lowered);
+            //   - "channel error: transport failure" / "heartbeat timeout" —
+            //     the WebSocket dropped (iPad backgrounded, network handover)
+            //     and Supabase rejoins the channel on reconnect. Nothing is
+            //     lost: fetchInvoices() runs on mount and the channel only
+            //     triggers a refetch. These were the three largest issues on
+            //     the dashboard (Sentry FJ/DP/AN — 174 events, 96 users) with
+            //     nothing for anyone to fix.
+            const isTransportDrop =
+              lowered.includes('transport failure') || lowered.includes('heartbeat timeout');
             if (isKnownBindingsMismatch) {
               addBreadcrumb('Realtime bindings mismatch (recoverable)', 'realtime', {
                 channel: 'invoice-realtime',
                 status,
               });
-            } else if (isSocketClose) {
+            } else if (isSocketClose || isTransportDrop) {
               addBreadcrumb('Realtime socket closed (reconnecting)', 'realtime', {
                 channel: 'invoice-realtime',
                 status,
+                reason: message,
               });
             } else if (isExpiredJwt) {
               addBreadcrumb('Realtime JWT expired (recoverable)', 'realtime', {

@@ -1,16 +1,26 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { Pill, type Tone } from '@/components/college/primitives';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { HubSectionHeading } from '@/components/hub/HubPrimitives';
 import { useApprenticeOtj, type OtjEntry, type OtjSource } from '@/hooks/useApprenticeOtj';
 import { OtjVerificationPanel } from '@/components/college/student360/OtjVerificationPanel';
 import { OtjTrajectoryChart } from '@/components/college/student360/OtjTrajectoryChart';
 
 /* ==========================================================================
-   SectionApprenticeOtj — cross-hub Off-the-Job training panel.
+   SectionApprenticeOtj — cross-hub off-the-job training panel.
    Surfaces apprentice-side activity (videos, study sessions, learning log)
    alongside college-recorded entries (workshops, 1-2-1s, mentoring).
-   Built for ESFA-defensible reporting against the 6hr/week minimum.
+
+   Data honesty. Everything `useApprenticeOtj` totals is LOGGED, not verified:
+   learning-log rows, study sessions and site-diary entries are written by
+   the learner's own device, and the college rows are counted whatever their
+   verification status. So the two figure cards say "logged", the verified
+   picture is the verification panel's job, and the only row that may say
+   "Verified" is a college entry — the one kind whose verified_at a learner
+   cannot set (guarded by tg_guard_otj_self_edit). A site-diary row used to
+   show "Verified" off `time_entries.is_supervisor_verified`, a boolean on the
+   learner's own row that nothing in the app but the learner's client writes.
    ========================================================================== */
 
 const SOURCE_LABEL: Record<OtjSource, string> = {
@@ -21,21 +31,10 @@ const SOURCE_LABEL: Record<OtjSource, string> = {
   time_entry: 'Site diary',
 };
 
-const SOURCE_TONE: Record<OtjSource, Tone> = {
-  learning_activity: 'blue',
-  study_session: 'purple',
-  video_watch: 'cyan',
-  college: 'amber',
-  time_entry: 'emerald',
-};
-
-const SOURCE_DOT: Record<OtjSource, string> = {
-  learning_activity: 'bg-blue-400/85',
-  study_session: 'bg-purple-400/85',
-  video_watch: 'bg-white/40',
-  college: 'bg-elec-yellow/85',
-  time_entry: 'bg-emerald-400/85',
-};
+const CARD = cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE);
+const CARD_TITLE = 'text-[13px] font-semibold text-white';
+const TEXT_BTN =
+  'inline-flex h-11 shrink-0 items-center px-2 text-[12px] font-semibold transition-colors touch-manipulation';
 
 function formatRelativeOrDate(iso: string): string {
   const d = new Date(iso);
@@ -74,96 +73,95 @@ export function SectionApprenticeOtj({
   const { entries, breakdown, loading } = useApprenticeOtj(userId, weeklyTargetMinutes);
   const [expanded, setExpanded] = useState(false);
 
-  const visible = useMemo(
-    () => (expanded ? entries : entries.slice(0, 6)),
-    [entries, expanded]
-  );
+  const visible = useMemo(() => (expanded ? entries : entries.slice(0, 6)), [entries, expanded]);
 
   const noLink = !userId;
+  const firstName = studentName.split(' ')[0];
 
   return (
-    <section id={id} className="scroll-mt-6">
-      <div className="flex items-end justify-between gap-4 flex-wrap">
-        <div>
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-            Off-the-job training
-          </div>
-          <h2 className="mt-1.5 text-xl sm:text-[26px] font-semibold text-white tracking-tight leading-tight">
-            OTJ activity
-          </h2>
-        </div>
-        <div className="flex items-center gap-3 flex-wrap no-print">
+    <section id={id} className="scroll-mt-6 space-y-3">
+      <div className="flex items-end justify-between gap-3">
+        <HubSectionHeading>Off-the-job training</HubSectionHeading>
+        <div className="no-print -my-2 -mr-2 flex items-center">
           <button
             type="button"
             onClick={() => navigate('/college/otj/inbox')}
-            className="text-[12px] font-medium text-amber-300/85 hover:text-amber-200 transition-colors touch-manipulation"
+            className={cn(TEXT_BTN, 'text-white')}
           >
-            Verification inbox →
+            Verification inbox
           </button>
           <button
+            type="button"
             onClick={onAdd}
             disabled={noLink}
-            className="text-[12px] font-medium text-elec-yellow/85 hover:text-elec-yellow transition-colors touch-manipulation disabled:opacity-40"
+            title={noLink ? 'Needs a linked apprentice account' : undefined}
+            className={cn(TEXT_BTN, noLink ? 'text-white opacity-50' : 'text-elec-yellow')}
           >
-            Log college activity →
+            Log college activity
           </button>
         </div>
       </div>
 
       {noLink ? (
-        <div className="mt-5 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-6 py-8 text-center">
-          <p className="text-[12.5px] text-white/65 max-w-md mx-auto leading-relaxed">
-            This learner has no linked apprentice account yet, so we can't pull cross-hub
-            activity. Once they sign in to the app with the same email, OTJ will appear here.
+        <div className={cn(CARD, 'px-4 py-6 sm:px-5')}>
+          <p className="text-[13px] leading-relaxed text-white">
+            This learner has no linked apprentice account yet, so cross-hub activity can&apos;t be
+            pulled in. Once they sign in to the app with the same email, off-the-job training will
+            appear here.
           </p>
         </div>
       ) : (
         <>
-          <div className="mt-5 grid grid-cols-1 md:grid-cols-[260px_minmax(0,1fr)] gap-4">
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-[260px_minmax(0,1fr)]">
             <ProgressCard breakdown={breakdown} loading={loading} />
             <BreakdownCard breakdown={breakdown} />
           </div>
 
-          {/* Cumulative trajectory — ESFA 20% line vs actual */}
+          {/* Cumulative trajectory — required line vs logged and verified */}
           {collegeStudentId && (
-            <div className="mt-4">
-              <OtjTrajectoryChart collegeStudentId={collegeStudentId} userId={userId} />
-            </div>
+            <OtjTrajectoryChart collegeStudentId={collegeStudentId} userId={userId} />
           )}
 
-          {/* H.3: Tri-source verification panel — pending submissions
-              from the apprentice land here for one-click sign-off. */}
-          <div className="mt-5">
-            <OtjVerificationPanel studentUserId={userId} />
-          </div>
+          {/* Verification panel — the apprentice's pending submissions land
+              here for one-tap sign-off. */}
+          <OtjVerificationPanel studentUserId={userId} />
 
-          <div className="mt-5">
-            {loading && entries.length === 0 ? (
-              <Skeleton />
-            ) : entries.length === 0 ? (
-              <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-6 py-8 text-center">
-                <p className="text-[12.5px] text-white/65 max-w-md mx-auto leading-relaxed">
-                  No off-the-job activity logged for {studentName.split(' ')[0]} yet. Activity
-                  in the app and college-led sessions will appear here as they happen.
+          {/* The full timeline — the history view to the panel's action view. */}
+          {loading && entries.length === 0 ? (
+            <Skeleton />
+          ) : (
+            <div className={CARD}>
+              <div className="flex items-center justify-between gap-3 border-b border-white/[0.10] px-4 py-3 sm:px-5">
+                <div className={CARD_TITLE}>Everything logged</div>
+                <div className="text-[12px] tabular-nums text-white">
+                  {entries.length} {entries.length === 1 ? 'entry' : 'entries'}
+                </div>
+              </div>
+              {entries.length === 0 ? (
+                <p className="px-4 py-5 text-[12.5px] leading-relaxed text-white sm:px-5">
+                  Nothing logged for {firstName} yet. Activity in the app and college-led sessions
+                  will appear here as they happen.
                 </p>
-              </div>
-            ) : (
-              <div className="space-y-2.5">
-                {visible.map((e) => (
-                  <EntryRow key={e.id} entry={e} />
-                ))}
-                {entries.length > 6 && (
-                  <button
-                    type="button"
-                    onClick={() => setExpanded((v) => !v)}
-                    className="w-full h-11 rounded-xl border border-white/[0.08] text-[12px] font-medium text-white/75 hover:text-white hover:border-white/[0.18] transition-colors touch-manipulation"
-                  >
-                    {expanded ? 'Show fewer' : `Show all ${entries.length} entries`}
-                  </button>
-                )}
-              </div>
-            )}
-          </div>
+              ) : (
+                <>
+                  <ul className="divide-y divide-white/[0.10]">
+                    {visible.map((e) => (
+                      <EntryRow key={e.id} entry={e} />
+                    ))}
+                  </ul>
+                  {entries.length > 6 && (
+                    <button
+                      type="button"
+                      onClick={() => setExpanded((v) => !v)}
+                      className="flex h-11 w-full items-center justify-center border-t border-white/[0.10] text-[12.5px] font-semibold text-white transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09]"
+                    >
+                      {expanded ? 'Show fewer' : `${entries.length - 6} more`}
+                    </button>
+                  )}
+                </>
+              )}
+            </div>
+          )}
         </>
       )}
     </section>
@@ -180,22 +178,13 @@ function ProgressCard({
   loading: boolean;
 }) {
   const pct = breakdown.weekly_progress_percent;
-  const ringColour =
-    pct >= 100
-      ? 'stroke-emerald-400'
-      : pct >= 60
-        ? 'stroke-elec-yellow'
-        : pct >= 30
-          ? 'stroke-amber-400'
-          : 'stroke-red-400';
+  const short = breakdown.weekly_target_minutes - breakdown.this_week_minutes;
 
   return (
-    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-5 py-5">
-      <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-        This week
-      </div>
+    <div className={cn(CARD, 'px-4 py-4 sm:px-5')}>
+      <div className={CARD_TITLE}>Logged this week</div>
       <div className="mt-3 flex items-center gap-4">
-        <div className="relative h-[88px] w-[88px] flex-shrink-0">
+        <div className="relative h-[88px] w-[88px] shrink-0">
           <svg viewBox="0 0 36 36" className="h-full w-full -rotate-90">
             <circle
               cx="18"
@@ -203,7 +192,7 @@ function ProgressCard({
               r="15.5"
               fill="none"
               strokeWidth="2.5"
-              className="stroke-white/[0.08]"
+              className="stroke-white/[0.25]"
             />
             <circle
               cx="18"
@@ -213,39 +202,35 @@ function ProgressCard({
               strokeWidth="2.5"
               strokeLinecap="round"
               strokeDasharray={`${(pct / 100) * 97.4} 97.4`}
-              className={cn('transition-all duration-500', ringColour)}
+              className="stroke-elec-yellow transition-all duration-500"
             />
           </svg>
           <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <div className="text-[18px] font-semibold text-white tabular-nums leading-none">
+            <div className="text-[18px] font-semibold leading-none tabular-nums text-white">
               {pct}
-              <span className="text-[11px] text-white/65">%</span>
+              <span className="text-[11px]">%</span>
             </div>
-            <div className="text-[9.5px] uppercase tracking-[0.14em] text-white/50 mt-0.5">
-              of target
-            </div>
+            <div className="mt-0.5 text-[10px] text-white">of target</div>
           </div>
         </div>
         <div className="min-w-0">
-          <div className="text-[15px] font-semibold text-white tabular-nums">
+          <div className="text-[15px] font-semibold tabular-nums text-white">
             {fmtMins(breakdown.this_week_minutes)}
-            <span className="text-[11px] text-white/55 ml-1">
+            <span className="ml-1 text-[11px] font-normal">
               / {fmtMins(breakdown.weekly_target_minutes)}
             </span>
           </div>
-          <div className="mt-1 text-[11px] text-white/55 leading-tight">
-            ESFA expects 6h/week minimum off-the-job for apprenticeships.
-          </div>
           {!loading && pct < 100 && (
-            <div className="mt-2 inline-flex items-center h-5 px-1.5 rounded-md bg-amber-500/[0.08] border border-amber-500/25 text-[10px] font-semibold tracking-[0.06em] uppercase text-amber-200">
-              {fmtMins(breakdown.weekly_target_minutes - breakdown.this_week_minutes)} short
+            <div className="mt-1 text-[12px] font-semibold tabular-nums text-elec-yellow">
+              {fmtMins(short)} short
             </div>
           )}
           {!loading && pct >= 100 && (
-            <div className="mt-2 inline-flex items-center h-5 px-1.5 rounded-md bg-emerald-500/[0.08] border border-emerald-500/25 text-[10px] font-semibold tracking-[0.06em] uppercase text-emerald-200">
-              On track
-            </div>
+            <div className="mt-1 text-[12px] font-semibold text-white">Target met</div>
           )}
+          <div className="mt-1 text-[11.5px] leading-tight text-white">
+            Everything logged, verified or not. Weekly minimum for an apprenticeship is 6h.
+          </div>
         </div>
       </div>
     </div>
@@ -259,18 +244,20 @@ function BreakdownCard({
 }: {
   breakdown: ReturnType<typeof useApprenticeOtj>['breakdown'];
 }) {
-  const sources: OtjSource[] = ['college', 'learning_activity', 'study_session', 'video_watch'];
+  const sources: OtjSource[] = [
+    'college',
+    'learning_activity',
+    'study_session',
+    'video_watch',
+    'time_entry',
+  ];
   const total = breakdown.total_minutes;
 
   return (
-    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-5 py-5">
+    <div className={cn(CARD, 'px-4 py-4 sm:px-5')}>
       <div className="flex items-baseline justify-between gap-3">
-        <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-          All time
-        </div>
-        <div className="text-[15px] font-semibold text-white tabular-nums">
-          {fmtMins(total)}
-        </div>
+        <div className={CARD_TITLE}>Logged all time</div>
+        <div className="text-[15px] font-semibold tabular-nums text-white">{fmtMins(total)}</div>
       </div>
       <div className="mt-3 space-y-2.5">
         {sources.map((s) => {
@@ -278,17 +265,20 @@ function BreakdownCard({
           const widthPct = total > 0 ? (stat.minutes / total) * 100 : 0;
           return (
             <div key={s}>
-              <div className="flex items-center justify-between text-[11.5px]">
-                <div className="flex items-center gap-2">
-                  <span className={cn('inline-block h-1.5 w-1.5 rounded-full', SOURCE_DOT[s])} />
-                  <span className="text-white/85">{SOURCE_LABEL[s]}</span>
-                  <span className="text-white/70 tabular-nums">{stat.entries}</span>
+              <div className="flex items-center justify-between gap-3 text-[12px] text-white">
+                <div className="flex min-w-0 items-center gap-2">
+                  <span className="truncate">{SOURCE_LABEL[s]}</span>
+                  <span className="tabular-nums">{stat.entries}</span>
                 </div>
-                <span className="text-white/85 tabular-nums">{fmtMins(stat.minutes)}</span>
+                <span className="tabular-nums">{fmtMins(stat.minutes)}</span>
               </div>
-              <div className="mt-1 h-1 rounded-full bg-white/[0.04] overflow-hidden">
+              <div className="mt-1 h-1 overflow-hidden rounded-full bg-white/[0.10]">
                 <div
-                  className={cn('h-full rounded-full transition-all duration-500', SOURCE_DOT[s])}
+                  className={cn(
+                    'h-full rounded-full transition-all duration-500',
+                    // College-led hours are the ones a tutor put there.
+                    s === 'college' ? 'bg-elec-yellow' : 'bg-white'
+                  )}
                   style={{ width: `${widthPct}%` }}
                 />
               </div>
@@ -296,16 +286,16 @@ function BreakdownCard({
           );
         })}
       </div>
-      <div className="mt-4 pt-3 border-t border-white/[0.06] flex items-center justify-between text-[11px] text-white/55">
+      <div className="mt-4 flex items-center justify-between border-t border-white/[0.10] pt-3 text-[12px] text-white">
         <div>
           Last 7 days
-          <span className="ml-1.5 text-white/85 tabular-nums">
+          <span className="ml-1.5 font-semibold tabular-nums">
             {fmtMins(breakdown.last_7_days_minutes)}
           </span>
         </div>
         <div>
           Last 30 days
-          <span className="ml-1.5 text-white/85 tabular-nums">
+          <span className="ml-1.5 font-semibold tabular-nums">
             {fmtMins(breakdown.last_30_days_minutes)}
           </span>
         </div>
@@ -317,60 +307,52 @@ function BreakdownCard({
 /* ──────────────────────────────────────────────────────── */
 
 function EntryRow({ entry }: { entry: OtjEntry }) {
+  // Only a college entry's verified_at is set by staff. A site-diary row's
+  // comes from a boolean on the learner's own record — not a verification.
+  const verified = entry.source === 'college' && !!entry.verified_at;
+  const reason = [
+    formatRelativeOrDate(entry.occurred_at),
+    SOURCE_LABEL[entry.source],
+    entry.category && entry.source === 'college' ? entry.category.replace(/_/g, ' ') : null,
+    entry.recorded_by_name ? `by ${entry.recorded_by_name}` : null,
+  ]
+    .filter(Boolean)
+    .join(' · ');
+
   return (
-    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-4 sm:px-5 py-3.5 flex items-start gap-3">
+    <li className="flex items-center gap-3 px-4 py-3 sm:px-5">
       <span
-        aria-hidden
-        className={cn('mt-1.5 inline-block h-2 w-2 rounded-full flex-shrink-0', SOURCE_DOT[entry.source])}
+        aria-hidden="true"
+        className={cn(
+          'h-8 w-[3px] shrink-0 rounded-full',
+          verified ? 'bg-elec-yellow' : 'bg-white/[0.25]'
+        )}
       />
       <div className="min-w-0 flex-1">
-        <div className="flex items-start justify-between gap-3 flex-wrap">
-          <div className="min-w-0 flex-1">
-            <h3 className="text-[13.5px] font-medium text-white leading-tight truncate">
-              {entry.title}
-            </h3>
-            <div className="mt-0.5 flex items-center flex-wrap gap-x-2 gap-y-0.5 text-[10.5px] text-white/55 tabular-nums">
-              <span>{formatRelativeOrDate(entry.occurred_at)}</span>
-              <span className="text-white/25">·</span>
-              <Pill tone={SOURCE_TONE[entry.source]}>{SOURCE_LABEL[entry.source]}</Pill>
-              {entry.category && entry.source === 'college' && (
-                <>
-                  <span className="text-white/25">·</span>
-                  <span className="capitalize">{entry.category.replace(/_/g, ' ')}</span>
-                </>
-              )}
-              {entry.recorded_by_name && (
-                <>
-                  <span className="text-white/25">·</span>
-                  <span className="text-white/65">by {entry.recorded_by_name}</span>
-                </>
-              )}
-              {entry.verified_at && (
-                <>
-                  <span className="text-white/25">·</span>
-                  <span className="text-emerald-300/85">Verified</span>
-                </>
-              )}
-            </div>
-            {entry.unit_codes.length > 0 && (
-              <div className="mt-1.5 flex items-center flex-wrap gap-1">
-                {entry.unit_codes.slice(0, 4).map((u) => (
-                  <span
-                    key={u}
-                    className="inline-flex items-center h-4 px-1.5 rounded-md bg-white/[0.04] border border-white/[0.08] text-[10px] font-mono tabular-nums text-white/85"
-                  >
-                    {u}
-                  </span>
-                ))}
-              </div>
-            )}
-          </div>
-          <div className="text-[13px] font-semibold text-white tabular-nums flex-shrink-0">
-            {entry.duration_minutes > 0 ? fmtMins(entry.duration_minutes) : '—'}
-          </div>
+        <div className="truncate text-[14px] font-semibold leading-tight text-white">
+          {entry.title}
         </div>
+        <div className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[12px] leading-tight text-white">
+          <span className="truncate capitalize tabular-nums">{reason}</span>
+          {verified && <span className="font-semibold text-elec-yellow">Verified</span>}
+        </div>
+        {entry.unit_codes.length > 0 && (
+          <div className="mt-1.5 flex flex-wrap items-center gap-1">
+            {entry.unit_codes.slice(0, 4).map((u) => (
+              <span
+                key={u}
+                className="inline-flex h-5 items-center rounded-md border border-white/[0.14] px-1.5 font-mono text-[10.5px] tabular-nums text-white"
+              >
+                {u}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
-    </div>
+      <div className="shrink-0 text-[13px] font-semibold tabular-nums text-white">
+        {entry.duration_minutes > 0 ? fmtMins(entry.duration_minutes) : '—'}
+      </div>
+    </li>
   );
 }
 
@@ -378,16 +360,15 @@ function EntryRow({ entry }: { entry: OtjEntry }) {
 
 function Skeleton() {
   return (
-    <div className="space-y-2.5 animate-pulse">
-      {[0, 1, 2].map((i) => (
-        <div
-          key={i}
-          className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-5 py-3.5"
-        >
-          <div className="h-3 w-2/3 rounded bg-white/[0.06]" />
-          <div className="mt-2 h-2 w-1/3 rounded bg-white/[0.04]" />
-        </div>
-      ))}
+    <div className={cn(CARD, 'animate-pulse')}>
+      <ul className="divide-y divide-white/[0.10]">
+        {[0, 1, 2].map((i) => (
+          <li key={i} className="px-4 py-3.5 sm:px-5">
+            <div className="h-3 w-2/3 rounded bg-white/[0.10]" />
+            <div className="mt-2 h-2 w-1/3 rounded bg-white/[0.06]" />
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

@@ -18,6 +18,47 @@ const APPRENTICE_WINBACK_CONFIG = {
   yearlyPaymentLink: 'https://buy.stripe.com/9B628k9MS8fi6U9fbMbjW06', // £49.99/yr — price_1SmUfK2RKw5t5RAml6bj1I77 (OLD — needs new link)
 };
 
+/**
+ * Who is paying? A bare Stripe Payment Link cannot say.
+ *
+ * 🔴 The same link goes to every recipient, so it carries no `metadata.userId`
+ * and creates a brand-new Stripe customer. `findUserByCustomer` in
+ * stripe-subscription-webhook therefore falls all the way through to matching on
+ * the email typed at checkout — and Stripe Link autofills whatever address the
+ * person has used at ANY other Stripe merchant. Two ways that fails: the address
+ * belongs to no account (they pay and get nothing — Jake James, 2026-09-05, paid
+ * £9.99 at 21:17 and was hand-granted free access at 21:30), or it belongs to a
+ * DIFFERENT account of theirs and the subscription silently lands on the wrong
+ * one. 198 of these went out on 2026-08-30 with bare links.
+ *
+ * `prefilled_email` pins the field to their account address so Link cannot
+ * override it (verified against the live link, 2026-09-07 — the field renders
+ * pre-populated). `client_reference_id` gives the webhook an exact second
+ * signal; note it deliberately loses to the paying email on conflict, so the
+ * prefill is the half that actually prevents the problem.
+ *
+ * Mirrors `withIdentity()` in _shared/winback-v12.ts and v13 — those were
+ * written with this fix but are not wired into any sender.
+ */
+function withIdentity(url: string, accountEmail: string | null, userId: string | null): string {
+  if (!url.includes('buy.stripe.com')) return url;
+  const sep = url.includes('?') ? '&' : '?';
+  const parts: string[] = [];
+  if (userId) {
+    // Stripe allows [A-Za-z0-9_-], max 200 chars. A UUID passes unchanged.
+    const safeRef = userId.replace(/[^A-Za-z0-9_-]/g, '').slice(0, 200);
+    if (safeRef) parts.push(`client_reference_id=${encodeURIComponent(safeRef)}`);
+  }
+  if (accountEmail) parts.push(`prefilled_email=${encodeURIComponent(accountEmail)}`);
+  return parts.length ? `${url}${sep}${parts.join('&')}` : url;
+}
+
+/** Recipient identity threaded into the win-back templates. */
+interface PayerIdentity {
+  accountEmail: string | null;
+  userId: string | null;
+}
+
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers':
@@ -367,7 +408,7 @@ function generateEngagementNudgeEmail(firstName: string): string {
   `);
 }
 
-function generateTrialWinbackEmail(firstName: string): string {
+function generateTrialWinbackEmail(firstName: string, id: PayerIdentity): string {
   return emailWrapper(`
           <tr>
             <td style="padding: 32px 24px 20px;">
@@ -454,10 +495,10 @@ function generateTrialWinbackEmail(firstName: string): string {
                 <p style="margin: 6px 0 16px; font-size: 14px; color: #94a3b8;">
                   or &pound;49.99/year (&pound;4.17/mo)
                 </p>
-                <a href="${APPRENTICE_WINBACK_CONFIG.monthlyPaymentLink}" style="display: block; padding: 16px 24px; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #0f172a; text-decoration: none; font-size: 16px; font-weight: 700; border-radius: 12px; text-align: center;">
+                <a href="${withIdentity(APPRENTICE_WINBACK_CONFIG.monthlyPaymentLink, id.accountEmail, id.userId)}" style="display: block; padding: 16px 24px; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #0f172a; text-decoration: none; font-size: 16px; font-weight: 700; border-radius: 12px; text-align: center;">
                   Lock in &pound;4.99/mo now &rarr;
                 </a>
-                <a href="${APPRENTICE_WINBACK_CONFIG.yearlyPaymentLink}" style="display: block; padding: 12px 24px; margin-top: 8px; background: transparent; border: 2px solid rgba(251, 191, 36, 0.4); color: #fbbf24; text-decoration: none; font-size: 14px; font-weight: 600; border-radius: 12px; text-align: center;">
+                <a href="${withIdentity(APPRENTICE_WINBACK_CONFIG.yearlyPaymentLink, id.accountEmail, id.userId)}" style="display: block; padding: 12px 24px; margin-top: 8px; background: transparent; border: 2px solid rgba(251, 191, 36, 0.4); color: #fbbf24; text-decoration: none; font-size: 14px; font-weight: 600; border-radius: 12px; text-align: center;">
                   Or save with &pound;49.99/year &rarr;
                 </a>
                 <p style="margin: 10px 0 0; font-size: 12px; color: #64748b;">
@@ -482,7 +523,7 @@ function generateTrialWinbackEmail(firstName: string): string {
   `);
 }
 
-function generateTrialWinbackEmailV2(firstName: string): string {
+function generateTrialWinbackEmailV2(firstName: string, id: PayerIdentity): string {
   return emailWrapper(`
           <tr>
             <td style="padding: 32px 24px 20px;">
@@ -513,10 +554,10 @@ function generateTrialWinbackEmailV2(firstName: string): string {
 
           <tr>
             <td style="padding: 0 20px 24px;">
-              <a href="${APPRENTICE_WINBACK_CONFIG.monthlyPaymentLink}" style="display: block; padding: 16px 24px; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #0f172a; text-decoration: none; font-size: 16px; font-weight: 700; border-radius: 12px; text-align: center;">
+              <a href="${withIdentity(APPRENTICE_WINBACK_CONFIG.monthlyPaymentLink, id.accountEmail, id.userId)}" style="display: block; padding: 16px 24px; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #0f172a; text-decoration: none; font-size: 16px; font-weight: 700; border-radius: 12px; text-align: center;">
                 Grab &pound;4.99/mo before prices rise &rarr;
               </a>
-              <a href="${APPRENTICE_WINBACK_CONFIG.yearlyPaymentLink}" style="display: block; padding: 12px 24px; margin-top: 8px; background: transparent; border: 2px solid rgba(251, 191, 36, 0.4); color: #fbbf24; text-decoration: none; font-size: 14px; font-weight: 600; border-radius: 12px; text-align: center;">
+              <a href="${withIdentity(APPRENTICE_WINBACK_CONFIG.yearlyPaymentLink, id.accountEmail, id.userId)}" style="display: block; padding: 12px 24px; margin-top: 8px; background: transparent; border: 2px solid rgba(251, 191, 36, 0.4); color: #fbbf24; text-decoration: none; font-size: 14px; font-weight: 600; border-radius: 12px; text-align: center;">
                 Or save with &pound;49.99/year &rarr;
               </a>
               <p style="margin: 8px 0 0; font-size: 12px; color: #64748b; text-align: center;">
@@ -537,7 +578,7 @@ function generateTrialWinbackEmailV2(firstName: string): string {
   `);
 }
 
-function generateTrialWinbackEmailV3(firstName: string, signupMonth: string): string {
+function generateTrialWinbackEmailV3(firstName: string, signupMonth: string, id: PayerIdentity): string {
   return emailWrapper(`
           <tr>
             <td style="padding: 32px 24px 20px;">
@@ -625,10 +666,10 @@ function generateTrialWinbackEmailV3(firstName: string, signupMonth: string): st
                 <p style="margin: 6px 0 16px; font-size: 14px; color: #ffffff;">
                   or &pound;49.99/year (&pound;4.17/mo)
                 </p>
-                <a href="${APPRENTICE_WINBACK_CONFIG.monthlyPaymentLink}" style="display: block; padding: 16px 24px; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #0f172a; text-decoration: none; font-size: 16px; font-weight: 700; border-radius: 12px; text-align: center;">
+                <a href="${withIdentity(APPRENTICE_WINBACK_CONFIG.monthlyPaymentLink, id.accountEmail, id.userId)}" style="display: block; padding: 16px 24px; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #0f172a; text-decoration: none; font-size: 16px; font-weight: 700; border-radius: 12px; text-align: center;">
                   Lock in &pound;4.99/mo now &rarr;
                 </a>
-                <a href="${APPRENTICE_WINBACK_CONFIG.yearlyPaymentLink}" style="display: block; padding: 12px 24px; margin-top: 8px; background: transparent; border: 2px solid rgba(251, 191, 36, 0.4); color: #fbbf24; text-decoration: none; font-size: 14px; font-weight: 600; border-radius: 12px; text-align: center;">
+                <a href="${withIdentity(APPRENTICE_WINBACK_CONFIG.yearlyPaymentLink, id.accountEmail, id.userId)}" style="display: block; padding: 12px 24px; margin-top: 8px; background: transparent; border: 2px solid rgba(251, 191, 36, 0.4); color: #fbbf24; text-decoration: none; font-size: 14px; font-weight: 600; border-radius: 12px; text-align: center;">
                   Or save with &pound;49.99/year &rarr;
                 </a>
                 <p style="margin: 10px 0 0; font-size: 12px; color: #ffffff;">
@@ -662,8 +703,15 @@ function generateCampaignEmail(
     contentDescription?: string;
     email_version?: string;
     signupDate?: string;
+    /** Recipient identity, so win-back payment links can name the payer. */
+    accountEmail?: string | null;
+    userId?: string | null;
   }
 ): { html: string; subject: string } {
+  const identity: PayerIdentity = {
+    accountEmail: params.accountEmail ?? null,
+    userId: params.userId ?? null,
+  };
   switch (campaignType) {
     case 'feature_spotlight': {
       const featureKey = params.featureKey || 'study_centre';
@@ -697,18 +745,18 @@ function generateCampaignEmail(
           ? new Date(params.signupDate).toLocaleDateString('en-GB', { month: 'long' })
           : 'January';
         return {
-          html: generateTrialWinbackEmailV3(firstName, signupMonth),
+          html: generateTrialWinbackEmailV3(firstName, signupMonth, identity),
           subject: "We've added loads since you left \u2014 fancy another look?",
         };
       }
       if (version === 'v2') {
         return {
-          html: generateTrialWinbackEmailV2(firstName),
+          html: generateTrialWinbackEmailV2(firstName, identity),
           subject: `${firstName}, your apprentice toolkit is waiting`,
         };
       }
       return {
-        html: generateTrialWinbackEmail(firstName),
+        html: generateTrialWinbackEmail(firstName, identity),
         subject: "The UK's #1 apprentice app \u2014 \u00A34.99/mo before prices rise",
       };
     }
@@ -971,6 +1019,10 @@ Deno.serve(async (req) => {
           contentDescription,
           email_version,
           signupDate: profile.created_at,
+          // Names the payer on win-back Stripe links so the webhook can match
+          // them even if Stripe Link autofills a different address.
+          accountEmail: authUser.email,
+          userId,
         });
 
         const fromAddress =
@@ -1058,6 +1110,8 @@ Deno.serve(async (req) => {
               contentDescription,
               email_version,
               signupDate: profile.created_at,
+              accountEmail: authUser.email,
+              userId: uid,
             });
 
             const fromAddress =
@@ -1135,6 +1189,7 @@ Deno.serve(async (req) => {
           contentTitle,
           contentDescription,
           email_version,
+          accountEmail: testEmail,
         });
 
         const fromAddress =
@@ -1173,6 +1228,7 @@ Deno.serve(async (req) => {
           contentTitle,
           contentDescription,
           email_version,
+          accountEmail: manualEmail,
         });
 
         const fromAddress =

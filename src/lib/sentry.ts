@@ -170,9 +170,24 @@ export function initSentry() {
         // transient mobile-network or slow-query event, not a server bug.
         // Sentry: JAVASCRIPT-REACT-58.
         const message = event.exception?.values?.[0]?.value || '';
+        // The abort text is often on the wrapped Supabase error in `extra`
+        // rather than on the exception itself ("API call failed: x" carrying
+        // originalError.message "AbortError: Fetch is aborted"), so look there
+        // too. "Failed to send a request to the Edge Function" is supabase-js's
+        // wording for the same dead connection (Sentry CZ); "Load failed" is
+        // Safari's.
+        let nestedError = '';
+        try {
+          nestedError = JSON.stringify(event.extra?.originalError ?? event.extra?.originalValue ?? '');
+        } catch {
+          nestedError = '';
+        }
         if (
-          /Failed to fetch|NetworkError|fetch failed|net::ERR_|AbortError.*(Fetch is aborted|signal timed out)|TimeoutError: signal timed out/i.test(
+          /Failed to fetch|NetworkError|fetch failed|net::ERR_|AbortError.*(Fetch is aborted|signal timed out)|TimeoutError: signal timed out|Failed to send a request to the Edge Function|Load failed/i.test(
             message
+          ) ||
+          /AbortError|Fetch is aborted|signal timed out|Failed to fetch|Failed to send a request/i.test(
+            nestedError
           )
         ) {
           event.level = 'warning';

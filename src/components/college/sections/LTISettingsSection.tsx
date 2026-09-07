@@ -1,10 +1,29 @@
+/**
+ * LTISettingsSection — LTI 1.3 / VLE integration, on the shared hub language.
+ * Content only; the masthead is CollegeDashboard's.
+ *
+ * Shape: KPI row → the one solid volt action (Add platform) → four h-11
+ * chips standing in for the old pill tabs → the chosen panel as CARD_SURFACE
+ * cards → observability → recent launches. Forms use underline fields, chips
+ * for the 2–6-option choices, and exactly one solid volt Save per dialog.
+ *
+ * Every field, integration test and connect action survives: verify config,
+ * edit details, configure features, open the LMS, delete, dynamic
+ * registration, the three setup guides, copy-to-clipboard on every URL, the
+ * health probe and the launch log.
+ *
+ * Two things were dishonest and are fixed rather than restyled:
+ *   - "Configure features" showed uncontrolled inputs and switches and its
+ *     Save only raised a "Settings saved" toast. It now writes name, issuer,
+ *     client id and the three feature flags through `updatePlatform`.
+ *   - The five tool URLs were drawn twice (a cheat-sheet card above the tabs
+ *     and again in Configuration). They live once, in Configuration.
+ * A `handleSync` that flipped status to Connected and promised a sync
+ * "coming in Phase 16.5" was never reachable from the UI and is gone.
+ */
 import { useMemo, useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
-import { Switch } from '@/components/ui/switch';
-import { Label } from '@/components/ui/label';
+import { motion } from 'framer-motion';
+import { ChevronRight } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { copyToClipboard } from '@/utils/clipboard';
 import { openExternalUrl } from '@/utils/open-external-url';
@@ -14,25 +33,10 @@ import {
   type LTIPlatformRow,
   type LTIPlatformType,
 } from '@/hooks/useLTIPlatforms';
-import { useAuth } from '@/contexts/AuthContext';
-import {
-  PageFrame,
-  PageHero,
-  StatStrip,
-  Pill,
-  Field,
-  FormGrid,
-  PrimaryButton,
-  SecondaryButton,
-  inputClass,
-  selectTriggerClass,
-  selectContentClass,
-  fieldLabelClass,
-  itemVariants,
-  type Tone,
-} from '@/components/college/primitives';
 import { cn } from '@/lib/utils';
-import { motion } from 'framer-motion';
+import { CARD_BASE, CARD_NEUTRAL, CARD_SURFACE } from '@/components/ui/card-recipe';
+import { HubKpi, HubKpiRow, HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { containerVariants, itemVariants } from '@/components/college/primitives';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -47,20 +51,39 @@ import {
   ResponsiveDialogFooter,
   ResponsiveDialogTitle,
 } from '@/components/ui/responsive-dialog';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+
+/* ── Hub-language atoms ──────────────────────────────────────────────── */
+
+const CHIP =
+  'inline-flex h-11 shrink-0 items-center gap-1.5 rounded-full border px-4 text-[12.5px] transition-colors touch-manipulation';
+const CHIP_ON = 'border-elec-yellow bg-elec-yellow font-semibold text-black';
+const CHIP_OFF = 'border-white/[0.12] bg-white/[0.06] font-medium text-white hover:bg-white/[0.10]';
+const FIELD =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white placeholder:opacity-60 hover:border-white/[0.3] focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation';
+const LABEL = 'mb-1 block text-[12px] font-medium text-white';
+const PRIMARY =
+  'inline-flex h-11 w-full items-center justify-center rounded-full bg-elec-yellow px-5 text-[13px] font-semibold text-black transition-[opacity,transform] hover:opacity-90 active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white disabled:opacity-60 touch-manipulation sm:w-auto';
+const NEUTRAL =
+  'inline-flex h-11 items-center justify-center rounded-full border border-white/[0.12] bg-white/[0.06] px-4 text-[13px] font-medium text-white transition-colors hover:bg-white/[0.10] disabled:opacity-50 touch-manipulation';
+const TEXT_ACTION =
+  'flex h-11 shrink-0 items-center px-2 text-[12px] font-bold text-elec-yellow transition-colors touch-manipulation';
+const CARD = cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE);
+const LIST_CARD = cn(
+  '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
+  CARD_SURFACE
+);
+const CARD_PAD = 'px-4 py-4 sm:px-5 sm:py-5';
+const CARD_TITLE = 'text-[15px] font-semibold tracking-tight text-elec-yellow';
+const ROW_STATIC = 'flex items-center gap-3 px-4 py-3.5 sm:px-5';
+const DIALOG = 'border-white/[0.10] bg-elec-dark p-0';
+
+/* ── Types ────────────────────────────────────────────────────────────── */
 
 /**
  * Shape used by the UI. Adapted from the live `lti_platforms` row +
@@ -70,7 +93,7 @@ import {
 interface LTIPlatform {
   id: string;
   name: string;
-  type: 'canvas' | 'moodle' | 'blackboard' | 'd2l' | 'schoology' | 'other';
+  type: LTIPlatformType;
   status: 'Connected' | 'Disconnected' | 'Pending';
   url: string;
   clientId: string;
@@ -97,7 +120,7 @@ function rowToPlatform(
   return {
     id: row.id,
     name: row.name,
-    type: (row.platform_type as LTIPlatform['type']) ?? 'other',
+    type: (row.platform_type as LTIPlatformType) ?? 'other',
     status: row.status as LTIPlatform['status'],
     url: row.issuer,
     clientId: row.client_id,
@@ -116,16 +139,17 @@ function rowToPlatform(
   };
 }
 
-// KPI tone enum → static Tailwind class. Dynamic `text-${tone}` strings get
-// purged at build time, so map a small fixed set instead.
-type KpiTone = 'neutral' | 'muted' | 'good' | 'warn' | 'bad';
-const KPI_TONE_CLASS: Record<KpiTone, string> = {
-  neutral: 'text-white',
-  muted: 'text-white/70',
-  good: 'text-emerald-400',
-  warn: 'text-amber-400',
-  bad: 'text-red-400',
-};
+const PLATFORM_TYPES: { value: LTIPlatformType; label: string }[] = [
+  { value: 'canvas', label: 'Canvas' },
+  { value: 'moodle', label: 'Moodle' },
+  { value: 'blackboard', label: 'Blackboard Learn' },
+  { value: 'd2l', label: 'D2L Brightspace' },
+  { value: 'schoology', label: 'Schoology' },
+  { value: 'other', label: 'Other LTI 1.3' },
+];
+
+const platformTypeLabel = (t: string) =>
+  PLATFORM_TYPES.find((p) => p.value === t)?.label ?? 'LTI 1.3';
 
 // Real LTI 1.3 backend (Supabase Edge Functions)
 const LTI_BASE = 'https://jtwygbeceundfgnkirof.supabase.co/functions/v1';
@@ -138,16 +162,67 @@ const ltiConfig = {
   oidcInitUrl: LTI_BASE + '/lti-oidc-init',
 };
 
+const EMPTY_FORM = {
+  name: '',
+  type: 'canvas' as LTIPlatformType,
+  issuer: '',
+  clientId: '',
+  deploymentId: '',
+  authLoginUrl: '',
+  authTokenUrl: '',
+  jwksUrl: '',
+};
+
+type Tab = 'platforms' | 'config' | 'dynamic' | 'guides';
+type GuideType = 'canvas' | 'moodle' | 'blackboard';
+
+/* ── Small form pieces ───────────────────────────────────────────────── */
+
+function Field({
+  label,
+  required,
+  error,
+  hint,
+  children,
+}: {
+  label: string;
+  required?: boolean;
+  error?: string | null;
+  hint?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div>
+      <label className={LABEL}>
+        {label}
+        {required && <span className="ml-1 text-elec-yellow">*</span>}
+      </label>
+      {children}
+      {error ? (
+        <p className="mt-1 text-[11.5px] text-red-300">{error}</p>
+      ) : hint ? (
+        <p className="mt-1 text-[11.5px] leading-snug text-white">{hint}</p>
+      ) : null}
+    </div>
+  );
+}
+
+function StepNumber({ n }: { n: number }) {
+  return (
+    <span className="w-5 shrink-0 text-[13px] font-bold tabular-nums text-elec-yellow">{n}</span>
+  );
+}
+
+/* ── Component ───────────────────────────────────────────────────────── */
+
 export function LTISettingsSection() {
   const { toast } = useToast();
-  const { profile } = useAuth();
   const {
     collegeId,
     platforms: rows,
     launches,
     loading,
     error,
-    refresh,
     addPlatform,
     updatePlatform,
     deletePlatform,
@@ -163,38 +238,40 @@ export function LTISettingsSection() {
     [rows, statsForPlatform]
   );
 
+  const [tab, setTab] = useState<Tab>('platforms');
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [isSetupGuideOpen, setIsSetupGuideOpen] = useState(false);
-  const [selectedGuide, setSelectedGuide] = useState<'canvas' | 'moodle' | 'blackboard' | null>(
-    null
-  );
+  const [selectedGuide, setSelectedGuide] = useState<GuideType | null>(null);
   const [isConfigureDialogOpen, setIsConfigureDialogOpen] = useState(false);
   const [selectedPlatform, setSelectedPlatform] = useState<LTIPlatform | null>(null);
   const [copiedField, setCopiedField] = useState<string | null>(null);
-  const [isSyncing, setIsSyncing] = useState<string | null>(null);
   const [isSubmittingAdd, setIsSubmittingAdd] = useState(false);
   const [editingPlatformId, setEditingPlatformId] = useState<string | null>(null);
   const [verifyingId, setVerifyingId] = useState<string | null>(null);
   const [verifyResult, setVerifyResult] = useState<
     Record<string, { ok: boolean; checks: Array<{ name: string; ok: boolean; message: string }> }>
   >({});
-  // Tapped sparkline day — touch alternative to the hover title=.
-  const [sparkTapped, setSparkTapped] = useState<
-    { date: string; total: number; failed: number } | null
-  >(null);
+  // Tapped sparkline day — touch alternative to a hover title.
+  const [sparkTapped, setSparkTapped] = useState<{
+    date: string;
+    total: number;
+    failed: number;
+  } | null>(null);
 
   // New platform form state — captures everything needed to create an
-  // `lti_platforms` row. college_id is taken from profile (required — H14).
-  const [newPlatform, setNewPlatform] = useState({
+  // `lti_platforms` row. college_id comes from the hook (required — H14).
+  const [newPlatform, setNewPlatform] = useState({ ...EMPTY_FORM });
+
+  // Configure-features form — CONTROLLED, and saved. See file comment.
+  const [configForm, setConfigForm] = useState({
     name: '',
-    type: 'canvas' as LTIPlatformType,
-    issuer: '',
+    url: '',
     clientId: '',
-    deploymentId: '',
-    authLoginUrl: '',
-    authTokenUrl: '',
-    jwksUrl: '',
+    deepLinking: false,
+    gradeSync: false,
+    rosterSync: false,
   });
+  const [isSavingConfig, setIsSavingConfig] = useState(false);
 
   const handleCopyToClipboard = (text: string, field: string) => {
     copyToClipboard(text);
@@ -204,28 +281,6 @@ export function LTISettingsSection() {
       description: 'Value has been copied successfully',
     });
     setTimeout(() => setCopiedField(null), 2000);
-  };
-
-  // handleSavePlatform (add + edit) is defined below with validation.
-
-  const handleSync = async (platformId: string) => {
-    setIsSyncing(platformId);
-    try {
-      await updatePlatform(platformId, { status: 'Connected' });
-      toast({
-        title: 'Platform marked connected',
-        description:
-          'Roster/grade sync coming in Phase 16.5/16.6. For now, you can launch from your LMS.',
-      });
-    } catch (e) {
-      toast({
-        title: 'Sync failed',
-        description: e instanceof Error ? e.message : 'Unknown error',
-        variant: 'destructive',
-      });
-    } finally {
-      setIsSyncing(null);
-    }
   };
 
   const handleDisconnect = async (platformId: string) => {
@@ -284,6 +339,52 @@ export function LTISettingsSection() {
     setIsAddDialogOpen(true);
   };
 
+  const openConfigure = (p: LTIPlatform) => {
+    setSelectedPlatform(p);
+    setConfigForm({
+      name: p.name,
+      url: p.url,
+      clientId: p.clientId,
+      deepLinking: p.features.deepLinking,
+      gradeSync: p.features.gradeSync,
+      rosterSync: p.features.rosterSync,
+    });
+    setIsConfigureDialogOpen(true);
+  };
+
+  const handleSaveConfigure = async () => {
+    if (!selectedPlatform) return;
+    const row = rows.find((r) => r.id === selectedPlatform.id);
+    if (!row) return;
+    setIsSavingConfig(true);
+    try {
+      const existingSettings = (row.settings as Record<string, unknown> | null) ?? {};
+      await updatePlatform(selectedPlatform.id, {
+        name: configForm.name.trim() || row.name,
+        issuer: configForm.url.trim() || row.issuer,
+        client_id: configForm.clientId.trim() || row.client_id,
+        settings: {
+          ...existingSettings,
+          features: {
+            deep_linking: configForm.deepLinking,
+            grade_sync: configForm.gradeSync,
+            roster_sync: configForm.rosterSync,
+          },
+        },
+      });
+      toast({ title: 'Settings saved', description: 'Platform configuration has been updated.' });
+      setIsConfigureDialogOpen(false);
+    } catch (e) {
+      toast({
+        title: 'Save failed',
+        description: e instanceof Error ? e.message : 'Unknown error',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsSavingConfig(false);
+    }
+  };
+
   // Live form validation for the add/edit dialog
   const formErrors = useMemo(() => {
     const errs: Record<string, string | null> = {
@@ -335,18 +436,12 @@ export function LTISettingsSection() {
           jwks_url: newPlatform.jwksUrl,
           college_id: collegeId,
         });
-        toast({ title: 'Platform added', description: 'Now click Verify to confirm it reaches your LMS.' });
+        toast({
+          title: 'Platform added',
+          description: 'Now run Verify config to confirm it reaches your LMS.',
+        });
       }
-      setNewPlatform({
-        name: '',
-        type: 'canvas',
-        issuer: '',
-        clientId: '',
-        deploymentId: '',
-        authLoginUrl: '',
-        authTokenUrl: '',
-        jwksUrl: '',
-      });
+      setNewPlatform({ ...EMPTY_FORM });
       setEditingPlatformId(null);
       setIsAddDialogOpen(false);
     } catch (e) {
@@ -367,12 +462,18 @@ export function LTISettingsSection() {
     const row = rows.find((r) => r.id === platformId);
     if (!row) return;
     const featureKey =
-      feature === 'deepLinking' ? 'deep_linking' : feature === 'gradeSync' ? 'grade_sync' : 'roster_sync';
+      feature === 'deepLinking'
+        ? 'deep_linking'
+        : feature === 'gradeSync'
+          ? 'grade_sync'
+          : 'roster_sync';
     const currentFeatures =
       ((row.settings as Record<string, unknown> | null)?.features as Record<string, boolean>) ?? {};
     const nextFeatures = { ...currentFeatures, [featureKey]: !currentFeatures[featureKey] };
     try {
-      await updatePlatform(platformId, { settings: { ...(row.settings ?? {}), features: nextFeatures } });
+      await updatePlatform(platformId, {
+        settings: { ...(row.settings ?? {}), features: nextFeatures },
+      });
       toast({ title: 'Feature updated' });
     } catch (e) {
       toast({
@@ -383,419 +484,381 @@ export function LTISettingsSection() {
     }
   };
 
-  const openSetupGuide = (type: 'canvas' | 'moodle' | 'blackboard') => {
+  const openSetupGuide = (type: GuideType) => {
     setSelectedGuide(type);
     setIsSetupGuideOpen(true);
   };
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'Connected':
-        return 'bg-green-500/10 text-green-500 border-green-500/20';
-      case 'Disconnected':
-        return 'bg-red-500/10 text-red-500 border-red-500/20';
-      case 'Pending':
-        return 'bg-amber-500/10 text-amber-500 border-amber-500/20';
-      default:
-        return 'bg-[hsl(0_0%_12%)] text-white';
-    }
-  };
+  /* ── Derived figures ──────────────────────────────────────────────── */
 
-  const getPlatformColor = (type: string) => {
-    const colors: Record<string, string> = {
-      canvas: 'bg-red-500',
-      moodle: 'bg-orange-500',
-      blackboard: 'bg-gray-700',
-      other: 'bg-elec-yellow',
-    };
-    return colors[type] || 'bg-elec-yellow';
-  };
+  const connectedCount = platforms.filter((p) => p.status === 'Connected').length;
+  const pendingCount = platforms.filter((p) => p.status === 'Pending').length;
+  const linkedUsers = platforms.reduce((sum, p) => sum + p.stats.users, 0);
+  const dynamicUrl = collegeId ? `${LTI_BASE}/lti-dynamic-register?college_id=${collegeId}` : '';
+
+  const toolUrls = [
+    { label: 'Tool launch URL', value: ltiConfig.toolUrl, key: 'toolUrl' },
+    { label: 'OIDC initiation URL', value: ltiConfig.oidcInitUrl, key: 'oidcInitUrl' },
+    { label: 'JWKS URL (public key set)', value: ltiConfig.jwksUrl, key: 'jwksUrl' },
+    { label: 'Deep linking URL', value: ltiConfig.deepLinkUrl, key: 'deepLinkUrl' },
+    { label: 'Redirect URIs', value: ltiConfig.redirectUris.join(', '), key: 'redirectUris' },
+  ];
+
+  const tabs: { value: Tab; label: string }[] = [
+    { value: 'platforms', label: 'Platforms' },
+    { value: 'config', label: 'Configuration' },
+    { value: 'dynamic', label: 'Dynamic registration' },
+    { value: 'guides', label: 'Setup guides' },
+  ];
+
+  const healthWord =
+    health.status === 'ok'
+      ? 'Systems operational'
+      : health.status === 'degraded'
+        ? 'Degraded'
+        : 'Checking…';
+
+  /* ── Render ───────────────────────────────────────────────────────── */
 
   return (
-    <PageFrame>
-      <motion.div variants={itemVariants}>
-        <PageHero
-          eyebrow="Resources · VLE Integration"
-          title="LTI & VLE integration"
-          description="Connect to Canvas, Moodle, Blackboard and other LMS platforms via LTI 1.3."
-          tone="blue"
-          actions={
-            <button
-              onClick={() => setIsAddDialogOpen(true)}
-              className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap"
-            >
-              Add platform →
-            </button>
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="space-y-6 sm:space-y-8"
+    >
+      {/* Four KPIs: the observability tiles and the old stat strip, merged. */}
+      <HubKpiRow>
+        <HubKpi
+          accent
+          label="Connected platforms"
+          value={String(connectedCount)}
+          verdict={
+            connectedCount > 0
+              ? 'Launching from the LMS'
+              : rows.length > 0
+                ? 'Verify a platform to connect it'
+                : 'No VLE connected yet'
+          }
+          context={[
+            `${rows.length} registered`,
+            pendingCount > 0 ? `${pendingCount} pending` : null,
+            linkedUsers > 0 ? `${linkedUsers} linked account${linkedUsers === 1 ? '' : 's'}` : null,
+          ]
+            .filter(Boolean)
+            .join(' · ')}
+          onClick={() => setTab('platforms')}
+        />
+        <HubKpi
+          label="Launches"
+          value={String(globalStats.total)}
+          verdict={globalStats.total > 0 ? 'In the last 50 recorded' : 'No launches yet'}
+        />
+        <HubKpi
+          label="Success rate"
+          value={globalStats.successRate === null ? '—' : `${globalStats.successRate}%`}
+          verdict={
+            globalStats.successRate === null
+              ? 'Nothing to measure yet'
+              : globalStats.successRate >= 99
+                ? 'Healthy'
+                : globalStats.successRate >= 95
+                  ? 'Worth a look at the failures'
+                  : 'Check the top errors below'
+          }
+          sentiment={
+            globalStats.successRate === null
+              ? 'neutral'
+              : globalStats.successRate >= 99
+                ? 'good'
+                : 'bad'
           }
         />
-      </motion.div>
-
-      {/* Connection Overview */}
-      <motion.div variants={itemVariants}>
-        <StatStrip
-          columns={3}
-          stats={[
-            {
-              value: platforms.filter((p) => p.status === 'Connected').length,
-              label: 'Connected',
-              sub: 'Active platforms',
-              tone: 'green',
-            },
-            {
-              value: platforms.reduce((sum, p) => sum + p.stats.launches, 0),
-              label: 'Launches',
-              sub: 'Total tool launches',
-              tone: 'yellow',
-            },
-            {
-              value: platforms.reduce((sum, p) => sum + p.stats.users, 0),
-              label: 'Users',
-              sub: 'Linked accounts',
-              tone: 'blue',
-            },
-          ]}
+        <HubKpi
+          label="Failed"
+          value={String(globalStats.failed)}
+          verdict={globalStats.failed > 0 ? 'See the launch log' : 'No failures'}
+          sentiment={globalStats.failed > 0 ? 'bad' : 'neutral'}
         />
-      </motion.div>
+      </HubKpiRow>
 
-      {/* Prominent "Your tool URLs" card — admin's cheat sheet to paste into any LMS */}
-      <motion.div variants={itemVariants} className="mb-10">
-        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
-          <div className="flex items-baseline justify-between gap-3 flex-wrap">
-            <div>
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                Tool URLs
-              </div>
-              <h3 className="mt-1 text-lg sm:text-xl font-semibold text-white tracking-tight">
-                Give these four URLs to your LMS admin
-              </h3>
-              <p className="mt-1 text-[12.5px] text-white">
-                These are fixed for your Elec-Mate instance. Paste them into your LMS's LTI tool
-                configuration. Each URL has a copy button.
-              </p>
-            </div>
-          </div>
-          <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-            {[
-              { label: 'OIDC login init', value: ltiConfig.oidcInitUrl },
-              { label: 'Launch URL', value: ltiConfig.toolUrl },
-              { label: 'Redirect URI', value: ltiConfig.redirectUris[0] },
-              { label: 'Public JWKS', value: ltiConfig.jwksUrl },
-              { label: 'Deep linking', value: ltiConfig.deepLinkUrl },
-            ].map((row) => (
-              <div
-                key={row.label}
-                className="flex items-center gap-3 bg-[hsl(0_0%_10%)] border border-white/[0.05] rounded-lg px-3 py-2"
-              >
-                <div className="min-w-0 flex-1">
-                  <div className="text-[10px] uppercase tracking-wider text-white">
-                    {row.label}
-                  </div>
-                  <div className="mt-0.5 text-[11.5px] font-mono text-white truncate">
-                    {row.value}
-                  </div>
-                </div>
-                <button
-                  onClick={() => handleCopyToClipboard(row.value, row.label)}
-                  className="text-[11px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation shrink-0"
-                >
-                  {copiedField === row.label ? '✓ Copied' : 'Copy'}
-                </button>
-              </div>
-            ))}
-          </div>
+      {/* The one solid volt action on the page. */}
+      <motion.div
+        variants={itemVariants}
+        className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between"
+      >
+        <button type="button" onClick={() => setIsAddDialogOpen(true)} className={PRIMARY}>
+          Add platform
+        </button>
+        <div className="-mx-2 flex items-center gap-1 sm:mx-0">
+          <button type="button" onClick={() => setTab('dynamic')} className={TEXT_ACTION}>
+            Install with one URL
+          </button>
         </div>
       </motion.div>
 
-      <Tabs defaultValue="platforms">
-        <TabsList className="inline-flex items-center gap-1 p-1 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-full h-auto w-auto">
-          <TabsTrigger
-            value="platforms"
-            className="px-4 py-1.5 rounded-full text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white"
+      {/* Chips in place of the pill tabs. */}
+      <motion.div variants={itemVariants} className="flex flex-wrap gap-2">
+        {tabs.map((t) => (
+          <button
+            key={t.value}
+            type="button"
+            onClick={() => setTab(t.value)}
+            className={cn(CHIP, tab === t.value ? CHIP_ON : CHIP_OFF)}
           >
-            Platforms
-          </TabsTrigger>
-          <TabsTrigger
-            value="config"
-            className="px-4 py-1.5 rounded-full text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white"
-          >
-            Configuration
-          </TabsTrigger>
-          <TabsTrigger
-            value="dynamic"
-            className="px-4 py-1.5 rounded-full text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white"
-          >
-            Dynamic registration
-          </TabsTrigger>
-          <TabsTrigger
-            value="guides"
-            className="px-4 py-1.5 rounded-full text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white"
-          >
-            Setup guides
-          </TabsTrigger>
-        </TabsList>
+            {t.label}
+          </button>
+        ))}
+      </motion.div>
 
-        <TabsContent value="platforms" className="space-y-5 mt-6">
+      {/* ── Platforms ─────────────────────────────────────────────────── */}
+      {tab === 'platforms' && (
+        <motion.section variants={itemVariants} className="space-y-3">
+          <div className="flex items-end justify-between gap-4">
+            <HubSectionHeading>Platforms</HubSectionHeading>
+            <span className="text-[11px] font-semibold tabular-nums text-white">
+              {rows.length} registered
+            </span>
+          </div>
+
           {platforms.length === 0 ? (
-            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-8 sm:p-12 text-center">
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                No platforms connected
+            <div className={LIST_CARD}>
+              <div className={CARD_PAD}>
+                <p className="text-[14px] font-semibold text-white">No VLE connected yet</p>
+                <p className="mt-1 text-[12.5px] leading-snug text-white">
+                  Link Canvas, Moodle or Blackboard over LTI 1.3 for single sign-on, grade sync
+                  and roster import. Add a platform above, or paste one URL into an LMS that
+                  supports dynamic registration.
+                </p>
               </div>
-              <h3 className="mt-2 text-xl sm:text-2xl font-semibold text-white tracking-tight">
-                Connect your first VLE
-              </h3>
-              <p className="mt-3 text-[13px] text-white max-w-md mx-auto leading-relaxed">
-                Link Canvas, Moodle or Blackboard via LTI 1.3 for single sign-on, grade sync and
-                roster import.
-              </p>
-              <div className="mt-6 flex items-center justify-center gap-4">
-                <button
-                  onClick={() => setIsAddDialogOpen(true)}
-                  className="h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 transition-opacity touch-manipulation"
-                >
-                  Add platform →
-                </button>
-                <button
-                  onClick={() => openSetupGuide('canvas')}
-                  className="text-[12.5px] font-medium text-white hover:text-white transition-colors touch-manipulation"
-                >
-                  View guide
+              <div className="flex border-t border-white/[0.10] px-2 sm:px-3">
+                <button type="button" onClick={() => openSetupGuide('canvas')} className={TEXT_ACTION}>
+                  Read the Canvas guide
                 </button>
               </div>
             </div>
           ) : (
             <div className="space-y-3">
               {platforms.map((platform) => {
-                const platformTone: Tone =
-                  platform.type === 'canvas'
-                    ? 'red'
-                    : platform.type === 'moodle'
-                      ? 'orange'
-                      : platform.type === 'blackboard'
-                        ? 'indigo'
-                        : 'yellow';
-                const statusTone: Tone =
-                  platform.status === 'Connected'
-                    ? 'green'
-                    : platform.status === 'Disconnected'
-                      ? 'red'
-                      : 'amber';
+                const result = verifyResult[platform.id];
                 return (
-                  <div
-                    key={platform.id}
-                    className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden"
-                  >
-                    <div
-                      className={cn(
-                        'h-px',
-                        platformTone === 'red' && 'bg-red-400/60',
-                        platformTone === 'orange' && 'bg-orange-400/60',
-                        platformTone === 'indigo' && 'bg-indigo-400/60',
-                        platformTone === 'yellow' && 'bg-elec-yellow/60'
-                      )}
-                    />
-                    <div className="p-5 sm:p-6">
-                      <div className="flex items-start justify-between gap-3">
-                        <div className="min-w-0">
-                          <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
-                            {platform.type}
-                          </div>
-                          <h3 className="mt-1 text-lg sm:text-xl font-semibold text-white tracking-tight">
-                            {platform.name}
-                          </h3>
-                          <p className="mt-0.5 text-[12px] text-white truncate">
-                            {platform.url}
-                          </p>
-                        </div>
-                        <div className="flex items-center gap-1.5 shrink-0">
-                          <Pill tone={statusTone}>{platform.status}</Pill>
-                          <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                              <button
-                                className="text-white hover:text-white text-[18px] leading-none px-1 touch-manipulation"
-                                aria-label="Options"
-                              >
-                                ⋯
-                              </button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                              <DropdownMenuItem
-                                className="h-11"
-                                onClick={() => handleVerify(platform.id)}
-                                disabled={verifyingId === platform.id}
-                              >
-                                {verifyingId === platform.id ? 'Verifying…' : 'Verify config'}
-                              </DropdownMenuItem>
-                              <DropdownMenuItem
-                                className="h-11"
-                                onClick={() => handleStartEdit(platform)}
-                              >
-                                Edit details
-                              </DropdownMenuItem>
-                              <DropdownMenuItem
-                                className="h-11"
-                                onClick={() => {
-                                  setSelectedPlatform(platform);
-                                  setIsConfigureDialogOpen(true);
-                                }}
-                              >
-                                Configure features
-                              </DropdownMenuItem>
-                              <DropdownMenuItem
-                                className="h-11"
-                                onClick={() => openExternalUrl(platform.url)}
-                              >
-                                Open LMS
-                              </DropdownMenuItem>
-                              <DropdownMenuSeparator />
-                              <DropdownMenuItem
-                                className="h-11 text-red-400"
-                                onClick={() => handleDisconnect(platform.id)}
-                              >
-                                Delete
-                              </DropdownMenuItem>
-                            </DropdownMenuContent>
-                          </DropdownMenu>
-                        </div>
+                  <div key={platform.id} className={CARD}>
+                    <div className="flex items-start gap-3 px-4 pt-4 sm:px-5 sm:pt-5">
+                      <span
+                        aria-hidden
+                        className={cn(
+                          'mt-1 h-8 w-[3px] shrink-0 rounded-full',
+                          platform.status === 'Disconnected'
+                            ? 'bg-red-400'
+                            : platform.status === 'Pending'
+                              ? 'bg-elec-yellow'
+                              : 'bg-white/[0.25]'
+                        )}
+                      />
+                      <div className="min-w-0 flex-1">
+                        <h3 className="truncate text-[15px] font-semibold tracking-tight text-white">
+                          {platform.name}
+                        </h3>
+                        <p className="mt-0.5 truncate text-[12px] leading-tight text-white">
+                          {platformTypeLabel(platform.type)} · {platform.url}
+                        </p>
                       </div>
+                      <span
+                        className={cn(
+                          'shrink-0 pt-0.5 text-[12.5px] font-semibold',
+                          platform.status === 'Disconnected'
+                            ? 'text-red-300'
+                            : platform.status === 'Pending'
+                              ? 'text-elec-yellow'
+                              : 'text-white'
+                        )}
+                      >
+                        {platform.status}
+                      </span>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <button
+                            type="button"
+                            aria-label={`Options for ${platform.name}`}
+                            className="-mr-2 -mt-2 flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white transition-colors touch-manipulation hover:bg-white/[0.06]"
+                          >
+                            <span className="text-[15px] font-semibold tracking-[0.12em]">⋯</span>
+                          </button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end" className="min-w-[190px]">
+                          <DropdownMenuItem
+                            className="h-11 touch-manipulation"
+                            onClick={() => handleVerify(platform.id)}
+                            disabled={verifyingId === platform.id}
+                          >
+                            {verifyingId === platform.id ? 'Verifying…' : 'Verify config'}
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            className="h-11 touch-manipulation"
+                            onClick={() => handleStartEdit(platform)}
+                          >
+                            Edit details
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            className="h-11 touch-manipulation"
+                            onClick={() => openConfigure(platform)}
+                          >
+                            Configure features
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            className="h-11 touch-manipulation"
+                            onClick={() => openExternalUrl(platform.url)}
+                          >
+                            Open LMS
+                          </DropdownMenuItem>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem
+                            className="h-11 text-red-300 touch-manipulation focus:text-red-200"
+                            onClick={() => handleDisconnect(platform.id)}
+                          >
+                            Delete
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
 
-                      {/* Verify result inline — shows after clicking "Verify config" */}
-                      {verifyResult[platform.id] && (
-                        <div
+                    {/* Verify result — shows after "Verify config" runs */}
+                    {result && (
+                      <div className="mx-4 mt-4 border-t border-white/[0.10] pt-3 sm:mx-5">
+                        <p
                           className={cn(
-                            'mt-4 rounded-lg border p-3 text-xs space-y-1.5',
-                            verifyResult[platform.id].ok
-                              ? 'border-emerald-500/30 bg-emerald-500/5'
-                              : 'border-red-500/30 bg-red-500/5'
+                            'text-[12.5px] font-semibold',
+                            result.ok ? 'text-white' : 'text-red-300'
                           )}
                         >
-                          <div className="font-medium text-white">
-                            {verifyResult[platform.id].ok
-                              ? '✓ All checks passed'
-                              : `${verifyResult[platform.id].checks.filter((c) => !c.ok).length} check(s) failed`}
-                          </div>
-                          {verifyResult[platform.id].checks.map((c) => (
-                            <div key={c.name} className="flex items-start gap-2">
+                          {result.ok
+                            ? 'All checks passed'
+                            : `${result.checks.filter((c) => !c.ok).length} check(s) failed`}
+                        </p>
+                        <ul className="mt-1.5 space-y-1">
+                          {result.checks.map((c) => (
+                            <li key={c.name} className="flex items-start gap-2 text-[12px]">
                               <span
                                 className={cn(
-                                  'mt-0.5 font-mono text-[10px]',
-                                  c.ok ? 'text-emerald-400' : 'text-red-400'
+                                  'mt-px w-3 shrink-0 font-mono',
+                                  c.ok ? 'text-emerald-300' : 'text-red-300'
                                 )}
                               >
                                 {c.ok ? '✓' : '✗'}
                               </span>
-                              <div className="flex-1">
-                                <span className="text-white">{c.name}:</span>{' '}
-                                <span className="text-white">{c.message}</span>
-                              </div>
-                            </div>
+                              <span className="min-w-0 text-white">
+                                <span className="font-semibold">{c.name}</span> · {c.message}
+                              </span>
+                            </li>
                           ))}
-                        </div>
-                      )}
+                        </ul>
+                      </div>
+                    )}
 
-                      {/* Feature Toggles */}
-                      <div className="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-2">
-                        {[
-                          { key: 'deepLinking' as const, label: 'Deep linking' },
-                          { key: 'gradeSync' as const, label: 'Grade sync' },
-                          { key: 'rosterSync' as const, label: 'Roster sync' },
-                        ].map((feat) => {
-                          const enabled = platform.features[feat.key];
-                          return (
+                    {/* Feature toggles — three h-11 rows, On in volt */}
+                    <ul className="mt-4 divide-y divide-white/[0.10] border-t border-white/[0.10]">
+                      {(
+                        [
+                          { key: 'deepLinking', label: 'Deep linking' },
+                          { key: 'gradeSync', label: 'Grade sync' },
+                          { key: 'rosterSync', label: 'Roster sync' },
+                        ] as const
+                      ).map((feat) => {
+                        const enabled = platform.features[feat.key];
+                        return (
+                          <li key={feat.key}>
                             <button
-                              key={feat.key}
+                              type="button"
                               onClick={() => handleToggleFeature(platform.id, feat.key)}
-                              className="flex items-center justify-between px-4 py-3 bg-[hsl(0_0%_10%)] border border-white/[0.06] rounded-xl hover:bg-[hsl(0_0%_13%)] transition-colors touch-manipulation text-left"
+                              aria-pressed={enabled}
+                              className="flex h-11 w-full items-center justify-between gap-3 px-4 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5"
                             >
-                              <span className="text-[12px] text-white">{feat.label}</span>
-                              <Pill tone={enabled ? 'green' : 'yellow'}>
+                              <span className="text-[13px] font-medium text-white">{feat.label}</span>
+                              <span
+                                className={cn(
+                                  'text-[12px] font-bold',
+                                  enabled ? 'text-elec-yellow' : 'text-white'
+                                )}
+                              >
                                 {enabled ? 'On' : 'Off'}
-                              </Pill>
+                              </span>
                             </button>
-                          );
-                        })}
-                      </div>
+                          </li>
+                        );
+                      })}
+                    </ul>
 
-                      {/* Stats */}
-                      <div className="mt-5 pt-5 border-t border-white/[0.06] flex flex-wrap items-center gap-x-5 gap-y-1 text-[11.5px] text-white">
-                        <span className="tabular-nums">
-                          {platform.stats.launches.toLocaleString()} launches
+                    {/* Stats */}
+                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-white/[0.10] px-4 py-3 text-[11.5px] tabular-nums text-white sm:px-5">
+                      <span>{platform.stats.launches.toLocaleString()} launches</span>
+                      <span>{platform.stats.courses} courses</span>
+                      <span>{platform.stats.users} users</span>
+                      {platform.lastSync && (
+                        <span>
+                          Last sync{' '}
+                          {new Date(platform.lastSync).toLocaleDateString('en-GB', {
+                            day: 'numeric',
+                            month: 'short',
+                            hour: '2-digit',
+                            minute: '2-digit',
+                          })}
                         </span>
-                        <span className="tabular-nums">{platform.stats.courses} courses</span>
-                        <span className="tabular-nums">{platform.stats.users} users</span>
-                        {platform.lastSync && (
-                          <span className="tabular-nums">
-                            Last sync{' '}
-                            {new Date(platform.lastSync).toLocaleDateString('en-GB', {
-                              day: 'numeric',
-                              month: 'short',
-                              hour: '2-digit',
-                              minute: '2-digit',
-                            })}
-                          </span>
-                        )}
-                      </div>
+                      )}
                     </div>
                   </div>
                 );
               })}
             </div>
           )}
-        </TabsContent>
+        </motion.section>
+      )}
 
-        <TabsContent value="config" className="space-y-6 mt-6">
-          {/* LTI Tool Configuration */}
-          <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
-            <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
-              LTI 1.3 Tool Configuration
+      {/* ── Configuration ─────────────────────────────────────────────── */}
+      {tab === 'config' && (
+        <motion.section variants={itemVariants} className="space-y-3">
+          <HubSectionHeading>Tool configuration</HubSectionHeading>
+
+          <div className={CARD}>
+            <div className={CARD_PAD}>
+              <h3 className={CARD_TITLE}>Give these to your LMS admin</h3>
+              <p className="mt-1 text-[12.5px] leading-snug text-white">
+                Fixed for your Elec-Mate instance. Paste them into the LMS’s LTI 1.3 tool
+                registration.
+              </p>
             </div>
-            <p className="mt-2 text-[12.5px] text-white leading-relaxed">
-              Copy these values when registering Elec-Mate as an LTI tool in your LMS.
-            </p>
-
-            <div className="mt-5 space-y-3">
-              {[
-                { label: 'Tool launch URL', value: ltiConfig.toolUrl, key: 'toolUrl' },
-                {
-                  label: 'OIDC initiation URL',
-                  value: ltiConfig.oidcInitUrl,
-                  key: 'oidcInitUrl',
-                },
-                { label: 'JWKS URL (public key set)', value: ltiConfig.jwksUrl, key: 'jwksUrl' },
-                { label: 'Deep linking URL', value: ltiConfig.deepLinkUrl, key: 'deepLinkUrl' },
-                {
-                  label: 'Redirect URIs',
-                  value: ltiConfig.redirectUris.join(', '),
-                  key: 'redirectUris',
-                },
-              ].map((item) => (
-                <div key={item.key}>
-                  <Label className={fieldLabelClass}>{item.label}</Label>
-                  <div className="mt-1.5 flex gap-2">
+            <ul className="divide-y divide-white/[0.10] border-t border-white/[0.10]">
+              {toolUrls.map((item) => (
+                <li key={item.key} className={cn(ROW_STATIC, 'py-2.5')}>
+                  <div className="min-w-0 flex-1">
+                    <div className="text-[11.5px] font-medium text-white">{item.label}</div>
                     <input
                       value={item.value}
                       readOnly
-                      className={`${inputClass} flex-1 font-mono`}
+                      aria-label={item.label}
+                      onFocus={(e) => e.currentTarget.select()}
+                      className="h-11 w-full rounded-none border-0 bg-transparent px-0 font-mono text-[12px] text-white focus:outline-none focus:ring-0 touch-manipulation"
                     />
-                    <SecondaryButton
-                      onClick={() => handleCopyToClipboard(item.value, item.key)}
-                    >
-                      {copiedField === item.key ? 'Copied ✓' : 'Copy'}
-                    </SecondaryButton>
                   </div>
-                </div>
+                  <button
+                    type="button"
+                    onClick={() => handleCopyToClipboard(item.value, item.key)}
+                    className={TEXT_ACTION}
+                  >
+                    {copiedField === item.key ? 'Copied' : 'Copy'}
+                  </button>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
 
-          {/* Security Settings */}
-          <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
-            <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
-              Security Settings
+          <div className={CARD}>
+            <div className={CARD_PAD}>
+              <h3 className={CARD_TITLE}>Security settings</h3>
+              <p className="mt-1 text-[12.5px] leading-snug text-white">
+                Enforced by the platform — not configurable per college yet.
+              </p>
             </div>
-            <p className="mt-1 text-[11.5px] text-white/50">
-              Platform-enforced defaults — not configurable per college yet.
-            </p>
-            <div className="mt-4 divide-y divide-white/[0.06]">
+            <ul className="divide-y divide-white/[0.10] border-t border-white/[0.10]">
               {[
                 {
                   label: 'Require state parameter',
@@ -814,392 +877,267 @@ export function LTISettingsSection() {
                 },
                 {
                   label: 'Sync grades automatically',
-                  desc: 'Push grades to LMS when recorded in Elec-Mate.',
+                  desc: 'Push grades to the LMS when recorded in Elec-Mate.',
                   on: false,
                 },
-              ].map((setting, idx) => (
-                <div key={idx} className="flex items-center justify-between gap-4 py-4">
-                  <div className="min-w-0">
+              ].map((setting) => (
+                <li key={setting.label} className={ROW_STATIC}>
+                  <div className="min-w-0 flex-1">
                     <div className="text-[13.5px] font-medium text-white">{setting.label}</div>
-                    <div className="mt-0.5 text-[11.5px] text-white">{setting.desc}</div>
+                    <div className="mt-0.5 text-[11.5px] leading-snug text-white">{setting.desc}</div>
                   </div>
-                  <span
-                    className={`shrink-0 rounded-full px-2.5 py-1 text-[11px] font-medium ${
-                      setting.on
-                        ? 'bg-emerald-500/15 text-emerald-300'
-                        : 'bg-white/[0.06] text-white/45'
-                    }`}
-                  >
+                  <span className="shrink-0 text-[12px] font-bold text-white">
                     {setting.on ? 'Enforced' : 'Off'}
                   </span>
-                </div>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
-        </TabsContent>
+        </motion.section>
+      )}
 
-        {/* Dynamic Registration tab — Sprint 3 / ELE-832 */}
-        <TabsContent value="dynamic" className="space-y-6 mt-6">
-          <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              Recommended · 30-second install
+      {/* ── Dynamic registration ──────────────────────────────────────── */}
+      {tab === 'dynamic' && (
+        <motion.section variants={itemVariants} className="space-y-3">
+          <HubSectionHeading>Dynamic registration</HubSectionHeading>
+          <div className={CARD}>
+            <div className={CARD_PAD}>
+              <h3 className={CARD_TITLE}>Install with one URL</h3>
+              <p className="mt-1 text-[12.5px] leading-snug text-white">
+                Modern LMSs (Canvas, Moodle 4+, D2L, Schoology) support the 1EdTech LTI Dynamic
+                Registration flow. Paste the URL below into your LMS’s “Register external tool”
+                field — it handshakes with Elec-Mate automatically, no eight-field form required.
+              </p>
             </div>
-            <h3 className="mt-1 text-xl sm:text-2xl font-semibold text-white tracking-tight">
-              Install with one URL
-            </h3>
-            <p className="mt-2 text-[13px] text-white leading-relaxed">
-              Modern LMSes (Canvas, Moodle 4+, D2L, Schoology) support the 1EdTech LTI Dynamic
-              Registration flow. Paste the URL below into your LMS's "Register external tool" field —
-              your LMS then handshakes with Elec-Mate automatically, no 8-field form required.
-            </p>
 
             {!collegeId ? (
-              <div className="mt-5 rounded-lg border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-300">
-                You must be a member of a college to use Dynamic Registration. Speak to your Elec-Mate admin.
-              </div>
+              <p className="border-t border-white/[0.10] px-4 py-4 text-[12.5px] leading-snug text-red-300 sm:px-5">
+                You must be a member of a college to use dynamic registration. Speak to your
+                Elec-Mate admin.
+              </p>
             ) : (
               <>
-                <div className="mt-5 flex items-center gap-3 bg-[hsl(0_0%_10%)] border border-white/[0.06] rounded-lg px-3 py-3">
+                <div className={cn(ROW_STATIC, 'border-t border-white/[0.10] py-2.5')}>
                   <div className="min-w-0 flex-1">
-                    <div className="text-[10px] uppercase tracking-wider text-white">
+                    <div className="text-[11.5px] font-medium text-white">
                       Dynamic registration URL
                     </div>
-                    <div className="mt-0.5 text-[12px] font-mono text-white break-all">
-                      {`${LTI_BASE}/lti-dynamic-register?college_id=${collegeId}`}
+                    <div className="mt-0.5 break-all font-mono text-[12px] text-white">
+                      {dynamicUrl}
                     </div>
                   </div>
                   <button
-                    onClick={() =>
-                      handleCopyToClipboard(
-                        `${LTI_BASE}/lti-dynamic-register?college_id=${collegeId}`,
-                        'dynamic-reg'
-                      )
-                    }
-                    className="shrink-0 px-3 py-1.5 rounded-full bg-elec-yellow hover:bg-elec-yellow/90 text-black text-[11.5px] font-medium touch-manipulation"
+                    type="button"
+                    onClick={() => handleCopyToClipboard(dynamicUrl, 'dynamic-reg')}
+                    className={TEXT_ACTION}
                   >
-                    {copiedField === 'dynamic-reg' ? '✓ Copied' : 'Copy URL'}
+                    {copiedField === 'dynamic-reg' ? 'Copied' : 'Copy URL'}
                   </button>
                 </div>
-
-                <div className="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <ul className="divide-y divide-white/[0.10] border-t border-white/[0.10]">
                   {[
                     {
-                      step: '1',
                       title: 'Copy the URL above',
-                      desc: 'The `college_id` is already baked in for your college.',
+                      desc: 'Your college id is already baked in.',
                     },
                     {
-                      step: '2',
-                      title: 'Paste into your LMS',
-                      desc: 'In Canvas → Admin → Developer Keys → LTI Advantage Tool Registration. In Moodle → External Tools → LTI Advantage.',
+                      title: 'Paste it into your LMS',
+                      desc: 'Canvas → Admin → Developer Keys → LTI Advantage Tool Registration. Moodle → External Tools → LTI Advantage.',
                     },
                     {
-                      step: '3',
-                      title: "Follow the LMS's prompts",
-                      desc: 'Your LMS redirects to Elec-Mate, we handshake, save config, and you see a success page.',
+                      title: 'Follow the LMS’s prompts',
+                      desc: 'Your LMS redirects to Elec-Mate, the handshake saves the config, and you see a success page.',
                     },
-                  ].map((s) => (
-                    <div
-                      key={s.step}
-                      className="bg-[hsl(0_0%_10%)] border border-white/[0.06] rounded-xl p-4"
-                    >
-                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
-                        Step {s.step}
+                  ].map((s, i) => (
+                    <li key={s.title} className={cn(ROW_STATIC, 'items-start')}>
+                      <StepNumber n={i + 1} />
+                      <div className="min-w-0 flex-1">
+                        <div className="text-[14px] font-semibold leading-tight text-white">
+                          {s.title}
+                        </div>
+                        <div className="mt-0.5 text-[12px] leading-snug text-white">{s.desc}</div>
                       </div>
-                      <h4 className="mt-2 text-[14px] font-semibold text-white">{s.title}</h4>
-                      <p className="mt-1 text-[11.5px] text-white leading-relaxed">{s.desc}</p>
-                    </div>
+                    </li>
                   ))}
-                </div>
-
-                <div className="mt-4 text-[11.5px] text-white">
-                  LMS doesn't support Dynamic Registration? Switch to the <b className="text-white">Platforms</b> tab and use the manual 8-field form.
+                </ul>
+                <div className="flex items-center justify-between gap-3 border-t border-white/[0.10] py-1 pl-4 pr-2 sm:pl-5 sm:pr-3">
+                  <span className="text-[12px] leading-snug text-white">
+                    LMS doesn’t support dynamic registration?
+                  </span>
+                  <button type="button" onClick={() => setIsAddDialogOpen(true)} className={TEXT_ACTION}>
+                    Use the manual form
+                  </button>
                 </div>
               </>
             )}
           </div>
-        </TabsContent>
+        </motion.section>
+      )}
 
-        <TabsContent value="guides" className="space-y-6 mt-6">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-white/[0.06] border border-white/[0.06] rounded-2xl overflow-hidden">
-            {[
-              { type: 'canvas' as const, name: 'Canvas LMS', desc: 'Instructure Canvas', tone: 'red' as Tone },
-              { type: 'moodle' as const, name: 'Moodle', desc: 'Moodle LMS 4.x', tone: 'orange' as Tone },
-              { type: 'blackboard' as const, name: 'Blackboard', desc: 'Blackboard Learn', tone: 'indigo' as Tone },
-            ].map((guide) => (
+      {/* ── Setup guides ──────────────────────────────────────────────── */}
+      {tab === 'guides' && (
+        <motion.section variants={itemVariants} className="space-y-3">
+          <HubSectionHeading>Setup guides</HubSectionHeading>
+          <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-3 [&>*:last-child]:col-span-2 sm:[&>*:last-child]:col-span-1">
+            {(
+              [
+                { type: 'canvas', name: 'Canvas', desc: 'Instructure Canvas' },
+                { type: 'moodle', name: 'Moodle', desc: 'Moodle LMS 4.x' },
+                { type: 'blackboard', name: 'Blackboard', desc: 'Blackboard Learn' },
+              ] as { type: GuideType; name: string; desc: string }[]
+            ).map((guide) => (
               <button
                 key={guide.type}
+                type="button"
                 onClick={() => openSetupGuide(guide.type)}
-                className="group relative bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-6 text-left touch-manipulation flex flex-col min-h-[180px]"
+                className={cn(CARD_BASE, CARD_NEUTRAL, 'min-h-[104px] p-4 lg:hover:-translate-y-0.5')}
               >
-                <div
-                  className={cn(
-                    'absolute inset-x-0 top-0 h-px opacity-70 group-hover:opacity-100 transition-opacity',
-                    guide.tone === 'red' && 'bg-red-400',
-                    guide.tone === 'orange' && 'bg-orange-400',
-                    guide.tone === 'indigo' && 'bg-indigo-400'
-                  )}
-                />
-                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
-                  Setup Guide
-                </div>
-                <h3 className="mt-2 text-lg sm:text-xl font-semibold text-white tracking-tight">
+                <span className="flex items-center justify-between gap-2 text-[16px] font-bold leading-tight tracking-tight text-white transition-colors group-hover:text-elec-yellow">
                   {guide.name}
-                </h3>
-                <p className="mt-1 text-[12.5px] text-white">{guide.desc}</p>
-                <div className="flex-grow" />
-                <div className="mt-4 text-[12px] font-medium text-elec-yellow/80 group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all">
-                  View guide →
-                </div>
+                  <ChevronRight className="h-3.5 w-3.5 shrink-0 text-white" aria-hidden />
+                </span>
+                <span className="mt-1 text-[11.5px] leading-snug text-white">{guide.desc}</span>
               </button>
             ))}
           </div>
 
-          {/* Quick Start */}
-          <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
-            <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
-              Quick Start
+          <div className={CARD}>
+            <div className={CARD_PAD}>
+              <h3 className={CARD_TITLE}>Four steps to connect</h3>
             </div>
-            <h3 className="mt-2 text-lg sm:text-xl font-semibold text-white tracking-tight">
-              Four steps to connect
-            </h3>
-            <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <ul className="divide-y divide-white/[0.10] border-t border-white/[0.10]">
               {[
-                {
-                  step: '01',
-                  title: 'Register tool',
-                  desc: 'Add Elec-Mate as an LTI tool in your LMS admin panel.',
-                },
-                {
-                  step: '02',
-                  title: 'Copy config',
-                  desc: 'Use the values from the Configuration tab.',
-                },
-                {
-                  step: '03',
-                  title: 'Add platform',
-                  desc: 'Enter your LMS details in the Platforms tab.',
-                },
-                {
-                  step: '04',
-                  title: 'Test launch',
-                  desc: 'Create a test assignment and verify the connection.',
-                },
-              ].map((item) => (
-                <div
-                  key={item.step}
-                  className="bg-[hsl(0_0%_10%)] border border-white/[0.06] rounded-xl p-4"
-                >
-                  <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
-                    Step {item.step}
+                { title: 'Register the tool', desc: 'Add Elec-Mate as an LTI tool in your LMS admin panel.' },
+                { title: 'Copy the config', desc: 'Use the values under Configuration.' },
+                { title: 'Add the platform', desc: 'Enter your LMS details under Platforms.' },
+                { title: 'Test a launch', desc: 'Create a test assignment and run Verify config.' },
+              ].map((item, i) => (
+                <li key={item.title} className={cn(ROW_STATIC, 'items-start')}>
+                  <StepNumber n={i + 1} />
+                  <div className="min-w-0 flex-1">
+                    <div className="text-[14px] font-semibold leading-tight text-white">{item.title}</div>
+                    <div className="mt-0.5 text-[12px] leading-snug text-white">{item.desc}</div>
                   </div>
-                  <h4 className="mt-2 text-[14px] font-semibold text-white">{item.title}</h4>
-                  <p className="mt-1 text-[11.5px] text-white leading-relaxed">{item.desc}</p>
-                </div>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
-        </TabsContent>
-      </Tabs>
+        </motion.section>
+      )}
 
-      {/* Observability dashboard — Sprint 2 / ELE-831 */}
-      <motion.div variants={itemVariants} className="mt-10">
-        <div className="flex items-baseline justify-between gap-3 flex-wrap mb-4">
-          <div>
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              Observability
-            </div>
-            <h3 className="mt-1 text-xl sm:text-2xl font-semibold text-white tracking-tight">
-              Health & launch metrics
-            </h3>
-          </div>
-          <div className="flex items-center gap-3">
+      {/* ── Observability (Sprint 2 / ELE-831) ────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <div className="flex items-end justify-between gap-4">
+          <HubSectionHeading>Health and launches</HubSectionHeading>
+          <button type="button" onClick={refreshHealth} className={cn(TEXT_ACTION, '-my-2')}>
+            Refresh
+          </button>
+        </div>
+
+        <div className={CARD}>
+          <div className={cn(ROW_STATIC, 'justify-between')}>
             <span
               className={cn(
-                'inline-flex items-center gap-1.5 text-[11px] font-medium tabular-nums',
-                health.status === 'ok'
-                  ? 'text-emerald-400'
-                  : health.status === 'degraded'
-                    ? 'text-red-400'
-                    : 'text-white'
+                'text-[13px] font-semibold',
+                health.status === 'degraded' ? 'text-red-300' : 'text-white'
               )}
             >
-              <span
-                className={cn(
-                  'h-1.5 w-1.5 rounded-full',
-                  health.status === 'ok'
-                    ? 'bg-emerald-400 animate-pulse'
-                    : health.status === 'degraded'
-                      ? 'bg-red-400'
-                      : 'bg-white/30'
-                )}
-                aria-hidden
-              />
-              {health.status === 'ok'
-                ? 'Systems operational'
-                : health.status === 'degraded'
-                  ? 'Degraded'
-                  : 'Checking…'}
-              {health.total_ms ? ` · ${health.total_ms}ms` : ''}
+              {healthWord}
             </span>
-            <button
-              onClick={refreshHealth}
-              className="text-[11px] text-white hover:text-white transition-colors"
-            >
-              ↻
-            </button>
+            <span className="text-[11.5px] tabular-nums text-white">
+              {health.total_ms ? `${health.total_ms}ms` : ''}
+              {health.version ? ` · v${health.version}` : ''}
+            </span>
           </div>
-        </div>
 
-        {/* KPI tiles. Tones are a fixed enum mapped to a static class lookup —
-            never interpolate `text-${k.tone}`, Tailwind purges those. */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          {([
-            {
-              label: 'Launches (50)',
-              value: globalStats.total,
-              tone: 'neutral' as KpiTone,
-            },
-            {
-              label: 'Success rate',
-              value: globalStats.successRate === null ? '—' : `${globalStats.successRate}%`,
-              tone: (globalStats.successRate === null
-                ? 'muted'
-                : globalStats.successRate >= 99
-                  ? 'good'
-                  : globalStats.successRate >= 95
-                    ? 'warn'
-                    : 'bad') as KpiTone,
-            },
-            {
-              label: 'Failed',
-              value: globalStats.failed,
-              tone: (globalStats.failed > 0 ? 'bad' : 'muted') as KpiTone,
-            },
-            {
-              label: 'Platforms',
-              value: rows.length,
-              tone: 'neutral' as KpiTone,
-            },
-          ]).map((k) => (
-            <div
-              key={k.label}
-              className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-xl p-4"
-            >
-              <div className="text-[10px] uppercase tracking-wider text-white/70">{k.label}</div>
-              <div className={cn('mt-1 text-xl font-semibold tabular-nums', KPI_TONE_CLASS[k.tone])}>
-                {k.value}
-              </div>
+          {/* 7-day sparkline. Tap a bar to reveal its figures. */}
+          <div className="border-t border-white/[0.10] px-4 py-4 sm:px-5">
+            <div className="mb-3 flex items-baseline justify-between gap-3">
+              <span className="text-[11.5px] font-medium text-white">Launches per day, last 7 days</span>
+              {sparkTapped && (
+                <span className="text-[11px] tabular-nums text-white">
+                  {sparkTapped.date}: {sparkTapped.total} launches
+                  {sparkTapped.failed > 0 ? ` · ${sparkTapped.failed} failed` : ''}
+                </span>
+              )}
             </div>
-          ))}
-        </div>
-
-        {/* 7-day sparkline. Tap a bar to reveal its figures (hover title= is
-            useless on touch). */}
-        <div className="mt-3 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-xl p-4">
-          <div className="flex items-baseline justify-between gap-3 mb-3">
-            <div className="text-[10px] uppercase tracking-wider text-white">
-              Last 7 days · launches per day
-            </div>
-            {sparkTapped && (
-              <div className="text-[11px] tabular-nums text-white/70">
-                {sparkTapped.date}: {sparkTapped.total} launches
-                {sparkTapped.failed > 0 ? ` · ${sparkTapped.failed} failed` : ''}
-              </div>
-            )}
-          </div>
-          <div className="flex items-end gap-2 h-20">
-            {globalStats.days.map((d) => {
-              const max = Math.max(1, ...globalStats.days.map((x) => x.total));
-              const h = Math.round((d.total / max) * 100);
-              const fh = d.total ? Math.round((d.failed / d.total) * h) : 0;
-              const isTapped = sparkTapped?.date === d.date;
-              return (
-                <button
-                  key={d.date}
-                  type="button"
-                  onClick={() => setSparkTapped((s) => (s?.date === d.date ? null : d))}
-                  aria-label={`${d.total} launches, ${d.failed} failed on ${d.date}`}
-                  className="flex-1 flex flex-col items-center gap-1 touch-manipulation min-h-[44px] justify-end"
-                >
-                  <div className="w-full flex-1 flex items-end">
-                    <div
-                      className={cn(
-                        'w-full rounded-t bg-emerald-400/70 relative transition-opacity',
-                        sparkTapped && !isTapped && 'opacity-50'
-                      )}
-                      style={{ height: `${Math.max(2, h)}%` }}
-                    >
-                      {fh > 0 && (
-                        <div
-                          className="absolute top-0 left-0 right-0 rounded-t bg-red-400/80"
-                          style={{ height: `${fh}%` }}
-                        />
-                      )}
-                    </div>
-                  </div>
-                  <span
-                    className={cn(
-                      'text-[9px] tabular-nums',
-                      isTapped ? 'text-white' : 'text-white/70'
-                    )}
+            <div className="flex h-20 items-end gap-2">
+              {globalStats.days.map((d) => {
+                const max = Math.max(1, ...globalStats.days.map((x) => x.total));
+                const h = Math.round((d.total / max) * 100);
+                const fh = d.total ? Math.round((d.failed / d.total) * h) : 0;
+                const isTapped = sparkTapped?.date === d.date;
+                return (
+                  <button
+                    key={d.date}
+                    type="button"
+                    onClick={() => setSparkTapped((s) => (s?.date === d.date ? null : d))}
+                    aria-label={`${d.total} launches, ${d.failed} failed on ${d.date}`}
+                    className="flex min-h-[44px] flex-1 flex-col items-center justify-end gap-1 touch-manipulation"
                   >
-                    {d.date.slice(-2)}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Top errors */}
-        {globalStats.topErrors.length > 0 && (
-          <div className="mt-3 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-xl p-4">
-            <div className="text-[10px] uppercase tracking-wider text-white mb-3">
-              Top errors
+                    <div className="flex w-full flex-1 items-end">
+                      <div
+                        className={cn(
+                          'relative w-full rounded-t transition-opacity',
+                          isTapped ? 'bg-white' : 'bg-white/[0.35]',
+                          sparkTapped && !isTapped && 'opacity-50'
+                        )}
+                        style={{ height: `${Math.max(2, h)}%` }}
+                      >
+                        {fh > 0 && (
+                          <div
+                            className="absolute inset-x-0 top-0 rounded-t bg-red-400"
+                            style={{ height: `${fh}%` }}
+                          />
+                        )}
+                      </div>
+                    </div>
+                    <span
+                      className={cn('text-[10px] tabular-nums text-white', !isTapped && 'opacity-70')}
+                    >
+                      {d.date.slice(-2)}
+                    </span>
+                  </button>
+                );
+              })}
             </div>
-            <div className="space-y-1.5">
+          </div>
+
+          {globalStats.topErrors.length > 0 && (
+            <ul className="divide-y divide-white/[0.10] border-t border-white/[0.10]">
               {globalStats.topErrors.map((e) => (
-                <div
-                  key={e.code}
-                  className="flex items-center justify-between gap-3 text-[12px]"
-                >
-                  <span className="font-mono text-red-300/90 truncate">{e.code}</span>
-                  <span className="text-white tabular-nums">{e.count}</span>
-                </div>
+                <li key={e.code} className={cn(ROW_STATIC, 'py-2.5')}>
+                  <span aria-hidden className="h-6 w-[3px] shrink-0 rounded-full bg-red-400" />
+                  <span className="min-w-0 flex-1 truncate font-mono text-[12px] text-white">{e.code}</span>
+                  <span className="shrink-0 text-[13px] font-semibold tabular-nums text-white">{e.count}</span>
+                </li>
               ))}
-            </div>
-          </div>
-        )}
-      </motion.div>
+            </ul>
+          )}
+        </div>
+      </motion.section>
 
-      {/* Recent launches — admin diagnostic panel (H8 / ELE-823) */}
-      <motion.div variants={itemVariants} className="mt-10">
-        <div className="flex items-baseline justify-between mb-4">
-          <div>
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              Diagnostic
-            </div>
-            <h3 className="mt-1 text-xl sm:text-2xl font-semibold text-white tracking-tight">
-              Recent launches
-            </h3>
-          </div>
-          <div className="text-[11px] text-white tabular-nums">
-            {loading ? 'loading…' : `${launches.length} in last 50`}
-          </div>
+      {/* ── Recent launches (H8 / ELE-823) ────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <div className="flex items-end justify-between gap-4">
+          <HubSectionHeading>Recent launches</HubSectionHeading>
+          <span className="text-[11px] font-semibold tabular-nums text-white">
+            {loading ? 'Loading…' : `${launches.length} in the last 50`}
+          </span>
         </div>
         {error && (
-          <div className="mb-3 rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-xs text-red-300">
-            {error}
-          </div>
+          <p className="text-[12.5px] leading-snug text-red-300">{error}</p>
         )}
-        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
+        <div className={LIST_CARD}>
           {launches.length === 0 ? (
-            <div className="p-8 text-center text-[12px] text-white">
-              No launches recorded yet. Register a platform and click test-launch to see entries here.
+            <div className={CARD_PAD}>
+              <p className="text-[14px] font-semibold text-white">No launches recorded yet</p>
+              <p className="mt-1 text-[12.5px] leading-snug text-white">
+                Register a platform and launch from the LMS to see entries here.
+              </p>
             </div>
           ) : (
-            <div className="divide-y divide-white/[0.06] max-h-[440px] overflow-y-auto">
+            <ul className="max-h-[440px] divide-y divide-white/[0.10] overflow-y-auto">
               {launches.slice(0, 50).map((l) => {
                 const platform = rows.find((p) => p.id === l.platform_id);
                 const errorCode = (l.launch_data as Record<string, unknown> | null)?.error as
@@ -1208,320 +1146,288 @@ export function LTISettingsSection() {
                 const cid = (l.launch_data as Record<string, unknown> | null)?.cid as
                   | string
                   | undefined;
+                const roles =
+                  l.roles && l.roles.length > 0
+                    ? l.roles.map((r) => r.split('#').pop() ?? r).slice(0, 2).join(', ')
+                    : null;
+                const reason = [
+                  l.validated ? 'OK' : 'Failed',
+                  errorCode ?? null,
+                  l.lti_user_id,
+                  roles,
+                  cid ?? null,
+                ]
+                  .filter(Boolean)
+                  .join(' · ');
                 return (
-                  <div
-                    key={l.id}
-                    className="flex items-start gap-3 px-4 sm:px-5 py-3 text-left"
-                  >
+                  <li key={l.id} className={ROW_STATIC}>
                     <span
-                      className={cn(
-                        'mt-1.5 h-1.5 w-1.5 rounded-full shrink-0',
-                        l.validated ? 'bg-emerald-400' : 'bg-red-400'
-                      )}
                       aria-hidden
+                      className={cn(
+                        'h-8 w-[3px] shrink-0 rounded-full',
+                        l.validated ? 'bg-white/[0.25]' : 'bg-red-400'
+                      )}
                     />
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between gap-3 flex-wrap">
-                        <div className="text-[13px] text-white">
-                          <span className="font-medium">{platform?.name ?? 'Unknown platform'}</span>
-                          <span className="text-white mx-1.5">·</span>
-                          <span className="text-white font-mono text-[11px]">{l.lti_user_id}</span>
-                          {l.context_title && (
-                            <>
-                              <span className="text-white mx-1.5">·</span>
-                              <span className="text-white">{l.context_title}</span>
-                            </>
-                          )}
-                        </div>
-                        <span className="text-[11px] tabular-nums text-white shrink-0">
-                          {new Date(l.created_at).toLocaleString('en-GB', {
-                            day: '2-digit',
-                            month: 'short',
-                            hour: '2-digit',
-                            minute: '2-digit',
-                          })}
-                        </span>
-                      </div>
-                      <div className="mt-1 flex items-center gap-1.5 flex-wrap">
-                        <Pill tone={l.validated ? 'green' : 'red'}>
-                          {l.validated ? 'OK' : 'Failed'}
-                        </Pill>
-                        {errorCode && (
-                          <span className="text-[11px] font-mono text-red-300/90 bg-red-500/10 border border-red-500/20 rounded px-1.5 py-0.5">
-                            {errorCode}
-                          </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+                        {platform?.name ?? 'Unknown platform'}
+                        {l.context_title ? ` · ${l.context_title}` : ''}
+                      </span>
+                      <span
+                        className={cn(
+                          'mt-0.5 block truncate font-mono text-[11.5px] leading-tight',
+                          l.validated ? 'text-white' : 'text-red-300'
                         )}
-                        {l.roles && l.roles.length > 0 && (
-                          <span className="text-[11px] text-white">
-                            {l.roles
-                              .map((r) => r.split('#').pop() ?? r)
-                              .slice(0, 2)
-                              .join(', ')}
-                          </span>
-                        )}
-                        {cid && (
-                          <span className="text-[10px] font-mono text-white ml-auto">
-                            {cid}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  </div>
+                      >
+                        {reason}
+                      </span>
+                    </span>
+                    <span className="shrink-0 text-[11.5px] tabular-nums text-white">
+                      {new Date(l.created_at).toLocaleString('en-GB', {
+                        day: '2-digit',
+                        month: 'short',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                      })}
+                    </span>
+                  </li>
                 );
               })}
-            </div>
+            </ul>
           )}
         </div>
-      </motion.div>
+      </motion.section>
 
-      {/* Add Platform Dialog */}
+      {/* ── Add / edit platform dialog ────────────────────────────────── */}
       <ResponsiveDialog
         open={isAddDialogOpen}
         onOpenChange={(open) => {
           setIsAddDialogOpen(open);
           if (!open) {
             setEditingPlatformId(null);
-            setNewPlatform({
-              name: '',
-              type: 'canvas',
-              issuer: '',
-              clientId: '',
-              deploymentId: '',
-              authLoginUrl: '',
-              authTokenUrl: '',
-              jwksUrl: '',
-            });
+            setNewPlatform({ ...EMPTY_FORM });
           }
         }}
       >
-        <ResponsiveDialogContent hideCloseButton className="w-[min(100vw-2rem,640px)] bg-[hsl(0_0%_10%)] border-white/[0.08] p-0">
-          {/* Header */}
-          <div className="shrink-0 bg-[hsl(0_0%_10%)] border-b border-white/[0.06] px-6 py-5">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              LMS integration
-            </div>
-            <ResponsiveDialogTitle className="mt-1 text-xl font-semibold text-white tracking-tight">
+        <ResponsiveDialogContent hideCloseButton className={cn('w-[min(100vw-2rem,640px)]', DIALOG)}>
+          <div className="shrink-0 border-b border-white/[0.10] px-5 py-4 sm:px-6">
+            <ResponsiveDialogTitle className="text-[17px] font-semibold tracking-tight text-white">
               {editingPlatformId ? 'Edit LTI platform' : 'Add LTI platform'}
             </ResponsiveDialogTitle>
-            <ResponsiveDialogDescription className="mt-1 text-[13px] text-white leading-relaxed">
+            <ResponsiveDialogDescription className="mt-1 text-[12.5px] leading-snug text-white">
               {editingPlatformId
                 ? 'Update the LMS configuration. Changes take effect on the next launch.'
-                : 'Manually register an LMS using LTI 1.3. If your LMS supports Dynamic Registration, switch to that tab — it only needs one URL.'}
+                : 'Register an LMS over LTI 1.3. If your LMS supports dynamic registration it only needs one URL — see that chip instead.'}
             </ResponsiveDialogDescription>
           </div>
 
-          <div className="flex-1 overflow-y-auto px-6 py-5 space-y-6">
-            {/* —— Section 1: Platform identity —— */}
+          <div className="flex-1 space-y-6 overflow-y-auto px-5 py-5 sm:px-6">
+            {/* Platform identity */}
             <div className="space-y-4">
-              <div className="flex items-center gap-2">
-                <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow" aria-hidden />
-                <div className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white">
-                  Platform identity
+              <h3 className="text-[15px] font-semibold tracking-tight text-elec-yellow">
+                Platform identity
+              </h3>
+
+              <Field label="Display name" required>
+                <input
+                  placeholder="Canvas — Production"
+                  value={newPlatform.name}
+                  onChange={(e) => setNewPlatform({ ...newPlatform, name: e.target.value })}
+                  className={FIELD}
+                />
+              </Field>
+
+              <div>
+                <span className={LABEL}>
+                  LMS type<span className="ml-1 text-elec-yellow">*</span>
+                </span>
+                <div className="flex flex-wrap gap-2">
+                  {PLATFORM_TYPES.map((t) => (
+                    <button
+                      key={t.value}
+                      type="button"
+                      onClick={() => setNewPlatform({ ...newPlatform, type: t.value })}
+                      className={cn(CHIP, newPlatform.type === t.value ? CHIP_ON : CHIP_OFF)}
+                    >
+                      {t.label}
+                    </button>
+                  ))}
                 </div>
               </div>
 
-              <FormGrid cols={2}>
-                <Field label="Display name" required>
-                  <Input
-                    placeholder="Canvas — Production"
-                    value={newPlatform.name}
-                    onChange={(e) => setNewPlatform({ ...newPlatform, name: e.target.value })}
-                    className={inputClass}
-                  />
-                </Field>
-                <Field label="LMS type" required>
-                  <Select
-                    value={newPlatform.type}
-                    onValueChange={(value: LTIPlatformType) =>
-                      setNewPlatform({ ...newPlatform, type: value })
-                    }
-                  >
-                    <SelectTrigger className={selectTriggerClass}>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className={selectContentClass}>
-                      <SelectItem value="canvas">Canvas</SelectItem>
-                      <SelectItem value="moodle">Moodle</SelectItem>
-                      <SelectItem value="blackboard">Blackboard Learn</SelectItem>
-                      <SelectItem value="d2l">D2L Brightspace</SelectItem>
-                      <SelectItem value="schoology">Schoology</SelectItem>
-                      <SelectItem value="other">Other LTI 1.3</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </Field>
-              </FormGrid>
-
-              <Field label="Issuer URL (iss)" required>
-                <Input
+              <Field
+                label="Issuer URL (iss)"
+                required
+                error={formErrors.issuer && newPlatform.issuer ? formErrors.issuer : null}
+                hint="The canonical URL your LMS uses as its OpenID issuer."
+              >
+                <input
                   placeholder="https://canvas.instructure.com"
                   value={newPlatform.issuer}
                   onChange={(e) => setNewPlatform({ ...newPlatform, issuer: e.target.value })}
                   className={cn(
-                    inputClass,
-                    formErrors.issuer && newPlatform.issuer && 'border-red-500/60'
+                    FIELD,
+                    formErrors.issuer && newPlatform.issuer && 'border-red-400'
                   )}
                 />
-                {formErrors.issuer && newPlatform.issuer ? (
-                  <p className="text-[11.5px] text-red-400">{formErrors.issuer}</p>
-                ) : (
-                  <p className="text-[11.5px] text-white leading-relaxed">
-                    The canonical URL your LMS uses as its OpenID issuer.
-                  </p>
-                )}
               </Field>
 
-              <FormGrid cols={2}>
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <Field label="Client ID" required>
-                  <Input
+                  <input
                     placeholder="From LMS tool settings"
                     value={newPlatform.clientId}
                     onChange={(e) => setNewPlatform({ ...newPlatform, clientId: e.target.value })}
-                    className={`${inputClass} font-mono`}
+                    className={cn(FIELD, 'font-mono')}
                   />
                 </Field>
                 <Field label="Deployment ID (optional)">
-                  <Input
+                  <input
                     placeholder="Optional"
                     value={newPlatform.deploymentId}
                     onChange={(e) =>
                       setNewPlatform({ ...newPlatform, deploymentId: e.target.value })
                     }
-                    className={`${inputClass} font-mono`}
+                    className={cn(FIELD, 'font-mono')}
                   />
                 </Field>
-              </FormGrid>
+              </div>
             </div>
 
-            {/* —— Section 2: LMS endpoints —— */}
-            <div className="space-y-4 pt-2 border-t border-white/[0.06]">
-              <div className="flex items-center justify-between gap-3 pt-2">
-                <div className="flex items-center gap-2">
-                  <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow" aria-hidden />
-                  <div className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white">
-                    LMS endpoints
-                  </div>
-                </div>
-                <span className="text-[10.5px] text-white">
-                  All three are required
-                </span>
+            {/* LMS endpoints */}
+            <div className="space-y-4 border-t border-white/[0.10] pt-5">
+              <div className="flex items-baseline justify-between gap-3">
+                <h3 className="text-[15px] font-semibold tracking-tight text-elec-yellow">
+                  LMS endpoints
+                </h3>
+                <span className="text-[11px] text-white">All three are required</span>
               </div>
 
-              <Field label="Authorisation login URL" required>
-                <Input
+              <Field
+                label="Authorisation login URL"
+                required
+                error={
+                  formErrors.authLoginUrl && newPlatform.authLoginUrl
+                    ? formErrors.authLoginUrl
+                    : null
+                }
+              >
+                <input
                   placeholder="https://canvas.../api/lti/authorize_redirect"
                   value={newPlatform.authLoginUrl}
                   onChange={(e) =>
                     setNewPlatform({ ...newPlatform, authLoginUrl: e.target.value })
                   }
                   className={cn(
-                    inputClass,
+                    FIELD,
                     'font-mono',
-                    formErrors.authLoginUrl && newPlatform.authLoginUrl && 'border-red-500/60'
+                    formErrors.authLoginUrl && newPlatform.authLoginUrl && 'border-red-400'
                   )}
                 />
-                {formErrors.authLoginUrl && newPlatform.authLoginUrl && (
-                  <p className="text-[11.5px] text-red-400">{formErrors.authLoginUrl}</p>
-                )}
               </Field>
 
-              <Field label="Authorisation token URL" required>
-                <Input
+              <Field
+                label="Authorisation token URL"
+                required
+                error={
+                  formErrors.authTokenUrl && newPlatform.authTokenUrl
+                    ? formErrors.authTokenUrl
+                    : null
+                }
+              >
+                <input
                   placeholder="https://canvas.../login/oauth2/token"
                   value={newPlatform.authTokenUrl}
                   onChange={(e) =>
                     setNewPlatform({ ...newPlatform, authTokenUrl: e.target.value })
                   }
                   className={cn(
-                    inputClass,
+                    FIELD,
                     'font-mono',
-                    formErrors.authTokenUrl && newPlatform.authTokenUrl && 'border-red-500/60'
+                    formErrors.authTokenUrl && newPlatform.authTokenUrl && 'border-red-400'
                   )}
                 />
-                {formErrors.authTokenUrl && newPlatform.authTokenUrl && (
-                  <p className="text-[11.5px] text-red-400">{formErrors.authTokenUrl}</p>
-                )}
               </Field>
 
-              <Field label="LMS JWKS URL" required>
-                <Input
+              <Field
+                label="LMS JWKS URL"
+                required
+                error={formErrors.jwksUrl && newPlatform.jwksUrl ? formErrors.jwksUrl : null}
+                hint="We fetch the LMS’s public keys from here to verify signed launches."
+              >
+                <input
                   placeholder="https://canvas.../api/lti/security/jwks"
                   value={newPlatform.jwksUrl}
                   onChange={(e) => setNewPlatform({ ...newPlatform, jwksUrl: e.target.value })}
                   className={cn(
-                    inputClass,
+                    FIELD,
                     'font-mono',
-                    formErrors.jwksUrl && newPlatform.jwksUrl && 'border-red-500/60'
+                    formErrors.jwksUrl && newPlatform.jwksUrl && 'border-red-400'
                   )}
                 />
-                {formErrors.jwksUrl && newPlatform.jwksUrl ? (
-                  <p className="text-[11.5px] text-red-400">{formErrors.jwksUrl}</p>
-                ) : (
-                  <p className="text-[11.5px] text-white leading-relaxed">
-                    We fetch the LMS's public keys from here to verify signed launches.
-                  </p>
-                )}
               </Field>
             </div>
 
             {!collegeId && (
-              <div className="rounded-lg border border-red-500/30 bg-red-500/10 text-red-300 p-3 text-[12px]">
+              <p className="text-[12.5px] leading-snug text-red-300">
                 You must belong to a college to register a platform. Ask your Elec-Mate admin to
                 add you to a college first.
-              </div>
+              </p>
             )}
           </div>
 
-          {/* Footer */}
-          <ResponsiveDialogFooter className="bg-[hsl(0_0%_10%)] border-t border-white/[0.06] px-6 py-4 gap-2">
-            <SecondaryButton
+          <ResponsiveDialogFooter className="gap-2 border-t border-white/[0.10] px-5 py-4 sm:px-6">
+            <button
+              type="button"
               onClick={() => setIsAddDialogOpen(false)}
               disabled={isSubmittingAdd}
+              className={NEUTRAL}
             >
               Cancel
-            </SecondaryButton>
-            <PrimaryButton
+            </button>
+            <button
+              type="button"
               onClick={handleSavePlatform}
               disabled={isSubmittingAdd || !collegeId || !formValid}
+              className={PRIMARY}
             >
               {isSubmittingAdd
                 ? editingPlatformId
                   ? 'Saving…'
                   : 'Adding…'
                 : editingPlatformId
-                  ? 'Save changes →'
-                  : 'Add platform →'}
-            </PrimaryButton>
+                  ? 'Save changes'
+                  : 'Add platform'}
+            </button>
           </ResponsiveDialogFooter>
         </ResponsiveDialogContent>
       </ResponsiveDialog>
 
-      {/* Setup Guide Dialog */}
+      {/* ── Setup guide dialog ────────────────────────────────────────── */}
       <ResponsiveDialog open={isSetupGuideOpen} onOpenChange={setIsSetupGuideOpen}>
-        <ResponsiveDialogContent hideCloseButton className="max-w-2xl bg-[hsl(0_0%_10%)] border-white/[0.08] p-0">
-          <div className="shrink-0 border-b border-white/[0.06] px-6 py-5">
-            <ResponsiveDialogTitle className="text-lg font-semibold text-white tracking-tight">
-              {selectedGuide === 'canvas' && 'Canvas LMS setup guide'}
+        <ResponsiveDialogContent hideCloseButton className={cn('max-w-2xl', DIALOG)}>
+          <div className="shrink-0 border-b border-white/[0.10] px-5 py-4 sm:px-6">
+            <ResponsiveDialogTitle className="text-[17px] font-semibold tracking-tight text-white">
+              {selectedGuide === 'canvas' && 'Canvas setup guide'}
               {selectedGuide === 'moodle' && 'Moodle setup guide'}
               {selectedGuide === 'blackboard' && 'Blackboard Learn setup guide'}
             </ResponsiveDialogTitle>
-            <ResponsiveDialogDescription className="mt-1 text-[13px] text-white leading-relaxed">
-              Follow these steps to connect your LMS to Elec-Mate
+            <ResponsiveDialogDescription className="mt-1 text-[12.5px] leading-snug text-white">
+              Follow these steps to connect your LMS to Elec-Mate.
             </ResponsiveDialogDescription>
           </div>
 
-          <div className="flex-1 overflow-y-auto px-6 py-4">
+          <div className="flex-1 overflow-y-auto px-5 py-2 text-[13px] text-white sm:px-6">
             {selectedGuide === 'canvas' && (
               <Accordion type="single" collapsible className="w-full">
                 <AccordionItem value="step1">
-                  <AccordionTrigger className="text-left">
-                    <div className="flex items-center gap-3">
-                      <div className="h-6 w-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-xs font-bold text-elec-yellow">
-                        1
-                      </div>
+                  <AccordionTrigger className="min-h-11 text-left text-white">
+                    <span className="flex items-center gap-3">
+                      <StepNumber n={1} />
                       Access Developer Keys
-                    </div>
+                    </span>
                   </AccordionTrigger>
-                  <AccordionContent className="text-white space-y-2 pl-9">
+                  <AccordionContent className="space-y-2 pl-8 text-white">
                     <p>1. Log in to Canvas as an admin</p>
                     <p>
                       2. Go to <strong>Admin → Developer Keys</strong>
@@ -1532,17 +1438,15 @@ export function LTISettingsSection() {
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="step2">
-                  <AccordionTrigger className="text-left">
-                    <div className="flex items-center gap-3">
-                      <div className="h-6 w-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-xs font-bold text-elec-yellow">
-                        2
-                      </div>
-                      Configure LTI Key
-                    </div>
+                  <AccordionTrigger className="min-h-11 text-left text-white">
+                    <span className="flex items-center gap-3">
+                      <StepNumber n={2} />
+                      Configure the LTI key
+                    </span>
                   </AccordionTrigger>
-                  <AccordionContent className="text-white space-y-2 pl-9">
+                  <AccordionContent className="space-y-2 pl-8 text-white">
                     <p>Enter the following values:</p>
-                    <ul className="list-disc pl-4 space-y-1">
+                    <ul className="list-disc space-y-1 pl-4">
                       <li>
                         <strong>Key Name:</strong> Elec-Mate
                       </li>
@@ -1568,17 +1472,15 @@ export function LTISettingsSection() {
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="step3">
-                  <AccordionTrigger className="text-left">
-                    <div className="flex items-center gap-3">
-                      <div className="h-6 w-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-xs font-bold text-elec-yellow">
-                        3
-                      </div>
-                      Enable Additional Features
-                    </div>
+                  <AccordionTrigger className="min-h-11 text-left text-white">
+                    <span className="flex items-center gap-3">
+                      <StepNumber n={3} />
+                      Enable additional features
+                    </span>
                   </AccordionTrigger>
-                  <AccordionContent className="text-white space-y-2 pl-9">
+                  <AccordionContent className="space-y-2 pl-8 text-white">
                     <p>Under LTI Advantage Services, enable:</p>
-                    <ul className="list-disc pl-4 space-y-1">
+                    <ul className="list-disc space-y-1 pl-4">
                       <li>Can create and view assignment data in the gradebook</li>
                       <li>Can view assignment data in the gradebook</li>
                       <li>Can view submission data for assignments</li>
@@ -1587,15 +1489,13 @@ export function LTISettingsSection() {
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="step4">
-                  <AccordionTrigger className="text-left">
-                    <div className="flex items-center gap-3">
-                      <div className="h-6 w-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-xs font-bold text-elec-yellow">
-                        4
-                      </div>
-                      Save and Copy Client ID
-                    </div>
+                  <AccordionTrigger className="min-h-11 text-left text-white">
+                    <span className="flex items-center gap-3">
+                      <StepNumber n={4} />
+                      Save and copy the Client ID
+                    </span>
                   </AccordionTrigger>
-                  <AccordionContent className="text-white space-y-2 pl-9">
+                  <AccordionContent className="space-y-2 pl-8 text-white">
                     <p>
                       1. Click <strong>Save</strong>
                     </p>
@@ -1603,7 +1503,7 @@ export function LTISettingsSection() {
                       2. Set the key state to <strong>ON</strong>
                     </p>
                     <p>
-                      3. Copy the <strong>Client ID</strong> (shown in Details column)
+                      3. Copy the <strong>Client ID</strong> (shown in the Details column)
                     </p>
                     <p>4. Add this platform in Elec-Mate using the Client ID</p>
                   </AccordionContent>
@@ -1614,15 +1514,13 @@ export function LTISettingsSection() {
             {selectedGuide === 'moodle' && (
               <Accordion type="single" collapsible className="w-full">
                 <AccordionItem value="step1">
-                  <AccordionTrigger className="text-left">
-                    <div className="flex items-center gap-3">
-                      <div className="h-6 w-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-xs font-bold text-elec-yellow">
-                        1
-                      </div>
+                  <AccordionTrigger className="min-h-11 text-left text-white">
+                    <span className="flex items-center gap-3">
+                      <StepNumber n={1} />
                       Access External Tools
-                    </div>
+                    </span>
                   </AccordionTrigger>
-                  <AccordionContent className="text-white space-y-2 pl-9">
+                  <AccordionContent className="space-y-2 pl-8 text-white">
                     <p>1. Log in to Moodle as an admin</p>
                     <p>
                       2. Go to{' '}
@@ -1637,17 +1535,15 @@ export function LTISettingsSection() {
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="step2">
-                  <AccordionTrigger className="text-left">
-                    <div className="flex items-center gap-3">
-                      <div className="h-6 w-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-xs font-bold text-elec-yellow">
-                        2
-                      </div>
-                      Configure Tool Settings
-                    </div>
+                  <AccordionTrigger className="min-h-11 text-left text-white">
+                    <span className="flex items-center gap-3">
+                      <StepNumber n={2} />
+                      Configure tool settings
+                    </span>
                   </AccordionTrigger>
-                  <AccordionContent className="text-white space-y-2 pl-9">
+                  <AccordionContent className="space-y-2 pl-8 text-white">
                     <p>Enter the following values:</p>
-                    <ul className="list-disc pl-4 space-y-1">
+                    <ul className="list-disc space-y-1 pl-4">
                       <li>
                         <strong>Tool name:</strong> Elec-Mate
                       </li>
@@ -1673,42 +1569,38 @@ export function LTISettingsSection() {
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="step3">
-                  <AccordionTrigger className="text-left">
-                    <div className="flex items-center gap-3">
-                      <div className="h-6 w-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-xs font-bold text-elec-yellow">
-                        3
-                      </div>
-                      Enable Services
-                    </div>
+                  <AccordionTrigger className="min-h-11 text-left text-white">
+                    <span className="flex items-center gap-3">
+                      <StepNumber n={3} />
+                      Enable services
+                    </span>
                   </AccordionTrigger>
-                  <AccordionContent className="text-white space-y-2 pl-9">
-                    <p>Under Services, set these to "Use this service":</p>
-                    <ul className="list-disc pl-4 space-y-1">
+                  <AccordionContent className="space-y-2 pl-8 text-white">
+                    <p>Under Services, set these to “Use this service”:</p>
+                    <ul className="list-disc space-y-1 pl-4">
                       <li>IMS LTI Assignment and Grade Services</li>
                       <li>IMS LTI Names and Role Provisioning Services</li>
                     </ul>
                     <p className="mt-2">Under Privacy, set:</p>
-                    <ul className="list-disc pl-4 space-y-1">
-                      <li>Share launcher's name: Always</li>
-                      <li>Share launcher's email: Always</li>
+                    <ul className="list-disc space-y-1 pl-4">
+                      <li>Share launcher’s name: Always</li>
+                      <li>Share launcher’s email: Always</li>
                     </ul>
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="step4">
-                  <AccordionTrigger className="text-left">
-                    <div className="flex items-center gap-3">
-                      <div className="h-6 w-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-xs font-bold text-elec-yellow">
-                        4
-                      </div>
-                      Save and Get Credentials
-                    </div>
+                  <AccordionTrigger className="min-h-11 text-left text-white">
+                    <span className="flex items-center gap-3">
+                      <StepNumber n={4} />
+                      Save and get credentials
+                    </span>
                   </AccordionTrigger>
-                  <AccordionContent className="text-white space-y-2 pl-9">
+                  <AccordionContent className="space-y-2 pl-8 text-white">
                     <p>
                       1. Click <strong>Save changes</strong>
                     </p>
                     <p>
-                      2. Click on <strong>View configuration details</strong>
+                      2. Click <strong>View configuration details</strong>
                     </p>
                     <p>
                       3. Copy the <strong>Client ID</strong>
@@ -1722,15 +1614,13 @@ export function LTISettingsSection() {
             {selectedGuide === 'blackboard' && (
               <Accordion type="single" collapsible className="w-full">
                 <AccordionItem value="step1">
-                  <AccordionTrigger className="text-left">
-                    <div className="flex items-center gap-3">
-                      <div className="h-6 w-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-xs font-bold text-elec-yellow">
-                        1
-                      </div>
+                  <AccordionTrigger className="min-h-11 text-left text-white">
+                    <span className="flex items-center gap-3">
+                      <StepNumber n={1} />
                       Access LTI Tool Providers
-                    </div>
+                    </span>
                   </AccordionTrigger>
-                  <AccordionContent className="text-white space-y-2 pl-9">
+                  <AccordionContent className="space-y-2 pl-8 text-white">
                     <p>1. Log in to Blackboard as an admin</p>
                     <p>
                       2. Go to <strong>System Admin → Integrations → LTI Tool Providers</strong>
@@ -1741,17 +1631,15 @@ export function LTISettingsSection() {
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="step2">
-                  <AccordionTrigger className="text-left">
-                    <div className="flex items-center gap-3">
-                      <div className="h-6 w-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-xs font-bold text-elec-yellow">
-                        2
-                      </div>
-                      Register the Tool
-                    </div>
+                  <AccordionTrigger className="min-h-11 text-left text-white">
+                    <span className="flex items-center gap-3">
+                      <StepNumber n={2} />
+                      Register the tool
+                    </span>
                   </AccordionTrigger>
-                  <AccordionContent className="text-white space-y-2 pl-9">
+                  <AccordionContent className="space-y-2 pl-8 text-white">
                     <p>Enter the following values:</p>
-                    <ul className="list-disc pl-4 space-y-1">
+                    <ul className="list-disc space-y-1 pl-4">
                       <li>
                         <strong>Client ID:</strong> (generated by Blackboard)
                       </li>
@@ -1768,17 +1656,15 @@ export function LTISettingsSection() {
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="step3">
-                  <AccordionTrigger className="text-left">
-                    <div className="flex items-center gap-3">
-                      <div className="h-6 w-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-xs font-bold text-elec-yellow">
-                        3
-                      </div>
-                      Configure LTI 1.3 Settings
-                    </div>
+                  <AccordionTrigger className="min-h-11 text-left text-white">
+                    <span className="flex items-center gap-3">
+                      <StepNumber n={3} />
+                      Configure LTI 1.3 settings
+                    </span>
                   </AccordionTrigger>
-                  <AccordionContent className="text-white space-y-2 pl-9">
+                  <AccordionContent className="space-y-2 pl-8 text-white">
                     <p>In the LTI 1.3 configuration:</p>
-                    <ul className="list-disc pl-4 space-y-1">
+                    <ul className="list-disc space-y-1 pl-4">
                       <li>
                         <strong>Login Initiation URL:</strong> {ltiConfig.oidcInitUrl}
                       </li>
@@ -1792,15 +1678,13 @@ export function LTISettingsSection() {
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="step4">
-                  <AccordionTrigger className="text-left">
-                    <div className="flex items-center gap-3">
-                      <div className="h-6 w-6 rounded-full bg-elec-yellow/20 flex items-center justify-center text-xs font-bold text-elec-yellow">
-                        4
-                      </div>
-                      Complete Registration
-                    </div>
+                  <AccordionTrigger className="min-h-11 text-left text-white">
+                    <span className="flex items-center gap-3">
+                      <StepNumber n={4} />
+                      Complete registration
+                    </span>
                   </AccordionTrigger>
-                  <AccordionContent className="text-white space-y-2 pl-9">
+                  <AccordionContent className="space-y-2 pl-8 text-white">
                     <p>
                       1. Enable <strong>Course Memberships Service</strong>
                     </p>
@@ -1820,81 +1704,111 @@ export function LTISettingsSection() {
             )}
           </div>
 
-          <ResponsiveDialogFooter className="border-t border-white/[0.06] px-6 py-4 gap-2">
-            <SecondaryButton onClick={() => setIsSetupGuideOpen(false)}>
+          <ResponsiveDialogFooter className="gap-2 border-t border-white/[0.10] px-5 py-4 sm:px-6">
+            <button type="button" onClick={() => setIsSetupGuideOpen(false)} className={NEUTRAL}>
               Close
-            </SecondaryButton>
-            <PrimaryButton
+            </button>
+            <button
+              type="button"
               onClick={() => {
                 setIsSetupGuideOpen(false);
                 setIsAddDialogOpen(true);
               }}
+              className={PRIMARY}
             >
-              Add Platform →
-            </PrimaryButton>
+              Add platform
+            </button>
           </ResponsiveDialogFooter>
         </ResponsiveDialogContent>
       </ResponsiveDialog>
 
-      {/* Configure Platform Dialog */}
+      {/* ── Configure platform dialog — controlled, and actually saved ─── */}
       <ResponsiveDialog open={isConfigureDialogOpen} onOpenChange={setIsConfigureDialogOpen}>
-        <ResponsiveDialogContent hideCloseButton className="max-w-lg bg-[hsl(0_0%_10%)] border-white/[0.08] p-0">
-          <div className="shrink-0 border-b border-white/[0.06] px-6 py-5">
-            <ResponsiveDialogTitle className="text-lg font-semibold text-white tracking-tight">
+        <ResponsiveDialogContent hideCloseButton className={cn('max-w-lg', DIALOG)}>
+          <div className="shrink-0 border-b border-white/[0.10] px-5 py-4 sm:px-6">
+            <ResponsiveDialogTitle className="text-[17px] font-semibold tracking-tight text-white">
               Configure {selectedPlatform?.name}
             </ResponsiveDialogTitle>
-            <ResponsiveDialogDescription className="mt-1 text-[13px] text-white leading-relaxed">
-              Update platform settings and features
+            <ResponsiveDialogDescription className="mt-1 text-[12.5px] leading-snug text-white">
+              Update the platform’s details and which LTI Advantage features it uses.
             </ResponsiveDialogDescription>
           </div>
           {selectedPlatform && (
-            <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
-              <Field label="Platform Name">
-                <Input defaultValue={selectedPlatform.name} className={inputClass} />
+            <div className="flex-1 space-y-4 overflow-y-auto px-5 py-5 sm:px-6">
+              <Field label="Platform name">
+                <input
+                  value={configForm.name}
+                  onChange={(e) => setConfigForm({ ...configForm, name: e.target.value })}
+                  className={FIELD}
+                />
               </Field>
-              <Field label="Platform URL">
-                <Input defaultValue={selectedPlatform.url} className={inputClass} />
+              <Field label="Issuer URL">
+                <input
+                  value={configForm.url}
+                  onChange={(e) => setConfigForm({ ...configForm, url: e.target.value })}
+                  className={cn(FIELD, 'font-mono')}
+                />
               </Field>
               <Field label="Client ID">
-                <Input defaultValue={selectedPlatform.clientId} className={inputClass} />
+                <input
+                  value={configForm.clientId}
+                  onChange={(e) => setConfigForm({ ...configForm, clientId: e.target.value })}
+                  className={cn(FIELD, 'font-mono')}
+                />
               </Field>
-              <div className="pt-4 border-t border-white/[0.08]">
-                <h4 className="font-medium text-white mb-3">Features</h4>
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <Label className={fieldLabelClass}>Deep Linking</Label>
-                    <Switch defaultChecked={selectedPlatform.features.deepLinking} />
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <Label className={fieldLabelClass}>Grade Sync</Label>
-                    <Switch defaultChecked={selectedPlatform.features.gradeSync} />
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <Label className={fieldLabelClass}>Roster Sync</Label>
-                    <Switch defaultChecked={selectedPlatform.features.rosterSync} />
-                  </div>
-                </div>
+              <div className="border-t border-white/[0.10] pt-4">
+                <h4 className="text-[15px] font-semibold tracking-tight text-elec-yellow">Features</h4>
+                <ul className="-mx-2 mt-1 divide-y divide-white/[0.10]">
+                  {(
+                    [
+                      { key: 'deepLinking', label: 'Deep linking' },
+                      { key: 'gradeSync', label: 'Grade sync' },
+                      { key: 'rosterSync', label: 'Roster sync' },
+                    ] as const
+                  ).map((feat) => {
+                    const on = configForm[feat.key];
+                    return (
+                      <li key={feat.key}>
+                        <button
+                          type="button"
+                          aria-pressed={on}
+                          onClick={() => setConfigForm({ ...configForm, [feat.key]: !on })}
+                          className="flex h-11 w-full items-center justify-between gap-3 px-2 text-left transition-colors touch-manipulation hover:bg-white/[0.06]"
+                        >
+                          <span className="text-[13px] font-medium text-white">{feat.label}</span>
+                          <span
+                            className={cn('text-[12px] font-bold', on ? 'text-elec-yellow' : 'text-white')}
+                          >
+                            {on ? 'On' : 'Off'}
+                          </span>
+                        </button>
+                      </li>
+                    );
+                  })}
+                </ul>
               </div>
             </div>
           )}
-          <ResponsiveDialogFooter className="border-t border-white/[0.06] px-6 py-4 gap-2">
-            <SecondaryButton onClick={() => setIsConfigureDialogOpen(false)}>
-              Cancel
-            </SecondaryButton>
-            <PrimaryButton
-              onClick={() => {
-                setIsConfigureDialogOpen(false);
-                toast({
-                  title: 'Settings saved',
-                  description: 'Platform configuration has been updated',
-                });
-              }}
+          <ResponsiveDialogFooter className="gap-2 border-t border-white/[0.10] px-5 py-4 sm:px-6">
+            <button
+              type="button"
+              onClick={() => setIsConfigureDialogOpen(false)}
+              disabled={isSavingConfig}
+              className={NEUTRAL}
             >
-              Save Changes
-            </PrimaryButton>
+              Cancel
+            </button>
+            <button
+              type="button"
+              onClick={handleSaveConfigure}
+              disabled={isSavingConfig || !selectedPlatform}
+              className={PRIMARY}
+            >
+              {isSavingConfig ? 'Saving…' : 'Save changes'}
+            </button>
           </ResponsiveDialogFooter>
         </ResponsiveDialogContent>
       </ResponsiveDialog>
-    </PageFrame>
+    </motion.div>
   );
 }

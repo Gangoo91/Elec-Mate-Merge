@@ -17,8 +17,18 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { PageFrame, SheetShell, SecondaryButton } from '@/components/college/primitives';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetDescription, SheetTitle } from '@/components/ui/sheet';
+import { containerVariants, itemVariants } from '@/components/college/primitives';
+import { HubBody, HubMasthead, HubPage, HubSectionHeading } from '@/components/hub/HubPrimitives';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import {
+  buttonPrimaryCn,
+  buttonSecondaryCn,
+  chipBase,
+  chipOff,
+  chipOn,
+  textareaCn,
+} from '@/components/forms/fieldStyles';
 import {
   useSlideDeck,
   type Slide,
@@ -36,22 +46,40 @@ import { cn } from '@/lib/utils';
    LessonSlideDeckPage — /college/lessons/:id/slides
 
    Tutor-ready slide deck companion to a lesson plan. AI-generated, edited
-   inline, deliverable in presenter mode. The Smartscreen killer.
+   in place, delivered in presenter mode.
 
-   v2 — visual overhaul + gpt-image-1 photographs:
-     - Bigger, more confident typography
-     - Per-kind gradient backgrounds + accent rules
-     - Rich layouts: pull-quote, big-stat, two-column, image-concept,
-       diagram-caption (SVG), starter, plenary
-     - Async per-slide gpt-image-1 photo generation streams in over
-       ~60-120s while the deck text appears immediately
+   Rebuilt on the shared hub shell (HubPage → HubMasthead → HubBody), the
+   same frame the Marking queue and the College dashboard use. What went:
+
+   - The editorial header (volt eyebrow, 34px title, meta paragraph). The
+     masthead names the lesson; one line under the "Deck" heading carries
+     the figures.
+   - Per-kind coloured pills and radial gradient washes on every card
+     (blue, purple, cyan, emerald, rose). A slide's kind is now a volt word
+     on the card; the kind-specific TEMPLATE for each slide body is kept.
+   - Three solid volt buttons on one screen (Present, Generate/Regenerate,
+     and the editor's own Regenerate). Present is the one primary; the rest
+     are neutral 44px controls or in-row text actions.
+   - The right-hand editor drawer and the centred preflight dialog — both
+     are bottom sheets now.
+
+   Per-slide actions are all wired to the existing hook: edit
+   (updateSlide), regenerate with a tweak (regenerateSlide), new photo
+   (generateSlideImage), reorder (reorderSlides — drag on desktop, arrows
+   on a phone), duplicate and delete.
+
+   The `theme` on the deck only ever affected the PowerPoint export —
+   presenter mode is always full-bleed black — so its control is labelled
+   as the export theme rather than pretending to restyle the page.
 
    ELE-942 / [F1.2].
    ========================================================================== */
 
 type Mode = 'viewer' | 'single' | 'presenter';
+type Quality = 'low' | 'medium' | 'high';
+type ImageStatus = 'generating' | 'ready' | 'failed' | null;
 
-const KIND_EYEBROW: Record<SlideKind, string> = {
+const KIND_LABEL: Record<SlideKind, string> = {
   title: 'Title',
   starter: 'Starter',
   objectives: 'Objectives',
@@ -70,46 +98,26 @@ const KIND_EYEBROW: Record<SlideKind, string> = {
   plenary: 'Plenary',
 };
 
-const KIND_PILL: Record<SlideKind, string> = {
-  title: 'border-elec-yellow/30 bg-elec-yellow/[0.08] text-elec-yellow',
-  starter: 'border-blue-500/30 bg-blue-500/[0.08] text-blue-300',
-  objectives: 'border-purple-500/30 bg-purple-500/[0.08] text-purple-300',
-  concept: 'border-white/[0.16] bg-white/[0.04] text-white',
-  reg_cite: 'border-amber-500/30 bg-amber-500/[0.08] text-amber-300',
-  pull_quote: 'border-amber-500/30 bg-amber-500/[0.08] text-amber-300',
-  big_stat: 'border-cyan-500/30 bg-cyan-500/[0.08] text-cyan-300',
-  two_column: 'border-purple-500/30 bg-purple-500/[0.08] text-purple-300',
-  image_concept: 'border-emerald-500/30 bg-emerald-500/[0.08] text-emerald-300',
-  diagram_caption: 'border-blue-500/30 bg-blue-500/[0.08] text-blue-300',
-  activity: 'border-emerald-500/30 bg-emerald-500/[0.08] text-emerald-300',
-  worked_example: 'border-blue-500/30 bg-blue-500/[0.08] text-blue-300',
-  check_understanding: 'border-purple-500/30 bg-purple-500/[0.08] text-purple-300',
-  misconception: 'border-rose-500/30 bg-rose-500/[0.08] text-rose-300',
-  summary: 'border-elec-yellow/30 bg-elec-yellow/[0.08] text-elec-yellow',
-  plenary: 'border-blue-500/30 bg-blue-500/[0.08] text-blue-300',
-};
+const QUALITY_OPTIONS: Array<{ value: Quality; label: string; help: string }> = [
+  { value: 'low', label: 'Standard', help: 'About £0.40 a photo' },
+  { value: 'medium', label: 'Better', help: 'About £2 a photo' },
+  { value: 'high', label: 'Best', help: 'About £8 a photo' },
+];
 
-/** Subtle gradient backdrop per kind — keeps the cards feeling tailored
-    rather than identical. Applied as a layered radial-gradient overlay. */
-const KIND_BACKDROP: Record<SlideKind, string> = {
-  title: 'bg-[radial-gradient(ellipse_at_top_left,rgba(250,204,21,0.08),transparent_60%)]',
-  starter: 'bg-[radial-gradient(ellipse_at_top_right,rgba(96,165,250,0.10),transparent_60%)]',
-  objectives: 'bg-[radial-gradient(ellipse_at_bottom_right,rgba(168,85,247,0.10),transparent_55%)]',
-  concept: '',
-  reg_cite: 'bg-[radial-gradient(ellipse_at_top,rgba(245,158,11,0.08),transparent_55%)]',
-  pull_quote: 'bg-[radial-gradient(ellipse_at_center,rgba(245,158,11,0.10),transparent_60%)]',
-  big_stat: 'bg-[radial-gradient(ellipse_at_top,rgba(34,211,238,0.10),transparent_55%)]',
-  two_column: 'bg-[radial-gradient(ellipse_at_bottom,rgba(168,85,247,0.08),transparent_55%)]',
-  image_concept: '',
-  diagram_caption: '',
-  activity: 'bg-[radial-gradient(ellipse_at_top_right,rgba(52,211,153,0.10),transparent_60%)]',
-  worked_example: 'bg-[radial-gradient(ellipse_at_top_left,rgba(96,165,250,0.10),transparent_55%)]',
-  check_understanding:
-    'bg-[radial-gradient(ellipse_at_bottom_left,rgba(168,85,247,0.08),transparent_55%)]',
-  misconception: 'bg-[radial-gradient(ellipse_at_top,rgba(244,63,94,0.08),transparent_55%)]',
-  summary: 'bg-[radial-gradient(ellipse_at_bottom_right,rgba(250,204,21,0.10),transparent_55%)]',
-  plenary: 'bg-[radial-gradient(ellipse_at_top,rgba(96,165,250,0.10),transparent_55%)]',
-};
+/** Neutral 44px control — the cert footer's secondary button at hub height. */
+const CONTROL = cn(buttonSecondaryCn, 'h-11 px-4 text-[12.5px]');
+/** In-row text action on a slide card. */
+const TEXT_ACTION =
+  'flex h-11 items-center px-2.5 text-[12.5px] font-semibold text-white transition-colors touch-manipulation hover:text-elec-yellow disabled:text-white disabled:opacity-40';
+/** Page-width card: edge-to-edge on a phone, inset and rounded from sm: up. */
+const PAGE_CARD = cn(
+  '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
+  CARD_SURFACE
+);
+
+function plural(n: number, one: string, many = `${one}s`): string {
+  return `${n} ${n === 1 ? one : many}`;
+}
 
 export default function LessonSlideDeckPage() {
   const { id } = useParams<{ id: string }>();
@@ -130,18 +138,21 @@ export default function LessonSlideDeckPage() {
     duplicateSlide,
     deleteSlide,
     setTheme,
+    generateSlideImage,
     generateMissingImages,
     imageStatus,
   } = useSlideDeck(id ?? null);
   const [mode, setMode] = useState<Mode>('viewer');
   const [focusedIndex, setFocusedIndex] = useState(0);
-  const [quality, setQuality] = useState<'low' | 'medium' | 'high'>('medium');
-  const [toolsOpen, setToolsOpen] = useState(false);
+  const [quality, setQuality] = useState<Quality>('medium');
+  const [settingsOpen, setSettingsOpen] = useState(false);
   const [preflightOpen, setPreflightOpen] = useState(false);
   const [editorIndex, setEditorIndex] = useState<number | null>(null);
+  const [regenIndex, setRegenIndex] = useState<number | null>(null);
   const [exportingPptx, setExportingPptx] = useState(false);
 
   const theme: DeckTheme = deck?.theme ?? 'dark';
+  const planPath = `/college/lessons/${id}`;
 
   const slides = useMemo(() => deck?.slides ?? [], [deck]);
   const focused = slides[focusedIndex];
@@ -208,6 +219,11 @@ export default function LessonSlideDeckPage() {
     return () => window.removeEventListener('keydown', onKey);
   }, [mode, slides.length]);
 
+  // A deleted last slide can leave the focus index past the end.
+  useEffect(() => {
+    if (slides.length && focusedIndex > slides.length - 1) setFocusedIndex(slides.length - 1);
+  }, [slides.length, focusedIndex]);
+
   const handleGenerateConfirmed = useCallback(
     async (preflight: DeckPreflight) => {
       // Reset the per-prompt fired tracker so the new deck's image
@@ -253,6 +269,37 @@ export default function LessonSlideDeckPage() {
     }
   }, [deck, plan, brand, theme]);
 
+  const handleNewPhoto = useCallback(
+    (i: number) => {
+      const s = slides[i];
+      if (!s?.image_prompt) return;
+      firedPromptsRef.current.set(i, s.image_prompt);
+      void generateSlideImage(i, s.image_prompt, quality);
+    },
+    [slides, generateSlideImage, quality]
+  );
+
+  const handleDelete = useCallback(
+    (i: number) => {
+      if (!confirm('Delete this slide?')) return;
+      void deleteSlide(i);
+    },
+    [deleteSlide]
+  );
+
+  // Browser back rather than a pushed route, so plan ↔ slides does not
+  // build an endless history chain. Deep links with no history fall back
+  // to the plan page.
+  const goBack = useCallback(() => {
+    if (window.history.length > 1) navigate(-1);
+    else navigate(planPath);
+  }, [navigate, planPath]);
+
+  const openPresenter = () => {
+    setFocusedIndex(0);
+    setMode('presenter');
+  };
+
   if (mode === 'presenter' && focused) {
     return (
       <PresenterMode
@@ -267,373 +314,251 @@ export default function LessonSlideDeckPage() {
     );
   }
 
+  const summaryParts: string[] = [];
+  if (plan?.duration_minutes) summaryParts.push(`${plan.duration_minutes} min lesson`);
+  summaryParts.push(plural(slides.length, 'slide'));
+  if (totalActivityMins > 0) summaryParts.push(`${totalActivityMins} min of activity`);
+  if (generatedAt) summaryParts.push(`generated ${formatGenAt(generatedAt)}`);
+
   return (
-    <PageFrame>
-      <div className="max-w-[1100px] mx-auto px-4 sm:px-6 py-5 sm:py-7">
-        <button
-          type="button"
-          onClick={() => {
-            // Use browser back so we don't push another history entry —
-            // otherwise plan ↔ slides causes an infinite back-button loop.
-            // If the user landed directly via deep-link (no prior history),
-            // fall back to the lesson plan URL.
-            if (window.history.length > 1) navigate(-1);
-            else navigate(`/college/lessons/${id}`);
-          }}
-          className="text-[11px] font-medium text-white hover:text-elec-yellow transition-colors touch-manipulation"
-        >
-          ← Back to lesson plan
-        </button>
-        <div className="mt-3 flex items-end justify-between gap-4 flex-wrap">
-          <div className="min-w-0">
-            <div className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-elec-yellow">
-              Slide deck
-            </div>
-            <h1 className="mt-1 text-[26px] sm:text-[34px] font-semibold tracking-tight text-white leading-[1.05]">
-              {plan?.title ?? 'Lesson'}
-            </h1>
-            {plan && (
-              <p className="mt-1 text-[12.5px] text-white">
-                {plan.duration_minutes ?? 90} min lesson · {slides.length} slide
-                {slides.length === 1 ? '' : 's'}
-                {totalActivityMins > 0 && ` · ${totalActivityMins} min of activity`}
-                {generatedAt && ` · generated ${formatGenAt(generatedAt)}`}
-              </p>
-            )}
-            {(generatingImagesNow > 0 || pendingImages > 0) && (
-              <div className="mt-2 inline-flex items-center gap-2 text-[11px] text-white">
-                <span className="relative inline-flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-elec-yellow opacity-60" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-elec-yellow" />
-                </span>
-                <span>
-                  {generatingImagesNow > 0
-                    ? `Generating photo ${slides.length - pendingImages + 1}/${slides.length}…`
-                    : `${pendingImages} photos queued`}
-                </span>
-              </div>
-            )}
-          </div>
-          <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
-            {slides.length > 0 && (
-              <>
-                {/* Secondary controls — inline on desktop, collapsed into More on mobile */}
-                <div className="hidden md:flex items-center gap-2 flex-wrap">
-                  {/* Theme toggle */}
-                  <div className="inline-flex h-11 rounded-lg border border-white/[0.10] overflow-hidden">
-                    <button
-                      type="button"
-                      onClick={() => void setTheme('dark')}
-                      className={cn(
-                        'px-3 text-[11.5px] font-medium touch-manipulation transition-colors',
-                        theme === 'dark'
-                          ? 'bg-white/[0.10] text-white'
-                          : 'bg-transparent text-white/55 hover:text-white'
-                      )}
-                    >
-                      Dark
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => void setTheme('light')}
-                      className={cn(
-                        'px-3 text-[11.5px] font-medium touch-manipulation transition-colors',
-                        theme === 'light'
-                          ? 'bg-white text-black'
-                          : 'bg-transparent text-white/55 hover:text-white'
-                      )}
-                    >
-                      Light
-                    </button>
-                  </div>
-                  {/* Quality select */}
-                  <select
-                    value={quality}
-                    onChange={(e) => setQuality(e.target.value as 'low' | 'medium' | 'high')}
-                    className="h-11 px-3 rounded-lg bg-[hsl(0_0%_10%)] border border-white/[0.10] text-white text-[12px] font-medium touch-manipulation"
-                    title="Image quality"
-                  >
-                    <option value="low">£0.40 photos</option>
-                    <option value="medium">£2 photos</option>
-                    <option value="high">£8 photos</option>
-                  </select>
-                  {pendingImages > 0 && (
-                    <button
-                      type="button"
-                      onClick={() => void generateMissingImages(quality)}
-                      className="inline-flex h-11 px-4 rounded-lg bg-transparent border border-white/[0.10] hover:border-white/25 text-white text-[12px] font-medium transition-colors touch-manipulation"
-                    >
-                      Generate {pendingImages} photo{pendingImages === 1 ? '' : 's'}
-                    </button>
-                  )}
-                  <button
-                    type="button"
-                    onClick={handleExportPptx}
-                    disabled={exportingPptx}
-                    className="h-11 px-4 rounded-lg bg-transparent border border-white/[0.10] hover:border-white/25 text-white text-[12px] font-medium transition-colors touch-manipulation"
-                    title="Download PowerPoint"
-                  >
-                    {exportingPptx ? 'Building…' : '↓ PPTX'}
-                  </button>
-                  {/* Focus mode */}
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setFocusedIndex(0);
-                      setMode('single');
-                    }}
-                    className="inline-flex h-11 px-4 rounded-lg bg-transparent border border-white/[0.10] hover:border-white/25 text-white text-[12px] font-medium transition-colors touch-manipulation"
-                  >
-                    Focus
-                  </button>
-                </div>
+    <HubPage>
+      <HubMasthead
+        section="College"
+        title={`Slides · ${plan?.title ?? 'Lesson'}`}
+        backTo={planPath}
+        onBack={goBack}
+      />
+      <HubBody pushContext="Get notified about marking, off-the-job hours and learners who need you">
+        {error && <ErrorLine text={error} />}
 
-                {/* Mobile overflow trigger */}
-                <button
-                  type="button"
-                  onClick={() => setToolsOpen(true)}
-                  className="md:hidden h-11 px-3 rounded-lg bg-transparent border border-white/[0.10] text-white text-[12px] font-medium transition-colors touch-manipulation"
-                >
-                  ⋯ More
-                </button>
+        {loading && !deck && <LoadingSkeleton />}
 
-                <button
-                  type="button"
-                  onClick={() => {
-                    setFocusedIndex(0);
-                    setMode('presenter');
-                  }}
-                  className="h-11 px-3 sm:px-4 rounded-lg bg-elec-yellow text-black text-[12px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation"
-                >
-                  Present →
-                </button>
-              </>
-            )}
-            <button
-              type="button"
-              onClick={() => setPreflightOpen(true)}
-              disabled={generating}
-              className={cn(
-                'h-11 px-3 sm:px-4 rounded-lg text-[12px] font-semibold transition-colors touch-manipulation',
-                slides.length === 0
-                  ? 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
-                  : 'bg-transparent border border-white/[0.10] hover:border-white/25 text-white',
-                generating && 'opacity-60 cursor-wait'
-              )}
+        {!loading && slides.length === 0 && !generating && (
+          <EmptyDeckCard onBuild={() => setPreflightOpen(true)} />
+        )}
+
+        {generating && <GenerationProgress replacing={slides.length > 0} />}
+
+        {slides.length > 0 && (
+          <>
+            {/* Deck — the figures and the controls */}
+            <motion.section
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="space-y-3"
             >
-              {generating ? 'Generating…' : slides.length === 0 ? 'Generate slides' : 'Regenerate'}
-            </button>
-          </div>
-        </div>
+              <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
+                <HubSectionHeading>Deck</HubSectionHeading>
+                <span className="text-right text-[11px] font-semibold tabular-nums text-white">
+                  {summaryParts.join(' · ')}
+                </span>
+              </motion.div>
 
-        {/* Mobile tools overflow sheet */}
-        <Sheet open={toolsOpen} onOpenChange={setToolsOpen}>
-          <SheetContent
-            side="bottom"
-            className="h-auto max-h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
-          >
-            <SheetShell eyebrow="Slide deck" title="Deck tools">
-              {/* Theme */}
-              <div>
-                <div className="text-[11px] font-medium uppercase tracking-[0.14em] text-white/70 mb-2">
-                  Theme
-                </div>
-                <div className="inline-flex h-11 w-full rounded-lg border border-white/[0.10] overflow-hidden">
-                  <button
-                    type="button"
-                    onClick={() => void setTheme('dark')}
-                    className={cn(
-                      'flex-1 text-[12.5px] font-medium touch-manipulation transition-colors',
-                      theme === 'dark'
-                        ? 'bg-white/[0.10] text-white'
-                        : 'bg-transparent text-white/55 hover:text-white'
-                    )}
-                  >
-                    Dark
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => void setTheme('light')}
-                    className={cn(
-                      'flex-1 text-[12.5px] font-medium touch-manipulation transition-colors',
-                      theme === 'light'
-                        ? 'bg-white text-black'
-                        : 'bg-transparent text-white/55 hover:text-white'
-                    )}
-                  >
-                    Light
-                  </button>
-                </div>
-              </div>
-
-              {/* Photo quality */}
-              <div>
-                <div className="text-[11px] font-medium uppercase tracking-[0.14em] text-white/70 mb-2">
-                  Photo quality
-                </div>
-                <select
-                  value={quality}
-                  onChange={(e) => setQuality(e.target.value as 'low' | 'medium' | 'high')}
-                  className="h-11 w-full px-3 rounded-lg bg-[hsl(0_0%_10%)] border border-white/[0.10] text-white text-[12.5px] font-medium touch-manipulation"
+              <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-2">
+                <button
+                  type="button"
+                  onClick={openPresenter}
+                  className={cn(buttonPrimaryCn, 'h-11 w-full text-[13px] sm:w-auto sm:px-6')}
                 >
-                  <option value="low">£0.40 photos</option>
-                  <option value="medium">£2 photos</option>
-                  <option value="high">£8 photos</option>
-                </select>
-              </div>
-
-              {/* Actions */}
-              <div className="grid grid-cols-2 gap-2">
-                {pendingImages > 0 && (
-                  <SecondaryButton
-                    fullWidth
-                    onClick={() => {
-                      setToolsOpen(false);
-                      void generateMissingImages(quality);
-                    }}
-                  >
-                    Generate {pendingImages} photo{pendingImages === 1 ? '' : 's'}
-                  </SecondaryButton>
-                )}
-                <SecondaryButton
-                  fullWidth
-                  disabled={exportingPptx}
+                  Present
+                </button>
+                <button
+                  type="button"
                   onClick={() => {
-                    setToolsOpen(false);
-                    void handleExportPptx();
-                  }}
-                >
-                  {exportingPptx ? 'Building…' : '↓ PPTX'}
-                </SecondaryButton>
-                <SecondaryButton
-                  fullWidth
-                  onClick={() => {
-                    setToolsOpen(false);
                     setFocusedIndex(0);
                     setMode('single');
                   }}
+                  className={CONTROL}
                 >
                   Focus
-                </SecondaryButton>
-              </div>
-            </SheetShell>
-          </SheetContent>
-        </Sheet>
-
-        {error && (
-          <div className="mt-4 rounded-xl border border-rose-300/30 bg-rose-500/[0.06] px-4 py-3 text-[13px] text-rose-200">
-            {error}
-          </div>
-        )}
-
-        {loading && !deck && (
-          <div className="mt-8 space-y-3">
-            {Array.from({ length: 4 }).map((_, i) => (
-              <div
-                key={i}
-                className="h-[180px] rounded-2xl bg-[hsl(0_0%_10%)] border border-white/[0.06] animate-pulse"
-              />
-            ))}
-          </div>
-        )}
-
-        {!loading && slides.length === 0 && !generating && (
-          <EmptyState onGenerate={() => setPreflightOpen(true)} />
-        )}
-
-        {generating && slides.length === 0 && <GenerationProgress />}
-
-        {/* Stacked viewer with drag-reorder */}
-        {mode === 'viewer' && slides.length > 0 && (
-          <DndContext
-            sensors={sensors}
-            collisionDetection={closestCenter}
-            onDragEnd={handleDragEnd}
-          >
-            <SortableContext items={slideIds} strategy={verticalListSortingStrategy}>
-              <ol className="mt-6 space-y-4">
-                {slides.map((slide, i) => (
-                  <SortableSlideRow
-                    key={slideIds[i]}
-                    sortableId={slideIds[i]}
-                    slide={slide}
-                    index={i}
-                    total={slides.length}
-                    theme={theme}
-                    imageStatus={imageStatus[i] ?? null}
-                    regenerating={regeneratingIndex === i}
-                    onFocus={() => {
-                      setFocusedIndex(i);
-                      setMode('single');
-                    }}
-                    onEditOpen={() => setEditorIndex(i)}
-                    onMoveUp={i > 0 ? () => void reorderSlides(i, i - 1) : undefined}
-                    onMoveDown={
-                      i < slides.length - 1 ? () => void reorderSlides(i, i + 1) : undefined
-                    }
-                  />
-                ))}
-              </ol>
-            </SortableContext>
-          </DndContext>
-        )}
-
-        {/* Single-focus mode */}
-        {mode === 'single' && focused && (
-          <div className="mt-6">
-            <SlideCard
-              slide={focused}
-              index={focusedIndex}
-              total={slides.length}
-              theme={theme}
-              imageStatus={imageStatus[focusedIndex] ?? null}
-              regenerating={regeneratingIndex === focusedIndex}
-              focused
-              onEditOpen={() => setEditorIndex(focusedIndex)}
-            />
-            <div className="mt-4 flex items-center justify-between gap-3">
-              <button
-                type="button"
-                onClick={() => setMode('viewer')}
-                className="text-[11.5px] font-medium text-white hover:text-elec-yellow transition-colors touch-manipulation"
-              >
-                ← Back to all slides
-              </button>
-              <div className="flex items-center gap-2">
+                </button>
                 <button
                   type="button"
-                  onClick={() => setFocusedIndex((i) => Math.max(0, i - 1))}
-                  disabled={focusedIndex === 0}
-                  className="h-10 px-4 rounded-lg bg-transparent border border-white/[0.10] hover:border-white/25 disabled:opacity-30 text-white text-[12px] font-medium transition-colors touch-manipulation"
+                  onClick={() => void handleExportPptx()}
+                  disabled={exportingPptx}
+                  className={CONTROL}
                 >
-                  ← Prev
+                  {exportingPptx ? 'Building…' : 'Download PowerPoint'}
                 </button>
-                <span className="text-[12px] text-white tabular-nums">
-                  {focusedIndex + 1} / {slides.length}
+                {pendingImages > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => void generateMissingImages(quality)}
+                    disabled={generatingImagesNow > 0}
+                    className={CONTROL}
+                  >
+                    {generatingImagesNow > 0
+                      ? 'Generating photos…'
+                      : `Generate ${plural(pendingImages, 'photo')}`}
+                  </button>
+                )}
+                <button
+                  type="button"
+                  onClick={() => setPreflightOpen(true)}
+                  disabled={generating}
+                  className={CONTROL}
+                >
+                  {generating ? 'Rebuilding…' : 'Rebuild deck'}
+                </button>
+                <button type="button" onClick={() => setSettingsOpen(true)} className={CONTROL}>
+                  Settings
+                </button>
+              </motion.div>
+
+              {(generatingImagesNow > 0 || pendingImages > 0) && (
+                <motion.div
+                  variants={itemVariants}
+                  className="flex items-center gap-2 text-[12px] text-white"
+                >
+                  <PulsingDot />
+                  <span>
+                    {generatingImagesNow > 0
+                      ? `Generating ${plural(generatingImagesNow, 'photo')} — ${pendingImages} still to come`
+                      : `${plural(pendingImages, 'photo')} queued`}
+                  </span>
+                </motion.div>
+              )}
+            </motion.section>
+
+            {/* Slides */}
+            <motion.section
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="space-y-3"
+            >
+              <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
+                <HubSectionHeading>{mode === 'single' ? 'Focus' : 'Slides'}</HubSectionHeading>
+                <span className="text-[11px] font-semibold tabular-nums text-white">
+                  {mode === 'single'
+                    ? `${focusedIndex + 1} of ${slides.length}`
+                    : plural(slides.length, 'slide')}
                 </span>
-                <button
-                  type="button"
-                  onClick={() => setFocusedIndex((i) => Math.min(slides.length - 1, i + 1))}
-                  disabled={focusedIndex === slides.length - 1}
-                  className="h-10 px-4 rounded-lg bg-transparent border border-white/[0.10] hover:border-white/25 disabled:opacity-30 text-white text-[12px] font-medium transition-colors touch-manipulation"
-                >
-                  Next →
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
+              </motion.div>
 
-      {/* Pre-flight dialog — runs before every generate so the tutor can
-          tune slide count / tone / depth. */}
+              {mode === 'viewer' && (
+                <DndContext
+                  sensors={sensors}
+                  collisionDetection={closestCenter}
+                  onDragEnd={handleDragEnd}
+                >
+                  <SortableContext items={slideIds} strategy={verticalListSortingStrategy}>
+                    <ol className="space-y-4">
+                      {slides.map((slide, i) => (
+                        <SortableSlideRow
+                          key={slideIds[i]}
+                          sortableId={slideIds[i]}
+                          slide={slide}
+                          index={i}
+                          total={slides.length}
+                          imageStatus={imageStatus[i] ?? null}
+                          regenerating={regeneratingIndex === i}
+                          onFocus={() => {
+                            setFocusedIndex(i);
+                            setMode('single');
+                          }}
+                          onEditOpen={() => setEditorIndex(i)}
+                          onRegenerate={() => setRegenIndex(i)}
+                          onNewPhoto={slide.image_prompt ? () => handleNewPhoto(i) : undefined}
+                          onDelete={() => handleDelete(i)}
+                          onMoveUp={i > 0 ? () => void reorderSlides(i, i - 1) : undefined}
+                          onMoveDown={
+                            i < slides.length - 1 ? () => void reorderSlides(i, i + 1) : undefined
+                          }
+                        />
+                      ))}
+                    </ol>
+                  </SortableContext>
+                </DndContext>
+              )}
+
+              {mode === 'single' && focused && (
+                <motion.div variants={itemVariants} className="space-y-3">
+                  <SlideCard
+                    slide={focused}
+                    index={focusedIndex}
+                    total={slides.length}
+                    imageStatus={imageStatus[focusedIndex] ?? null}
+                    regenerating={regeneratingIndex === focusedIndex}
+                    focused
+                    onEditOpen={() => setEditorIndex(focusedIndex)}
+                    onRegenerate={() => setRegenIndex(focusedIndex)}
+                    onNewPhoto={
+                      focused.image_prompt ? () => handleNewPhoto(focusedIndex) : undefined
+                    }
+                    onDelete={() => handleDelete(focusedIndex)}
+                  />
+                  <div className="flex items-center justify-between gap-3">
+                    <button
+                      type="button"
+                      onClick={() => setMode('viewer')}
+                      className="-ml-2 flex h-11 items-center px-2 text-[12.5px] font-semibold text-white transition-colors touch-manipulation hover:text-elec-yellow"
+                    >
+                      ← All slides
+                    </button>
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setFocusedIndex((i) => Math.max(0, i - 1))}
+                        disabled={focusedIndex === 0}
+                        className={CONTROL}
+                      >
+                        Previous
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setFocusedIndex((i) => Math.min(slides.length - 1, i + 1))}
+                        disabled={focusedIndex === slides.length - 1}
+                        className={CONTROL}
+                      >
+                        Next
+                      </button>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </motion.section>
+          </>
+        )}
+      </HubBody>
+
+      {/* Deck settings — export theme and photo quality */}
+      <DeckSettingsSheet
+        open={settingsOpen}
+        onOpenChange={setSettingsOpen}
+        theme={theme}
+        onTheme={(t) => void setTheme(t)}
+        quality={quality}
+        onQuality={setQuality}
+      />
+
+      {/* Pre-flight — runs before every build so the tutor can tune
+          slide count, tone, depth and differentiation. */}
       <SlideDeckPreflightDialog
         open={preflightOpen}
         onOpenChange={setPreflightOpen}
         onConfirm={handleGenerateConfirmed}
       />
 
-      {/* Per-slide editor — opens to the right with kind-aware fields. */}
+      {/* Per-slide regenerate with a tweak — the edge function needs a
+          prompt, so this is a sheet rather than a one-tap action. */}
+      <RegenerateSlideSheet
+        open={regenIndex != null}
+        onOpenChange={(o) => {
+          if (!o) setRegenIndex(null);
+        }}
+        slide={regenIndex != null ? slides[regenIndex] : null}
+        index={regenIndex}
+        total={slides.length}
+        busy={regenIndex != null && regeneratingIndex === regenIndex}
+        onRegenerate={async (tweak) => {
+          if (regenIndex == null) return false;
+          return await regenerateSlide(regenIndex, tweak);
+        }}
+      />
+
+      {/* Per-slide editor with kind-aware fields. */}
       <SlideEditorSheet
         open={editorIndex != null}
         onOpenChange={(o) => {
@@ -642,13 +567,8 @@ export default function LessonSlideDeckPage() {
         slide={editorIndex != null ? slides[editorIndex] : null}
         slideIndex={editorIndex}
         totalSlides={slides.length}
-        regenerating={regeneratingIndex === editorIndex}
         onSave={async (patch) => {
           if (editorIndex != null) await updateSlide(editorIndex, patch);
-        }}
-        onRegenerate={async (tweak) => {
-          if (editorIndex == null) return false;
-          return await regenerateSlide(editorIndex, tweak);
         }}
         onDuplicate={async () => {
           if (editorIndex != null) {
@@ -663,27 +583,234 @@ export default function LessonSlideDeckPage() {
           }
         }}
       />
-    </PageFrame>
+    </HubPage>
+  );
+}
+
+/* ───────────────── deck settings sheet ───────────────── */
+
+function DeckSettingsSheet({
+  open,
+  onOpenChange,
+  theme,
+  onTheme,
+  quality,
+  onQuality,
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  theme: DeckTheme;
+  onTheme: (t: DeckTheme) => void;
+  quality: Quality;
+  onQuality: (q: Quality) => void;
+}) {
+  const q = QUALITY_OPTIONS.find((o) => o.value === quality);
+  return (
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent
+        hideCloseButton
+        side="bottom"
+        className="h-auto max-h-[85vh] overflow-hidden rounded-t-2xl border-white/[0.06] bg-[hsl(0_0%_8%)] p-0"
+      >
+        <div className="flex max-h-[85vh] flex-col">
+          <div className="flex flex-shrink-0 justify-center pb-1 pt-2.5">
+            <div className="h-1 w-10 rounded-full bg-white/20" />
+          </div>
+          <div className="flex flex-shrink-0 items-start justify-between gap-3 border-b border-white/[0.06] px-5 pb-4">
+            <div className="min-w-0">
+              <SheetTitle className="text-[20px] font-semibold leading-tight text-white">
+                Deck settings
+              </SheetTitle>
+              <SheetDescription className="mt-1 text-[12.5px] text-white">
+                Saved with the deck. Neither changes the slides themselves.
+              </SheetDescription>
+            </div>
+            <button
+              type="button"
+              onClick={() => onOpenChange(false)}
+              className="-mr-2 flex h-11 shrink-0 items-center px-2 text-[12.5px] font-medium text-white touch-manipulation"
+            >
+              Done
+            </button>
+          </div>
+          <div
+            className="space-y-6 overflow-y-auto overscroll-contain p-5"
+            style={{ paddingBottom: 'max(1.25rem, env(safe-area-inset-bottom))' }}
+          >
+            <div>
+              <div className="text-[12px] font-medium text-white">PowerPoint theme</div>
+              <div className="mt-2 flex gap-2">
+                {(['dark', 'light'] as const).map((t) => (
+                  <button
+                    key={t}
+                    type="button"
+                    onClick={() => onTheme(t)}
+                    className={cn(chipBase, 'px-5', theme === t ? chipOn : chipOff)}
+                  >
+                    {t === 'dark' ? 'Dark' : 'Light'}
+                  </button>
+                ))}
+              </div>
+              <p className="mt-2 text-[12px] leading-snug text-white">
+                Applies to the downloaded file. Presenter mode is always dark.
+              </p>
+            </div>
+            <div>
+              <div className="text-[12px] font-medium text-white">Photo quality</div>
+              <div className="mt-2 flex flex-wrap gap-2">
+                {QUALITY_OPTIONS.map((o) => (
+                  <button
+                    key={o.value}
+                    type="button"
+                    onClick={() => onQuality(o.value)}
+                    className={cn(chipBase, 'px-5', quality === o.value ? chipOn : chipOff)}
+                  >
+                    {o.label}
+                  </button>
+                ))}
+              </div>
+              {q && (
+                <p className="mt-2 text-[12px] leading-snug text-white">
+                  {q.help}. Applies to photos generated from now on.
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+      </SheetContent>
+    </Sheet>
+  );
+}
+
+/* ───────────────── regenerate-slide sheet ───────────────── */
+
+function RegenerateSlideSheet({
+  open,
+  onOpenChange,
+  slide,
+  index,
+  total,
+  busy,
+  onRegenerate,
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  slide: Slide | null;
+  index: number | null;
+  total: number;
+  busy: boolean;
+  onRegenerate: (tweak: string) => Promise<boolean>;
+}) {
+  const [tweak, setTweak] = useState('');
+  useEffect(() => {
+    if (!open) setTweak('');
+  }, [open]);
+
+  const submit = async () => {
+    if (!tweak.trim() || busy) return;
+    const ok = await onRegenerate(tweak.trim());
+    if (ok) onOpenChange(false);
+  };
+
+  return (
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent
+        hideCloseButton
+        side="bottom"
+        className="h-auto max-h-[85vh] overflow-hidden rounded-t-2xl border-white/[0.06] bg-[hsl(0_0%_8%)] p-0"
+      >
+        <div className="flex max-h-[85vh] flex-col">
+          <div className="flex flex-shrink-0 justify-center pb-1 pt-2.5">
+            <div className="h-1 w-10 rounded-full bg-white/20" />
+          </div>
+          <div className="flex flex-shrink-0 items-start justify-between gap-3 border-b border-white/[0.06] px-5 pb-4">
+            <div className="min-w-0">
+              <SheetTitle className="text-[20px] font-semibold leading-tight text-white">
+                Regenerate slide
+              </SheetTitle>
+              <SheetDescription className="mt-1 truncate text-[12.5px] text-white">
+                {slide && index != null
+                  ? `${KIND_LABEL[slide.kind]} · slide ${index + 1} of ${total}${
+                      slide.heading ? ` · ${slide.heading}` : ''
+                    }`
+                  : 'Slide'}
+              </SheetDescription>
+            </div>
+            <button
+              type="button"
+              onClick={() => onOpenChange(false)}
+              className="-mr-2 flex h-11 shrink-0 items-center px-2 text-[12.5px] font-medium text-white touch-manipulation"
+            >
+              Cancel
+            </button>
+          </div>
+          <div className="space-y-3 overflow-y-auto overscroll-contain p-5">
+            <label className="block">
+              <span className="mb-1 block text-[12px] font-medium text-white">
+                What should change?
+              </span>
+              <textarea
+                value={tweak}
+                onChange={(e) => setTweak(e.target.value)}
+                onKeyDown={(e) => {
+                  if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+                    e.preventDefault();
+                    void submit();
+                  }
+                }}
+                rows={4}
+                placeholder="e.g. more practical with a real on-site example, or swap the regulation cite for 411.3.2.1"
+                className={cn(textareaCn, 'w-full resize-none')}
+              />
+            </label>
+            <p className="text-[12px] leading-snug text-white">
+              The rest of the deck is untouched. If the photo prompt changes, a new photo is
+              generated.
+            </p>
+          </div>
+          <div
+            className="flex-shrink-0 border-t border-white/[0.06] p-4"
+            style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}
+          >
+            <button
+              type="button"
+              onClick={() => void submit()}
+              disabled={!tweak.trim() || busy}
+              className={cn(buttonPrimaryCn, 'w-full sm:w-auto sm:px-6')}
+            >
+              {busy ? 'Regenerating…' : 'Regenerate slide'}
+            </button>
+          </div>
+        </div>
+      </SheetContent>
+    </Sheet>
   );
 }
 
 /* ───────────────── sortable wrapper ───────────────── */
 
-function SortableSlideRow({
-  sortableId,
-  ...rest
-}: {
-  sortableId: string;
+interface SlideCardProps {
   slide: Slide;
   index: number;
   total: number;
-  theme: DeckTheme;
-  imageStatus: 'generating' | 'ready' | 'failed' | null;
+  imageStatus: ImageStatus;
   regenerating: boolean;
-  onFocus: () => void;
+  focused?: boolean;
+  onFocus?: () => void;
   onEditOpen: () => void;
+  onRegenerate: () => void;
+  onNewPhoto?: () => void;
+  onDelete: () => void;
   onMoveUp?: () => void;
   onMoveDown?: () => void;
+  dragHandleProps?: Record<string, unknown>;
+}
+
+function SortableSlideRow({
+  sortableId,
+  ...rest
+}: SlideCardProps & {
+  sortableId: string;
 }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: sortableId,
@@ -702,261 +829,182 @@ function SortableSlideRow({
 
 /* ───────────────── slide card ───────────────── */
 
+const ICON_CONTROL =
+  'flex h-11 w-11 items-center justify-center text-[15px] leading-none text-white transition-colors touch-manipulation hover:text-elec-yellow disabled:opacity-30';
+
 function SlideCard({
   slide,
   index,
   total,
-  theme,
   imageStatus,
   regenerating,
   focused = false,
   onFocus,
   onEditOpen,
+  onRegenerate,
+  onNewPhoto,
+  onDelete,
   onMoveUp,
   onMoveDown,
   dragHandleProps,
-}: {
-  slide: Slide;
-  index: number;
-  total: number;
-  theme: DeckTheme;
-  imageStatus: 'generating' | 'ready' | 'failed' | null;
-  regenerating: boolean;
-  focused?: boolean;
-  onFocus?: () => void;
-  onEditOpen: () => void;
-  onMoveUp?: () => void;
-  onMoveDown?: () => void;
-  dragHandleProps?: Record<string, unknown>;
-}) {
+}: SlideCardProps) {
   const isImageKind =
     slide.kind === 'image_concept' ||
     slide.kind === 'starter' ||
     (!!slide.image_prompt && (slide.kind === 'plenary' || slide.kind === 'concept'));
 
-  const pill = KIND_PILL[slide.kind] ?? 'border-white/[0.16] bg-white/[0.04] text-white';
-  const backdrop = theme === 'dark' ? (KIND_BACKDROP[slide.kind] ?? '') : '';
-  const cardBg = theme === 'dark' ? 'bg-[hsl(0_0%_10%)]' : 'bg-white';
-  const cardBorder = theme === 'dark' ? 'border-white/[0.06]' : 'border-black/[0.10]';
-
   return (
-    <div
-      className={cn(
-        'relative overflow-hidden rounded-2xl border transition-colors',
-        cardBg,
-        focused ? 'border-elec-yellow/40 shadow-[0_0_0_1px_rgba(250,204,21,0.10)]' : cardBorder,
-        backdrop,
-        regenerating && 'opacity-60'
-      )}
-    >
+    <div className={cn('relative', PAGE_CARD, focused && 'border-elec-yellow/70')}>
       {regenerating && (
-        <div className="absolute inset-0 z-10 bg-black/40 flex items-center justify-center backdrop-blur-sm">
-          <div className="text-[12px] font-medium text-white tracking-wide uppercase">
+        <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+          <div className="flex items-center gap-2 text-[12.5px] font-semibold text-white">
+            <PulsingDot />
             Regenerating slide…
           </div>
         </div>
       )}
-      {/* Image-led layout: image full-bleed at top of card */}
+
+      {/* Image-led layout: photo full-bleed at the top of the card */}
       {isImageKind && (
         <SlideImage
           imageUrl={slide.image_url}
           imagePrompt={slide.image_prompt}
           status={imageStatus}
-          aspect="3/2"
           caption={slide.image_caption}
         />
       )}
 
-      <div className="px-4 sm:px-7 py-4 sm:py-7">
-        <div className="flex items-start justify-between gap-2 sm:gap-3 flex-wrap">
-          <div className="min-w-0 flex-1">
-            <div className="flex items-center gap-2 flex-wrap">
-              <span
-                className={cn(
-                  'inline-flex items-center h-5 px-2 rounded-md border text-[10px] font-semibold uppercase tracking-[0.06em]',
-                  pill
-                )}
-              >
-                {KIND_EYEBROW[slide.kind]}
-              </span>
-              <span className="text-[10.5px] tabular-nums text-white">
-                {index + 1} / {total}
-              </span>
-              {slide.kind === 'activity' && slide.time_minutes != null && (
-                <span className="text-[10.5px] text-white">{slide.time_minutes} min</span>
-              )}
-              {slide.kind === 'activity' && slide.group_size && (
-                <span className="text-[10.5px] text-white capitalize">
-                  {slide.group_size.replace(/_/g, ' ')}
-                </span>
-              )}
-            </div>
-
-            <button
-              type="button"
-              onClick={onEditOpen}
-              className={cn(
-                'mt-3 block text-left text-[24px] sm:text-[32px] font-semibold tracking-tight leading-[1.1] hover:text-elec-yellow transition-colors touch-manipulation',
-                theme === 'light' ? 'text-black' : 'text-white'
-              )}
-              title="Edit slide"
-            >
-              {slide.heading ?? '(untitled slide)'}
-            </button>
-
-            {slide.subtitle && (
-              <div
-                className={cn(
-                  'mt-2 text-[15px] sm:text-[16px]',
-                  theme === 'light' ? 'text-black/70' : 'text-white'
-                )}
-              >
-                {slide.subtitle}
-              </div>
-            )}
-          </div>
-
-          <div className="shrink-0 flex items-center gap-1.5">
-            {/* Move up/down — touch-friendly alternative to drag (drag is touch-hostile) */}
-            {(onMoveUp || onMoveDown) && (
-              <div className="flex items-center gap-1.5">
-                <button
-                  type="button"
-                  onClick={onMoveUp}
-                  disabled={!onMoveUp}
-                  aria-label="Move slide up"
-                  title="Move up"
-                  className={cn(
-                    'h-11 w-9 rounded-lg border flex items-center justify-center transition-colors touch-manipulation disabled:opacity-30',
-                    theme === 'light'
-                      ? 'border-black/[0.12] text-black/55 hover:border-black/30'
-                      : 'border-white/[0.10] text-white/55 hover:border-white/25'
-                  )}
-                >
-                  <span className="text-[14px] leading-none">↑</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={onMoveDown}
-                  disabled={!onMoveDown}
-                  aria-label="Move slide down"
-                  title="Move down"
-                  className={cn(
-                    'h-11 w-9 rounded-lg border flex items-center justify-center transition-colors touch-manipulation disabled:opacity-30',
-                    theme === 'light'
-                      ? 'border-black/[0.12] text-black/55 hover:border-black/30'
-                      : 'border-white/[0.10] text-white/55 hover:border-white/25'
-                  )}
-                >
-                  <span className="text-[14px] leading-none">↓</span>
-                </button>
-              </div>
-            )}
-            {dragHandleProps && (
-              <button
-                type="button"
-                {...dragHandleProps}
-                className={cn(
-                  'hidden sm:flex h-11 w-9 rounded-lg border items-center justify-center cursor-grab active:cursor-grabbing transition-colors touch-manipulation',
-                  theme === 'light'
-                    ? 'border-black/[0.12] text-black/55 hover:border-black/30'
-                    : 'border-white/[0.10] text-white/55 hover:border-white/25'
-                )}
-                aria-label="Drag to reorder"
-                title="Drag to reorder"
-              >
-                <span className="text-[14px] leading-none">⠿</span>
-              </button>
-            )}
-            <button
-              type="button"
-              onClick={onEditOpen}
-              className={cn(
-                'h-11 px-3 rounded-lg border text-[11.5px] font-medium transition-colors touch-manipulation',
-                theme === 'light'
-                  ? 'border-black/[0.12] text-black hover:border-black/30'
-                  : 'border-white/[0.10] text-white hover:border-white/25'
-              )}
-            >
-              Edit
-            </button>
-            {onFocus && !focused && (
-              <button
-                type="button"
-                onClick={onFocus}
-                className={cn(
-                  'h-11 px-3 rounded-lg border text-[11.5px] font-medium transition-colors touch-manipulation',
-                  theme === 'light'
-                    ? 'border-black/[0.12] text-black hover:border-black/30'
-                    : 'border-white/[0.10] text-white hover:border-white/25'
-                )}
-              >
-                Focus
-              </button>
-            )}
-          </div>
-        </div>
-
-        <div className="mt-5">
-          <SlideBody slide={slide} theme={theme} />
-        </div>
-
-        {/* AC chip + speaker notes row */}
-        <div className="mt-5 flex flex-wrap items-start gap-3">
-          {slide.slide_acs && slide.slide_acs.length > 0 && (
-            <div className="inline-flex items-center gap-1.5 flex-wrap">
-              <span
-                className={cn(
-                  'text-[10px] font-medium uppercase tracking-[0.18em]',
-                  theme === 'light' ? 'text-black/55' : 'text-white/55'
-                )}
-              >
-                Maps to
-              </span>
-              {slide.slide_acs.map((ac) => (
-                <span
-                  key={ac}
-                  className={cn(
-                    'inline-flex items-center h-5 px-2 rounded-md border text-[10.5px] font-semibold tabular-nums',
-                    theme === 'light'
-                      ? 'border-black/[0.16] bg-black/[0.04] text-black'
-                      : 'border-elec-yellow/25 bg-elec-yellow/[0.06] text-elec-yellow'
-                  )}
-                >
-                  {ac}
-                </span>
-              ))}
-            </div>
+      <div className="px-4 py-4 sm:px-6 sm:py-5">
+        <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px]">
+          <span className="font-semibold text-elec-yellow">{KIND_LABEL[slide.kind]}</span>
+          <span className="tabular-nums text-white">
+            {index + 1} / {total}
+          </span>
+          {slide.kind === 'activity' && slide.time_minutes != null && (
+            <span className="text-white">· {slide.time_minutes} min</span>
+          )}
+          {slide.kind === 'activity' && slide.group_size && (
+            <span className="capitalize text-white">· {slide.group_size.replace(/_/g, ' ')}</span>
           )}
         </div>
 
+        <button
+          type="button"
+          onClick={onEditOpen}
+          className="mt-2 block text-left text-[22px] font-semibold leading-[1.1] tracking-tight text-white transition-colors touch-manipulation hover:text-elec-yellow sm:text-[28px]"
+          title="Edit slide"
+        >
+          {slide.heading ?? '(untitled slide)'}
+        </button>
+
+        {slide.subtitle && (
+          <div className="mt-2 text-[15px] leading-snug text-white sm:text-[16px]">
+            {slide.subtitle}
+          </div>
+        )}
+
+        <div className="mt-4">
+          <SlideBody slide={slide} />
+        </div>
+
+        {slide.slide_acs && slide.slide_acs.length > 0 && (
+          <div className="mt-4 flex flex-wrap items-center gap-1.5">
+            <span className="mr-0.5 text-[11px] font-medium text-white">Maps to</span>
+            {slide.slide_acs.map((ac) => (
+              <span
+                key={ac}
+                className="inline-flex h-6 items-center rounded-md border border-white/[0.15] px-2 text-[11px] font-semibold tabular-nums text-white"
+              >
+                {ac}
+              </span>
+            ))}
+          </div>
+        )}
+
         {slide.speaker_notes && (
-          <div
-            className={cn(
-              'mt-4 rounded-lg border px-4 py-3',
-              theme === 'light'
-                ? 'border-black/[0.10] bg-black/[0.03]'
-                : 'border-white/[0.06] bg-white/[0.02]'
-            )}
-          >
-            <div
-              className={cn(
-                'text-[10px] font-medium uppercase tracking-[0.18em]',
-                theme === 'light' ? 'text-black/55' : 'text-white'
-              )}
-            >
-              Speaker notes
-            </div>
-            <p
-              className={cn(
-                'mt-1 text-[13px] leading-relaxed whitespace-pre-line',
-                theme === 'light' ? 'text-black/85' : 'text-white'
-              )}
-            >
+          <div className="mt-4 border-t border-white/[0.10] pt-3">
+            <div className="text-[11px] font-semibold text-elec-yellow">Speaker notes</div>
+            <p className="mt-1 whitespace-pre-line text-[13px] leading-relaxed text-white">
               {slide.speaker_notes}
             </p>
           </div>
         )}
+      </div>
+
+      {/* Actions — reorder on the left, everything else as text on the right */}
+      <div className="flex flex-wrap items-center justify-between gap-x-2 border-t border-white/[0.10] px-1 py-0.5 sm:px-3">
+        <div className="flex items-center">
+          {(onMoveUp || onMoveDown) && (
+            <>
+              <button
+                type="button"
+                onClick={onMoveUp}
+                disabled={!onMoveUp}
+                aria-label="Move slide up"
+                title="Move up"
+                className={ICON_CONTROL}
+              >
+                ↑
+              </button>
+              <button
+                type="button"
+                onClick={onMoveDown}
+                disabled={!onMoveDown}
+                aria-label="Move slide down"
+                title="Move down"
+                className={ICON_CONTROL}
+              >
+                ↓
+              </button>
+            </>
+          )}
+          {dragHandleProps && (
+            <button
+              type="button"
+              {...dragHandleProps}
+              className={cn(ICON_CONTROL, 'hidden cursor-grab active:cursor-grabbing sm:flex')}
+              aria-label="Drag to reorder"
+              title="Drag to reorder"
+            >
+              ⠿
+            </button>
+          )}
+        </div>
+        <div className="flex flex-wrap items-center">
+          <button type="button" onClick={onEditOpen} className={TEXT_ACTION}>
+            Edit
+          </button>
+          <button
+            type="button"
+            onClick={onRegenerate}
+            disabled={regenerating}
+            className={TEXT_ACTION}
+          >
+            Regenerate
+          </button>
+          {onNewPhoto && (
+            <button
+              type="button"
+              onClick={onNewPhoto}
+              disabled={imageStatus === 'generating'}
+              className={TEXT_ACTION}
+            >
+              {imageStatus === 'failed'
+                ? 'Retry photo'
+                : slide.image_url
+                  ? 'New photo'
+                  : 'Generate photo'}
+            </button>
+          )}
+          {onFocus && !focused && (
+            <button type="button" onClick={onFocus} className={TEXT_ACTION}>
+              Focus
+            </button>
+          )}
+          <button type="button" onClick={onDelete} className={TEXT_ACTION}>
+            Delete
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -968,31 +1016,26 @@ function SlideImage({
   imageUrl,
   imagePrompt,
   status,
-  aspect,
   caption,
 }: {
   imageUrl?: string;
   imagePrompt?: string;
-  status: 'generating' | 'ready' | 'failed' | null;
-  aspect: '3/2' | '16/9' | 'square';
+  status: ImageStatus;
   caption?: string;
 }) {
-  const aspectClass =
-    aspect === '3/2' ? 'aspect-[3/2]' : aspect === '16/9' ? 'aspect-video' : 'aspect-square';
-
   if (imageUrl) {
     return (
       <div className="relative">
-        <div className={cn('w-full overflow-hidden bg-black', aspectClass)}>
+        <div className="aspect-[3/2] w-full overflow-hidden bg-black">
           <img
             src={imageUrl}
             alt={caption ?? 'Slide illustration'}
-            className="w-full h-full object-cover"
+            className="h-full w-full object-cover"
             loading="lazy"
           />
         </div>
         {caption && (
-          <div className="absolute bottom-0 left-0 right-0 px-5 py-2 bg-gradient-to-t from-black/70 to-transparent text-[11px] text-white">
+          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-5 py-2 text-[11px] text-white">
             {caption}
           </div>
         )}
@@ -1002,30 +1045,28 @@ function SlideImage({
 
   if (!imagePrompt) return null;
 
-  // Skeleton — shown while generating, before generation, or on failure.
+  // Placeholder — before generation, while generating, or after a failure.
   return (
-    <div className={cn('w-full bg-[hsl(0_0%_8%)] relative overflow-hidden', aspectClass)}>
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(250,204,21,0.06),transparent_60%)]" />
-      <div className="absolute inset-0 flex flex-col items-center justify-center gap-2">
+    <div className="relative aspect-[3/2] w-full overflow-hidden border-b border-white/[0.10]">
+      <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 px-6 text-center">
         {status === 'failed' ? (
           <>
-            <span className="text-[24px]">⚠</span>
-            <span className="text-[11px] text-white">Photo generation failed</span>
+            <span className="h-8 w-[3px] rounded-full bg-red-400" aria-hidden />
+            <span className="text-[12px] font-semibold text-white">
+              Photo could not be generated
+            </span>
           </>
         ) : (
           <>
-            <span className="relative inline-flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-elec-yellow opacity-60" />
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-elec-yellow" />
-            </span>
-            <span className="text-[11px] text-white tracking-wide uppercase">
-              {status === 'generating' ? 'Photographing…' : 'Photo queued'}
-            </span>
-            <span className="text-[10px] text-white/55 px-6 text-center max-w-md italic">
-              {imagePrompt}
+            <PulsingDot />
+            <span className="text-[12px] font-semibold text-white">
+              {status === 'generating' ? 'Generating photo…' : 'Photo queued'}
             </span>
           </>
         )}
+        <span className="line-clamp-3 max-w-md text-[11px] italic leading-snug text-white">
+          {imagePrompt}
+        </span>
       </div>
     </div>
   );
@@ -1033,16 +1074,16 @@ function SlideImage({
 
 /* ───────────────── slide body (kind-specific) ───────────────── */
 
-function SlideBody({ slide, theme = 'dark' }: { slide: Slide; theme?: DeckTheme }) {
-  // Light theme: neutral body/bullet text needs to be near-black instead
-  // of white. Accent slide kinds (pull_quote/reg_cite/big_stat) keep their
-  // coloured accents on both themes — only neutral text flips.
-  const T = theme === 'light' ? 'text-black' : 'text-white';
-  const Tmuted = theme === 'light' ? 'text-black/60' : 'text-white';
-  const KeyTermBg =
-    theme === 'light'
-      ? 'border-black/[0.10] bg-black/[0.02]'
-      : 'border-white/[0.10] bg-white/[0.02]';
+/**
+ * Per-kind template for a slide on the page. Kept per kind — a regulation
+ * cite still leads with its number, a stat with its figure, a comparison
+ * with two columns — but every accent is volt TEXT and every inner panel is
+ * a hairline, not a coloured wash.
+ */
+function SlideBody({ slide }: { slide: Slide }) {
+  const T = 'text-white';
+  const Tmuted = 'text-white';
+  const KeyTermBg = 'border-white/[0.12]';
   switch (slide.kind) {
     case 'title':
       return (
@@ -1105,7 +1146,7 @@ function SlideBody({ slide, theme = 'dark' }: { slide: Slide; theme?: DeckTheme 
       return (
         <div className="space-y-3 max-w-3xl">
           {slide.reg_number && (
-            <div className="text-[28px] sm:text-[36px] font-semibold text-amber-500 tabular-nums tracking-tight leading-none">
+            <div className="text-[28px] sm:text-[36px] font-semibold text-elec-yellow tabular-nums tracking-tight leading-none">
               {slide.reg_number}
             </div>
           )}
@@ -1113,9 +1154,9 @@ function SlideBody({ slide, theme = 'dark' }: { slide: Slide; theme?: DeckTheme 
             <blockquote
               className={cn('text-[18px] sm:text-[22px] leading-[1.4] italic font-light', T)}
             >
-              <span className="text-amber-500/70 mr-1">“</span>
+              <span className="text-elec-yellow mr-1">“</span>
               {slide.clause ?? slide.quote}
-              <span className="text-amber-500/70 ml-1">”</span>
+              <span className="text-elec-yellow ml-1">”</span>
             </blockquote>
           )}
           {slide.attribution && (
@@ -1125,11 +1166,7 @@ function SlideBody({ slide, theme = 'dark' }: { slide: Slide; theme?: DeckTheme 
           )}
           {slide.why_it_matters && (
             <p
-              className={cn(
-                'text-[14px] leading-relaxed pt-2 border-t',
-                T,
-                theme === 'light' ? 'border-black/[0.10]' : 'border-white/[0.06]'
-              )}
+              className={cn('text-[14px] leading-relaxed pt-2 border-t', T, 'border-white/[0.10]')}
             >
               <span className={cn('font-semibold', T)}>Why this matters: </span>
               {slide.why_it_matters}
@@ -1140,7 +1177,7 @@ function SlideBody({ slide, theme = 'dark' }: { slide: Slide; theme?: DeckTheme 
     case 'big_stat':
       return (
         <div className="space-y-2 max-w-2xl">
-          <div className="text-[60px] sm:text-[88px] font-semibold text-cyan-500 tabular-nums tracking-tight leading-none">
+          <div className="text-[60px] sm:text-[88px] font-semibold text-elec-yellow tabular-nums tracking-tight leading-none">
             {slide.stat_value}
           </div>
           {slide.stat_caption && (
@@ -1167,7 +1204,7 @@ function SlideBody({ slide, theme = 'dark' }: { slide: Slide; theme?: DeckTheme 
             const heading = side === 'left' ? slide.left_heading : slide.right_heading;
             const body = side === 'left' ? slide.left_body : slide.right_body;
             const bullets = side === 'left' ? slide.left_bullets : slide.right_bullets;
-            const accent = side === 'left' ? 'text-purple-400' : 'text-emerald-400';
+            const accent = 'text-elec-yellow';
             return (
               <div key={side} className={cn('rounded-xl border px-4 py-4', KeyTermBg)}>
                 {heading && (
@@ -1220,8 +1257,8 @@ function SlideBody({ slide, theme = 'dark' }: { slide: Slide; theme?: DeckTheme 
             </p>
           )}
           {slide.success_criteria && (
-            <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/[0.06] px-4 py-3">
-              <div className="text-[10.5px] font-semibold uppercase tracking-[0.16em] text-emerald-400">
+            <div className="rounded-lg border border-white/[0.12] px-4 py-3">
+              <div className="text-[10.5px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">
                 Success looks like
               </div>
               <div className={cn('mt-0.5 text-[13.5px]', T)}>{slide.success_criteria}</div>
@@ -1233,8 +1270,8 @@ function SlideBody({ slide, theme = 'dark' }: { slide: Slide; theme?: DeckTheme 
       return (
         <div className="space-y-3">
           {slide.problem && (
-            <div className="rounded-lg border border-blue-500/30 bg-blue-500/[0.06] px-4 py-3">
-              <div className="text-[10.5px] font-semibold uppercase tracking-[0.16em] text-blue-400">
+            <div className="rounded-lg border border-white/[0.12] px-4 py-3">
+              <div className="text-[10.5px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">
                 Problem
               </div>
               <div className={cn('mt-0.5 text-[14px] whitespace-pre-line', T)}>{slide.problem}</div>
@@ -1265,16 +1302,16 @@ function SlideBody({ slide, theme = 'dark' }: { slide: Slide; theme?: DeckTheme 
       return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {slide.belief && (
-            <div className="rounded-lg border border-rose-500/30 bg-rose-500/[0.06] px-4 py-3">
-              <div className="text-[10.5px] font-semibold uppercase tracking-[0.16em] text-rose-400">
+            <div className="rounded-lg border border-white/[0.12] px-4 py-3">
+              <div className="text-[10.5px] font-semibold uppercase tracking-[0.16em] text-white">
                 Common belief
               </div>
               <div className={cn('mt-0.5 text-[14px]', T)}>{slide.belief}</div>
             </div>
           )}
           {slide.correction && (
-            <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/[0.06] px-4 py-3">
-              <div className="text-[10.5px] font-semibold uppercase tracking-[0.16em] text-emerald-400">
+            <div className="rounded-lg border border-white/[0.12] px-4 py-3">
+              <div className="text-[10.5px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">
                 Actually
               </div>
               <div className={cn('mt-0.5 text-[14px]', T)}>{slide.correction}</div>
@@ -1289,7 +1326,7 @@ function SlideBody({ slide, theme = 'dark' }: { slide: Slide; theme?: DeckTheme 
             <p className={cn('text-[15px] leading-relaxed whitespace-pre-line', T)}>{slide.body}</p>
           )}
           {slide.exit_ticket && (
-            <div className="rounded-lg border border-elec-yellow/30 bg-elec-yellow/[0.06] px-4 py-3">
+            <div className="rounded-lg border border-white/[0.12] px-4 py-3">
               <div className="text-[10.5px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">
                 Exit ticket
               </div>
@@ -1312,7 +1349,7 @@ function DiagramSvg({ kind }: { kind: DiagramKind | null }) {
   // Lightweight illustrative diagrams — not technically rigorous wiring
   // schematics, but better than a "diagram coming soon" placeholder. Each
   // kind gets its own minimalist SVG.
-  const cls = 'w-full max-w-[640px] mx-auto rounded-lg border border-white/[0.10] bg-white/[0.02]';
+  const cls = 'w-full max-w-[640px] mx-auto rounded-lg border border-white/[0.10]';
   switch (kind) {
     case 'ring_final':
       return (
@@ -1502,8 +1539,8 @@ function DiagramSvg({ kind }: { kind: DiagramKind | null }) {
       );
     default:
       return (
-        <div className="w-full aspect-video rounded-lg border border-white/[0.10] bg-white/[0.02] flex items-center justify-center">
-          <span className="text-[12px] text-white/55 italic">
+        <div className="w-full aspect-video rounded-lg border border-white/[0.10] flex items-center justify-center">
+          <span className="text-[12px] text-white italic">
             Diagram template "{kind}" coming soon
           </span>
         </div>
@@ -1513,6 +1550,12 @@ function DiagramSvg({ kind }: { kind: DiagramKind | null }) {
 
 /* ───────────────── presenter mode ───────────────── */
 
+/**
+ * The thing projected in a classroom. Full-bleed black, its own type scale —
+ * deliberately NOT shrunk into hub cards. Only the chrome changed: the
+ * counter and eyebrow are white or volt rather than white/55, the exit
+ * button is 44px, and Next is the one solid volt control.
+ */
 function PresenterMode({
   slide,
   slideStatus,
@@ -1523,7 +1566,7 @@ function PresenterMode({
   onNext,
 }: {
   slide: Slide;
-  slideStatus: 'generating' | 'ready' | 'failed' | null;
+  slideStatus: ImageStatus;
   index: number;
   total: number;
   onExit: () => void;
@@ -1534,15 +1577,15 @@ function PresenterMode({
     !!slide.image_url && (slide.kind === 'image_concept' || slide.kind === 'starter');
 
   return (
-    <div className="fixed inset-0 z-[100] bg-black text-white flex flex-col">
-      <div className="absolute top-3 right-3 z-10 flex items-center gap-2">
-        <span className="text-[11px] tabular-nums text-white/55">
+    <div className="fixed inset-0 z-[100] flex flex-col bg-black text-white">
+      <div className="absolute right-3 top-3 z-10 flex items-center gap-3">
+        <span className="text-[12px] font-semibold tabular-nums text-white">
           {index + 1} / {total}
         </span>
         <button
           type="button"
           onClick={onExit}
-          className="h-9 px-3 rounded-lg bg-white/[0.06] hover:bg-white/[0.12] text-[11.5px] font-medium touch-manipulation"
+          className="h-11 rounded-xl border border-white/[0.15] bg-black/50 px-4 text-[12.5px] font-medium text-white transition-colors touch-manipulation hover:bg-black/70"
         >
           Exit (Esc)
         </button>
@@ -1552,33 +1595,30 @@ function PresenterMode({
         <img
           src={slide.image_url}
           alt={slide.image_caption ?? ''}
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 h-full w-full object-cover"
         />
       )}
       {hasFullBleedImage && (
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/20" />
       )}
 
-      <div className="relative z-[1] flex-1 flex flex-col justify-center px-5 sm:px-12 lg:px-24 pt-14 pb-24 sm:py-12 max-w-[1400px] w-full mx-auto">
-        <div className="text-[12px] font-medium uppercase tracking-[0.22em] text-white/55">
-          {KIND_EYEBROW[slide.kind]}
+      <div className="relative z-[1] mx-auto flex w-full max-w-[1400px] flex-1 flex-col justify-center px-5 pb-24 pt-14 sm:px-12 sm:py-12 lg:px-24">
+        <div className="text-[12px] font-semibold uppercase tracking-[0.22em] text-elec-yellow">
+          {KIND_LABEL[slide.kind]}
         </div>
-        <h1 className="mt-3 text-[40px] sm:text-[56px] lg:text-[72px] font-semibold tracking-tight leading-[1.02]">
+        <h1 className="mt-3 text-[40px] font-semibold leading-[1.02] tracking-tight sm:text-[56px] lg:text-[72px]">
           {slide.heading ?? ''}
         </h1>
         {slide.subtitle && (
-          <div className="mt-3 text-[20px] sm:text-[26px] text-white/80">{slide.subtitle}</div>
+          <div className="mt-3 text-[20px] text-white sm:text-[26px]">{slide.subtitle}</div>
         )}
-        <div className="mt-8 max-w-[1000px] text-[20px] sm:text-[26px] leading-[1.5]">
+        <div className="mt-8 max-w-[1000px] text-[20px] leading-[1.5] sm:text-[26px]">
           <PresenterBody slide={slide} />
         </div>
 
         {!slide.image_url && slide.image_prompt && (
-          <div className="mt-6 inline-flex items-center gap-2 text-[12px] text-white/55">
-            <span className="relative inline-flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-elec-yellow opacity-60" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-elec-yellow" />
-            </span>
+          <div className="mt-6 inline-flex items-center gap-2 text-[12px] text-white">
+            <PulsingDot />
             <span>{slideStatus === 'generating' ? 'Photo generating…' : 'Photo queued'}</span>
           </div>
         )}
@@ -1589,29 +1629,33 @@ function PresenterMode({
           type="button"
           onClick={onPrev}
           disabled={index === 0}
-          className="h-12 px-5 rounded-lg bg-white/[0.10] hover:bg-white/[0.16] disabled:opacity-30 text-[14px] font-medium touch-manipulation"
+          className="h-12 rounded-xl border border-white/[0.15] bg-black/50 px-5 text-[14px] font-medium text-white transition-colors touch-manipulation hover:bg-black/70 disabled:opacity-30"
         >
-          ← Prev
+          Previous
         </button>
         <button
           type="button"
           onClick={onNext}
           disabled={index === total - 1}
-          className="h-12 px-5 rounded-lg bg-elec-yellow text-black hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/70 text-[14px] font-semibold touch-manipulation"
+          className={cn(buttonPrimaryCn, 'px-6')}
         >
-          Next →
+          Next
         </button>
       </div>
     </div>
   );
 }
 
+/**
+ * Per-kind template at presentation scale. Accents are volt text; the
+ * cyan / amber / purple / emerald / rose of the first version went.
+ */
 function PresenterBody({ slide }: { slide: Slide }) {
   switch (slide.kind) {
     case 'objectives':
     case 'summary':
       return (
-        <ul className="space-y-4 list-disc list-outside ml-6">
+        <ul className="ml-6 list-outside list-disc space-y-4">
           {(slide.bullets ?? []).map((b, i) => (
             <li key={i}>{b}</li>
           ))}
@@ -1621,13 +1665,13 @@ function PresenterBody({ slide }: { slide: Slide }) {
       return (
         <div className="space-y-3">
           {slide.stat_value && (
-            <div className="text-[120px] sm:text-[180px] font-semibold text-cyan-300 tabular-nums leading-none">
+            <div className="text-[120px] font-semibold leading-none tabular-nums text-elec-yellow sm:text-[180px]">
               {slide.stat_value}
             </div>
           )}
           {slide.stat_caption && <p className="text-[24px] sm:text-[32px]">{slide.stat_caption}</p>}
           {slide.stat_source && (
-            <div className="text-[14px] text-white/55 uppercase tracking-[0.18em]">
+            <div className="text-[14px] uppercase tracking-[0.18em] text-white">
               Source · {slide.stat_source}
             </div>
           )}
@@ -1638,19 +1682,19 @@ function PresenterBody({ slide }: { slide: Slide }) {
       return (
         <div className="space-y-4">
           {slide.reg_number && (
-            <div className="text-[60px] sm:text-[80px] font-semibold text-amber-300 tabular-nums leading-none">
+            <div className="text-[60px] font-semibold leading-none tabular-nums text-elec-yellow sm:text-[80px]">
               {slide.reg_number}
             </div>
           )}
           {(slide.clause || slide.quote) && (
-            <p className="italic font-light text-[28px] sm:text-[36px] leading-[1.35]">
-              <span className="text-amber-300/70 mr-1">“</span>
+            <p className="text-[28px] font-light italic leading-[1.35] sm:text-[36px]">
+              <span className="mr-1 text-elec-yellow">“</span>
               {slide.clause ?? slide.quote}
-              <span className="text-amber-300/70 ml-1">”</span>
+              <span className="ml-1 text-elec-yellow">”</span>
             </p>
           )}
           {slide.attribution && (
-            <div className="text-[16px] text-white/55 uppercase tracking-[0.18em]">
+            <div className="text-[16px] uppercase tracking-[0.18em] text-white">
               — {slide.attribution}
             </div>
           )}
@@ -1660,36 +1704,28 @@ function PresenterBody({ slide }: { slide: Slide }) {
     case 'two_column':
       return (
         <div className="grid grid-cols-2 gap-8">
-          <div>
-            {slide.left_heading && (
-              <div className="text-[14px] uppercase tracking-[0.18em] text-purple-300">
-                {slide.left_heading}
+          {(['left', 'right'] as const).map((side) => {
+            const heading = side === 'left' ? slide.left_heading : slide.right_heading;
+            const body = side === 'left' ? slide.left_body : slide.right_body;
+            const bullets = side === 'left' ? slide.left_bullets : slide.right_bullets;
+            return (
+              <div key={side}>
+                {heading && (
+                  <div className="text-[14px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
+                    {heading}
+                  </div>
+                )}
+                {body && <p className="mt-2 whitespace-pre-line">{body}</p>}
+                {bullets && (
+                  <ul className="ml-6 mt-2 list-outside list-disc space-y-1.5 text-[18px]">
+                    {bullets.map((b, i) => (
+                      <li key={i}>{b}</li>
+                    ))}
+                  </ul>
+                )}
               </div>
-            )}
-            {slide.left_body && <p className="mt-2 whitespace-pre-line">{slide.left_body}</p>}
-            {slide.left_bullets && (
-              <ul className="mt-2 space-y-1.5 list-disc list-outside ml-6 text-[18px]">
-                {slide.left_bullets.map((b, i) => (
-                  <li key={i}>{b}</li>
-                ))}
-              </ul>
-            )}
-          </div>
-          <div>
-            {slide.right_heading && (
-              <div className="text-[14px] uppercase tracking-[0.18em] text-emerald-300">
-                {slide.right_heading}
-              </div>
-            )}
-            {slide.right_body && <p className="mt-2 whitespace-pre-line">{slide.right_body}</p>}
-            {slide.right_bullets && (
-              <ul className="mt-2 space-y-1.5 list-disc list-outside ml-6 text-[18px]">
-                {slide.right_bullets.map((b, i) => (
-                  <li key={i}>{b}</li>
-                ))}
-              </ul>
-            )}
-          </div>
+            );
+          })}
         </div>
       );
     case 'starter':
@@ -1703,10 +1739,10 @@ function PresenterBody({ slide }: { slide: Slide }) {
         <div className="space-y-4">
           {slide.instruction && <div className="whitespace-pre-line">{slide.instruction}</div>}
           {slide.success_criteria && (
-            <div className="text-emerald-300 text-[18px]">Success: {slide.success_criteria}</div>
+            <div className="text-[18px] text-elec-yellow">Success: {slide.success_criteria}</div>
           )}
           {slide.time_minutes != null && (
-            <div className="text-[18px] text-white/75">{slide.time_minutes} minutes</div>
+            <div className="text-[18px] text-white">{slide.time_minutes} minutes</div>
           )}
         </div>
       );
@@ -1715,7 +1751,7 @@ function PresenterBody({ slide }: { slide: Slide }) {
         <div className="space-y-4">
           {slide.problem && <div className="whitespace-pre-line">{slide.problem}</div>}
           {slide.solution_steps && (
-            <ol className="space-y-3 list-decimal list-outside ml-6">
+            <ol className="ml-6 list-outside list-decimal space-y-3">
               {slide.solution_steps.map((s, i) => (
                 <li key={i}>{s}</li>
               ))}
@@ -1725,7 +1761,7 @@ function PresenterBody({ slide }: { slide: Slide }) {
       );
     case 'check_understanding':
       return (
-        <ol className="space-y-4 list-decimal list-outside ml-6">
+        <ol className="ml-6 list-outside list-decimal space-y-4">
           {(slide.questions ?? []).map((q, i) => (
             <li key={i}>{q}</li>
           ))}
@@ -1735,16 +1771,18 @@ function PresenterBody({ slide }: { slide: Slide }) {
       return (
         <div className="space-y-6">
           {slide.belief && (
-            <div className="text-rose-300">
-              <span className="text-[14px] uppercase tracking-[0.18em] block mb-2">
+            <div>
+              <span className="mb-2 block text-[14px] font-semibold uppercase tracking-[0.18em] text-white">
                 Common belief
               </span>
               {slide.belief}
             </div>
           )}
           {slide.correction && (
-            <div className="text-emerald-300">
-              <span className="text-[14px] uppercase tracking-[0.18em] block mb-2">Actually</span>
+            <div>
+              <span className="mb-2 block text-[14px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
+                Actually
+              </span>
               {slide.correction}
             </div>
           )}
@@ -1758,18 +1796,18 @@ function PresenterBody({ slide }: { slide: Slide }) {
 /* ───────────────── generation progress ───────────────── */
 
 const GENERATION_STAGES: Array<{ label: string; minSec: number }> = [
-  { label: 'Reading your lesson plan…', minSec: 0 },
+  { label: 'Reading the lesson plan…', minSec: 0 },
   { label: 'Mapping objectives to BS 7671…', minSec: 6 },
-  { label: 'Drafting 12–18 slides…', minSec: 14 },
+  { label: 'Drafting the slides…', minSec: 14 },
   { label: 'Selecting regulation citations…', minSec: 24 },
   { label: 'Composing photo prompts…', minSec: 34 },
-  { label: 'Polishing typography…', minSec: 46 },
+  { label: 'Tidying the wording…', minSec: 46 },
   { label: 'Almost there…', minSec: 56 },
 ];
 
 const ESTIMATED_DECK_SEC = 60;
 
-function GenerationProgress() {
+function GenerationProgress({ replacing }: { replacing: boolean }) {
   const [elapsed, setElapsed] = useState(0);
   const startedAt = useRef(Date.now());
 
@@ -1781,7 +1819,7 @@ function GenerationProgress() {
   }, []);
 
   // Pseudo-progress: smooth ramp to 95% over the estimated duration, then
-  // pauses at 95% until the deck actually returns. This avoids a janky
+  // holds there until the deck actually returns. This avoids a janky
   // "stuck at 100% for 20s" feel.
   const progress = Math.min(95, (elapsed / ESTIMATED_DECK_SEC) * 95);
 
@@ -1791,188 +1829,134 @@ function GenerationProgress() {
   const remainingSec = Math.max(0, ESTIMATED_DECK_SEC - elapsed);
 
   return (
-    <div className="mt-8 space-y-5">
-      <div className="rounded-2xl border border-elec-yellow/25 overflow-hidden bg-[hsl(0_0%_10%)]">
-        {/* Hero header with shimmer heading */}
-        <div className="relative px-6 py-7 bg-[radial-gradient(ellipse_at_top_left,rgba(250,204,21,0.10),transparent_60%),radial-gradient(ellipse_at_bottom_right,rgba(168,85,247,0.08),transparent_60%)]">
-          <div className="flex items-center gap-3">
-            <PulsingDot />
-            <span className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-elec-yellow">
-              Live · AI working
-            </span>
-          </div>
-          <ShimmerHeading className="mt-3 text-[24px] sm:text-[32px] font-semibold tracking-tight leading-[1.1]">
+    <motion.section
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="space-y-3"
+    >
+      <HubSectionHeading>
+        {replacing ? 'Rebuilding the deck' : 'Building the deck'}
+      </HubSectionHeading>
+      <motion.div variants={itemVariants} className={cn(PAGE_CARD, 'px-4 py-5 sm:px-6')}>
+        <div className="flex items-center gap-2">
+          <PulsingDot />
+          <span className="text-[17px] font-semibold leading-tight tracking-tight text-white">
             {currentStage.label}
-          </ShimmerHeading>
-          <div className="mt-2 flex items-center gap-3 text-[12px] text-white">
-            <span className="tabular-nums">{elapsed}s elapsed</span>
-            <span className="text-white/60">·</span>
-            <span className="tabular-nums">~{remainingSec}s left</span>
-            <span className="text-white/60">·</span>
-            <span>Then ~5s per photo</span>
-          </div>
-
-          {/* Progress bar */}
-          <div className="mt-5 h-1.5 w-full rounded-full bg-white/[0.06] overflow-hidden">
-            <motion.div
-              className="h-full bg-gradient-to-r from-elec-yellow via-amber-300 to-elec-yellow rounded-full"
-              animate={{ width: `${progress}%` }}
-              transition={{ duration: 0.4, ease: 'easeOut' }}
-              style={{
-                backgroundSize: '200% 100%',
-                animation: 'shimmer 2s linear infinite',
-              }}
-            />
-          </div>
-
-          {/* Stage timeline */}
-          <div className="mt-5 grid grid-cols-7 gap-1">
-            {GENERATION_STAGES.map((s, i) => {
-              const reached = elapsed >= s.minSec;
-              const current = currentStage === s;
-              return (
-                <div key={i} className="flex flex-col items-center gap-1">
-                  <div
-                    className={cn(
-                      'h-1 w-full rounded-full transition-colors duration-500',
-                      current ? 'bg-elec-yellow' : reached ? 'bg-elec-yellow/40' : 'bg-white/[0.06]'
-                    )}
-                  />
-                  <div
-                    className={cn(
-                      'h-1.5 w-1.5 rounded-full transition-colors duration-500',
-                      current
-                        ? 'bg-elec-yellow shadow-[0_0_8px_rgba(250,204,21,0.6)]'
-                        : reached
-                          ? 'bg-elec-yellow/40'
-                          : 'bg-white/[0.10]'
-                    )}
-                  />
-                </div>
-              );
-            })}
-          </div>
+          </span>
         </div>
-      </div>
-
-      {/* Skeleton slide cards — shows the user the shape of what's coming */}
-      <div>
-        <div className="text-[10.5px] font-medium uppercase tracking-[0.22em] text-white mb-2">
-          Slides will appear here
+        <div className="mt-2 text-[12px] tabular-nums text-white">
+          {elapsed}s elapsed · about {remainingSec}s left · then a few seconds a photo
         </div>
-        <div className="space-y-3">
-          {Array.from({ length: 6 }).map((_, i) => (
+        <div className="mt-4 h-1.5 w-full overflow-hidden rounded-full bg-white/[0.10]">
+          <motion.div
+            className="h-full rounded-full bg-elec-yellow"
+            animate={{ width: `${progress}%` }}
+            transition={{ duration: 0.4, ease: 'easeOut' }}
+          />
+        </div>
+        {replacing && (
+          <p className="mt-3 text-[12px] leading-snug text-white">
+            The current slides stay below until the new deck replaces them.
+          </p>
+        )}
+      </motion.div>
+      {!replacing && (
+        <motion.div variants={itemVariants} className="space-y-4">
+          {Array.from({ length: 3 }).map((_, i) => (
             <SkeletonSlide key={i} index={i} />
           ))}
-        </div>
-      </div>
-
-      <style>{`
-        @keyframes shimmer {
-          0% { background-position: 200% 0; }
-          100% { background-position: -200% 0; }
-        }
-        @keyframes textShimmer {
-          0% { background-position: -200% 0; }
-          100% { background-position: 200% 0; }
-        }
-        @keyframes skeletonPulse {
-          0%, 100% { opacity: 0.4; }
-          50% { opacity: 0.8; }
-        }
-      `}</style>
-    </div>
+        </motion.div>
+      )}
+    </motion.section>
   );
 }
 
 function PulsingDot() {
   return (
-    <span className="relative inline-flex h-2.5 w-2.5">
-      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-elec-yellow opacity-70" />
-      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-elec-yellow" />
+    <span className="relative inline-flex h-2.5 w-2.5 shrink-0">
+      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-elec-yellow opacity-70" />
+      <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-elec-yellow" />
     </span>
   );
 }
 
-function ShimmerHeading({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
+function SkeletonSlide({ index }: { index: number }) {
+  const hasImage = index === 0 || index === 2;
+  const headingWidth = ['w-2/3', 'w-1/2', 'w-3/4'][index % 3];
   return (
-    <h2
-      className={cn(className, 'inline-block bg-clip-text text-transparent')}
-      style={{
-        backgroundImage:
-          'linear-gradient(90deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,1) 25%, rgba(250,204,21,1) 50%, rgba(255,255,255,1) 75%, rgba(255,255,255,0.7) 100%)',
-        backgroundSize: '200% 100%',
-        animation: 'textShimmer 3s linear infinite',
-      }}
-    >
-      {children}
-    </h2>
+    <div className={cn(PAGE_CARD, 'animate-pulse')} aria-hidden>
+      {hasImage && <div className="aspect-[3/2] w-full border-b border-white/[0.10]" />}
+      <div className="space-y-3 px-4 py-5 sm:px-6">
+        <div className="flex items-center gap-2">
+          <div className="h-3 w-16 rounded bg-white/[0.12]" />
+          <div className="h-3 w-8 rounded bg-white/[0.08]" />
+        </div>
+        <div className={cn('h-7 rounded bg-white/[0.12]', headingWidth)} />
+        <div className="space-y-1.5">
+          <div className="h-3 w-full rounded bg-white/[0.08]" />
+          <div className="h-3 w-5/6 rounded bg-white/[0.08]" />
+        </div>
+      </div>
+    </div>
   );
 }
 
-function SkeletonSlide({ index }: { index: number }) {
-  // Vary the skeleton shape slightly per index so the column doesn't look
-  // monotonous. Some have an "image" block, some don't.
-  const hasImage = index === 0 || index === 2 || index === 4;
-  const variantHeading = ['w-2/3', 'w-1/2', 'w-3/4', 'w-3/5', 'w-2/3', 'w-1/2'][index % 6];
+function LoadingSkeleton() {
   return (
-    <div
-      className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden"
-      style={{ animation: `skeletonPulse 2s ease-in-out infinite ${index * 0.15}s` }}
-    >
-      {hasImage && (
-        <div className="aspect-[3/2] w-full bg-gradient-to-br from-white/[0.06] to-white/[0.02] relative overflow-hidden">
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage:
-                'linear-gradient(110deg, transparent 30%, rgba(255,255,255,0.04) 50%, transparent 70%)',
-              backgroundSize: '200% 100%',
-              animation: 'shimmer 2.5s linear infinite',
-            }}
-          />
-        </div>
-      )}
-      <div className="px-5 sm:px-7 py-5 space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="h-4 w-16 rounded bg-white/[0.06]" />
-          <div className="h-3 w-8 rounded bg-white/[0.04]" />
-        </div>
-        <div className={cn('h-7 rounded bg-white/[0.08]', variantHeading)} />
-        <div className="space-y-1.5">
-          <div className="h-3 rounded bg-white/[0.04] w-full" />
-          <div className="h-3 rounded bg-white/[0.04] w-5/6" />
-          {!hasImage && <div className="h-3 rounded bg-white/[0.04] w-2/3" />}
-        </div>
-      </div>
+    <div className="space-y-4" aria-busy>
+      {Array.from({ length: 3 }).map((_, i) => (
+        <SkeletonSlide key={i} index={i} />
+      ))}
     </div>
   );
 }
 
 /* ───────────────── empty state ───────────────── */
 
-function EmptyState({ onGenerate }: { onGenerate: () => void }) {
+function EmptyDeckCard({ onBuild }: { onBuild: () => void }) {
   return (
-    <div className="mt-8 rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] px-6 py-12 text-center">
-      <div className="text-[16px] font-semibold text-white">No slide deck yet</div>
-      <p className="mt-2 text-[13px] text-white max-w-md mx-auto leading-relaxed">
-        Generate a tutor-ready deck from this lesson plan — title, objectives, activities,
-        regulation cites, summary, plenary. Photos auto-generate per slide. Edit any heading inline.
-        Present in full-screen.
-      </p>
-      <button
-        type="button"
-        onClick={onGenerate}
-        className="mt-5 h-11 px-5 rounded-lg bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation"
-      >
-        Generate slides →
-      </button>
+    <motion.section
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="space-y-3"
+    >
+      <HubSectionHeading>Slide deck</HubSectionHeading>
+      <motion.div variants={itemVariants} className={cn(PAGE_CARD, 'px-4 py-5 sm:px-6 sm:py-6')}>
+        <div className="text-[17px] font-semibold leading-tight tracking-tight text-white">
+          No slide deck yet
+        </div>
+        <p className="mt-2 max-w-prose text-[13px] leading-relaxed text-white">
+          A deck is built from this lesson plan: a title, the objectives, a starter, the concepts
+          and regulation cites, the activities, a check for understanding, a summary and a plenary.
+          Every slide has speaker notes and maps to its assessment criteria. Photos are generated
+          for the slides that call for one. You can edit any slide, regenerate one with a note, and
+          present the deck full-screen.
+        </p>
+        <button
+          type="button"
+          onClick={onBuild}
+          className={cn(buttonPrimaryCn, 'mt-5 w-full sm:w-auto sm:px-6')}
+        >
+          Build the slide deck
+        </button>
+      </motion.div>
+    </motion.section>
+  );
+}
+
+/* ───────────────── error line ───────────────── */
+
+/** Red is reserved for a genuine problem — a failed build is one. */
+function ErrorLine({ text }: { text: string }) {
+  return (
+    <div
+      role="alert"
+      className={cn(PAGE_CARD, 'flex items-center gap-3 border-red-400/50 px-4 py-3 sm:px-5')}
+    >
+      <span aria-hidden className="h-8 w-[3px] shrink-0 rounded-full bg-red-400" />
+      <span className="text-[13px] font-medium leading-snug text-white">{text}</span>
     </div>
   );
 }

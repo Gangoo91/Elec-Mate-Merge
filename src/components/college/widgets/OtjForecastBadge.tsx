@@ -1,9 +1,14 @@
+import { cn } from '@/lib/utils';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { useOtjForecast } from '@/hooks/useOtjForecast';
-import { Pill, type Tone } from '@/components/college/primitives';
 
 /* ==========================================================================
-   OtjForecastBadge — compact view for Student 360 / Gateway readiness.
-   ELE-928 (I2).
+   OtjForecastBadge — off-the-job forecast for Student 360 / Gateway
+   readiness. ELE-928 (I2).
+
+   Hub card language. The risk word is text, not a pill: red only for "off
+   track", which is a real state; "at risk" is volt text; "on track" is
+   plain white.
    ========================================================================== */
 
 interface Props {
@@ -11,66 +16,79 @@ interface Props {
   compact?: boolean;
 }
 
-const RISK_TONE = {
-  green: 'emerald' as Tone,
-  amber: 'amber' as Tone,
-  red: 'red' as Tone,
-  unknown: 'blue' as Tone,
-};
-
 const RISK_LABEL = {
   green: 'On track',
   amber: 'At risk',
   red: 'Off track',
   unknown: 'Unknown',
-};
+} as const;
+
+const RISK_TEXT = {
+  green: 'text-white',
+  amber: 'text-elec-yellow',
+  red: 'text-red-300',
+  unknown: 'text-white',
+} as const;
 
 export function OtjForecastBadge({ studentId, compact }: Props) {
   const { forecast, loading } = useOtjForecast(studentId);
 
   if (loading || !forecast) {
-    return <Pill tone="blue">{loading ? '…' : 'No forecast'}</Pill>;
+    return (
+      <span className="text-[12px] font-semibold text-white">
+        {loading ? '…' : 'No forecast'}
+      </span>
+    );
   }
 
   if (compact) {
     return (
-      <Pill tone={RISK_TONE[forecast.risk]}>
-        OTJ {forecast.forecast_pct}% • {RISK_LABEL[forecast.risk]}
-      </Pill>
+      <span className="text-[12px] font-semibold tabular-nums text-white">
+        OTJ {forecast.forecast_pct}% ·{' '}
+        <span className={RISK_TEXT[forecast.risk]}>{RISK_LABEL[forecast.risk]}</span>
+      </span>
     );
   }
 
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-      <div className="flex items-center justify-between gap-3">
-        <div>
-          <div className="text-xs uppercase tracking-wider text-white/50">OTJ forecast</div>
-          <div className="mt-1 text-2xl font-semibold text-white">
-            {forecast.forecast_pct}%
-          </div>
-          <div className="text-xs text-white/60">
-            of required {forecast.required_hours}h by end date
-          </div>
-        </div>
-        <Pill tone={RISK_TONE[forecast.risk]}>{RISK_LABEL[forecast.risk]}</Pill>
+    <section
+      className={cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}
+    >
+      <div className="flex items-end justify-between gap-4 px-4 py-3.5 sm:px-5">
+        <h3 className="text-[15px] font-semibold tracking-tight text-elec-yellow">
+          Off-the-job forecast
+        </h3>
+        <span className={cn('text-[11px] font-semibold', RISK_TEXT[forecast.risk])}>
+          {RISK_LABEL[forecast.risk]}
+        </span>
       </div>
 
-      <div className="mt-3 space-y-1.5 text-xs text-white/70">
-        <div>
-          <span className="text-white/70">So far:</span> {forecast.current_hours}h ·{' '}
-          <span className="text-white/70">pace:</span> {forecast.weekly_pace_hours}h/wk
-        </div>
-        <div>
-          <span className="text-white/70">Days left:</span> {forecast.days_remaining} ·{' '}
-          <span className="text-white/70">forecast at end:</span>{' '}
-          {forecast.forecast_hours_at_end}h
-        </div>
-        {forecast.shortfall_hours < 0 && (
-          <div className="text-red-300">
-            Needs ~{forecast.weekly_needed_to_close_gap}h/wk to close the gap.
+      <div className="flex items-center justify-between gap-4 border-t border-white/[0.10] px-4 py-3.5 sm:px-5">
+        <div className="min-w-0 text-[12px] leading-snug text-white">
+          <div>
+            <span className="font-semibold">{forecast.current_hours}h</span> so far ·{' '}
+            <span className="font-semibold">{forecast.weekly_pace_hours}h</span>/wk pace
           </div>
-        )}
+          <div className="mt-0.5">
+            {forecast.days_remaining} days left · forecast{' '}
+            <span className="font-semibold">{forecast.forecast_hours_at_end}h</span> of{' '}
+            {forecast.required_hours}h required by end date
+          </div>
+          {forecast.shortfall_hours < 0 && (
+            <div className="mt-0.5 font-semibold text-red-300">
+              Needs ~{forecast.weekly_needed_to_close_gap}h/wk to close the gap.
+            </div>
+          )}
+        </div>
+        <span
+          className={cn(
+            'shrink-0 text-[26px] font-semibold leading-none tabular-nums',
+            forecast.risk === 'red' ? 'text-red-300' : 'text-white'
+          )}
+        >
+          {forecast.forecast_pct}%
+        </span>
       </div>
-    </div>
+    </section>
   );
 }

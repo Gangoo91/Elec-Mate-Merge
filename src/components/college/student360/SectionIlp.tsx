@@ -1,31 +1,35 @@
 import { useEffect, useState } from 'react';
+import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Pill, type Tone } from '@/components/college/primitives';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { HubSectionHeading } from '@/components/hub/HubPrimitives';
 import {
   useStudentIlp,
   type IlpGoal,
   type GoalCategory,
-  type GoalPriority,
   type GoalStatus,
+  type StudentIlpHook,
 } from '@/hooks/useStudentIlp';
 import { IlpEditorSheet } from '@/components/college/sheets/IlpEditorSheet';
 import { IlpGoalSheet } from '@/components/college/sheets/IlpGoalSheet';
 import { IlpGenerateSheet } from '@/components/college/sheets/IlpGenerateSheet';
-import { Wand2 } from 'lucide-react';
 
 /* ==========================================================================
    SectionIlp — bidirectional Individual Learning Plan panel.
    Tutors edit headline + goals; learners can tick off goals + comment back.
-   ========================================================================== */
 
-const STATUS_TONE: Record<GoalStatus, Tone> = {
-  not_started: 'cyan',
-  in_progress: 'blue',
-  completed: 'emerald',
-  blocked: 'red',
-  overdue: 'amber',
-  cancelled: 'cyan',
-};
+   Hub language: HubSectionHeading with quiet volt text actions, two
+   CARD_SURFACE cards (plan headline, goals). Status is TEXT — red only for
+   overdue/blocked, emerald only for done. The cyan/blue/purple chips that
+   used to tell apart "not started", "in progress", "AI suggested" and
+   "apprentice proposed" said nothing the words didn't.
+
+   `hook` lets a parent that already runs `useStudentIlp` (the dashboard's
+   Student 360 needs the roll-up for its KPI row and "Needs you" list) share
+   the instance instead of fetching twice. When it is supplied the section's
+   own hook is given a null id, which is the hook's no-fetch, no-subscribe
+   path.
+   ========================================================================== */
 
 const STATUS_LABEL: Record<GoalStatus, string> = {
   not_started: 'Not started',
@@ -46,11 +50,15 @@ const CATEGORY_LABEL: Record<GoalCategory, string> = {
   other: 'Other',
 };
 
-const PRIORITY_DOT: Record<GoalPriority, string> = {
-  low: 'bg-white/30',
-  medium: 'bg-elec-yellow/85',
-  high: 'bg-red-400/85',
-};
+const ACTION_BTN =
+  '-my-2 flex h-11 shrink-0 items-center px-2 text-[12px] font-bold text-elec-yellow transition-colors touch-manipulation';
+
+const CHIP =
+  'inline-flex items-center rounded-full border px-2 py-0.5 text-[10.5px] font-semibold tabular-nums';
+const CHIP_NEUTRAL = 'border-white/[0.14] bg-white/[0.06] text-white';
+const CHIP_RED = 'border-red-400/30 bg-red-500/[0.08] text-red-300';
+const CHIP_GOOD = 'border-emerald-400/30 bg-emerald-500/[0.08] text-emerald-300';
+const CHIP_VOLT = 'border-elec-yellow/35 text-elec-yellow';
 
 function formatDate(iso: string | null): string {
   if (!iso) return '—';
@@ -65,13 +73,17 @@ export function SectionIlp({
   id,
   studentName,
   collegeStudentId,
+  hook: shared,
 }: {
   id: string;
   studentName: string;
   collegeStudentId: string | null;
+  hook?: StudentIlpHook;
 }) {
-  const hook = useStudentIlp({ collegeStudentId });
+  const own = useStudentIlp({ collegeStudentId: shared ? null : collegeStudentId });
+  const hook = shared ?? own;
   const { ilp, goals, rollUp, loading } = hook;
+  const first = studentName.split(' ')[0];
 
   const [editorOpen, setEditorOpen] = useState(false);
   const [generateOpen, setGenerateOpen] = useState(false);
@@ -81,8 +93,8 @@ export function SectionIlp({
     acContext?: { unit_code: string; ac_code: string };
   } | null>(null);
 
-  // Cross-section bridge: SectionCoverage's AC cells can dispatch an event
-  // to open the goal sheet pre-filled in from_ac AI mode.
+  // Cross-section bridge: an AC cell can dispatch this event to open the
+  // goal sheet pre-filled in from_ac AI mode.
   useEffect(() => {
     const handler = (e: Event) => {
       const detail = (e as CustomEvent).detail as
@@ -95,61 +107,78 @@ export function SectionIlp({
     return () => window.removeEventListener('ilp:suggest-from-ac', handler);
   }, []);
 
+  const today = new Date().toISOString().slice(0, 10);
+  const reviewOverdue = !!ilp?.review_date && ilp.review_date.slice(0, 10) < today;
+
   if (!collegeStudentId) {
     return (
-      <section id={id} className="scroll-mt-6">
-        <Header onEdit={null} />
+      <section id={id} className="scroll-mt-20 space-y-3">
+        <HubSectionHeading>Individual learning plan</HubSectionHeading>
+        <div className={cn('rounded-2xl border border-elec-yellow/35 px-4 py-5 sm:px-5', CARD_SURFACE)}>
+          <p className="text-[12.5px] leading-relaxed text-white">
+            No college record for this learner yet, so there is no plan to show.
+          </p>
+        </div>
       </section>
     );
   }
 
   return (
-    <section id={id} className="scroll-mt-6">
-      <Header
-        onEdit={() => setEditorOpen(true)}
-        onAi={() => setGenerateOpen(true)}
-        rollUp={rollUp}
-        hasIlp={!!ilp}
-      />
-
-      {!ilp && !loading ? (
-        <div className="mt-5 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-6 py-8 text-center">
-          <p className="text-[12.5px] text-white/85 max-w-md mx-auto leading-relaxed">
-            No ILP yet for {studentName.split(' ')[0]}. Generate one with AI from cross-hub data, or
-            create a blank plan and write it yourself.
-          </p>
-          <div className="mt-4 flex items-center justify-center gap-2 flex-wrap">
-            <button
-              type="button"
-              onClick={() => setGenerateOpen(true)}
-              className="inline-flex items-center justify-center gap-1.5 h-10 px-4 rounded-full bg-elec-yellow text-black text-[12.5px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation"
-            >
-              <Wand2 className="h-3.5 w-3.5" strokeWidth={2.5} />
-              Generate with AI
+    <section id={id} className="scroll-mt-20 space-y-3">
+      <div className="flex items-end justify-between gap-4">
+        <HubSectionHeading>Individual learning plan</HubSectionHeading>
+        {ilp && (
+          <div className="flex items-center gap-1 no-print">
+            <button type="button" onClick={() => setGenerateOpen(true)} className={ACTION_BTN}>
+              Refine with AI
             </button>
-            <button
-              type="button"
-              onClick={() => setEditorOpen(true)}
-              className="inline-flex items-center justify-center h-10 px-4 rounded-full border border-white/[0.12] text-white text-[12.5px] font-medium hover:bg-white/[0.06] transition-all touch-manipulation"
-            >
-              Create blank
+            <button type="button" onClick={() => setEditorOpen(true)} className={ACTION_BTN}>
+              Edit
             </button>
           </div>
+        )}
+      </div>
+
+      {!ilp && !loading ? (
+        <div className={cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
+          <p className="px-4 pt-4 text-[12.5px] leading-relaxed text-white sm:px-5">
+            No ILP yet for {first}. Generate one from cross-hub data, or start a blank plan and
+            write it yourself.
+          </p>
+          <ul className="mt-3 divide-y divide-white/[0.10] border-t border-white/[0.10]">
+            <li>
+              <ActionRow
+                title="Generate with AI"
+                reason="Drafts the focus, strengths, support strategies and first goals"
+                urgent
+                onClick={() => setGenerateOpen(true)}
+              />
+            </li>
+            <li>
+              <ActionRow
+                title="Create a blank plan"
+                reason="Write the headline and goals yourself"
+                onClick={() => setEditorOpen(true)}
+              />
+            </li>
+          </ul>
         </div>
       ) : ilp ? (
         <>
-          <HeadlineCard ilp={ilp} rollUp={rollUp} />
+          <HeadlineCard ilp={ilp} rollUp={rollUp} reviewOverdue={reviewOverdue} />
           <GoalsList
             goals={goals}
             loading={loading}
-            studentName={studentName}
+            first={first}
             onAddGoal={() => setGoalSheetOpen({ mode: 'add' })}
             onEditGoal={(g) => setGoalSheetOpen({ mode: 'edit', goal: g })}
             onToggleComplete={(g) => hook.toggleGoalComplete(g.id, g.status !== 'completed')}
           />
         </>
       ) : (
-        <Skeleton />
+        <div className={cn('rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
+          <Skeleton />
+        </div>
       )}
 
       <IlpEditorSheet
@@ -190,204 +219,155 @@ export function SectionIlp({
 
 /* ──────────────────────────────────────────────────────── */
 
-function Header({
-  onEdit,
-  onAi,
-  rollUp,
-  hasIlp,
+function ActionRow({
+  title,
+  reason,
+  urgent,
+  onClick,
 }: {
-  onEdit: (() => void) | null;
-  onAi?: (() => void) | null;
-  rollUp?: ReturnType<typeof useStudentIlp>['rollUp'];
-  hasIlp?: boolean;
+  title: string;
+  reason: string;
+  urgent?: boolean;
+  onClick: () => void;
 }) {
   return (
-    <div className="flex items-end justify-between gap-4 flex-wrap">
-      <div>
-        <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Individual learning plan
-        </div>
-        <h2 className="mt-1.5 text-xl sm:text-[26px] font-semibold text-white tracking-tight leading-tight">
-          ILP
-        </h2>
-        {rollUp && rollUp.total_goals > 0 && (
-          <div className="mt-1 text-[11px] text-white/55 tabular-nums">
-            {rollUp.completed}/{rollUp.total_goals} complete
-            {rollUp.unread_student_comments > 0 && (
-              <span className="ml-2 text-amber-300">
-                · {rollUp.unread_student_comments} new from learner
-              </span>
-            )}
-          </div>
-        )}
-      </div>
-      <div className="flex items-center gap-2 no-print">
-        {onAi && (
-          <button
-            onClick={onAi}
-            className="inline-flex items-center gap-1.5 h-9 px-3 rounded-full bg-elec-yellow/[0.08] border border-elec-yellow/30 text-elec-yellow text-[12px] font-semibold hover:bg-elec-yellow/[0.14] transition-colors touch-manipulation"
-          >
-            <Wand2 className="h-3 w-3" strokeWidth={2.5} />
-            {hasIlp ? 'Refine with AI' : 'Generate with AI'}
-          </button>
-        )}
-        {onEdit && (
-          <button
-            onClick={onEdit}
-            className="text-[12px] font-medium text-white/85 hover:text-white transition-colors touch-manipulation"
-          >
-            {hasIlp ? 'Edit ILP →' : 'Create blank →'}
-          </button>
-        )}
-      </div>
-    </div>
+    <button
+      type="button"
+      onClick={onClick}
+      className="flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5"
+    >
+      <span
+        aria-hidden
+        className={cn('h-8 w-[3px] shrink-0 rounded-full', urgent ? 'bg-elec-yellow' : 'bg-white/[0.25]')}
+      />
+      <span className="min-w-0 flex-1">
+        <span className="block text-[14px] font-semibold leading-tight text-white">{title}</span>
+        <span className="mt-0.5 block text-[12px] leading-tight text-white">{reason}</span>
+      </span>
+      <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden />
+    </button>
   );
 }
-
-/* ──────────────────────────────────────────────────────── */
 
 function HeadlineCard({
   ilp,
   rollUp,
+  reviewOverdue,
 }: {
-  ilp: NonNullable<ReturnType<typeof useStudentIlp>['ilp']>;
-  rollUp: ReturnType<typeof useStudentIlp>['rollUp'];
+  ilp: NonNullable<StudentIlpHook['ilp']>;
+  rollUp: StudentIlpHook['rollUp'];
+  reviewOverdue: boolean;
 }) {
   const pct = rollUp.completion_percent;
-  const ringColour =
-    pct >= 80
-      ? 'stroke-emerald-400'
-      : pct >= 50
-        ? 'stroke-elec-yellow'
-        : pct >= 25
-          ? 'stroke-amber-400'
-          : 'stroke-red-400';
+  const hasNarrative =
+    !!ilp.headline_focus ||
+    !!ilp.headline_strengths ||
+    !!ilp.headline_areas ||
+    !!ilp.support_strategies ||
+    !!ilp.accessibility_adjustments;
 
   return (
-    <div className="mt-5 grid grid-cols-1 md:grid-cols-[260px_minmax(0,1fr)] gap-4">
-      {/* Progress ring + meta */}
-      <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-5 py-5">
-        <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-          Plan progress
-        </div>
-        <div className="mt-3 flex items-center gap-4">
-          <div className="relative h-[88px] w-[88px] flex-shrink-0">
-            <svg viewBox="0 0 36 36" className="h-full w-full -rotate-90">
-              <circle
-                cx="18"
-                cy="18"
-                r="15.5"
-                fill="none"
-                strokeWidth="2.5"
-                className="stroke-white/[0.08]"
-              />
-              <circle
-                cx="18"
-                cy="18"
-                r="15.5"
-                fill="none"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeDasharray={`${(pct / 100) * 97.4} 97.4`}
-                className={cn('transition-all duration-500', ringColour)}
-              />
-            </svg>
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <div className="text-[18px] font-semibold text-white tabular-nums leading-none">
-                {pct}
-                <span className="text-[11px] text-white/65">%</span>
-              </div>
-              <div className="text-[9.5px] uppercase tracking-[0.14em] text-white/50 mt-0.5">
-                done
-              </div>
-            </div>
+    <div className={cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
+      <div className="grid grid-cols-1 divide-y divide-white/[0.10] md:grid-cols-[240px_minmax(0,1fr)] md:divide-x md:divide-y-0">
+        {/* Progress + meta */}
+        <div className="px-4 py-4 sm:px-5">
+          <div className="text-[12px] font-medium text-white">Plan progress</div>
+          <div className="mt-1.5 flex items-baseline gap-2">
+            <span className="text-[30px] font-semibold leading-none tabular-nums tracking-tight text-white">
+              {pct}%
+            </span>
+            <span className="text-[12px] tabular-nums text-white">
+              {rollUp.completed}/{rollUp.total_goals} goals done
+            </span>
           </div>
-          <div className="min-w-0 flex-1 text-[11px] leading-snug">
-            <div className="text-white/45">Version</div>
-            <div className="text-white tabular-nums">v{ilp.version}</div>
+          <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-white/[0.08]">
+            <div
+              className="h-full rounded-full bg-elec-yellow transition-all duration-500"
+              style={{ width: `${Math.min(100, pct)}%` }}
+            />
+          </div>
+          <dl className="mt-4 space-y-1.5 text-[12px]">
+            <MetaRow label="Version" value={`v${ilp.version}`} />
             {ilp.target_completion_date && (
-              <>
-                <div className="text-white/45 mt-1.5">Target</div>
-                <div className="text-white tabular-nums">
-                  {formatDate(ilp.target_completion_date)}
-                </div>
-              </>
+              <MetaRow label="Target" value={formatDate(ilp.target_completion_date)} />
             )}
             {ilp.review_date && (
-              <>
-                <div className="text-white/45 mt-1.5">Next review</div>
-                <div className="text-white tabular-nums">{formatDate(ilp.review_date)}</div>
-              </>
+              <MetaRow
+                label={reviewOverdue ? 'Review overdue' : 'Next review'}
+                value={formatDate(ilp.review_date)}
+                tone={reviewOverdue ? 'bad' : undefined}
+              />
             )}
-          </div>
+            {rollUp.unread_student_comments > 0 && (
+              <MetaRow
+                label="From learner"
+                value={`${rollUp.unread_student_comments} new`}
+                tone="volt"
+              />
+            )}
+          </dl>
         </div>
-      </div>
 
-      {/* Headline narrative */}
-      <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-5 py-5 space-y-3">
-        {ilp.headline_focus ? (
-          <Block label="Focus" tone="yellow" text={ilp.headline_focus} />
-        ) : null}
-        {ilp.headline_strengths && (
-          <Block label="Strengths" tone="emerald" text={ilp.headline_strengths} />
-        )}
-        {ilp.headline_areas && (
-          <Block label="Areas for development" tone="amber" text={ilp.headline_areas} />
-        )}
-        {ilp.support_strategies && (
-          <Block label="Support strategies" tone="blue" text={ilp.support_strategies} />
-        )}
-        {ilp.accessibility_adjustments && (
-          <Block label="Accessibility" tone="purple" text={ilp.accessibility_adjustments} />
-        )}
-        {!ilp.headline_focus &&
-          !ilp.headline_strengths &&
-          !ilp.headline_areas &&
-          !ilp.support_strategies &&
-          !ilp.accessibility_adjustments && (
-            <p className="text-[12px] text-white/55">
+        {/* Headline narrative */}
+        <div className="space-y-3.5 px-4 py-4 sm:px-5">
+          {ilp.headline_focus && <Block label="Focus" text={ilp.headline_focus} />}
+          {ilp.headline_strengths && <Block label="Strengths" text={ilp.headline_strengths} />}
+          {ilp.headline_areas && (
+            <Block label="Areas for development" text={ilp.headline_areas} />
+          )}
+          {ilp.support_strategies && (
+            <Block label="Support strategies" text={ilp.support_strategies} />
+          )}
+          {ilp.accessibility_adjustments && (
+            <Block label="Accessibility" text={ilp.accessibility_adjustments} />
+          )}
+          {!hasNarrative && (
+            <p className="text-[12.5px] leading-relaxed text-white">
               No headline narrative yet. Edit the ILP to set focus, strengths and support
               strategies.
             </p>
           )}
-        {ilp.tutor_name_snapshot && (
-          <div className="pt-2 border-t border-white/[0.06] text-[10.5px] text-white/45 tabular-nums">
-            Owned by {ilp.tutor_name_snapshot}
-          </div>
-        )}
+          {ilp.tutor_name_snapshot && (
+            <div className="border-t border-white/[0.10] pt-2.5 text-[11px] text-white">
+              Owned by {ilp.tutor_name_snapshot}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
 }
 
-function Block({
+function MetaRow({
   label,
+  value,
   tone,
-  text,
 }: {
   label: string;
-  tone: 'emerald' | 'amber' | 'blue' | 'purple' | 'yellow';
-  text: string;
+  value: string;
+  tone?: 'bad' | 'volt';
 }) {
   return (
-    <div>
-      <div
+    <div className="flex items-baseline justify-between gap-3">
+      <dt className={cn('text-white', tone === 'bad' && 'text-red-300')}>{label}</dt>
+      <dd
         className={cn(
-          'text-[10px] font-medium uppercase tracking-[0.18em] mb-1',
-          tone === 'emerald'
-            ? 'text-emerald-300/85'
-            : tone === 'amber'
-              ? 'text-amber-300/85'
-              : tone === 'blue'
-                ? 'text-blue-300/85'
-                : tone === 'purple'
-                  ? 'text-purple-300/85'
-                  : 'text-elec-yellow/85'
+          'tabular-nums text-white',
+          tone === 'bad' && 'font-semibold text-red-300',
+          tone === 'volt' && 'font-semibold text-elec-yellow'
         )}
       >
-        {label}
-      </div>
-      <p className="text-[12.5px] text-white/85 leading-relaxed whitespace-pre-line">{text}</p>
+        {value}
+      </dd>
+    </div>
+  );
+}
+
+function Block({ label, text }: { label: string; text: string }) {
+  return (
+    <div>
+      <div className="text-[11px] font-semibold text-elec-yellow">{label}</div>
+      <p className="mt-0.5 whitespace-pre-line text-[12.5px] leading-relaxed text-white">{text}</p>
     </div>
   );
 }
@@ -397,55 +377,47 @@ function Block({
 function GoalsList({
   goals,
   loading,
-  studentName,
+  first,
   onAddGoal,
   onEditGoal,
   onToggleComplete,
 }: {
   goals: IlpGoal[];
   loading: boolean;
-  studentName: string;
+  first: string;
   onAddGoal: () => void;
   onEditGoal: (g: IlpGoal) => void;
   onToggleComplete: (g: IlpGoal) => void;
 }) {
   return (
-    <div className="mt-4">
-      <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
-        <div className="px-5 py-3 border-b border-white/[0.06] flex items-center justify-between">
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-            Goals
-          </div>
-          <button
-            type="button"
-            onClick={onAddGoal}
-            className="text-[11.5px] font-medium text-elec-yellow/85 hover:text-elec-yellow transition-colors touch-manipulation"
-          >
-            Add goal +
-          </button>
+    <div className={cn('overflow-hidden rounded-2xl border border-elec-yellow/35', CARD_SURFACE)}>
+      <div className="flex items-center justify-between gap-3 border-b border-white/[0.10] px-4 py-3 sm:px-5">
+        <div className="text-[13px] font-semibold text-white">
+          Goals{goals.length > 0 ? ` · ${goals.length}` : ''}
         </div>
-        {loading && goals.length === 0 ? (
-          <Skeleton />
-        ) : goals.length === 0 ? (
-          <div className="px-5 py-8 text-center">
-            <p className="text-[12.5px] text-white/65 max-w-md mx-auto leading-relaxed">
-              No goals on this ILP yet. Add the first one — it'll appear in{' '}
-              {studentName.split(' ')[0]}'s app for them to acknowledge and work on.
-            </p>
-          </div>
-        ) : (
-          <ul className="divide-y divide-white/[0.04]">
-            {goals.map((g) => (
-              <GoalRow
-                key={g.id}
-                goal={g}
-                onEdit={() => onEditGoal(g)}
-                onToggleComplete={() => onToggleComplete(g)}
-              />
-            ))}
-          </ul>
-        )}
+        <button type="button" onClick={onAddGoal} className={ACTION_BTN}>
+          Add goal
+        </button>
       </div>
+      {loading && goals.length === 0 ? (
+        <Skeleton />
+      ) : goals.length === 0 ? (
+        <p className="px-4 py-6 text-[12.5px] leading-relaxed text-white sm:px-5">
+          No goals on this plan yet. Add the first one — it appears in {first}'s app for them to
+          acknowledge and work on.
+        </p>
+      ) : (
+        <ul className="divide-y divide-white/[0.10]">
+          {goals.map((g) => (
+            <GoalRow
+              key={g.id}
+              goal={g}
+              onEdit={() => onEditGoal(g)}
+              onToggleComplete={() => onToggleComplete(g)}
+            />
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
@@ -467,9 +439,14 @@ function GoalRow({
     goal.status !== 'cancelled';
   const status: GoalStatus = overdue && goal.status !== 'overdue' ? 'overdue' : goal.status;
   const isComplete = goal.status === 'completed';
+  const isProblem = status === 'overdue' || status === 'blocked';
+  const newComment =
+    !!goal.student_comment_at &&
+    (!goal.tutor_comment_at || goal.student_comment_at > goal.tutor_comment_at);
 
   return (
-    <li className="px-5 py-3.5 flex items-start gap-3">
+    <li className="flex items-start gap-1 pl-2 pr-4 sm:pr-5">
+      {/* 44px tap area around a 20px tick */}
       <button
         type="button"
         aria-label={isComplete ? 'Mark not done' : 'Mark done'}
@@ -477,34 +454,42 @@ function GoalRow({
           e.stopPropagation();
           onToggleComplete();
         }}
-        className={cn(
-          'mt-0.5 h-5 w-5 rounded-full border flex items-center justify-center text-[10px] font-bold flex-shrink-0 transition-colors touch-manipulation',
-          isComplete
-            ? 'bg-emerald-500/25 border-emerald-400 text-emerald-300'
-            : 'border-white/25 text-transparent hover:border-white/55'
-        )}
+        className="mt-1.5 flex h-11 w-11 shrink-0 items-center justify-center touch-manipulation"
       >
-        ✓
+        <span
+          className={cn(
+            'flex h-5 w-5 items-center justify-center rounded-full border text-[10px] font-bold transition-colors',
+            isComplete
+              ? 'border-emerald-400 bg-emerald-500/20 text-emerald-300'
+              : 'border-white/40 text-transparent'
+          )}
+        >
+          ✓
+        </span>
       </button>
       <button
         type="button"
         onClick={onEdit}
-        className="min-w-0 flex-1 text-left touch-manipulation"
+        className="min-w-0 flex-1 py-3.5 text-left touch-manipulation"
       >
-        <div className="flex items-center gap-2 flex-wrap">
+        <div className="flex flex-wrap items-center gap-1.5">
           <span
-            aria-hidden
-            className={cn('inline-block h-1.5 w-1.5 rounded-full', PRIORITY_DOT[goal.priority])}
-          />
-          <Pill tone={STATUS_TONE[status]}>{STATUS_LABEL[status]}</Pill>
-          <span className="text-[10.5px] uppercase tracking-[0.12em] text-white/55">
-            {CATEGORY_LABEL[goal.category]}
+            className={cn(
+              CHIP,
+              isProblem ? CHIP_RED : isComplete ? CHIP_GOOD : CHIP_NEUTRAL
+            )}
+          >
+            {STATUS_LABEL[status]}
           </span>
+          <span className="text-[11px] text-white">{CATEGORY_LABEL[goal.category]}</span>
+          {goal.priority === 'high' && !isComplete && (
+            <span className="text-[11px] font-semibold text-elec-yellow">High priority</span>
+          )}
           {goal.target_date && (
             <span
               className={cn(
-                'text-[10.5px] tabular-nums',
-                overdue ? 'text-red-300' : 'text-white/55'
+                'text-[11px] tabular-nums',
+                overdue ? 'font-semibold text-red-300' : 'text-white'
               )}
             >
               {overdue ? 'Overdue · ' : 'Due '}
@@ -512,49 +497,33 @@ function GoalRow({
             </span>
           )}
           {goal.source === 'student' && (
-            <span
-              className="inline-flex items-center h-4 px-1.5 rounded-md bg-cyan-500/[0.12] border border-cyan-400/40 text-[9px] font-semibold tracking-[0.06em] uppercase text-cyan-200"
-              title="Apprentice proposed this goal — review and accept, edit, or reject."
-            >
+            <span className={cn(CHIP, CHIP_VOLT)} title="Apprentice proposed this goal — review and accept, edit, or reject.">
               Apprentice proposed
             </span>
           )}
-          {goal.source === 'ai_suggested' && (
-            <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-purple-500/[0.12] border border-purple-400/40 text-[9px] font-semibold tracking-[0.06em] uppercase text-purple-200">
-              AI suggested
-            </span>
+          {goal.source === 'ai_suggested' && <span className={cn(CHIP, CHIP_NEUTRAL)}>AI suggested</span>}
+          {!goal.student_acknowledged && !isComplete && (
+            <span className={cn(CHIP, CHIP_NEUTRAL)}>Not yet seen by learner</span>
           )}
-          {!goal.student_acknowledged && (
-            <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-amber-500/[0.1] border border-amber-500/30 text-[9px] font-semibold tracking-[0.06em] uppercase text-amber-200">
-              Unread
-            </span>
-          )}
-          {goal.student_comment_at &&
-            (!goal.tutor_comment_at || goal.student_comment_at > goal.tutor_comment_at) && (
-              <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-blue-500/[0.1] border border-blue-500/30 text-[9px] font-semibold tracking-[0.06em] uppercase text-blue-200">
-                New comment
-              </span>
-            )}
+          {newComment && <span className={cn(CHIP, CHIP_VOLT)}>New comment</span>}
         </div>
         <h3
           className={cn(
-            'mt-1.5 text-[13.5px] font-medium leading-tight',
-            isComplete ? 'text-white/55 line-through' : 'text-white'
+            'mt-1.5 text-[13.5px] font-semibold leading-tight text-white',
+            isComplete && 'line-through opacity-70'
           )}
         >
           {goal.title}
         </h3>
         {goal.description && (
-          <p className="mt-0.5 text-[11.5px] text-white/65 leading-snug line-clamp-2">
+          <p className="mt-0.5 line-clamp-2 text-[12px] leading-snug text-white">
             {goal.description}
           </p>
         )}
         {goal.student_comment && (
-          <div className="mt-2 px-3 py-2 rounded-lg bg-blue-500/[0.05] border border-blue-500/[0.18]">
-            <div className="text-[9.5px] uppercase tracking-[0.14em] text-blue-300/85 mb-0.5">
-              Learner reply
-            </div>
-            <p className="text-[11.5px] text-white/85 leading-snug whitespace-pre-line">
+          <div className="mt-2 border-l-2 border-white/[0.25] pl-3">
+            <div className="text-[10.5px] font-semibold text-white">Learner reply</div>
+            <p className="mt-0.5 whitespace-pre-line text-[12px] leading-snug text-white">
               {goal.student_comment}
             </p>
           </div>
@@ -566,13 +535,13 @@ function GoalRow({
 
 function Skeleton() {
   return (
-    <div className="px-5 py-4 space-y-2.5 animate-pulse">
+    <div className="space-y-3 px-4 py-4 animate-pulse sm:px-5">
       {[0, 1, 2].map((i) => (
         <div key={i} className="flex items-start gap-3">
-          <div className="h-5 w-5 rounded-full bg-white/[0.06] flex-shrink-0" />
+          <div className="h-5 w-5 shrink-0 rounded-full bg-white/[0.08]" />
           <div className="flex-1 space-y-1.5">
-            <div className="h-2.5 w-2/3 rounded bg-white/[0.06]" />
-            <div className="h-2 w-1/3 rounded bg-white/[0.04]" />
+            <div className="h-2.5 w-2/3 rounded bg-white/[0.08]" />
+            <div className="h-2 w-1/3 rounded bg-white/[0.05]" />
           </div>
         </div>
       ))}

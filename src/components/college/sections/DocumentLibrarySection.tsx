@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
+import { ChevronRight } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,20 +8,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import {
-  PageFrame,
-  PageHero,
-  SectionHeader,
-  HubGrid,
-  ListCard,
-  FilterBar,
-  EmptyState,
-  IconButton,
-  SecondaryButton,
+  containerVariants,
   itemVariants,
-  toneDot,
-  type Tone,
+  EmptyState,
+  LoadingState,
 } from '@/components/college/primitives';
+import { HubKpi, HubKpiRow, HubSectionHeading } from '@/components/hub/HubPrimitives';
 import { ResourcePreviewSheet } from '@/components/college/sheets/ResourcePreviewSheet';
 import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
 import { useToast } from '@/hooks/use-toast';
@@ -34,12 +29,16 @@ import type { CollegeSection } from '@/pages/college/CollegeDashboard';
 
 /* ==========================================================================
    DocumentLibrarySection — read-focused browser of the same `college_resources`
-   that TeachingResourcesSection manages. Was 100% mock (mockFolders +
-   useCollege() returning hardcoded arrays); now wired to the real hook.
+   that TeachingResourcesSection manages.
 
-   "Folders" are derived from `kind` (Documents, Videos, Images, Links, Notes)
-   so the taxonomy is honest — no fake counts. Upload routes to the
-   TeachingResources section to avoid duplicating the upload flow.
+   Filters are the resource KINDS that actually exist in the library (with
+   live counts) — the old "PDFs / Docs / Slides" tab strip used values
+   ('pdf', 'doc', 'slides') that no row ever carries (the column is
+   document/slide/sheet/image/video/audio/link/other), so three of its seven
+   tabs always filtered to nothing. Upload routes to Teaching Resources so
+   there is one upload flow.
+
+   Renders CONTENT ONLY under the CollegeDashboard masthead.
    ========================================================================== */
 
 interface DocumentLibrarySectionProps {
@@ -57,52 +56,32 @@ const KIND_LABEL: Record<ResourceKind, string> = {
   other: 'Other',
 };
 
-const KIND_TONE: Record<ResourceKind, Tone> = {
-  document: 'blue',
-  slide: 'orange',
-  sheet: 'yellow',
-  image: 'emerald',
-  video: 'red',
-  audio: 'amber',
-  link: 'purple',
-  other: 'cyan',
+const KIND_ONE: Record<ResourceKind, string> = {
+  document: 'Document',
+  slide: 'Slides',
+  sheet: 'Spreadsheet',
+  image: 'Image',
+  video: 'Video',
+  audio: 'Audio',
+  link: 'Link',
+  other: 'File',
 };
 
-// Folder definitions — derived dynamically from the resources we have.
-interface DerivedFolder {
-  id: string;
-  label: string;
-  kinds: ResourceKind[];
-  count: number;
-  tone: Tone;
-}
-
-function buildFolders(resources: CollegeResource[]): DerivedFolder[] {
-  // Group by display label so pdf+doc both fall under "Documents"
-  const counts = new Map<string, { kinds: Set<ResourceKind>; count: number }>();
-  for (const r of resources) {
-    const label = KIND_LABEL[r.kind];
-    const entry = counts.get(label) ?? { kinds: new Set(), count: 0 };
-    entry.kinds.add(r.kind);
-    entry.count += 1;
-    counts.set(label, entry);
-  }
-  return Array.from(counts.entries())
-    .filter(([, e]) => e.count > 0)
-    .sort((a, b) => b[1].count - a[1].count)
-    .map(([label, e]) => {
-      const firstKind = Array.from(e.kinds)[0];
-      return {
-        id: label.toLowerCase(),
-        label,
-        kinds: Array.from(e.kinds),
-        count: e.count,
-        tone: KIND_TONE[firstKind],
-      };
-    });
-}
-
 const STORAGE_QUOTA_BYTES = 5 * 1024 * 1024 * 1024;
+const PAGE = 24;
+
+const CHIP =
+  'inline-flex h-11 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border px-4 text-[12.5px] font-medium transition-colors touch-manipulation';
+const CHIP_ON = 'border-white bg-white text-black';
+const CHIP_OFF = 'border-white/[0.14] text-white hover:bg-white/[0.06]';
+const SEARCH =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white placeholder:text-white placeholder:opacity-40 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus:outline-none touch-manipulation';
+const PRIMARY =
+  'inline-flex h-11 w-full items-center justify-center rounded-full bg-elec-yellow px-5 text-[13px] font-semibold text-black transition-[filter,transform] touch-manipulation hover:brightness-105 active:scale-[0.98] sm:w-auto';
+const LIST_CARD = cn(
+  '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
+  CARD_SURFACE
+);
 
 function formatFileSize(bytes?: number | null): string {
   if (!bytes) return '—';
@@ -112,19 +91,28 @@ function formatFileSize(bytes?: number | null): string {
   return `${(bytes / (1024 * 1024 * 1024)).toFixed(2)} GB`;
 }
 
+function fmtDate(iso: string): string {
+  return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+}
+
 export function DocumentLibrarySection({ onNavigate }: DocumentLibrarySectionProps) {
   const { resources, loading, error, deleteResource, signedUrl, refresh } = useCollegeResources();
   const { toast } = useToast();
 
   const [searchQuery, setSearchQuery] = useState('');
-  const [filterFolder, setFilterFolder] = useState<string>('all');
-  const [filterKind, setFilterKind] = useState<string>('all');
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [filterKind, setFilterKind] = useState<ResourceKind | 'all'>('all');
   const [deleting, setDeleting] = useState<CollegeResource | null>(null);
   const [preview, setPreview] = useState<CollegeResource | null>(null);
-  const [visibleCount, setVisibleCount] = useState(24);
+  const [visibleCount, setVisibleCount] = useState(PAGE);
 
-  const folders = useMemo(() => buildFolders(resources), [resources]);
+  // Kinds present in the library, most common first, with live counts.
+  const kinds = useMemo(() => {
+    const counts = new Map<ResourceKind, number>();
+    for (const r of resources) counts.set(r.kind, (counts.get(r.kind) ?? 0) + 1);
+    return Array.from(counts.entries())
+      .sort((a, b) => b[1] - a[1])
+      .map(([kind, count]) => ({ kind, count }));
+  }, [resources]);
 
   const filtered = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
@@ -132,11 +120,9 @@ export function DocumentLibrarySection({ onNavigate }: DocumentLibrarySectionPro
       const haystack = `${r.title} ${r.description ?? ''} ${(r.tags ?? []).join(' ')}`.toLowerCase();
       const matchesSearch = !q || haystack.includes(q);
       const matchesKind = filterKind === 'all' || r.kind === filterKind;
-      const folder = folders.find((f) => f.id === filterFolder);
-      const matchesFolder = filterFolder === 'all' || (folder && folder.kinds.includes(r.kind));
-      return matchesSearch && matchesKind && matchesFolder;
+      return matchesSearch && matchesKind;
     });
-  }, [resources, searchQuery, filterKind, filterFolder, folders]);
+  }, [resources, searchQuery, filterKind]);
 
   const usedStorage = useMemo(
     () => resources.reduce((sum, r) => sum + (r.size_bytes ?? 0), 0),
@@ -147,11 +133,11 @@ export function DocumentLibrarySection({ onNavigate }: DocumentLibrarySectionPro
   // Reset the page size whenever the filtered set changes so a new filter
   // doesn't inherit a huge previous "load more" count.
   useEffect(() => {
-    setVisibleCount(24);
-  }, [searchQuery, filterFolder, filterKind, viewMode]);
+    setVisibleCount(PAGE);
+  }, [searchQuery, filterKind]);
 
   const shown = filtered.slice(0, visibleCount);
-  const hasMore = filtered.length > visibleCount;
+  const hidden = filtered.length - shown.length;
 
   // Open the in-app preview sheet (image / PDF / video / audio / link) rather
   // than bouncing to a new browser tab.
@@ -183,341 +169,218 @@ export function DocumentLibrarySection({ onNavigate }: DocumentLibrarySectionPro
     }
   };
 
+  const goUpload = () => onNavigate?.('teachingresources');
+
   return (
-    <PageFrame>
-      <motion.div variants={itemVariants}>
-        <PageHero
-          eyebrow="Curriculum · Document Library"
-          title="Shared documents"
-          description={
-            loading
-              ? 'Loading documents…'
-              : `${resources.length} document${resources.length === 1 ? '' : 's'} · ${formatFileSize(usedStorage)} used.`
-          }
-          tone="purple"
-          actions={
-            <button
-              onClick={() => onNavigate?.('teachingresources')}
-              className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap"
-            >
-              Upload →
-            </button>
-          }
-        />
-      </motion.div>
-
-      {/* Storage bar — real bytes from real resources. */}
-      <motion.div variants={itemVariants}>
-        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
-          <div className="flex items-baseline justify-between">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
-              Storage
-            </div>
-            <div className="text-[12px] tabular-nums text-white">
-              {formatFileSize(usedStorage)} / 5 GB
-            </div>
-          </div>
-          <div className="mt-3 h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
-            <div
-              className={cn(
-                'h-full transition-all rounded-full',
-                storagePercent > 80
-                  ? 'bg-red-500/80'
-                  : storagePercent > 60
-                    ? 'bg-amber-400/80'
-                    : 'bg-elec-yellow/80'
-              )}
-              style={{ width: `${storagePercent}%` }}
+    <>
+      <motion.section
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="space-y-3"
+      >
+        {!loading && !error && resources.length > 0 && (
+          <HubKpiRow>
+            <HubKpi
+              accent
+              label="Documents"
+              value={String(resources.length)}
+              verdict="Shared across the college"
+              context={
+                kinds.length > 0
+                  ? `${kinds.length} type${kinds.length === 1 ? '' : 's'}`
+                  : undefined
+              }
             />
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Folders — derived from real kinds, no fake counts. */}
-      {folders.length > 0 && (
-        <motion.section variants={itemVariants} className="space-y-5">
-          <SectionHeader eyebrow="Folders" title="Browse by type" />
-          <HubGrid columns={4}>
-            <button
-              onClick={() => setFilterFolder('all')}
-              className={cn(
-                'group relative bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-5 text-left touch-manipulation flex flex-col min-h-[140px] rounded-2xl border',
-                filterFolder === 'all'
-                  ? 'border-elec-yellow/60'
-                  : 'border-white/[0.06]'
+            <HubKpi
+              label="Storage used"
+              value={formatFileSize(usedStorage)}
+              sentiment={storagePercent >= 80 ? 'bad' : 'neutral'}
+              verdict={
+                storagePercent >= 80
+                  ? 'Nearly full — clear old files'
+                  : `${storagePercent}% of 5 GB`
+              }
+            />
+            <HubKpi
+              label="Added this month"
+              value={String(
+                resources.filter((r) => {
+                  const d = new Date(r.created_at);
+                  const n = new Date();
+                  return d.getFullYear() === n.getFullYear() && d.getMonth() === n.getMonth();
+                }).length
               )}
-            >
-              <div
-                aria-hidden
-                className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/80 via-amber-400/70 to-orange-400/70 opacity-70 group-hover:opacity-100 transition-opacity"
-              />
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
-                All
-              </div>
-              <h3 className="mt-3 text-base font-semibold text-white tracking-tight">
-                Everything
-              </h3>
-              <div className="flex-grow" />
-              <div className="mt-4 pt-3 border-t border-white/[0.06] text-[11.5px] text-white/70 tabular-nums">
-                {resources.length} item{resources.length === 1 ? '' : 's'}
-              </div>
-            </button>
-            {folders.map((folder, i) => (
-              <button
-                key={folder.id}
-                onClick={() => setFilterFolder(folder.id)}
-                className={cn(
-                  'group relative bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-5 text-left touch-manipulation flex flex-col min-h-[140px] rounded-2xl border',
-                  filterFolder === folder.id
-                    ? 'border-elec-yellow/60'
-                    : 'border-white/[0.06]'
-                )}
-              >
-                <div
-                  className={cn(
-                    'absolute inset-x-0 top-0 h-px opacity-70 group-hover:opacity-100 transition-opacity',
-                    toneDot[folder.tone]
-                  )}
-                />
-                <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
-                  {String(i + 1).padStart(2, '0')} · Folder
-                </div>
-                <h3 className="mt-3 text-base font-semibold text-white tracking-tight">
-                  {folder.label}
-                </h3>
-                <div className="flex-grow" />
-                <div className="mt-4 pt-3 border-t border-white/[0.06] text-[11.5px] text-white/70 tabular-nums">
-                  {folder.count} item{folder.count === 1 ? '' : 's'}
-                </div>
-              </button>
-            ))}
-          </HubGrid>
-        </motion.section>
-      )}
-
-      <motion.div variants={itemVariants}>
-        <FilterBar
-          tabs={[
-            { value: 'all', label: 'All' },
-            { value: 'pdf', label: 'PDFs' },
-            { value: 'doc', label: 'Docs' },
-            { value: 'slides', label: 'Slides' },
-            { value: 'video', label: 'Videos' },
-            { value: 'image', label: 'Images' },
-            { value: 'link', label: 'Links' },
-          ]}
-          activeTab={filterKind}
-          onTabChange={setFilterKind}
-          search={searchQuery}
-          onSearchChange={setSearchQuery}
-          searchPlaceholder="Search documents…"
-          actions={
-            <div className="flex items-center gap-0 bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-full p-0.5">
-              <button
-                onClick={() => setViewMode('grid')}
-                className={cn(
-                  'px-3 py-1 text-[11.5px] font-medium rounded-full transition-colors touch-manipulation',
-                  viewMode === 'grid'
-                    ? 'bg-elec-yellow text-black'
-                    : 'text-white hover:text-white'
-                )}
-              >
-                Grid
-              </button>
-              <button
-                onClick={() => setViewMode('list')}
-                className={cn(
-                  'px-3 py-1 text-[11.5px] font-medium rounded-full transition-colors touch-manipulation',
-                  viewMode === 'list'
-                    ? 'bg-elec-yellow text-black'
-                    : 'text-white hover:text-white'
-                )}
-              >
-                List
-              </button>
-            </div>
-          }
-        />
-      </motion.div>
-
-      <motion.section variants={itemVariants} className="space-y-5">
-        <SectionHeader
-          eyebrow={loading ? 'Loading…' : 'Documents'}
-          title={
-            loading
-              ? '—'
-              : hasMore
-                ? `Showing ${shown.length} of ${filtered.length}`
-                : `${filtered.length} item${filtered.length === 1 ? '' : 's'}`
-          }
-        />
-
-        {error ? (
-          <EmptyState
-            title="Could not load documents"
-            description={error}
-            action="Retry"
-            onAction={refresh}
-          />
-        ) : loading ? (
-          <HubGrid columns={4}>
-            {Array.from({ length: 4 }).map((_, i) => (
-              <div
-                key={i}
-                className="h-[140px] bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl animate-pulse"
-              />
-            ))}
-          </HubGrid>
-        ) : filtered.length === 0 ? (
-          <EmptyState
-            title={resources.length === 0 ? 'No documents yet' : 'No matches'}
-            description={
-              resources.length === 0
-                ? 'Upload teaching resources from the Teaching Resources section to see them here.'
-                : 'Try adjusting your filters or search query.'
-            }
-            action={resources.length === 0 ? 'Open Teaching Resources' : undefined}
-            onAction={
-              resources.length === 0
-                ? () => onNavigate?.('teachingresources')
-                : undefined
-            }
-          />
-        ) : viewMode === 'grid' ? (
-          <HubGrid columns={4}>
-            {shown.map((resource, i) => (
-              <button
-                key={resource.id}
-                type="button"
-                onClick={() => openResource(resource)}
-                className="group relative bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-4 flex flex-col min-h-[140px] rounded-2xl border border-white/[0.06] text-left touch-manipulation focus:outline-none focus:ring-2 focus:ring-elec-yellow/40"
-              >
-                <div
-                  className={cn(
-                    'absolute inset-x-0 top-0 h-px opacity-70',
-                    toneDot[KIND_TONE[resource.kind]]
-                  )}
-                />
-                <div className="flex items-start justify-between">
-                  <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
-                    {String(i + 1).padStart(2, '0')} · {KIND_LABEL[resource.kind]}
-                  </div>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger
-                      asChild
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <IconButton
-                        aria-label="Options"
-                        onClick={(e) => e.stopPropagation()}
-                        className="-mt-1 -mr-1 shrink-0"
-                      >
-                        <span className="text-[18px] leading-none">⋯</span>
-                      </IconButton>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent
-                      align="end"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <DropdownMenuItem
-                        className="h-11"
-                        onClick={() => openResource(resource)}
-                      >
-                        Open
-                      </DropdownMenuItem>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem
-                        className="h-11 text-red-400 focus:text-red-300"
-                        onClick={() => setDeleting(resource)}
-                      >
-                        Delete
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </div>
-                <h4 className="mt-3 text-[13.5px] font-medium text-white line-clamp-2">
-                  {resource.title}
-                </h4>
-                <div className="flex-grow" />
-                <div className="mt-4 pt-3 border-t border-white/[0.06] text-[11px] text-white/70 tabular-nums">
-                  {formatFileSize(resource.size_bytes)}
-                </div>
-              </button>
-            ))}
-          </HubGrid>
-        ) : (
-          <ListCard>
-            {shown.map((resource) => (
-              <button
-                key={resource.id}
-                type="button"
-                onClick={() => openResource(resource)}
-                className="w-full flex items-center gap-4 px-5 sm:px-6 py-4 hover:bg-[hsl(0_0%_15%)] transition-colors text-left touch-manipulation"
-              >
-                <span
-                  aria-hidden
-                  className={cn(
-                    'h-1.5 w-1.5 rounded-full shrink-0',
-                    toneDot[KIND_TONE[resource.kind]]
-                  )}
-                />
-                <div className="flex-1 min-w-0">
-                  <div className="text-[14px] font-medium text-white truncate">
-                    {resource.title}
-                  </div>
-                  <div className="mt-0.5 flex items-center gap-3 text-[11.5px] text-white/70">
-                    <span className="tabular-nums">
-                      {formatFileSize(resource.size_bytes)}
-                    </span>
-                    {resource.uploader_name && <span>{resource.uploader_name}</span>}
-                    <span className="tabular-nums">
-                      {new Date(resource.created_at).toLocaleDateString('en-GB', {
-                        day: 'numeric',
-                        month: 'short',
-                      })}
-                    </span>
-                  </div>
-                </div>
-                <DropdownMenu>
-                  <DropdownMenuTrigger
-                    asChild
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <IconButton
-                      aria-label="Options"
-                      onClick={(e) => e.stopPropagation()}
-                      className="shrink-0"
-                    >
-                      <span className="text-[18px] leading-none">⋯</span>
-                    </IconButton>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" onClick={(e) => e.stopPropagation()}>
-                    <DropdownMenuItem
-                      className="h-11"
-                      onClick={() => openResource(resource)}
-                    >
-                      Open
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem
-                      className="h-11 text-red-400 focus:text-red-300"
-                      onClick={() => setDeleting(resource)}
-                    >
-                      Delete
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </button>
-            ))}
-          </ListCard>
+              verdict="New this calendar month"
+            />
+          </HubKpiRow>
         )}
 
-        {!loading && !error && hasMore && (
-          <div className="flex justify-center">
-            <SecondaryButton onClick={() => setVisibleCount((c) => c + 24)}>
-              Load more · {filtered.length - visibleCount} left
-            </SecondaryButton>
-          </div>
+        <motion.div variants={itemVariants}>
+          <button type="button" onClick={goUpload} className={PRIMARY}>
+            Upload a document
+          </button>
+        </motion.div>
+      </motion.section>
+
+      <motion.section
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="space-y-3"
+      >
+        <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
+          <HubSectionHeading>Library</HubSectionHeading>
+          {!loading && !error && (
+            <span className="text-[11px] font-semibold tabular-nums text-white">
+              {filtered.length === resources.length
+                ? `${resources.length} item${resources.length === 1 ? '' : 's'}`
+                : `${filtered.length} of ${resources.length}`}
+            </span>
+          )}
+        </motion.div>
+
+        {resources.length > 0 && (
+          <>
+            <motion.div variants={itemVariants}>
+              <input
+                type="search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search title, description or tags"
+                aria-label="Search documents"
+                className={SEARCH}
+              />
+            </motion.div>
+
+            {kinds.length > 1 && (
+              <motion.div
+                variants={itemVariants}
+                className="-mx-4 flex gap-2 overflow-x-auto px-4 hide-scrollbar sm:mx-0 sm:flex-wrap sm:px-0"
+              >
+                <button
+                  type="button"
+                  onClick={() => setFilterKind('all')}
+                  className={cn(CHIP, filterKind === 'all' ? CHIP_ON : CHIP_OFF)}
+                >
+                  All
+                  <span className="text-[11px] tabular-nums opacity-70">{resources.length}</span>
+                </button>
+                {kinds.map(({ kind, count }) => (
+                  <button
+                    key={kind}
+                    type="button"
+                    onClick={() => setFilterKind(kind)}
+                    className={cn(CHIP, filterKind === kind ? CHIP_ON : CHIP_OFF)}
+                  >
+                    {KIND_LABEL[kind]}
+                    <span className="text-[11px] tabular-nums opacity-70">{count}</span>
+                  </button>
+                ))}
+              </motion.div>
+            )}
+          </>
+        )}
+
+        {error ? (
+          <motion.div variants={itemVariants}>
+            <EmptyState
+              title="Could not load documents"
+              description={error}
+              action="Retry"
+              onAction={refresh}
+            />
+          </motion.div>
+        ) : loading ? (
+          <LoadingState />
+        ) : resources.length === 0 ? (
+          <motion.div variants={itemVariants}>
+            <EmptyState
+              title="No documents yet"
+              description="Upload teaching resources and they appear here for everyone at the college."
+              action="Open Teaching Resources"
+              onAction={goUpload}
+            />
+          </motion.div>
+        ) : (
+          <motion.div variants={itemVariants} className={LIST_CARD}>
+            {filtered.length === 0 ? (
+              <p className="px-4 py-5 text-[12.5px] text-white sm:px-5">
+                Nothing matches — clear the search or pick another type.
+              </p>
+            ) : (
+              <ul className="divide-y divide-white/[0.10]">
+                {shown.map((resource) => (
+                  <li key={resource.id} className="flex items-center gap-1 pr-2 sm:pr-3">
+                    <button
+                      type="button"
+                      onClick={() => openResource(resource)}
+                      className="flex min-w-0 flex-1 items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5"
+                    >
+                      <span
+                        aria-hidden="true"
+                        className="h-8 w-[3px] shrink-0 rounded-full bg-white/[0.25]"
+                      />
+                      <span className="min-w-0 flex-1">
+                        <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+                          {resource.title}
+                        </span>
+                        <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">
+                          {[
+                            KIND_ONE[resource.kind],
+                            resource.uploader_name,
+                            fmtDate(resource.created_at),
+                            resource.ac_count ? `${resource.ac_count} AC${resource.ac_count === 1 ? '' : 's'}` : null,
+                          ]
+                            .filter(Boolean)
+                            .join(' · ')}
+                        </span>
+                      </span>
+                      <span className="shrink-0 text-[13px] font-semibold tabular-nums text-white">
+                        {resource.kind === 'link' ? 'Link' : formatFileSize(resource.size_bytes)}
+                      </span>
+                      <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
+                    </button>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <button
+                          type="button"
+                          aria-label={`Options for ${resource.title}`}
+                          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white transition-colors touch-manipulation hover:bg-white/[0.06]"
+                        >
+                          <span className="text-[18px] leading-none">⋯</span>
+                        </button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem
+                          className="h-11 touch-manipulation"
+                          onClick={() => openResource(resource)}
+                        >
+                          Open
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem
+                          className="h-11 touch-manipulation text-red-400 focus:text-red-300"
+                          onClick={() => setDeleting(resource)}
+                        >
+                          Delete
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </li>
+                ))}
+              </ul>
+            )}
+            {hidden > 0 && (
+              <button
+                type="button"
+                onClick={() => setVisibleCount((c) => c + PAGE)}
+                className="flex h-11 w-full items-center justify-center border-t border-white/[0.10] text-[12.5px] font-semibold text-white transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09]"
+              >
+                {hidden} more
+              </button>
+            )}
+          </motion.div>
         )}
       </motion.section>
 
@@ -550,6 +413,6 @@ export function DocumentLibrarySection({ onNavigate }: DocumentLibrarySectionPro
         variant="destructive"
         onConfirm={confirmDelete}
       />
-    </PageFrame>
+    </>
   );
 }

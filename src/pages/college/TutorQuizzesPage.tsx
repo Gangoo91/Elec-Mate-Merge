@@ -1,32 +1,92 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  Filter,
-  Brain,
-  Sparkles,
-  FileText,
-  Users,
-  Clock,
-  AlertTriangle,
-  Check,
-  TrendingUp,
-  Download,
-} from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { PageFrame, LoadingState } from '@/components/college/primitives';
+import { containerVariants, itemVariants } from '@/components/college/primitives';
+import {
+  HubPage,
+  HubBody,
+  HubMasthead,
+  HubKpi,
+  HubKpiRow,
+  HubSectionHeading,
+} from '@/components/hub/HubPrimitives';
+import { CARD_SURFACE } from '@/components/ui/card-recipe';
+import { chipBase, chipOff, inputCn } from '@/components/forms/fieldStyles';
 import { useTutorQuizzes, type TutorQuizListItem, type TutorQuizKind } from '@/hooks/useTutorQuizzes';
 import { rowsToCsv, downloadCsv } from '@/lib/csv';
 import { useToast } from '@/hooks/use-toast';
 
 /* ==========================================================================
    TutorQuizzesPage — /college/quizzes
-   Every quiz / assessment / mock-exam the tutor has created, with attempt
-   stats, filters, and click-through to a per-quiz detail page.
+
+   Every quiz / assessment / mock exam the tutor has authored, with attempt
+   stats, filters and click-through to the per-quiz page.
+
+   Rebuilt on the shared hub shell. What went: the hero (eyebrow, 32px
+   headline and a paragraph), two rows of count tiles that restated one
+   another, a completion ring per row, and a five-colour badge system
+   (blue / cyan / orange / purple / amber) that encoded nothing a word
+   couldn't. Rows now speak HubWorkList: rule, words, figure, chevron.
+
+   The one solid volt control is the marking queue — pending AI marks are
+   the only thing on this page that is waiting on the tutor.
    ========================================================================== */
 
 type StatusFilter = 'all' | 'published' | 'draft' | 'overdue' | 'needs_review';
 type KindFilter = 'all' | TutorQuizKind;
 type SortKey = 'recent' | 'completion' | 'avg' | 'pass_rate';
+
+const STATUS_DEFS: { key: StatusFilter; label: string }[] = [
+  { key: 'all', label: 'All' },
+  { key: 'published', label: 'Published' },
+  { key: 'draft', label: 'Drafts' },
+  { key: 'overdue', label: 'Overdue' },
+  { key: 'needs_review', label: 'Needs review' },
+];
+
+const KIND_DEFS: { key: KindFilter; label: string }[] = [
+  { key: 'all', label: 'All kinds' },
+  { key: 'quiz', label: 'Quizzes' },
+  { key: 'assessment', label: 'Assessments' },
+  { key: 'mock_exam', label: 'Mock exams' },
+];
+
+const SORT_LABEL: Record<SortKey, string> = {
+  recent: 'Most recent',
+  completion: 'Completion',
+  avg: 'Average score',
+  pass_rate: 'Pass rate',
+};
+
+const NEXT_SORT: Record<SortKey, SortKey> = {
+  recent: 'completion',
+  completion: 'avg',
+  avg: 'pass_rate',
+  pass_rate: 'recent',
+};
+
+const KIND_LABEL: Record<TutorQuizKind, string> = {
+  quiz: 'Quiz',
+  assessment: 'Assessment',
+  mock_exam: 'Mock exam',
+};
+
+const neutralButtonCn =
+  'inline-flex h-11 items-center justify-center rounded-xl border border-white/[0.12] bg-white/[0.06] px-4 text-[12.5px] font-semibold text-white transition-colors touch-manipulation hover:bg-white/[0.10] active:scale-[0.98] disabled:bg-white/[0.03] disabled:opacity-60';
+
+function plural(n: number, one: string, many = `${one}s`): string {
+  return `${n} ${n === 1 ? one : many}`;
+}
+
+function matchesStatus(q: TutorQuizListItem, status: StatusFilter): boolean {
+  if (status === 'published') return q.is_published;
+  if (status === 'draft') return !q.is_published;
+  if (status === 'overdue') return q.overdue_count > 0;
+  if (status === 'needs_review') return q.pending_ai_grade_count > 0;
+  return true;
+}
 
 export default function TutorQuizzesPage() {
   const navigate = useNavigate();
@@ -35,6 +95,49 @@ export default function TutorQuizzesPage() {
   const [status, setStatus] = useState<StatusFilter>('all');
   const [kind, setKind] = useState<KindFilter>('all');
   const [sort, setSort] = useState<SortKey>('recent');
+  const [search, setSearch] = useState('');
+
+  const filtered = useMemo(() => {
+    const needle = search.trim().toLowerCase();
+    let list = quizzes.filter((q) => matchesStatus(q, status));
+    if (kind !== 'all') list = list.filter((q) => q.kind === kind);
+    if (needle) {
+      list = list.filter((q) =>
+        [q.title, q.cohort_name, q.qualification_code]
+          .filter(Boolean)
+          .some((s) => (s as string).toLowerCase().includes(needle))
+      );
+    }
+
+    if (sort === 'recent') {
+      list.sort(
+        (a, b) => new Date(b.created_at ?? 0).getTime() - new Date(a.created_at ?? 0).getTime()
+      );
+    } else if (sort === 'completion') {
+      list.sort((a, b) => completionRatio(b) - completionRatio(a));
+    } else if (sort === 'avg') {
+      list.sort((a, b) => (b.avg_percentage ?? -1) - (a.avg_percentage ?? -1));
+    } else if (sort === 'pass_rate') {
+      list.sort((a, b) => (b.pass_rate_percent ?? -1) - (a.pass_rate_percent ?? -1));
+    }
+    return list;
+  }, [quizzes, status, kind, sort, search]);
+
+  const counts = useMemo(
+    () => ({
+      total: quizzes.length,
+      published: quizzes.filter((q) => q.is_published).length,
+      draft: quizzes.filter((q) => !q.is_published).length,
+      overdue: quizzes.reduce((s, q) => s + q.overdue_count, 0),
+      needs_review: quizzes.reduce((s, q) => s + q.pending_ai_grade_count, 0),
+      assigned: quizzes.reduce((s, q) => s + q.assigned_count, 0),
+      completed: quizzes.reduce((s, q) => s + q.completed_count, 0),
+    }),
+    [quizzes]
+  );
+
+  const statusCount = (key: StatusFilter) =>
+    key === 'all' ? quizzes.length : quizzes.filter((q) => matchesStatus(q, key)).length;
 
   const handleExportCsv = () => {
     const list = filtered;
@@ -95,472 +198,287 @@ export default function TutorQuizzesPage() {
     toast({ title: 'CSV exported', description: `${rows.length} quizzes` });
   };
 
-  const filtered = useMemo(() => {
-    let list = [...quizzes];
-    if (status === 'published') list = list.filter((q) => q.is_published);
-    else if (status === 'draft') list = list.filter((q) => !q.is_published);
-    else if (status === 'overdue') list = list.filter((q) => q.overdue_count > 0);
-    else if (status === 'needs_review') list = list.filter((q) => q.pending_ai_grade_count > 0);
-    if (kind !== 'all') list = list.filter((q) => q.kind === kind);
-
-    if (sort === 'recent') {
-      list.sort(
-        (a, b) =>
-          new Date(b.created_at ?? 0).getTime() - new Date(a.created_at ?? 0).getTime()
-      );
-    } else if (sort === 'completion') {
-      list.sort((a, b) => completionRatio(b) - completionRatio(a));
-    } else if (sort === 'avg') {
-      list.sort((a, b) => (b.avg_percentage ?? -1) - (a.avg_percentage ?? -1));
-    } else if (sort === 'pass_rate') {
-      list.sort((a, b) => (b.pass_rate_percent ?? -1) - (a.pass_rate_percent ?? -1));
-    }
-    return list;
-  }, [quizzes, status, kind, sort]);
-
-  const counts = useMemo(() => {
-    return {
-      total: quizzes.length,
-      published: quizzes.filter((q) => q.is_published).length,
-      draft: quizzes.filter((q) => !q.is_published).length,
-      overdue: quizzes.reduce((s, q) => s + q.overdue_count, 0),
-      needs_review: quizzes.reduce((s, q) => s + q.pending_ai_grade_count, 0),
-      assigned: quizzes.reduce((s, q) => s + q.assigned_count, 0),
-      completed: quizzes.reduce((s, q) => s + q.completed_count, 0),
-    };
-  }, [quizzes]);
+  const completionPct =
+    counts.assigned > 0 ? Math.round((counts.completed / counts.assigned) * 100) : null;
 
   return (
-    <PageFrame className="max-w-[1280px] pb-24">
-      <button
-        onClick={() => navigate(-1)}
-        className="text-[12px] font-medium text-white hover:text-elec-yellow transition-colors"
-      >
-        ← Back
-      </button>
-
-      <div className="mt-4">
-        <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Cohort assessments
-        </div>
-        <h1 className="mt-1.5 text-[26px] sm:text-[32px] font-semibold text-white tracking-tight leading-tight">
-          Quizzes &amp; assessments
-        </h1>
-        <p className="mt-2 text-[13px] text-white max-w-2xl leading-relaxed">
-          Every quiz, assessment and mock exam you've authored, with live attempt stats and
-          one-tap drill-down to AI grades you can override.
-        </p>
-      </div>
-
-      {/* Counts strip */}
-      <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-        <CountTile label="Total" value={counts.total} />
-        <CountTile label="Published" value={counts.published} tone="emerald" />
-        <CountTile label="Drafts" value={counts.draft} tone="amber" />
-        <CountTile
-          label="AI marks pending"
-          value={counts.needs_review}
-          tone={counts.needs_review > 0 ? 'amber' : undefined}
-        />
-      </div>
-
-      <div className="mt-2 grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-        <CountTile
-          label="Assignments"
-          value={counts.assigned}
-          sub={`${counts.completed} completed`}
-        />
-        <CountTile
-          label="Overdue"
-          value={counts.overdue}
-          tone={counts.overdue > 0 ? 'red' : undefined}
-        />
-      </div>
-
-      {/* Filter toolbar */}
-      <div className="mt-6 flex items-center gap-2 flex-wrap">
-        <div className="flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          <Filter className="h-3.5 w-3.5" />
-          Status
-        </div>
-        <FilterPill active={status === 'all'} onClick={() => setStatus('all')}>
-          All ({quizzes.length})
-        </FilterPill>
-        <FilterPill active={status === 'published'} onClick={() => setStatus('published')}>
-          Published
-        </FilterPill>
-        <FilterPill active={status === 'draft'} onClick={() => setStatus('draft')}>
-          Drafts
-        </FilterPill>
-        <FilterPill active={status === 'overdue'} onClick={() => setStatus('overdue')}>
-          Overdue
-        </FilterPill>
-        <FilterPill active={status === 'needs_review'} onClick={() => setStatus('needs_review')}>
-          Needs review
-        </FilterPill>
-      </div>
-
-      <div className="mt-2 flex items-center gap-2 flex-wrap">
-        <div className="flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Kind
-        </div>
-        <FilterPill active={kind === 'all'} onClick={() => setKind('all')}>All</FilterPill>
-        <FilterPill active={kind === 'quiz'} onClick={() => setKind('quiz')}>Quizzes</FilterPill>
-        <FilterPill active={kind === 'assessment'} onClick={() => setKind('assessment')}>
-          Assessments
-        </FilterPill>
-        <FilterPill active={kind === 'mock_exam'} onClick={() => setKind('mock_exam')}>
-          Mock exams
-        </FilterPill>
-
-        <div className="ml-auto flex items-center gap-1.5">
+    <HubPage>
+      <HubMasthead
+        section="College"
+        title="Quizzes & assessments"
+        backTo="/college?section=curriculumhub"
+      />
+      <HubBody pushContext="Get notified about marking, off-the-job hours and learners who need you">
+        {/* The one solid volt control. Marking is where pending AI marks are
+            cleared; export is a neutral secondary beside it. */}
+        <motion.div
+          variants={itemVariants}
+          initial="hidden"
+          animate="visible"
+          className="flex flex-col gap-2.5 sm:flex-row sm:items-center"
+        >
+          <button
+            type="button"
+            onClick={() => navigate('/college/marking')}
+            className="inline-flex h-11 w-full items-center justify-center rounded-xl bg-elec-yellow px-5 text-[13px] font-semibold text-black transition-colors touch-manipulation hover:bg-elec-yellow/90 sm:w-auto"
+          >
+            {counts.needs_review > 0
+              ? `Marking queue · ${plural(counts.needs_review, 'AI mark')} pending`
+              : 'Marking queue'}
+          </button>
           <button
             type="button"
             onClick={handleExportCsv}
             disabled={loading || filtered.length === 0}
-            title="Export the visible quizzes to CSV"
-            className="inline-flex items-center gap-1.5 h-8 px-3 rounded-full bg-white/[0.04] border border-white/[0.08] text-white hover:bg-white/[0.08] text-[11px] touch-manipulation disabled:opacity-50"
+            className={cn(neutralButtonCn, 'w-full sm:w-auto')}
           >
-            <Download className="h-3 w-3" />
             Export CSV
           </button>
-          <button
-            type="button"
-            onClick={() =>
-              setSort(
-                sort === 'recent'
-                  ? 'completion'
-                  : sort === 'completion'
-                    ? 'avg'
-                    : sort === 'avg'
-                      ? 'pass_rate'
-                      : 'recent'
-              )
-            }
-            className="inline-flex items-center gap-1.5 h-8 px-3 rounded-full bg-white/[0.04] border border-white/[0.08] text-white hover:bg-white/[0.08] text-[11px] touch-manipulation"
-          >
-            <TrendingUp className="h-3 w-3" />
-            Sort:{' '}
-            {sort === 'recent'
-              ? 'Most recent'
-              : sort === 'completion'
-                ? 'Completion'
-                : sort === 'avg'
-                  ? 'Avg score'
-                  : 'Pass rate'}
-          </button>
-        </div>
-      </div>
+        </motion.div>
 
-      {/* List */}
-      {loading ? (
-        <LoadingState />
-      ) : filtered.length === 0 ? (
-        <div className="mt-6 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-6 py-10 text-center">
-          <Brain className="h-8 w-8 text-white/35 mx-auto mb-2" />
-          <p className="text-[13px] text-white max-w-md mx-auto leading-relaxed">
-            {quizzes.length === 0
-              ? "You haven't authored any quizzes yet. Open a Student 360 page and tap Quiz or From doc."
-              : 'No quizzes match this filter.'}
-          </p>
-        </div>
-      ) : (
-        <ul className="mt-6 space-y-2.5">
-          {filtered.map((q) => (
-            <li key={q.id}>
-              <button
-                type="button"
-                onClick={() => navigate(`/college/quizzes/${q.id}`)}
-                className="w-full text-left bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-5 py-4 hover:bg-white/[0.02] hover:border-white/[0.10] transition-colors touch-manipulation"
-              >
-                <QuizListRow q={q} />
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
-    </PageFrame>
+        <HubKpiRow>
+          <HubKpi
+            accent
+            label="Authored"
+            value={loading ? '—' : String(counts.total)}
+            verdict={
+              loading
+                ? undefined
+                : counts.total === 0
+                  ? 'Nothing authored yet'
+                  : `${counts.published} published · ${counts.draft} in draft`
+            }
+            onClick={() => setStatus('all')}
+          />
+          <HubKpi
+            label="AI marks pending"
+            value={loading ? '—' : String(counts.needs_review)}
+            verdict={
+              loading
+                ? undefined
+                : counts.needs_review > 0
+                  ? 'Free-response answers waiting for a mark'
+                  : 'Nothing waiting'
+            }
+            sentiment={counts.needs_review > 0 ? 'bad' : 'neutral'}
+            onClick={() => setStatus('needs_review')}
+          />
+          <HubKpi
+            label="Overdue"
+            value={loading ? '—' : String(counts.overdue)}
+            verdict={
+              loading
+                ? undefined
+                : counts.overdue > 0
+                  ? 'Homework past its due date, not handed in'
+                  : 'No homework overdue'
+            }
+            sentiment={counts.overdue > 0 ? 'bad' : 'neutral'}
+            onClick={() => setStatus('overdue')}
+          />
+          <HubKpi
+            label="Completion"
+            value={loading ? '—' : completionPct == null ? '—' : `${completionPct}%`}
+            verdict={
+              loading
+                ? undefined
+                : completionPct == null
+                  ? 'Nothing assigned yet'
+                  : `${counts.completed} of ${plural(counts.assigned, 'assignment')} done`
+            }
+          />
+        </HubKpiRow>
+
+        <motion.section
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="space-y-3"
+        >
+          <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
+            <HubSectionHeading>Your quizzes</HubSectionHeading>
+            <span className="text-[11px] font-semibold tabular-nums text-white">
+              {plural(filtered.length, 'quiz', 'quizzes')}
+            </span>
+          </motion.div>
+
+          {/* Status chips — active is solid white so volt stays with the
+              marking button above. */}
+          <motion.div
+            variants={itemVariants}
+            className="-mx-4 flex snap-x snap-mandatory gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:px-0"
+          >
+            {STATUS_DEFS.map((f) => {
+              const active = status === f.key;
+              return (
+                <button
+                  key={f.key}
+                  type="button"
+                  onClick={() => setStatus(f.key)}
+                  aria-pressed={active}
+                  className={cn(
+                    chipBase,
+                    'inline-flex shrink-0 snap-start items-center gap-2 px-3.5 text-[12.5px]',
+                    active ? 'border-white bg-white font-semibold text-black' : chipOff
+                  )}
+                >
+                  {f.label}
+                  <span className="tabular-nums">{statusCount(f.key)}</span>
+                </button>
+              );
+            })}
+          </motion.div>
+
+          <motion.div
+            variants={itemVariants}
+            className="-mx-4 flex snap-x snap-mandatory gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:px-0"
+          >
+            {KIND_DEFS.map((f) => {
+              const active = kind === f.key;
+              return (
+                <button
+                  key={f.key}
+                  type="button"
+                  onClick={() => setKind(f.key)}
+                  aria-pressed={active}
+                  className={cn(
+                    chipBase,
+                    'inline-flex shrink-0 snap-start items-center px-3.5 text-[12.5px]',
+                    active ? 'border-white bg-white font-semibold text-black' : chipOff
+                  )}
+                >
+                  {f.label}
+                </button>
+              );
+            })}
+            <button
+              type="button"
+              onClick={() => setSort(NEXT_SORT[sort])}
+              className={cn(
+                chipBase,
+                chipOff,
+                'inline-flex shrink-0 snap-start items-center px-3.5 text-[12.5px] sm:ml-auto'
+              )}
+            >
+              Sort: {SORT_LABEL[sort]}
+            </button>
+          </motion.div>
+
+          <motion.div variants={itemVariants}>
+            <input
+              type="search"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Filter by title, cohort or qualification"
+              aria-label="Filter quizzes"
+              className={inputCn}
+            />
+          </motion.div>
+
+          <motion.div
+            variants={itemVariants}
+            className={cn(
+              '-mx-4 overflow-hidden border-y border-elec-yellow/35 sm:mx-0 sm:rounded-2xl sm:border-x',
+              CARD_SURFACE
+            )}
+          >
+            {loading ? (
+              <div className="space-y-px animate-pulse">
+                {[0, 1, 2, 3].map((i) => (
+                  <div key={i} className="h-16 bg-white/[0.04]" />
+                ))}
+              </div>
+            ) : filtered.length === 0 ? (
+              <p className="px-4 py-8 text-center text-[13px] text-white sm:px-5">
+                {quizzes.length === 0
+                  ? 'Nothing authored yet. Open a learner in Student 360 and tap Quiz or From doc.'
+                  : 'No quizzes match this filter.'}
+              </p>
+            ) : (
+              <ul className="divide-y divide-white/[0.10]">
+                {filtered.map((q) => (
+                  <li key={q.id}>
+                    <QuizRow q={q} onClick={() => navigate(`/college/quizzes/${q.id}`)} />
+                  </li>
+                ))}
+              </ul>
+            )}
+          </motion.div>
+        </motion.section>
+      </HubBody>
+    </HubPage>
   );
 }
 
 /* ────────────────────────── row ────────────────────────── */
 
-function QuizListRow({ q }: { q: TutorQuizListItem }) {
-  return (
-    <div className="flex items-start gap-4 flex-wrap">
-      <div className="min-w-0 flex-1">
-        <div className="flex items-center gap-1.5 flex-wrap mb-1">
-          <KindBadge kind={q.kind} />
-          {!q.is_published && (
-            <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-amber-500/[0.10] border border-amber-400/30 text-[9.5px] font-semibold tracking-[0.06em] uppercase text-amber-200">
-              Draft
-            </span>
-          )}
-          {q.source === 'ai_authored' && (
-            <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-elec-yellow/[0.10] border border-elec-yellow/30 text-[9.5px] font-semibold tracking-[0.06em] uppercase text-elec-yellow gap-0.5">
-              <Sparkles className="h-2.5 w-2.5" />
-              AI
-            </span>
-          )}
-          {q.source_document_id && (
-            <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-white/[0.04] border border-white/[0.10] text-[9.5px] font-semibold tracking-[0.06em] uppercase text-white gap-0.5">
-              <FileText className="h-2.5 w-2.5" />
-              From doc
-            </span>
-          )}
-          {q.is_homework && (
-            <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-purple-500/[0.10] border border-purple-400/30 text-[9.5px] font-semibold tracking-[0.06em] uppercase text-purple-200">
-              Homework
-            </span>
-          )}
-          {q.qualification_code && (
-            <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-white/[0.04] border border-white/[0.10] text-[9.5px] font-semibold tracking-[0.06em] uppercase text-white">
-              {q.qualification_code}
-            </span>
-          )}
-        </div>
+function QuizRow({ q, onClick }: { q: TutorQuizListItem; onClick: () => void }) {
+  const urgent = q.overdue_count > 0 || q.pending_ai_grade_count > 0;
+  const total = Math.max(q.assigned_count, q.completed_count);
 
-        <h3 className="text-[14px] font-semibold text-white leading-tight tracking-tight">
-          {q.title}
-        </h3>
-        <div className="mt-1 text-[11px] text-white tabular-nums flex items-center gap-x-2 gap-y-0.5 flex-wrap">
-          <span>{q.questions_count} questions</span>
-          {q.time_limit_minutes && (
-            <>
-              <span className="text-white/35">·</span>
-              <span>{q.time_limit_minutes}m</span>
-            </>
-          )}
-          {q.pass_mark != null && (
-            <>
-              <span className="text-white/35">·</span>
-              <span>{q.pass_mark}% pass</span>
-            </>
-          )}
-          {q.cohort_name && (
-            <>
-              <span className="text-white/35">·</span>
-              <span className="inline-flex items-center gap-1">
-                <Users className="h-3 w-3" />
-                {q.cohort_name}
-              </span>
-            </>
-          )}
-          {q.due_date && (
-            <>
-              <span className="text-white/35">·</span>
-              <span className={cn(q.overdue_count > 0 && 'text-red-300')}>
-                Due {q.due_date}
-              </span>
-            </>
-          )}
-        </div>
+  const reason = [
+    KIND_LABEL[q.kind],
+    !q.is_published ? 'Draft' : null,
+    q.is_homework ? 'Homework' : null,
+    plural(q.questions_count, 'question'),
+    q.cohort_name,
+    q.qualification_code,
+    q.due_date ? `Due ${q.due_date}` : null,
+  ]
+    .filter(Boolean)
+    .join(' · ');
 
-        {/* Stats strip */}
-        <div className="mt-2 flex items-center gap-2 flex-wrap text-[10.5px] tabular-nums">
-          <Stat
-            icon={<Users className="h-3 w-3" />}
-            label={`${q.completed_count}/${q.assigned_count} done`}
-            tone={
-              q.assigned_count > 0 && q.completed_count === q.assigned_count
-                ? 'emerald'
-                : undefined
-            }
-          />
-          {q.in_progress_count > 0 && (
-            <Stat
-              icon={<Clock className="h-3 w-3" />}
-              label={`${q.in_progress_count} in progress`}
-              tone="amber"
-            />
-          )}
-          {q.avg_percentage != null && (
-            <Stat
-              icon={<TrendingUp className="h-3 w-3" />}
-              label={`${q.avg_percentage}% avg`}
-              tone={
-                q.avg_percentage >= 75 ? 'emerald' : q.avg_percentage >= 50 ? 'amber' : 'red'
-              }
-            />
-          )}
-          {q.pass_rate_percent != null && (
-            <Stat
-              icon={<Check className="h-3 w-3" />}
-              label={`${q.pass_rate_percent}% pass`}
-              tone={
-                q.pass_rate_percent >= 80
-                  ? 'emerald'
-                  : q.pass_rate_percent >= 50
-                    ? 'amber'
-                    : 'red'
-              }
-            />
-          )}
-          {q.overdue_count > 0 && (
-            <Stat
-              icon={<AlertTriangle className="h-3 w-3" />}
-              label={`${q.overdue_count} overdue`}
-              tone="red"
-            />
-          )}
-          {q.pending_ai_grade_count > 0 && (
-            <Stat
-              icon={<Brain className="h-3 w-3" />}
-              label={`${q.pending_ai_grade_count} need AI marks`}
-              tone="amber"
-            />
-          )}
-        </div>
-      </div>
+  const detail = [
+    q.in_progress_count > 0 ? `${q.in_progress_count} in progress` : null,
+    q.avg_percentage != null ? `${q.avg_percentage}% average` : null,
+    q.pass_rate_percent != null ? `${q.pass_rate_percent}% pass` : null,
+    q.overdue_count > 0 ? `${q.overdue_count} overdue` : null,
+    q.pending_ai_grade_count > 0 ? `${q.pending_ai_grade_count} need AI marks` : null,
+  ]
+    .filter(Boolean)
+    .join(' · ');
 
-      {/* Big completion ring */}
-      <div className="flex-shrink-0 flex flex-col items-end justify-center">
-        <CompletionRing
-          completed={q.completed_count}
-          total={Math.max(q.assigned_count, q.completed_count, 1)}
-        />
-      </div>
-    </div>
-  );
-}
-
-function KindBadge({ kind }: { kind: TutorQuizKind }) {
-  const meta =
-    kind === 'mock_exam'
-      ? { label: 'Mock exam', cls: 'bg-orange-500/[0.10] border-orange-400/30 text-orange-200' }
-      : kind === 'assessment'
-        ? { label: 'Assessment', cls: 'bg-cyan-500/[0.10] border-cyan-400/30 text-cyan-200' }
-        : { label: 'Quiz', cls: 'bg-blue-500/[0.10] border-blue-400/30 text-blue-200' };
-  return (
-    <span
-      className={cn(
-        'inline-flex items-center h-4 px-1.5 rounded-md border text-[9.5px] font-semibold tracking-[0.06em] uppercase',
-        meta.cls
-      )}
-    >
-      {meta.label}
-    </span>
-  );
-}
-
-function Stat({
-  icon,
-  label,
-  tone,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  tone?: 'emerald' | 'amber' | 'red';
-}) {
-  return (
-    <span
-      className={cn(
-        'inline-flex items-center gap-1 h-5 px-2 rounded-full border text-[10.5px] tabular-nums',
-        tone === 'emerald'
-          ? 'bg-emerald-500/[0.08] border-emerald-400/30 text-emerald-200'
-          : tone === 'amber'
-            ? 'bg-amber-500/[0.08] border-amber-400/30 text-amber-200'
-            : tone === 'red'
-              ? 'bg-red-500/[0.08] border-red-400/30 text-red-200'
-              : 'bg-white/[0.04] border-white/[0.10] text-white'
-      )}
-    >
-      {icon}
-      {label}
-    </span>
-  );
-}
-
-function CompletionRing({ completed, total }: { completed: number; total: number }) {
-  const pct = total > 0 ? completed / total : 0;
-  const radius = 22;
-  const circ = 2 * Math.PI * radius;
-  const dash = pct * circ;
-  return (
-    <div className="relative h-14 w-14">
-      <svg className="absolute inset-0 -rotate-90" viewBox="0 0 56 56">
-        <circle cx="28" cy="28" r={radius} stroke="rgba(255,255,255,0.06)" strokeWidth="4" fill="none" />
-        <circle
-          cx="28"
-          cy="28"
-          r={radius}
-          stroke="currentColor"
-          strokeWidth="4"
-          fill="none"
-          strokeDasharray={`${dash} ${circ - dash}`}
-          strokeLinecap="round"
-          className={cn(
-            pct >= 1
-              ? 'text-emerald-400'
-              : pct >= 0.5
-                ? 'text-elec-yellow'
-                : 'text-blue-400'
-          )}
-        />
-      </svg>
-      <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <div className="text-[12px] font-semibold tabular-nums text-white leading-none">
-          {Math.round(pct * 100)}%
-        </div>
-        <div className="text-[8px] text-white/55 tabular-nums leading-none mt-0.5">
-          {completed}/{total}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function CountTile({
-  label,
-  value,
-  sub,
-  tone,
-}: {
-  label: string;
-  value: number;
-  sub?: string;
-  tone?: 'emerald' | 'amber' | 'red';
-}) {
-  return (
-    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-4 py-3">
-      <div className="text-[10px] uppercase tracking-[0.16em] text-white/85">{label}</div>
-      <div
-        className={cn(
-          'mt-1 text-[24px] font-semibold tabular-nums leading-none',
-          tone === 'emerald' && 'text-emerald-300',
-          tone === 'amber' && 'text-amber-300',
-          tone === 'red' && 'text-red-300',
-          !tone && 'text-white'
-        )}
-      >
-        {value}
-      </div>
-      {sub && <div className="mt-1 text-[10.5px] text-white tabular-nums">{sub}</div>}
-    </div>
-  );
-}
-
-function FilterPill({
-  active,
-  onClick,
-  children,
-}: {
-  active: boolean;
-  onClick: () => void;
-  children: React.ReactNode;
-}) {
   return (
     <button
       type="button"
       onClick={onClick}
-      className={cn(
-        'h-8 px-3 rounded-full text-[11.5px] font-semibold tracking-tight transition-colors touch-manipulation border',
-        active
-          ? 'bg-elec-yellow/[0.14] border-elec-yellow/40 text-elec-yellow'
-          : 'bg-white/[0.04] border-white/[0.08] text-white hover:bg-white/[0.08]'
-      )}
+      className="flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors touch-manipulation hover:bg-white/[0.06] active:bg-white/[0.09] sm:px-5"
     >
-      {children}
+      <span
+        aria-hidden="true"
+        className={cn(
+          'h-8 w-[3px] shrink-0 rounded-full',
+          urgent ? 'bg-elec-yellow' : 'bg-white/[0.25]'
+        )}
+      />
+      <span className="min-w-0 flex-1">
+        <span className="block truncate text-[14px] font-semibold leading-tight text-white">
+          {q.title}
+        </span>
+        <span className="mt-0.5 block truncate text-[12px] leading-tight text-white">{reason}</span>
+        {detail && (
+          <span
+            className={cn(
+              'mt-0.5 block truncate text-[12px] leading-tight',
+              urgent ? 'text-elec-yellow' : 'text-white'
+            )}
+          >
+            {detail}
+          </span>
+        )}
+      </span>
+      <span className="shrink-0 text-right">
+        <span
+          className={cn(
+            'block text-[13px] font-semibold tabular-nums',
+            urgent ? 'text-elec-yellow' : 'text-white'
+          )}
+        >
+          {q.completed_count}/{total}
+        </span>
+        <span className="mt-0.5 block text-[11px] tabular-nums text-white">done</span>
+      </span>
+      <ChevronRight className="h-4 w-4 shrink-0 text-white" aria-hidden="true" />
     </button>
   );
 }
