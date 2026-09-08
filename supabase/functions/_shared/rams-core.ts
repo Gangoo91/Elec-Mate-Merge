@@ -116,7 +116,7 @@ function repairTruncatedJson(text: string): string {
   // The bare-literal rule runs ONCE, on the raw tail, and only for a literal
   // that is not already valid JSON — `12.` and `tru` become null, `12.5`,
   // `true` and `1` are complete values and must stay (`{"a":1` → `{"a":1}`).
-  s = s.replace(/:\s*([^\s,:\[\]{}"]+)$/, (m, lit: string) =>
+  s = s.replace(/:\s*([^\s,:[\]{}"]+)$/, (m, lit: string) =>
     /^(-?\d+(\.\d+)?([eE][+-]?\d+)?|true|false|null)$/.test(lit) ? m : ': null'
   );
   for (let guard = 0; guard < 8; guard++) {
@@ -406,7 +406,8 @@ async function streamOpenAIChatWithRetry(
     } catch (err) {
       lastErr = err;
       const msg = String((err as Error)?.message || err);
-      const retryable = /timed out|timeout|abort|network|reset|ECONN|fetch failed|empty stream/i.test(msg);
+      const retryable =
+        /timed out|timeout|abort|network|reset|ECONN|fetch failed|empty stream/i.test(msg);
       if (!retryable || attempt === retries) throw err;
       console.warn(
         `[rams-core] OpenAI stream attempt ${attempt + 1}/${retries + 1} failed: ${msg} — retrying`
@@ -644,7 +645,11 @@ export async function runAgentPhase(
       progress: 60,
       ...(which === 'hs'
         ? { rams_data: result, hs_agent_status: 'complete', hs_agent_progress: 100 }
-        : { method_data: result, installer_agent_status: 'complete', installer_agent_progress: 100 }),
+        : {
+            method_data: result,
+            installer_agent_status: 'complete',
+            installer_agent_progress: 100,
+          }),
     });
 
     // Null means the other agent is still running — it will finalise instead.
@@ -672,9 +677,7 @@ export async function runAgentPhase(
     // and the good half is preserved.
     await updateJob(supabase, jobId, {
       error_message: String(err?.message ?? err),
-      ...(which === 'hs'
-        ? { hs_agent_status: 'failed' }
-        : { installer_agent_status: 'failed' }),
+      ...(which === 'hs' ? { hs_agent_status: 'failed' } : { installer_agent_status: 'failed' }),
     }).catch(() => {});
     const outcome = await finaliseJob(supabase, jobId).catch(() => null);
     if (outcome) {
@@ -706,11 +709,7 @@ async function finaliseJob(supabase: any, jobId: string): Promise<string | null>
  * Re-reads the row rather than trusting the copy loaded before the other agent
  * ran; that stale read is precisely the race the split removes.
  */
-async function onJobFinalised(
-  supabase: any,
-  jobId: string,
-  elapsedSeconds: number
-): Promise<void> {
+async function onJobFinalised(supabase: any, jobId: string, elapsedSeconds: number): Promise<void> {
   const { data: full } = await supabase
     .from('rams_generation_jobs')
     .select('rams_data, method_data')
@@ -1525,7 +1524,9 @@ Hard rules:
         `building the statement from ${salvaged.length} steps salvaged from the stream.`
     );
     await captureException(
-      new Error(`Method output unparseable — salvaged ${salvaged.length} method_steps from the stream`),
+      new Error(
+        `Method output unparseable — salvaged ${salvaged.length} method_steps from the stream`
+      ),
       {
         functionName: 'rams-generator/runMethodStatementAgent',
         tags: { agent: 'method', outcome: 'unparseable-salvaged' },
@@ -1552,7 +1553,9 @@ Hard rules:
       // don't record it the problem goes invisible again — and it is the
       // signal that the token budget is too tight for real briefs.
       await captureException(
-        new Error(`Method output truncated — salvaged ${salvaged.length} method_steps from the stream`),
+        new Error(
+          `Method output truncated — salvaged ${salvaged.length} method_steps from the stream`
+        ),
         {
           functionName: 'rams-generator/runMethodStatementAgent',
           tags: { agent: 'method', outcome: 'truncated-salvaged' },
