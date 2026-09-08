@@ -5,8 +5,15 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Switch } from '@/components/ui/switch';
 import { toast } from 'sonner';
+import { useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Eyebrow } from '@/components/college/primitives';
+import { QUERY_KEYS } from '@/lib/queryConfig';
+import {
+  CONFIRMATION_TOKENS,
+  DEFAULT_CONFIRMATION_TEMPLATE,
+  renderConfirmationTemplate,
+} from '@/components/calendar/confirmationMessage';
 
 interface BookingAvailabilitySheetProps {
   open: boolean;
@@ -62,8 +69,26 @@ const DEFAULT_HOURS: WorkingHours = {
   sun: null,
 };
 
+/** What the preview is rendered against — a booking that exercises every token. */
+const PREVIEW_VALUES = {
+  name: 'Sarah',
+  business: '',
+  what: 'Consumer unit replacement',
+  when: 'Tuesday 15 September, 08:00–12:00',
+  where: '14 Orchard Close, Truro',
+};
+
 const BookingAvailabilitySheet = ({ open, onOpenChange }: BookingAvailabilitySheetProps) => {
+  const queryClient = useQueryClient();
   const [isSaving, setIsSaving] = useState(false);
+  // ELE-1685 — the confirmation wording lives on company_profiles alongside the
+  // trading name it is sent under. Empty = the stock message.
+  const [confirmationTemplate, setConfirmationTemplate] = useState('');
+  const [businessName, setBusinessName] = useState('');
+  // 873 live accounts have no company_profiles row yet. An UPDATE against a
+  // missing row matches nothing and reports no error, so without this flag
+  // the sheet would say "saved" and quietly drop the template.
+  const [hasCompanyProfile, setHasCompanyProfile] = useState(false);
   const [hours, setHours] = useState<WorkingHours>(DEFAULT_HOURS);
   const [bufferMinutes, setBufferMinutes] = useState<number>(30);
   const [maxPerDay, setMaxPerDay] = useState<number>(4);
@@ -118,6 +143,24 @@ const BookingAvailabilitySheet = ({ open, onOpenChange }: BookingAvailabilityShe
         if (typeof data?.scheduling_min_notice_hours === 'number') {
           setMinNoticeHours(data.scheduling_min_notice_hours);
         }
+        // ELE-1685 — separate row, separate table; a failure here must not
+        // block the availability settings from loading.
+        const { data: company, error: companyError } = await supabase
+          .from('company_profiles')
+          .select('company_name, booking_confirmation_template')
+          .eq('user_id', user.id)
+          .maybeSingle();
+        if (companyError) {
+          // Availability still loads; the message section just cannot be trusted.
+          toast.error(`Could not load your confirmation message: ${companyError.message}`);
+        }
+        const row = company as {
+          company_name?: string | null;
+          booking_confirmation_template?: string | null;
+        } | null;
+        setHasCompanyProfile(!!row);
+        setBusinessName(row?.company_name ?? '');
+        setConfirmationTemplate(row?.booking_confirmation_template ?? '');
         if (Array.isArray(data?.scheduling_blackout_dates)) {
           setBlackouts(
             (data.scheduling_blackout_dates as BlackoutEntry[])
@@ -195,6 +238,35 @@ const BookingAvailabilitySheet = ({ open, onOpenChange }: BookingAvailabilityShe
         })
         .eq('id', user.id);
       if (error) throw error;
+
+      // ELE-1685 — blank means "use the stock message", stored as null so the
+      // calendar's fallback is unambiguous. The template that IS the default is
+      // stored as null too, so switching the default later reaches everyone
+      // who never changed it.
+      const trimmed = confirmationTemplate.trim();
+      const templateToStore =
+        trimmed && trimmed !== DEFAULT_CONFIRMATION_TEMPLATE ? trimmed : null;
+      if (hasCompanyProfile) {
+        const { data: updated, error: templateError } = await supabase
+          .from('company_profiles')
+          .update({ booking_confirmation_template: templateToStore } as never)
+          .eq('user_id', user.id)
+          .select('id');
+        if (templateError) throw templateError;
+        if (!updated || updated.length === 0) {
+          throw new Error('Your business details could not be found to save the message against.');
+        }
+        queryClient.invalidateQueries({ queryKey: QUERY_KEYS.COMPANY_PROFILE });
+      } else if (templateToStore) {
+        // No row to hold it, and inventing one would put a placeholder trading
+        // name on his quotes. Availability is saved; say why the message is not.
+        toast.error(
+          'Availability saved, but the confirmation message needs your business details first — add them under Settings → Company, then come back.'
+        );
+        onOpenChange(false);
+        return;
+      }
+
       toast.success('Booking availability saved');
       onOpenChange(false);
     } catch (e) {
@@ -450,6 +522,68 @@ const BookingAvailabilitySheet = ({ open, onOpenChange }: BookingAvailabilityShe
                 Buffer adds padding before and after each existing calendar event so you have travel
                 time. Min notice prevents clients booking a slot too close to now.
               </p>
+            </section>
+
+            {/* ELE-1685 — the WhatsApp / text / email wording, in his own words. */}
+            <section className="space-y-3">
+              <Eyebrow>Confirmation message</Eyebrow>
+              <p className="text-[12px] text-white leading-relaxed">
+                What goes into WhatsApp or a text when you tap “Tell the customer” on a booking,
+                and what “Copy message” copies. Use the tokens below and they are filled in for each
+                job. The branded email the app sends keeps its standard wording.
+              </p>
+              <div className="flex flex-wrap gap-1.5">
+                {CONFIRMATION_TOKENS.map((t) => (
+                  <button
+                    key={t.token}
+                    type="button"
+                    onClick={() =>
+                      setConfirmationTemplate((cur) =>
+                        (cur.trim() ? cur : DEFAULT_CONFIRMATION_TEMPLATE) + ` ${t.token}`
+                      )
+                    }
+                    className="h-11 rounded-xl border border-white/[0.12] bg-white/[0.06] px-3 text-[12px] font-medium text-white touch-manipulation active:scale-[0.98]"
+                    title={t.means}
+                  >
+                    {t.token}
+                    <span className="ml-1 text-[11px] font-normal text-white">· {t.means}</span>
+                  </button>
+                ))}
+              </div>
+              <textarea
+                value={confirmationTemplate}
+                onChange={(e) => setConfirmationTemplate(e.target.value.slice(0, 600))}
+                onFocus={() =>
+                  setConfirmationTemplate((cur) => (cur.trim() ? cur : DEFAULT_CONFIRMATION_TEMPLATE))
+                }
+                rows={7}
+                placeholder={DEFAULT_CONFIRMATION_TEMPLATE}
+                className="w-full rounded-xl border border-white/[0.08] bg-[hsl(0_0%_12%)] px-3.5 py-3 text-[14px] leading-snug text-white placeholder:text-white/40 caret-elec-yellow focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation"
+              />
+              <div className="flex items-center justify-between gap-3">
+                <p className="text-[11.5px] text-white">
+                  Leave it blank to use the standard message. A rescheduled booking always uses the
+                  standard wording so the old time is quoted back.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setConfirmationTemplate('')}
+                  className="shrink-0 h-11 text-[12px] font-semibold text-white underline decoration-white/40 underline-offset-4 touch-manipulation"
+                >
+                  Reset
+                </button>
+              </div>
+              <div className="rounded-xl border border-white/[0.08] bg-white/[0.04] p-3.5">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
+                  Preview
+                </p>
+                <pre className="mt-2 whitespace-pre-wrap font-sans text-[13px] leading-snug text-white">
+                  {renderConfirmationTemplate(
+                    confirmationTemplate.trim() ? confirmationTemplate : DEFAULT_CONFIRMATION_TEMPLATE,
+                    { ...PREVIEW_VALUES, business: businessName }
+                  )}
+                </pre>
+              </div>
             </section>
           </div>
 

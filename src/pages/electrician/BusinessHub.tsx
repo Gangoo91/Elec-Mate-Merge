@@ -42,6 +42,7 @@ import { useCustomers } from '@/hooks/useCustomers';
 import { useSnags } from '@/hooks/useSnags';
 import { useTimeTracker, formatDuration } from '@/hooks/useTimeTracker';
 import { usePortalBookings, splitBookings } from '@/hooks/usePortalBookings';
+import { isQuoteDraft } from '@/utils/quote-status';
 import { Assistant } from '@/components/business-hub/Assistant';
 import { MateBar } from '@/components/business-hub/MateBar';
 import DiaryPanel from '@/components/calendar/DiaryPanel';
@@ -277,7 +278,9 @@ const BusinessHub = () => {
    * "unpaid", which is what "Owed to you" and the Needs you list already say
    * twice over.
    */
-  const draftQuotes = quotes.filter((q) => q.status === 'draft').length;
+  // Derived rule shared with the Quotes page (ELE-1682): an accepted quote
+  // keeps status 'draft', so a raw match counted won work as unsent.
+  const draftQuotes = quotes.filter(isQuoteDraft).length;
   const draftInvoices = invoices.filter((i) => i.invoice_status === 'draft').length;
 
   // Same React Query keys the Insights panel uses, so this is served from

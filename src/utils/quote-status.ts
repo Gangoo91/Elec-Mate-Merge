@@ -30,6 +30,15 @@ export const isQuoteLost = (q: QuoteStatusLike): boolean =>
 export const isQuoteOpen = (q: QuoteStatusLike): boolean =>
   !isQuoteWon(q) && !isQuoteLost(q) && !isQuoteInvoiced(q);
 
+/**
+ * Still being written: status 'draft' AND no decision recorded. A quote can be
+ * accepted from a draft (acceptance_status flips, status does not), and the
+ * Draft tab was matching the raw column so a won quote appeared under both
+ * Draft and Won (ELE-1682).
+ */
+export const isQuoteDraft = (q: QuoteStatusLike): boolean =>
+  q.status === 'draft' && isQuoteOpen(q);
+
 /** Sent and awaiting a decision (the "chase this" bucket). */
 export const isQuoteAwaiting = (q: QuoteStatusLike): boolean =>
   (q.status === 'sent' || q.status === 'pending') && isQuoteOpen(q);

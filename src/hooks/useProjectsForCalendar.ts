@@ -51,7 +51,9 @@ export function useProjectsForCalendar(dateFrom: string, dateTo: string, enabled
         // is already drawn as that booking, and its synthetic "Starts:" event
         // would double it up on the day.
         .is('calendar_event_id', null)
-        .not('status', 'in', '("completed","cancelled")')
+        // On hold means the date is gone (ELE-1681) — its old start/due dates
+        // must not keep drawing on the timeline.
+        .not('status', 'in', '("completed","cancelled","on_hold")')
         .or(
           `and(start_date.gte.${fromDate},start_date.lte.${toDate}),and(due_date.gte.${fromDate},due_date.lte.${toDate})`
         );

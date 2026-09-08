@@ -53,6 +53,8 @@ interface TellCustomerSheetProps {
   businessName?: string | null;
   /** The saved event, so the email can be sent server-side against it. */
   eventId?: string | null;
+  /** ELE-1685 — the electrician's own confirmation wording, if set in Settings. */
+  template?: string | null;
 }
 
 const TellCustomerSheet = ({
@@ -62,6 +64,7 @@ const TellCustomerSheet = ({
   booking,
   businessName,
   eventId,
+  template,
 }: TellCustomerSheetProps) => {
   const { send, sending } = useSendBookingConfirmation();
   const [emailed, setEmailed] = useState(false);
@@ -82,9 +85,9 @@ const TellCustomerSheet = ({
   const parts = useMemo<ConfirmationParts | null>(
     () =>
       booking && customer
-        ? { ...booking, clientName: customer.name, businessName }
+        ? { ...booking, clientName: customer.name, businessName, template }
         : null,
-    [booking, customer, businessName]
+    [booking, customer, businessName, template]
   );
 
   const preview = parts ? confirmationMessage(parts) : '';

@@ -16,6 +16,7 @@ import {
   isQuoteLost,
   isQuoteAwaiting,
   isQuoteOpen,
+  isQuoteDraft,
   isQuoteLive,
   isQuoteExpired,
 } from '@/utils/quote-status';
@@ -183,7 +184,15 @@ const QuotesPage = () => {
    * list the moment the date is accepted into the diary.
    */
   const awaitingStartConfirmation = useMemo(
-    () => savedQuotes.filter((q) => q.requested_start_date && !q.booked_slot_start),
+    () =>
+      savedQuotes.filter(
+        (q) =>
+          q.requested_start_date &&
+          !q.booked_slot_start &&
+          // ELE-1686 — set aside from the panel: done already, or on hold
+          // with no date. The request stays on the quote; it just stops nagging.
+          !q.tags?.some((t) => t === 'work_done' || t === 'on_hold')
+      ),
     [savedQuotes]
   );
 
@@ -205,7 +214,7 @@ const QuotesPage = () => {
       .filter(isQuoteLive)
       .reduce((acc, q) => acc + (q.total || 0), 0);
     const draftValue = savedQuotes
-      .filter((q) => q.status === 'draft')
+      .filter(isQuoteDraft)
       .reduce((acc, q) => acc + (q.total || 0), 0);
     const invoicedValue = invoicedQuotes.reduce((acc, q) => acc + (q.total || 0), 0);
     const conversionRate =
@@ -222,7 +231,9 @@ const QuotesPage = () => {
       conversionRate,
       counts: {
         all: savedQuotes.length,
-        draft: savedQuotes.filter((q) => q.status === 'draft').length,
+        // Same derived rule as the Draft tab, so the badge count matches the
+        // list (ELE-1682).
+        draft: savedQuotes.filter(isQuoteDraft).length,
         sent: savedQuotes.filter(isQuoteLive).length,
         expired: savedQuotes.filter(isQuoteExpired).length,
         invoiced: invoicedQuotes.length,

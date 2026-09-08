@@ -25,6 +25,7 @@ import {
   ComposedChart,
 } from 'recharts';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { parseDeclineReason } from '@/utils/declineReason';
 
 interface QuoteInvoiceAnalyticsProps {
   quotes: Quote[];
@@ -205,9 +206,16 @@ export const QuoteInvoiceAnalytics: React.FC<QuoteInvoiceAnalyticsProps> = ({
     );
     if (lostWithReason.length >= 3) {
       const counts = new Map<string, number>();
+      // ELE-1683 — "Other" may carry a free-text note (`other:<note>`); group
+      // on the key so the notes count together, and keep them for display.
+      const otherNotes: string[] = [];
       for (const q of lostWithReason) {
-        const r = (q as { declined_reason?: string | null }).declined_reason as string;
+        const { key, note } = parseDeclineReason(
+          (q as { declined_reason?: string | null }).declined_reason
+        );
+        const r = key ?? 'other';
         counts.set(r, (counts.get(r) || 0) + 1);
+        if (r === 'other' && note && !otherNotes.includes(note)) otherNotes.push(note);
       }
       const [topKey, topCount] = [...counts.entries()].sort((a, b) => b[1] - a[1])[0];
       const share = Math.round((topCount / lostWithReason.length) * 100);
@@ -245,6 +253,24 @@ export const QuoteInvoiceAnalytics: React.FC<QuoteInvoiceAnalyticsProps> = ({
             <>
               <span className="font-semibold text-white">{share}%</span> of lost quotes were{' '}
               <span className="font-semibold text-white">cancelled jobs</span> — out of your hands
+            </>
+          ),
+          other: (
+            <>
+              <span className="font-semibold text-white">{share}%</span> of lost quotes were down to{' '}
+              <span className="font-semibold text-white">something else</span>
+              {otherNotes.length > 0 ? (
+                <>
+                  {' '}— you wrote: {otherNotes.slice(0, 3).map((n, i) => (
+                    <React.Fragment key={n}>
+                      {i > 0 ? '; ' : ''}
+                      <span className="font-semibold text-white">“{n}”</span>
+                    </React.Fragment>
+                  ))}
+                </>
+              ) : (
+                ' — add a note next time so the pattern shows here'
+              )}
             </>
           ),
         };

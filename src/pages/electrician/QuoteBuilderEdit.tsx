@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Quote } from '@/types/quote';
 import { supabase } from '@/integrations/supabase/client';
+import { quoteRowToQuote } from '@/hooks/useQuoteStorage';
 import { QuoteWizard } from '@/components/electrician/quote-builder/QuoteWizard';
 import { Button } from '@/components/ui/button';
 import { Loader2, ArrowLeft, FileText, Copy } from 'lucide-react';
@@ -36,52 +37,53 @@ const QuoteBuilderEdit = () => {
             variant: 'destructive',
           });
         } else {
-          // Transform the database record to Quote type
+          // Transform the database record to Quote type.
+          //
+          // Seeded from the ONE shared mapper. This page used to carry its own
+          // hand-picked copy that dropped project_id, customer_id, site_visit_id,
+          // the linked-certificate fields and the booking fields — and because
+          // saveQuote and the autosave write those as `value || null`, opening a
+          // job-linked quote here and touching a line unlinked it from its job
+          // (code review). Only the line items are normalised on top.
+          const base = quoteRowToQuote(data);
           const transformedQuote: Quote = {
-            id: data.id,
-            quoteNumber: data.quote_number,
-            client:
-              typeof data.client_data === 'string'
-                ? JSON.parse(data.client_data)
-                : data.client_data,
-            items: (typeof data.items === 'string' ? JSON.parse(data.items) : data.items || []).map(
-              (item: any) => ({
-                id: item.id ?? crypto.randomUUID(),
-                category: item.category ?? 'materials',
-                unit: item.unit ?? 'each',
-                notes: item.notes ?? '',
-                description: item.description ?? '',
-                quantity: Number(item.quantity) || 0,
-                unitPrice: Number(item.unitPrice ?? item.unit_price) || 0,
-                totalPrice:
-                  Number(item.totalPrice ?? item.total) ||
-                  (Number(item.quantity) || 0) * (Number(item.unitPrice ?? item.unit_price) || 0),
-              })
+            ...base,
+            // ELE-1678 — keep EVERY stored field on the line, then coerce the
+            // numerics. This used to hand-pick eight fields and silently drop
+            // the rest, including `itemAdjustmentPercent` / `itemAdjustmentLabel`
+            // (plus hourlyRate, hours, subcategory, workerType, materialCode,
+            // equipmentCode, inventoryItemId). A line created with a +18%
+            // per-item markup kept its inflated totalPrice but lost the
+            // percentage, so the builder recomputed the grand total from
+            // quantity × unitPrice and RE-SAVED it lower — a customer's quote
+            // shrank the moment he reopened it to edit.
+            items: (base.items || []).map(
+              (item: any) => {
+                const quantity = Number(item.quantity) || 0;
+                const unitPrice = Number(item.unitPrice ?? item.unit_price) || 0;
+                const rawPct = item.itemAdjustmentPercent;
+                const itemAdjustmentPercent =
+                  rawPct === null || rawPct === undefined || rawPct === ''
+                    ? undefined
+                    : Number(rawPct) || 0;
+                const base = quantity * unitPrice;
+                const adjustedBase = itemAdjustmentPercent
+                  ? base * (1 + itemAdjustmentPercent / 100)
+                  : base;
+                return {
+                  ...item,
+                  id: item.id ?? crypto.randomUUID(),
+                  category: item.category ?? 'materials',
+                  unit: item.unit ?? 'each',
+                  notes: item.notes ?? '',
+                  description: item.description ?? '',
+                  quantity,
+                  unitPrice,
+                  itemAdjustmentPercent,
+                  totalPrice: Number(item.totalPrice ?? item.total) || adjustedBase,
+                };
+              }
             ),
-            settings: typeof data.settings === 'string' ? JSON.parse(data.settings) : data.settings,
-            jobDetails: data.job_details
-              ? typeof data.job_details === 'string'
-                ? JSON.parse(data.job_details)
-                : data.job_details
-              : undefined,
-            subtotal: data.subtotal || 0,
-            overhead: data.overhead || 0,
-            profit: data.profit || 0,
-            vatAmount: data.vat_amount || 0,
-            total: data.total || 0,
-            status: data.status as Quote['status'],
-            tags: data.tags as Quote['tags'],
-            createdAt: new Date(data.created_at),
-            updatedAt: new Date(data.updated_at),
-            expiryDate: new Date(data.expiry_date),
-            notes: data.notes || undefined,
-            acceptance_status: data.acceptance_status as Quote['acceptance_status'],
-            acceptance_method: data.acceptance_method as Quote['acceptance_method'],
-            accepted_at: data.accepted_at ? new Date(data.accepted_at) : undefined,
-            accepted_by_name: data.accepted_by_name || undefined,
-            accepted_by_email: data.accepted_by_email || undefined,
-            invoice_raised: data.invoice_raised || false,
-            invoice_number: data.invoice_number || undefined,
           };
           setQuote(transformedQuote);
         }

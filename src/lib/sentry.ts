@@ -183,7 +183,10 @@ export function initSentry() {
           nestedError = '';
         }
         if (
-          /Failed to fetch|NetworkError|fetch failed|net::ERR_|AbortError.*(Fetch is aborted|signal timed out)|TimeoutError: signal timed out|Failed to send a request to the Edge Function|Load failed/i.test(
+          // "Subscription check timed out" is useSubscriptionStatus giving up
+          // after three retries against check-subscription — the same dead
+          // connection wearing our own wording (Sentry 9V, 7 users since May).
+          /Failed to fetch|NetworkError|fetch failed|net::ERR_|AbortError.*(Fetch is aborted|signal timed out)|TimeoutError: signal timed out|Failed to send a request to the Edge Function|Load failed|Subscription check timed out/i.test(
             message
           ) ||
           /AbortError|Fetch is aborted|signal timed out|Failed to fetch|Failed to send a request/i.test(

@@ -21,7 +21,7 @@ import {
   isInvoiceDraft,
   getInvoiceOutstanding,
 } from '@/utils/invoice-status';
-import { isQuoteLive } from '@/utils/quote-status';
+import { isQuoteLive, isQuoteDraft } from '@/utils/quote-status';
 
 export interface DashboardUserData {
   name: string;
@@ -136,7 +136,8 @@ export function useDashboardData(): DashboardData {
         .from('spark_projects')
         .select('id', { count: 'exact', head: true })
         .eq('user_id', user.id)
-        .in('status', ['open', 'active']);
+        // Same "live" set as useSparkProjects — on hold is still live work (ELE-1681).
+        .in('status', ['open', 'active', 'on_hold']);
       if (error) {
         console.error('Error fetching active projects count:', error);
         return 0;
@@ -215,7 +216,9 @@ export function useDashboardData(): DashboardData {
      */
     const activeQuotes = savedQuotes?.filter(isQuoteLive) || [];
 
-    const draftQuotes = savedQuotes?.filter((q) => q.status === 'draft') || [];
+    // Derived, not the raw column: an accepted quote keeps status 'draft'
+    // (ELE-1682), and this count must agree with the Quotes page's Draft tab.
+    const draftQuotes = savedQuotes?.filter(isQuoteDraft) || [];
 
     const pendingQuotes =
       savedQuotes?.filter((q) => q.status === 'sent' && q.acceptance_status === 'pending') || [];

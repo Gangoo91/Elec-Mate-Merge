@@ -67,42 +67,75 @@ function repairTruncatedJson(text: string): string {
     s = s.replace(/^```(?:json)?\s*/i, '').replace(/```\s*$/i, '');
   }
 
-  // Walk the string, tracking open braces/brackets that aren't inside strings.
-  const stack: string[] = [];
-  let inStr = false;
-  let escape = false;
-  let lastSafe = -1;
-  for (let i = 0; i < s.length; i++) {
-    const c = s[i];
-    if (escape) {
-      escape = false;
-      continue;
+  // Walk the string once to find whether it ends inside a string literal, and
+  // where that literal opened.
+  //
+  // ELE-1698 — this used to cut at `lastIndexOf('"', lastSafe)`, but lastSafe
+  // is the last character OUTSIDE any string, so that lookup found the closing
+  // quote of the PREVIOUS string and sliced off a complete key or value with
+  // it: `{"a":1,"bc` became `{"a}`. Remember the opening quote instead.
+  const walk = (input: string) => {
+    const stack: string[] = [];
+    let inStr = false;
+    let escape = false;
+    let strStart = -1;
+    for (let i = 0; i < input.length; i++) {
+      const c = input[i];
+      if (escape) {
+        escape = false;
+        continue;
+      }
+      if (c === '\\') {
+        escape = true;
+        continue;
+      }
+      if (c === '"') {
+        inStr = !inStr;
+        if (inStr) strStart = i;
+        continue;
+      }
+      if (inStr) continue;
+      if (c === '{' || c === '[') stack.push(c);
+      else if (c === '}' || c === ']') stack.pop();
     }
-    if (c === '\\') {
-      escape = true;
-      continue;
+    return { stack, inStr, strStart };
+  };
+
+  const first = walk(s);
+  if (first.inStr && first.strStart > 0) s = s.slice(0, first.strStart);
+
+  // Strip whatever dangling fragment the cut left behind, until nothing changes.
+  //
+  //  - `,` or an opener that has nothing in it yet:  `..., {`  →  `...`
+  //  - a complete key with no colon (the ELE-1698 shape, job 7591fc01, cut at
+  //    character 48,449): `{"a":1,"nextKey"` → closing braces gave `"nextKey"}`
+  //    and JSON.parse failed with "Expected ':' after property name". A quoted
+  //    string after `{` or `,` is a key; after `:` it is a value and stays.
+  //  - a half-written bare literal after a colon (`tru`, `12.`) → null
+  //  - a colon with nothing after it → null
+  // The bare-literal rule runs ONCE, on the raw tail, and only for a literal
+  // that is not already valid JSON — `12.` and `tru` become null, `12.5`,
+  // `true` and `1` are complete values and must stay (`{"a":1` → `{"a":1}`).
+  s = s.replace(/:\s*([^\s,:\[\]{}"]+)$/, (m, lit: string) =>
+    /^(-?\d+(\.\d+)?([eE][+-]?\d+)?|true|false|null)$/.test(lit) ? m : ': null'
+  );
+  for (let guard = 0; guard < 8; guard++) {
+    const before = s;
+    s = s.replace(/[,\s]*[{[]\s*$/, '');
+    // A trailing quoted string is a dangling KEY only when the innermost open
+    // container is an object. Inside an array it is a complete element —
+    // `{"steps":["one","two"` must keep both, not be nulled (code review
+    // caught this rule eating every element of a string[] one per pass).
+    if (walk(s).stack.at(-1) === '{') {
+      s = s.replace(/([{,])\s*"(?:[^"\\]|\\.)*"\s*$/, '$1');
     }
-    if (c === '"') {
-      inStr = !inStr;
-      continue;
-    }
-    if (inStr) continue;
-    if (c === '{' || c === '[') stack.push(c);
-    else if (c === '}' || c === ']') stack.pop();
-    if (!inStr && stack.length > 0) lastSafe = i;
+    s = s.replace(/,\s*$/, '');
+    s = s.replace(/:\s*$/, ': null');
+    if (s === before) break;
   }
 
-  // If we ended inside a string, drop everything from the unclosed quote.
-  if (inStr) {
-    const lastQuote = s.lastIndexOf('"', lastSafe);
-    if (lastQuote > 0) s = s.slice(0, lastQuote);
-  }
-
-  // Strip a trailing comma or partial key/value.
-  s = s.replace(/,\s*$/, '');
-  s = s.replace(/:\s*$/, ': null');
-
-  // Close any open brackets in LIFO order.
+  // Close any open brackets in LIFO order, from a fresh walk of the cut text.
+  const { stack } = walk(s);
   while (stack.length) {
     const open = stack.pop();
     s += open === '{' ? '}' : ']';
@@ -1156,7 +1189,25 @@ Hard rules:
       'text:',
       text.slice(0, 400)
     );
-    throw new Error('H&S agent returned malformed JSON');
+    // ELE-1698 — a document that will not parse is the same situation as one
+    // that parsed with no hazards: the stream extractor already holds every
+    // risk that completed before the cut. Use them rather than failing the
+    // whole job; the truncation branch below reports it.
+    const salvaged = live.elements();
+    if (salvaged.length === 0) throw new Error('H&S agent returned malformed JSON');
+    console.warn(
+      `[rams-core] H&S output unparseable (finish_reason: ${finishReason}) — ` +
+        `building the register from ${salvaged.length} risks salvaged from the stream.`
+    );
+    await captureException(
+      new Error(`H&S output unparseable — salvaged ${salvaged.length} risks from the stream`),
+      {
+        functionName: 'rams-generator/runHealthSafetyAgent',
+        tags: { agent: 'hs', outcome: 'unparseable-salvaged' },
+        extra: { jobId, finishReason, salvaged: salvaged.length, textLength: text.length },
+      }
+    ).catch(() => {});
+    parsed = { risks: salvaged };
   }
 
   /**
@@ -1462,7 +1513,26 @@ Hard rules:
       'text:',
       text.slice(0, 400)
     );
-    throw new Error('Method agent returned malformed JSON');
+    // ELE-1698 — job 7591fc01: a 239-character brief still ran to the 24k
+    // token cap and the cut landed after a key, so repair failed and the whole
+    // job was marked partial with no method statement, though the stream
+    // extractor already held every completed step. Same treatment as the
+    // truncation branch below: salvage, report, carry on.
+    const salvaged = live.elements();
+    if (salvaged.length === 0) throw new Error('Method agent returned malformed JSON');
+    console.warn(
+      `[rams-core] Method output unparseable (finish_reason: ${finishReason}) — ` +
+        `building the statement from ${salvaged.length} steps salvaged from the stream.`
+    );
+    await captureException(
+      new Error(`Method output unparseable — salvaged ${salvaged.length} method_steps from the stream`),
+      {
+        functionName: 'rams-generator/runMethodStatementAgent',
+        tags: { agent: 'method', outcome: 'unparseable-salvaged' },
+        extra: { jobId, finishReason, salvaged: salvaged.length, textLength: text.length },
+      }
+    ).catch(() => {});
+    parsed = { method_steps: salvaged };
   }
 
   /**

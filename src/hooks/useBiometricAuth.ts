@@ -13,6 +13,7 @@ import {
   storeCredentials,
   clearCredentials,
   authenticateAndGetCredentials,
+  type BiometricAuthResult,
 } from '@/utils/biometricAuth';
 
 export interface UseBiometricAuth {
@@ -28,8 +29,13 @@ export interface UseBiometricAuth {
   enableBiometric: (email: string, password: string) => Promise<void>;
   /** Clear credentials and disable biometric login */
   disableBiometric: () => Promise<void>;
-  /** Prompt biometric then return stored credentials (or null on cancel) */
-  authenticateWithBiometric: () => Promise<{ email: string; password: string } | null>;
+  /**
+   * Prompt biometric then return stored credentials. `credentials` is null on
+   * cancel, and null with `reason: 'credentials_lost'` when the secure-store
+   * entry could not be read — in which case biometrics have been switched off
+   * and `isEnabled` already reflects that (ELE-1677).
+   */
+  authenticateWithBiometric: () => Promise<BiometricAuthResult>;
 }
 
 export function useBiometricAuth(): UseBiometricAuth {
@@ -74,7 +80,9 @@ export function useBiometricAuth(): UseBiometricAuth {
   }, []);
 
   const authenticateWithBiometric = useCallback(async () => {
-    return authenticateAndGetCredentials();
+    const result = await authenticateAndGetCredentials();
+    if (result.reason === 'credentials_lost') setIsEnabled(false);
+    return result;
   }, []);
 
   return {

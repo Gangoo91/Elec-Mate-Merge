@@ -39,7 +39,7 @@ export function useStartDateRequests() {
       const { data, error } = await supabase
         .from('quotes')
         .select(
-          'id, quote_number, requested_start_date, requested_time_preference, requested_at, customer_id, client_data, total'
+          'id, quote_number, requested_start_date, requested_time_preference, requested_at, customer_id, client_data, total, tags'
         )
         .eq('user_id', user.id)
         .not('requested_start_date', 'is', null)
@@ -49,7 +49,15 @@ export function useStartDateRequests() {
 
       if (error) throw error;
 
-      return (data ?? []).map((r) => {
+      // ELE-1686 — requests the electrician set aside from the Quotes page
+      // (job already done, or on hold with no date) must drop off the Booking
+      // page and the Calendar too, or the three surfaces disagree.
+      const live = (data ?? []).filter((r) => {
+        const tags = (r as { tags?: string[] | null }).tags ?? [];
+        return !tags.includes('work_done') && !tags.includes('on_hold');
+      });
+
+      return live.map((r) => {
         const client = (r.client_data ?? {}) as {
           name?: string;
           phone?: string;

@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect, useRef } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Invoice, InvoiceItem, InvoiceSettings } from '@/types/invoice';
 import { Quote } from '@/types/quote';
+import { dueDateForTerms } from '@/utils/invoice-status';
 import { toast } from '@/hooks/use-toast';
 import { v4 as uuidv4 } from 'uuid';
 import { generateSequentialInvoiceNumber } from '@/utils/invoice-number-generator';
@@ -191,9 +192,8 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
           // On hydration the profile's terms win; the due date follows.
           const terms =
             companyProfile.payment_terms || prev.settings?.paymentTerms || '30 days';
-          const daysMatch = /(\d+)/.exec(terms);
-          const termDays = /receipt/i.test(terms) ? 0 : daysMatch ? parseInt(daysMatch[1], 10) : 30;
-          const termDueDate = new Date(Date.now() + termDays * 86400000);
+          // Shared parser (ELE-1684) — "On completion" is due today, like receipt.
+          const termDueDate = dueDateForTerms(terms);
           return {
             ...prev,
             invoice_due_date: termDueDate,

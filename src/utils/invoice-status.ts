@@ -55,3 +55,25 @@ export const getInvoiceDaysOverdue = (inv: InvoiceStatusLike): number => {
 /** What's actually still owed once part-payments are netted off. */
 export const getInvoiceOutstanding = (inv: InvoiceStatusLike): number =>
   Math.max(0, (inv.total || 0) - (inv.total_paid || 0));
+
+/**
+ * Payment terms → days until due. ONE parser for every surface.
+ *
+ * `company_profiles.payment_terms` is free text chosen from a list — "30 days",
+ * "On receipt", "Due on receipt", and since ELE-1684 "On completion". Three
+ * places used to parse it with three slightly different regexes, so a profile
+ * set to "On completion" produced a due date of today on one screen and thirty
+ * days out on the next. Anything with no number and no recognised phrase falls
+ * back to 30, the historical default.
+ */
+export const paymentTermsToDays = (terms: string | null | undefined): number => {
+  const t = (terms ?? '').trim();
+  if (!t) return 30;
+  if (/receipt|completion|immediate/i.test(t)) return 0;
+  const m = /(\d+)/.exec(t);
+  return m ? parseInt(m[1], 10) : 30;
+};
+
+/** Due date for an invoice raised now (or at `from`) under the given terms. */
+export const dueDateForTerms = (terms: string | null | undefined, from: Date = new Date()): Date =>
+  new Date(from.getTime() + paymentTermsToDays(terms) * 86400000);

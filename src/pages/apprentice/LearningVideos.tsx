@@ -1297,6 +1297,36 @@ const CREATORS: Record<string, Creator> = {
     ],
   },
 
+  /*
+    SparkyNinja — added 2026-09-08.
+
+    Facts here are limited to what was verified: the channel handle and
+    subscriber count were read from YouTube on the day, the earliest uploads
+    sampled are mid-2017, and the David Watts / Teesside / e5 attribution comes
+    from his published trade-press interviews. No qualifications are claimed on
+    his behalf, because none were verified.
+  */
+  SparkyNinja: {
+    name: 'David Watts',
+    strap: 'SparkyNinja',
+    icon: Zap,
+    bio: 'David has been publishing electrical training content as SparkyNinja since 2017, building an audience of over 40,000 from a base in Teesside. His focus is the standard of training in the UK trade — long-form, unhurried teaching on BS 7671, design and inspection and testing, alongside his work with the e5 group.',
+    note: 'Much of his catalogue is webinar-length — several run past an hour. Worth sitting down with rather than watching between jobs.',
+    blocks: [
+      {
+        icon: BookOpen,
+        title: 'What he covers',
+        body: 'BS 7671 chapter by chapter, design and verification (2396), inspection and testing (2391), EICR coding panels with other industry names, earthing and bonding, thermal imaging and the Electricity at Work Regulations.',
+      },
+      {
+        icon: Video,
+        title: 'The channel',
+        body: 'Free training videos plus a long-running podcast on the state of the industry.',
+        cta: { label: "Visit David's channel", href: 'https://www.youtube.com/@SparkyNinja' },
+      },
+    ],
+  },
+
   'A121 Training': {
     name: 'Apprentice 121',
     strap: 'A121 Training',

@@ -4,7 +4,13 @@ import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useToast } from '@/hooks/use-toast';
 import { trackUserEvent } from '@/hooks/useActivityTracking';
 
-export type ProjectStatus = 'open' | 'active' | 'completed' | 'cancelled';
+/**
+ * `on_hold` (ELE-1681): the customer wants the work but the date has gone —
+ * "not sure exactly when this month". The job stays in the pipeline and off
+ * the timeline until it is booked again. Set from a calendar event or the job
+ * page; the DB check constraint and get_jobs_overview know the value too.
+ */
+export type ProjectStatus = 'open' | 'active' | 'on_hold' | 'completed' | 'cancelled';
 export type ProjectPriority = 'low' | 'normal' | 'high' | 'urgent';
 export type ProjectView = 'active' | 'completed' | 'all';
 
@@ -14,6 +20,7 @@ export type JobStage =
   | 'quoted'
   | 'won'
   | 'booked'
+  | 'on_hold'
   | 'in_progress'
   | 'bill_it'
   | 'awaiting_payment'
@@ -25,6 +32,7 @@ export const JOB_STAGE_META: Record<JobStage, { label: string; dot: string; text
   quoted: { label: 'Quoted', dot: 'bg-blue-400', text: 'text-blue-300' },
   won: { label: 'Won — book it', dot: 'bg-elec-yellow', text: 'text-elec-yellow' },
   booked: { label: 'Booked', dot: 'bg-sky-400', text: 'text-sky-300' },
+  on_hold: { label: 'On hold — date TBC', dot: 'bg-violet-400', text: 'text-violet-300' },
   in_progress: { label: 'In progress', dot: 'bg-emerald-400', text: 'text-emerald-300' },
   bill_it: { label: 'Bill it', dot: 'bg-orange-400', text: 'text-orange-300' },
   awaiting_payment: { label: 'Awaiting payment', dot: 'bg-amber-400', text: 'text-amber-300' },
@@ -280,16 +288,19 @@ export const useSparkProjects = (view: ProjectView = 'active') => {
     };
   }, [loadProjects, toast]);
 
-  // Filter by view
+  // Filter by view. On hold is live work with no date (ELE-1681) — it belongs
+  // in the Active list, or putting a job on hold would make it disappear.
+  const isLive = (p: SparkProject) =>
+    p.status === 'open' || p.status === 'active' || p.status === 'on_hold';
   const projects =
     view === 'active'
-      ? allProjects.filter((p) => p.status === 'open' || p.status === 'active')
+      ? allProjects.filter(isLive)
       : view === 'completed'
         ? allProjects.filter((p) => p.status === 'completed')
         : allProjects;
 
   const counts = {
-    active: allProjects.filter((p) => p.status === 'open' || p.status === 'active').length,
+    active: allProjects.filter(isLive).length,
     completed: allProjects.filter((p) => p.status === 'completed').length,
     all: allProjects.length,
   };

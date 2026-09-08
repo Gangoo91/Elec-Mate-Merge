@@ -28,6 +28,7 @@ import {
 import { InvoiceSendDropdown } from '@/components/electrician/invoice-builder/InvoiceSendDropdown';
 import { PartialPaymentDialog } from '@/components/electrician/invoice-builder/PartialPaymentDialog';
 import { useAccountingIntegrations } from '@/hooks/useAccountingIntegrations';
+import { useStockMovements } from '@/hooks/useStockMovements';
 import { PANEL } from '@/components/electrician/shared/surfaces';
 import { isPermanentPdfUrl } from '@/utils/pdfUrl';
 
@@ -56,6 +57,9 @@ const InvoiceViewPage = () => {
   const [showRecordPayment, setShowRecordPayment] = useState(false);
   const { hasConnectedProvider, syncInvoice, refreshInvoiceStatus, recordExternalPayment, integrations } =
     useAccountingIntegrations();
+  // Deleting an invoice must put its materials back (ELE-1014), same as the
+  // list's delete does — this page's delete used to skip it (ELE-1676).
+  const { reverseInvoiceDecrement } = useStockMovements();
 
   const connectedProvider = integrations.find((i) => i.status === 'connected');
   const providerName = connectedProvider?.provider
@@ -136,6 +140,10 @@ const InvoiceViewPage = () => {
         .eq('user_id', user.id)
         .eq('id', id)
         .eq('invoice_raised', true)
+        // A deleted invoice must read as "not found", not render as live. A
+        // push deep-linked a user to one he had deleted 200 days earlier,
+        // this page showed it as overdue, and Delete then failed (ELE-1676).
+        .is('deleted_at', null)
         .single();
 
       if (error) throw error;
@@ -368,11 +376,27 @@ const InvoiceViewPage = () => {
     if (!invoice) return;
     setIsDeleting(true);
     try {
+      // ELE-1676 — soft-delete, the same way useInvoiceStorage.deleteInvoice
+      // does. This used to "delete" by nulling invoice_number / invoice_status
+      // / dates. That write can never succeed: the
+      // sync_quote_invoice_status_to_invoices trigger copies invoice_status
+      // onto the `invoices` row, whose status column is NOT NULL, so Postgres
+      // rejected the whole update (23502) and the user saw "Failed to delete
+      // invoice" on every attempt. It also left no `deleted_at`, so every
+      // list and cron that respects soft deletes would still have shown it.
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not signed in');
+      const now = new Date().toISOString();
       const { error } = await supabase
         .from('quotes')
-        .update({ invoice_raised: false, invoice_number: null, invoice_status: null, invoice_date: null, invoice_due_date: null })
-        .eq('id', invoice.id);
+        .update({ deleted_at: now, updated_at: now })
+        .eq('id', invoice.id)
+        .eq('user_id', user.id);
       if (error) throw error;
+      // Restore any stock this invoice had decremented (idempotent).
+      await reverseInvoiceDecrement(invoice.id);
       toast({ title: 'Invoice deleted', description: `Invoice ${invoice.invoice_number} has been removed.` });
       navigate('/electrician/invoices');
     } catch (error) {

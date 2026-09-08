@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Loader2, Check, ChevronLeft } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Quote } from '@/types/quote';
+import { dueDateForTerms } from '@/utils/invoice-status';
 import { Invoice } from '@/types/invoice';
 import { useInvoiceBuilder } from '@/hooks/useInvoiceBuilder';
 import { useInvoiceStorage } from '@/hooks/useInvoiceStorage';
@@ -117,7 +118,9 @@ export const InvoiceWizard = ({
             vatRate: 20,
             vatRegistered: !!companyProfile?.vat_number,
             paymentTerms: defaultPaymentTerms,
-            dueDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+            // Follows the saved terms (ELE-1684); this was a hard-coded +30 days
+            // beside a paymentTerms value that could say otherwise.
+            dueDate: dueDateForTerms(defaultPaymentTerms),
           },
           // Include linked certificate data for attachment support
           ...(initialCertificateData.linkedCertificate && {

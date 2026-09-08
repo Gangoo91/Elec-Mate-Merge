@@ -5,6 +5,7 @@ import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { QuotesReadyPanel } from './QuotesReadyPanel';
 import { InvoiceStatusPanel } from './InvoiceStatusPanel';
 import { Quote } from '@/types/quote';
+import { dueDateForTerms } from '@/utils/invoice-status';
 import { Card, CardContent } from '@/components/ui/card';
 import { Receipt, FileCheck, TrendingUp, PoundSterling } from 'lucide-react';
 import { InvoiceDecisionDialog } from './InvoiceDecisionDialog';
@@ -168,9 +169,9 @@ export const QuoteInvoiceDashboard = () => {
     setLoadingAction(true);
     try {
       const invoiceNumber = await generateSequentialInvoiceNumber();
-      const termsStr = companyProfile?.payment_terms || '30 days';
-      const termsDays = /receipt/i.test(termsStr) ? 0 : parseInt((/(\d+)/.exec(termsStr) || ['','30'])[1], 10);
-      const dueDate = new Date(Date.now() + termsDays * 86400000);
+      // Shared parser (ELE-1684): "On receipt" and "On completion" are due the
+      // day the invoice is raised; "N days" is N days out.
+      const dueDate = dueDateForTerms(companyProfile?.payment_terms || '30 days');
       const invoiceData = {
         ...quoteForInvoice,
         id: quoteForInvoice.id,

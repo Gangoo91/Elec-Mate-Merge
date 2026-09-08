@@ -18,7 +18,7 @@ import { useBiometricAuth } from '@/hooks/useBiometricAuth';
 import { useUserCount } from '@/hooks/useUserCount';
 import { useCookieConsent } from '@/components/CookieConsent';
 import { cn } from '@/lib/utils';
-import { addBreadcrumb } from '@/lib/sentry';
+import { addBreadcrumb, captureError } from '@/lib/sentry';
 
 const SignIn = () => {
   const [searchParams] = useSearchParams();
@@ -95,10 +95,19 @@ const SignIn = () => {
 
   const handleBiometricEnable = async () => {
     if (pendingCredentials.current) {
-      await biometric.enableBiometric(
-        pendingCredentials.current.email,
-        pendingCredentials.current.password
-      );
+      // ELE-1677 — the user is already signed in at this point. If the secure
+      // store refuses the write (Sentry GK: "KeychainError error 0" as an
+      // unhandled rejection on this page), record it and carry on to the
+      // dashboard rather than leaving the sign-in stuck behind a rejected
+      // promise. Settings → Security offers the toggle again.
+      try {
+        await biometric.enableBiometric(
+          pendingCredentials.current.email,
+          pendingCredentials.current.password
+        );
+      } catch (err) {
+        captureError(err, { context: 'biometric-enable-after-signin' });
+      }
     }
     setShowBiometricPrompt(false);
     pendingCredentials.current = null;
@@ -118,11 +127,20 @@ const SignIn = () => {
     setIsBiometricLoggingIn(true);
     addBreadcrumb('Biometric login attempt', 'auth');
     try {
-      const credentials = await biometric.authenticateWithBiometric();
-      if (!credentials) {
+      const result = await biometric.authenticateWithBiometric();
+      if (!result.credentials) {
+        if (result.reason === 'credentials_lost') {
+          // Typically after an iOS update: identity verified, Keychain entry
+          // gone. Biometrics are now off; the next password sign-in offers to
+          // turn them back on (ELE-1677).
+          setError(
+            `${biometric.biometricType} needs setting up again after your phone update. Sign in with your password once and we'll turn it back on.`
+          );
+        }
         setIsBiometricLoggingIn(false);
         return;
       }
+      const credentials = result.credentials;
       const { error: signInError } = await signIn(credentials.email, credentials.password);
       if (signInError) {
         await biometric.disableBiometric();

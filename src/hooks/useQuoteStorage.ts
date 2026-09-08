@@ -10,6 +10,7 @@ import { trackFeatureUse } from '@/components/ActivityTracker';
 import { trackQuoteCreated } from '@/lib/analytics-events';
 import { QUERY_KEYS, QUERY_PRESETS } from '@/lib/queryConfig';
 import { useStockMovements } from '@/hooks/useStockMovements';
+import { isQuoteDraft } from '@/utils/quote-status';
 
 // Database storage for quotes (no longer using localStorage).
 //
@@ -22,6 +23,109 @@ import { useStockMovements } from '@/hooks/useStockMovements';
 // setSavedQuotes / setInvoicedQuotes adapters that delegate to
 // queryClient.setQueryData — so every consumer sees the optimistic update
 // without a roundtrip.
+const parseNumber = (value: unknown): number => {
+  if (typeof value === 'number') {
+    return Number.isFinite(value) ? value : 0;
+  }
+
+  if (typeof value === 'string') {
+    const parsed = Number.parseFloat(value);
+    return Number.isFinite(parsed) ? parsed : 0;
+  }
+
+  return 0;
+};
+
+/**
+ * THE mapping from a `quotes` row to the app's Quote.
+ *
+ * Every screen that loads a quote must come through here. The edit page used
+ * to carry its own hand-picked copy that omitted project_id, customer_id,
+ * site_visit_id, the linked-certificate fields and the booking fields; because
+ * `saveQuote` and the autosave write those columns as `value || null`, opening
+ * one of the 160 quotes linked to a job and touching a line unlinked it from
+ * the job (code review, ELE-1678 follow-up). One mapper, no drift.
+ */
+export function quoteRowToQuote(row: any): Quote {
+  return {
+    id: row.id,
+    quoteNumber: row.quote_number,
+    client: typeof row.client_data === 'string' ? JSON.parse(row.client_data) : row.client_data,
+    jobDetails:
+      typeof row.job_details === 'string' ? JSON.parse(row.job_details) : row.job_details,
+    items: typeof row.items === 'string' ? JSON.parse(row.items) : row.items,
+    settings: typeof row.settings === 'string' ? JSON.parse(row.settings) : row.settings,
+    subtotal: parseNumber(row.subtotal),
+    overhead: parseNumber(row.overhead),
+    profit: parseNumber(row.profit),
+    discountAmount: parseNumber(row.discount_amount),
+    vatAmount: parseNumber(row.vat_amount),
+    total: parseNumber(row.total),
+    status: row.status,
+    tags: row.tags || [],
+    lastReminderSentAt: row.last_reminder_sent_at ? new Date(row.last_reminder_sent_at) : undefined,
+    createdAt: new Date(row.created_at),
+    updatedAt: new Date(row.updated_at),
+    expiryDate: new Date(row.expiry_date),
+    notes: row.notes,
+    acceptance_status: row.acceptance_status,
+    acceptance_method: row.acceptance_method,
+    accepted_at: row.accepted_at ? new Date(row.accepted_at) : undefined,
+    accepted_by_name: row.accepted_by_name,
+    accepted_by_email: row.accepted_by_email,
+    accepted_ip: row.accepted_ip,
+    accepted_user_agent: row.accepted_user_agent,
+    signature_url: row.signature_url,
+    public_token: row.public_token,
+    invoice_raised: row.invoice_raised,
+    invoice_number: row.invoice_number ?? undefined,
+    work_completion_date: row.work_completion_date ? new Date(row.work_completion_date) : undefined,
+    pdf_document_id: row.pdf_document_id,
+    pdf_url: row.pdf_url,
+    pdf_generated_at: row.pdf_generated_at ? new Date(row.pdf_generated_at) : undefined,
+    pdf_version: row.pdf_version,
+    // Email tracking fields
+    first_sent_at: row.first_sent_at ? new Date(row.first_sent_at) : undefined,
+    reminder_count: row.reminder_count || 0,
+    auto_followup_enabled: row.auto_followup_enabled !== false, // Default true
+    expiry_notification_sent: row.expiry_notification_sent || false,
+    // Email view tracking (from join with quote_views if available)
+    email_opened_at: row.email_opened_at ? new Date(row.email_opened_at) : undefined,
+    email_open_count: row.email_open_count || 0,
+    // Source site visit
+    site_visit_id: row.site_visit_id,
+    // Linked certificate fields
+    linked_certificate_id: row.linked_certificate_id,
+    linked_certificate_type: row.linked_certificate_type,
+    linked_certificate_reference: row.linked_certificate_reference,
+    linked_certificate_pdf_url: row.linked_certificate_pdf_url,
+    // Project + CRM links — must round-trip here or saveQuote nulls them on edit
+    project_id: row.project_id,
+    customer_id: row.customer_id,
+    // Owner. Needed by anything that writes a related row scoped to the
+    // user — StartDateRequestPanel could not create its calendar event
+    // without it and failed silently on a guard clause.
+    user_id: row.user_id,
+    /*
+     * ELE-1513 — start date the client asked for on the acceptance page,
+     * and whether it has been confirmed into the diary yet.
+     *
+     * This mapper is a field-by-field pick rather than a spread, so a new
+     * column is invisible to the app until it is named here. Safe to add:
+     * `saveQuote`'s column list writes none of these three, so editing a
+     * quote cannot null them.
+     */
+    requested_start_date: row.requested_start_date,
+    // ELE-1562 — without these the panel can never see a proposal it has
+    // just sent, and would keep offering "Can't do that date".
+    proposed_start_date: row.proposed_start_date,
+    proposed_at: row.proposed_at,
+    proposed_note: row.proposed_note,
+    requested_time_preference: row.requested_time_preference,
+    booked_slot_start: row.booked_slot_start,
+  };
+}
+
 export const useQuoteStorage = () => {
   const queryClient = useQueryClient();
   const { applyInvoiceDecrement } = useStockMovements();
@@ -47,102 +151,9 @@ export const useQuoteStorage = () => {
   const activeKey = useMemo(() => [...QUERY_KEYS.QUOTES, userId, 'active'] as const, [userId]);
   const invoicedKey = useMemo(() => [...QUERY_KEYS.QUOTES, userId, 'invoiced'] as const, [userId]);
 
-  const parseNumber = (value: unknown): number => {
-    if (typeof value === 'number') {
-      return Number.isFinite(value) ? value : 0;
-    }
-
-    if (typeof value === 'string') {
-      const parsed = Number.parseFloat(value);
-      return Number.isFinite(parsed) ? parsed : 0;
-    }
-
-    return 0;
-  };
-
-  // Convert database row to Quote object
-  const convertDbRowToQuote = useCallback(
-    (row: any): Quote => ({
-      id: row.id,
-      quoteNumber: row.quote_number,
-      client: row.client_data,
-      jobDetails: row.job_details,
-      items: row.items,
-      settings: row.settings,
-      subtotal: parseNumber(row.subtotal),
-      overhead: parseNumber(row.overhead),
-      profit: parseNumber(row.profit),
-      discountAmount: parseNumber(row.discount_amount),
-      vatAmount: parseNumber(row.vat_amount),
-      total: parseNumber(row.total),
-      status: row.status,
-      tags: row.tags || [],
-      lastReminderSentAt: row.last_reminder_sent_at
-        ? new Date(row.last_reminder_sent_at)
-        : undefined,
-      createdAt: new Date(row.created_at),
-      updatedAt: new Date(row.updated_at),
-      expiryDate: new Date(row.expiry_date),
-      notes: row.notes,
-      acceptance_status: row.acceptance_status,
-      acceptance_method: row.acceptance_method,
-      accepted_at: row.accepted_at ? new Date(row.accepted_at) : undefined,
-      accepted_by_name: row.accepted_by_name,
-      accepted_by_email: row.accepted_by_email,
-      accepted_ip: row.accepted_ip,
-      accepted_user_agent: row.accepted_user_agent,
-      signature_url: row.signature_url,
-      public_token: row.public_token,
-      invoice_raised: row.invoice_raised,
-      work_completion_date: row.work_completion_date
-        ? new Date(row.work_completion_date)
-        : undefined,
-      pdf_document_id: row.pdf_document_id,
-      pdf_url: row.pdf_url,
-      pdf_generated_at: row.pdf_generated_at ? new Date(row.pdf_generated_at) : undefined,
-      pdf_version: row.pdf_version,
-      // Email tracking fields
-      first_sent_at: row.first_sent_at ? new Date(row.first_sent_at) : undefined,
-      reminder_count: row.reminder_count || 0,
-      auto_followup_enabled: row.auto_followup_enabled !== false, // Default true
-      expiry_notification_sent: row.expiry_notification_sent || false,
-      // Email view tracking (from join with quote_views if available)
-      email_opened_at: row.email_opened_at ? new Date(row.email_opened_at) : undefined,
-      email_open_count: row.email_open_count || 0,
-      // Source site visit
-      site_visit_id: row.site_visit_id,
-      // Linked certificate fields
-      linked_certificate_id: row.linked_certificate_id,
-      linked_certificate_type: row.linked_certificate_type,
-      linked_certificate_reference: row.linked_certificate_reference,
-      linked_certificate_pdf_url: row.linked_certificate_pdf_url,
-      // Project + CRM links — must round-trip here or saveQuote nulls them on edit
-      project_id: row.project_id,
-      customer_id: row.customer_id,
-      // Owner. Needed by anything that writes a related row scoped to the
-      // user — StartDateRequestPanel could not create its calendar event
-      // without it and failed silently on a guard clause.
-      user_id: row.user_id,
-      /*
-       * ELE-1513 — start date the client asked for on the acceptance page,
-       * and whether it has been confirmed into the diary yet.
-       *
-       * This mapper is a field-by-field pick rather than a spread, so a new
-       * column is invisible to the app until it is named here. Safe to add:
-       * `saveQuote`'s column list writes none of these three, so editing a
-       * quote cannot null them.
-       */
-      requested_start_date: row.requested_start_date,
-      // ELE-1562 — without these the panel can never see a proposal it has
-      // just sent, and would keep offering "Can't do that date".
-      proposed_start_date: row.proposed_start_date,
-      proposed_at: row.proposed_at,
-      proposed_note: row.proposed_note,
-      requested_time_preference: row.requested_time_preference,
-      booked_slot_start: row.booked_slot_start,
-    }),
-    []
-  );
+  // Convert database row to Quote object — the pure function lives at module
+  // scope (`quoteRowToQuote`) so the edit page can use the same mapper.
+  const convertDbRowToQuote = useCallback((row: any): Quote => quoteRowToQuote(row), []);
 
   const fetchActiveQuotesForUser = useCallback(
     async (userId: string): Promise<Quote[]> => {
@@ -608,7 +619,9 @@ export const useQuoteStorage = () => {
     const sent = savedQuotes.filter((q) => q.status === 'sent').length;
     const approved = savedQuotes.filter((q) => q.status === 'approved').length;
     const rejected = savedQuotes.filter((q) => q.status === 'rejected').length;
-    const draft = savedQuotes.filter((q) => q.status === 'draft').length;
+    // Derived rule shared with the Quotes page (ELE-1682): an accepted quote
+    // keeps status 'draft', so a raw match over-counts drafts by one per win.
+    const draft = savedQuotes.filter(isQuoteDraft).length;
     const awaitingPayment = savedQuotes.filter((q) => q.tags?.includes('awaiting_payment')).length;
 
     // Calculate this month's total from completed quotes

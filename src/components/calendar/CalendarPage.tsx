@@ -502,6 +502,104 @@ const CalendarPageContent = () => {
     [customers]
   );
 
+  /**
+   * ELE-1680 — Sean: "maybe select start job directly from the business
+   * calendar?" Both halves of starting: the job goes to in-progress (if it is
+   * still open or on hold) and the time tracker starts against it, so the
+   * hours are billable from the moment he taps. Then the job opens.
+   *
+   * A timer already running is left alone — silently stopping it would lose
+   * whatever it was timing. He is told, and can swap it on the job page.
+   *
+   * The time_sessions rows are written directly rather than through
+   * useTimeTracker: that hook ticks a state update every second while a timer
+   * runs, which would re-render the whole calendar for as long as he is on
+   * the tools. The row shape and the query keys match the hook exactly, and
+   * its caches are invalidated so the tracker picks the session up.
+   */
+  const handleStartJob = useCallback(
+    async (event: CalendarEvent) => {
+      if (!event.project_id) return;
+      const label = event.project?.title ?? event.title;
+      try {
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+        if (!user) throw new Error('Not signed in');
+
+        // A finished job cannot be started; say so instead of timing against it.
+        const { data: project, error: projectError } = await supabase
+          .from('spark_projects')
+          .select('status')
+          .eq('id', event.project_id)
+          .eq('user_id', user.id)
+          .maybeSingle();
+        if (projectError) throw projectError;
+        const status = (project as { status?: string } | null)?.status;
+        if (!status) throw new Error('That job no longer exists');
+        if (status === 'completed' || status === 'cancelled') {
+          toast({
+            title: `That job is ${status}`,
+            description: 'Reopen it from the job page if the work is starting again.',
+            variant: 'destructive',
+          });
+          return;
+        }
+
+        // Timer first: if this fails nothing else has changed.
+        const { data: running, error: runningError } = await supabase
+          .from('time_sessions')
+          .select('id, label, project_id')
+          .eq('user_id', user.id)
+          .is('ended_at', null)
+          .maybeSingle();
+        if (runningError) throw runningError;
+        const active = running as { id: string; label: string | null; project_id: string | null } | null;
+
+        let timerNote: string;
+        if (active && active.project_id === event.project_id) {
+          timerNote = 'The timer for this job is already running.';
+        } else if (active) {
+          timerNote = `A timer is already running${active.label ? ` for ${active.label}` : ''} — stop it on the job page to time this one instead.`;
+        } else {
+          const { error: startError } = await supabase.from('time_sessions').insert({
+            user_id: user.id,
+            label,
+            project_id: event.project_id,
+            started_at: new Date().toISOString(),
+            hourly_rate: companyProfile?.hourly_rate ?? 45,
+          } as never);
+          if (startError) throw startError;
+          timerNote = `Timer running for ${label}.`;
+        }
+        queryClient.invalidateQueries({ queryKey: ['time-session-active'] });
+        queryClient.invalidateQueries({ queryKey: ['time-sessions-recent'] });
+
+        if (status === 'open' || status === 'on_hold') {
+          const { error } = await supabase
+            .from('spark_projects')
+            .update({ status: 'active' } as never)
+            .eq('id', event.project_id)
+            .eq('user_id', user.id);
+          if (error) throw error;
+          queryClient.invalidateQueries({ queryKey: ['spark-projects'] });
+          queryClient.invalidateQueries({ queryKey: ['projects-for-calendar'] });
+        }
+
+        toast({ title: 'Job started', description: timerNote });
+        setDetailSheetOpen(false);
+        navigate(`/electrician/projects/${event.project_id}`);
+      } catch (e) {
+        toast({
+          title: 'Could not start the job',
+          description: e instanceof Error ? e.message : 'Try again',
+          variant: 'destructive',
+        });
+      }
+    },
+    [companyProfile?.hourly_rate, navigate, queryClient]
+  );
+
   const handleDelete = useCallback(
     (eventId: string) => {
       /*
@@ -547,6 +645,75 @@ const CalendarPageContent = () => {
       setDetailSheetOpen(false);
     },
     [deleteMutation, allEvents, queryClient]
+  );
+
+  /**
+   * ELE-1681 — Sean: "is there an option to put a job on hold? This customer
+   * wants to change the date but not sure exactly when this month."
+   *
+   * On hold = the job is kept, in the pipeline, with no date. So the project
+   * goes to `on_hold` and THIS diary slot is removed (through the same
+   * split-job-safe path as Delete). Nothing about the job is lost — customer,
+   * quote, notes and tasks all stay on it — and "Start job" or a fresh booking
+   * takes it off hold again.
+   */
+  const handleHoldJob = useCallback(
+    async (event: CalendarEvent) => {
+      if (!event.project_id) return;
+      try {
+        const { data, error } = await supabase
+          .from('spark_projects')
+          .update({ status: 'on_hold' } as never)
+          .eq('id', event.project_id)
+          .in('status', ['open', 'active'])
+          .select('id');
+        if (error) throw error;
+        // A completed or cancelled job cannot go on hold — and its diary slot
+        // must not be cleared on the strength of a status change that never
+        // happened.
+        if (!data || data.length === 0) {
+          toast({
+            title: 'That job is already finished',
+            description: 'Only an open or in-progress job can be put on hold.',
+            variant: 'destructive',
+          });
+          return;
+        }
+        queryClient.invalidateQueries({ queryKey: ['spark-projects'] });
+        queryClient.invalidateQueries({ queryKey: ['projects-for-calendar'] });
+        /*
+         * Clear EVERY day of the job, not just the one that was tapped — a
+         * three-day job on hold with two days still in the diary is the
+         * double-Tuesday problem in a new coat. Non-anchor days go first so the
+         * anchor's ON DELETE CASCADE (see splitJob.ts) has nothing left to take
+         * with it; each goes through the same mutation as Delete so a day that
+         * is synced to Google is tombstoned rather than resurrected on the next
+         * pull.
+         */
+        const target = allEvents.find((e) => e.id === event.id);
+        const days = target ? jobDays(target, allEvents) : [event];
+        const children = days.filter((d) => !!d.parent_event_id);
+        const anchors = days.filter((d) => !d.parent_event_id);
+        for (const d of [...children, ...anchors]) {
+          await deleteMutation.mutateAsync(d.id);
+        }
+        queryClient.invalidateQueries({ queryKey: ['calendar-events'] });
+        setDetailSheetOpen(false);
+        toast({
+          title: 'Job on hold',
+          description: `${event.project?.title ?? 'The job'} is kept under Jobs as "On hold — date TBC". ${
+            days.length > 1 ? `All ${days.length} days have` : 'This slot has'
+          } been cleared; book it again when they have a date.`,
+        });
+      } catch (e) {
+        toast({
+          title: 'Could not put the job on hold',
+          description: e instanceof Error ? e.message : 'Try again',
+          variant: 'destructive',
+        });
+      }
+    },
+    [allEvents, deleteMutation, queryClient]
   );
 
   const handleSave = useCallback(
@@ -855,6 +1022,7 @@ const CalendarPageContent = () => {
         booking={tellBooking}
         businessName={companyProfile?.company_name}
         eventId={tellEventId}
+        template={companyProfile?.booking_confirmation_template}
       />
 
       <CalendarEventDetail
@@ -864,6 +1032,15 @@ const CalendarPageContent = () => {
         onEdit={handleEdit}
         onDelete={handleDelete}
         onTellCustomer={handleTellCustomer}
+        onOpenJob={(ev) => {
+          // Same destination the synthetic project events already use
+          // (diaryLinks.eventRecordHref), reached from a real booking (ELE-1679).
+          if (!ev.project_id) return;
+          setDetailSheetOpen(false);
+          navigate(`/electrician/projects/${ev.project_id}`);
+        }}
+        onStartJob={handleStartJob}
+        onHoldJob={handleHoldJob}
       />
 
       <CalendarSettingsSheet

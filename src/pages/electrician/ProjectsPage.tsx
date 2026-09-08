@@ -223,6 +223,8 @@ const ProjectsPage = () => {
         });
       } else if (p.stage === 'awaiting_payment') {
         items.push({ project: p, reason: 'Invoice out — chase payment', tone: 'text-white/60' });
+      } else if (p.status === 'on_hold') {
+        items.push({ project: p, reason: 'On hold — waiting on a date', tone: 'text-violet-300' });
       } else if (p.dueDate && p.status !== 'completed' && new Date(p.dueDate) < startOfToday) {
         items.push({
           project: p,
@@ -240,6 +242,7 @@ const ProjectsPage = () => {
       'quoted',
       'won',
       'booked',
+      'on_hold',
       'in_progress',
       'awaiting_payment',
       'bill_it',
@@ -799,6 +802,7 @@ const ProjectsPage = () => {
                       'quoted',
                       'won',
                       'booked',
+                      'on_hold',
                       'in_progress',
                       'awaiting_payment',
                       'bill_it',

@@ -148,7 +148,9 @@ export function useAuthSession() {
           // No valid session — try biometric auto-login if enabled
           const biometricOn = await isBiometricEnabled();
           if (biometricOn) {
-            const credentials = await authenticateAndGetCredentials();
+            // A lost Keychain entry (ELE-1677) is cleared inside the helper and
+            // simply falls through to the sign-in page, where the user is told.
+            const { credentials } = await authenticateAndGetCredentials();
             if (credentials && mounted) {
               const { data, error } = await supabase.auth.signInWithPassword({
                 email: credentials.email,

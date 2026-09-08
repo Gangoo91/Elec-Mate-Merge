@@ -209,6 +209,11 @@
   ],
   "redirects": [
     {
+      "source": "/signup",
+      "destination": "/auth/signup",
+      "statusCode": 302
+    },
+    {
       "source": "/guides/afdd-mandatory-hmo-care-home-a4-2026",
       "destination": "/guides/afdd-hmo-care-home-a4-2026",
       "statusCode": 301

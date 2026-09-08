@@ -239,6 +239,18 @@ export const BookJobSheet = ({
             .update({ start_date: date })
             .eq('id', projectId);
 
+      // ELE-1681 — booking a date is what takes a job off hold. Without this
+      // the Jobs list kept saying "On hold — date TBC" beside a date in the
+      // diary until someone found "Take off hold" in a menu.
+      if (!subjectUpdate.error && projectId) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        await (supabase as any)
+          .from('spark_projects')
+          .update({ status: 'open' })
+          .eq('id', projectId)
+          .eq('status', 'on_hold');
+      }
+
       if (subjectUpdate.error) {
         // don't leave orphaned events behind a failed booking (audit P2)
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

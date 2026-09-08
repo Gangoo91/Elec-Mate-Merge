@@ -606,9 +606,20 @@ export const QuoteSettingsStep = ({ settings, items, onUpdate }: QuoteSettingsSt
                     className={inputCn}
                     placeholder={`Default: ${companyValidityDays} days`}
                     value={field.value ?? ''}
-                    onChange={(e) =>
-                      field.onChange(e.target.value === '' ? undefined : Number(e.target.value))
-                    }
+                    onChange={(e) => {
+                      // ELE-1687 — a user reported garbled text here after
+                      // typing "7 Days" on a second quote. A number input can
+                      // still hand back "" or non-numeric text on some mobile
+                      // keyboards, and Number('7 Days') is NaN, which then
+                      // round-trips through form.watch → settings → defaultValues
+                      // as a value the field cannot display. Keep only the
+                      // leading digits and drop anything that is not a whole
+                      // number of days.
+                      // Leading whole number only: "7.5" → 7, not 75 (a strip of
+                      // every non-digit would have concatenated them).
+                      const lead = /^\s*(\d+)/.exec(e.target.value);
+                      field.onChange(lead ? parseInt(lead[1], 10) : undefined);
+                    }}
                   />
                 </FormControl>
                 <FormMessage />

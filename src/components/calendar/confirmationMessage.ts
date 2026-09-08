@@ -44,6 +44,72 @@ export interface ConfirmationParts {
    * send 2 texts/enails ext?" — five day-entries must not mean five texts.
    */
   jobDates?: Date[] | null;
+  /**
+   * ELE-1685 — the electrician's own wording for a confirmation, from
+   * Settings → Booking availability. Tokens: {name} {business} {what} {when}
+   * {where}. Null or blank means the default below. A reschedule (`movedFrom`)
+   * always uses the built-in wording, because it must quote the old time back.
+   */
+  template?: string | null;
+}
+
+/** The tokens a custom confirmation may use, with what each one becomes. */
+export const CONFIRMATION_TOKENS = [
+  { token: '{name}', means: 'their first name' },
+  { token: '{business}', means: 'your trading name' },
+  { token: '{what}', means: 'the booking title' },
+  { token: '{when}', means: 'the day and time' },
+  { token: '{where}', means: 'the address' },
+] as const;
+
+/** The stock message, expressed as a template so the two can never drift. */
+export const DEFAULT_CONFIRMATION_TEMPLATE = [
+  'Hi {name},',
+  '',
+  'You’re booked in — {business}.',
+  '',
+  'What: {what}',
+  'When: {when}',
+  'Where: {where}',
+  '',
+  'If that no longer suits, just reply and we’ll sort another time.',
+].join('\n');
+
+/**
+ * Fill a template in.
+ *
+ * Empty values must not leave debris behind: a customer with no address on
+ * file should not get a bare "Where:" line, and no trading name should not
+ * leave "booked in — ." So a line that ends up as only a label is dropped, a
+ * dangling " — " separator is trimmed, and "Hi ," collapses to "Hi,".
+ */
+export function renderConfirmationTemplate(
+  template: string,
+  values: Record<'name' | 'business' | 'what' | 'when' | 'where', string>
+): string {
+  const TOKEN = /\{(name|business|what|when|where)\}/g;
+  const lines = template.split('\n').flatMap((line) => {
+    // Clean-up applies ONLY to a line in which a token rendered empty. A line
+    // the electrician wrote himself with no token in it — "Parking:", "Gate
+    // code:", a line ending in a dash — is his and is left exactly as typed
+    // (code review caught the first version deleting those).
+    let emptied = false;
+    const filled = line.replace(TOKEN, (_, key) => {
+      const v = values[key as keyof typeof values] ?? '';
+      if (!v.trim()) emptied = true;
+      return v;
+    });
+    if (!emptied) return [filled];
+    const cleaned = filled
+      .replace(/\s*[—–-]\s*\.$/, '.') // "booked in — ." → "booked in."
+      .replace(/\s*[—–-]\s*$/, '') // "booked in —" → "booked in"
+      .replace(/\s+([,.!?;:])/g, '$1') // "Hi ," / "Hi !" → "Hi," / "Hi!"
+      .replace(/[ \t]+$/, '');
+    // Nothing but a label left ("Where:") or nothing at all — drop the line.
+    if (/^[^{}]{0,40}:$/.test(cleaned.trim()) || cleaned.trim() === '') return [];
+    return [cleaned];
+  });
+  return lines.join('\n').replace(/\n{3,}/g, '\n\n').trim();
 }
 
 /**
@@ -155,16 +221,17 @@ export function confirmationMessage(parts: ConfirmationParts): string {
     ].join('\n');
   }
 
-  return [
-    greeting,
-    '',
-    `You’re booked in${from}.`,
-    '',
-    `What: ${parts.title}`,
-    `When: ${whenLine(parts)}${where}`,
-    '',
-    'If that no longer suits, just reply and we’ll sort another time.',
-  ].join('\n');
+  // ELE-1685 — his own wording when he has set one; the stock text otherwise.
+  // Both go through the same renderer so the default is exercised on every
+  // send and cannot quietly diverge from what the Settings preview shows.
+  const template = parts.template?.trim() ? parts.template : DEFAULT_CONFIRMATION_TEMPLATE;
+  return renderConfirmationTemplate(template, {
+    name: who ?? '',
+    business: parts.businessName?.trim() ?? '',
+    what: parts.title,
+    when: whenLine(parts),
+    where: parts.location?.trim() ?? '',
+  });
 }
 
 export function confirmationSubject(parts: ConfirmationParts): string {

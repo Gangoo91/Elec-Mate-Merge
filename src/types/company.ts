@@ -102,6 +102,10 @@ export interface CompanyProfile {
   // Testing instruments for certificates
   testing_instruments?: TestingInstrument[];
 
+  // Booking confirmation wording for WhatsApp / SMS / mail hand-offs (ELE-1685).
+  // Tokens {name} {business} {what} {when} {where}; null = the stock message.
+  booking_confirmation_template?: string | null;
+
   // Quote settings
   quote_terms?: string;
   quote_validity_days?: number;

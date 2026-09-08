@@ -35,6 +35,8 @@ import {
   Clock,
   Phone,
   Mic,
+  PauseCircle,
+  PlayCircle,
 } from 'lucide-react';
 import { Assistant } from '@/components/business-hub/Assistant';
 import { Button } from '@/components/ui/button';
@@ -858,6 +860,15 @@ const ProjectDetailPage = () => {
         run: () => navigate(`/electrician/invoice-builder/create?projectId=${project.id}`),
       };
     }
+    // ELE-1681 — checked before the live stages: the linked quote and old dates
+    // still exist and would otherwise read this job as booked or in progress.
+    if (project.status === 'on_hold')
+      return {
+        eyebrow: 'On hold',
+        headline: 'Waiting on a date — book it in when they know',
+        cta: 'Book it in',
+        run: () => setBookSheetOpen(true),
+      };
     const startArrived =
       !!project.start_date && new Date(project.start_date) <= new Date();
     if (doneTasks > 0 || project.status === 'active' || (hasAcceptedQuote && startArrived))
@@ -1253,6 +1264,26 @@ const ProjectDetailPage = () => {
                     Mark Complete
                   </DropdownMenuItem>
                 )}
+                {/* ELE-1681 — the date has gone but the customer still wants the
+                    work. Keeps everything on the job; only the timeline lets go. */}
+                {project.status !== 'completed' && project.status !== 'on_hold' && (
+                  <DropdownMenuItem
+                    onClick={() => void updateProject(project.id, { status: 'on_hold' })}
+                    className="text-white focus:bg-white/10 focus:text-white"
+                  >
+                    <PauseCircle className="h-4 w-4 mr-2 text-violet-300" />
+                    Put on hold — date TBC
+                  </DropdownMenuItem>
+                )}
+                {project.status === 'on_hold' && (
+                  <DropdownMenuItem
+                    onClick={() => void updateProject(project.id, { status: 'open' })}
+                    className="text-white focus:bg-white/10 focus:text-white"
+                  >
+                    <PlayCircle className="h-4 w-4 mr-2 text-emerald-400" />
+                    Take off hold
+                  </DropdownMenuItem>
+                )}
                 <DropdownMenuItem
                   onClick={() => setConfirmDeleteProject(true)}
                   className="text-red-400 focus:bg-red-500/10 focus:text-red-400"
@@ -1375,10 +1406,12 @@ const ProjectDetailPage = () => {
                     'text-[10.5px] font-medium px-2 py-0.5 rounded-full',
                     project.status === 'completed'
                       ? 'bg-emerald-500/15 text-emerald-400 ring-1 ring-emerald-500/20'
-                      : 'bg-blue-500/15 text-blue-400 ring-1 ring-blue-500/20'
+                      : project.status === 'on_hold'
+                        ? 'bg-violet-500/15 text-violet-300 ring-1 ring-violet-500/20'
+                        : 'bg-blue-500/15 text-blue-400 ring-1 ring-blue-500/20'
                   )}
                 >
-                  {project.status}
+                  {project.status === 'on_hold' ? 'on hold' : project.status}
                 </span>
                 <button
                   type="button"

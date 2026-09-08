@@ -131,6 +131,7 @@ const PricingSheet = ({ open, onOpenChange, profile, onSave }: PricingSheetProps
                   </SelectTrigger>
                   <SelectContent className="bg-[hsl(0_0%_16%)] border-white/[0.12] shadow-xl shadow-black/50 text-white">
                     <SelectItem value="On receipt">Paid on receipt</SelectItem>
+                    <SelectItem value="On completion">Payment due on completion</SelectItem>
                     <SelectItem value="7 days">7 days</SelectItem>
                     <SelectItem value="14 days">14 days</SelectItem>
                     <SelectItem value="30 days">30 days</SelectItem>

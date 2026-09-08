@@ -290,7 +290,9 @@ const SignUp = () => {
   }, [user, profile, navigate]);
 
   useEffect(() => {
-    const code = searchParams.get('offer');
+    // Codes are stored upper-case in promo_offers and looked up exactly, so a
+    // tutor pasting bet50 into a WhatsApp group must still land the discount.
+    const code = searchParams.get('offer')?.trim().toUpperCase();
     if (code) {
       storageSetSync('elec-mate-offer-code', code);
       setOfferCode(code);

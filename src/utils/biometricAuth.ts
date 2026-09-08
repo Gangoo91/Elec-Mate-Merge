@@ -88,11 +88,27 @@ export async function setBiometricEnabled(enabled: boolean): Promise<void> {
 export async function storeCredentials(email: string, password: string): Promise<void> {
   if (!Capacitor.isNativePlatform()) return;
 
-  await NativeBiometric.setCredentials({
-    username: email,
-    password,
-    server: CREDENTIAL_SERVER,
-  });
+  // ELE-1677 — always clear before writing.
+  //
+  // On iOS the plugin's setCredentials does SecItemAdd, and on
+  // errSecDuplicateItem falls back to SecItemUpdate. After an iOS update a
+  // stale Keychain entry can be visible to Add (duplicate) but not to Update
+  // (errSecItemNotFound), which the plugin surfaces as "KeychainError error 0"
+  // (`.noPassword`). Deleting first collapses that state; if the write still
+  // fails, clear again and retry once before giving up.
+  await clearCredentials();
+  const write = () =>
+    NativeBiometric.setCredentials({
+      username: email,
+      password,
+      server: CREDENTIAL_SERVER,
+    });
+  try {
+    await write();
+  } catch {
+    await clearCredentials();
+    await write();
+  }
 }
 
 /**
@@ -108,15 +124,35 @@ export async function clearCredentials(): Promise<void> {
   }
 }
 
-/**
- * Prompt biometric verification then return stored credentials.
- * Returns `null` if the user cancels, biometric fails, or no credentials are stored.
- */
-export async function authenticateAndGetCredentials(): Promise<{
+export interface BiometricCredentials {
   email: string;
   password: string;
-} | null> {
-  if (!Capacitor.isNativePlatform()) return null;
+}
+
+/**
+ * Why a biometric sign-in produced no credentials.
+ *   - unavailable       — not a native platform
+ *   - cancelled         — the user dismissed the prompt, or the biometric check failed
+ *   - credentials_lost  — identity verified but the Keychain / Keystore entry could not be
+ *                         read (typically after an OS update or a restore). The stale entry
+ *                         and the opt-in flag have already been cleared so the next password
+ *                         sign-in offers to re-enable biometrics.
+ */
+export type BiometricAuthResult =
+  | { credentials: BiometricCredentials; reason?: undefined }
+  | { credentials: null; reason: 'unavailable' | 'cancelled' | 'credentials_lost' };
+
+/**
+ * Prompt biometric verification then return stored credentials.
+ *
+ * ELE-1677 — this used to swallow every failure into `null`, so a Keychain
+ * entry that had gone unreadable after an iOS update looked identical to the
+ * user tapping Cancel: Face ID "wouldn't accept" with no way back except the
+ * user working out on his own to type his password. A lost entry is now
+ * reported as such, and cleaned up here, so callers can say what happened.
+ */
+export async function authenticateAndGetCredentials(): Promise<BiometricAuthResult> {
+  if (!Capacitor.isNativePlatform()) return { credentials: null, reason: 'unavailable' };
 
   try {
     await NativeBiometric.verifyIdentity({
@@ -125,18 +161,27 @@ export async function authenticateAndGetCredentials(): Promise<{
       subtitle: 'Verify your identity',
       useFallback: true, // Allow device passcode as fallback
     });
+  } catch {
+    // User cancelled, or the biometric check itself failed.
+    return { credentials: null, reason: 'cancelled' };
+  }
 
+  try {
     const credentials = await NativeBiometric.getCredentials({
       server: CREDENTIAL_SERVER,
     });
-
     if (credentials.username && credentials.password) {
-      return { email: credentials.username, password: credentials.password };
+      return { credentials: { email: credentials.username, password: credentials.password } };
     }
-
-    return null;
   } catch {
-    // User cancelled or biometric failed
-    return null;
+    // Fall through — the entry is missing or unreadable ("KeychainError error 0").
   }
+
+  await clearCredentials();
+  try {
+    await setBiometricEnabled(false);
+  } catch {
+    // Preference write failed — the cleared credentials are the important part.
+  }
+  return { credentials: null, reason: 'credentials_lost' };
 }

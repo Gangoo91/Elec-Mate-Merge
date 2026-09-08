@@ -6,7 +6,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from '@/components/ui/sheet';
-import { Navigation, Pencil, Send, Trash2 } from 'lucide-react';
+import { Briefcase, Navigation, Pencil, Play, Send, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { navigateToAddress } from '@/utils/navigate-to-address';
 import { eyebrowCn, ghostButtonCn } from './calendarStyles';
@@ -29,6 +29,25 @@ interface CalendarEventDetailProps {
    * confirmed at all without editing the time to trigger it.
    */
   onTellCustomer?: (event: CalendarEvent) => void;
+  /**
+   * Open the Electrician Hub job this booking is linked to (`project_id`).
+   *
+   * Events could be LINKED to a job from the edit sheet but never opened from
+   * one — the only actions here were Tell customer / Delete / Edit, so getting
+   * from a booking to its job meant leaving the calendar and finding it again
+   * (ELE-1679, Sean Mulcahy's top ask).
+   */
+  onOpenJob?: (event: CalendarEvent) => void;
+  /**
+   * ELE-1680 — start the linked job from the diary: marks it in progress and
+   * starts the time tracker against it, then opens the job.
+   */
+  onStartJob?: (event: CalendarEvent) => void;
+  /**
+   * ELE-1681 — the customer wants the work but the date has gone. Puts the
+   * job on hold and clears this diary slot; the job itself is kept.
+   */
+  onHoldJob?: (event: CalendarEvent) => void;
 }
 
 /** Row of a detail list — label above, value below, separated by a rule. */
@@ -61,12 +80,18 @@ const CalendarEventDetail = ({
   onEdit,
   onDelete,
   onTellCustomer,
+  onOpenJob,
+  onStartJob,
+  onHoldJob,
 }: CalendarEventDetailProps) => {
   if (!event) return null;
 
   // Synthetic events (tasks, projects, visits) never reach this sheet, so
   // anything here with a customer on it is a real booking that can be sent.
   const canTell = !!onTellCustomer && !!event.client_id;
+  const canOpenJob = !!onOpenJob && !!event.project_id;
+  const canStartJob = !!onStartJob && !!event.project_id;
+  const canHoldJob = !!onHoldJob && !!event.project_id;
   const sentAt = event.confirmation_sent_at ? new Date(event.confirmation_sent_at) : null;
 
   /**
@@ -168,6 +193,27 @@ const CalendarEventDetail = ({
               </DetailRow>
             )}
 
+            {event.project_id && (
+              <DetailRow label="Job">
+                {canOpenJob ? (
+                  <button
+                    type="button"
+                    onClick={() => onOpenJob?.(event)}
+                    className="flex w-full items-center justify-between gap-2 text-left touch-manipulation"
+                  >
+                    <span className="min-w-0 flex-1 truncate">
+                      {event.project?.title ?? 'Linked job'}
+                    </span>
+                    <span className="shrink-0 text-[12px] font-medium text-elec-yellow">
+                      Open
+                    </span>
+                  </button>
+                ) : (
+                  <span>{event.project?.title ?? 'Linked job'}</span>
+                )}
+              </DetailRow>
+            )}
+
             {event.sync_status === 'synced' && (
               <DetailRow label="Sync">Synced with Google Calendar</DetailRow>
             )}
@@ -177,6 +223,41 @@ const CalendarEventDetail = ({
             className="shrink-0 space-y-2 border-t border-white/[0.10] px-4 pt-3 sm:px-5"
             style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
           >
+            {(canStartJob || canOpenJob) && (
+              <div className="flex gap-2">
+                {canStartJob && (
+                  <button
+                    type="button"
+                    onClick={() => onStartJob?.(event)}
+                    className={cn(ghostButtonCn, 'h-12 flex-1 text-[14px]')}
+                  >
+                    <Play className="mr-2 inline h-4 w-4" />
+                    Start job
+                  </button>
+                )}
+                {canOpenJob && (
+                  <button
+                    type="button"
+                    onClick={() => onOpenJob?.(event)}
+                    className={cn(ghostButtonCn, 'h-12 flex-1 text-[14px]')}
+                  >
+                    <Briefcase className="mr-2 inline h-4 w-4" />
+                    Open job
+                  </button>
+                )}
+              </div>
+            )}
+
+            {canHoldJob && (
+              <button
+                type="button"
+                onClick={() => onHoldJob?.(event)}
+                className="h-11 w-full text-[12px] font-medium text-white underline decoration-white/40 underline-offset-4 touch-manipulation"
+              >
+                Customer needs a different date? Put the job on hold
+              </button>
+            )}
+
             {canTell && (
               <button
                 type="button"

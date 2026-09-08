@@ -1,6 +1,7 @@
 import { InvoiceSettings } from '@/types/invoice';
 import { DecimalInput } from '@/components/ui/decimal-input';
 import type { QuoteItem } from '@/types/quote';
+import { dueDateForTerms } from '@/utils/invoice-status';
 import { computeQuoteTotals } from '@/utils/quote-calculations';
 import { useMemo } from 'react';
 import { Calendar } from '@/components/ui/calendar';
@@ -339,18 +340,9 @@ export const InvoiceSettingsStep = ({
           <Select
             value={settings?.paymentTerms || '30 days'}
             onValueChange={(value) => {
-              const today = new Date();
-              let newDueDate: Date;
-              switch (value) {
-                case 'Due on receipt': newDueDate = today; break;
-                case '7 days': newDueDate = new Date(today.getTime() + 7 * 86400000); break;
-                case '14 days': newDueDate = new Date(today.getTime() + 14 * 86400000); break;
-                case '30 days': newDueDate = new Date(today.getTime() + 30 * 86400000); break;
-                case '60 days': newDueDate = new Date(today.getTime() + 60 * 86400000); break;
-                case '90 days': newDueDate = new Date(today.getTime() + 90 * 86400000); break;
-                default: newDueDate = new Date(today.getTime() + 30 * 86400000);
-              }
-              onUpdateSettings({ paymentTerms: value, dueDate: newDueDate });
+              // One parser for every surface (ELE-1684): receipt and completion
+              // are due today, "N days" is N days out.
+              onUpdateSettings({ paymentTerms: value, dueDate: dueDateForTerms(value) });
             }}
           >
             <SelectTrigger className={cn(inputCn, 'pr-8 [&>svg]:text-white')}>
@@ -358,6 +350,7 @@ export const InvoiceSettingsStep = ({
             </SelectTrigger>
             <SelectContent className="bg-elec-gray border-white/[0.1]">
               <SelectItem value="Due on receipt">Due on receipt</SelectItem>
+              <SelectItem value="On completion">Due on completion</SelectItem>
               <SelectItem value="7 days">7 days</SelectItem>
               <SelectItem value="14 days">14 days</SelectItem>
               <SelectItem value="30 days">30 days (Standard)</SelectItem>

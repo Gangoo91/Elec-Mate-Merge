@@ -197,6 +197,49 @@ const StartDateRequestPanel = ({ quote }: { quote: Quote }) => {
 
   const awaitingClient = !!quote.proposed_start_date;
 
+  /**
+   * ELE-1686 — a way out when none of the three moves fit.
+   *
+   * A request only left this panel once `booked_slot_start` was written, so a
+   * job that was never going to be booked through here (done already, or on
+   * hold with no date) sat under "Waiting on you" indefinitely. Both exits
+   * reuse the existing quote tags — `work_done` is what "Mark work complete"
+   * writes elsewhere, `on_hold` is the reschedule-later state — so nothing new
+   * is stored and both remain visible and reversible on the quote itself.
+   */
+  const setAside = async (tag: 'on_hold' | 'work_done') => {
+    setSaving(true);
+    try {
+      const tags = Array.from(new Set([...(quote.tags ?? []), tag]));
+      const { error } = await supabase
+        .from('quotes')
+        .update({
+          tags,
+          ...(tag === 'work_done' ? { work_completion_date: new Date().toISOString() } : {}),
+        })
+        .eq('id', quote.id)
+        .eq('user_id', quote.user_id);
+      if (error) throw error;
+      toast({
+        title: tag === 'work_done' ? 'Marked as done' : 'Put on hold',
+        description:
+          tag === 'work_done'
+            ? 'You can raise the invoice from the quote whenever you are ready.'
+            : `The request is kept on the quote. Book ${clientName} in from the calendar when a date is agreed.`,
+      });
+      queryClient.invalidateQueries({ queryKey: ['quotes'] });
+      queryClient.invalidateQueries({ queryKey: ['start-date-requests'] });
+    } catch (e) {
+      toast({
+        title: 'Could not update',
+        description: e instanceof Error ? e.message : 'Try again',
+        variant: 'destructive',
+      });
+    } finally {
+      setSaving(false);
+    }
+  };
+
   return (
     <div className="rounded-2xl border border-elec-yellow/30 bg-elec-yellow/[0.08] p-4 sm:p-5">
       <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
@@ -240,6 +283,26 @@ const StartDateRequestPanel = ({ quote }: { quote: Quote }) => {
             Ring them
           </button>
         )}
+      </div>
+
+      <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-[12px] text-white">
+        <span>None of those?</span>
+        <button
+          type="button"
+          onClick={() => setAside('work_done')}
+          disabled={saving}
+          className="h-11 font-semibold underline decoration-white/40 underline-offset-4 touch-manipulation disabled:opacity-60"
+        >
+          Job already done
+        </button>
+        <button
+          type="button"
+          onClick={() => setAside('on_hold')}
+          disabled={saving}
+          className="h-11 font-semibold underline decoration-white/40 underline-offset-4 touch-manipulation disabled:opacity-60"
+        >
+          Not booking this yet
+        </button>
       </div>
 
       {suggesting && (

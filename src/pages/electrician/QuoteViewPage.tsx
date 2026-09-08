@@ -26,15 +26,13 @@ import { computeQuoteTotals } from '@/utils/quote-calculations';
 import { cn } from '@/lib/utils';
 import BookJobSheet from '@/components/project-management/BookJobSheet';
 
-/** Why a quote was lost — feeds win/loss analytics. Keys persist in quotes.declined_reason. */
-const DECLINE_REASONS = [
-  { key: 'price', label: 'Too expensive', hint: 'Price was the sticking point' },
-  { key: 'timing', label: 'Bad timing', hint: 'Couldn\u2019t start soon enough' },
-  { key: 'competitor', label: 'Went elsewhere', hint: 'Chose another electrician' },
-  { key: 'no_response', label: 'Went quiet', hint: 'Client stopped responding' },
-  { key: 'cancelled', label: 'Job cancelled', hint: 'Work no longer happening' },
-  { key: 'other', label: 'Other', hint: 'None of the above' },
-] as const;
+// Reasons and the stored-value format live in one place so the analytics
+// reader and this page cannot drift (ELE-1683).
+import {
+  DECLINE_REASONS,
+  describeDeclineReason,
+  encodeDeclineReason,
+} from '@/utils/declineReason';
 
 
 const QuoteViewPage = () => {
@@ -56,6 +54,9 @@ const QuoteViewPage = () => {
   const [showActionsSheet, setShowActionsSheet] = useState(false);
   const [showNumberSheet, setShowNumberSheet] = useState(false);
   const [showDeclineSheet, setShowDeclineSheet] = useState(false);
+  // ELE-1683 — "Other" opens a note field instead of saving straight away.
+  const [declineOtherOpen, setDeclineOtherOpen] = useState(false);
+  const [declineNote, setDeclineNote] = useState('');
   const [showRevertDialog, setShowRevertDialog] = useState(false);
   const [showProjectPicker, setShowProjectPicker] = useState(false);
   const [showBookSheet, setShowBookSheet] = useState(false);
@@ -318,22 +319,28 @@ const QuoteViewPage = () => {
     toast({ title: 'Duplicating quote', description: 'Edit the copy and save as new' });
   };
 
-  const handleMarkAsDeclined = async (reason?: string) => {
+  const handleMarkAsDeclined = async (reason?: string, note?: string) => {
     if (!quote) return;
+    // ELE-1683 — "Other" carries the electrician's own words in the same
+    // column (`other:<note>`), so the pattern he wants to spot later is kept.
+    const stored = reason ? encodeDeclineReason(reason, note) : null;
     const { error } = await supabase
       .from('quotes')
-      .update({ acceptance_status: 'rejected', declined_reason: reason ?? null })
+      .update({ acceptance_status: 'rejected', declined_reason: stored })
       .eq('id', quote.id);
     if (error) {
       toast({ title: 'Failed', variant: 'destructive' });
     } else {
       setQuote((prev) =>
-        prev ? { ...prev, acceptance_status: 'rejected', declined_reason: reason ?? null } : prev
+        prev ? { ...prev, acceptance_status: 'rejected', declined_reason: stored } : prev
       );
       setShowDeclineSheet(false);
+      setDeclineOtherOpen(false);
+      setDeclineNote('');
+      const described = describeDeclineReason(stored);
       toast({
         title: 'Marked as declined',
-        description: reason ? `Reason: ${DECLINE_REASONS.find((r) => r.key === reason)?.label}` : undefined,
+        description: described ? `Reason: ${described}` : undefined,
       });
     }
   };
@@ -490,11 +497,11 @@ const QuoteViewPage = () => {
     if (isAccepted)
       return { label: 'Won', dot: 'bg-emerald-400', text: 'text-emerald-400', pill: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/25', wash: 'from-emerald-500/[0.14]' };
     if (quote?.acceptance_status === 'rejected') {
-      const reason = DECLINE_REASONS.find(
-        (r) => r.key === (quote as { declined_reason?: string | null }).declined_reason
+      const reason = describeDeclineReason(
+        (quote as { declined_reason?: string | null }).declined_reason
       );
       return {
-        label: reason ? `Declined · ${reason.label}` : 'Declined',
+        label: reason ? `Declined · ${reason}` : 'Declined',
         dot: 'bg-red-400',
         text: 'text-red-400',
         pill: 'bg-red-500/15 text-red-400 border-red-500/25',
@@ -1433,7 +1440,16 @@ const QuoteViewPage = () => {
         }}
       />
 
-      <Sheet open={showDeclineSheet} onOpenChange={setShowDeclineSheet}>
+      <Sheet
+        open={showDeclineSheet}
+        onOpenChange={(open) => {
+          setShowDeclineSheet(open);
+          if (!open) {
+            setDeclineOtherOpen(false);
+            setDeclineNote('');
+          }
+        }}
+      >
         <SheetContent
           side="bottom"
           className="rounded-t-2xl p-0 max-h-[85vh] overflow-y-auto overscroll-contain border-t border-white/[0.10]"
@@ -1443,30 +1459,72 @@ const QuoteViewPage = () => {
 
             <div className="pb-3 mb-3 border-b border-white/[0.08]">
               <p className="text-[14px] font-semibold text-white">Why was it declined?</p>
-              <p className="text-[11px] text-white/55 mt-0.5">
+              <p className="text-[11px] text-white mt-0.5">
                 One tap — this builds your win/loss insight over time
               </p>
             </div>
 
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-2">
-              {DECLINE_REASONS.map((r) => (
-                <button
-                  key={r.key}
-                  onClick={() => handleMarkAsDeclined(r.key)}
-                  className="flex flex-col items-start gap-1 p-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:bg-red-500/[0.05] active:scale-[0.98] touch-manipulation transition-all text-left select-none min-h-[64px]"
-                >
-                  <span className="text-[13px] font-semibold text-white">{r.label}</span>
-                  <span className="text-[11px] text-white/55">{r.hint}</span>
-                </button>
-              ))}
-            </div>
+            {declineOtherOpen ? (
+              /* ELE-1683 — "Other" used to save the bare word. The electrician
+                 asked to write down why so he can look for a pattern later. */
+              <div className="space-y-3">
+                <label htmlFor="decline-note" className="block text-[12px] font-medium text-white">
+                  What happened?
+                </label>
+                <textarea
+                  id="decline-note"
+                  value={declineNote}
+                  onChange={(e) => setDeclineNote(e.target.value.slice(0, 240))}
+                  rows={3}
+                  autoFocus
+                  placeholder="e.g. Landlord sold the property, or they went with a family friend"
+                  className="w-full rounded-xl border border-white/[0.12] bg-white/[0.06] px-3.5 py-3 text-[14px] leading-snug text-white placeholder:text-white/40 caret-elec-yellow focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation"
+                />
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => handleMarkAsDeclined('other', declineNote)}
+                    className="h-11 flex-1 rounded-xl bg-elec-yellow text-[14px] font-semibold text-black touch-manipulation active:scale-[0.98] transition-all"
+                  >
+                    {declineNote.trim() ? 'Save reason' : 'Save as Other'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setDeclineOtherOpen(false);
+                      setDeclineNote('');
+                    }}
+                    className="h-11 rounded-xl border border-white/[0.12] bg-white/[0.06] px-5 text-[14px] font-semibold text-white touch-manipulation active:scale-[0.98] transition-all"
+                  >
+                    Back
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <>
+                <div className="grid grid-cols-2 lg:grid-cols-3 gap-2">
+                  {DECLINE_REASONS.map((r) => (
+                    <button
+                      key={r.key}
+                      onClick={() =>
+                        r.key === 'other' ? setDeclineOtherOpen(true) : handleMarkAsDeclined(r.key)
+                      }
+                      className="flex flex-col items-start gap-1 p-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:bg-red-500/[0.05] active:scale-[0.98] touch-manipulation transition-all text-left select-none min-h-[64px]"
+                    >
+                      <span className="text-[13px] font-semibold text-white">{r.label}</span>
+                      <span className="text-[11px] text-white">{r.hint}</span>
+                    </button>
+                  ))}
+                </div>
 
-            <button
-              onClick={() => handleMarkAsDeclined()}
-              className="w-full mt-3 h-11 rounded-xl text-[12px] font-medium text-white/55 bg-white/[0.03] border border-white/[0.06] touch-manipulation active:scale-[0.99] transition-all"
-            >
-              Skip — just mark it declined
-            </button>
+                <button
+                  onClick={() => handleMarkAsDeclined()}
+                  className="w-full mt-3 h-11 rounded-xl text-[12px] font-medium text-white bg-white/[0.03] border border-white/[0.06] touch-manipulation active:scale-[0.99] transition-all"
+                >
+                  Skip — just mark it declined
+                </button>
+              </>
+            )}
           </div>
         </SheetContent>
       </Sheet>

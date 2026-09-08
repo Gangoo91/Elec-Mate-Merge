@@ -168,6 +168,11 @@ serve(async (req) => {
         'id, user_id, invoice_number, invoice_status, invoice_sent_at, total, total_paid, partial_payments, client_data, last_payment_prompt_pushed_at, settings'
       )
       .in('invoice_status', ['sent', 'overdue'])
+      // ELE-1676 — soft-deleted invoices are not unpaid invoices. Without this
+      // filter the cron pushed "did X pay?" prompts for 18 invoices their
+      // owners had already deleted, one of them 200 days after deletion, and
+      // the deep link landed on a page that then refused to delete it again.
+      .is('deleted_at', null)
       .not('invoice_sent_at', 'is', null)
       .lte('invoice_sent_at', sevenDaysAgo)
       .or(`last_payment_prompt_pushed_at.is.null,last_payment_prompt_pushed_at.lte.${sevenDaysAgo}`)

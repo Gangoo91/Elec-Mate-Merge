@@ -1,4 +1,10 @@
-import { isQuoteWon, isQuoteLost, isQuoteLive, isQuoteExpired } from '@/utils/quote-status';
+import {
+  isQuoteWon,
+  isQuoteLost,
+  isQuoteLive,
+  isQuoteExpired,
+  isQuoteDraft,
+} from '@/utils/quote-status';
 import { Quote } from '@/types/quote';
 
 export interface FinancialBreakdown {
@@ -101,6 +107,10 @@ export const filterQuotesByStatus = (
   // own tab rather than sitting there looking chaseable forever (ELE-1072).
   if (status === 'sent' || status === 'pending') return quotes.filter(isQuoteLive);
   if (status === 'expired') return quotes.filter(isQuoteExpired);
+  // 'draft' must mean undecided too. Accepting a quote sets acceptance_status
+  // and leaves `status` at 'draft', so a raw column match put the same quote
+  // under Won AND Draft (ELE-1682).
+  if (status === 'draft') return quotes.filter(isQuoteDraft);
   return quotes.filter((quote) => quote.status === status);
 };
 
