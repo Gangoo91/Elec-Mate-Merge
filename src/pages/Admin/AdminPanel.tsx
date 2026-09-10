@@ -222,7 +222,25 @@ export default function AdminPanel() {
         Campaigns menu rendered UNDERNEATH the page: the title "Signup" and the
         word "CAMPAIGNS" showed straight through the chips.
       */}
-      <header className="sticky top-0 z-[60] border-b border-white/[0.06] bg-background/95 backdrop-blur">
+      {/*
+        Sticks BELOW the app header, not behind it.
+
+        This was `sticky top-0 z-[60]`, but the main app header is `fixed top-0`
+        and 48px tall on a phone, 64px from `lg:` — so "stick to the top of the
+        viewport" meant sticking underneath it. Scrolling slid the whole admin
+        bar, tabs included, up into that band and out of sight, and the page
+        title came up behind the translucent banner with it. The offset matches
+        the app header's own `h-12 lg:h-16` plus the safe-area inset it pads
+        itself by, so the two meet exactly rather than overlapping or leaving a
+        gap.
+
+        z drops from 60 to 55: still far above the page body's stacking context
+        (the reason it was raised in the first place, see above), but now below
+        the app header at 60 so the two can never fight over the same band.
+      */}
+      <header
+        className="sticky top-[calc(var(--safe-area-top,0px)_+_3rem)] z-[55] border-b border-white/[0.06] bg-background/95 backdrop-blur lg:top-[calc(var(--safe-area-top,0px)_+_4rem)]"
+      >
         <div className="px-4 sm:px-6 lg:px-8">
           {/* Title row */}
           <div className="flex items-center h-14 gap-3">

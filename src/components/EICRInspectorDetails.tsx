@@ -313,8 +313,8 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
       if (companyProfile.company_website) {
         onUpdate('companyWebsite', companyProfile.company_website);
       }
-      if (companyProfile.logo_data_url || companyProfile.logo_url) {
-        onUpdate('companyLogo', companyProfile.logo_data_url || companyProfile.logo_url || '');
+      if (companyProfile.logo_url || companyProfile.logo_data_url) {
+        onUpdate('companyLogo', companyProfile.logo_url || companyProfile.logo_data_url || '');
         loadedItems.push('Logo');
       }
       if (companyProfile.primary_color) {

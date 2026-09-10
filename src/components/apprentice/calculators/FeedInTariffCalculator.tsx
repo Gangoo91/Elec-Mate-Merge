@@ -1,4 +1,6 @@
 import { useState, useCallback, useMemo } from 'react';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { copyToClipboard } from '@/utils/clipboard';
 import { Copy, Check, ChevronDown, AlertTriangle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -228,6 +230,74 @@ export function FeedInTariffCalculator() {
     toast({ title: 'Copied to clipboard' });
     setTimeout(() => setCopied(false), 2000);
   };
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+    const techLabel = TECHNOLOGY_TYPES.find((t) => t.value === technologyType)?.label ?? technologyType;
+    const periodLabel = INSTALLATION_PERIODS.find((p) => p.value === installationDate)?.label ?? installationDate;
+
+    return {
+      meta: {
+        title: 'Feed-in Tariff Calculator',
+        subtitle: 'Historical FIT payments for existing installations — an indicative estimate, not a guaranteed tariff',
+      },
+      headline: [
+        { label: 'Total annual return', value: `£${result.totalAnnualReturn.toFixed(2)}` },
+        { label: 'Simple payback', value: result.simplePayback.toFixed(1), unit: 'years' },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            { label: 'System size', value: `${systemSize} kW` },
+            { label: 'Technology', value: techLabel },
+            { label: 'Installation period', value: periodLabel },
+            ...(technologyType === 'solar_pv'
+              ? [{ label: 'Peak sun hours', value: `${peakSunHours} hrs/day` }]
+              : []),
+            ...(technologyType === 'wind'
+              ? [{ label: 'Wind capacity factor', value: `${(parseFloat(windCapacityFactor) * 100).toFixed(0)} %` }]
+              : []),
+            ...(technologyType === 'hydro'
+              ? [{ label: 'Hydro capacity factor', value: `${(parseFloat(hydroCapacityFactor) * 100).toFixed(0)} %` }]
+              : []),
+            { label: 'Installation cost', value: `£${parseFloat(installationCost).toFixed(2)}` },
+            { label: 'Self consumption', value: `${selfConsumption} %` },
+            { label: 'Electricity price', value: `£${parseFloat(electricityPrice).toFixed(2)}/kWh` },
+            { label: 'RPI rate (20-year projection)', value: `${rpiRate} %` },
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'Annual generation', value: `${result.yearlyGeneration.toFixed(0)} kWh` },
+            { label: 'FIT generation rate', value: `${(result.fitRate * 100).toFixed(1)} p/kWh` },
+            { label: 'Generation payment', value: `£${result.generationPayment.toFixed(2)}/yr` },
+            { label: 'Export rate', value: `${(result.exportRate * 100).toFixed(1)} p/kWh` },
+            { label: 'Export payment', value: `£${result.exportPayment.toFixed(2)}/yr` },
+            { label: 'Self-consumption saving', value: `£${result.selfConsumptionSaving.toFixed(2)}/yr` },
+            { label: 'Total annual return', value: `£${result.totalAnnualReturn.toFixed(2)}` },
+            { label: 'Simple payback', value: `${result.simplePayback.toFixed(1)} years` },
+            { label: 'Return on investment', value: `${result.roi.toFixed(1)} %` },
+            {
+              label: `20-year return (${(result.rpiRate * 100).toFixed(0)}% RPI)`,
+              value: `£${result.totalReturn20Years.toFixed(2)}`,
+            },
+          ],
+        },
+      ],
+      notes: [
+        'Figures are an indicative estimate based on the values entered — not a quotation or a guaranteed tariff.',
+        ...(!isSchemeActive
+          ? [
+              'FIT closed to new applicants on 31 March 2019. New installations receive Smart Export Guarantee (SEG) payments only; no generation tariff is available.',
+            ]
+          : []),
+      ],
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

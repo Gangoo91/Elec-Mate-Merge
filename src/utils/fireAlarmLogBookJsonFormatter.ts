@@ -1,4 +1,5 @@
 import { format, parseISO } from 'date-fns';
+import { coverPayloadKeys } from '@/utils/certCoverPayload';
 import {
   ENTRY_TYPE_LABELS,
   type FireAlarmLogBook,
@@ -295,6 +296,15 @@ export const formatFireAlarmLogBookJson = ({
     company_name: branding.companyName || '',
     company_logo: branding.companyLogo || '',
     company_accent_color: branding.companyAccentColor || FIRE_ACCENT,
+    // ELE-1671 — cover palette + one scheme lockup per masthead.
+    //
+    // Cast because this formatter's `branding` param predates CertBranding and
+    // is typed narrower than what the caller actually passes (the pages all
+    // resolve `fetchCertBranding()`). `coverPayloadKeys` returns {} when the
+    // palette really is absent, so on the default `house` style — or with no
+    // company profile at all — this sends nothing and the template's own
+    // defaults apply. It cannot make a certificate worse.
+    ...coverPayloadKeys(branding as Partial<CertBranding>),
     registration_scheme_logo: branding.registrationSchemeLogo || '',
 
     standard_edition: 'BS 5839-1:2025',
@@ -309,16 +319,12 @@ export const formatFireAlarmLogBookJson = ({
     panel_location: book.panel_location || '',
     detector_count: book.detector_count != null ? String(book.detector_count) : '',
     call_point_count: book.call_points?.length ? String(book.call_points.length) : '',
-    arc_summary: book.arc_connected
-      ? `Yes${book.arc_phone ? ` — ${book.arc_phone}` : ''}`
-      : 'No',
+    arc_summary: book.arc_connected ? `Yes${book.arc_phone ? ` — ${book.arc_phone}` : ''}` : 'No',
     installation_date: fmtDate(book.installation_date),
     acceptance_date: fmtDate(book.acceptance_date),
     commissioning_cert_ref: book.commissioning_cert_ref || '',
     servicing_org: [book.servicing_org, book.servicing_org_phone].filter(Boolean).join(' — '),
-    service_interval: book.service_interval_months
-      ? `${book.service_interval_months} months`
-      : '',
+    service_interval: book.service_interval_months ? `${book.service_interval_months} months` : '',
     last_service_date: fmtDate(book.last_service_date),
     weekly_test_day: book.weekly_test_day
       ? book.weekly_test_day[0].toUpperCase() + book.weekly_test_day.slice(1)

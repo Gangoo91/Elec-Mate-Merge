@@ -1,4 +1,6 @@
 import { useState, useCallback } from 'react';
+import type { CalcReport, CalcVerdict } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { copyToClipboard } from '@/utils/clipboard';
 import {
   Sun,
@@ -192,6 +194,80 @@ export function OffGridSystemCalculator() {
         return 'fail';
     }
   };
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+    const ratingStatus = getRatingStatus(result.systemRating);
+    const verdict: CalcVerdict | undefined =
+      ratingStatus === 'pass' ? 'pass' : ratingStatus === 'warning' ? 'warn' : ratingStatus === 'fail' ? 'fail' : undefined;
+    const solarKw = (result.numberOfPanels * parseFloat(panelWattage)) / 1000;
+    const usableAh = (result.numberOfBatteries * parseFloat(batteryCapacity) * parseFloat(depthOfDischarge)) / 100;
+
+    return {
+      meta: {
+        title: 'Off-Grid System Designer',
+        subtitle: 'Indicative off-grid solar system sizing',
+      },
+      headline: [
+        { label: 'Solar array', value: solarKw.toFixed(1), unit: 'kW', verdict },
+        { label: 'Battery bank (usable)', value: usableAh.toFixed(0), unit: 'Ah' },
+        { label: 'System cost', value: `£${result.systemCost.toFixed(2)}` },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            { label: 'Daily consumption', value: `${dailyConsumption} kWh` },
+            ...(peakPowerKw ? [{ label: 'Peak power draw', value: `${peakPowerKw} kW` }] : []),
+            { label: 'Peak sun hours', value: `${peakSunHours} hrs/day` },
+            { label: 'Backup (autonomy)', value: `${autonomyDays} days` },
+            { label: 'System voltage', value: `${systemVoltage} V DC` },
+            { label: 'Panel wattage', value: `${panelWattage} W` },
+            { label: 'Battery type', value: batteryType === 'lithium' ? 'LiFePO4' : 'AGM deep cycle' },
+            { label: 'Battery location', value: batteryLocation },
+            { label: 'Battery capacity', value: `${batteryCapacity} Ah` },
+            { label: 'Depth of discharge', value: `${depthOfDischarge} %` },
+            { label: 'System efficiency', value: `${systemEfficiency} %` },
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'Solar array', value: `${result.numberOfPanels} × ${panelWattage} W (${solarKw.toFixed(1)} kW)` },
+            { label: 'Battery bank', value: `${result.numberOfBatteries} × ${batteryCapacity} Ah (${usableAh.toFixed(0)} Ah usable)` },
+            { label: 'Inverter', value: `${result.inverterSize.toFixed(1)} kW` },
+            { label: 'Charge controller', value: `${result.chargeControllerSize.toFixed(0)} A MPPT` },
+            {
+              label: 'Daily energy balance',
+              value: `${result.dailyEnergyBalance >= 0 ? '+' : ''}${result.dailyEnergyBalance.toFixed(1)} kWh`,
+            },
+            { label: 'Overall system efficiency', value: `${result.overallEfficiency.toFixed(0)} %` },
+            { label: 'System rating', value: result.systemRating },
+          ],
+        },
+        {
+          heading: 'Estimated cost',
+          rows: [
+            ...Object.entries(result.costBreakdown)
+              .filter(([key]) => key !== 'total')
+              .map(([key, value]) => ({
+                label: key.replace(/([A-Z])/g, ' $1').replace(/^./, (c) => c.toUpperCase()),
+                value: `£${(value as number).toFixed(2)}`,
+              })),
+            { label: 'Total (inc. VAT)', value: `£${result.costBreakdown.total.toFixed(2)}` },
+          ],
+        },
+      ],
+      notes: [
+        ...result.warnings,
+        ...result.recommendations,
+        ...(result.wireLossWarning ? [result.wireLossWarning] : []),
+        'Costs are an indicative estimate based on the values entered, not a quotation.',
+      ],
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

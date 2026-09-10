@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { coverKeysFromFormData } from '@/utils/certCoverPayload'; /* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Fire Alarm G6 Periodic Inspection Certificate — JSON Formatter
  * Maps form data to PDF template variables for PDF Monkey
@@ -324,8 +324,8 @@ export const formatFireAlarmG6Json = (formData: Record<string, any>) => {
 
     // Device sampling detail (2025 — specific devices, not just counts)
     sampled_devices: Array.isArray(formData.sampledDevices)
-      ? (formData.sampledDevices as { ref: string; zone: string; result: string }[]).filter(
-          (d) => d.ref?.trim()
+      ? (formData.sampledDevices as { ref: string; zone: string; result: string }[]).filter((d) =>
+          d.ref?.trim()
         )
       : [],
     has_sampled_devices:
@@ -399,6 +399,10 @@ export const formatFireAlarmG6Json = (formData: Record<string, any>) => {
     company_address: get('companyAddress'),
     company_phone: get('companyPhone'),
     company_email: get('companyEmail'),
+    // ELE-1671 — the cover palette rides in on formData, put there by the
+    // smart-form hook that already merges company branding. Absent for anyone
+    // on the default `house` style, so the template's own defaults apply.
+    ...coverKeysFromFormData(formData as Record<string, unknown>),
     company_logo: get('companyLogo'),
     company_accent_color: get('accentColor') || '#dc2626',
     registration_scheme_logo: get('registrationSchemeLogo'),

@@ -33,6 +33,8 @@ import useSEO from '@/hooks/useSEO';
 import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { CalculatorPicker } from '@/components/calculators/shared/CalculatorPicker';
 import { CALCULATOR_COMPONENTS } from '@/components/calculators/shared/calculatorComponents';
+import { CalcReportProvider } from '@/lib/calculator-report-context';
+import { CalculatorReportAction } from '@/components/calculators/CalculatorReportAction';
 import { CALCULATOR_BY_SLUG, CALCULATORS } from '@/data/calculators';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { cn } from '@/lib/utils';
@@ -93,7 +95,12 @@ const Calculations = ({
       <HubMasthead section={section} title={title} backTo={backTo} />
       <HubBody>
         <CalculatorPicker value={entry.value} onChange={choose} />
-        {body}
+        <CalcReportProvider>
+          <div className="mb-3 flex justify-end">
+            <CalculatorReportAction />
+          </div>
+          {body}
+        </CalcReportProvider>
       </HubBody>
     </HubPage>
   );

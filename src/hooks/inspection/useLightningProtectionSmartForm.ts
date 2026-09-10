@@ -6,7 +6,16 @@
 import { useCallback, useMemo } from 'react';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { useInspectorProfiles } from '@/hooks/useInspectorProfiles';
-import { EARTH_RESISTANCE_THRESHOLD, CONTINUITY_THRESHOLD, BONDING_THRESHOLD, TEST_INTERVAL, DOWN_CONDUCTOR_SPACING, LPSClass } from '@/types/lightning-protection';
+import {
+  EARTH_RESISTANCE_THRESHOLD,
+  CONTINUITY_THRESHOLD,
+  BONDING_THRESHOLD,
+  TEST_INTERVAL,
+  DOWN_CONDUCTOR_SPACING,
+  LPSClass,
+} from '@/types/lightning-protection';
+import { brandingFromCompanyProfile } from '@/utils/certBranding';
+import { coverPayloadKeys } from '@/utils/certCoverPayload';
 
 export function useLightningProtectionSmartForm() {
   const { companyProfile, loading: companyLoading } = useCompanyProfile();
@@ -19,7 +28,10 @@ export function useLightningProtectionSmartForm() {
     return {
       testerName: name,
       contractorCompany: companyProfile?.company_name || profile?.companyName || '',
-      testerQualifications: companyProfile?.inspector_qualifications?.join(', ') || profile?.qualifications?.join(', ') || '',
+      testerQualifications:
+        companyProfile?.inspector_qualifications?.join(', ') ||
+        profile?.qualifications?.join(', ') ||
+        '',
       inspectorSignature: companyProfile?.signature_data || profile?.signatureData || '',
       inspectorDate: new Date().toISOString().split('T')[0],
     };
@@ -27,14 +39,30 @@ export function useLightningProtectionSmartForm() {
 
   const loadCompanyBranding = useCallback(() => {
     if (!companyProfile) return null;
-    const fullAddress = companyProfile.company_postcode ? `${companyProfile.company_address || ''}, ${companyProfile.company_postcode}` : companyProfile.company_address || '';
+    const fullAddress = companyProfile.company_postcode
+      ? `${companyProfile.company_address || ''}, ${companyProfile.company_postcode}`
+      : companyProfile.company_address || '';
     return {
-      companyLogo: companyProfile.logo_data_url || companyProfile.logo_url || '',
+      // 🔴 Do NOT re-derive branding by hand here.
+      //
+      // This block used to build its own copy of what `brandingFromCompanyProfile`
+      // already does, and it drifted: when the logo order was corrected for
+      // ELE-1668 (hosted URL first, because the data URL is downscaled to 320px),
+      // the fix landed in certBranding and NOT in these five hooks — so EV,
+      // emergency lighting, BESS, lightning protection and minor works kept
+      // shipping blurred logos for weeks after the bug was "fixed".
+      //
+      // Spreading the shared reader means there is one implementation to correct,
+      // and it brings the ELE-1671 cover palette along for free.
+      ...brandingFromCompanyProfile(companyProfile, '#f59e0b'),
+      ...coverPayloadKeys(brandingFromCompanyProfile(companyProfile, '#f59e0b')),
+      companyLogo: companyProfile.logo_url || companyProfile.logo_data_url || '',
       companyName: companyProfile.company_name || '',
       companyAddress: fullAddress,
       companyPhone: companyProfile.company_phone || '',
       companyEmail: companyProfile.company_email || '',
-      registrationSchemeLogo: companyProfile.scheme_logo_data_url || companyProfile.registration_scheme_logo || '',
+      registrationSchemeLogo:
+        companyProfile.scheme_logo_data_url || companyProfile.registration_scheme_logo || '',
       registrationScheme: companyProfile.registration_scheme || '',
       registrationNumber: companyProfile.registration_number || '',
     };
@@ -46,7 +74,11 @@ export function useLightningProtectionSmartForm() {
   }, [companyProfile, getDefaultProfile]);
 
   const hasSavedCompanyBranding = useMemo(() => {
-    return !!(companyProfile?.company_name || companyProfile?.logo_url || companyProfile?.logo_data_url);
+    return !!(
+      companyProfile?.company_name ||
+      companyProfile?.logo_url ||
+      companyProfile?.logo_data_url
+    );
   }, [companyProfile]);
 
   // Auto pass/fail for earth electrode resistance
@@ -71,14 +103,17 @@ export function useLightningProtectionSmartForm() {
   }, []);
 
   // Calculate next inspection due date from LPS class
-  const calculateNextInspectionDue = useCallback((inspectionDate: string, lpsClass: LPSClass | ''): string => {
-    if (!inspectionDate || !lpsClass) return '';
-    const interval = TEST_INTERVAL[lpsClass] || 4;
-    const d = new Date(inspectionDate);
-    if (isNaN(d.getTime())) return '';
-    d.setFullYear(d.getFullYear() + interval);
-    return d.toISOString().split('T')[0];
-  }, []);
+  const calculateNextInspectionDue = useCallback(
+    (inspectionDate: string, lpsClass: LPSClass | ''): string => {
+      if (!inspectionDate || !lpsClass) return '';
+      const interval = TEST_INTERVAL[lpsClass] || 4;
+      const d = new Date(inspectionDate);
+      if (isNaN(d.getTime())) return '';
+      d.setFullYear(d.getFullYear() + interval);
+      return d.toISOString().split('T')[0];
+    },
+    []
+  );
 
   // Calculate next VISUAL inspection due (always 1 year regardless of class)
   const calculateNextVisualDue = useCallback((inspectionDate: string): string => {
@@ -90,18 +125,26 @@ export function useLightningProtectionSmartForm() {
   }, []);
 
   // Validate down conductor spacing against class requirements
-  const validateDownConductorSpacing = useCallback((spacing: string, lpsClass: LPSClass | ''): { valid: boolean; required: number; message: string } => {
-    if (!spacing || !lpsClass) return { valid: true, required: 0, message: '' };
-    const required = DOWN_CONDUCTOR_SPACING[lpsClass] || 20;
-    const actual = parseFloat(spacing);
-    if (isNaN(actual)) return { valid: true, required, message: '' };
-    const valid = actual <= required;
-    return {
-      valid,
-      required,
-      message: valid ? `PASS: ${actual}m ≤ ${required}m (Class ${lpsClass})` : `FAIL: ${actual}m > ${required}m max for Class ${lpsClass}`,
-    };
-  }, []);
+  const validateDownConductorSpacing = useCallback(
+    (
+      spacing: string,
+      lpsClass: LPSClass | ''
+    ): { valid: boolean; required: number; message: string } => {
+      if (!spacing || !lpsClass) return { valid: true, required: 0, message: '' };
+      const required = DOWN_CONDUCTOR_SPACING[lpsClass] || 20;
+      const actual = parseFloat(spacing);
+      if (isNaN(actual)) return { valid: true, required, message: '' };
+      const valid = actual <= required;
+      return {
+        valid,
+        required,
+        message: valid
+          ? `PASS: ${actual}m ≤ ${required}m (Class ${lpsClass})`
+          : `FAIL: ${actual}m > ${required}m max for Class ${lpsClass}`,
+      };
+    },
+    []
+  );
 
   return {
     loading: companyLoading,

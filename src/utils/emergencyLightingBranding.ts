@@ -9,6 +9,7 @@
 
 import type { EmergencyLightingFormData } from '@/types/emergency-lighting';
 import type { CompanyBranding } from '@/hooks/inspection/useEmergencyLightingSmartForm';
+import { coverKeysFromFormData } from '@/utils/certCoverPayload';
 
 /** Merge saved Business Settings branding into the certificate data. */
 export function mergeEmergencyLightingBranding(
@@ -18,6 +19,10 @@ export function mergeEmergencyLightingBranding(
   if (!branding) return data;
   return {
     ...data,
+    // ELE-1671 — the cover palette travels on the branding object. This merge
+    // is an explicit field list, so without spreading the em_* keys the whole
+    // cover-branding chain is inert for emergency lighting certificates.
+    ...coverKeysFromFormData(branding as unknown as Record<string, unknown>),
     companyLogo: branding.companyLogo || data.companyLogo,
     companyName: branding.companyName || data.companyName || data.testerCompany,
     companyAddress: branding.companyAddress || data.companyAddress,

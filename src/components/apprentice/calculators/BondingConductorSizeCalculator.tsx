@@ -18,6 +18,8 @@
  * 2026-08-07 — not from the RAG, which mis-attributes.
  */
 import { useMemo, useState } from 'react';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import {
   CalculatorCard,
   CalculatorInputGrid,
@@ -167,6 +169,80 @@ const BondingConductorSizeCalculator = () => {
     if (!got || got <= 0) return null;
     return { got, ok: got >= verdict.required };
   }, [verdict, installed]);
+
+  const buildReport = (): CalcReport | null => {
+    if (!verdict) return null;
+
+    const headline: CalcReport['headline'] = [
+      { label: 'Minimum size', value: `${verdict.required}`, unit: 'mm²' },
+    ];
+    if (check) {
+      headline.push({
+        label: 'Installed conductor',
+        value: `${check.got}`,
+        unit: 'mm²',
+        verdict: check.ok ? 'pass' : 'fail',
+      });
+    }
+
+    const inputRows =
+      mode === 'main'
+        ? [
+            {
+              label: 'Earthing arrangement',
+              value: earthing === 'pme' ? 'TN-C-S (PME)' : 'TN-S or TT',
+            },
+            {
+              label: earthing === 'pme' ? 'Supply PEN conductor' : 'Earthing conductor',
+              value: `${refCsa} mm²`,
+            },
+          ]
+        : [
+            {
+              label: 'Connection',
+              value:
+                kind === 'exp-extr'
+                  ? 'Exposed-conductive-part to extraneous-conductive-part'
+                  : kind === 'exp-exp'
+                    ? 'Two exposed-conductive-parts'
+                    : 'Two extraneous-conductive-parts',
+            },
+            { label: 'Mechanically protected', value: mech === 'yes' ? 'Yes' : 'No' },
+            ...(kind !== 'extr-extr'
+              ? [{ label: 'Circuit protective conductor', value: `${cpcCsa} mm²` }]
+              : []),
+          ];
+
+    return {
+      meta: {
+        title: 'Bonding Conductor Size',
+        subtitle: mode === 'main' ? 'Main protective bonding' : 'Supplementary bonding',
+        standard: `BS 7671:2018+A4:2026 — ${verdict.reg}`,
+      },
+      headline,
+      sections: [
+        { heading: 'Inputs', rows: inputRows },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'Minimum size', value: `${verdict.required} mm²`, note: verdict.rule },
+            ...(check
+              ? [
+                  {
+                    label: 'Installed conductor',
+                    value: `${check.got} mm²`,
+                    note: check.ok ? 'Meets the minimum' : 'Below the minimum',
+                  },
+                ]
+              : []),
+          ],
+        },
+      ],
+      notes: [verdict.workings, ...verdict.notes],
+    };
+  };
+
+  useProvideCalcReport(verdict ? buildReport : null);
 
   return (
     <CalculatorCard

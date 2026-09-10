@@ -1,4 +1,6 @@
 import { useState, useCallback } from 'react';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { copyToClipboard } from '@/utils/clipboard';
 import {
   Car,
@@ -232,6 +234,76 @@ const EVSELoadCalculator = () => {
       result.compliance.rcdProtection &&
       result.compliance.overloadCoordination
     : false;
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+
+    return {
+      meta: {
+        title: 'EVSE Load Calculator',
+        subtitle: 'Load, cable and protection sizing for EV charge points',
+        standard: 'BS 7671:2018+A4:2026 — Section 722',
+      },
+      headline: [
+        {
+          label: 'Diversified load',
+          value: result.totalDiversifiedLoad.toFixed(1),
+          unit: 'kW',
+        },
+        { label: 'Design current (Ib)', value: result.designCurrent.toFixed(0), unit: 'A' },
+        {
+          label: 'Compliance',
+          value: allCompliant ? 'Compliant' : 'Review required',
+          verdict: allCompliant ? 'pass' : 'fail',
+        },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            { label: 'Charging points', value: `${getTotalPoints()}` },
+            { label: 'Supply', value: `${supplyVoltage} V` },
+            { label: 'Earthing system', value: earthingSystem },
+            { label: 'Available capacity', value: `${availableCapacity} kW` },
+            { label: 'Cable length', value: `${cableLength} m` },
+            { label: 'Diversity scenario', value: diversityScenario },
+            { label: 'Power factor', value: powerFactor },
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'Nominal load', value: `${result.totalNominalPower.toFixed(0)} kW` },
+            { label: 'Diversified load', value: `${result.totalDiversifiedLoad.toFixed(1)} kW` },
+            { label: 'Design current (Ib)', value: `${result.designCurrent.toFixed(0)} A` },
+            {
+              label: 'Device rating (In)',
+              value: result.protectiveDeviceRating ? `${result.protectiveDeviceRating} A` : 'TBD',
+            },
+            { label: 'Cable size', value: result.selectedCable || 'TBD' },
+            { label: 'Voltage drop', value: `${result.voltageDropPercent.toFixed(1)} %` },
+            { label: 'Protection', value: result.selectedProtection ?? 'TBD' },
+            {
+              label: 'Earth fault loop (Zs)',
+              value:
+                result.estimatedZs !== null && result.maxZs !== null
+                  ? `${result.estimatedZs.toFixed(2)} Ω / max ${result.maxZs} Ω`
+                  : 'Not assessed',
+              note: result.zsBasis,
+            },
+            { label: 'Headroom', value: `${result.headroom.toFixed(0)} A` },
+            { label: 'DNO notification', value: result.dnoGuidance },
+          ],
+        },
+      ],
+      notes: [
+        ...(result.recommendations.length ? result.recommendations : []),
+        'Voltage drop and Zs figures are indicative — confirm against BS 7671 Appendix 4 and by measurement.',
+      ],
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

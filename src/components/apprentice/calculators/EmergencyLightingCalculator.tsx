@@ -1,4 +1,6 @@
 import { copyToClipboard } from '@/utils/clipboard';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { useState, useCallback } from 'react';
 import { Copy, Check, ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -171,6 +173,76 @@ const EmergencyLightingCalculator = () => {
   };
 
   const isValid = parseFloat(floorArea) > 0;
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+    const verdict =
+      result.complianceStatus === 'compliant'
+        ? 'pass'
+        : result.complianceStatus === 'warning'
+          ? 'warn'
+          : 'fail';
+
+    return {
+      meta: {
+        title: 'Emergency Lighting Calculator',
+        subtitle: 'Luminaire count, spacing and battery sizing for an emergency escape lighting system',
+        standard: 'BS 5266-1',
+      },
+      headline: [
+        { label: 'Total luminaires', value: `${result.totalLuminaires}`, verdict },
+        { label: 'System power', value: `${result.totalPower}`, unit: 'W' },
+        { label: 'Battery capacity', value: `${result.batteryCapacity}`, unit: 'Ah' },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            { label: 'Floor area', value: `${floorArea} m²` },
+            { label: 'Ceiling height', value: `${ceilingHeight} m` },
+            {
+              label: 'Occupancy type',
+              value: occupancyProfiles[occupancyType as keyof typeof occupancyProfiles]?.description ?? occupancyType,
+            },
+            { label: 'Exit routes', value: exitRoutes },
+            { label: 'Emergency duration', value: `${emergencyDuration} h` },
+            {
+              label: 'Fixture type',
+              value: fixtureProfiles[fixtureType as keyof typeof fixtureProfiles]?.description ?? fixtureType,
+            },
+            {
+              label: 'Battery chemistry',
+              value: batteryChemistries[batteryChemistry as keyof typeof batteryChemistries]?.description ?? batteryChemistry,
+            },
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'Escape route luminaires', value: `${result.escapeRouteLights}` },
+            { label: 'Open area luminaires', value: `${result.openAreaLights}` },
+            { label: 'Anti-panic luminaires', value: `${result.antiPanicLights}` },
+            { label: 'High-risk task luminaires', value: `${result.highRiskAreaLights}` },
+            { label: 'SHR spacing', value: `${result.shrSpacing} m` },
+            { label: 'System power', value: `${result.totalPower} W` },
+            { label: 'Battery capacity', value: `${result.batteryCapacity} Ah` },
+            { label: 'Battery weight', value: `${result.batteryWeight} kg` },
+            { label: 'Illuminance achieved', value: `${result.illuminanceAchieved.toFixed(1)} lux` },
+            { label: 'Uniformity', value: `${result.uniformityRatio.toFixed(1)}:1` },
+            { label: 'Cable size', value: result.cableSize },
+            {
+              label: 'Recommended system',
+              value: result.recommendedSystem,
+              note: `Self-contained £${result.selfContainedCost.toLocaleString()} vs central battery £${result.centralBatteryCost.toLocaleString()}`,
+            },
+          ],
+        },
+      ],
+      notes: result.complianceIssues.length ? result.complianceIssues : undefined,
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

@@ -37,7 +37,11 @@ export async function generateQuotePosterPdf(
   doc.setFillColor(brand[0], brand[1], brand[2]);
   doc.rect(0, 0, pageW, bandH, 'F');
 
-  const logo = (company as { logo_data_url?: string | null })?.logo_data_url || null;
+  // ELE-1668 — hosted URL first; the data URL is downscaled and size-capped.
+  const logo =
+    (company as { logo_url?: string | null })?.logo_url ||
+    (company as { logo_data_url?: string | null })?.logo_data_url ||
+    null;
   let nameBelowBand = false;
   if (logo && logo.startsWith('data:image')) {
     try {

@@ -270,12 +270,21 @@ export async function formatEicJson(
   // absolute URL). Relative paths get fetched + converted to data URLs so
   // PDFMonkey's renderer can embed them inline.
   const { resolveSchemeLogo, resolveCompanyLogo } = await import('@/utils/resolveSchemeLogo');
+
+  // ELE-1671 — the cover palette. Derived from the profile this formatter was
+  // handed rather than the signed-in user's, so regenerating someone else's
+  // certificate keeps THEIR branding. On the default `house` style these values
+  // are identical to the template's own Liquid defaults, so nothing changes for
+  // anyone who has not opted in.
+  const { brandingFromCompanyProfile } = await import('@/utils/certBranding');
+  const { coverPayloadKeys } = await import('@/utils/certCoverPayload');
+  const emCover = coverPayloadKeys(brandingFromCompanyProfile(companyProfile, '#f59e0b'));
   const resolvedSchemeLogo = await resolveSchemeLogo(
     companyProfile?.scheme_logo_data_url || companyProfile?.registration_scheme_logo,
     companyProfile?.registration_scheme || formData.registrationScheme
   );
   const resolvedCompanyLogo = await resolveCompanyLogo(
-    companyProfile?.logo_data_url || companyProfile?.logo_url
+    companyProfile?.logo_url || companyProfile?.logo_data_url
   );
 
   const json: any = {
@@ -886,6 +895,9 @@ export async function formatEicJson(
       registration_scheme: companyProfile?.registration_scheme || '',
       registration_number: companyProfile?.registration_number || '',
     },
+
+    // ELE-1671 — cover palette tokens (em_cover_*, em_accent*)
+    ...emCover,
 
     // ELE-876 — root-level logos use resolved (PDF-safe) values
     company_logo: resolvedCompanyLogo,

@@ -2,6 +2,8 @@
  * Formats Isolation Certificate form data into PDF Monkey payload.
  */
 import { TRANSPARENT_PIXEL } from '@/utils/resolveSchemeLogo';
+import { brandingFromCompanyProfile } from '@/utils/certBranding';
+import { coverPayloadKeys } from '@/utils/certCoverPayload';
 
 interface IsolationFormData {
   referenceNumber: string;
@@ -177,6 +179,9 @@ export function formatIsolationCertPayload(
     // ELE-1668 — hosted URL first, data URL second. See `certBranding.ts`: the
     // data URL gets downscaled and can be stripped by the payload size guard,
     // the hosted object is fetched by the renderer at full resolution.
+    // ELE-1671 — this formatter is handed the company_profiles row directly, so
+    // it derives the cover palette itself rather than hopping via formData.
+    ...coverPayloadKeys(brandingFromCompanyProfile(company, '#f59e0b')),
     company_logo: company.logo_url || company.logo_data_url || '',
     company_tagline: company.company_tagline || '',
     // ELE-1581 / ELE-1669 — never '': the template renders this `<img>`

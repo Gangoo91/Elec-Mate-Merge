@@ -1,4 +1,6 @@
 import { copyToClipboard } from '@/utils/clipboard';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { useState, useCallback } from 'react';
 import { Copy, Check, CheckCircle, AlertTriangle, ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -278,6 +280,74 @@ const MarineElectricalCalculator = () => {
     value: o.value.toString(),
     label: o.label,
   }));
+
+  const buildReport = (): CalcReport | null => {
+    if (!results) return null;
+    const compliance = getComplianceStatus();
+    const verdict: 'pass' | 'fail' | 'warn' =
+      compliance.status === 'pass' ? 'pass' : compliance.status === 'warning' ? 'warn' : 'fail';
+    return {
+      meta: {
+        title: 'Marine Electrical Calculator',
+        subtitle: `${vesselType} — ${vesselLength} m, ${systemVoltage} V system`,
+        standard: 'ISO 13297 / ABYC E-11 / BS 7671 Section 709',
+      },
+      headline: [
+        { label: 'Battery bank required', value: `${results.recommendedBatteryCapacity}`, unit: 'Ah' },
+        { label: 'Peak load', value: `${results.peakLoad}`, unit: 'W' },
+        { label: 'Compliance', value: compliance.label, verdict },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            { label: 'Vessel type', value: vesselType },
+            { label: 'Vessel length', value: `${vesselLength} m` },
+            { label: 'System voltage', value: `${systemVoltage} V` },
+            { label: 'Battery type', value: batteryType },
+            { label: 'Cable length', value: `${cableLength} m` },
+            { label: 'Voltage drop limit', value: `${voltageDropLimit}%` },
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'Peak load', value: `${results.peakLoad} W` },
+            { label: 'Daily consumption', value: `${results.dailyEnergyConsumption.toFixed(0)} Ah` },
+            {
+              label: 'Battery bank',
+              value: `${results.recommendedBatteryCapacity} Ah (${results.numberOfBatteries} batteries at ${results.batteryBankVoltage} V)`,
+            },
+            {
+              label: 'Cable size',
+              value: `${results.recommendedCableSize} mm² (${results.cableType})`,
+            },
+            { label: 'Voltage drop', value: `${results.actualVoltageDropPercentage.toFixed(1)}%` },
+            {
+              label: 'Inverter',
+              value: `${results.recommendedInverterSize} W (${results.inverterType})`,
+            },
+            {
+              label: 'Energy balance',
+              value: `${results.energyBalance > 0 ? '+' : ''}${results.energyBalance.toFixed(0)} Ah/day`,
+              note: results.energyBalance >= 0 ? 'surplus' : 'deficit',
+            },
+          ],
+        },
+        {
+          heading: 'Compliance checks',
+          rows: results.complianceChecks.map((c) => ({
+            label: c.regulation,
+            value: c.status,
+            note: c.message,
+          })),
+        },
+      ],
+      notes: results.recommendations.map((r) => `${r.category}: ${r.message}`),
+    };
+  };
+
+  useProvideCalcReport(results ? buildReport : null);
 
   return (
     <CalculatorCard

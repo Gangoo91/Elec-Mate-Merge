@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react';
 import { copyToClipboard } from '@/utils/clipboard';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { Copy, Check, ChevronDown, CheckCircle, XCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
@@ -348,6 +350,88 @@ const SolarArrayCalculator = () => {
     panelWattage && panelLength && panelWidth && availableLength && availableWidth;
 
   const allChecksPass = result && Object.values(result.complianceChecks).every((v) => v);
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+
+    return {
+      meta: {
+        title: 'PV System Designer',
+        subtitle: 'Solar array layout, string configuration and annual yield estimate',
+      },
+      headline: [
+        { label: 'System capacity', value: (result.totalWattage / 1000).toFixed(1), unit: 'kWp' },
+        { label: 'Annual yield', value: result.yearlyGeneration.toFixed(0), unit: 'kWh/yr' },
+        {
+          label: 'Compliance checks',
+          value: allChecksPass ? 'All checks pass' : 'Issues found',
+          verdict: allChecksPass ? 'pass' : 'warn',
+        },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            { label: 'Panel wattage', value: `${panelWattage} W` },
+            { label: 'Panel dimensions', value: `${panelLength} m × ${panelWidth} m` },
+            { label: 'Location', value: locationData[location]?.name ?? location },
+            { label: 'Available roof area', value: `${availableLength} m × ${availableWidth} m` },
+            { label: 'Tilt angle', value: `${tiltAngle}°` },
+            { label: 'Azimuth', value: `${azimuthAngle}°` },
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            {
+              label: 'Array layout',
+              value: `${result.panelsPerRow} × ${result.numberOfRows} = ${result.totalPanels} panels`,
+            },
+            { label: 'Area efficiency', value: `${result.areaEfficiency.toFixed(1)} %` },
+            {
+              label: 'String configuration',
+              value: `${result.panelsPerString} panels × ${result.totalStrings} strings`,
+            },
+            { label: 'Voc (cold)', value: `${result.stringVocCold.toFixed(0)} V` },
+            { label: 'Vmpp (hot)', value: `${result.stringVmppHot.toFixed(0)} V` },
+            { label: 'DC voltage drop', value: `${result.voltageDropDC.toFixed(2)} %` },
+            { label: 'AC voltage drop', value: `${result.voltageDropAC.toFixed(2)} %` },
+            { label: 'Performance ratio', value: `${(result.performanceRatio * 100).toFixed(1)} %` },
+            { label: 'Daily average generation', value: `${result.dailyGeneration.toFixed(1)} kWh` },
+            { label: 'Yearly generation', value: `${result.yearlyGeneration.toFixed(0)} kWh` },
+            { label: 'Inverter sizing', value: `${result.inverterSizing.toFixed(0)} %` },
+          ],
+        },
+        {
+          heading: 'Compliance checks',
+          rows: [
+            {
+              label: 'String voltage within inverter limits',
+              value: result.complianceChecks.stringVoltageOK ? 'PASS' : 'FAIL',
+            },
+            {
+              label: 'Inverter sizing (90–120%)',
+              value: result.complianceChecks.inverterSizingOK ? 'PASS' : 'FAIL',
+            },
+            {
+              label: 'Voltage drop within limits',
+              value: result.complianceChecks.voltageDropOK ? 'PASS' : 'FAIL',
+            },
+            {
+              label: 'Isolation distances',
+              value: result.complianceChecks.isolationDistanceOK ? 'PASS' : 'FAIL',
+            },
+            {
+              label: 'MCS requirements',
+              value: result.complianceChecks.mcsSizingOK ? 'PASS' : 'FAIL',
+            },
+          ],
+        },
+      ],
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

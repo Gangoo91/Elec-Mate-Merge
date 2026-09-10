@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Info, AlertTriangle, BookOpen, ChevronDown } from 'lucide-react';
@@ -271,6 +273,41 @@ const OhmsLawCalculator = () => {
     if (currentStep) steps.push(currentStep);
     return steps;
   };
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+    const rows: { label: string; value: string }[] = [];
+    if (result.voltage !== undefined) rows.push({ label: 'Voltage', value: `${result.voltage} V` });
+    if (result.current !== undefined) rows.push({ label: 'Current', value: `${result.current} A` });
+    if (result.resistance !== undefined) rows.push({ label: 'Resistance', value: `${result.resistance} Ω` });
+    if (result.power !== undefined) rows.push({ label: 'Power', value: `${result.power} W` });
+
+    const headlineKey =
+      result.voltage !== undefined && result.current === undefined
+        ? { label: 'Voltage', value: String(result.voltage), unit: 'V' }
+        : result.current !== undefined
+          ? { label: 'Current', value: String(result.current), unit: 'A' }
+          : result.resistance !== undefined
+            ? { label: 'Resistance', value: String(result.resistance), unit: 'Ω' }
+            : { label: 'Power', value: String(result.power ?? ''), unit: 'W' };
+
+    return {
+      meta: {
+        title: 'Ohm\'s Law',
+        subtitle: result.formula ? `Calculated using ${result.formula}` : undefined,
+      },
+      headline: [headlineKey],
+      sections: [
+        { heading: 'Values', rows },
+        ...(result.calculationSteps?.length
+          ? [{ heading: 'Working', items: result.calculationSteps }]
+          : []),
+      ],
+      notes: result.protectionGuidance ? [result.protectionGuidance] : undefined,
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

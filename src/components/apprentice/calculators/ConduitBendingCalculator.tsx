@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { ChevronDown, Info, BookOpen, CheckCircle, AlertTriangle } from 'lucide-react';
 import {
@@ -420,6 +422,77 @@ const ConduitBendingCalculator = () => {
         return null;
     }
   };
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+    const inputRows: { label: string; value: string; note?: string }[] = [
+      { label: 'Bend type', value: result.bendType },
+      { label: 'Conduit size', value: `${conduitSize} mm` },
+    ];
+    if (bendType === 'offset') {
+      inputRows.push(
+        { label: 'Bend angle', value: `${bendAngle}°` },
+        { label: 'Rise (offset height)', value: `${rise} mm` },
+        { label: 'Distance to obstacle', value: `${distanceToObstacle} mm` }
+      );
+    } else if (bendType === 'saddle-3' || bendType === 'saddle-4') {
+      inputRows.push(
+        { label: 'Obstacle height', value: `${obstacleHeight} mm` },
+        { label: 'Distance to obstacle centre', value: `${distanceToObstacle} mm` }
+      );
+    } else if (bendType === '90-stub') {
+      inputRows.push({ label: 'Desired stub length', value: `${stubLength} mm` });
+    } else if (bendType === '90-back') {
+      inputRows.push(
+        { label: 'First stub length', value: `${stubLength} mm` },
+        { label: 'Second stub length', value: `${distanceToObstacle} mm` }
+      );
+    } else if (bendType === 'kick') {
+      inputRows.push(
+        { label: 'Kick offset', value: `${kickOffset} mm` },
+        { label: 'Distance from end', value: `${distanceToObstacle} mm` }
+      );
+    }
+
+    const resultRows: { label: string; value: string; note?: string }[] = [
+      { label: 'First bend mark', value: `${result.firstBendMark.toFixed(1)} mm` },
+    ];
+    if (result.secondBendMark > 0)
+      resultRows.push({ label: 'Second bend mark', value: `${result.secondBendMark.toFixed(1)} mm` });
+    if (result.thirdBendMark)
+      resultRows.push({ label: 'Third bend mark', value: `${result.thirdBendMark.toFixed(1)} mm` });
+    if (result.fourthBendMark)
+      resultRows.push({ label: 'Fourth bend mark', value: `${result.fourthBendMark.toFixed(1)} mm` });
+    if (result.shrinkAmount > 0)
+      resultRows.push({ label: 'Shrink amount', value: `${result.shrinkAmount.toFixed(1)} mm` });
+    if (result.distanceBetweenBends > 0)
+      resultRows.push({
+        label: 'Distance between bends',
+        value: `${result.distanceBetweenBends.toFixed(1)} mm`,
+      });
+    resultRows.push(
+      { label: 'Take-up (90°)', value: `${result.takeUp} mm` },
+      { label: 'Minimum bend radius', value: `${result.minBendRadius} mm`, note: 'Table 4F1' }
+    );
+
+    return {
+      meta: {
+        title: 'Conduit Bending Calculator',
+        subtitle: `${result.bendType} — ${conduitSize} mm conduit`,
+      },
+      headline: [
+        { label: result.bendType, value: `${result.firstBendMark.toFixed(1)}`, unit: 'mm' },
+        { label: 'Minimum bend radius', value: `${result.minBendRadius}`, unit: 'mm' },
+      ],
+      sections: [
+        { heading: 'Inputs', rows: inputRows },
+        { heading: 'Result', rows: resultRows },
+      ],
+      notes: result.notes,
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

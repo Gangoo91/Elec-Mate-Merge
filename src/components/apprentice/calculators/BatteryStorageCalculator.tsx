@@ -1,4 +1,6 @@
 import { copyToClipboard } from '@/utils/clipboard';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { useState, useCallback } from 'react';
 import {
   Battery,
@@ -554,6 +556,66 @@ const BatteryStorageCalculator = () => {
     criticalLoad &&
     parseFloat(dailyConsumption) > 0 &&
     parseFloat(criticalLoad) > 0;
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+    const batteryLabel =
+      batteryTypes.find((t) => t.value === batteryType)?.label ?? batteryType;
+    return {
+      meta: {
+        title: 'Battery Storage Design',
+        subtitle: `${result.numberOfBatteries}× ${batteryUnitCapacity}Ah ${batteryLabel} bank — ${result.batteriesInSeries}S${result.batteriesInParallel}P`,
+        standard: 'BS 7671:2018+A4:2026 — Chapter 57 (stationary secondary batteries)',
+      },
+      headline: [
+        {
+          label: 'Configuration',
+          value: `${result.batteriesInSeries}S${result.batteriesInParallel}P`,
+          verdict: result.powerSufficient ? 'pass' : 'warn',
+        },
+        { label: 'Usable capacity', value: result.usableCapacityKwh.toFixed(1), unit: 'kWh' },
+        { label: 'Backup duration', value: result.backupDurationHours.toFixed(1), unit: 'hours' },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            { label: 'Critical load', value: `${criticalLoad} kW` },
+            { label: 'Daily consumption', value: `${dailyConsumption} kWh` },
+            { label: 'Days of autonomy', value: `${daysOfAutonomy} days` },
+            { label: 'Battery chemistry', value: batteryLabel },
+            { label: 'System voltage', value: `${systemVoltage} V` },
+            { label: 'Installation environment', value: installEnvironment },
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            {
+              label: 'Battery bank',
+              value: `${result.numberOfBatteries} × ${batteryUnitCapacity} Ah (${result.batteriesInSeries}S${result.batteriesInParallel}P)`,
+            },
+            { label: 'Bank capacity', value: `${result.batteryBankCapacityKwh.toFixed(1)} kWh` },
+            { label: 'Usable capacity', value: `${result.usableCapacityKwh.toFixed(1)} kWh` },
+            { label: 'Backup duration', value: `${result.backupDurationHours.toFixed(1)} hours` },
+            { label: 'Inverter size', value: `${result.inverterSizeKw.toFixed(1)} kW` },
+            { label: 'Charging time', value: `${result.chargingTimeHours.toFixed(1)} hours` },
+            {
+              label: 'System cost (estimate)',
+              value: `£${Math.round(result.costBreakdown.total).toLocaleString()}`,
+              note: `£${result.costPerKwhStored.toFixed(0)}/kWh stored`,
+            },
+          ],
+        },
+      ],
+      notes: [
+        ...result.recommendations,
+        ...(result.powerWarning ? [result.powerWarning] : []),
+      ],
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

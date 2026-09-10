@@ -111,7 +111,10 @@ export function MrrChart({
             tick={{ fill: '#ffffff', fontSize: 11 }}
             tickLine={false}
             axisLine={false}
-            width={compact ? 34 : 40}
+            // 34 clipped "£4.25k" on a phone: the compact width was set for
+            // three-character ticks and this ladder reaches five. The overview's
+            // mobile chart takes the same branch.
+            width={44}
           />
           <Tooltip
             trigger={isMobile ? 'click' : 'hover'}

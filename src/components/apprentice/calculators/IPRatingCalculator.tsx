@@ -1,4 +1,6 @@
 import { copyToClipboard } from '@/utils/clipboard';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { useState, useMemo, useCallback } from 'react';
 import { Copy, Check, ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -478,6 +480,62 @@ const IPRatingCalculator = () => {
   // Current rating string for highlighting in common ratings
   const currentRating =
     solidDigit !== '' && liquidDigit !== '' ? `IP${solidDigit}${liquidDigit}` : '';
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+    const verdict =
+      result.suitability === 'pass'
+        ? ('pass' as const)
+        : result.suitability === 'warning'
+          ? ('warn' as const)
+          : undefined;
+    return {
+      meta: {
+        title: 'IP Rating Decoder',
+        subtitle: 'Ingress protection rating decoded to BS EN 60529',
+        standard: 'BS EN 60529',
+      },
+      headline: [{ label: 'IP rating', value: result.code, verdict }],
+      sections: [
+        {
+          heading: 'Result',
+          rows: [
+            {
+              label: `First digit (${solidDigit}) — solids`,
+              value: result.solid.short,
+              note: result.solid.description,
+            },
+            {
+              label: `Second digit (${liquidDigit}) — liquids`,
+              value: result.liquid.short,
+              note: result.liquid.description,
+            },
+            ...(result.addLetter
+              ? [
+                  {
+                    label: `Additional letter (${result.addLetter})`,
+                    value: ADDITIONAL_LETTERS[result.addLetter],
+                  },
+                ]
+              : []),
+            ...(result.suppLetters.length
+              ? [
+                  {
+                    label: 'Supplementary letters',
+                    value: result.suppLetters
+                      .map((l) => `${l} — ${SUPPLEMENTARY_LETTERS[l]}`)
+                      .join(', '),
+                  },
+                ]
+              : []),
+            { label: 'Suitability', value: result.suitabilityLabel },
+          ],
+        },
+      ],
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

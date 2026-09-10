@@ -15,21 +15,6 @@ interface SchemeLogoPickerProps {
   onLogoDataUrlChange?: (dataUrl: string | null) => void;
 }
 
-async function fetchLogoAsDataUrl(logoPath: string): Promise<string | null> {
-  try {
-    const response = await fetch(logoPath);
-    const blob = await response.blob();
-    return new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = () => resolve(null);
-      reader.readAsDataURL(blob);
-    });
-  } catch {
-    return null;
-  }
-}
-
 export function SchemeLogoPicker({
   scheme,
   registrationNumber,
@@ -56,11 +41,18 @@ export function SchemeLogoPicker({
         if (value === 'none' || value === 'other') {
           onLogoDataUrlChange(null);
         } else {
-          const info = getSchemeInfo(value);
-          if (info) {
-            const dataUrl = await fetchLogoAsDataUrl(info.logoPath);
-            onLogoDataUrlChange(dataUrl);
-          }
+          // 🔴 ELE-1669 — do NOT bake the bundled lockup into the profile.
+          //
+          // A scheme logo has to be drawn in two places with opposite
+          // backgrounds: the white cover masthead needs the standard dark
+          // lockup, the dark interior masthead needs the reversed white one.
+          // One stored image is invisible in whichever place it does not suit,
+          // and that is exactly what happened — 28 NICEIC profiles carried a
+          // baked-in lockup that vanished depending on the page.
+          //
+          // Storing nothing lets `certBranding` derive the right variant per
+          // placement from `registration_scheme`, which is set just above.
+          onLogoDataUrlChange(null);
         }
       }
     },

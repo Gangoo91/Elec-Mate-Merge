@@ -1,4 +1,6 @@
 import { useState, useCallback } from 'react';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { copyToClipboard } from '@/utils/clipboard';
 import { Copy, Check, CheckCircle, AlertTriangle, ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -148,6 +150,69 @@ const DataCentreCalculator = () => {
     if (pue <= 1.8) return { status: 'warning', label: 'Average PUE' };
     return { status: 'fail', label: 'Poor PUE' };
   };
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+    const pueRating = getPueRating(result.pue);
+
+    return {
+      meta: {
+        title: 'Data Centre Calculator',
+        subtitle: 'Load analysis, PUE, infrastructure sizing and cost estimation',
+      },
+      headline: [
+        {
+          label: 'Power Usage Effectiveness',
+          value: result.pue.toFixed(2),
+          verdict: pueRating.status === 'warning' ? 'warn' : pueRating.status,
+        },
+        { label: 'Total facility load', value: result.totalFacilityLoad.toFixed(0), unit: 'kW' },
+        { label: 'DCiE', value: result.dcie.toFixed(1), unit: '%' },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            { label: 'IT load', value: `${itLoad} kW` },
+            { label: 'Redundancy level', value: redundancy },
+            { label: 'Facility type', value: facilityType },
+            { label: 'Climate zone', value: climateZone },
+            { label: 'Cooling method', value: coolingMethod },
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'Total IT load', value: `${result.totalItLoad.toFixed(0)} kW` },
+            { label: 'Cooling load', value: `${result.coolingLoad.toFixed(0)} kW` },
+            { label: 'Total facility load', value: `${result.totalFacilityLoad.toFixed(0)} kW` },
+            { label: 'UPS capacity', value: `${result.upsCapacity.toFixed(0)} kW` },
+            { label: 'Generator capacity', value: `${result.generatorCapacity.toFixed(0)} kW` },
+            { label: 'Battery capacity', value: `${result.batteryCapacity.toFixed(0)} kWh` },
+            { label: 'Annual energy', value: `${(result.annualKwh / 1000).toFixed(0)} MWh` },
+            {
+              label: 'Annual cost',
+              value: `£${result.annualCost.toLocaleString('en-GB', { maximumFractionDigits: 0 })}`,
+            },
+            { label: 'Annual CO₂e', value: `${(result.annualCo2e / 1000).toFixed(1)} t` },
+          ],
+        },
+        {
+          heading: 'Compliance',
+          rows: result.complianceStatus.map((item) => ({
+            label: item.standard,
+            value: item.status === 'compliant' ? 'Compliant' : 'Warning',
+            note: item.message,
+          })),
+        },
+      ],
+      notes: result.recommendations.length
+        ? result.recommendations.map((rec) => `${rec.category}: ${rec.message}`)
+        : undefined,
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

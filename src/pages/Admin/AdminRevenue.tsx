@@ -1,374 +1,254 @@
+/**
+ * Revenue.
+ *
+ * The money, then everything that moves it: what people are actually paying,
+ * what the win-back programme is earning, what the discounts cost, what is
+ * failing right now, what renews next, and why people leave.
+ *
+ * Rebuilt on the overview dialect — Panel / KpiTile / Sparkline / recharts — so
+ * it reads as the same product as the admin dashboard and the Trials page. What
+ * it replaced was on the older editorial dialect and answered only "how much":
+ * MRR, ARR, paying, ARPU, one yellow area chart with no axes, and a
+ * subscriptions-by-price map keyed on "£9.99/month" that silently merged the
+ * legacy Electrician price with the win-back price — collapsing exactly the
+ * distinction this page exists to draw.
+ *
+ * Everything here is live on every load. Only the trial-conversion figures go
+ * through a cache, and they live on the Trials page, not this one.
+ */
+
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { RefreshCw, CheckCircle2, AlertTriangle } from 'lucide-react';
-import { format, subDays, startOfDay } from 'date-fns';
-import { useState, useCallback, type ReactNode } from 'react';
-import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis } from 'recharts';
+import { RefreshCw, AlertTriangle, CheckCircle2 } from 'lucide-react';
+import { useState, useCallback, useMemo, type ReactNode } from 'react';
+import { formatDistanceToNow, parseISO } from 'date-fns';
 import { cn } from '@/lib/utils';
-import { AnimatedCounter } from '@/components/dashboard/AnimatedCounter';
 import PullToRefresh from '@/components/admin/PullToRefresh';
+import { PageFrame, IconButton, Divider } from '@/components/admin/editorial';
 import {
-  PageFrame,
-  PageHero,
-  ListCard,
-  ListCardHeader,
-  ListBody,
-  ListRow,
-  Pill,
-  IconButton,
-  LoadingBlocks,
-  EmptyState,
-  Avatar,
-  Eyebrow,
-  PulseDot,
-  type Tone,
-} from '@/components/admin/editorial';
+  ACCENT,
+  AQUA,
+  BLUE,
+  Delta,
+  Fig,
+  GOOD,
+  Hairline,
+  KpiTile,
+  Panel,
+  RoundAvatar,
+  SectionHead,
+  Segmented,
+  SERIOUS,
+  Sparkline,
+  StackBar,
+  gbp,
+} from '@/components/admin/overview/primitives';
+import { MrrChart, type MrrPoint, type Range } from '@/components/admin/overview/MrrHero';
+import {
+  DailyCashChart,
+  NewMrrChart,
+  PriceLadderChart,
+  RenewalMonthsChart,
+  WinbackWeeklyChart,
+  PRICE_KIND_COLOURS,
+  PRICE_KIND_LABELS,
+} from '@/components/admin/revenue/RevenueCharts';
+import {
+  useAdminStripeStats,
+  type PriceLadderRow,
+  type OfferRow,
+  OFFER_SCHEME_LABELS,
+  ADMIN_STRIPE_STATS_QUERY_KEY,
+} from '@/hooks/useAdminStripeStats';
+import { useAdminOverviewSeries } from '@/hooks/useAdminOverviewSeries';
 import { useLifetimeBuyers } from '@/hooks/useLifetimeBuyers';
-import { stripePrices } from '@/data/stripePrices';
+import { useRevenueOps, recoveryRate, CHURN_REASON_LABELS } from '@/hooks/useRevenueOps';
+import { useStorePriceMix, STORE_PRODUCTS, storeLabel } from '@/hooks/useStorePriceMix';
+import { useCollegeScheme } from '@/hooks/useCollegeScheme';
 
-/* ────────────────────────────────────────────────────────
-   Chart palette
-
-   Validated, not chosen by eye. The first attempt here used Tailwind's
-   cyan-400 / blue-400 / emerald-400 family, which fails two of the six checks
-   against this surface (#1C1C1C): every hue sits above the dark lightness
-   band, and Apprentice-cyan against Electrician-blue measures ΔE 13.2 to
-   normal vision — below the 15 floor, and those are the two largest tiers
-   sitting next to each other in the stacked bar.
-
-   These are the reference categorical steps for a dark surface, kept in their
-   published order because the ORDER is the colourblind-safety mechanism, not
-   decoration. Re-run before changing anything here:
-     node scripts/validate_palette.js \
-       "#3987E5,#E66767,#199E70,#C98500,#D55181,#008300" \
-       --mode dark --surface "#1C1C1C"
-   → all six PASS (worst adjacent CVD ΔE 8.4, normal-vision ΔE 19.3).
-
-   elec-yellow is deliberately NOT in this set: at L 0.857 it is far outside
-   the band, and leading with it collapsed magenta against aqua to ΔE 1.6 for
-   deuteranopes. It stays what it already is — the brand/UI accent and the
-   single-series chart colour, where there is no second series to confuse it
-   with.
-   ──────────────────────────────────────────────────────── */
-const SERIES = ['#3987E5', '#E66767', '#199E70', '#9085E9', '#D55181', '#008300'] as const;
-
-/** Chart chrome. Gridlines are solid hairlines one step off the surface —
- *  dashing reads as "projection" or "threshold" when it is just a grid. */
-const CHART_STROKE = 'hsl(var(--elec-yellow))';
-const CHART_GRID = '#2C2C2A';
-const CHART_AXIS = '#898781';
-/** Status is a reserved, fixed palette — never a categorical slot, and never
- *  carrying meaning without an icon and a label beside it. */
-const STATUS = { good: '#0CA30C', warning: '#FAB219' } as const;
-
-interface StripeStats {
-  stripe: {
-    activeSubscriptions: number;
-    canceledLast30Days: number;
-    /** Cancellations inside the same window the 14-day card reports on. */
-    canceledLast14Days?: number;
-    trialingSubscriptions?: number;
-    tierCounts: {
-      founder: number;
-      apprentice: number;
-      electrician: number;
-      employer: number;
-      unknown: number;
-      business_ai?: number;
-      business_ai_yearly?: number;
-    };
-    mrr: number;
-    subscriptionsByPrice: Record<string, number>;
-  };
-  /** Like-for-like starts vs cancellations. Absent until the deployed copy of
-   *  admin-stripe-stats includes it; the card degrades rather than guessing. */
-  movement?: {
-    started14: number;
-    started30: number;
-    canceled14: number;
-    canceled30: number;
-    canceledNeverPaid14: number;
-    canceledNeverPaid30: number;
-    startsLast14: Array<{ created: string; monthlyAmount: number; stillActive: boolean }>;
-  };
-  supabase: {
-    subscribedUsers: number;
-    withStripeId: number;
-    withoutStripeId: number;
-  };
-  discrepancies: {
-    inStripeNotSupabase: number;
-    inSupabaseNotStripe: number;
-  };
-  subscriptions: Array<{
-    subscriptionId: string;
-    customerId: string;
-    // Null, not the string 'N/A' the function used to bake in — which left the
-    // UI no way to fall back and printed "N/A" as ten people's names.
-    customerEmail: string | null;
-    customerName: string | null;
-    /** Needed to tell a grandfathered price from one still on sale. */
-    priceId: string;
-    tier: string;
-    priceAmount: number;
-    monthlyAmount: number;
-    interval: string;
-    created: string;
-  }>;
-  /** Trialing subscriptions, same shape. These are the newest signups — the
-   *  "Recent" list was active-only and so ran a week stale. */
-  trialingList?: Array<{
-    subscriptionId: string;
-    customerId: string;
-    customerEmail: string | null;
-    customerName: string | null;
-    tier: string;
-    monthlyAmount: number;
-    created: string;
-    trialEnd: string | null;
-  }>;
-  generatedAt: string;
-}
-
-/** What each tier is called in the product. `business_ai` is sold as "Mate", so
- *  humanising the raw key renders it "Business Ai" to whoever reads the page. */
-const tierLabel: Record<string, string> = {
-  founder: 'Founder',
-  apprentice: 'Apprentice',
-  electrician: 'Electrician',
-  business_ai: 'Mate',
-  employer: 'Employer',
-  unknown: 'Unmapped',
+/** "50% off", "£3 off", written the way the offer was sold. */
+const offerValue = (o: OfferRow): string => {
+  const amount = o.percentOff ? `${o.percentOff}% off` : o.amountOff ? `${gbp(o.amountOff, 2)} off` : '—';
+  const term =
+    o.duration === 'forever'
+      ? 'forever'
+      : o.duration === 'once'
+        ? 'first payment'
+        : o.durationMonths
+          ? `${o.durationMonths} months`
+          : (o.duration ?? '');
+  return term ? `${amount} · ${term}` : amount;
 };
 
-const tierTone: Record<string, Tone> = {
-  founder: 'yellow',
-  apprentice: 'cyan',
-  electrician: 'blue',
-  employer: 'purple',
-  business_ai: 'yellow',
-};
+const tierLabel = (t: string) =>
+  t === 'business_ai' ? 'Mate' : t.charAt(0).toUpperCase() + t.slice(1);
 
-/** Series colour follows the entity, never its rank — filtering or reordering
- *  the table must never repaint a tier the reader has already learned. */
-const tierSeriesColour: Record<string, string> = {
-  founder: SERIES[0],
-  apprentice: SERIES[1],
-  electrician: SERIES[2],
-  business_ai: SERIES[3],
-  employer: SERIES[4],
-  unknown: SERIES[5],
-};
-
-function getInitials(name?: string | null, email?: string | null) {
-  const src = (name && name.trim()) || email || '?';
-  const parts = src.split(/[\s@._-]+/).filter(Boolean);
-  return (parts[0]?.[0] ?? '?').toUpperCase() + (parts[1]?.[0] ?? '').toUpperCase();
-}
-
-/** "Today" / "3 days ago" / "27 Jul" — a recent list has to show recency. */
-function whenLabel(iso: string): string {
-  const then = new Date(iso);
-  const days = Math.floor((Date.now() - then.getTime()) / 86400000);
-  if (days <= 0) return 'Today';
-  if (days === 1) return 'Yesterday';
-  if (days < 14) return `${days} days ago`;
-  return format(then, 'd MMM');
-}
-
-const money = (n: number, dp = 0) =>
-  `£${n.toLocaleString('en-GB', { minimumFractionDigits: dp, maximumFractionDigits: dp })}`;
-
-/* ────────────────────────────────────────────────────────
-   Local building blocks
-
-   The page previously stacked seven cards built from the same
-   header-plus-rows primitive, so the money, the movement, the composition and
-   the health checks all carried identical visual weight and you had to read
-   every heading to find anything. These give the sections distinct shapes.
-   ──────────────────────────────────────────────────────── */
-
-/** Tab strip used to fold two cards into one — composition can be read by tier
- *  or by price band, people as recent or lifetime, without doubling the page. */
-function Segmented<T extends string>({
-  options,
+/**
+ * One person and one number.
+ *
+ * The discounts, failing-payment, coupon-holder and lifetime lists were four
+ * separate stacks of bare email addresses, which read as log output rather than
+ * as people. An initial gives each row an anchor for the eye to land on and
+ * makes a long list scannable instead of uniform.
+ */
+function PersonLine({
+  name,
+  sub,
   value,
-  onChange,
+  note,
 }: {
-  options: Array<{ value: T; label: string }>;
-  value: T;
-  onChange: (v: T) => void;
+  name: string;
+  sub?: ReactNode;
+  value: ReactNode;
+  note?: ReactNode;
 }) {
+  // Letters only: splitting "kane_845" on separators produced "K8", which
+  // reads as a code rather than a person.
+  const initials = name
+    .replace(/@.*$/, '')
+    .split(/[\s._-]+/)
+    .filter((w) => /^[a-z]/i.test(w))
+    .slice(0, 2)
+    .map((w) => w[0].toUpperCase())
+    .join('');
   return (
-    <div className="flex items-center gap-1 rounded-full border border-white/[0.08] bg-white/[0.03] p-1">
-      {options.map((o) => (
-        <button
-          key={o.value}
-          type="button"
-          onClick={() => onChange(o.value)}
-          className={cn(
-            'h-8 touch-manipulation rounded-full px-3 text-[12px] font-medium transition-colors',
-            value === o.value ? 'bg-elec-yellow text-black' : 'text-white hover:bg-white/[0.06]'
-          )}
-        >
-          {o.label}
-        </button>
-      ))}
-    </div>
-  );
-}
-
-/**
- * A single proportional bar. Reading composition off a column of numbers means
- * doing the division in your head; the bar does it.
- *
- * Touching segments are separated by a 2px gap painted in the surface colour
- * rather than by a stroke drawn around each fill — a border round a mark adds
- * a second edge colour and thickens the smallest segments out of proportion.
- * Every segment carries its own hover title, so a value is never reachable
- * only by counting pixels; the table underneath repeats all of it.
- */
-function StackedBar({
-  segments,
-  height = 10,
-  format,
-}: {
-  segments: Array<{ key: string; label: string; value: number; fill: string }>;
-  height?: number;
-  format?: (v: number, pct: number) => string;
-}) {
-  const total = segments.reduce((t, s) => t + s.value, 0);
-  if (total <= 0) return null;
-  const shown = segments.filter((s) => s.value > 0);
-  return (
-    <div
-      className="flex w-full rounded-full"
-      style={{ height, gap: 2, background: 'transparent' }}
-      role="img"
-      aria-label={shown
-        .map((s) => `${s.label} ${((s.value / total) * 100).toFixed(0)}%`)
-        .join(', ')}
-    >
-      {shown.map((s, i) => {
-        const pct = (s.value / total) * 100;
-        return (
-          <div
-            key={s.key}
-            title={format ? format(s.value, pct) : `${s.label}: ${pct.toFixed(1)}%`}
-            style={{
-              width: `calc(${pct}% - ${(2 * (shown.length - 1)) / shown.length}px)`,
-              background: s.fill,
-              // 4px rounded data-ends on the outer edges only; interior joins
-              // stay square so the 2px gap reads as a gap, not as a pill chain.
-              borderTopLeftRadius: i === 0 ? 999 : 2,
-              borderBottomLeftRadius: i === 0 ? 999 : 2,
-              borderTopRightRadius: i === shown.length - 1 ? 999 : 2,
-              borderBottomRightRadius: i === shown.length - 1 ? 999 : 2,
-            }}
-          />
-        );
-      })}
-    </div>
-  );
-}
-
-/** A horizontal meter. Square at the baseline, 4px rounded at the data end. */
-function Meter({ pct, fill }: { pct: number; fill: string }) {
-  return (
-    <div className="h-1.5 w-full rounded-sm" style={{ background: 'rgba(255,255,255,0.06)' }}>
-      <div
-        className="h-full"
-        style={{
-          width: `${Math.max(pct, 1)}%`,
-          background: fill,
-          borderRadius: '2px 4px 4px 2px',
-        }}
-      />
-    </div>
-  );
-}
-
-/**
- * Health checks read as pass/fail.
- *
- * A status colour never carries the meaning on its own — a reader who cannot
- * separate the green from the amber would have had nothing else to go on. Each
- * row pairs the colour with an icon AND a word.
- */
-function Check({
-  ok,
-  label,
-  detail,
-  action,
-}: {
-  ok: boolean;
-  label: string;
-  detail: string;
-  action?: ReactNode;
-}) {
-  const Icon = ok ? CheckCircle2 : AlertTriangle;
-  return (
-    <div className="flex items-start gap-3 py-3.5">
-      <Icon
-        className="mt-0.5 h-4 w-4 shrink-0"
-        style={{ color: ok ? STATUS.good : STATUS.warning }}
-        aria-hidden
-      />
+    <div className="flex items-center gap-3 border-t border-white/[0.08] py-2.5">
+      <RoundAvatar initials={initials || '?'} />
       <div className="min-w-0 flex-1">
-        <div className="flex flex-wrap items-baseline gap-x-2">
-          <span className="text-[14px] font-medium text-white">{label}</span>
-          <span
-            className="text-[11px] font-semibold uppercase tracking-[0.1em]"
-            style={{ color: ok ? STATUS.good : STATUS.warning }}
-          >
-            {ok ? 'Pass' : 'Needs attention'}
-          </span>
-        </div>
-        <div className="mt-0.5 text-[12px] text-white">{detail}</div>
+        <div className="truncate text-[13px] font-medium leading-[18px] text-white">{name}</div>
+        {sub && <div className="mt-0.5 truncate text-[12px] leading-4 text-white">{sub}</div>}
       </div>
-      {action && <div className="shrink-0">{action}</div>}
+      <div className="shrink-0 text-right">
+        <div className="text-[13px] font-semibold tabular-nums text-white">{value}</div>
+        {note && <div className="text-[11px] tabular-nums text-white">{note}</div>}
+      </div>
+    </div>
+  );
+}
+
+/**
+ * One integrity check: does this hold, and what does it mean if not.
+ *
+ * These three were on the previous revenue page and were lost in the rewrite.
+ * The middle one — every price resolving to a tier — is what guards the price
+ * ladder: an unmapped price ID lands in "unknown", so its revenue is real but
+ * attributed to nothing, and the ladder quietly stops adding up.
+ */
+function Check({ ok, label, detail }: { ok: boolean; label: string; detail: string }) {
+  return (
+    <div className="flex items-start gap-3 border-t border-white/[0.08] py-3">
+      {ok ? (
+        <CheckCircle2 className="mt-px h-4 w-4 shrink-0" style={{ color: GOOD }} />
+      ) : (
+        <AlertTriangle className="mt-px h-4 w-4 shrink-0" style={{ color: SERIOUS }} />
+      )}
+      <div className="min-w-0 flex-1">
+        <div className="text-[13px] font-medium leading-[18px] text-white">{label}</div>
+        <div className="mt-0.5 text-[12px] leading-[17px] text-white">{detail}</div>
+      </div>
+    </div>
+  );
+}
+
+/** A labelled proportion bar, used for the churn-reason and skip-reason lists. */
+function ReasonBar({
+  label,
+  n,
+  total,
+  colour,
+}: {
+  label: string;
+  n: number;
+  total: number;
+  colour: string;
+}) {
+  const pct = total > 0 ? (n / total) * 100 : 0;
+  return (
+    <div className="flex items-center gap-3">
+      <span className="w-[11rem] shrink-0 truncate text-[13px] text-white">{label}</span>
+      <span
+        className="h-1.5 min-w-[2px] rounded-sm"
+        style={{ width: `${Math.max(pct, 1)}%`, background: colour }}
+      />
+      <span className="shrink-0 text-[12px] tabular-nums text-white">
+        {pct.toFixed(0)}%<span className="text-white/60"> · {n}</span>
+      </span>
+    </div>
+  );
+}
+
+/**
+ * One price, as a row rather than a bar.
+ *
+ * The horizontal chart works on a desktop and fails on a phone: thirteen
+ * two-line category labels ate roughly 40% of a 390px screen, squeezed every
+ * bar into the remainder, and left the only readable numbers on an axis three
+ * hundred pixels below the top row. A row per price carries the exact figures
+ * where the eye already is, and the bar becomes a proportion cue underneath it
+ * rather than the only encoding.
+ */
+function PriceRow({ row, max }: { row: PriceLadderRow; max: number }) {
+  const pct = max > 0 ? (row.mrr / max) * 100 : 0;
+  return (
+    <div className="border-t border-white/[0.08] py-2.5">
+      <div className="flex items-baseline gap-2">
+        <span
+          className="mt-1 h-2 w-2 shrink-0 self-start rounded-[2px]"
+          style={{ background: PRICE_KIND_COLOURS[row.kind] }}
+        />
+        <span className="min-w-0 flex-1 truncate text-[13px] font-medium text-white">
+          £{row.unitAmount}
+          {row.interval === 'year' ? '/yr' : '/mo'} · {tierLabel(row.tier)}
+        </span>
+        <span className="shrink-0 text-[13px] font-semibold tabular-nums text-white">
+          {gbp(row.mrr)}
+        </span>
+      </div>
+      <div className="mt-1 flex items-baseline gap-2 pl-4">
+        <span className="min-w-0 flex-1 truncate text-[12px] text-white">
+          {row.count} subscriber{row.count === 1 ? '' : 's'} · {PRICE_KIND_LABELS[row.kind]}
+        </span>
+        {row.belowCurrent > 0 && (
+          <span className="shrink-0 text-[11px] tabular-nums text-white/60">
+            −{gbp(row.belowCurrent)}/mo
+          </span>
+        )}
+      </div>
+      <div className="mt-1.5 ml-4 h-1 rounded-sm bg-white/[0.06]">
+        <div
+          className="h-1 rounded-sm"
+          style={{ width: `${Math.max(pct, 1)}%`, background: PRICE_KIND_COLOURS[row.kind] }}
+        />
+      </div>
     </div>
   );
 }
 
 export default function AdminRevenue() {
   const queryClient = useQueryClient();
-  const [isRefreshing, setIsRefreshing] = useState(false);
-  const [composition, setComposition] = useState<'tier' | 'price'>('tier');
-  const [people, setPeople] = useState<'recent' | 'lifetime'>('recent');
+  const [range, setRange] = useState<Range>(30);
 
-  const {
-    data: stripeStats,
-    isLoading: stripeLoading,
-    isFetching: stripeFetching,
-  } = useQuery<StripeStats>({
-    queryKey: ['admin-stripe-live-stats'],
-    refetchInterval: 60000,
-    refetchOnWindowFocus: true,
-    staleTime: 30000,
-    queryFn: async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-      if (!session) throw new Error('Not authenticated');
-
-      const { data, error } = await supabase.functions.invoke('admin-stripe-stats', {
-        headers: { Authorization: `Bearer ${session.access_token}` },
-      });
-
-      if (error) throw error;
-      return data as StripeStats;
-    },
-  });
+  const { data: stripeStats, isLoading: stripeLoading, isFetching: stripeFetching } =
+    useAdminStripeStats();
+  const { data: series } = useAdminOverviewSeries();
+  const { data: lifetime } = useLifetimeBuyers();
+  const { data: ops } = useRevenueOps();
+  const { data: storeMix } = useStorePriceMix();
+  const { data: collegeScheme } = useCollegeScheme();
 
   const { data: rcStats, isLoading: rcLoading } = useQuery<{
-    subscribersBySource: Record<string, number>;
-    tiersBySource: Record<string, Record<string, number>>;
     revenuecat: { mrr: number; revenue: number; activeSubscriptions: number; activeTrials: number };
+    subscribersBySource?: Record<string, number>;
+    /** All-time store revenue from RevenueCat's revenue chart. */
+    gross?: {
+      allTime: number;
+      monthly: Array<{ month: string; amount: number }>;
+      daily: Array<{ day: string; amount: number }>;
+      measure: string | null;
+    } | null;
   }>({
     queryKey: ['admin-revenuecat-stats'],
-    refetchInterval: 60000,
-    staleTime: 30000,
+    staleTime: 60_000,
     queryFn: async () => {
       const {
         data: { session },
@@ -382,869 +262,1487 @@ export default function AdminRevenue() {
     },
   });
 
-  // Lifetime buyers — deliberately OUTSIDE MRR since nothing recurs, but
-  // banked cash and a loyalty cohort, so it gets a name and a list rather than
-  // a count. See useLifetimeBuyers for why the count alone was misleading.
-  const { data: lifetime } = useLifetimeBuyers();
-  const lifetimeCount = lifetime?.buyers.length ?? 0;
-
-  const handleRefresh = useCallback(async () => {
-    setIsRefreshing(true);
+  const refresh = useCallback(async () => {
     await Promise.all([
-      queryClient.invalidateQueries({ queryKey: ['admin-stripe-live-stats'] }),
+      queryClient.invalidateQueries({ queryKey: ADMIN_STRIPE_STATS_QUERY_KEY }),
       queryClient.invalidateQueries({ queryKey: ['admin-revenuecat-stats'] }),
+      queryClient.invalidateQueries({ queryKey: ['admin-revenue-ops'] }),
       queryClient.invalidateQueries({ queryKey: ['admin-lifetime-buyers'] }),
     ]);
-    setTimeout(() => setIsRefreshing(false), 500);
   }, [queryClient]);
 
+  const stripeMrr = stripeStats?.stripe?.mrr ?? 0;
   /*
-    Gross new MRR per day.
-
-    This used `stripeStats.subscriptions`, which is the ACTIVE list — so a
-    subscription that started inside the window and has since cancelled was
-    invisible, and the chart plus its "+11 new" caption undercounted starts by
-    16 against a cancellation figure that counted everyone. Starts and
-    cancellations are now both gross, over the same window.
+    `stripe.mrr` is gross of coupons. The net figure is reported beside it rather
+    than replacing it: which one is "MRR" is a business definition, not a
+    rendering choice, and this one is quoted outside admin.
   */
-  const starts = stripeStats?.movement?.startsLast14 ?? stripeStats?.subscriptions ?? [];
-  const dailyRevenue = starts.length
-    ? Array.from({ length: 14 }, (_, i) => {
-        const date = subDays(new Date(), 13 - i);
-        const start = startOfDay(date).getTime();
-        const end = start + 24 * 60 * 60 * 1000;
-        const daySubs = starts.filter((sub) => {
-          const created = new Date(sub.created).getTime();
-          return created >= start && created < end;
-        });
-        return {
-          date: format(date, 'dd MMM'),
-          short: format(date, 'dd'),
-          amount: daySubs.reduce((sum, sub) => sum + sub.monthlyAmount, 0),
-          count: daySubs.length,
-        };
-      })
-    : [];
-
-  const totalLast14Days = dailyRevenue.reduce((sum, d) => sum + d.amount, 0);
-  const subsLast14Days = dailyRevenue.reduce((sum, d) => sum + d.count, 0);
-
-  if (stripeLoading) {
-    return (
-      <PageFrame>
-        <PageHero
-          eyebrow="Finance"
-          title="Revenue"
-          description="Live Stripe, App Store and Play Store revenue."
-          tone="yellow"
-        />
-        <LoadingBlocks />
-      </PageFrame>
-    );
-  }
-
-  const stripeMrr = stripeStats?.stripe.mrr || 0;
-  const rcMrr = rcStats?.revenuecat?.mrr || 0;
+  const netMrr =
+    stripeStats?.stripe?.mrrNetOfDiscounts != null
+      ? stripeStats.stripe.mrrNetOfDiscounts + (rcStats?.revenuecat?.mrr ?? 0)
+      : null;
+  const rcMrr = rcStats?.revenuecat?.mrr ?? 0;
+  const rcLoaded = !rcLoading && !!rcStats;
   const mrr = stripeMrr + rcMrr;
-  const arr = mrr * 12;
-  const rcActiveTrials = (
-    (rcStats as { trialUsers?: Array<{ is_cancelled?: boolean }> })?.trialUsers || []
-  ).filter((t) => !t.is_cancelled).length;
-  const appStoreSubs = rcStats?.subscribersBySource?.app_store || 0;
-  const playStoreSubs = rcStats?.subscribersBySource?.play_store || 0;
-  const stripeSubs = stripeStats?.stripe.activeSubscriptions || 0;
-  const totalSubs = stripeSubs + appStoreSubs + playStoreSubs;
-  const arpu = totalSubs > 0 ? mrr / totalSubs : 0;
+  const stripeSubs = stripeStats?.stripe?.activeSubscriptions ?? 0;
+  const storeSubs = rcStats?.revenuecat?.activeSubscriptions ?? 0;
+  const paying = stripeSubs + storeSubs;
 
-  // Two windows, kept apart. The 14-day card previously displayed a 30-day
-  // cancellation count next to a 14-day signup count and a churn rate derived
-  // from the 30-day figure, so three numbers sat side by side measuring two
-  // different periods.
-  const mv = stripeStats?.movement;
-  const churned30 = stripeStats?.stripe.canceledLast30Days || 0;
-  const churned14 = stripeStats?.stripe.canceledLast14Days;
-  const churnRate30 = totalSubs > 0 ? (churned30 / (totalSubs + churned30)) * 100 : 0;
-  const churnRate14 =
-    churned14 !== undefined && totalSubs > 0 ? (churned14 / (totalSubs + churned14)) * 100 : null;
-
-  const stripeTierCounts = stripeStats?.stripe.tierCounts;
-  const rcAppStoreTiers = rcStats?.tiersBySource?.app_store || {};
-  const rcPlayStoreTiers = rcStats?.tiersBySource?.play_store || {};
-
-  /*
-    Tiers across all three billing rails.
-
-    The old strip counted Stripe only — 62 + 57 + 149 + 1 + 0 = 269 — directly
-    beneath a hero reading "348 paying", with no indication that the missing 79
-    were the mobile stores. Nothing on the page reconciled, and `play_store`
-    tiers were being returned by the RevenueCat function and never read at all.
-  */
-  const tierRows = (() => {
-    const defs: Array<{ key: string; name: string; list: string }> = [
-      { key: 'founder', name: 'Founder', list: '£3.99' },
-      { key: 'apprentice', name: 'Apprentice', list: '£6.99' },
-      { key: 'electrician', name: 'Electrician', list: '£19.99' },
-      { key: 'business_ai', name: 'Mate', list: '£39.99' },
-      { key: 'employer', name: 'Employer', list: '£49.99' },
-      { key: 'unknown', name: 'Unmapped price', list: '—' },
-    ];
-    const pick = (src: Record<string, number>, key: string) =>
-      (src[key] || 0) + (src[`${key}_yearly`] || 0);
-
-    return defs
-      .map((d) => {
-        const stripe = pick((stripeTierCounts ?? {}) as Record<string, number>, d.key);
-        const app = pick(rcAppStoreTiers, d.key);
-        const play = pick(rcPlayStoreTiers, d.key);
-        // Real Stripe MRR for the tier, so grandfathering is visible. Mobile
-        // MRR is not broken out per tier by RevenueCat, so the effective
-        // average is computed over the Stripe population only.
-        const tierMrr = (stripeStats?.subscriptions ?? [])
-          .filter((s) => s.tier === d.key)
-          .reduce((t, s) => t + s.monthlyAmount, 0);
-        return {
-          ...d,
-          stripe,
-          mobile: app + play,
-          total: stripe + app + play,
-          mrr: tierMrr,
-          effective: stripe > 0 ? tierMrr / stripe : 0,
-        };
-      })
-      .filter((r) => r.total > 0 || r.key !== 'unknown');
-  })();
-
-  const tierTotal = tierRows.reduce((t, r) => t + r.total, 0);
-
-  /*
-    Price bands, as money rather than head count.
-
-    The old card ranked prices by number of subscribers, which inverts the
-    thing you want to know: 62 founders at £3.99 topped the list on £247/mo
-    while 44 grandfathered accounts at £12.99 sat third on £571/mo. Ranking by
-    contribution puts the legacy bands where they belong, and marking which
-    price IDs are still on sale separates grandfathered revenue from what new
-    customers pay.
-  */
-  const currentPriceIds = new Set<string>([
-    ...Object.values(stripePrices.monthly),
-    ...Object.values(stripePrices.yearly),
-  ]);
-
-  const priceBands = (() => {
-    const bands = new Map<
-      string,
-      { label: string; count: number; mrr: number; current: boolean; tier: string }
-    >();
-    for (const s of stripeStats?.subscriptions ?? []) {
-      const key = s.priceId || `${s.priceAmount}/${s.interval}`;
-      const existing = bands.get(key);
-      if (existing) {
-        existing.count += 1;
-        existing.mrr += s.monthlyAmount;
-      } else {
-        bands.set(key, {
-          label: `£${s.priceAmount.toFixed(2)}/${s.interval === 'year' ? 'yr' : 'mo'}`,
-          count: 1,
-          mrr: s.monthlyAmount,
-          current: s.priceId ? currentPriceIds.has(s.priceId) : false,
-          tier: s.tier,
-        });
-      }
+  /* MRR history, same construction as the overview so the two cannot disagree. */
+  const mrrPoints = useMemo<MrrPoint[]>(() => {
+    const rows = series?.metric_daily ?? [];
+    let lastStripe: number | null = null;
+    let lastRc: number | null = null;
+    const pts: MrrPoint[] = [];
+    for (const r of rows) {
+      if (r.stripe_mrr != null) lastStripe = Number(r.stripe_mrr);
+      if (r.rc_mrr != null) lastRc = Number(r.rc_mrr);
+      if (lastStripe == null || lastRc == null) continue;
+      pts.push({ day: r.day, stripe: lastStripe, rc: lastRc, total: lastStripe + lastRc });
     }
-    return [...bands.values()].sort((a, b) => b.mrr - a.mrr);
-  })();
+    if (pts.length && stripeStats && rcLoaded) {
+      const last = pts[pts.length - 1];
+      pts[pts.length - 1] = {
+        day: series?.today_date ?? last.day,
+        stripe: stripeMrr,
+        rc: rcMrr,
+        total: mrr,
+      };
+    }
+    return pts;
+  }, [series, stripeStats, rcLoaded, stripeMrr, rcMrr, mrr]);
 
-  const legacyMrr = priceBands.filter((b) => !b.current).reduce((t, b) => t + b.mrr, 0);
-  const legacySubs = priceBands.filter((b) => !b.current).reduce((t, b) => t + b.count, 0);
-  const maxBandMrr = Math.max(...priceBands.map((b) => b.mrr), 1);
+  const mrrThen =
+    mrrPoints.length > range ? mrrPoints[mrrPoints.length - 1 - range].total : null;
+  const mrrDelta = mrrThen != null ? mrr - mrrThen : null;
+  const mrrDeltaPct = mrrThen ? Math.round(((mrrDelta as number) / mrrThen) * 100) : null;
+  const payingSeries = useMemo(
+    () =>
+      (series?.metric_daily ?? [])
+        .slice(-30)
+        .map((r) => (Number(r.stripe_paying) || 0) + (Number(r.rc_paying) || 0)),
+    [series]
+  );
 
-  const unmappedSubs = tierRows.find((r) => r.key === 'unknown')?.total ?? 0;
-  const unfulfilledLifetime = lifetime?.needsAttention.length ?? 0;
-  const syncGap =
-    (stripeStats?.discrepancies.inStripeNotSupabase || 0) +
-    (stripeStats?.discrepancies.inSupabaseNotStripe || 0);
+  // Memoised so the `?? []` fallback does not hand useMemo a new array each render.
+  const ladder = useMemo(() => stripeStats?.priceLadder ?? [], [stripeStats]);
+  const discounts = stripeStats?.discounts;
+  const renewals = stripeStats?.renewals;
+  const atRisk = stripeStats?.atRisk;
+  const offers = stripeStats?.offers;
+  const movement = stripeStats?.movement;
+  const gross = stripeStats?.gross;
+  const rcGross = rcStats?.gross ?? null;
+  // Both rails, all time. Only summed when BOTH are present — a total that
+  // silently omits the stores would read as the whole business.
+  const grossTotal =
+    gross && rcGross ? Math.round((gross.allTime + rcGross.allTime) * 100) / 100 : null;
 
   /*
-    Newest signups, trials included.
+    Daily average across both rails.
 
-    This listed active subscriptions only, so on 9 August its top row was 2
-    August — a week stale — while nine people had started in between and were
-    all still inside their trial. A list headed "Recent" that cannot show the
-    last seven days of signups is answering a different question from the one
-    it appears to answer.
-
-    Trials are marked, never counted: they are excluded from MRR, from the 348,
-    and from every tier figure on this page. They belong here because the
-    question is "who just signed up", not "who is paying".
-
-    Mobile is still absent and cannot honestly be added — only 13 of the 82
-    store subscribers carry a subscription_start date, so sorting them in would
-    mean ranking most of them by profile signup date and presenting that as a
-    subscribe date.
+    Averaged over the calendar days in the window rather than the days that
+    happen to have a row: a day nobody paid is a real zero and dividing it out
+    would flatter the figure.
   */
-  const recentSubs = [
-    ...(stripeStats?.subscriptions || []).map((s) => ({ ...s, trialing: false as const })),
-    ...(stripeStats?.trialingList || []).map((s) => ({ ...s, trialing: true as const })),
-  ]
-    .sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime())
-    .slice(0, 9);
+  const dailyAverage = useMemo(() => {
+    if (!gross?.daily?.length) return null;
+    const cutoff = new Date(Date.now() - 30 * 86400 * 1000).toISOString().slice(0, 10);
+    const sum = (rows: Array<{ day: string; amount: number }> | undefined) =>
+      (rows ?? []).filter((d) => d.day >= cutoff).reduce((t, d) => t + d.amount, 0);
+    return (sum(gross.daily) + sum(rcGross?.daily)) / 30;
+  }, [gross, rcGross]);
+  // Win-back reaches people two ways — a dedicated price, or a coupon on a
+  // standard price. Reporting only the prices understated it.
+  const winbackOffer = offers?.schemes.find((x) => x.scheme === 'winback');
+
+  /*
+    Who currently holds each coupon.
+
+    `offers` says how many times a coupon was redeemed; `discounts.rows` says
+    who is on one right now and what it costs. Joining them on the coupon id is
+    the difference between "20 redemptions" and a list of names you can act on.
+  */
+  const holdersByCoupon = useMemo(() => {
+    const m = new Map<string, typeof discounts.rows>();
+    (discounts?.rows ?? []).forEach((d) => {
+      if (!d.couponId) return;
+      const list = m.get(d.couponId);
+      if (list) list.push(d);
+      else m.set(d.couponId, [d]);
+    });
+    return m;
+  }, [discounts]);
+
+  /*
+    What grandfathered pricing costs, and what the win-back deliberately gives
+    away. Kept apart on purpose: one is a decision nobody has revisited, the
+    other is a decision that is working.
+  */
+  const ladderSummary = useMemo(() => {
+    const by = (k: PriceLadderRow['kind']) => ladder.filter((r) => r.kind === k);
+    const sum = (rows: PriceLadderRow[], f: (r: PriceLadderRow) => number) =>
+      rows.reduce((t, r) => t + f(r), 0);
+    const legacy = by('legacy');
+    const winback = by('winback');
+    return {
+      current: by('current'),
+      legacy,
+      winback,
+      founder: by('founder'),
+      currentCount: sum(by('current'), (r) => r.count),
+      legacyCount: sum(legacy, (r) => r.count),
+      legacyGap: sum(legacy, (r) => r.belowCurrent),
+      winbackCount: sum(winback, (r) => r.count),
+      founderCount: sum(by('founder'), (r) => r.count),
+      winbackMrr: sum(winback, (r) => r.mrr),
+      total: sum(ladder, (r) => r.count),
+    };
+  }, [ladder]);
+
+  /*
+    The store ladder, and a check on the prices behind it.
+
+    Neither store returns the price a given subscriber pays, so STORE_PRODUCTS is
+    a lookup. Summing it against RevenueCat's own MRR turns that lookup into
+    something falsifiable: if a price is wrong or stale the two diverge visibly
+    instead of the page quietly misreporting.
+  */
+  const storeLadder = useMemo(() => {
+    const rows = (storeMix?.rows ?? []).map((r) => {
+      const meta = STORE_PRODUCTS[r.product_id];
+      return {
+        ...r,
+        label: meta?.label ?? r.product_id,
+        tier: meta?.tier ?? 'unknown',
+        monthly: meta?.monthly ?? null,
+        interval: meta?.interval ?? null,
+        promo: !!meta?.promo,
+        mrr: meta ? meta.monthly * r.subscribers : null,
+        known: !!meta,
+      };
+    });
+    const impliedMrr = rows.reduce((t, r) => t + (r.mrr ?? 0), 0);
+    return {
+      rows: rows.sort((a, b) => (b.mrr ?? 0) - (a.mrr ?? 0)),
+      impliedMrr: Math.round(impliedMrr * 100) / 100,
+      max: Math.max(...rows.map((r) => r.mrr ?? 0), 1),
+      unknown: rows.filter((r) => !r.known).length,
+    };
+  }, [storeMix]);
+
+  /*
+    The college scheme, per college.
+
+    Catalogue (name, price, tier) from promo_offers; take-up from Stripe, joined
+    on the code — see the note in useCollegeScheme for why the DB's own
+    `redemptions` column cannot be used. Revenue is redemptions x the coupon
+    price, which is the real £3.50 / £9.99 rather than list.
+  */
+  const schemeRollup = useMemo(() => {
+    const redeemedByCode = new Map(
+      (offers?.collegeCodes ?? []).map((c) => [c.code, c])
+    );
+    const build = (want: 'college' | 'employer') => {
+    const byCollege = new Map<
+      string,
+      {
+        college: string;
+        apprentice?: { code: string; redeemed: number; active: boolean; price: number };
+        electrician?: { code: string; redeemed: number; active: boolean; price: number };
+        redeemed: number;
+        mrr: number;
+      }
+    >();
+    for (const c of (collegeScheme?.codes ?? []).filter((x) => x.scheme === want)) {
+      const live = redeemedByCode.get(c.code);
+      const entry =
+        byCollege.get(c.org) ?? { college: c.org, redeemed: 0, mrr: 0 };
+      const slot = {
+        code: c.code,
+        redeemed: live?.redeemed ?? 0,
+        active: live?.active ?? c.is_active,
+        price: Number(c.price),
+      };
+      if (c.tier === 'electrician') entry.electrician = slot;
+      else entry.apprentice = slot;
+      entry.redeemed += slot.redeemed;
+      entry.mrr += slot.redeemed * slot.price;
+      byCollege.set(c.org, entry);
+    }
+    const rows = [...byCollege.values()].sort(
+      (a, b) => b.redeemed - a.redeemed || a.college.localeCompare(b.college)
+    );
+    return {
+      rows,
+      taken: rows.filter((r) => r.redeemed > 0),
+      notUsed: rows.filter((r) => r.redeemed === 0),
+      colleges: rows.length,
+      codes: (collegeScheme?.codes ?? []).filter((x) => x.scheme === want).length,
+      redeemed: rows.reduce((t, r) => t + r.redeemed, 0),
+      mrr: Math.round(rows.reduce((t, r) => t + r.mrr, 0) * 100) / 100,
+      apprenticePrice: collegeScheme?.apprentice_price ?? 3.5,
+      electricianPrice: collegeScheme?.electrician_price ?? 9.99,
+    };
+    };
+    return { college: build('college'), employer: build('employer') };
+  }, [collegeScheme, offers]);
+
+  const college = schemeRollup.college;
+  const employer = schemeRollup.employer;
+
+  /*
+    Four things that must hold for the rest of the page to be trustworthy.
+    `unknown` tier means a price ID is missing from PRICE_TIER_MAP in the edge
+    function, which is exactly the failure the ladder cannot show on its own.
+  */
+  const checks = useMemo(() => {
+    const syncGap =
+      (stripeStats?.discrepancies?.inStripeNotSupabase ?? 0) +
+      (stripeStats?.discrepancies?.inSupabaseNotStripe ?? 0);
+    const unmapped = ladder
+      .filter((r) => r.tier === 'unknown')
+      .reduce((t, r) => t + r.count, 0);
+    const unfulfilledLifetime = lifetime?.needsAttention.length ?? 0;
+    const storeCoverage = storeMix ? storeMix.store_paying - storeMix.covered : 0;
+    const failing = [syncGap, unmapped, unfulfilledLifetime, storeCoverage].filter(
+      (n) => n > 0
+    ).length;
+    return { syncGap, unmapped, unfulfilledLifetime, storeCoverage, failing, allOk: failing === 0 };
+  }, [stripeStats, ladder, lifetime, storeMix]);
+
+  const churnByReason = useMemo(() => {
+    const m = new Map<string, number>();
+    (ops?.churn_reasons ?? []).forEach((r) => m.set(r.reason, (m.get(r.reason) ?? 0) + r.n));
+    const rows = [...m.entries()].map(([reason, n]) => ({ reason, n })).sort((a, b) => b.n - a.n);
+    return { rows, total: rows.reduce((t, r) => t + r.n, 0) };
+  }, [ops]);
+
+  const wb = ops?.winback;
+  const wbRate = recoveryRate(wb?.outcome ?? null);
+
+  const isRefreshing = stripeFetching;
 
   return (
-    <PullToRefresh onRefresh={handleRefresh}>
-      <PageFrame>
-        <PageHero
-          eyebrow="Finance"
-          title="Revenue"
-          description="Live Stripe, App Store and Play Store revenue."
-          tone="yellow"
-          actions={
-            <IconButton
-              onClick={handleRefresh}
-              disabled={stripeFetching || isRefreshing}
-              aria-label="Refresh"
-            >
-              <RefreshCw
-                className={cn('h-4 w-4', (stripeFetching || isRefreshing) && 'animate-spin')}
-              />
+    <PullToRefresh onRefresh={refresh}>
+      <PageFrame className="space-y-5 sm:space-y-6">
+        {/* Title row */}
+        <div className="flex items-center justify-between gap-3">
+          <div className="min-w-0">
+            <h1 className="text-[22px] font-semibold leading-7 tracking-[-0.02em] text-white lg:text-[26px] lg:leading-[30px]">
+              Revenue
+            </h1>
+            <div className="mt-0.5 flex items-center gap-2 text-[12px] text-white">
+              <span className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: GOOD }} />
+              {/* The full rail list wrapped to three lines beside the range
+                  control on a phone and squashed the title next to it. */}
+              <span className="hidden sm:inline">Live from Stripe, App Store and Play Store</span>
+              <span className="sm:hidden">Live · all rails</span>
+            </div>
+          </div>
+          <div className="flex shrink-0 items-center gap-2.5">
+            <Segmented<Range>
+              options={[
+                { key: 7, label: '7d' },
+                { key: 30, label: '30d' },
+                { key: 90, label: '90d' },
+              ]}
+              value={range}
+              onChange={setRange}
+            />
+            <IconButton onClick={refresh} disabled={isRefreshing} aria-label="Refresh">
+              <RefreshCw className={cn('h-4 w-4', isRefreshing && 'animate-spin')} />
             </IconButton>
-          }
-        />
+          </div>
+        </div>
 
-        {totalSubs === 0 ? (
-          <EmptyState
-            title="No active subscriptions"
-            description="Subscription data from Stripe and RevenueCat will appear here once users subscribe."
-          />
-        ) : (
-          <>
-            {/*
-              The money.
-
-              A hero built from four equal cells gave ARR, head count, ARPU and
-              a lifetime figure the same weight as each other, and a legend
-              underneath mixed "£2446.77" with "71" and "8" so the stores looked
-              like they contributed £79 of the MRR. Here the recurring total
-              leads, the split beneath it is a proportional bar in one unit, and
-              the banked lifetime cash is set apart because it does not recur.
-            */}
-            <section className="relative overflow-hidden rounded-none border-y border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:rounded-2xl sm:border-x sm:p-6 -mx-4 sm:mx-0">
-              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/70 via-elec-yellow/20 to-transparent" />
-
-              <div className="grid gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-10">
-                <div className="min-w-0">
-                  <div className="flex items-center gap-2.5">
-                    <PulseDot tone="green" />
-                    <Eyebrow>Live MRR</Eyebrow>
-                  </div>
-                  <div className="mt-4 text-[38px] font-semibold leading-none tracking-tight text-white sm:text-[52px]">
-                    <AnimatedCounter value={mrr} prefix="£" decimals={2} />
-                  </div>
-                  <div className="mt-2 text-[13px] text-white">
-                    {rcLoading
-                      ? 'Stripe only — mobile revenue still loading'
-                      : stripeStats
-                        ? `Stripe + RevenueCat · Updated ${new Date(stripeStats.generatedAt).toLocaleTimeString()}`
-                        : 'Monthly recurring revenue'}
-                  </div>
-
-                  <div className="mt-5">
-                    <StackedBar
-                      segments={[
-                        {
-                          key: 'stripe',
-                          label: 'Stripe',
-                          value: stripeMrr,
-                          fill: SERIES[0],
-                        },
-                        { key: 'mobile', label: 'Mobile', value: rcMrr, fill: SERIES[1] },
-                      ]}
-                      format={(v, pct) => `${money(v, 2)} · ${pct.toFixed(0)}% of MRR`}
-                    />
-                    <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2">
-                      <div className="flex items-baseline gap-2">
-                        <span
-                          className="inline-block h-2 w-2 shrink-0 translate-y-[-1px] rounded-full"
-                          style={{ background: SERIES[0] }}
-                        />
-                        <span className="text-[13px] font-medium text-white tabular-nums">
-                          {money(stripeMrr, 2)}
-                        </span>
-                        <span className="text-[12px] text-white">Stripe · {stripeSubs} subs</span>
-                      </div>
-                      <div className="flex items-baseline gap-2">
-                        <span
-                          className="inline-block h-2 w-2 shrink-0 translate-y-[-1px] rounded-full"
-                          style={{ background: SERIES[1] }}
-                        />
-                        <span className="text-[13px] font-medium text-white tabular-nums">
-                          {rcLoading ? '…' : money(rcMrr, 2)}
-                        </span>
-                        <span className="text-[12px] text-white">
-                          {rcLoading
-                            ? 'Mobile · loading'
-                            : `Mobile · ${appStoreSubs + playStoreSubs} subs`}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-px self-start overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.08]">
-                  {[
-                    { label: 'ARR', value: money(arr) },
-                    { label: 'Paying', value: totalSubs.toLocaleString('en-GB') },
-                    { label: 'Avg ARPU', value: money(arpu, 2) },
-                    {
-                      label: 'Lifetime banked',
-                      value: money(lifetime?.banked ?? 0),
-                      sub: `${lifetimeCount} buyers · not recurring`,
-                      tone: 'emerald' as const,
-                    },
-                  ].map((c) => (
-                    <div key={c.label} className="bg-[hsl(0_0%_9%)] px-4 py-5">
-                      <div
-                        className={cn(
-                          'text-[22px] font-semibold leading-none sm:text-[26px]',
-                          'text-white'
-                        )}
-                      >
-                        {c.value}
-                      </div>
-                      <div className="mt-2 text-[10px] font-medium uppercase tracking-[0.14em] text-white">
-                        {c.label}
-                      </div>
-                      {c.sub && <div className="mt-1 text-[11px] text-white">{c.sub}</div>}
-                    </div>
-                  ))}
-                </div>
+        {/* The money */}
+        <Panel tone="accent">
+          <div className="grid gap-5 lg:grid-cols-[340px_minmax(0,1fr)] lg:gap-x-10">
+            <div className="flex min-w-0 flex-col gap-2 text-white">
+              <div className="text-[13px] font-medium leading-4">Monthly recurring revenue</div>
+              <div className="text-[44px] font-semibold leading-[46px] tracking-[-0.03em] lg:text-[56px] lg:leading-[56px]">
+                {stripeLoading ? <span className="opacity-40">£—</span> : gbp(mrr)}
               </div>
-            </section>
-
-            {/*
-              Movement.
-
-              Fourteen flex children with an inline `height:` percentage is not
-              a chart — no axis, no values, nothing on hover, and a bar for a
-              day with £0 was indistinguishable from a missing day. Recharts is
-              already the house chart library on AdminAnalytics, so this uses
-              the same tokens rather than inventing a second look.
-            */}
-            <ListCard>
-              <ListCardHeader
-                tone="yellow"
-                title="New MRR, last 14 days"
-                meta={<Pill tone="emerald">+{money(totalLast14Days)}</Pill>}
-              />
-              <div className="p-4 sm:p-5">
-                <div className="h-48 w-full sm:h-56">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart
-                      data={dailyRevenue}
-                      margin={{ top: 8, right: 4, left: 4, bottom: 0 }}
+              {netMrr != null && netMrr < mrr && (
+                <div className="text-[13px] leading-[18px] text-white">
+                  {gbp(netMrr)} after coupons — the {gbp(mrr - netMrr)} difference is the discounts
+                  below.
+                </div>
+              )}
+              <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[13px]">
+                {mrrDelta != null ? (
+                  <>
+                    <Delta
+                      dir={mrrDelta > 0 ? 'up' : mrrDelta < 0 ? 'down' : 'flat'}
+                      tone={mrrDelta > 0 ? 'good' : mrrDelta < 0 ? 'bad' : 'neutral'}
+                      size={13}
                     >
-                      <defs>
-                        <linearGradient id="mrrFill" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="0%" stopColor={CHART_STROKE} stopOpacity={0.35} />
-                          <stop offset="100%" stopColor={CHART_STROKE} stopOpacity={0.02} />
-                        </linearGradient>
-                      </defs>
-                      <CartesianGrid stroke={CHART_GRID} vertical={false} />
-                      <XAxis
-                        dataKey="short"
-                        tick={{ fill: CHART_AXIS, fontSize: 11 }}
-                        tickLine={false}
-                        axisLine={false}
-                        interval="preserveStartEnd"
-                      />
-                      <Tooltip
-                        contentStyle={{
-                          background: 'hsl(0 0% 10%)',
-                          border: '1px solid rgba(255,255,255,0.08)',
-                          borderRadius: 12,
-                          color: '#ffffff',
-                          fontSize: 12,
-                        }}
-                        labelStyle={{ color: '#ffffff' }}
-                        cursor={{ stroke: CHART_GRID }}
-                        formatter={(v: number, _n, p) => [
-                          `${money(v, 2)} · ${p?.payload?.count ?? 0} new`,
-                          'New MRR',
-                        ]}
-                        labelFormatter={(_l, p) => p?.[0]?.payload?.date ?? ''}
-                      />
-                      <Area
-                        type="monotone"
-                        dataKey="amount"
-                        stroke={CHART_STROKE}
-                        strokeWidth={2}
-                        fill="url(#mrrFill)"
-                        activeDot={{ r: 4, fill: CHART_STROKE }}
-                      />
-                    </AreaChart>
-                  </ResponsiveContainer>
-                </div>
-
-                {/*
-                  Starts against cancellations, counted the same way.
-
-                  This card used to read "+11 new · 34 lost", which looked like a
-                  collapse. The 11 counted only the subscriptions that started in
-                  the window AND survive today, so 16 that started and left were
-                  dropped from one side of a comparison that counted every leaver
-                  on the other. Gross starts are 27 and the net is -7. Over 30
-                  days it is +10, which is growth.
-
-                  Cancellations are split by whether the customer ever billed:
-                  half of the 14-day figure ended on or before a trial end date,
-                  and a trial that did not convert is not paying-customer churn.
-                */}
-                {mv ? (
-                  <div className="mt-5 overflow-hidden rounded-xl border border-white/[0.06]">
-                    <div
-                      className="grid items-center gap-3 px-4 py-2.5 text-[10px] uppercase tracking-[0.14em] text-white"
-                      style={{ gridTemplateColumns: 'minmax(0,1fr) 4.5rem 5rem 4.5rem' }}
-                    >
-                      <span>Stripe only</span>
-                      <span className="text-right">Started</span>
-                      <span className="text-right">Cancelled</span>
-                      <span className="text-right">Net</span>
-                    </div>
-                    {[
-                      {
-                        window: 'Last 14 days',
-                        started: mv.started14,
-                        cancelled: mv.canceled14,
-                        neverPaid: mv.canceledNeverPaid14,
-                      },
-                      {
-                        window: 'Last 30 days',
-                        started: mv.started30,
-                        cancelled: mv.canceled30,
-                        neverPaid: mv.canceledNeverPaid30,
-                      },
-                    ].map((r) => {
-                      const net = r.started - r.cancelled;
-                      return (
-                        <div
-                          key={r.window}
-                          className="grid items-center gap-3 border-t border-white/[0.06] px-4 py-3"
-                          style={{ gridTemplateColumns: 'minmax(0,1fr) 4.5rem 5rem 4.5rem' }}
-                        >
-                          <div className="min-w-0">
-                            <div className="text-[13px] text-white">{r.window}</div>
-                            <div className="text-[11px] text-white">
-                              {r.neverPaid} ended in trial, never paid
-                            </div>
-                          </div>
-                          <span className="text-right text-[14px] tabular-nums text-white">
-                            {r.started}
-                          </span>
-                          <span className="text-right text-[14px] tabular-nums text-white">
-                            {r.cancelled}
-                          </span>
-                          <span
-                            className="text-right text-[15px] font-semibold tabular-nums"
-                            style={{ color: net >= 0 ? STATUS.good : STATUS.warning }}
-                          >
-                            {net >= 0 ? `+${net}` : net}
-                          </span>
-                        </div>
-                      );
-                    })}
-                    <div className="border-t border-white/[0.06] px-4 py-3 text-[12px] text-white">
-                      Paying churn, excluding trials that never converted:{' '}
-                      {mv.canceled30 - mv.canceledNeverPaid30} in 30 days against {stripeSubs}{' '}
-                      Stripe subscribers. App Store and Play Store movement is not included —
-                      RevenueCat does not report it per window.
-                    </div>
-                  </div>
-                ) : null}
+                      {gbp(Math.abs(mrrDelta))}
+                    </Delta>
+                    <span>
+                      {mrrDeltaPct != null && `${mrrDeltaPct > 0 ? '+' : ''}${mrrDeltaPct}% in ${range} days · `}
+                      {gbp((mrr * 12) / 1000, 1)}k a year
+                    </span>
+                  </>
+                ) : (
+                  <span>{gbp((mrr * 12) / 1000, 1)}k a year</span>
+                )}
               </div>
-            </ListCard>
 
-            {/*
-              Equal-height columns.
-
-              SplitLayout wraps each side in its own stack, so the shorter card
-              stopped where its content stopped and left a void beside the taller
-              one. An explicit grid with stretched items and h-full cards makes
-              the two end on the same line — the spare room goes inside the
-              shorter card rather than becoming dead page.
-            */}
-            <div className="grid grid-cols-1 items-stretch gap-6 sm:gap-8 lg:grid-cols-[3fr_2fr]">
-              <div className="flex min-w-0 flex-col">
-                <>
-                  {/* Composition — one card with two readings, instead of a
-                      tier card and a price card that never referenced each
-                      other. */}
-                  <ListCard className="flex h-full flex-col">
-                    <ListCardHeader
-                      tone="blue"
-                      title="Composition"
-                      meta={
-                        <Segmented<'tier' | 'price'>
-                          value={composition}
-                          onChange={setComposition}
-                          options={[
-                            { value: 'tier', label: 'By tier' },
-                            { value: 'price', label: 'By price' },
-                          ]}
-                        />
-                      }
-                    />
-
-                    {composition === 'tier' ? (
-                      <div className="px-4 pb-4 sm:px-5 sm:pb-5">
-                        <StackedBar
-                          segments={tierRows.map((r) => ({
-                            key: r.key,
-                            label: r.name,
-                            value: r.total,
-                            fill: tierSeriesColour[r.key] ?? SERIES[0],
-                          }))}
-                          format={(v, pct) =>
-                            `${v} subscriber${v === 1 ? '' : 's'} · ${pct.toFixed(0)}%`
-                          }
-                        />
-                        <div className="mt-2 text-[12px] text-white">
-                          {tierTotal.toLocaleString('en-GB')} paying subscribers
-                        </div>
-
-                        <div
-                          className="mt-4 grid items-center gap-x-3 pb-2 text-[10px] uppercase tracking-[0.14em] text-white"
-                          style={{ gridTemplateColumns: 'minmax(0,1fr) 3.5rem 3.5rem 3.5rem' }}
-                        >
-                          <span>Tier</span>
-                          <span className="text-right">Stripe</span>
-                          <span className="text-right">Mobile</span>
-                          <span className="text-right">Total</span>
-                        </div>
-                        <div className="divide-y divide-white/[0.06] border-t border-white/[0.06]">
-                          {tierRows.map((r) => (
-                            <div
-                              key={r.key}
-                              className="grid items-center gap-x-3 py-3"
-                              style={{ gridTemplateColumns: 'minmax(0,1fr) 3.5rem 3.5rem 3.5rem' }}
-                            >
-                              <div className="flex min-w-0 items-center gap-2.5">
-                                <span
-                                  className="h-2 w-2 shrink-0 rounded-full"
-                                  style={{ background: tierSeriesColour[r.key] ?? SERIES[0] }}
-                                />
-                                <div className="min-w-0">
-                                  <div className="truncate text-[14px] font-medium text-white">
-                                    {r.name}
-                                  </div>
-                                  {/* What the tier actually earns, not its list
-                                      price. 149 Electricians are not 149 ×
-                                      £19.99 — only 27 are on that price. */}
-                                  <div className="text-[11px] text-white">
-                                    {r.stripe > 0
-                                      ? `${money(r.mrr)}/mo · avg ${money(r.effective, 2)} of ${r.list}`
-                                      : r.list}
-                                  </div>
-                                </div>
-                              </div>
-                              <span className="text-right text-[14px] tabular-nums text-white">
-                                {r.stripe || '—'}
-                              </span>
-                              <span className="text-right text-[14px] tabular-nums text-white">
-                                {r.mobile || '—'}
-                              </span>
-                              <span
-                                className={cn(
-                                  'text-right text-[15px] font-semibold tabular-nums text-white'
-                                )}
-                              >
-                                {r.total}
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="px-4 pb-4 sm:px-5 sm:pb-5">
-                        <div className="mb-4 rounded-xl border border-amber-500/20 bg-amber-500/5 px-4 py-3 text-[12px] text-white">
-                          <span className="font-semibold text-amber-400">
-                            {legacySubs} of {stripeSubs}
-                          </span>{' '}
-                          Stripe subscribers are on a price no longer sold, worth{' '}
-                          <span className="font-semibold text-amber-400">
-                            {money(legacyMrr)}/mo
-                          </span>{' '}
-                          — {stripeMrr > 0 ? ((legacyMrr / stripeMrr) * 100).toFixed(0) : 0}% of
-                          Stripe revenue.
-                        </div>
-                        <div className="space-y-3.5">
-                          {priceBands.map((b, i) => (
-                            <div key={`${b.label}-${i}`} className="min-w-0">
-                              <div className="mb-1.5 flex items-center justify-between gap-3">
-                                <div className="flex min-w-0 items-center gap-2">
-                                  <span className="text-[13px] font-medium text-white">
-                                    {b.label}
-                                  </span>
-                                  {b.current ? (
-                                    <Pill tone="emerald">On sale</Pill>
-                                  ) : (
-                                    <Pill tone="amber">Legacy</Pill>
-                                  )}
-                                  <span className="truncate text-[11px] text-white">
-                                    {tierLabel[b.tier] ?? b.tier}
-                                  </span>
-                                </div>
-                                <div className="shrink-0 text-right">
-                                  <div className="text-[13px] font-semibold tabular-nums text-white">
-                                    {money(b.mrr)}/mo
-                                  </div>
-                                  <div className="text-[11px] tabular-nums text-white">
-                                    {b.count} sub{b.count === 1 ? '' : 's'}
-                                  </div>
-                                </div>
-                              </div>
-                              {/* Bar is share of revenue, not of head count —
-                                  the prices that carry the money are not the
-                                  most populous ones. */}
-                              <Meter
-                                pct={(b.mrr / maxBandMrr) * 100}
-                                fill={b.current ? SERIES[0] : SERIES[1]}
-                              />
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </ListCard>
-                </>
-              </div>
-              <div className="flex min-w-0 flex-col">
-                <>
-                  {/* People — recent subscribers and lifetime buyers are both
-                      "who is paying", so they share a card. */}
-                  <ListCard className="flex h-full flex-col">
-                    <ListCardHeader
-                      tone="emerald"
-                      title="People"
-                      meta={
-                        <Segmented<'recent' | 'lifetime'>
-                          value={people}
-                          onChange={setPeople}
-                          options={[
-                            { value: 'recent', label: 'Recent' },
-                            { value: 'lifetime', label: `Lifetime ${lifetimeCount}` },
-                          ]}
-                        />
-                      }
-                    />
-                    {people === 'recent' ? (
-                      <ListBody>
-                        {recentSubs.map((sub) => {
-                          const tierKey = (sub.tier || 'unknown').toLowerCase();
-                          return (
-                            <ListRow
-                              key={sub.subscriptionId}
-                              lead={
-                                <Avatar
-                                  initials={getInitials(sub.customerName, sub.customerEmail)}
-                                />
-                              }
-                              title={sub.customerName || sub.customerEmail || 'Unknown'}
-                              /* The date is the point of a "recent" list. Without
-                                 it there was nothing on screen to show the top
-                                 row was a week old. */
-                              subtitle={[
-                                whenLabel(sub.created),
-                                sub.customerName ? sub.customerEmail : null,
-                              ]
-                                .filter(Boolean)
-                                .join(' · ')}
-                              trailing={
-                                <>
-                                  {sub.trialing && <Pill tone="orange">Trial</Pill>}
-                                  <Pill tone={tierTone[tierKey] ?? 'yellow'}>
-                                    {tierLabel[tierKey] ?? tierKey}
-                                  </Pill>
-                                  <span
-                                    className={cn(
-                                      'text-[11px] tabular-nums',
-                                      sub.trialing ? 'text-white/50' : 'text-white'
-                                    )}
-                                  >
-                                    {money(sub.monthlyAmount, 2)}
-                                  </span>
-                                </>
-                              }
-                            />
-                          );
-                        })}
-                      </ListBody>
-                    ) : null}
-                    {people === 'recent' && (
-                      <div className="border-t border-white/[0.06] px-4 py-3 sm:px-5">
-                        <div className="text-[12px] text-white">
-                          The {recentSubs.length} newest Stripe signups, trials included.{' '}
-                          {recentSubs.filter((r) => r.trialing).length} of them are still in trial
-                          and are not counted in the {totalSubs} paying or in MRR. App Store and
-                          Play Store signups are not listed — only 13 of 82 carry a subscription
-                          date.
-                        </div>
-                      </div>
-                    )}
-                    {people === 'lifetime' && (
+              <div className="mt-2">
+                <StackBar
+                  segments={[
+                    { value: stripeMrr, color: BLUE, label: 'Stripe' },
+                    { value: rcMrr, color: AQUA, label: 'App Store & Play Store' },
+                  ]}
+                  height={8}
+                />
+                <div className="mt-2.5 flex flex-col gap-1.5 whitespace-nowrap text-[12px] sm:flex-row sm:gap-5">
+                  <span className="inline-flex items-center gap-1.5">
+                    <span className="h-2 w-2 rounded-[2px]" style={{ background: BLUE }} />
+                    Stripe <b className="font-semibold tabular-nums">{gbp(stripeMrr)}</b> ·{' '}
+                    {stripeSubs} subs
+                  </span>
+                  <span className="inline-flex items-center gap-1.5">
+                    <span className="h-2 w-2 rounded-[2px]" style={{ background: AQUA }} />
+                    Stores{' '}
+                    {rcLoaded ? (
                       <>
-                        <ListBody>
-                          {lifetime?.buyers.map((b) => (
-                            <ListRow
-                              key={b.user_id ?? b.email ?? b.recorded_at}
-                              lead={<Avatar initials={getInitials(b.full_name, b.email)} />}
-                              title={b.full_name || b.email || 'Unknown buyer'}
-                              subtitle={b.full_name ? (b.email ?? undefined) : undefined}
-                              trailing={
-                                <>
-                                  {!b.fulfilled && <Pill tone="orange">No access</Pill>}
-                                  {/* An amount parsed out of a grant reason is
-                                      not the same fact as a charge Stripe
-                                      recorded, so it does not look like one. */}
-                                  {!b.amount_is_exact && <Pill tone="purple">Est.</Pill>}
-                                  <span className="text-[13px] font-semibold tabular-nums text-white">
-                                    {money(b.amount_pence / 100, 2)}
-                                  </span>
-                                </>
-                              }
-                            />
-                          ))}
-                        </ListBody>
-                        <div className="border-t border-white/[0.06] px-4 py-3 sm:px-5">
-                          <div className="text-[12px] text-white">
-                            {money(lifetime?.banked ?? 0, 2)} banked · {lifetime?.exactCount ?? 0}{' '}
-                            of {lifetimeCount} confirmed against a checkout record (
-                            {money(lifetime?.bankedExact ?? 0, 2)}). The rest were granted by hand
-                            before purchases were logged, so their amounts are read off the grant
-                            reason.
-                          </div>
-                        </div>
+                        <b className="font-semibold tabular-nums">{gbp(rcMrr)}</b> · {storeSubs} subs
                       </>
+                    ) : (
+                      'loading'
                     )}
-                  </ListCard>
-                </>
+                  </span>
+                </div>
               </div>
+
+              {lifetime && lifetime.banked > 0 && (
+                <div className="mt-4 border-t border-white/[0.1] pt-3 text-[12px] leading-[17px] text-white">
+                  <b className="font-semibold">{gbp(lifetime.banked)}</b> banked from{' '}
+                  {lifetime.buyers.length} lifetime buyers — one-off cash, deliberately not in the
+                  MRR above.
+                  {lifetime.needsAttention.length > 0 && (
+                    <>
+                      {' '}
+                      <span style={{ color: SERIOUS }}>
+                        {lifetime.needsAttention.length} paid with nothing delivered.
+                      </span>
+                    </>
+                  )}
+                </div>
+              )}
             </div>
 
-            {/*
-              The two small cards get their own row rather than being stacked
-              under People.
+            <div className="flex min-w-0 flex-col">
+              <div className="-mx-2 lg:mx-0">
+                {/* `compact` on desktop too: it drops MrrChart's "30 days ago"
+                    reference label, which is clipped at this width and is in any
+                    case redundant beside the delta printed under the figure. */}
+                <div className="hidden lg:block">
+                  <MrrChart points={mrrPoints} range={range} height={260} compact />
+                </div>
+                <div className="lg:hidden">
+                  <MrrChart points={mrrPoints} range={range} height={190} compact />
+                </div>
+              </div>
+            </div>
+          </div>
+        </Panel>
 
-              With Composition alone on the left and People + Mobile + Checks
-              on the right, the left column ran out roughly nine hundred pixels
-              before the right one did and the page carried a dead void down its
-              whole left side. Two short cards side by side end together, and the
-              tall pair above them only differ by the length of one list.
-            */}
-            <div className="grid grid-cols-1 items-stretch gap-6 sm:gap-8 lg:grid-cols-2">
-              {/* Mobile detail stays its own card — it is the one place the
-                        store side is broken out. */}
-              {(rcMrr > 0 || Object.keys(rcAppStoreTiers).length > 0 || rcActiveTrials > 0) && (
-                <ListCard className="flex h-full flex-col">
-                  <ListCardHeader
-                    tone="blue"
-                    title="Mobile app"
-                    meta={rcMrr > 0 ? <Pill tone="blue">{money(rcMrr, 2)} MRR</Pill> : undefined}
-                  />
-                  <ListBody>
-                    {(
-                      [
-                        { key: 'apprentice', name: 'Apprentice', price: '£6.99/mo' },
-                        { key: 'electrician', name: 'Electrician', price: '£19.99/mo' },
-                        { key: 'business_ai', name: 'Mate', price: '£39.99/mo' },
-                        { key: 'employer', name: 'Employer', price: '£49.99/mo' },
-                      ] as const
-                    ).map((t) => {
-                      const count =
-                        (rcAppStoreTiers[t.key] || 0) +
-                        (rcAppStoreTiers[`${t.key}_yearly`] || 0) +
-                        (rcPlayStoreTiers[t.key] || 0) +
-                        (rcPlayStoreTiers[`${t.key}_yearly`] || 0);
-                      return (
-                        <ListRow
-                          key={t.key}
-                          accent={tierTone[t.key] ?? 'blue'}
-                          title={t.name}
-                          subtitle={
-                            count > 0
-                              ? `${count} subscriber${count === 1 ? '' : 's'} · ${t.price}`
-                              : `No subscribers yet · ${t.price}`
-                          }
-                          trailing={
-                            <span
-                              className={cn('text-[15px] font-semibold tabular-nums text-white')}
-                            >
-                              {count}
-                            </span>
-                          }
-                        />
-                      );
-                    })}
-                    {rcActiveTrials > 0 && (
-                      <ListRow
-                        accent="orange"
-                        title="Active trials"
-                        subtitle="Free trial period"
-                        trailing={<Pill tone="orange">{rcActiveTrials} trialing</Pill>}
-                      />
-                    )}
-                  </ListBody>
-                </ListCard>
+        {/* Six figures */}
+        <Panel padded={false} className="px-4 sm:px-5 lg:px-6">
+          <div className="grid grid-cols-2 gap-x-4 lg:grid-cols-6 lg:gap-x-5 [&>*:nth-child(-n+4)]:border-b [&>*:nth-child(-n+4)]:border-white/[0.08] [&>*:nth-child(odd)]:border-r [&>*:nth-child(odd)]:border-white/[0.08] lg:[&>*:last-child]:border-r-0 lg:[&>*]:border-b-0 lg:[&>*]:border-r lg:[&>*]:border-white/[0.08]">
+            <KpiTile
+              label="Paying"
+              value={stripeLoading ? '—' : paying}
+              definition="Stripe + stores"
+              viz={<Sparkline series={payingSeries} accent={BLUE} />}
+            />
+            <KpiTile
+              label="Annual run rate"
+              value={stripeLoading ? '—' : gbp((mrr * 12) / 1000, 1) + 'k'}
+              definition="MRR × 12"
+            />
+            <KpiTile
+              label="Average per user"
+              value={paying > 0 ? gbp(mrr / paying, 2) : '—'}
+              definition="MRR ÷ paying"
+            />
+            <KpiTile
+              label="On a current price"
+              value={
+                ladderSummary.total > 0
+                  ? `${Math.round((ladderSummary.currentCount / ladderSummary.total) * 100)}%`
+                  : '—'
+              }
+              definition={`${ladderSummary.currentCount} of ${ladderSummary.total} Stripe subs`}
+            />
+            <KpiTile
+              label="Payment failing"
+              value={atRisk ? atRisk.count : '—'}
+              definition={atRisk ? `${gbp(atRisk.mrr)}/mo recoverable` : 'past due or unpaid'}
+              delta={
+                atRisk && atRisk.count > 0 ? (
+                  <Delta dir="down" tone="bad">
+                    chase today
+                  </Delta>
+                ) : undefined
+              }
+            />
+            <KpiTile
+              label="Given away"
+              value={discounts ? `${gbp(discounts.forgoneMrr)}` : '—'}
+              definition={discounts ? `${discounts.count} on a discount, monthly` : 'coupons'}
+            />
+          </div>
+        </Panel>
+
+        <Divider label="Pricing" />
+
+        {/* Who is on what price */}
+        <Panel>
+          <SectionHead
+            title="Who's on what price"
+            meta={`${ladder.length} prices in use across ${ladderSummary.total} Stripe subscriptions`}
+          />
+
+          {/*
+            The mix in one bar, before any of the detail.
+
+            Thirteen rows answer "what is each price doing"; almost nobody opens
+            this page for that. The question is "how much of the book is on what
+            we actually charge", and that is one proportion — so it gets said
+            once, large, before the breakdown that justifies it.
+          */}
+          {ladderSummary.total > 0 && (
+            <div className="mt-4">
+              <StackBar
+                segments={[
+                  {
+                    value: ladderSummary.currentCount,
+                    color: PRICE_KIND_COLOURS.current,
+                    label: 'Current price',
+                  },
+                  {
+                    value: ladderSummary.legacyCount,
+                    color: PRICE_KIND_COLOURS.legacy,
+                    label: 'Legacy',
+                  },
+                  {
+                    value: ladderSummary.winbackCount,
+                    color: PRICE_KIND_COLOURS.winback,
+                    label: 'Win-back',
+                  },
+                  {
+                    value: ladderSummary.founderCount,
+                    color: PRICE_KIND_COLOURS.founder,
+                    label: 'Founder',
+                  },
+                ]}
+                height={10}
+              />
+              <div className="mt-2.5 flex flex-wrap gap-x-5 gap-y-1.5">
+                {(
+                  [
+                    ['current', ladderSummary.currentCount],
+                    ['legacy', ladderSummary.legacyCount],
+                    ['winback', ladderSummary.winbackCount],
+                    ['founder', ladderSummary.founderCount],
+                  ] as const
+                ).map(([k, n]) => (
+                  <span
+                    key={k}
+                    className="inline-flex items-center gap-1.5 whitespace-nowrap text-[12px] text-white"
+                  >
+                    <span
+                      className="h-2 w-2 shrink-0 rounded-[2px]"
+                      style={{ background: PRICE_KIND_COLOURS[k] }}
+                    />
+                    {PRICE_KIND_LABELS[k]} <b className="font-semibold tabular-nums">{n}</b>
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <Divider label="Every price" className="mt-5" />
+
+          <div className="mt-3 hidden lg:block">
+            <PriceLadderChart rows={ladder} />
+          </div>
+          <div className="mt-1 lg:hidden">
+            {ladder.map((r) => (
+              <PriceRow key={r.priceId} row={r} max={ladder[0]?.mrr ?? 0} />
+            ))}
+          </div>
+
+          <Hairline className="my-4" />
+          <div className="grid grid-cols-2 gap-x-4 gap-y-4 sm:grid-cols-4">
+            <Fig
+              value={ladderSummary.currentCount}
+              label="On today's price"
+              sub={`of ${ladderSummary.total}`}
+            />
+            <Fig
+              value={ladderSummary.legacyCount}
+              label="On a legacy price"
+              sub="never migrated"
+            />
+            <Fig
+              value={gbp(ladderSummary.legacyGap)}
+              label="Monthly shortfall"
+              sub="vs today's list"
+            />
+            <Fig
+              value={gbp(ladderSummary.winbackMrr)}
+              label="From win-back prices"
+              sub={`${ladderSummary.winbackCount} subscribers`}
+            />
+          </div>
+          <p className="m-0 mt-3 max-w-[85ch] text-[12px] leading-[17px] text-white">
+            The shortfall is what grandfathered subscribers would add if they paid today's list price
+            for their tier. It is not money you are losing — it is the price of the promise you made
+            them — but nothing on this page reported it before. Founder pricing is excluded from the
+            shortfall on purpose: that one was a commitment, not an oversight.
+          </p>
+        </Panel>
+
+        {/* Win-back */}
+        <Panel>
+          <SectionHead
+            title="Win-back"
+            meta={
+              wb?.queue
+                ? `${wb.queue.emails_sent} emails to ${wb.queue.people} people`
+                : 'loading'
+            }
+          />
+          {wb?.outcome && wb.queue ? (
+            <>
+              <div className="mt-3 grid grid-cols-2 gap-x-4 gap-y-4 sm:grid-cols-4">
+                <Fig
+                  value={wb.queue.sent_30d}
+                  label="Sent in 30 days"
+                  sub={`${wb.queue.pending} still queued`}
+                />
+                <Fig
+                  value={wb.outcome.recovered_after}
+                  label="Came back after"
+                  sub="an email went out"
+                />
+                <Fig
+                  value={wbRate != null ? `${wbRate.toFixed(1)}%` : '—'}
+                  label="Recovery rate"
+                  sub={`of ${wb.outcome.recipients} emailed`}
+                />
+                <Fig
+                  value={gbp(ladderSummary.winbackMrr)}
+                  label="On win-back prices"
+                  sub={
+                    winbackOffer
+                      ? `+ ${winbackOffer.redeemed} on a win-back coupon`
+                      : 'recurring, today'
+                  }
+                />
+              </div>
+
+              <div className="mt-4">
+                <WinbackWeeklyChart weekly={wb.weekly} />
+              </div>
+
+              <p className="m-0 mt-3 max-w-[85ch] text-[12px] leading-[17px] text-white">
+                Two different claims, kept apart.{' '}
+                <b className="font-semibold">{wb.outcome.now_subscribed}</b> of the people emailed
+                are subscribed today, but only{' '}
+                <b className="font-semibold">{wb.outcome.recovered_after}</b> started their
+                subscription <em>after</em> the first email — the rest were already back, or their
+                timing cannot be established. The{' '}
+                <b className="font-semibold">{gbp(ladderSummary.winbackMrr)}</b> sitting on win-back
+                prices is the only figure here that is provably attributable.
+                {winbackOffer && (
+                  <>
+                    {' '}
+                    It also understates the programme: win-back reaches people two ways, a dedicated
+                    price or a coupon on a standard price. Those coupons have been redeemed{' '}
+                    <b className="font-semibold">{winbackOffer.redeemed}</b> times, with{' '}
+                    <b className="font-semibold">{winbackOffer.activeSubs}</b> still active at{' '}
+                    {gbp(winbackOffer.activeForgoneMrr)}/mo off list — every discounted subscription
+                    on the book today is a win-back.
+                  </>
+                )}
+              </p>
+
+              {wb.outcome.already_back_before > 0 && (
+                <div
+                  className="mt-3 flex items-start gap-2 rounded-xl px-4 py-3 text-[12px] leading-[17px] text-white"
+                  style={{
+                    border: '1px solid rgba(236,131,90,0.25)',
+                    background: 'rgba(236,131,90,0.08)',
+                  }}
+                >
+                  <AlertTriangle className="mt-px h-4 w-4 shrink-0" style={{ color: SERIOUS }} />
+                  <span>
+                    <b className="font-semibold">
+                      {wb.outcome.already_back_before} people were emailed after they had already
+                      resubscribed.
+                    </b>{' '}
+                    The queue checks for an active subscription when it sends, so these slipped
+                    through — worth a look at the guard in <code>winback-send</code>.
+                  </span>
+                </div>
               )}
 
-              {/*
-                      Checks.
+              {wb.skips.length > 0 && (
+                <>
+                  <Hairline className="my-4" />
+                  <div className="flex items-baseline justify-between gap-3">
+                    <h3 className="m-0 text-[14px] font-semibold leading-5 text-white">
+                      Held back on purpose
+                    </h3>
+                    <span className="text-[12px] text-white">{wb.queue.skipped} skipped</span>
+                  </div>
+                  <div className="mt-2.5 space-y-2">
+                    {wb.skips.map((s) => (
+                      <ReasonBar
+                        key={s.reason}
+                        label={s.reason}
+                        n={s.n}
+                        total={wb.queue!.skipped}
+                        colour={PRICE_KIND_COLOURS.legacy}
+                      />
+                    ))}
+                  </div>
+                </>
+              )}
+            </>
+          ) : (
+            <div className="py-6 text-[13px] text-white">Reading the win-back queue…</div>
+          )}
+        </Panel>
 
-                      This was a "Data Sync" card holding two numbers and an amber
-                      box. The things that can quietly go wrong on this page are
-                      not only sync: an unmapped price silently parks paying
-                      subscribers in a tier that does not exist, and a lifetime
-                      buyer whose grant never landed has paid for nothing. All of
-                      it reads as pass or fail.
-                    */}
-              <ListCard className="flex h-full flex-col">
-                <ListCardHeader
-                  tone={syncGap + unmappedSubs + unfulfilledLifetime > 0 ? 'amber' : 'emerald'}
-                  title="Checks"
-                  action="Refresh"
-                  onAction={handleRefresh}
+        {/* What store subscribers are on */}
+        <Panel>
+          <SectionHead
+            title="Store prices"
+            meta={
+              storeMix
+                ? `${storeMix.covered} of ${storeMix.store_paying} store subscribers matched to a product`
+                : undefined
+            }
+          />
+          {!storeMix || storeLadder.rows.length === 0 ? (
+            <div className="py-6 text-[13px] text-white">Reading store products…</div>
+          ) : (
+            <>
+              <div className="mt-3">
+                {storeLadder.rows.map((r) => (
+                  <div key={`${r.store}-${r.product_id}`} className="border-t border-white/[0.08] py-2.5">
+                    <div className="flex items-baseline gap-2">
+                      <span
+                        className="mt-1 h-2 w-2 shrink-0 self-start rounded-[2px]"
+                        style={{
+                          background: r.promo
+                            ? PRICE_KIND_COLOURS.legacy
+                            : PRICE_KIND_COLOURS.current,
+                        }}
+                      />
+                      <span className="min-w-0 flex-1 truncate text-[13px] font-medium text-white">
+                        {r.monthly != null && !r.promo
+                          ? `£${r.monthly.toFixed(2).replace('.00', '')}${r.interval === 'year' ? '/yr' : '/mo'} · `
+                          : ''}
+                        {r.label}
+                      </span>
+                      <span className="shrink-0 text-[13px] font-semibold tabular-nums text-white">
+                        {r.mrr != null ? gbp(r.mrr) : '—'}
+                      </span>
+                    </div>
+                    <div className="mt-1 truncate pl-4 text-[12px] text-white">
+                      {r.subscribers} subscriber{r.subscribers === 1 ? '' : 's'} ·{' '}
+                      {storeLabel(r.store)}
+                      {r.promo ? ' · comped, no revenue' : ''}
+                    </div>
+                    <div className="mt-1.5 ml-4 h-1 rounded-sm bg-white/[0.06]">
+                      <div
+                        className="h-1 rounded-sm"
+                        style={{
+                          width: `${Math.max(((r.mrr ?? 0) / storeLadder.max) * 100, 1)}%`,
+                          background: r.promo
+                            ? PRICE_KIND_COLOURS.legacy
+                            : PRICE_KIND_COLOURS.current,
+                        }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <Hairline className="my-4" />
+              <div className="grid grid-cols-2 gap-x-4 gap-y-4 sm:grid-cols-4">
+                <Fig
+                  value={gbp(storeLadder.impliedMrr)}
+                  label="Implied by these"
+                  sub="list price × subs"
                 />
-                <div className="divide-y divide-white/[0.06] px-4 pb-2 sm:px-5">
-                  <Check
-                    ok={syncGap === 0}
-                    label="Stripe and Supabase agree"
-                    detail={
-                      syncGap === 0
-                        ? `${stripeSubs} active in Stripe, ${stripeStats?.supabase.subscribedUsers ?? 0} marked subscribed here.`
-                        : `${stripeStats?.discrepancies.inStripeNotSupabase ?? 0} in Stripe not synced here · ${stripeStats?.discrepancies.inSupabaseNotStripe ?? 0} marked subscribed with no live Stripe subscription. Store-billed subscribers are excluded.`
-                    }
-                  />
-                  <Check
-                    ok={unmappedSubs === 0}
-                    label="Every price maps to a tier"
-                    detail={
-                      unmappedSubs === 0
-                        ? 'All active prices resolve to a known tier.'
-                        : `${unmappedSubs} subscriber${unmappedSubs === 1 ? '' : 's'} on a product ID missing from the tier map — their tier is unknown and their revenue is unattributed.`
-                    }
-                  />
-                  <Check
-                    ok={unfulfilledLifetime === 0}
-                    label="Lifetime buyers have access"
-                    detail={
-                      unfulfilledLifetime === 0
-                        ? `All ${lifetimeCount} lifetime buyers granted, ${money(lifetime?.banked ?? 0)} banked.`
-                        : `${unfulfilledLifetime} paid without the grant landing.`
-                    }
-                  />
-                </div>
-              </ListCard>
+                <Fig value={gbp(rcMrr)} label="RevenueCat MRR" sub="the real figure" />
+                <Fig
+                  value={`${storeMix.store_paying - storeMix.covered}`}
+                  label="No product on file"
+                  sub="subscribed before Aug"
+                />
+                <Fig
+                  value={
+                    storeMix.covered > 0
+                      ? gbp(storeLadder.impliedMrr / storeMix.covered, 2)
+                      : '—'
+                  }
+                  label="Average matched"
+                  sub="per subscriber"
+                />
+              </div>
+              <p className="m-0 mt-3 max-w-[85ch] text-[12px] leading-[17px] text-white">
+                Apple and Google never return the price an individual subscriber pays, so the amounts
+                above are UK list prices looked up by product id — the store equivalent of the price
+                map the Stripe side uses. The check is the two figures beside each other: these
+                products imply {gbp(storeLadder.impliedMrr)} across{' '}
+                {storeMix.covered} matched subscribers, against {gbp(rcMrr)} of real store MRR across{' '}
+                {storeMix.store_paying}. The gap is the{' '}
+                {storeMix.store_paying - storeMix.covered} who subscribed before{' '}
+                {storeMix.events_from
+                  ? new Date(storeMix.events_from).toLocaleDateString('en-GB', {
+                      day: 'numeric',
+                      month: 'long',
+                    })
+                  : 'the webhook started'}
+                , when the webhook that records a product id started running.
+              </p>
+            </>
+          )}
+        </Panel>
+
+        <Divider label="Programmes" />
+
+        {/* The college scheme, on its own */}
+        <Panel tone="accent">
+          <SectionHead
+            title="College scheme"
+            meta={`50% for life · ${gbp(college.apprenticePrice, 2)} an apprentice · ${gbp(
+              college.electricianPrice,
+              2
+            )} an electrician`}
+          />
+
+          {/*
+            One number, then the distance still to run.
+
+            This opened with four equal-weight figures and a database footnote as
+            body copy, so the only fact that matters — one college of 140 has
+            used a code — arrived as the second-smallest stat on the panel. The
+            headline is the money it makes today; the bar underneath is how much
+            of the scheme is actually switched on.
+          */}
+          <div className="mt-4 grid gap-5 lg:grid-cols-[260px_minmax(0,1fr)] lg:gap-x-10">
+            <div className="min-w-0 text-white">
+              <div className="text-[13px] font-medium leading-4">Scheme MRR</div>
+              <div className="mt-1 text-[40px] font-semibold leading-[42px] tracking-[-0.03em] lg:text-[48px] lg:leading-[50px]">
+                {gbp(college.mrr, 2)}
+              </div>
+              <div className="mt-1.5 text-[13px] leading-[18px]">
+                {college.redeemed} redemption{college.redeemed === 1 ? '' : 's'} across{' '}
+                {college.taken.length} college{college.taken.length === 1 ? '' : 's'}
+              </div>
             </div>
-          </>
+
+            <div className="min-w-0">
+              <div className="flex items-baseline justify-between gap-3 text-white">
+                <span className="text-[13px] font-medium">Colleges using their code</span>
+                <span className="text-[13px] font-semibold tabular-nums">
+                  {college.taken.length} of {college.colleges}
+                </span>
+              </div>
+              <div className="mt-2 h-2.5 w-full overflow-hidden rounded-full bg-white/[0.07]">
+                <div
+                  className="h-full rounded-full"
+                  style={{
+                    // A sliver, honestly: 1 of 140 is 0.7%. Floored at 3px so it
+                    // is visible as a start rather than reading as nothing.
+                    width: `max(3px, ${(college.taken.length / Math.max(college.colleges, 1)) * 100}%)`,
+                    background: PRICE_KIND_COLOURS.current,
+                  }}
+                />
+              </div>
+              <div className="mt-3 grid grid-cols-2 gap-x-4 gap-y-4 sm:grid-cols-3">
+                <Fig
+                  value={gbp(college.colleges * college.apprenticePrice, 0)}
+                  label="If each took one"
+                  sub="a month, apprentice rate"
+                />
+                <Fig
+                  value={gbp(college.colleges * 10 * college.apprenticePrice, 0)}
+                  label="Ten each"
+                  sub="a month"
+                />
+                <Fig value={college.codes} label="Codes live" sub="apprentice + electrician" />
+              </div>
+            </div>
+          </div>
+
+          {college.taken.length > 0 && (
+            <>
+              <Divider label="Who has used it" className="mt-5" />
+              <div className="mt-2">
+                {college.taken.map((r) => (
+                  <PersonLine
+                    key={r.college}
+                    name={r.college}
+                    sub={
+                      [
+                        r.apprentice && r.apprentice.redeemed > 0
+                          ? `${r.apprentice.code} · ${r.apprentice.redeemed} apprentice`
+                          : null,
+                        r.electrician && r.electrician.redeemed > 0
+                          ? `${r.electrician.code} · ${r.electrician.redeemed} electrician`
+                          : null,
+                      ]
+                        .filter(Boolean)
+                        .join(' · ') || '—'
+                    }
+                    value={gbp(r.mrr, 2)}
+                    note="a month"
+                  />
+                ))}
+              </div>
+            </>
+          )}
+
+          {/*
+            The pipeline, deliberately quiet.
+
+            Forty pill-shaped chips made the colleges that have done NOTHING the
+            loudest thing on the panel. It is a worklist, not a headline: three
+            dense columns, plain text, capped height, so it can be read down
+            without shouting over the money above it.
+          */}
+          {college.notUsed.length > 0 && (
+            <>
+              <Divider
+                label={`Not yet used · ${college.notUsed.length}`}
+                className="mt-5"
+              />
+              <div className="mt-2 max-h-[190px] overflow-y-auto pr-1">
+                <ul className="m-0 grid list-none grid-cols-1 gap-x-6 gap-y-0.5 p-0 sm:grid-cols-2 lg:grid-cols-3">
+                  {college.notUsed.map((r) => (
+                    <li
+                      key={r.college}
+                      className="truncate py-1 text-[12px] leading-4 text-white"
+                      title={[r.apprentice?.code, r.electrician?.code].filter(Boolean).join(' · ')}
+                    >
+                      {r.college}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </>
+          )}
+
+          <p className="m-0 mt-4 text-[11px] leading-4 text-white">
+            Take-up is read from Stripe. Our own <code>promo_offers.redemptions</code> column is
+            written when a code is created and never updated, so it reads zero everywhere.
+          </p>
+        </Panel>
+
+        {/* Every offer we run */}
+        <Panel>
+          <SectionHead
+            title="Offers and coupons"
+            meta={
+              offers
+                ? `${offers.totalCoupons} coupons · ${offers.totalCodes} codes issued`
+                : undefined
+            }
+          />
+
+          {!offers ? (
+            <div className="py-6 text-[13px] text-white">Reading Stripe coupons…</div>
+          ) : (
+            <>
+              {/*
+                Schemes as tiles, not as a list of headings.
+
+                As a vertical list this read as six near-empty rows: a scheme
+                name, a count, and then nothing, because the referral scheme is
+                26 near-identical coupons that are not worth listing and two
+                schemes have never been redeemed at all. A tile carries the same
+                facts in a quarter of the height and lets the zero ones sit
+                quietly beside the ones doing work.
+              */}
+              {/*
+                Cards ON the panel, not holes punched INTO it.
+
+                These were a hairline grid filled with hsl(0 0% 9%) — darker
+                than the panel behind them — so six near-black rectangles read
+                as gaps in the surface rather than as tiles. Elevation runs the
+                other way: a raised thing is lighter than its ground. Separate
+                rounded cards on a translucent white fill, with real gaps
+                instead of 1px seams.
+              */}
+              {/*
+                Stripe cannot separate these two schemes, so the page must.
+
+                DODDELEC50, KANEELEC50, SESELEC50 and four more EMPLOYER codes
+                sit on the coupon literally named "College scheme: 50% off
+                Electrician" — so grouping by coupon name counted Dodd Group and
+                Kane Group as colleges, and this tile said 161 codes issued
+                while the College panel below said 143. Only promo_offers.name
+                knows the difference, so the college and employer rows are
+                rebuilt from it and Stripe's conflated row is dropped.
+              */}
+              <div className="mt-3 grid grid-cols-2 gap-2.5 lg:grid-cols-3">
+                {[
+                  ...offers.schemes.filter((sc) => sc.scheme !== 'college'),
+                  {
+                    scheme: 'college' as const,
+                    coupons: 2,
+                    codesIssued: college.codes,
+                    redeemed: college.redeemed,
+                    activeSubs: 0,
+                    activeForgoneMrr: 0,
+                  },
+                  {
+                    scheme: 'employer' as const,
+                    coupons: 2,
+                    codesIssued: employer.codes,
+                    redeemed: employer.redeemed,
+                    activeSubs: 0,
+                    activeForgoneMrr: 0,
+                  },
+                ].map((sc) => {
+                  const dead = sc.redeemed === 0;
+                  const accent =
+                    sc.scheme === 'college'
+                      ? ACCENT
+                      : sc.scheme === 'winback'
+                        ? PRICE_KIND_COLOURS.winback
+                        : sc.scheme === 'founder'
+                          ? PRICE_KIND_COLOURS.founder
+                          : 'rgba(255,255,255,0.30)';
+                  return (
+                    <div
+                      key={sc.scheme}
+                      className="rounded-xl border border-white/[0.08] bg-white/[0.035] px-4 py-3.5"
+                    >
+                      <div className="flex items-center gap-2">
+                        <span
+                          className="h-2 w-2 shrink-0 rounded-[2px]"
+                          style={{ background: dead ? 'rgba(255,255,255,0.22)' : accent }}
+                        />
+                        <span className="min-w-0 truncate text-[12px] font-medium leading-4 text-white">
+                          {OFFER_SCHEME_LABELS[sc.scheme]}
+                        </span>
+                      </div>
+                      <div className="mt-2 flex items-baseline gap-2">
+                        <span
+                          className="text-[28px] font-semibold leading-[30px] tracking-[-0.02em]"
+                          style={{ color: dead ? 'rgba(255,255,255,0.45)' : '#ffffff' }}
+                        >
+                          {sc.redeemed}
+                        </span>
+                        <span className="text-[12px] text-white">taken</span>
+                      </div>
+                      <div className="mt-1.5 text-[11px] leading-4 text-white">
+                        {sc.codesIssued > 0
+                          ? `${sc.codesIssued} code${sc.codesIssued === 1 ? '' : 's'} issued`
+                          : `${sc.coupons} coupon${sc.coupons === 1 ? '' : 's'}`}
+                        {sc.activeSubs > 0 && (
+                          <>
+                            <br />
+                            {sc.activeSubs} live · {gbp(sc.activeForgoneMrr)}/mo
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/*
+                Reads the promo_offers rollup, NOT `offers.schemes`.
+
+                This block shadowed the outer `college` with Stripe's grouping
+                and so printed 161 — the conflated college+employer figure — in
+                the very banner added to call the number out, directly under a
+                tile saying 143.
+              */}
+              {(() => {
+                if (college.codes === 0) return null;
+                return (
+                  <div
+                    className="mt-4 flex items-start gap-2 rounded-xl px-4 py-3 text-[12px] leading-[17px] text-white"
+                    style={{
+                      border: '1px solid rgba(236,131,90,0.25)',
+                      background: 'rgba(236,131,90,0.08)',
+                    }}
+                  >
+                    <AlertTriangle className="mt-px h-4 w-4 shrink-0" style={{ color: SERIOUS }} />
+                    <span>
+                      <b className="font-semibold">
+                        {college.codes} college codes issued, {college.redeemed} redeemed.
+                      </b>{' '}
+                      The codes are live and the coupon is valid — a distribution problem, not a
+                      pricing one.
+                    </span>
+                  </div>
+                );
+              })()}
+
+              {/*
+                Only the schemes with something to look at get rows: a coupon
+                per referrer is noise, and a scheme nobody has taken has no
+                holders to name.
+              */}
+              {(['winback', 'college'] as const).map((scheme) => {
+                const rows = offers.rows.filter((o) => o.scheme === scheme);
+                if (rows.length === 0) return null;
+                return (
+                  <div key={scheme} className="mt-5">
+                    <Divider label={OFFER_SCHEME_LABELS[scheme]} />
+                    <div className="mt-2">
+                      {rows.map((o) => {
+                        const holders = holdersByCoupon.get(o.couponId) ?? [];
+                        return (
+                          <div key={o.couponId}>
+                            <div className="flex items-center gap-3 border-t border-white/[0.08] py-2.5">
+                              <div className="min-w-0 flex-1">
+                                <div className="truncate text-[13px] font-medium text-white">
+                                  {o.name ?? o.couponId}
+                                </div>
+                                <div className="mt-0.5 truncate text-[12px] text-white">
+                                  {offerValue(o)}
+                                  {o.codesIssued > 0 &&
+                                    ` · ${o.codesIssued} code${o.codesIssued === 1 ? '' : 's'}`}
+                                  {holders.length > 0 && ` · ${holders.length} on it now`}
+                                </div>
+                              </div>
+                              <span className="shrink-0 text-right text-[13px] font-semibold tabular-nums text-white">
+                                {o.timesRedeemed}
+                                <span className="block text-[11px] font-normal text-white">
+                                  taken
+                                </span>
+                              </span>
+                            </div>
+                            {holders.length > 0 && (
+                              <div className="pl-6">
+                                {holders.map((h) => (
+                                  <PersonLine
+                                    key={h.subscriptionId}
+                                    name={h.email ?? h.customerId ?? 'Unknown'}
+                                    sub={tierLabel(h.tier)}
+                                    value={gbp(h.actualMrr, 2)}
+                                    note={`was ${gbp(h.listMrr, 2)}`}
+                                  />
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              })}
+            </>
+          )}
+        </Panel>
+
+        <Divider label="Risk" />
+
+        {/* Discounts and failing payments, side by side */}
+        <div className="grid gap-5 lg:grid-cols-2 lg:gap-6">
+          <Panel>
+            <SectionHead
+              title="Discounts in play"
+              meta={discounts ? `${gbp(discounts.forgoneMrr)} a month` : undefined}
+            />
+            {!discounts || discounts.rows.length === 0 ? (
+              <div className="py-6 text-[13px] text-white">
+                No active subscription carries a discount.
+              </div>
+            ) : (
+              <>
+                <div className="mt-2 max-h-[400px] overflow-y-auto">
+                  {discounts.rows.map((d) => (
+                    <PersonLine
+                      key={d.subscriptionId}
+                      name={d.email ?? d.customerId ?? 'Unknown'}
+                      sub={`${d.couponName ?? d.couponId ?? 'coupon'}${
+                        d.percentOff ? ` · ${d.percentOff}% off` : ''
+                      }${d.amountOff ? ` · ${gbp(d.amountOff)} off` : ''}${
+                        d.duration === 'forever' ? ' · forever' : ''
+                      }`}
+                      value={gbp(d.actualMrr, 2)}
+                      note={`was ${gbp(d.listMrr, 2)}`}
+                    />
+                  ))}
+                </div>
+              </>
+            )}
+          </Panel>
+
+          <Panel>
+            <SectionHead
+              title="Payment failing"
+              meta={atRisk ? `${gbp(atRisk.mrr)} a month at stake` : undefined}
+            />
+            {!atRisk || atRisk.rows.length === 0 ? (
+              <div className="flex items-center gap-2 py-6 text-[13px] text-white">
+                <CheckCircle2 className="h-4 w-4" style={{ color: GOOD }} />
+                No subscription is past due or unpaid.
+              </div>
+            ) : (
+              <>
+                <p className="m-0 mt-1 text-[12px] leading-[17px] text-white">
+                  A bounced card, not a decision to leave — usually reversible.
+                </p>
+                <div className="mt-2">
+                  {atRisk.rows.map((r) => (
+                    <PersonLine
+                      key={r.subscriptionId}
+                      name={r.email ?? r.customerId ?? 'Unknown'}
+                      sub={`${tierLabel(r.tier)} · ${r.status.replace('_', ' ')}${
+                        r.periodStart
+                          ? ` · unpaid since ${formatDistanceToNow(parseISO(r.periodStart), { addSuffix: true })}`
+                          : ''
+                      }`}
+                      value={gbp(r.monthlyAmount, 2)}
+                      note="a month"
+                    />
+                  ))}
+                </div>
+              </>
+            )}
+          </Panel>
+        </div>
+
+        {/* Renewals ahead */}
+        <Panel>
+          <SectionHead
+            title="Annual renewals ahead"
+            meta={
+              renewals
+                ? `${renewals.count} subscriptions · ${gbp(renewals.yearAmount)} over twelve months`
+                : undefined
+            }
+          />
+          <div className="mt-3">
+            <RenewalMonthsChart rows={renewals?.rows ?? []} />
+          </div>
+          {renewals && renewals.count > 0 && (
+            <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-[12px] text-white">
+              <span className="inline-flex items-center gap-1.5">
+                <span className="h-2 w-2 rounded-[2px]" style={{ background: AQUA }} />
+                Due to renew
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <span
+                  className="h-2 w-2 rounded-[2px]"
+                  style={{ background: PRICE_KIND_COLOURS.legacy }}
+                />
+                Already cancelling{renewals.willCancel > 0 ? ` · ${renewals.willCancel}` : ''}
+              </span>
+              <span>
+                Soonest{' '}
+                <b className="font-semibold">
+                  {renewals.rows[0] ? `${renewals.rows[0].daysAway} days away` : '—'}
+                </b>
+              </span>
+            </div>
+          )}
+        </Panel>
+
+        <Divider label="Money in" />
+
+        {/* Cash in */}
+        <Panel>
+          <SectionHead
+            title="Cash in"
+            meta={
+              gross
+                ? `${gross.charges.toLocaleString('en-GB')} successful charges since ${
+                    gross.firstChargeAt
+                      ? new Date(gross.firstChargeAt).toLocaleDateString('en-GB', {
+                          month: 'short',
+                          year: 'numeric',
+                        })
+                      : 'launch'
+                  }`
+                : undefined
+            }
+          />
+          <p className="m-0 mt-1 max-w-[80ch] text-[12px] leading-[17px] text-white">
+            Receipts, not run rate — every charge, refunds subtracted.
+          </p>
+
+          <div className="mt-4 grid grid-cols-2 gap-x-4 gap-y-4 sm:grid-cols-4">
+            <Fig
+              value={grossTotal != null ? gbp(grossTotal) : '—'}
+              label="Gross, all time"
+              sub="Stripe + stores"
+            />
+            <Fig
+              value={gross ? gbp(gross.allTime) : '—'}
+              label="Through Stripe"
+              sub={gross ? `${gbp(gross.refunded)} refunded` : 'net of refunds'}
+            />
+            <Fig
+              value={rcGross ? gbp(rcGross.allTime) : '—'}
+              label="Through the stores"
+              sub={rcGross ? 'App Store + Play' : 'unavailable'}
+            />
+            <Fig
+              value={dailyAverage != null ? gbp(dailyAverage, 2) : '—'}
+              label="A day, both rails"
+              sub="average, last 30"
+            />
+          </div>
+
+          <div className="mt-4">
+            <DailyCashChart
+              stripeDaily={gross?.daily ?? []}
+              storeDaily={rcGross?.daily ?? []}
+            />
+          </div>
+          <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5">
+            <span className="inline-flex items-center gap-1.5 text-[12px] text-white">
+              <span className="h-2 w-2 rounded-[2px]" style={{ background: BLUE }} />
+              Stripe
+            </span>
+            <span className="inline-flex items-center gap-1.5 text-[12px] text-white">
+              <span className="h-2 w-2 rounded-[2px]" style={{ background: AQUA }} />
+              App Store &amp; Play
+            </span>
+          </div>
+          <p className="m-0 mt-2 max-w-[85ch] text-[12px] leading-[17px] text-white">
+            Both rails by day, net of refunds — Stripe from its charges, stores from RevenueCat's
+            daily revenue chart.
+            {gross && (
+              <>
+                {' '}
+                Counted{' '}
+                {formatDistanceToNow(parseISO(gross.asOf), { addSuffix: true })}; refreshed every six
+                hours.
+              </>
+            )}
+          </p>
+        </Panel>
+
+        {/* Lifetime payers */}
+        {lifetime && lifetime.buyers.length > 0 && (
+          <Panel>
+            <SectionHead
+              title="Lifetime payers"
+              meta={`${lifetime.buyers.length} buyers · ${gbp(lifetime.banked)} banked`}
+            />
+            <p className="m-0 mt-1 max-w-[80ch] text-[12px] leading-[17px] text-white">
+              One-off payments, kept out of MRR — they recur never.
+            </p>
+            <div className="mt-3 grid grid-cols-2 gap-x-4 gap-y-4 sm:grid-cols-4">
+              <Fig value={gbp(lifetime.banked)} label="Banked" sub="all buyers" />
+              <Fig
+                value={gbp(lifetime.bankedExact)}
+                label="Confirmed"
+                sub={`${lifetime.exactCount} with a receipt`}
+              />
+              <Fig
+                value={lifetime.buyers.length}
+                label="Buyers"
+                sub="lifetime access granted"
+              />
+              <Fig
+                value={lifetime.needsAttention.length}
+                label="Need attention"
+                sub="paid, not delivered"
+              />
+            </div>
+            <div className="mt-3">
+              {lifetime.buyers.map((b) => (
+                <PersonLine
+                  key={`${b.user_id ?? b.email ?? b.recorded_at}`}
+                  name={b.full_name || b.email || 'Unknown buyer'}
+                  sub={`${new Date(b.recorded_at).toLocaleDateString('en-GB', {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric',
+                  })}${!b.amount_is_exact ? ' · amount approximate' : ''}${
+                    !b.fulfilled ? ' · not yet delivered' : ''
+                  }${!b.user_id ? ' · no account matched' : ''}`}
+                  value={gbp(b.amount_pence / 100, 2)}
+                />
+              ))}
+            </div>
+          </Panel>
+        )}
+
+        {/* Why people leave */}
+        <Panel>
+          <SectionHead
+            title="Why people leave"
+            meta={churnByReason.total > 0 ? `${churnByReason.total} cancellations` : undefined}
+          />
+          {churnByReason.rows.length === 0 ? (
+            <div className="py-6 text-[13px] text-white">No cancellation reasons recorded yet.</div>
+          ) : (
+            <>
+              <div className="mt-3 space-y-2">
+                {churnByReason.rows.map((r) => (
+                  <ReasonBar
+                    key={r.reason}
+                    label={CHURN_REASON_LABELS[r.reason] ?? r.reason}
+                    n={r.n}
+                    total={churnByReason.total}
+                    colour={r.reason === 'not_using' ? SERIOUS : PRICE_KIND_COLOURS.legacy}
+                  />
+                ))}
+              </div>
+              <p className="m-0 mt-3 max-w-[85ch] text-[12px] leading-[17px] text-white">
+                From the in-app cancel survey. Price is a long way from the top: people leave because
+                the product never became part of the job, which is an onboarding problem rather than
+                a pricing one — and the same conclusion the trial return curve reaches independently.
+              </p>
+            </>
+          )}
+        </Panel>
+
+        {/* Movement */}
+        <Panel>
+          <SectionHead
+            title="Movement"
+            meta={movement ? 'Stripe only · starts and cancellations' : undefined}
+          />
+          {!movement ? (
+            <div className="py-6 text-[13px] text-white">Reading Stripe movement…</div>
+          ) : (
+            <>
+              <div className="mt-3 grid grid-cols-2 gap-x-4 gap-y-4 sm:grid-cols-4">
+                <Fig
+                  value={movement.started30}
+                  label="Started, 30 days"
+                  sub={`${movement.started14} in the last 14`}
+                />
+                <Fig
+                  value={movement.canceled30}
+                  label="Cancelled, 30 days"
+                  sub={`${movement.canceled14} in the last 14`}
+                />
+                <Fig
+                  value={movement.started30 - movement.canceled30 >= 0
+                    ? `+${movement.started30 - movement.canceled30}`
+                    : `${movement.started30 - movement.canceled30}`}
+                  label="Net, 30 days"
+                  sub="starts minus cancellations"
+                />
+                <Fig
+                  value={movement.canceledNeverPaid30}
+                  label="Never paid"
+                  sub="of those cancellations"
+                />
+              </div>
+
+              {/*
+                New MRR by day, from what STARTED — including subscriptions that
+                have since cancelled. It answers "what did we win", not "what
+                survived"; netting churn into it would make a good sales week
+                and a quiet one look identical.
+              */}
+              <div className="mt-4">
+                <NewMrrChart starts={movement.startsLast14} />
+              </div>
+
+              <p className="m-0 mt-2 max-w-[85ch] text-[12px] leading-[17px] text-white">
+                Gross new MRR by the day it started, last 14 days. Faded bars are subscriptions that
+                have already cancelled — they were still won, so they are shown rather than removed.
+                {movement.canceledNeverPaid30 > 0 && (
+                  <>
+                    {' '}
+                    {movement.canceledNeverPaid30} of the {movement.canceled30} cancellations never
+                    paid at all — trials that ended, not customers lost.
+                  </>
+                )}
+              </p>
+            </>
+          )}
+        </Panel>
+
+        {/* Does this page add up */}
+        <Panel>
+          <SectionHead
+            title="Checks"
+            meta={checks.allOk ? 'all clear' : `${checks.failing} need looking at`}
+          />
+          <div className="mt-2">
+            <Check
+              ok={checks.syncGap === 0}
+              label="Stripe and this database agree"
+              detail={
+                checks.syncGap === 0
+                  ? `${stripeSubs} active in Stripe, ${stripeStats?.supabase?.subscribedUsers ?? 0} marked subscribed here.`
+                  : `${stripeStats?.discrepancies?.inStripeNotSupabase ?? 0} in Stripe but not synced here · ${stripeStats?.discrepancies?.inSupabaseNotStripe ?? 0} marked subscribed with no live Stripe subscription. Store-billed subscribers are excluded.`
+              }
+            />
+            <Check
+              ok={checks.unmapped === 0}
+              label="Every price maps to a tier"
+              detail={
+                checks.unmapped === 0
+                  ? 'All active prices resolve to a known tier, so the ladder above accounts for every pound.'
+                  : `${checks.unmapped} subscriber${checks.unmapped === 1 ? '' : 's'} on a price ID missing from the tier map — their revenue is real but attributed to no tier, so the price ladder is short by that much.`
+              }
+            />
+            <Check
+              ok={checks.unfulfilledLifetime === 0}
+              label="Lifetime buyers have their access"
+              detail={
+                checks.unfulfilledLifetime === 0
+                  ? `All ${lifetime?.buyers.length ?? 0} lifetime buyers granted, ${gbp(lifetime?.banked ?? 0)} banked.`
+                  : `${checks.unfulfilledLifetime} paid without the grant landing.`
+              }
+            />
+            <Check
+              ok={checks.storeCoverage === 0}
+              label="Every store subscriber has a product on file"
+              detail={
+                checks.storeCoverage === 0
+                  ? 'All store subscribers matched to a product.'
+                  : `${checks.storeCoverage} store subscriber${checks.storeCoverage === 1 ? '' : 's'} joined before the RevenueCat webhook started recording product IDs, so the store price mix above is drawn from the rest.`
+              }
+            />
+          </div>
+        </Panel>
+
+        {/* Stores */}
+        {rcLoaded && (
+          <Panel>
+            <SectionHead title="App Store & Play Store" meta="live from RevenueCat" />
+            <div className="mt-3 grid grid-cols-2 gap-x-4 gap-y-4 sm:grid-cols-4">
+              <Fig value={gbp(rcMrr)} label="Store MRR" sub="normalised monthly" />
+              <Fig value={storeSubs} label="Paying" sub="across both stores" />
+              <Fig
+                value={rcStats?.subscribersBySource?.app_store ?? 0}
+                label="App Store"
+                sub="subscribers"
+              />
+              <Fig
+                value={rcStats?.subscribersBySource?.play_store ?? 0}
+                label="Play Store"
+                sub="subscribers"
+              />
+            </div>
+            <p className="m-0 mt-3 max-w-[85ch] text-[12px] leading-[17px] text-white">
+              The price ladder above is Stripe only — Apple and Google report tiers, not the
+              individual price a subscriber is grandfathered on, so a like-for-like ladder cannot be
+              built for the stores.
+            </p>
+          </Panel>
         )}
       </PageFrame>
     </PullToRefresh>

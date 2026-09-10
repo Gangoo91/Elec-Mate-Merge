@@ -1,4 +1,6 @@
 import { useCalculator } from './power-factor/useCalculator';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import {
   CalculatorCard,
   CalculatorInputGrid,
@@ -85,6 +87,60 @@ const PowerFactorCalculator = () => {
     factor renders red rather than volt — volt is the good answer throughout the
     app, and showing 0.107 in the same colour as 0.99 is worse than no colour.
   */
+  const buildReport = (): CalcReport | null => {
+    if (pf === null) return null;
+    return {
+      meta: {
+        title: 'Power Factor',
+        subtitle: `${methodLabel} · ${phases === 'three' ? 'Three-phase' : 'Single-phase'}`,
+        standard: 'BS 7671 · Reg 331.1(l)',
+      },
+      headline: [
+        {
+          label: 'Power factor',
+          value: pf.toFixed(3),
+          verdict: pf >= 0.95 ? 'pass' : pf >= 0.85 ? 'pass' : 'warn',
+        },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            { label: 'Method', value: methodLabel },
+            ...(activePower ? [{ label: 'Active power', value: `${activePower} W` }] : []),
+            ...(apparentPower ? [{ label: 'Apparent power', value: `${apparentPower} VA` }] : []),
+            ...(voltage ? [{ label: 'Voltage', value: `${voltage} V` }] : []),
+            ...(current ? [{ label: 'Current', value: `${current} A` }] : []),
+            ...(targetPF ? [{ label: 'Target power factor', value: targetPF }] : []),
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'Power factor', value: pf.toFixed(3), note: status.text },
+            { label: 'Efficiency', value: rating },
+            ...(showCorrection && capacitorKVAr
+              ? [{ label: 'Capacitor rating required', value: `${capacitorKVAr} kVAr` }]
+              : []),
+            ...(showCorrection && currentAfterCorrection
+              ? [{ label: 'Current after correction', value: `${currentAfterCorrection} A` }]
+              : []),
+          ],
+        },
+      ],
+      // Stated because a client seeing "poor" needs to know it is not a breach:
+      // BS 7671 sets no numeric power-factor limit, it only requires assessment.
+      notes: [
+        'BS 7671 sets no numeric power-factor limit. Reg 331.1(l) requires power factor to be assessed; the efficiency banding here is guidance only.',
+        ...(pfType === 'leading'
+          ? ['A leading power factor is corrected by removing capacitance or adding inductance — adding capacitors would make it worse.']
+          : []),
+      ],
+    };
+  };
+
+  useProvideCalcReport(pf === null ? null : buildReport);
+
   const resultPane =
     pf === null ? null : (
       <CalculatorResult category="power" variant={pf < 0.85 ? 'warning' : 'success'}>

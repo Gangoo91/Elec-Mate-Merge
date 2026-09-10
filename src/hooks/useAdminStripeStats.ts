@@ -40,16 +40,170 @@ export interface AdminStripeSubscription {
   created: string;
 }
 
+/** One Stripe price and everyone sitting on it. */
+export interface PriceLadderRow {
+  priceId: string;
+  nickname: string | null;
+  unitAmount: number;
+  interval: string | null;
+  tier: string;
+  /** Why somebody is on this price, not just what it costs. */
+  kind: 'current' | 'winback' | 'founder' | 'legacy';
+  count: number;
+  mrr: number;
+  /** Monthly shortfall against today's list price for the tier. Never negative. */
+  belowCurrent: number;
+}
+
+export interface DiscountRow {
+  subscriptionId: string;
+  customerId: string | null;
+  email: string | null;
+  tier: string;
+  couponId: string | null;
+  couponName: string | null;
+  promotionCode: string | null;
+  percentOff: number | null;
+  amountOff: number | null;
+  listMrr: number;
+  actualMrr: number;
+  forgoneMrr: number;
+  duration: string | null;
+  endsAt: string | null;
+}
+
+export interface RenewalRow {
+  subscriptionId: string;
+  email: string | null;
+  tier: string;
+  /** The lump they get charged, not the monthly twelfth. */
+  amount: number;
+  renewsAt: string;
+  daysAway: number;
+  willCancel: boolean;
+}
+
+export interface AtRiskRow {
+  subscriptionId: string;
+  customerId: string | null;
+  email: string | null;
+  tier: string;
+  status: string;
+  monthlyAmount: number;
+  /** When they became a customer, not when the payment started failing. */
+  customerSince: string;
+  /** Start of the billing period they have failed to pay for, if Stripe gave one. */
+  periodStart: string | null;
+}
+
+/** Which scheme an offer belongs to, read from the coupon name we set. */
+export type OfferScheme =
+  | 'college'
+  | 'employer'
+  | 'winback'
+  | 'referral'
+  | 'retention'
+  | 'founder'
+  | 'other';
+
+export interface OfferRow {
+  couponId: string;
+  name: string | null;
+  scheme: OfferScheme;
+  percentOff: number | null;
+  amountOff: number | null;
+  duration: string | null;
+  durationMonths: number | null;
+  valid: boolean;
+  /** Coupon-level redemptions — includes discounts applied without a code. */
+  timesRedeemed: number;
+  maxRedemptions: number | null;
+  codesIssued: number;
+  /** Redemptions that came through a promotion code specifically. */
+  codesRedeemed: number;
+  activeSubs: number;
+  activeForgoneMrr: number;
+}
+
+export interface OfferSchemeRow {
+  scheme: OfferScheme;
+  coupons: number;
+  codesIssued: number;
+  redeemed: number;
+  activeSubs: number;
+  activeForgoneMrr: number;
+}
+
+export const OFFER_SCHEME_LABELS: Record<OfferScheme, string> = {
+  college: 'College 50% scheme',
+  employer: 'Employer 50% scheme',
+  winback: 'Win-back offers',
+  referral: 'Referral — free first month',
+  retention: 'Retention offer',
+  founder: 'Founder',
+  other: 'Other',
+};
+
 export interface AdminStripeStats {
   stripe: {
     activeSubscriptions: number;
     trialingSubscriptions?: number;
     tierCounts: Record<string, number>;
     mrr: number;
+    /** The same subscribers after their coupons — `mrr` is gross of discounts. */
+    mrrNetOfDiscounts?: number;
+  };
+  /** Like-for-like starts and cancellations, Stripe only. */
+  movement?: {
+    started14: number;
+    started30: number;
+    canceled14: number;
+    canceled30: number;
+    canceledNeverPaid14: number;
+    canceledNeverPaid30: number;
+    startsLast14: Array<{ created: string; monthlyAmount: number; stillActive: boolean }>;
+  };
+  /** Every price in use, richest first. Read this, not `subscriptionsByPrice`. */
+  priceLadder?: PriceLadderRow[];
+  discounts?: { rows: DiscountRow[]; count: number; forgoneMrr: number };
+  renewals?: {
+    rows: RenewalRow[];
+    count: number;
+    next90: number;
+    next90Amount: number;
+    yearAmount: number;
+    willCancel: number;
+  };
+  atRisk?: { rows: AtRiskRow[]; count: number; mrr: number };
+  /**
+   * Real cash in, from a full walk of Stripe charges — not MRR extrapolated.
+   * Refunds subtracted. Cached six hours; `asOf` says when it was counted.
+   */
+  gross?: {
+    allTime: number;
+    refunded: number;
+    charges: number;
+    firstChargeAt: string | null;
+    daily: Array<{ day: string; amount: number }>;
+    asOf: string;
+  };
+  /** Every coupon we run, its codes, and its take-up. */
+  offers?: {
+    rows: OfferRow[];
+    schemes: OfferSchemeRow[];
+    totalCoupons: number;
+    totalCodes: number;
+    /** Per-code take-up for the college scheme — Stripe is the only truth here. */
+    collegeCodes?: Array<{ code: string; redeemed: number; active: boolean }>;
   };
   supabase?: {
     subscribedUsers: number;
     tierCounts?: Record<string, number>;
+  };
+  /** Stripe vs Supabase reconciliation, for the integrity checks. */
+  discrepancies?: {
+    inStripeNotSupabase: number;
+    inSupabaseNotStripe: number;
   };
   subscriptions: AdminStripeSubscription[];
   generatedAt: string;

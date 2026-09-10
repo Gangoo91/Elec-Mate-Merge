@@ -7,6 +7,7 @@
  */
 
 import { supabase } from '@/integrations/supabase/client';
+import { coverPayloadKeys } from '@/utils/certCoverPayload';
 import type { CertBranding } from '@/utils/certBranding';
 import { ukDate } from '@/utils/certDate';
 
@@ -20,8 +21,7 @@ type BrandingOptions = Partial<CertBranding>;
 /** G98's house colour, used until the electrician sets their own in Settings. */
 export const G98_ACCENT = '#ea580c';
 
-const UUID_REGEX =
-  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 /**
  * Fetch this report's photo evidence and return public URLs (photos: string[]).
@@ -167,7 +167,7 @@ const getDefaultG98Data = (): Record<string, any> => ({
 export const formatG98Json = (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formData: Record<string, any>,
-  branding?: BrandingOptions,
+  branding?: BrandingOptions
 ) => {
   // Start with full defaults so every Liquid variable resolves
   const defaults = getDefaultG98Data();
@@ -207,6 +207,10 @@ export const formatG98Json = (
     ...(branding?.companyEmail && { companyEmail: branding.companyEmail }),
     ...(branding?.companyWebsite && { companyWebsite: branding.companyWebsite }),
     ...(branding?.companyAccentColor && { companyAccentColor: branding.companyAccentColor }),
+    // ELE-1671 — cover palette + one scheme lockup per masthead. Absent on the
+    // default `house` style these equal the template's own Liquid defaults, so
+    // sending them changes nothing for anyone who has not opted in.
+    ...(branding ? coverPayloadKeys(branding) : {}),
     ...(branding?.registrationSchemeLogo && {
       registrationSchemeLogo: branding.registrationSchemeLogo,
     }),

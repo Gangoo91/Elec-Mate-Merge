@@ -1,4 +1,6 @@
 import { Zap } from 'lucide-react';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { useCableSizing } from './cable-sizing/useCableSizing';
 import CableSizingForm from './cable-sizing/CableSizingInputs';
 import CableSizingResult from './cable-sizing/CableSizingResult';
@@ -183,6 +185,80 @@ const CableSizingCalculator = () => {
     setPhases('single');
     setInputMode('current');
   };
+
+  const buildReport = (): CalcReport | null => {
+    const cable = result.recommendedCable;
+    if (!cable) return null;
+
+    const compliant = cable.meetsCurrentCapacity && cable.meetsVoltageDrop;
+    const vdLimit = inputs.voltageDrop || '—';
+
+    return {
+      meta: {
+        title: 'Cable Sizing',
+        subtitle: `${inputs.current} A over ${inputs.length} m · ${inputs.cableType} · ${inputs.cores} core`,
+        standard: cable.tableReference
+          ? `BS 7671 · ${cable.tableReference}`
+          : 'BS 7671 · Appendix 4',
+      },
+      headline: [
+        {
+          label: 'Recommended cable',
+          value: cable.sizeLabel,
+          verdict: compliant ? 'pass' : 'fail',
+        },
+        { label: 'Volt drop', value: `${cable.voltageDropPercent.toFixed(2)}`, unit: '%' },
+      ],
+      sections: [
+        {
+          heading: 'Design inputs',
+          rows: [
+            { label: 'Design current', value: `${inputs.current} A` },
+            { label: 'Circuit length', value: `${inputs.length} m` },
+            { label: 'System voltage', value: `${inputs.voltage} V` },
+            { label: 'Cable type', value: `${inputs.cableType} · ${inputs.cores} core` },
+            { label: 'Insulation', value: inputs.installationType === 'xlpe' ? 'XLPE (90 °C)' : 'PVC (70 °C)' },
+            ...(inputs.ambientTemp ? [{ label: 'Ambient temperature', value: `${inputs.ambientTemp} °C` }] : []),
+            ...(inputs.cableGrouping ? [{ label: 'Grouping', value: `${inputs.cableGrouping} circuit(s)` }] : []),
+            { label: 'Volt drop limit', value: `${vdLimit} %` },
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'Recommended size', value: cable.sizeLabel },
+            {
+              label: 'Tabulated capacity',
+              value: `${cable.tabulatedCapacity} A`,
+              note: cable.tableReference || undefined,
+            },
+            {
+              label: 'Capacity after derating',
+              value: `${cable.deratedCapacity} A`,
+              note: cable.meetsCurrentCapacity
+                ? `At or above the ${inputs.current} A design current`
+                : `BELOW the ${inputs.current} A design current — not permitted`,
+            },
+            {
+              label: 'Volt drop',
+              value: `${cable.calculatedVoltageDrop.toFixed(2)} V (${cable.voltageDropPercent.toFixed(2)}%)`,
+              note: cable.meetsVoltageDrop ? `Within the ${vdLimit}% limit` : `Exceeds the ${vdLimit}% limit`,
+            },
+            { label: 'Volt drop per A·m', value: `${cable.voltageDropMvAm} mV/A/m` },
+          ],
+        },
+      ],
+      // The validator's own alerts, so a client report never looks compliant
+      // when the tool has flagged a safety problem behind it.
+      notes: [
+        ...(validation?.criticalAlerts ?? []),
+        ...(validation?.warnings ?? []),
+        'Cable capacities and volt drop are taken from BS 7671 Appendix 4 for the installation method stated above.',
+      ],
+    };
+  };
+
+  useProvideCalcReport(result.recommendedCable ? buildReport : null);
 
   return (
     <CalculatorCard

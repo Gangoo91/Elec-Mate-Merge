@@ -1,4 +1,6 @@
 import { useState, useCallback } from 'react';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { copyToClipboard } from '@/utils/clipboard';
 import { Copy, Check, CheckCircle, AlertTriangle, ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -212,6 +214,56 @@ const EarthElectrodeCalculator = () => {
     toast({ title: 'Copied to clipboard' });
     setTimeout(() => setCopied(false), 2000);
   };
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+    const rodLabel = diameterOptions.find((d) => d.value === electrodeDiameter)?.label ?? electrodeDiameter;
+    return {
+      meta: {
+        title: 'Earth Electrode Calculator',
+        subtitle: 'Earth rod resistance for a TT system',
+        standard: 'BS 7671 — Section 542',
+      },
+      headline: [
+        {
+          label: 'Total resistance',
+          value: result.totalResistance.toFixed(1),
+          unit: 'Ω',
+          verdict: result.meetsTarget ? 'pass' : 'fail',
+        },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            { label: 'Soil resistivity', value: `${result.resistivity} Ωm` },
+            { label: 'Rod length', value: `${result.length} m` },
+            { label: 'Rod type', value: rodLabel },
+            { label: 'Number of rods', value: result.rods.toString() },
+            ...(result.rods > 1 ? [{ label: 'Rod spacing', value: `${result.spacing} m` }] : []),
+            { label: 'Target resistance', value: `≤ ${result.target} Ω` },
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'Single rod resistance', value: `${result.singleRodResistance.toFixed(1)} Ω` },
+            { label: 'Total resistance', value: `${result.totalResistance.toFixed(1)} Ω` },
+            ...(result.requiredLength
+              ? [{ label: 'Required length to meet target', value: `${result.requiredLength.toFixed(1)} m` }]
+              : []),
+            {
+              label: 'Assessment',
+              value: result.meetsTarget ? 'MEETS TARGET' : 'EXCEEDS TARGET',
+            },
+          ],
+        },
+      ],
+      notes: result.recommendations.length ? result.recommendations : undefined,
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

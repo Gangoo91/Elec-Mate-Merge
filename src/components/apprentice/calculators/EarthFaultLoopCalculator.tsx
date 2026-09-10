@@ -1,4 +1,6 @@
 import { copyToClipboard } from '@/utils/clipboard';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { useState, useMemo, useCallback } from 'react';
 import {
   Copy,
@@ -297,6 +299,87 @@ const EarthFaultLoopCalculator = () => {
       }
     });
   };
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+    if (result.type === 'tn') {
+      const verdict = result.compliance80 ? 'pass' : result.compliance100 ? 'warn' : 'fail';
+      return {
+        meta: {
+          title: 'Earth Fault Loop Impedance',
+          subtitle: 'Measured Zs against the maximum permitted for the protective device',
+          standard: `BS 7671:2018+A4:2026 — ${result.tableRef}`,
+        },
+        headline: [
+          { label: 'Measured Zs', value: result.zsValue.toFixed(3), unit: 'Ω', verdict },
+          { label: 'Prospective fault current', value: result.faultCurrent.toFixed(0), unit: 'A' },
+        ],
+        sections: [
+          {
+            heading: 'Result',
+            rows: [
+              { label: 'Zs', value: `${result.zsValue.toFixed(3)} Ω` },
+              ...(result.maxZsValue
+                ? [{
+                    label: `Maximum permitted Zs (${result.disconnectionTime} s)`,
+                    value: `${result.maxZsValue} Ω`,
+                    note: result.tableRef,
+                  }]
+                : []),
+              ...(result.testLimit80
+                ? [{ label: '80% rule-of-thumb test limit', value: `${result.testLimit80.toFixed(3)} Ω` }]
+                : []),
+              { label: 'Prospective fault current', value: `${result.faultCurrent.toFixed(0)} A` },
+              {
+                label: 'Assessment',
+                value: result.compliance80 ? 'PASS' : result.compliance100 ? 'MARGINAL' : 'FAIL',
+              },
+            ],
+          },
+        ],
+        notes: [
+          'Maximum Zs values are for the protective device and disconnection time stated. The 80% figure is the customary allowance for conductor temperature at the time of test, not a value published in BS 7671.',
+        ],
+      };
+    }
+    return {
+      meta: {
+        title: 'TT System Verification',
+        subtitle: 'Earth electrode resistance against the RCD residual operating current',
+        standard: 'BS 7671:2018+A4:2026 — Reg 411.5.3',
+      },
+      headline: [
+        {
+          label: 'RA × IΔn',
+          value: result.product.toFixed(1),
+          unit: 'V',
+          verdict: result.touchVoltageOk ? 'pass' : 'fail',
+        },
+      ],
+      sections: [
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'RA (electrode resistance)', value: `${result.raValue} Ω` },
+            { label: 'IΔn (residual operating current)', value: `${result.iDeltaNValue} A` },
+            { label: 'RA × IΔn', value: `${result.product.toFixed(1)} V` },
+            {
+              label: 'Reg 411.5.3(b)',
+              value: result.touchVoltageOk ? 'MET (≤ 50 V)' : 'NOT MET (> 50 V)',
+            },
+          ],
+        },
+      ],
+      notes: [
+        'Reg 411.5.3(a) disconnection time must be verified separately — this calculation covers the touch-voltage condition only.',
+        ...(result.electrodeAboveStabilityLimit
+          ? ['RA exceeds 200 Ω — see Table 41.5 NOTE 2 and Reg 542.2.4 on electrode stability.']
+          : []),
+      ],
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

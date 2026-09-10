@@ -21,20 +21,46 @@
  */
 
 import { serve } from '../_shared/deps.ts';
+import { corsHeaders } from '../_shared/cors.ts';
 import Stripe from 'https://esm.sh/stripe@14.21.0';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
 import { captureException } from '../_shared/sentry.ts';
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers':
-    'authorization, x-client-info, apikey, content-type, x-request-id',
-};
 
 const log = (step: string, details?: unknown) => {
   const d = details ? ` - ${JSON.stringify(details)}` : '';
   console.log(`[GET-BILLING-CONTEXT] ${step}${d}`);
 };
+
+/**
+ * The retention offer's real terms, read off the Stripe coupon.
+ *
+ * WHY THIS IS HERE AND NOT A CONSTANT IN THE MODAL: the cancel flow spent ten
+ * weeks advertising "£12.99 → £9.99" because the price lived in the front end
+ * and Stripe moved on without it. Replacing that with a hardcoded "40%" would
+ * have been the identical bug one level up — change the coupon, or point
+ * RETENTION_COUPON_ID at a different one, and the modal would confidently
+ * quote a percentage nobody was actually getting.
+ *
+ * So the number the user is shown comes from the same coupon that will be
+ * applied. Costs one extra Stripe read on a screen that opens rarely.
+ * Returns null if the coupon is missing, and the modal falls back to its own
+ * constant rather than showing nothing.
+ */
+async function retentionOfferTerms(stripe: Stripe) {
+  const couponId = Deno.env.get('RETENTION_COUPON_ID') || 'ELECMATE_STAY_40';
+  try {
+    const coupon = await stripe.coupons.retrieve(couponId);
+    if (!coupon.valid || !coupon.percent_off) return null;
+    return {
+      retention_percent_off: coupon.percent_off,
+      retention_duration_months: coupon.duration_in_months ?? null,
+    };
+  } catch {
+    // Not fatal — this endpoint's main job is finding the subscription.
+    return null;
+  }
+}
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
@@ -117,6 +143,11 @@ serve(async (req) => {
         subs.data.find((s: Stripe.Subscription) => s.status === 'active' || s.status === 'trialing') ??
         subs.data.find((s: Stripe.Subscription) => CANCELLABLE.includes(s.status));
       if (live) {
+        // What they are actually being charged, straight off the subscription
+        // item — no extra API call, and no price constant in the front end to
+        // go stale. The cancel flow quoted hardcoded pre-June-2026 prices for
+        // ten weeks precisely because it had no source for this.
+        const livePrice = live.items?.data?.[0]?.price;
         return jsonResponse({
           ok: true,
           has_active_subscription: true,
@@ -127,6 +158,14 @@ serve(async (req) => {
           stripe_customer_id: c.id,
           tier,
           managed_by: 'stripe',
+          current_amount: livePrice?.unit_amount ?? null,
+          currency: livePrice?.currency ?? 'gbp',
+          interval: livePrice?.recurring?.interval ?? null,
+          // The retention offer is refused for both of these, so the modal
+          // should not pitch what the server will reject.
+          already_discounted: Boolean(live.discount),
+          is_paused: Boolean(live.pause_collection),
+          ...(await retentionOfferTerms(stripe)),
         });
       }
     }

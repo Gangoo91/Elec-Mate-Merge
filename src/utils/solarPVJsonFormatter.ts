@@ -18,6 +18,7 @@ import {
   CertificatePhoto,
 } from '@/types/solar-pv';
 import type { SolarPVPayloadType } from '@/types/solar-pv-payload';
+import { coverKeysFromFormData } from '@/utils/certCoverPayload';
 
 export const formatSolarPVJson = (formData: Partial<SolarPVFormData>): SolarPVPayloadType => {
   const get = (key: string, defaultValue: any = ''): string => {
@@ -398,13 +399,19 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>): SolarPVPa
         insulation_resistance: `${test.irPositiveToEarth || '—'} / ${test.irNegativeToEarth || '—'}`,
         ir_result: formatTestResult(
           test.irPositiveToEarth >= (test.irMinimumRequired || 1) &&
-          test.irNegativeToEarth >= (test.irMinimumRequired || 1)
-            ? true : test.irPositiveToEarth > 0 ? false : undefined
+            test.irNegativeToEarth >= (test.irMinimumRequired || 1)
+            ? true
+            : test.irPositiveToEarth > 0
+              ? false
+              : undefined
         ),
         ir_class: getTestResultClass(
           test.irPositiveToEarth >= (test.irMinimumRequired || 1) &&
-          test.irNegativeToEarth >= (test.irMinimumRequired || 1)
-            ? true : test.irPositiveToEarth > 0 ? false : undefined
+            test.irNegativeToEarth >= (test.irMinimumRequired || 1)
+            ? true
+            : test.irPositiveToEarth > 0
+              ? false
+              : undefined
         ),
         polarity_result: formatTestResult(test.polarityCorrect),
         polarity_class: getTestResultClass(test.polarityCorrect),
@@ -836,15 +843,17 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>): SolarPVPa
     // ============================================
     // TEST EQUIPMENT
     // ============================================
-    test_equipment: ((formData.testResults || {} as any).testEquipment || []).map((eq: any, i: number) => ({
-      number: i + 1,
-      type: eq.type || '',
-      make_model: eq.makeModel || '',
-      serial_number: eq.serialNumber || '',
-      calibration_date: formatDateUK(eq.calibrationDate || ''),
-      calibration_due: formatDateUK(eq.calibrationDue || ''),
-    })),
-    has_test_equipment: ((formData.testResults || {} as any).testEquipment || []).length > 0,
+    test_equipment: ((formData.testResults || ({} as any)).testEquipment || []).map(
+      (eq: any, i: number) => ({
+        number: i + 1,
+        type: eq.type || '',
+        make_model: eq.makeModel || '',
+        serial_number: eq.serialNumber || '',
+        calibration_date: formatDateUK(eq.calibrationDate || ''),
+        calibration_due: formatDateUK(eq.calibrationDue || ''),
+      })
+    ),
+    has_test_equipment: ((formData.testResults || ({} as any)).testEquipment || []).length > 0,
 
     // ============================================
     // ADDITIONAL NOTES
@@ -860,6 +869,10 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>): SolarPVPa
     company_phone: get('companyPhone'),
     company_email: get('companyEmail'),
     company_website: get('companyWebsite'),
+    // ELE-1671 — the cover palette rides in on formData, put there by the
+    // smart-form hook that already merges company branding. Absent for anyone
+    // on the default `house` style, so the template's own defaults apply.
+    ...coverKeysFromFormData(formData as Record<string, unknown>),
     company_logo: get('companyLogo'),
     company_accent_color: get('accentColor') || get('companyAccentColor') || '#f59e0b',
     registration_scheme_logo: get('registrationSchemeLogo'),

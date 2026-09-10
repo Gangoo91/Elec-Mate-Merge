@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
@@ -478,6 +480,78 @@ const CircuitBreakerSelectorCalculator = () => {
         : status === 'warning'
           ? 'bg-amber-400'
           : 'bg-white/40';
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+    const verdict = result.status === 'warning' ? 'warn' : result.status;
+
+    return {
+      meta: {
+        title: 'Circuit Breaker Selector',
+        subtitle: 'Recommended protective device with the applicable BS 7671 overload, Zs and breaking-capacity checks',
+        standard: 'BS 7671:2018+A4:2026 — Section 433 / Section 411',
+      },
+      headline: [
+        { label: 'Recommended device', value: result.recommendedLabel, verdict },
+        {
+          label: 'Max Zs',
+          value: result.maxZs > 0 ? result.maxZs.toFixed(2) : '—',
+          unit: result.maxZs > 0 ? 'Ω' : undefined,
+        },
+        { label: 'Breaking capacity', value: `${result.breakingCapacity}`, unit: 'kA' },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            { label: 'Circuit type', value: circuitType },
+            { label: 'Premises', value: premises === 'domestic' ? 'Domestic (household)' : 'Commercial / industrial' },
+            { label: 'Design current (Ib)', value: `${designCurrent} A` },
+            ...(cableIz ? [{ label: 'Cable capacity (Iz)', value: `${cableIz} A` }] : []),
+            { label: 'System type', value: systemType },
+            ...(prospectiveFault
+              ? [{ label: 'Prospective fault current', value: `${prospectiveFault} kA` }]
+              : []),
+            ...(measuredZs ? [{ label: 'Measured Zs', value: `${measuredZs} Ω` }] : []),
+            { label: 'RCD rated residual current (IΔn)', value: `${rcdRating} mA` },
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'Recommended device', value: result.recommendedLabel },
+            { label: 'Rating', value: `${result.rating} A` },
+            {
+              label: 'Trip curve',
+              value: result.curveType === 'N/A' ? '—' : `Type ${result.curveType}`,
+            },
+            { label: 'Breaking capacity', value: `${result.breakingCapacity} kA` },
+            {
+              label: 'Max Zs',
+              value: result.maxZs > 0 ? `${result.maxZs.toFixed(2)} Ω` : '—',
+              note: result.zsBasis,
+            },
+            {
+              label: 'RCD additional protection',
+              value: result.needsRcd ? 'Required' : 'Not required by this tool',
+              note: result.rcdReason || undefined,
+            },
+          ],
+        },
+        {
+          heading: 'Compliance checks',
+          rows: result.checks.map((c) => ({
+            label: c.label,
+            value: c.status.toUpperCase(),
+            note: c.detail,
+          })),
+        },
+      ],
+      notes: [result.rcdTypeGuidance],
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

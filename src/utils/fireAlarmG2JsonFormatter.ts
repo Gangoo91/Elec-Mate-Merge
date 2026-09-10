@@ -12,6 +12,7 @@ import {
   TestEquipmentItem,
 } from '@/types/fire-alarm';
 import type { FireAlarmPayloadType } from '@/types/fire-alarm-payload';
+import { coverKeysFromFormData } from '@/utils/certCoverPayload';
 
 export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>): FireAlarmPayloadType => {
   const data = formData as Record<string, unknown>;
@@ -706,8 +707,7 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>): FireA
     visual_alarm_count: finalVisualAlarmCount,
     total_alarm_devices: finalAlarmDeviceCount,
     total_devices:
-      finalDetectorCount + finalCallPointCount + finalAlarmDeviceCount ||
-      getNum('totalDevices'),
+      finalDetectorCount + finalCallPointCount + finalAlarmDeviceCount || getNum('totalDevices'),
 
     // ============================================
     // ZONES
@@ -1064,6 +1064,10 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>): FireA
     company_phone: get('companyPhone'),
     company_email: get('companyEmail'),
     company_website: get('companyWebsite'),
+    // ELE-1671 — the cover palette rides in on formData, put there by the
+    // smart-form hook that already merges company branding. Absent for anyone
+    // on the default `house` style, so the template's own defaults apply.
+    ...coverKeysFromFormData(formData as Record<string, unknown>),
     company_logo: get('companyLogo'),
     company_accent_color: get('accentColor') || get('companyAccentColor') || '#dc2626',
     registration_scheme_logo: get('registrationSchemeLogo'),

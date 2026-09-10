@@ -1,5 +1,7 @@
 import { useState, useMemo, useCallback } from 'react';
 import { copyToClipboard } from '@/utils/clipboard';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { Zap, Plus, Trash2, Copy, Check, ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
@@ -287,6 +289,57 @@ const GeneratorSizingCalculator = () => {
     if (loadRatio > 0.85) return { status: 'fail', label: 'Near Capacity' };
     return { status: 'pass', label: 'Correctly Sized' };
   };
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+    const sizingVerdict = getSizingVerdict();
+    const verdict = sizingVerdict.status === 'warning' ? 'warn' : sizingVerdict.status;
+
+    return {
+      meta: {
+        title: 'Generator Sizing Calculator',
+        subtitle: 'Standby generator kVA rating with motor starting allowance',
+        standard: 'BS 7671:2018+A4:2026 — Section 551 (low voltage generating sets)',
+      },
+      headline: [
+        { label: 'Generator rating', value: `${result.nearestStandardKVA}`, unit: 'kVA', verdict },
+        { label: 'Prime power', value: `${(result.nearestStandardKVA * 0.8).toFixed(0)}`, unit: 'kW' },
+        { label: 'Peak starting load', value: result.peakStartingKVA.toFixed(1), unit: 'kVA' },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            { label: 'System', value: phases === '3' ? 'Three phase' : 'Single phase' },
+            { label: 'Voltage', value: `${voltage} V` },
+            { label: 'Motor starting method', value: startingMethod === 'sequence' ? 'Sequential motor starting' : 'Simultaneous (worst case)' },
+            { label: 'Diversity factor', value: diversity },
+            { label: 'Fuel type', value: fuelType },
+            { label: 'Altitude', value: `${altitude} m` },
+            { label: 'Ambient temperature', value: `${ambientTemp} °C` },
+          ],
+          items: loads.map(
+            (l) =>
+              `${l.name}: ${l.kW} kW, PF ${l.powerFactor}${l.isMotor ? `, starting ×${l.startingMultiplier}` : ''}`
+          ),
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'Running load', value: `${result.totalRunningKW.toFixed(1)} kW / ${result.totalRunningKVA.toFixed(1)} kVA` },
+            { label: 'Peak starting load', value: `${result.peakStartingKVA.toFixed(1)} kVA` },
+            { label: 'Recommended rating (with margin)', value: `${result.recommendedKVA.toFixed(1)} kVA` },
+            { label: 'Nearest standard size', value: `${result.nearestStandardKVA} kVA (${result.recommendedKW.toFixed(0)} kW)` },
+            { label: 'Transfer switch rating', value: `${result.transferSwitchRating} A` },
+            { label: 'Fuel consumption', value: `${result.fuelConsumptionPerHour.toFixed(1)} L/hr (${result.fuelConsumption8Hours.toFixed(0)} L over 8 hr)` },
+          ],
+        },
+      ],
+      notes: result.warnings.length ? result.warnings : undefined,
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

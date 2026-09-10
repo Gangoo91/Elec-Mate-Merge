@@ -1026,6 +1026,14 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
   // is missing entirely but `registrationScheme` is set, derive from the
   // bundled lookup.
   const { resolveSchemeLogo, resolveCompanyLogo } = await import('@/utils/resolveSchemeLogo');
+
+  // ELE-1671 — the cover palette. This formatter is handed only formData and a
+  // reportId, so it reads the signed-in electrician's own branding. On the
+  // default `house` style the values equal the template's Liquid defaults, so
+  // output is unchanged for anyone who has not opted in.
+  const { fetchCertBranding } = await import('@/utils/certBranding');
+  const { coverPayloadKeys } = await import('@/utils/certCoverPayload');
+  const emCover = coverPayloadKeys(await fetchCertBranding('#f59e0b'));
   const resolvedSchemeLogo = await resolveSchemeLogo(
     get('registrationSchemeLogo'),
     get('registrationScheme')
@@ -1809,6 +1817,9 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     // ELE-876 — flat aliases use the resolved version too
     registration_scheme_logo: resolvedSchemeLogo,
     registrationSchemeLogo: resolvedSchemeLogo,
+
+    // ELE-1671 — cover palette tokens (em_cover_*, em_accent*)
+    ...emCover,
 
     // Insurance (flat)
     insurance_provider: get('insuranceProvider'),

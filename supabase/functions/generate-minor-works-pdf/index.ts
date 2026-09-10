@@ -1,4 +1,5 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
+import { coverKeys } from '../_shared/cert-cover-payload.ts';
 import { captureException } from '../_shared/sentry.ts';
 import { minorWorksSchema, type MinorWorksPayload } from '../_shared/minor-works-schema.ts';
 
@@ -199,6 +200,12 @@ function transformFormDataForTemplate(formData: any): MinorWorksPayload {
   const today = new Date().toLocaleDateString('en-GB');
 
   return {
+    // ELE-1671 — cover palette. The transform below builds a CLOSED object, so
+    // any key it does not name is dropped; the palette needs this explicit hop.
+    // Absent when the electrician has not opted in, and the template's own
+    // defaults then apply.
+    ...coverKeys(formData),
+
     // Certificate metadata
     certificate_number: formData.certificateNumber || '',
     generated_at: today,

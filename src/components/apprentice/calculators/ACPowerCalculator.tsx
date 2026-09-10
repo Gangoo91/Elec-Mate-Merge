@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { Info, BookOpen, ChevronDown, TrendingDown, Zap, Battery } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -198,6 +200,73 @@ const ACPowerCalculator = () => {
     (activePower && reactivePower) || (activePower && apparentPower);
 
   const status = getPowerFactorStatus();
+
+  const buildReport = (): CalcReport | null => {
+    if (!results) return null;
+
+    const headline: NonNullable<CalcReport['headline']> = [];
+    if (results.apparentPower !== undefined) {
+      headline.push({
+        label: 'Apparent power (S)',
+        value: results.apparentPower.toFixed(2),
+        unit: 'VA',
+      });
+    }
+    if (results.activePower !== undefined) {
+      headline.push({ label: 'Active power (P)', value: results.activePower.toFixed(2), unit: 'W' });
+    }
+    if (results.powerFactor !== undefined) {
+      headline.push({
+        label: 'Power factor',
+        value: results.powerFactor.toFixed(3),
+        verdict: results.powerFactor >= 0.95 ? 'pass' : results.powerFactor >= 0.85 ? 'warn' : 'fail',
+      });
+    }
+
+    const sections: NonNullable<CalcReport['sections']> = [];
+
+    if (voltage && current) {
+      sections.push({
+        heading: 'Inputs',
+        rows: [
+          { label: 'System', value: phaseSystem === 'single' ? 'Single phase' : 'Three phase' },
+          { label: 'Voltage', value: `${voltage} V`, note: voltageType === 'L-N' ? 'Line to neutral' : 'Line to line' },
+          { label: 'Current', value: `${current} A`, note: currentType === 'line' ? 'Line current' : 'Phase current' },
+          { label: 'Power factor', value: `${powerFactor || '1.00'}`, note: pfType === 'lagging' ? 'Lagging (inductive)' : 'Leading (capacitive)' },
+        ],
+      });
+    }
+
+    const resultRows: NonNullable<CalcReport['sections']>[number]['rows'] = [];
+    if (results.activePower !== undefined) resultRows!.push({ label: 'Active power (P)', value: `${results.activePower.toFixed(2)} W` });
+    if (results.reactivePower !== undefined) resultRows!.push({ label: 'Reactive power (Q)', value: `${results.reactivePower.toFixed(2)} VAr` });
+    if (results.apparentPower !== undefined) resultRows!.push({ label: 'Apparent power (S)', value: `${results.apparentPower.toFixed(2)} VA` });
+    if (results.powerFactor !== undefined) resultRows!.push({ label: 'Power factor', value: results.powerFactor.toFixed(3) });
+    if (results.phaseAngle !== undefined) resultRows!.push({ label: 'Phase angle', value: `${results.phaseAngle.toFixed(1)}°` });
+    if (results.currentAtUnity !== undefined) resultRows!.push({ label: 'Current at unity PF', value: `${results.currentAtUnity.toFixed(2)} A` });
+    if (results.protectiveDeviceRange) resultRows!.push({ label: 'Indicative protection', value: results.protectiveDeviceRange, note: 'Advisory only' });
+
+    sections.push({ heading: 'Result', rows: resultRows });
+
+    const notes: string[] = [];
+    if (results.currentAtUnity !== undefined && results.current !== undefined) {
+      notes.push(
+        `Improving power factor to unity would reduce current by ${(((results.current - results.currentAtUnity) / results.current) * 100).toFixed(1)}%.`
+      );
+    }
+
+    return {
+      meta: {
+        title: 'AC Power Calculator',
+        subtitle: 'Active, reactive and apparent power relationships',
+      },
+      headline,
+      sections,
+      notes: notes.length ? notes : undefined,
+    };
+  };
+
+  useProvideCalcReport(results ? buildReport : null);
 
   return (
     <CalculatorCard

@@ -1,4 +1,6 @@
 import { useState, useMemo } from 'react';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { ArrowUpDown, ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
@@ -232,6 +234,61 @@ const UnitConverterCalculator = () => {
       },
     ];
   }, [result, inputValue, category, fromUnit, toUnit]);
+
+  const buildReport = (): CalcReport | null => {
+    if (result === null) return null;
+
+    const equivalents = getEquivalentUnits(
+      parseFloat(inputValue) * conversionCategories[category].units[fromUnit].factor
+    );
+
+    return {
+      meta: {
+        title: 'Unit Converter',
+        subtitle: `${conversionCategories[category].name} conversion`,
+      },
+      headline: [
+        {
+          label: conversionCategories[category].units[toUnit].name,
+          value: formatValue(result),
+          unit: toUnit,
+        },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            { label: 'Category', value: conversionCategories[category].name },
+            { label: 'From', value: `${formatValue(parseFloat(inputValue))} ${fromUnit}` },
+            { label: 'To unit', value: toUnit },
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            {
+              label: conversionCategories[category].units[toUnit].name,
+              value: `${formatValue(result)} ${toUnit}`,
+              note: equation || undefined,
+            },
+          ],
+        },
+        ...(equivalents.length
+          ? [
+              {
+                heading: 'Also equals',
+                rows: equivalents.map((eq) => ({
+                  label: eq.name,
+                  value: `${formatValue(eq.value)} ${eq.unit}`,
+                })),
+              },
+            ]
+          : []),
+      ],
+    };
+  };
+
+  useProvideCalcReport(result !== null ? buildReport : null);
 
   return (
     <CalculatorCard

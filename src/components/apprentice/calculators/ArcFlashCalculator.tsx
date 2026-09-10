@@ -1,4 +1,6 @@
 import { copyToClipboard } from '@/utils/clipboard';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import {
   LineChart,
@@ -255,6 +257,65 @@ const ArcFlashCalculator = () => {
   };
 
   const canCalculate = faultCurrent && clearingTime && workingDistance;
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+    const verdict = result.ppeCategory <= 2 ? 'pass' : result.ppeCategory <= 3 ? 'warn' : 'fail';
+    return {
+      meta: {
+        title: 'Arc Flash Energy Calculator',
+        subtitle: 'Incident energy and PPE category per IEEE 1584-2002',
+        standard: 'IEEE 1584-2002',
+      },
+      headline: [
+        { label: 'Incident energy', value: result.incidentEnergy.toFixed(2), unit: 'cal/cm²' },
+        { label: 'PPE category', value: `Category ${result.ppeCategory}`, verdict },
+        {
+          label: 'Arc flash boundary',
+          value: `${Math.round(result.arcFlashBoundary)}`,
+          unit: 'mm',
+        },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            { label: 'System voltage', value: `${voltage} V` },
+            { label: 'Prospective fault current', value: `${faultCurrent} A` },
+            { label: 'Arc clearing time', value: `${clearingTime} s` },
+            { label: 'Working distance', value: `${workingDistance} mm` },
+            { label: 'Equipment type', value: EQUIPMENT_TYPE_LABELS[equipmentType] },
+            { label: 'Electrode configuration', value: electrodeConfig },
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            {
+              label: 'Incident energy',
+              value: `${result.incidentEnergy.toFixed(2)} cal/cm²`,
+              note: `${result.incidentEnergyJoules.toFixed(1)} J/cm²`,
+            },
+            { label: 'Arcing current', value: `${result.arcingCurrent.toFixed(1)} kA` },
+            { label: 'Arc flash boundary', value: `${Math.round(result.arcFlashBoundary)} mm` },
+            {
+              label: 'Minimum arc rating required',
+              value: `${result.minArcRatingRequired} cal/cm²`,
+            },
+            {
+              label: 'Energy let-through (I²t)',
+              value: `${result.energyLetThrough.toLocaleString()} A²s`,
+            },
+            { label: 'Arc duration', value: `${(result.arcDuration * 1000).toFixed(0)} ms` },
+            { label: 'BS 7671 disconnection check', value: result.bs7671DisconnectionCheck },
+          ],
+        },
+      ],
+      notes: result.warnings.length ? result.warnings : undefined,
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

@@ -7,6 +7,7 @@ import { EVChargingFormData } from '@/types/ev-charging';
 import type { EVChargingPayloadType } from '@/types/ev-charging-payload';
 import { createAccessTracker, reportUnmappedFields } from './reportUnmappedFields';
 import { normalisePdfDates, ukDate } from '@/utils/certDate';
+import { coverKeysFromFormData } from '@/utils/certCoverPayload';
 
 /**
  * The methods permitted by Reg 722.411.4.1, spelled out for the certificate.
@@ -647,6 +648,10 @@ export const formatEVChargingJson = (
       company_phone: get('companyPhone'),
       company_email: get('companyEmail'),
       company_website: get('companyWebsite'),
+      // ELE-1671 — the cover palette rides in on formData, put there by the
+      // smart-form hook that already merges company branding. Absent for anyone
+      // on the default `house` style, so the template's own defaults apply.
+      ...coverKeysFromFormData(formData as Record<string, unknown>),
       company_logo: get('companyLogo'),
       company_tagline: get('companyTagline'),
       company_accent_color: get('companyAccentColor') || '#22c55e',

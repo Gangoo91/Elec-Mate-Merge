@@ -11,6 +11,7 @@
  */
 
 import { getBoardWays } from '@/types/distributionBoard';
+import { coverPayloadKeys } from '@/utils/certCoverPayload';
 import { ukDate } from '@/utils/certDate';
 import type { CertBranding } from '@/utils/certBranding';
 
@@ -99,29 +100,31 @@ const formatBoards = (formData: Record<string, any>, testResults: any[]) => {
   // No boards defined but we have test results — create a default main board
   if (!Array.isArray(boards) || boards.length === 0) {
     if (testResults.length > 0) {
-      return [{
-        db_reference: 'Main DB',
-        db_location: '',
-        db_manufacturer: '',
-        db_type: '',
-        db_ways: '',
-        db_zdb: '',
-        db_ipf: '',
-        zdb: '',
-        ipf: '',
-        polarity_confirmed: false,
-        phase_sequence_confirmed: false,
-        spd_operational: false,
-        spd_na: false,
-        spd_make: '',
-        spd_model: '',
-        spd_location: '',
-        spd_rated_current_ka: '',
-        main_switch_type: '',
-        main_switch_rating: '',
-        circuit_count: testResults.length,
-        circuits: testResults.map(formatCircuit),
-      }];
+      return [
+        {
+          db_reference: 'Main DB',
+          db_location: '',
+          db_manufacturer: '',
+          db_type: '',
+          db_ways: '',
+          db_zdb: '',
+          db_ipf: '',
+          zdb: '',
+          ipf: '',
+          polarity_confirmed: false,
+          phase_sequence_confirmed: false,
+          spd_operational: false,
+          spd_na: false,
+          spd_make: '',
+          spd_model: '',
+          spd_location: '',
+          spd_rated_current_ka: '',
+          main_switch_type: '',
+          main_switch_rating: '',
+          circuit_count: testResults.length,
+          circuits: testResults.map(formatCircuit),
+        },
+      ];
     }
     return [];
   }
@@ -130,14 +133,11 @@ const formatBoards = (formData: Record<string, any>, testResults: any[]) => {
   // order the user set. Resolve the CURRENT main board's id once so circuits
   // with no explicit boardId fall back to the current main, not the legacy id.
   const sortedBoards = sortBoardsLocal(boards);
-  const mainBoardId =
-    sortedBoards.find((b: any) => b.order === 0)?.id ?? MAIN_BOARD_ID;
+  const mainBoardId = sortedBoards.find((b: any) => b.order === 0)?.id ?? MAIN_BOARD_ID;
 
   return sortedBoards.map((board: any) => {
     const boardId = board.id || mainBoardId;
-    const boardCircuits = testResults.filter(
-      (r: any) => (r.boardId || mainBoardId) === boardId
-    );
+    const boardCircuits = testResults.filter((r: any) => (r.boardId || mainBoardId) === boardId);
 
     return {
       db_reference: board.reference || board.name || 'Main DB',
@@ -205,7 +205,7 @@ const defaults: Record<string, any> = {
 
 export const formatTestingOnlyJson = (
   formData: Record<string, any>,
-  branding?: Partial<CertBranding>,
+  branding?: Partial<CertBranding>
 ) => {
   const merged = { ...defaults, ...formData };
 
@@ -227,6 +227,10 @@ export const formatTestingOnlyJson = (
     companyAccentColor: str(branding?.companyAccentColor, TESTING_ONLY_ACCENT),
     registrationScheme: str(branding?.registrationScheme),
     registrationNumber: str(branding?.registrationNumber),
+    // ELE-1671 — cover palette + one scheme lockup per masthead. Absent on the
+    // default `house` style these equal the template's own Liquid defaults, so
+    // sending them changes nothing for anyone who has not opted in.
+    ...(branding ? coverPayloadKeys(branding) : {}),
     registrationSchemeLogo: str(branding?.registrationSchemeLogo),
 
     // Certificate header

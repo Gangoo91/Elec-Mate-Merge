@@ -4329,6 +4329,7 @@ export type Database = {
           context: Json;
           created_at: string;
           id: string;
+          intervention_applied: Json | null;
           offered_intervention: string | null;
           outcome: string;
           outcome_at: string | null;
@@ -4342,6 +4343,7 @@ export type Database = {
           context?: Json;
           created_at?: string;
           id?: string;
+          intervention_applied?: Json | null;
           offered_intervention?: string | null;
           outcome?: string;
           outcome_at?: string | null;
@@ -4355,6 +4357,7 @@ export type Database = {
           context?: Json;
           created_at?: string;
           id?: string;
+          intervention_applied?: Json | null;
           offered_intervention?: string | null;
           outcome?: string;
           outcome_at?: string | null;

@@ -8,6 +8,8 @@
  */
 
 import { PATTestingFormData, Appliance, PAT_REPAIR_CODES } from '@/types/pat-testing';
+import type { CertBranding } from '@/utils/certBranding';
+import { coverPayloadKeys } from '@/utils/certCoverPayload';
 import type { PATTestingPayloadType } from '@/types/pat-testing-payload';
 import { normalisePdfDates, ukDate } from '@/utils/certDate';
 
@@ -264,6 +266,15 @@ export const formatPATTestingJson = (
     company_website: branding?.companyWebsite || '',
     registration_scheme: branding?.registrationScheme || '',
     registration_number: branding?.registrationNumber || '',
+    // ELE-1671 — cover palette + one scheme lockup per masthead.
+    //
+    // Cast because this formatter's `branding` param predates CertBranding and
+    // is typed narrower than what the caller actually passes (the pages all
+    // resolve `fetchCertBranding()`). `coverPayloadKeys` returns {} when the
+    // palette really is absent, so on the default `house` style — or with no
+    // company profile at all — this sends nothing and the template's own
+    // defaults apply. It cannot make a certificate worse.
+    ...coverPayloadKeys(branding as Partial<CertBranding>),
     registration_scheme_logo: branding?.registrationSchemeLogo || '',
   });
 };

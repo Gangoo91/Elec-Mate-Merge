@@ -1,4 +1,6 @@
 import { copyToClipboard } from '@/utils/clipboard';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { useState, useCallback, useMemo } from 'react';
 import { Copy, Check, ChevronDown, AlertTriangle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -303,6 +305,66 @@ const MicroHydroCalculator = () => {
       }
     });
   };
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+
+    return {
+      meta: {
+        title: 'Micro-Hydro Calculator',
+        subtitle: 'System sizing, penstock specification and economics',
+      },
+      headline: [
+        { label: 'Practical power output', value: result.practicalPower.toFixed(1), unit: 'kW' },
+        {
+          label: 'Annual generation',
+          value: (result.annualGeneration / 1000).toFixed(1),
+          unit: 'MWh',
+        },
+        { label: 'Payback period', value: result.paybackPeriod.toFixed(1), unit: 'years' },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            { label: 'Flow rate', value: `${result.flowValue} m³/s` },
+            { label: 'Head', value: `${result.headValue} m` },
+            { label: 'Recommended turbine', value: result.recommendedTurbine },
+            { label: 'Availability factor', value: `${(result.availabilityPct * 100).toFixed(0)} %` },
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'Theoretical power', value: `${result.theoreticalPower.toFixed(1)} kW` },
+            { label: 'Practical power', value: `${result.practicalPower.toFixed(1)} kW` },
+            {
+              label: 'Turbine efficiency',
+              value: `${(result.turbineEfficiency * 100).toFixed(0)} %`,
+              note: result.turbineSuitability,
+            },
+            { label: 'Annual generation', value: `${(result.annualGeneration / 1000).toFixed(1)} MWh` },
+            {
+              label: 'Penstock',
+              value: `${result.penstock.diameter} mm ${result.penstock.material} × ${result.penstock.length} m`,
+              note: `${result.penstock.pressureBar.toFixed(1)} bar`,
+            },
+            { label: 'Estimated cost', value: `£${Math.round(result.estimatedCost).toLocaleString()}` },
+            { label: 'Cost per kW', value: `£${Math.round(result.costPerKw).toLocaleString()}` },
+            { label: 'Annual revenue', value: `£${Math.round(result.annualRevenue).toLocaleString()}` },
+            { label: 'Payback period', value: `${result.paybackPeriod.toFixed(1)} years` },
+            { label: 'Viability', value: result.viabilityAssessment },
+          ],
+        },
+      ],
+      notes: [
+        'Environmental Impact Assessment, fish passage provisions and an abstraction licence are typically required — confirm with the Environment Agency before proceeding.',
+        'Grid connection is subject to G98/G99 requirements; planning permission is typically required for weirs and powerhouse structures.',
+      ],
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

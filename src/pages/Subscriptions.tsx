@@ -78,12 +78,26 @@ const Subscriptions = () => {
   // Email CTAs from the win-back sequence (touch 2 / touch 3) land here
   // with ?winback=apprentice|electrician. We surface a banner and pre-load
   // the coupon so checkout pre-applies it automatically.
+  //
+  // ⚠️ ORPHANED, and the prices below were wrong until 10 Sep 2026. Nothing in
+  // the codebase generates a `?winback=` URL any more: the live sequence is
+  // `winback-send` (v13), which sends people to dedicated Stripe payment links
+  // with the promo code pre-filled, not here. This branch survives only for
+  // links in emails already sent.
+  //
+  // The prices said £3.99 / £9.99, copied from the coupons' names. Those
+  // coupons are AMOUNT-off (£2 / £3) and the 29 June 2026 rise moved the list
+  // prices to £6.99 / £19.99, so the true post-coupon prices are £4.99 and
+  // £16.99 — the same stale-price failure the cancel flow had. Corrected here
+  // rather than deleted, because an old link landing on a wrong price is worse
+  // than one landing on a right one. Worth deleting outright once we're happy
+  // nobody is still clicking these.
   const winbackParam = searchParams.get('winback');
   const winbackCoupon: { id: string; tier: string; newPrice: string } | null =
     winbackParam === 'apprentice'
-      ? { id: 'YhLPdvFl', tier: 'apprentice', newPrice: '£3.99' }
+      ? { id: 'YhLPdvFl', tier: 'apprentice', newPrice: '£4.99' }
       : winbackParam === 'electrician'
-        ? { id: 'SSmqkZGn', tier: 'electrician', newPrice: '£9.99' }
+        ? { id: 'SSmqkZGn', tier: 'electrician', newPrice: '£16.99' }
         : null;
 
   // Annual is the default — saves the user ~17% (≈2 months free), locks in
@@ -103,7 +117,25 @@ const Subscriptions = () => {
     subscriptionId: string | null;
     tier: string | null;
     managedBy: 'stripe' | 'apple' | 'google' | 'unknown' | null;
-  }>({ open: false, subscriptionId: null, tier: null, managedBy: null });
+    /** Pence, straight from the live Stripe subscription item. */
+    currentAmount: number | null;
+    interval: 'month' | 'year' | null;
+    alreadyDiscounted: boolean;
+    alreadyPaused: boolean;
+    offerPercentOff: number | null;
+    offerDurationMonths: number | null;
+  }>({
+    open: false,
+    subscriptionId: null,
+    tier: null,
+    managedBy: null,
+    currentAmount: null,
+    interval: null,
+    alreadyDiscounted: false,
+    alreadyPaused: false,
+    offerPercentOff: null,
+    offerDurationMonths: null,
+  });
   const [isPreparingCancel, setIsPreparingCancel] = useState(false);
   const [isPortalLoading, setIsPortalLoading] = useState(false);
   const [isLoading, setIsLoading] = useState<Record<string, boolean>>({});
@@ -409,6 +441,16 @@ const Subscriptions = () => {
         subscriptionId: data.subscription_id,
         tier: data.tier ?? subscriptionTier ?? null,
         managedBy: data.managed_by ?? 'stripe',
+        currentAmount: typeof data.current_amount === 'number' ? data.current_amount : null,
+        interval: data.interval === 'year' ? 'year' : data.interval === 'month' ? 'month' : null,
+        alreadyDiscounted: Boolean(data.already_discounted),
+        alreadyPaused: Boolean(data.is_paused),
+        offerPercentOff:
+          typeof data.retention_percent_off === 'number' ? data.retention_percent_off : null,
+        offerDurationMonths:
+          typeof data.retention_duration_months === 'number'
+            ? data.retention_duration_months
+            : null,
       });
     } catch (err) {
       console.error('[Subscriptions] start cancel failed', err);
@@ -960,9 +1002,26 @@ const Subscriptions = () => {
         isOpen={cancelFlow.open}
         subscriptionId={cancelFlow.subscriptionId}
         tier={cancelFlow.tier}
+        currentAmount={cancelFlow.currentAmount}
+        interval={cancelFlow.interval}
+        alreadyDiscounted={cancelFlow.alreadyDiscounted}
+        alreadyPaused={cancelFlow.alreadyPaused}
+        offerPercentOff={cancelFlow.offerPercentOff}
+        offerDurationMonths={cancelFlow.offerDurationMonths}
         firstName={profile?.full_name?.split(' ')[0] ?? null}
         onClose={() =>
-          setCancelFlow({ open: false, subscriptionId: null, tier: null, managedBy: null })
+          setCancelFlow({
+            open: false,
+            subscriptionId: null,
+            tier: null,
+            managedBy: null,
+            currentAmount: null,
+            interval: null,
+            alreadyDiscounted: false,
+            alreadyPaused: false,
+            offerPercentOff: null,
+            offerDurationMonths: null,
+          })
         }
         onStayed={() => {
           // Refetch so the new (discounted) price reflects in the UI.

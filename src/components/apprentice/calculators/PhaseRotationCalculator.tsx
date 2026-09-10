@@ -1,4 +1,6 @@
 import { copyToClipboard } from '@/utils/clipboard';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { useState, useCallback } from 'react';
 import { Copy, Check, CheckCircle, XCircle, AlertTriangle, ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -165,6 +167,77 @@ const PhaseRotationCalculator = () => {
       }
     });
   };
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+
+    return {
+      meta: {
+        title: 'Phase Rotation Calculator',
+        subtitle: 'Phase sequence check for a three-phase installation',
+      },
+      headline: [
+        {
+          label: 'Phase sequence',
+          value: result.sequence.split('(')[0].trim(),
+          verdict: result.isCorrect ? 'pass' : 'fail',
+        },
+        {
+          label: 'Motor direction',
+          value: result.rotationDirection === 'clockwise' ? 'Clockwise' : 'Anti-clockwise',
+        },
+        { label: 'Confidence', value: result.confidence },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            {
+              label: 'Test method',
+              value:
+                testMethod === 'phase-rotation-meter'
+                  ? 'Phase rotation meter'
+                  : testMethod === 'motor-behaviour'
+                    ? 'Motor rotation test'
+                    : 'Voltage measurement',
+            },
+            ...(result.voltages
+              ? [
+                  { label: 'L1 to L2', value: `${result.voltages.l1l2.toFixed(1)} V` },
+                  { label: 'L2 to L3', value: `${result.voltages.l2l3.toFixed(1)} V` },
+                  { label: 'L3 to L1', value: `${result.voltages.l3l1.toFixed(1)} V` },
+                ]
+              : []),
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'Sequence', value: result.sequence },
+            { label: 'Motor direction', value: result.motorDirection },
+            { label: 'Confidence', value: result.confidence },
+            ...(result.voltages
+              ? [
+                  { label: 'Average voltage', value: `${result.voltages.avg.toFixed(1)} V` },
+                  {
+                    label: 'Max deviation',
+                    value: `${result.voltages.maxDeviation.toFixed(1)} %`,
+                    note: result.balanceStatus,
+                  },
+                ]
+              : []),
+            { label: 'Recommendation', value: result.recommendation },
+            { label: 'Correction method', value: result.correctionMethod },
+          ],
+        },
+      ],
+      notes: result.isCorrect
+        ? undefined
+        : ['Always isolate the supply and prove dead before making any phase corrections.'],
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

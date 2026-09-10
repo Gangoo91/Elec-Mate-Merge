@@ -44,6 +44,7 @@ import { createInvoiceFromCertificate } from '@/utils/certificateToQuote';
 import { useCertificateEmail } from '@/hooks/useCertificateEmail';
 import { EmailCertificateDialog } from '@/components/certificate-completion/EmailCertificateDialog';
 import { scrollToTopForStepChange } from '@/utils/scroll';
+import { coverKeysFromFormData } from '@/utils/certCoverPayload';
 
 const REPORT_TYPE = 'fire-alarm-design' as const;
 
@@ -79,7 +80,7 @@ export default function FireAlarmDesignCertificate() {
     lastModified: Date;
   } | null>(null);
 
-    // Lock + versioning (ELE-1037). enabled:!isLocked below gates autosave.
+  // Lock + versioning (ELE-1037). enabled:!isLocked below gates autosave.
   const {
     isLocked,
     lockedAt,
@@ -94,7 +95,7 @@ export default function FireAlarmDesignCertificate() {
     onAmended: (newId) => navigate(`/electrician/inspection-testing/fire-alarm-design/${newId}`),
   });
 
-const {
+  const {
     status: syncStatus,
     saveNow,
     syncNowImmediate,
@@ -148,6 +149,11 @@ const {
         dataWithBranding = {
           ...dataWithBranding,
           ...branding,
+          // ELE-1671 — the cover palette rides on the branding object. This merge is
+          // an EXPLICIT FIELD LIST, so without this line the em_* keys are silently
+          // dropped here and the whole cover-branding chain is inert for this
+          // certificate type. Spread, don't enumerate.
+          ...coverKeysFromFormData(branding as unknown as Record<string, unknown>),
           companyName: branding.companyName || dataWithBranding.designerCompany,
         };
       }
@@ -359,15 +365,27 @@ const {
       <AlertDialog open={showRecoveryDialog} onOpenChange={setShowRecoveryDialog}>
         <AlertDialogContent className="max-w-[90vw] sm:max-w-md bg-[#111114] border border-white/[0.08] rounded-2xl shadow-2xl">
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-white text-base font-bold">Recover unsaved work?</AlertDialogTitle>
+            <AlertDialogTitle className="text-white text-base font-bold">
+              Recover unsaved work?
+            </AlertDialogTitle>
             <AlertDialogDescription className="text-white text-sm">
               We found an unsaved fire alarm design certificate. Would you like to recover this
               work?
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter className="flex-col gap-2 sm:flex-col sm:space-x-0">
-            <AlertDialogAction onClick={handleRecoverDraft} className="w-full h-11 rounded-xl bg-elec-yellow font-semibold text-black hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation">Recover draft</AlertDialogAction>
-            <AlertDialogCancel onClick={handleDiscardDraft} className="w-full h-11 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white font-medium hover:bg-white/[0.08] active:scale-[0.98] transition-all touch-manipulation mt-0">Start fresh</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleRecoverDraft}
+              className="w-full h-11 rounded-xl bg-elec-yellow font-semibold text-black hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation"
+            >
+              Recover draft
+            </AlertDialogAction>
+            <AlertDialogCancel
+              onClick={handleDiscardDraft}
+              className="w-full h-11 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white font-medium hover:bg-white/[0.08] active:scale-[0.98] transition-all touch-manipulation mt-0"
+            >
+              Start fresh
+            </AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
@@ -411,35 +429,38 @@ const {
       />
 
       <main className="-mx-3 px-4 py-4 pb-36 sm:mx-auto sm:px-4 lg:max-w-[1600px] lg:px-8">
-        <div className={cn(isLocked && 'pointer-events-none select-none opacity-95')} aria-disabled={isLocked || undefined}>
-        <FireAlarmG1FormTabs
-          reportId={savedReportId}
-          currentTab={tabProps.currentTab}
-          onTabChange={(tab) => {
-            tabProps.setCurrentTab(tab as any);
-            syncOnTabChange();
-          }}
-          formData={formData}
-          onUpdate={handleUpdate}
-          tabNavigationProps={{
-            currentTab: tabProps.currentTab,
-            currentTabIndex: tabProps.currentTabIndex,
-            totalTabs: tabProps.tabs.length,
-            canNavigateNext: tabProps.canNavigateNext,
-            canNavigatePrevious: tabProps.canNavigatePrevious,
-            navigateNext: tabProps.navigateNext,
-            navigatePrevious: tabProps.navigatePrevious,
-            getProgressPercentage: tabProps.getProgressPercentage,
-            isCurrentTabComplete: tabProps.isCurrentTabComplete,
-          }}
-          onGenerateCertificate={handleGenerateCertificate}
-          onCreateInvoice={handleCreateInvoice}
-          onSaveDraft={handleSaveDraft}
-          canGenerateCertificate={!isGenerating}
-          onOpenEmailDialog={() => setShowEmailDialog(true)}
-          canEmail={!!savedReportId}
-        />
-      </div>
+        <div
+          className={cn(isLocked && 'pointer-events-none select-none opacity-95')}
+          aria-disabled={isLocked || undefined}
+        >
+          <FireAlarmG1FormTabs
+            reportId={savedReportId}
+            currentTab={tabProps.currentTab}
+            onTabChange={(tab) => {
+              tabProps.setCurrentTab(tab as any);
+              syncOnTabChange();
+            }}
+            formData={formData}
+            onUpdate={handleUpdate}
+            tabNavigationProps={{
+              currentTab: tabProps.currentTab,
+              currentTabIndex: tabProps.currentTabIndex,
+              totalTabs: tabProps.tabs.length,
+              canNavigateNext: tabProps.canNavigateNext,
+              canNavigatePrevious: tabProps.canNavigatePrevious,
+              navigateNext: tabProps.navigateNext,
+              navigatePrevious: tabProps.navigatePrevious,
+              getProgressPercentage: tabProps.getProgressPercentage,
+              isCurrentTabComplete: tabProps.isCurrentTabComplete,
+            }}
+            onGenerateCertificate={handleGenerateCertificate}
+            onCreateInvoice={handleCreateInvoice}
+            onSaveDraft={handleSaveDraft}
+            canGenerateCertificate={!isGenerating}
+            onOpenEmailDialog={() => setShowEmailDialog(true)}
+            canEmail={!!savedReportId}
+          />
+        </div>
       </main>
 
       {/* Email Certificate Dialog */}

@@ -13,6 +13,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
+import { CalculationPdfButton } from '@/components/calculators/CalculationPdfButton';
+import type { CalcReport } from '@/lib/calculator-report';
 import {
   getCalc,
   type CalcField,
@@ -91,6 +93,96 @@ export default function RenewableCalc() {
   }
 
   const related = (def.related ?? []).map((id) => getCalc(id)).filter(Boolean) as CalcDef[];
+
+  /**
+   * Every renewables calculator's client PDF, from one function (ELE-1699).
+   *
+   * These 13 calculators are a data-driven registry — each is a `CalcDef` with
+   * a `compute` returning the same `CalcResult` shape — so the PDF is wired
+   * once here rather than thirteen times. A new entry in RENEWABLE_CALCS gets
+   * a branded client report for free, with no work at all.
+   *
+   * The mapping is near lossless because the engine already produces exactly
+   * what a client report needs: `ok` is the verdict, `working` is the
+   * step-by-step with the real numbers in it, and `basis` explains why the
+   * calculation is done that way.
+   */
+  /**
+   * `def.standard` is a UI CHIP, not a citation — the registry holds values
+   * like "kWp", "DC:AC", "PVGIS" and "ROI" that are fine on a small badge in
+   * the app and nonsense under a heading marked STANDARD on a document handed
+   * to a customer. ("BS 7671 · 712" read as a random number.)
+   *
+   * So each chip is expanded to a proper citation, and anything that is not a
+   * standard returns null and the field is omitted entirely — better a missing
+   * row than an authoritative-looking wrong one.
+   *
+   * Section numbers verified against the BS 7671 A4:2026 corpus, not recalled:
+   * 712 = Solar photovoltaic (PV) power supply systems; 722 = Electric vehicle
+   * charging installations.
+   */
+  const citationFor = (calcId: string, chip: string): string | undefined => {
+    // 'IET CoP' is used by two calculators that cite different Codes of
+    // Practice, so it has to resolve per calculator rather than per chip.
+    if (chip === 'IET CoP') {
+      return calcId === 'battery-autonomy'
+        ? 'IET Code of Practice for Electrical Energy Storage Systems'
+        : 'IET Code of Practice for Grid-connected Solar PV Systems';
+    }
+    const map: Record<string, string> = {
+      'BS 7671 · 712': 'BS 7671:2018+A4:2026 — Section 712 (Solar PV)',
+      'Doc S · BS 7671 722':
+        'Approved Document S · BS 7671:2018+A4:2026 — Section 722 (EV charging)',
+      'MIS 3002 · 3.6.8': 'MCS MIS 3002, clause 3.6.8',
+      'MIS 3005 · BS 7671': 'MCS MIS 3005 · BS 7671:2018+A4:2026',
+      'EREC G98 / G99': 'Engineering Recommendation G98 / G99',
+      'EREC G100': 'Engineering Recommendation G100',
+      'BS EN 12831': 'BS EN 12831 — heat load calculation',
+    };
+    // kWp / DC:AC / PVGIS / ROI are descriptions of the calculation, not
+    // standards. Omitted rather than printed under a "Standard" heading.
+    return map[chip];
+  };
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+
+    return {
+      meta: {
+        title: def.title,
+        subtitle: def.description,
+        standard: citationFor(def.id, def.standard),
+      },
+      headline: [
+        {
+          // `headline` already carries its own unit ("2.35 %", "4.2 kWp"), so
+          // it goes in whole rather than being split into value + unit.
+          label: 'Result',
+          value: result.headline,
+          verdict: result.ok ? 'pass' : 'fail',
+        },
+      ],
+      sections: [
+        // The single most useful sentence for the client, so it leads.
+        ...(result.takeaway ? [{ heading: 'Bottom line', items: [result.takeaway] }] : []),
+        {
+          heading: 'Inputs',
+          rows: def.fields.map((f) => ({
+            label: f.label,
+            value: `${vals[f.key] ?? String(f.default)}${f.unit ? ` ${f.unit}` : ''}`,
+          })),
+        },
+        ...(result.outputs.length
+          ? [{
+              heading: 'Figures',
+              rows: result.outputs.map((o) => ({ label: o.label, value: o.value, note: o.sub })),
+            }]
+          : []),
+        ...(result.working.length ? [{ heading: 'Working', items: result.working }] : []),
+      ],
+      notes: [result.basis, ...result.warnings].filter(Boolean),
+    };
+  };
 
   return (
     <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-28">
@@ -274,9 +366,12 @@ export default function RenewableCalc() {
 
                   {/* Headline + takeaway + key figures */}
                   <div className="rounded-2xl border border-elec-yellow/30 bg-gradient-to-b from-elec-yellow/[0.09] to-elec-yellow/[0.02] p-5 sm:p-6">
-                    <p className="text-[10px] uppercase tracking-[0.18em] text-white/70 font-semibold">
-                      Result
-                    </p>
+                    <div className="flex items-start justify-between gap-3">
+                      <p className="text-[10px] uppercase tracking-[0.18em] text-white/70 font-semibold">
+                        Result
+                      </p>
+                      <CalculationPdfButton report={buildReport} />
+                    </div>
                     <p
                       className={
                         result.ok

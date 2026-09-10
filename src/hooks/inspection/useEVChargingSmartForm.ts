@@ -22,6 +22,8 @@ import {
   calculateCurrentFromPower,
   calculatePowerFromCurrent,
 } from '@/data/evChargerDatabase';
+import { brandingFromCompanyProfile } from '@/utils/certBranding';
+import { coverPayloadKeys } from '@/utils/certCoverPayload';
 
 // ============================================================================
 // Types
@@ -147,7 +149,20 @@ export function useEVChargingSmartForm() {
       : companyProfile.company_address || '';
 
     return {
-      companyLogo: companyProfile.logo_data_url || companyProfile.logo_url || '',
+      // 🔴 Do NOT re-derive branding by hand here.
+      //
+      // This block used to build its own copy of what `brandingFromCompanyProfile`
+      // already does, and it drifted: when the logo order was corrected for
+      // ELE-1668 (hosted URL first, because the data URL is downscaled to 320px),
+      // the fix landed in certBranding and NOT in these five hooks — so EV,
+      // emergency lighting, BESS, lightning protection and minor works kept
+      // shipping blurred logos for weeks after the bug was "fixed".
+      //
+      // Spreading the shared reader means there is one implementation to correct,
+      // and it brings the ELE-1671 cover palette along for free.
+      ...brandingFromCompanyProfile(companyProfile, '#f59e0b'),
+      ...coverPayloadKeys(brandingFromCompanyProfile(companyProfile, '#f59e0b')),
+      companyLogo: companyProfile.logo_url || companyProfile.logo_data_url || '',
       companyName: companyProfile.company_name || '',
       companyAddress: fullAddress,
       companyPhone: companyProfile.company_phone || '',
@@ -328,8 +343,8 @@ export function useEVChargingSmartForm() {
             isValid: isPass,
             status: isPass ? 'pass' : 'fail',
             message: isPass
-            ? `PASS: ${tripTime}ms ≤ 300ms (Reg 643.8)`
-            : `FAIL: ${tripTime}ms > 300ms max (Reg 643.8)`,
+              ? `PASS: ${tripTime}ms ≤ 300ms (Reg 643.8)`
+              : `FAIL: ${tripTime}ms > 300ms max (Reg 643.8)`,
             limit: 300,
           });
         }

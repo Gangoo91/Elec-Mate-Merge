@@ -25,9 +25,19 @@ function generateReminderEmailHTML(
   const subscribeUrl = 'https://elec-mate.com/subscribe';
   const logoUrl = 'https://elec-mate.com/logo.jpg';
 
-  // Pricing based on role
-  const currentPrice = isApprentice ? '£4.99' : '£9.99';
-  const futurePrice = isApprentice ? null : '£14.99';
+  /*
+   * List price, from src/data/stripePrices.ts.
+   *
+   * This said £4.99 / £9.99 with "price goes to £14.99 when our app launches"
+   * — the pre-29-June figures, on an app that has since launched. Every manual
+   * nudge sent from the admin Trials page quoted a price we do not charge and
+   * an increase that has already happened, and the recipient then met the real
+   * £6.99 / £19.99 at the checkout.
+   *
+   * The urgency claim is gone rather than restated: there is no scheduled rise
+   * to point at, and inventing one is the kind of thing that gets disputed.
+   */
+  const currentPrice = isApprentice ? '£6.99' : '£19.99';
 
   // Urgency styling
   const urgencyColor = daysLeft === 0 ? '#ef4444' : daysLeft === 1 ? '#f97316' : '#fbbf24';
@@ -94,9 +104,9 @@ function generateReminderEmailHTML(
                     </table>
 
                     ${
-                      futurePrice
+                      !isApprentice
                         ? `
-                    <!-- Price Lock Banner - Electricians -->
+                    <!-- Price Banner - Electricians -->
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: linear-gradient(135deg, rgba(251, 191, 36, 0.15) 0%, rgba(245, 158, 11, 0.1) 100%); border-radius: 12px; margin-bottom: 24px;">
                       <tr>
                         <td style="padding: 16px 20px;">
@@ -107,10 +117,10 @@ function generateReminderEmailHTML(
                               </td>
                               <td style="vertical-align: top;">
                                 <p style="margin: 0 0 4px; font-size: 15px; font-weight: 700; color: #ffffff;">
-                                  Lock in ${currentPrice}/month forever
+                                  ${currentPrice} a month, cancel any time
                                 </p>
                                 <p style="margin: 0; font-size: 14px; color: #d4d4d4; line-height: 1.4;">
-                                  Price goes to ${futurePrice}/month when our app launches
+                                  Or £199.99 a year — two months free
                                 </p>
                               </td>
                             </tr>
@@ -225,7 +235,7 @@ Deno.serve(async (req) => {
     console.log('Fetching profile...');
     const { data: profile, error: profileError } = await supabase
       .from('profiles')
-      .select('full_name, username, created_at, role')
+      .select('full_name, username, created_at, role, trial_end')
       .eq('id', userId)
       .single();
 
@@ -256,9 +266,18 @@ Deno.serve(async (req) => {
     const email = authUser.user.email;
     const firstName = (profile.full_name || 'there').split(' ')[0];
 
-    // Calculate days left in trial
-    const createdAt = new Date(profile.created_at);
-    const trialEnds = new Date(createdAt.getTime() + 7 * 24 * 60 * 60 * 1000);
+    /*
+     * The trial's real end date, not signup plus seven.
+     *
+     * Trials here run 7 to 23 days once store trials and admin extensions are
+     * counted, so `created_at + 7 days` told an extended trial it had already
+     * expired and put "your trial ends today" in the subject line of an email
+     * to somebody with a fortnight left. `profiles.trial_end` is the same
+     * column the admin page, the cohort RPC and the expiry cron all read.
+     */
+    const trialEnds = profile.trial_end
+      ? new Date(profile.trial_end)
+      : new Date(new Date(profile.created_at).getTime() + 7 * 24 * 60 * 60 * 1000);
     const now = new Date();
     const daysLeft = Math.max(
       0,
@@ -318,6 +337,26 @@ Deno.serve(async (req) => {
 
     if (logError) {
       console.log('Could not log email send:', logError.message);
+    }
+
+    /*
+     * Also record it where everything else records trial email.
+     *
+     * `trial_email_sends` (plural verb) is written only by this function and
+     * its bulk sibling; `trial_emails_sent` (plural noun) is what the daily
+     * cron, the winback flow and the admin Trials page all read. With the
+     * history split across two tables the page could not see that a manual
+     * nudge had gone out — it kept offering "Nudge" to somebody emailed a
+     * minute earlier, and the contact-coverage figures ignored manual sends
+     * entirely. Both get written until the older table can be retired.
+     */
+    const { error: sharedLogError } = await supabase.from('trial_emails_sent').insert({
+      user_id: userId,
+      email_type: 'admin_reminder',
+    });
+
+    if (sharedLogError) {
+      console.log('Could not log to trial_emails_sent:', sharedLogError.message);
     }
 
     return new Response(JSON.stringify({ success: true, emailId: data?.id }), {

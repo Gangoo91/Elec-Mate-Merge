@@ -11,6 +11,8 @@ import {
   TEST_INTERVAL,
 } from '@/types/lightning-protection';
 import { ukDate } from '@/utils/certDate';
+import { coverPayloadKeys } from '@/utils/certCoverPayload';
+import type { CertBranding } from '@/utils/certBranding';
 
 interface BrandingOptions {
   companyLogo?: string;
@@ -122,6 +124,11 @@ export const formatLightningProtectionJson = (
     // Company branding — prefer the branding arg, then any branding keys already
     // merged into formData (generate path / pdf_payload regen). Never force-blank.
     companyLogo: branding?.companyLogo ?? formData.companyLogo ?? '',
+    // ELE-1671 — cover palette + one scheme lockup per masthead. Cast because this
+    // formatter's `branding` param predates CertBranding and is typed narrower
+    // than what the caller actually passes. `coverPayloadKeys` returns {} when the
+    // palette is genuinely absent, so this can never make a certificate worse.
+    ...coverPayloadKeys(branding as Partial<CertBranding>),
     companyName: branding?.companyName ?? formData.companyName ?? formData.contractorCompany ?? '',
     companyAddress: branding?.companyAddress ?? formData.companyAddress ?? '',
     companyPhone: branding?.companyPhone ?? formData.companyPhone ?? '',
@@ -131,8 +138,7 @@ export const formatLightningProtectionJson = (
     registrationScheme: branding?.registrationScheme ?? formData.registrationScheme ?? '',
     registrationNumber: branding?.registrationNumber ?? formData.registrationNumber ?? '',
     companyWebsite: branding?.companyWebsite ?? formData.companyWebsite ?? '',
-    companyAccentColor:
-      branding?.companyAccentColor ?? formData.companyAccentColor ?? LP_ACCENT,
+    companyAccentColor: branding?.companyAccentColor ?? formData.companyAccentColor ?? LP_ACCENT,
   };
 
   return payload;

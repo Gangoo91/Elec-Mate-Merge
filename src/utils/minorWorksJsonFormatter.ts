@@ -66,6 +66,12 @@ export const formatMinorWorksJson = async (
   // `/logos/schemes/niceic.png` would otherwise render as broken images
   // in PDFMonkey because it can't fetch our static asset paths.
   const { resolveSchemeLogo, resolveCompanyLogo } = await import('@/utils/resolveSchemeLogo');
+
+  // ELE-1671 — the cover palette. The caller passes a narrow branding object
+  // that predates this, so fall back to the signed-in electrician's profile.
+  const { fetchCertBranding } = await import('@/utils/certBranding');
+  const { coverPayloadKeys } = await import('@/utils/certCoverPayload');
+  const emCover = coverPayloadKeys(await fetchCertBranding('#d69e2e'));
   const resolvedSchemeLogo = await resolveSchemeLogo(
     dataWithBranding.schemeLogoDataUrl ||
       dataWithBranding.registrationSchemeLogo ||
@@ -100,6 +106,11 @@ export const formatMinorWorksJson = async (
     formattedFormData.qsPosition = qsReview.qs_position;
     formattedFormData.qsDate = formatQsReviewDate(qsReview.reviewed_at);
   }
+
+  // ELE-1671 — cover palette. Added AFTER the formatting pass on purpose:
+  // `formatFieldForPdf` walks every key, and a hex colour is not something it
+  // should get a chance to rewrite.
+  Object.assign(formattedFormData, emCover);
 
   // ELE-1552 — formatFieldForPdf only formats four hard-coded field names
   // (the ELE-1167 fix), so testEquipmentCalDate and bsAmendmentDate still

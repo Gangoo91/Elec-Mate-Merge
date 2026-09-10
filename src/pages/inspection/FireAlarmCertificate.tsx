@@ -50,6 +50,7 @@ import CertLockBar from '@/components/inspection/CertLockBar';
 import { cn } from '@/lib/utils';
 import { generateCertificateNumber } from '@/utils/certificateNumbering';
 import { scrollToTopForStepChange } from '@/utils/scroll';
+import { coverKeysFromFormData } from '@/utils/certCoverPayload';
 
 const REPORT_TYPE = 'fire-alarm' as const;
 
@@ -89,7 +90,7 @@ export default function FireAlarmCertificate() {
   } | null>(null);
 
   // ─── Report sync (replaces all custom sync code) ──────────────────────
-    // Lock + versioning (ELE-1037). enabled:!isLocked below gates autosave.
+  // Lock + versioning (ELE-1037). enabled:!isLocked below gates autosave.
   const {
     isLocked,
     lockedAt,
@@ -104,7 +105,7 @@ export default function FireAlarmCertificate() {
     onAmended: (newId) => navigate(`/electrician/inspection-testing/fire-alarm/${newId}`),
   });
 
-const {
+  const {
     status: syncStatus,
     saveNow,
     syncNowImmediate,
@@ -190,6 +191,11 @@ const {
         if (branding) {
           merged = {
             ...merged,
+            // ELE-1671 — the cover palette rides on the branding object. This merge is
+            // an EXPLICIT FIELD LIST, so without this line the em_* keys are silently
+            // dropped here and the whole cover-branding chain is inert for this
+            // certificate type. Spread, don't enumerate.
+            ...coverKeysFromFormData(branding as unknown as Record<string, unknown>),
             companyLogo: branding.companyLogo || merged.companyLogo,
             companyName: branding.companyName || merged.companyName || merged.installerCompany,
             companyAddress: branding.companyAddress || merged.companyAddress,
@@ -364,7 +370,8 @@ const {
     if (!formData.premisesAddress) missing.push({ field: 'Premises Address', tab: 'client' });
     if (!formData.systemCategory) missing.push({ field: 'System Category', tab: 'system' });
     if (!formData.systemMake) missing.push({ field: 'Panel Make', tab: 'system' });
-    if (!formData.installerSignature) missing.push({ field: 'Installer Signature', tab: 'declarations' });
+    if (!formData.installerSignature)
+      missing.push({ field: 'Installer Signature', tab: 'declarations' });
     if (!formData.overallResult) missing.push({ field: 'Overall Result', tab: 'declarations' });
     return missing;
   };
@@ -539,7 +546,9 @@ const {
       <AlertDialog open={showRecoveryDialog} onOpenChange={setShowRecoveryDialog}>
         <AlertDialogContent className="max-w-[90vw] sm:max-w-md bg-[#111114] border border-white/[0.08] rounded-2xl shadow-2xl">
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-white text-base font-bold">Recover unsaved work?</AlertDialogTitle>
+            <AlertDialogTitle className="text-white text-base font-bold">
+              Recover unsaved work?
+            </AlertDialogTitle>
             <AlertDialogDescription className="text-white text-sm">
               We found an unsaved fire alarm certificate from{' '}
               {recoveryDraft?.lastModified.toLocaleString()}.
@@ -551,8 +560,18 @@ const {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter className="flex-col gap-2 sm:flex-col sm:space-x-0">
-            <AlertDialogAction onClick={handleRecoverDraft} className="w-full h-11 rounded-xl bg-elec-yellow font-semibold text-black hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation">Recover draft</AlertDialogAction>
-            <AlertDialogCancel onClick={handleDiscardDraft} className="w-full h-11 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white font-medium hover:bg-white/[0.08] active:scale-[0.98] transition-all touch-manipulation mt-0">Start fresh</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleRecoverDraft}
+              className="w-full h-11 rounded-xl bg-elec-yellow font-semibold text-black hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation"
+            >
+              Recover draft
+            </AlertDialogAction>
+            <AlertDialogCancel
+              onClick={handleDiscardDraft}
+              className="w-full h-11 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white font-medium hover:bg-white/[0.08] active:scale-[0.98] transition-all touch-manipulation mt-0"
+            >
+              Start fresh
+            </AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
@@ -597,49 +616,52 @@ const {
       />
 
       <main className="-mx-3 px-4 py-4 pb-36 sm:mx-auto sm:px-4 lg:max-w-[1600px] lg:px-8">
-        <div className={cn(isLocked && 'pointer-events-none select-none opacity-95')} aria-disabled={isLocked || undefined}>
-        <FireAlarmFormTabs
-          currentTab={tabProps.currentTab}
-          onTabChange={(tab) => {
-            tabProps.setCurrentTab(tab);
-            syncOnTabChange();
-          }}
-          canAccessTab={tabProps.canAccessTab}
-          formData={formData}
-          onUpdate={handleUpdate}
-          savedReportId={savedReportId}
-          tabNavigationProps={{
-            currentTab: tabProps.currentTab,
-            currentTabIndex: tabProps.currentTabIndex,
-            totalTabs: tabProps.tabs.length,
-            canNavigateNext: tabProps.canNavigateNext,
-            canNavigatePrevious: tabProps.canNavigatePrevious,
-            navigateNext: tabProps.navigateNext,
-            navigatePrevious: tabProps.navigatePrevious,
-            getProgressPercentage: tabProps.getProgressPercentage,
-            isCurrentTabComplete: tabProps.isCurrentTabComplete,
-            onGenerateCertificate: handleGenerateCertificate,
-            canGenerateCertificate: !isGenerating,
-            whatsApp: {
-              type: 'fire-alarm',
-              id: savedReportId || id || 'new',
-              recipientPhone: formData.clientTelephone || '',
-              recipientName: formData.clientName || '',
-              documentLabel: 'Fire Alarm Certificate',
-            },
-          }}
-          onGenerateCertificate={handleGenerateCertificate}
-          onCreateInvoice={handleCreateInvoice}
-          onSaveDraft={handleSaveDraft}
-          canGenerateCertificate={!isGenerating}
-          onOpenEmailDialog={() => {
-            setShowEmailDialog(true);
-            // Refresh general photos so the emailed PDF includes them
-            fetchGeneralPhotoUrls().then(setGeneralPhotoUrls);
-          }}
-          canEmail={!!savedReportId}
-        />
-      </div>
+        <div
+          className={cn(isLocked && 'pointer-events-none select-none opacity-95')}
+          aria-disabled={isLocked || undefined}
+        >
+          <FireAlarmFormTabs
+            currentTab={tabProps.currentTab}
+            onTabChange={(tab) => {
+              tabProps.setCurrentTab(tab);
+              syncOnTabChange();
+            }}
+            canAccessTab={tabProps.canAccessTab}
+            formData={formData}
+            onUpdate={handleUpdate}
+            savedReportId={savedReportId}
+            tabNavigationProps={{
+              currentTab: tabProps.currentTab,
+              currentTabIndex: tabProps.currentTabIndex,
+              totalTabs: tabProps.tabs.length,
+              canNavigateNext: tabProps.canNavigateNext,
+              canNavigatePrevious: tabProps.canNavigatePrevious,
+              navigateNext: tabProps.navigateNext,
+              navigatePrevious: tabProps.navigatePrevious,
+              getProgressPercentage: tabProps.getProgressPercentage,
+              isCurrentTabComplete: tabProps.isCurrentTabComplete,
+              onGenerateCertificate: handleGenerateCertificate,
+              canGenerateCertificate: !isGenerating,
+              whatsApp: {
+                type: 'fire-alarm',
+                id: savedReportId || id || 'new',
+                recipientPhone: formData.clientTelephone || '',
+                recipientName: formData.clientName || '',
+                documentLabel: 'Fire Alarm Certificate',
+              },
+            }}
+            onGenerateCertificate={handleGenerateCertificate}
+            onCreateInvoice={handleCreateInvoice}
+            onSaveDraft={handleSaveDraft}
+            canGenerateCertificate={!isGenerating}
+            onOpenEmailDialog={() => {
+              setShowEmailDialog(true);
+              // Refresh general photos so the emailed PDF includes them
+              fetchGeneralPhotoUrls().then(setGeneralPhotoUrls);
+            }}
+            canEmail={!!savedReportId}
+          />
+        </div>
       </main>
 
       {/* Email Certificate Dialog */}
@@ -666,7 +688,6 @@ const {
         errorMessage={generationError}
         documentLabel="Certificate"
       />
-
     </div>
   );
 }

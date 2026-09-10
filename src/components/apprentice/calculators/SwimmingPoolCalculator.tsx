@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { copyToClipboard } from '@/utils/clipboard';
 import { Copy, Check, CheckCircle, AlertTriangle, ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -110,6 +112,65 @@ const SwimmingPoolCalculator = () => {
     if (hasWarning) return { status: 'warning', label: 'Warnings' };
     return { status: 'pass', label: 'Section 702 Compliant' };
   };
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+    const compliance = getComplianceStatus();
+
+    return {
+      meta: {
+        title: 'Swimming Pool Electrical Calculator',
+        subtitle: 'Zone compliance, circuit analysis and bonding',
+        standard: 'BS 7671:2018+A4:2026 — Section 702',
+      },
+      headline: [
+        { label: 'Total load', value: `${result.totalLoad}`, unit: 'W' },
+        { label: 'Total current', value: `${result.totalCurrent}`, unit: 'A' },
+        {
+          label: 'Compliance',
+          value: compliance.label || (result.regulatoryCompliance.bs7671Section702 ? 'Compliant' : 'Issues found'),
+          verdict: compliance.status === 'warning' ? 'warn' : compliance.status,
+        },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            { label: 'Pool type', value: inputs.poolType },
+            { label: 'Pool volume', value: `${inputs.poolVolume} L` },
+            { label: 'Supply voltage', value: `${inputs.supplyVoltage} V` },
+            { label: 'Earthing system', value: inputs.earthingSystem },
+            { label: 'Installation zone', value: inputs.zone },
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'Total load', value: `${result.totalLoad} W` },
+            { label: 'Total current', value: `${result.totalCurrent} A` },
+            { label: 'Supply requirements', value: result.supplyRequirements },
+            { label: 'Main protection', value: result.mainProtection },
+            { label: 'Earthing arrangements', value: result.earthingArrangements },
+          ],
+        },
+        {
+          heading: 'Circuit schedule',
+          rows: result.circuits.map((c) => ({
+            label: c.name,
+            value: `${c.load} W, ${c.cableSize}, ${c.protectionRating} A MCB`,
+            note: c.ipRating,
+          })),
+        },
+        {
+          heading: 'Bonding requirements',
+          items: result.bondingRequirements,
+        },
+      ],
+      notes: result.regulatoryCompliance.issues.length ? result.regulatoryCompliance.issues : undefined,
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

@@ -7,6 +7,9 @@
  * this is mostly a pass-through with explicit defaults for every field.
  */
 
+import { coverPayloadKeys } from '@/utils/certCoverPayload';
+import type { CertBranding } from '@/utils/certBranding';
+
 // ── Alarm entry shape (matches AlarmEntry in SmokeCOAlarmCertificate.tsx) ────
 
 interface AlarmEntry {
@@ -69,7 +72,6 @@ const ensureAlarm = (alarm: Partial<AlarmEntry>): AlarmEntry => ({
   mainsIndicator: str(alarm.mainsIndicator),
 });
 
-
 /**
  * Stored option value -> the label the electrician actually saw in the form.
  *
@@ -85,23 +87,33 @@ const ensureAlarm = (alarm: Partial<AlarmEntry>): AlarmEntry => ({
  */
 const OPTION_LABELS: Record<string, string> = {
   // certificate type
-  'new-installation': 'New installation', replacement: 'Replacement',
-  addition: 'Addition to existing', upgrade: 'Upgrade',
+  'new-installation': 'New installation',
+  replacement: 'Replacement',
+  addition: 'Addition to existing',
+  upgrade: 'Upgrade',
   // tenure
-  'private-rental': 'Private rental', 'social-housing': 'Social housing',
+  'private-rental': 'Private rental',
+  'social-housing': 'Social housing',
   'owner-occupied': 'Owner-occupied',
   // alarm type
-  'optical-smoke': 'Optical smoke', heat: 'Heat',
+  'optical-smoke': 'Optical smoke',
+  heat: 'Heat',
   'multi-sensor-smoke-heat': 'Multi-sensor (smoke + heat)',
-  'multi-sensor-heat-co': 'Multi-sensor (heat + CO)', CO: 'CO alarm',
+  'multi-sensor-heat-co': 'Multi-sensor (heat + CO)',
+  CO: 'CO alarm',
   // power source
-  'mains-sealed-lithium': 'Mains + lithium', 'mains-rechargeable': 'Mains + rechargeable',
-  'sealed-lithium': 'Lithium 10yr', 'replaceable-battery': 'Replaceable battery',
+  'mains-sealed-lithium': 'Mains + lithium',
+  'mains-rechargeable': 'Mains + rechargeable',
+  'sealed-lithium': 'Lithium 10yr',
+  'replaceable-battery': 'Replaceable battery',
   // interconnection
-  hardwired: 'Hardwired', 'rf-wireless': 'RF wireless',
-  combination: 'Combination', standalone: 'Standalone',
+  hardwired: 'Hardwired',
+  'rf-wireless': 'RF wireless',
+  combination: 'Combination',
+  standalone: 'Standalone',
   // mounting
-  ceiling: 'Ceiling', wall: 'Wall',
+  ceiling: 'Ceiling',
+  wall: 'Wall',
   // Part P notification
   'self-certified': 'Self-certified via competent person scheme',
   'building-control': 'Notified to building control',
@@ -129,10 +141,7 @@ const ukDate = (v: unknown): string => {
 
 // ── Main formatter ──────────────────────────────────────────────────────────
 
-export const formatSmokeCOJson = (
-  formData: Record<string, any>,
-  branding?: SmokeCOBranding
-) => {
+export const formatSmokeCOJson = (formData: Record<string, any>, branding?: SmokeCOBranding) => {
   const alarms: AlarmEntry[] = Array.isArray(formData.alarms)
     ? formData.alarms.map((a: Partial<AlarmEntry>) => ensureAlarm(a))
     : [];
@@ -225,6 +234,11 @@ export const formatSmokeCOJson = (
     notes: str(formData.notes),
 
     // Company branding (merged from branding override or formData)
+    // ELE-1671 — cover palette + one scheme lockup per masthead. Cast because this
+    // formatter's `branding` param predates CertBranding and is typed narrower
+    // than what the caller actually passes. `coverPayloadKeys` returns {} when the
+    // palette is genuinely absent, so this can never make a certificate worse.
+    ...coverPayloadKeys(branding as Partial<CertBranding>),
     companyName: str(branding?.companyName ?? formData.companyName),
     companyAddress: str(branding?.companyAddress ?? formData.companyAddress),
     companyPhone: str(branding?.companyPhone ?? formData.companyPhone),
@@ -234,6 +248,8 @@ export const formatSmokeCOJson = (
     // The electrician's brand colour from Settings → Business → Brand. The
     // template used to hardcode its accent, so this never had any effect.
     companyAccentColor: str(branding?.companyAccentColor ?? formData.companyAccentColor),
-    registrationSchemeLogo: str(branding?.registrationSchemeLogo ?? formData.registrationSchemeLogo),
+    registrationSchemeLogo: str(
+      branding?.registrationSchemeLogo ?? formData.registrationSchemeLogo
+    ),
   };
 };

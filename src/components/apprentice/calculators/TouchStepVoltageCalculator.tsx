@@ -1,4 +1,6 @@
 import { copyToClipboard } from '@/utils/clipboard';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { useState, useCallback } from 'react';
 import { Copy, Check, ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -290,6 +292,80 @@ const TouchStepVoltageCalculator = () => {
     contactScenario,
     bodyImpedance,
   ]);
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+
+    const electrodeDimensionRows =
+      electrodeType === 'rod'
+        ? [
+            { label: 'Rod length', value: `${rodLength} m` },
+            { label: 'Rod diameter', value: `${rodDiameter} m` },
+          ]
+        : electrodeType === 'plate'
+          ? [{ label: 'Plate area', value: `${plateArea} m²` }]
+          : electrodeType === 'strip'
+            ? [
+                { label: 'Strip length', value: `${stripLength} m` },
+                { label: 'Strip width', value: `${stripWidth} m` },
+                { label: 'Burial depth', value: `${stripDepth} m` },
+              ]
+            : [
+                { label: 'Mesh area', value: `${meshArea} m²` },
+                { label: 'Total conductor length', value: `${meshTotalLength} m` },
+              ];
+
+    return {
+      meta: {
+        title: 'Touch & Step Voltage Calculator',
+        subtitle: 'Touch and step voltage assessment for an earthing installation',
+        standard: 'BS EN 50522; ENA TS 41-24',
+      },
+      headline: [
+        {
+          label: 'Result',
+          value: result.passOrFail === 'pass' ? 'Within limits' : 'Exceeds limits',
+          verdict: result.passOrFail === 'pass' ? 'pass' : 'fail',
+        },
+        { label: 'Touch voltage', value: `${result.touchVoltage}`, unit: 'V' },
+        { label: 'Step voltage', value: `${result.stepVoltage}`, unit: 'V' },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            { label: 'Earth fault current', value: `${earthFaultCurrent} A` },
+            { label: 'Fault duration', value: `${faultDuration} s` },
+            { label: 'Soil resistivity', value: `${soilResistivity} Ω·m` },
+            { label: 'Electrode type', value: electrodeType },
+            ...electrodeDimensionRows,
+            { label: 'Contact scenario', value: contactScenario === 'touch' ? 'Touch (hand-to-foot)' : 'Step (foot-to-foot)' },
+            { label: 'Body impedance', value: `${bodyImpedance || 1000} Ω` },
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'Electrode resistance', value: `${result.electrodeResistance} Ω` },
+            { label: 'Earth potential rise', value: `${result.earthPotentialRise} V` },
+            {
+              label: 'Touch voltage',
+              value: `${result.touchVoltage} V`,
+              note: `Permissible: ${result.permissibleTouchVoltage} V`,
+            },
+            {
+              label: 'Step voltage',
+              value: `${result.stepVoltage} V`,
+              note: `Permissible: ${result.permissibleStepVoltage} V`,
+            },
+            { label: 'Body current', value: `${result.bodyCurrent} mA`, note: result.physiologicalZone },
+          ],
+        },
+      ],
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

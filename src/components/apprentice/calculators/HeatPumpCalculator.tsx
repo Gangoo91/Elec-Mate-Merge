@@ -1,4 +1,6 @@
 import { useState, useCallback } from 'react';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { copyToClipboard } from '@/utils/clipboard';
 import { Copy, Check, ChevronDown, Zap, AlertTriangle, Info } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -232,6 +234,102 @@ const HeatPumpCalculator = () => {
     : [];
 
   const hasCritical = result?.reviewFindings.some((f) => f.type === 'critical') ?? false;
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+    return {
+      meta: {
+        title: 'Heat Pump Load Calculation',
+        subtitle: 'Space heating and hot water load, COP and running cost estimate',
+      },
+      headline: [
+        { label: 'Total heat load', value: result.totalHeatLoad.toFixed(1), unit: 'kW' },
+        { label: 'COP', value: result.cop.toFixed(2) },
+        {
+          label: 'MCS sizing',
+          value: result.sizing.withinMCS ? 'Within guidelines' : 'Outside range',
+          verdict: result.sizing.withinMCS ? 'pass' : 'warn',
+        },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            { label: 'Floor area', value: `${floorArea} m²` },
+            {
+              label: 'Insulation level',
+              value:
+                INSULATION_LEVELS[insulationLevel as keyof typeof INSULATION_LEVELS]?.label ??
+                insulationLevel,
+            },
+            {
+              label: 'Air tightness',
+              value:
+                AIR_TIGHTNESS_LEVELS[airTightness as keyof typeof AIR_TIGHTNESS_LEVELS]?.label ??
+                airTightness,
+            },
+            {
+              label: 'UK region',
+              value: UK_REGIONS[region as keyof typeof UK_REGIONS]?.label ?? region,
+            },
+            { label: 'Design temperature', value: `${designTemp} °C` },
+            { label: 'Indoor temperature', value: `${indoorTemp} °C` },
+            {
+              label: 'Heat pump type',
+              value:
+                HEAT_PUMP_TYPES[heatPumpType as keyof typeof HEAT_PUMP_TYPES]?.label ??
+                heatPumpType,
+            },
+            {
+              label: 'Emitter type',
+              value: EMITTER_TYPES[emitterType as keyof typeof EMITTER_TYPES]?.label ?? emitterType,
+            },
+            {
+              label: 'Hot water',
+              value: DHW_OPTIONS[dhwOption as keyof typeof DHW_OPTIONS]?.label ?? dhwOption,
+            },
+            { label: 'Electricity rate', value: `£${electricityRate}/kWh` },
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'Space heating load', value: `${result.spaceHeatingLoad.toFixed(1)} kW` },
+            { label: 'DHW load', value: `${result.dhwLoad.toFixed(1)} kW` },
+            { label: 'Total heat load', value: `${result.totalHeatLoad.toFixed(1)} kW` },
+            { label: 'COP', value: result.cop.toFixed(2) },
+            { label: 'Seasonal COP', value: result.performance.seasonalCOP.toFixed(2) },
+            { label: 'Electrical power', value: `${result.electricalPower.toFixed(1)} kW` },
+            { label: 'Flow temperature', value: `${result.flowTemperature} °C` },
+            { label: 'Daily cost', value: `£${result.dailyCost.toFixed(2)}` },
+            { label: 'Annual cost', value: `£${result.annualCost.toFixed(0)}` },
+            ...(result.defrostPenaltyKwh > 0
+              ? [
+                  {
+                    label: 'Defrost penalty',
+                    value: `${result.defrostPenaltyKwh.toFixed(0)} kWh/yr`,
+                  },
+                ]
+              : []),
+            { label: 'Carbon savings', value: `${result.carbonSavings.toFixed(0)} kg CO₂/yr vs gas` },
+            { label: 'Recommended size', value: `${result.sizing.recommended.toFixed(1)} kW` },
+            {
+              label: 'Boiler Upgrade Scheme',
+              value: result.busGrant.eligible
+                ? `£${result.busGrant.amount.toLocaleString()}`
+                : 'Not eligible',
+              note: result.busGrant.reason,
+            },
+          ],
+        },
+      ],
+      notes: result.reviewFindings.length
+        ? result.reviewFindings.map((f) => `${f.title}: ${f.description}`)
+        : undefined,
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

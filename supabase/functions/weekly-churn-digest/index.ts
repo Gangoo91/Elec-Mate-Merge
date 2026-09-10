@@ -463,7 +463,13 @@ Deno.serve(async (req: Request): Promise<Response> => {
     for (const r of enriched) if (!dedupe.has(r.user_id)) dedupe.set(r.user_id, r);
     const people = [...dedupe.values()];
 
-    const savable = people.filter((r) => r.outcome === 'pending' || r.outcome === 'stayed');
+    // 'paused' counts as saved, not lost: billing is voided for a month or
+    // three and the subscription resumes on its own. They are still worth a
+    // note in the digest, which is why they sit alongside 'stayed' here rather
+    // than being filtered out of the week entirely.
+    const savable = people.filter(
+      (r) => r.outcome === 'pending' || r.outcome === 'stayed' || r.outcome === 'paused'
+    );
     const heavy = people.filter((r) => r.outcome === 'cancelled' && num(r, 'hours_30d') >= 3);
     const tourists = people.filter((r) => r.outcome === 'cancelled' && num(r, 'tenure_days') <= 2);
     const activated = people.filter(
@@ -647,11 +653,18 @@ Deno.serve(async (req: Request): Promise<Response> => {
     ].join('\n');
 
     // ── HTML (email) — light, card-based, one glance per person ──
+    // Four outcomes, not three. A paused subscriber reads as neither a save
+    // nor a loss at a glance, so it gets its own blue rather than being
+    // lumped in with "Stayed" — the follow-up you'd send is different.
+    const OUTCOME_STYLE: Record<string, { bg: string; fg: string; label: string }> = {
+      pending: { bg: '#fff7e0', fg: '#8a6d00', label: 'Undecided' },
+      stayed: { bg: '#e8f6ec', fg: '#1e7a3a', label: 'Stayed' },
+      paused: { bg: '#e7f0fb', fg: '#1a5091', label: 'Paused' },
+      cancelled: { bg: '#fdecec', fg: '#b02a2a', label: 'Cancelled' },
+    };
     const outcomePill = (o: string) => {
-      const bg = o === 'pending' ? '#fff7e0' : o === 'stayed' ? '#e8f6ec' : '#fdecec';
-      const fg = o === 'pending' ? '#8a6d00' : o === 'stayed' ? '#1e7a3a' : '#b02a2a';
-      const label = o === 'pending' ? 'Undecided' : o === 'stayed' ? 'Stayed' : 'Cancelled';
-      return `<span style="display:inline-block; padding:2px 10px; border-radius:20px; background:${bg}; color:${fg}; font-size:11px; font-weight:bold;">${label}</span>`;
+      const s = OUTCOME_STYLE[o] ?? OUTCOME_STYLE.cancelled;
+      return `<span style="display:inline-block; padding:2px 10px; border-radius:20px; background:${s.bg}; color:${s.fg}; font-size:11px; font-weight:bold;">${s.label}</span>`;
     };
 
     const personCard = (r: Enriched, cta: string) => {

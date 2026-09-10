@@ -17,6 +17,7 @@ import {
   elStandardsList,
   elDeclarationText,
 } from '@/data/emergencyLightingStandards';
+import { coverKeysFromFormData } from '@/utils/certCoverPayload';
 
 export const formatEmergencyLightingJson = (
   formData: Partial<EmergencyLightingFormData>
@@ -494,6 +495,10 @@ export const formatEmergencyLightingJson = (
       logo: get('companyLogo'),
       tagline: get('companyTagline'),
       accent_color: get('accentColor') || get('companyAccentColor') || '#f59e0b',
+      // ELE-1671 — the cover palette rides in on formData, put there by the
+      // smart-form hook that already merges company branding. Absent for anyone
+      // on the default `house` style, so the template's own defaults apply.
+      ...coverKeysFromFormData(formData as Record<string, unknown>),
       registration_scheme_logo: get('registrationSchemeLogo'),
       registration_scheme: get('registrationScheme'),
       registration_number: get('registrationNumber'),

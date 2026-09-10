@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { coverKeysFromFormData } from '@/utils/certCoverPayload'; /* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Fire Alarm G7 Modification Certificate — JSON Formatter
  */
@@ -133,6 +133,10 @@ export const formatFireAlarmG7Json = (formData: Record<string, any>) => {
     company_phone: get('companyPhone'),
     company_email: get('companyEmail'),
     company_website: get('companyWebsite'),
+    // ELE-1671 — the cover palette rides in on formData, put there by the
+    // smart-form hook that already merges company branding. Absent for anyone
+    // on the default `house` style, so the template's own defaults apply.
+    ...coverKeysFromFormData(formData as Record<string, unknown>),
     company_logo: get('companyLogo'),
     company_accent_color: get('accentColor') || '#dc2626',
     registration_scheme_logo: get('registrationSchemeLogo'),

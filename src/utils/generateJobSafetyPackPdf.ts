@@ -48,7 +48,12 @@ export interface JobSafetyPackPdfData {
   crew: PackCrewRow[];
   rams: { title: string; status: string; statusKind: PackStatusKind; date: string }[];
   briefings: { title: string; date: string; signed: number; total: number }[];
-  compliance: { title: string; status: string; statusKind: PackStatusKind; expiry: string | null }[];
+  compliance: {
+    title: string;
+    status: string;
+    statusKind: PackStatusKind;
+    expiry: string | null;
+  }[];
 }
 
 const fmt = (iso: string | null): string =>
@@ -61,6 +66,7 @@ const statusFill = (kind: PackStatusKind): [RGB, RGB] =>
 
 interface CompanyBrand {
   company_name: string | null;
+  logo_url: string | null;
   logo_data_url: string | null;
   accent_color?: string | null;
   primary_color?: string | null;
@@ -72,7 +78,7 @@ export async function generateJobSafetyPackPdf(data: JobSafetyPackPdfData): Prom
   } = await supabase.auth.getUser();
   const { data: company } = await supabase
     .from('company_profiles')
-    .select('company_name, logo_data_url, accent_color, primary_color')
+    .select('company_name, logo_url, logo_data_url, accent_color, primary_color')
     .eq('user_id', user?.id ?? '')
     .maybeSingle();
   const brandCo = (company as CompanyBrand | null) ?? null;
@@ -103,7 +109,8 @@ export async function generateJobSafetyPackPdf(data: JobSafetyPackPdfData): Prom
   const drawPageHeader = (continued = false): number => {
     addAccentBar(doc, brand, 4);
     const y = 15;
-    const logo = brandCo?.logo_data_url || null;
+    // ELE-1668 — hosted URL first; the data URL is downscaled and size-capped.
+    const logo = brandCo?.logo_url || brandCo?.logo_data_url || null;
     if (logo && logo.startsWith('data:image')) {
       try {
         const f = /^data:image\/(jpe?g)/i.test(logo) ? 'JPEG' : 'PNG';
@@ -243,9 +250,7 @@ export async function generateJobSafetyPackPdf(data: JobSafetyPackPdfData): Prom
     }
     for (const w of data.crew) {
       const detailW = pageW - marginX * 2 - 92;
-      const detailLines = w.detail
-        ? (doc.splitTextToSize(w.detail, detailW) as string[])
-        : [];
+      const detailLines = w.detail ? (doc.splitTextToSize(w.detail, detailW) as string[]) : [];
       const blockH = Math.max(7.5, 3.5 + detailLines.length * 4);
       y = guard(y, blockH + 2);
       doc.setFont('helvetica', 'bold');

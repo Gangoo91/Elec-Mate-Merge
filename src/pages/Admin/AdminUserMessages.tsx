@@ -9,7 +9,18 @@ import { Input } from '@/components/ui/input';
 import { Avatar as ShadAvatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { RefreshCw, ArrowLeft, Search, Users, CheckCheck, PenSquare, Archive } from 'lucide-react';
+import {
+  RefreshCw,
+  ArrowLeft,
+  Search,
+  Users,
+  CheckCheck,
+  PenSquare,
+  Archive,
+  ArchiveRestore,
+  Mail,
+  Trash2,
+} from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { ToastAction } from '@/components/ui/toast';
 import { useHaptic } from '@/hooks/useHaptic';
@@ -19,16 +30,17 @@ import PullToRefresh from '@/components/admin/PullToRefresh';
 import MessageUserSheet from '@/components/admin/MessageUserSheet';
 import ChatThread from '@/components/messaging/ChatThread';
 import { SwipeableRow } from '@/components/ui/swipeable-row';
+import { Segmented, Panel, SectionHead, GOOD, SERIOUS } from '@/components/admin/overview/primitives';
 import {
   useAdminInbox,
   useArchiveConversation,
+  useDeleteMessages,
   sortAdminConversations,
   ADMIN_INBOX_QUERY_KEY,
   type AdminConversation,
 } from '@/hooks/useAdminInbox';
 import {
   PageFrame,
-  PageHero,
   Eyebrow,
   FilterBar,
   ListCard,
@@ -92,7 +104,9 @@ export default function AdminUserMessages() {
   const queryClient = useQueryClient();
   const haptic = useHaptic();
   const [search, setSearch] = useState('');
-  const [activeTab, setActiveTab] = useState<'all' | 'unread' | 'read' | 'sent'>('all');
+  const [activeTab, setActiveTab] = useState<
+    'all' | 'week' | 'overweek' | 'overmonth' | 'answered'
+  >('all');
   // ELE-1416 — hold only the partner id, never a snapshot of the conversation.
   // Previously this stored the whole AdminConversation object captured when
   // the thread was opened. Sending a reply invalidated the query and refetched
@@ -100,6 +114,14 @@ export default function AdminUserMessages() {
   // array — so the "Reply sent" toast fired and the reply never appeared.
   // Deriving from live query data means the thread updates on every refetch.
   const [selectedPartnerId, setSelectedPartnerId] = useState<string | null>(null);
+  /*
+    Archived threads were unreachable.
+
+    `useAdminInbox` has always taken a view, but this page only ever asked for
+    'inbox' — so archiving put a conversation somewhere with no way back. You
+    could hide a support thread for ever and never find it again.
+  */
+  const [view, setView] = useState<'inbox' | 'archived'>('inbox');
   const [composeOpen, setComposeOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedUser, setSelectedUser] = useState<{
@@ -111,16 +133,139 @@ export default function AdminUserMessages() {
 
   // ELE-1415/1417 — grouping moved to the shared useAdminInbox hook so the
   // admin page and the user-side Messages sheet read the same conversations.
-  const { data: conversations, isLoading, refetch, isFetching } = useAdminInbox();
+  const { data: conversations, isLoading, refetch, isFetching } = useAdminInbox(true, view);
 
   const isMobile = useIsMobile();
   const archive = useArchiveConversation();
+  const remove = useDeleteMessages();
+
+  /*
+    Delete, kept clearly apart from archive.
+
+    Archive means "handled, out of my inbox" and is reversible from the Archived
+    tab. Delete means "this should not be here": it sets `deleted_at`, so the
+    thread vanishes from every surface at once, and the only way back is the
+    Undo on the toast. The row survives because a support thread is the record
+    of what somebody reported.
+  */
+  const deleteConversation = (conv: AdminConversation) => {
+    const ids = conv.messages.map((m) => m.id);
+    const name = conv.partner?.full_name || 'Conversation';
+    if (selectedPartnerId === conv.partnerId) setSelectedPartnerId(null);
+    remove.mutate(
+      { messageIds: ids, deleted: true },
+      {
+        onSuccess: () =>
+          toast({
+            title: `${name} deleted`,
+            description: `${ids.length} message${ids.length === 1 ? '' : 's'} removed from every view.`,
+            action: (
+              <ToastAction
+                altText="Undo delete"
+                onClick={() => remove.mutate({ messageIds: ids, deleted: false })}
+              >
+                Undo
+              </ToastAction>
+            ),
+          }),
+        onError: (e: Error) =>
+          toast({ title: 'Could not delete', description: e.message, variant: 'destructive' }),
+      }
+    );
+  };
 
   // Swipe-to-archive, matching the Messages-sheet inbox. This page previously
   // had no way at all to clear a conversation — a thread you had dealt with sat
   // in the list for ever, so old items kept resurfacing and the queue never
   // emptied. Archiving hides the row; it does not delete, so a mis-swipe on a
   // phone costs nothing and the support record survives.
+  const unarchiveConversation = (conv: AdminConversation) => {
+    const ids = conv.messages.map((m) => m.id);
+    const name = conv.partner?.full_name || 'Conversation';
+    archive.mutate(
+      { messageIds: ids, archived: false },
+      {
+        onSuccess: () => toast({ title: `${name} back in the inbox` }),
+        onError: (e: Error) =>
+          toast({ title: 'Could not restore', description: e.message, variant: 'destructive' }),
+      }
+    );
+  };
+
+  /*
+    Clear a whole filtered set at once.
+
+    Thirteen threads were answered by email months ago and each needs the same
+    two-word verdict; doing that one swipe at a time is why the queue never got
+    emptied in the first place. Undo restores the lot.
+  */
+  const markAllAnswered = () => {
+    const convs = filteredConversations;
+    const ids = convs.flatMap((c) => c.messages.map((m) => m.id));
+    if (!ids.length) return;
+    setSelectedPartnerId(null);
+    archive.mutate(
+      { messageIds: ids, archived: true },
+      {
+        onSuccess: () =>
+          toast({
+            title: `${convs.length} thread${convs.length === 1 ? '' : 's'} marked answered`,
+            description: 'Moved to Archived. Nothing was deleted.',
+            action: (
+              <ToastAction
+                altText="Undo"
+                onClick={() => archive.mutate({ messageIds: ids, archived: false })}
+              >
+                Undo
+              </ToastAction>
+            ),
+          }),
+        onError: (e: Error) =>
+          toast({ title: 'Could not update', description: e.message, variant: 'destructive' }),
+      }
+    );
+  };
+
+  /*
+    Reply by email, and let the app know it happened.
+
+    The whole reason this queue read "15 open" with a seven-month-old thread at
+    the top is that replies go out from a mail client and nothing writes them
+    back. Fighting that habit by demanding replies go through the in-app
+    composer would just leave the queue wrong in a different way.
+
+    So: hand the mail client a pre-filled draft — right person, thread subject,
+    their message quoted — and mark the thread answered on the way out. The
+    reply still happens in Gmail; the app finally learns that it did.
+  */
+  const replyByEmail = (conv: AdminConversation) => {
+    // profiles has no email column — it lives on auth.users, and
+    // `admin-get-users` (already cached here for the compose picker) is the one
+    // place that joins the two.
+    const email = emailByUserId.get(conv.partnerId);
+    if (!email) {
+      toast({
+        title: 'No email address',
+        description: 'This account has no email to reply to.',
+        variant: 'destructive',
+      });
+      return;
+    }
+    const name = conv.partner?.full_name?.split(' ')[0] || 'there';
+    const last = conv.lastMessage;
+    const quoted = (last?.message ?? '')
+      .split('\n')
+      .map((line) => `> ${line}`)
+      .join('\n');
+    const subject = last?.subject?.trim() ? `Re: ${last.subject}` : 'Your Elec-Mate message';
+    const body = `Hi ${name},\n\n\n\nYou wrote:\n${quoted}\n\nThanks\nAndrew\nFounder, Elec-Mate`;
+    window.open(
+      `mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`,
+      '_self'
+    );
+    archiveConversation(conv);
+  };
+
   const archiveConversation = (conv: AdminConversation) => {
     const ids = conv.messages.map((m) => m.id);
     const name = conv.partner?.full_name || 'Conversation';
@@ -130,8 +275,8 @@ export default function AdminUserMessages() {
       {
         onSuccess: () =>
           toast({
-            title: `${name} archived`,
-            description: 'Hidden from the inbox. Nothing was deleted.',
+            title: `${name} marked answered`,
+            description: 'Moved to Archived. Nothing was deleted.',
             action: (
               <ToastAction
                 altText="Undo archive"
@@ -161,6 +306,10 @@ export default function AdminUserMessages() {
     that cannot succeed.
   */
   const { data: allAdminUsers } = useAdminUsersBase();
+  const emailByUserId = useMemo(
+    () => new Map((allAdminUsers ?? []).map((u) => [u.id, u.email])),
+    [allAdminUsers]
+  );
   const searchResults = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
     if (q.length < 2) return [];
@@ -339,6 +488,24 @@ export default function AdminUserMessages() {
     the right ("3mo"), identical for a message sent an hour ago and one sent in
     May, on the one screen where the age IS the problem.
   */
+  /*
+    How long the person at the other end has been waiting.
+
+    One definition, used by the hero bar, the filter rail and the row — before
+    this the rail split on read-state and the hero split on age, so the two
+    halves of the page measured different things.
+  */
+  const waitBucketOf = (conv: AdminConversation): 'day' | 'week' | 'month' | 'older' | null => {
+    if (!conv.awaitingReply) return null;
+    const last = conv.messages[conv.messages.length - 1];
+    if (!last) return null;
+    const waited = Date.now() - new Date(last.created_at).getTime();
+    if (waited < 86400000) return 'day';
+    if (waited < 7 * 86400000) return 'week';
+    if (waited < 30 * 86400000) return 'month';
+    return 'older';
+  };
+
   const waitBuckets = useMemo(() => {
     const buckets = [
       { key: 'day', label: 'under a day', max: 86400000, fill: MSG_SERIES[0], count: 0 },
@@ -371,13 +538,25 @@ export default function AdminUserMessages() {
         if (!matchesSearch) return false;
       }
 
+      /*
+        Split by how long they have waited, not by read-state.
+
+        Read / Sent overlapped — a conversation you had read AND replied to
+        counted in both — so the rail read All 15 against Unread 1 + Read 14 +
+        Sent 2 = 17, for a control that looks like it partitions. Worse, it was
+        answering a question nobody has: all 15 threads are awaiting a reply, so
+        which of them you have opened tells you nothing. Age does, and these
+        buckets are exclusive, so the counts add up to All.
+      */
       switch (activeTab) {
-        case 'unread':
-          return conv.unreadCount > 0;
-        case 'read':
-          return conv.unreadCount === 0 && conv.hasInboundToAdmin;
-        case 'sent':
-          return conv.hasAdminReply;
+        case 'week':
+          return waitBucketOf(conv) === 'day' || waitBucketOf(conv) === 'week';
+        case 'overweek':
+          return waitBucketOf(conv) === 'month';
+        case 'overmonth':
+          return waitBucketOf(conv) === 'older';
+        case 'answered':
+          return !conv.awaitingReply;
         case 'all':
         default:
           return true;
@@ -389,32 +568,21 @@ export default function AdminUserMessages() {
     return sortAdminConversations(filtered);
   }, [conversations, search, activeTab, user?.id]);
 
-  const tabs = useMemo(
-    () => [
+  const tabs = useMemo(() => {
+    const count = (want: ReturnType<typeof waitBucketOf>[]) =>
+      (conversations ?? []).filter((c) => want.includes(waitBucketOf(c))).length;
+    return [
       { value: 'all', label: 'All', count: conversations?.length ?? 0 },
-      /*
-        Conversations, like every other tab.
-
-        This read `stats.unread`, a sum of unread MESSAGES, while the filter
-        beside it returns conversations — so the rail showed "All 14 · Unread 9
-        · Read 8", where 9 + 8 exceeds the 14 it was splitting.
-      */
-      { value: 'unread', label: 'Unread', count: stats.unreadConversations },
+      { value: 'week', label: 'This week', count: count(['day', 'week']) },
+      { value: 'overweek', label: 'Over a week', count: count(['month']) },
+      { value: 'overmonth', label: 'Over a month', count: count(['older']) },
       {
-        value: 'read',
-        label: 'Read',
-        count: conversations?.filter((c) => c.unreadCount === 0 && c.hasInboundToAdmin).length ?? 0,
+        value: 'answered',
+        label: 'Answered',
+        count: (conversations ?? []).filter((c) => !c.awaitingReply).length,
       },
-      {
-        value: 'sent',
-        label: 'Sent',
-        count: conversations?.filter((c) => c.hasAdminReply).length ?? 0,
-      },
-    ],
-    // Depends on the conversation count now, not the message count — that swap
-    // is what makes the rail's numbers add up to the All tab.
-    [conversations, stats.unreadConversations]
-  );
+    ];
+  }, [conversations]);
 
   return (
     <PullToRefresh
@@ -422,18 +590,27 @@ export default function AdminUserMessages() {
         await refetch();
       }}
     >
-      <PageFrame>
-        <PageHero
-          eyebrow="Inbox"
-          title="Messages"
-          description="Support requests and direct messages from users."
-          tone="yellow"
-          actions={
-            <IconButton onClick={() => refetch()} aria-label="Refresh" disabled={isFetching}>
-              <RefreshCw className={cn('h-4 w-4', isFetching && 'animate-spin')} />
-            </IconButton>
-          }
-        />
+      <PageFrame className="space-y-5 sm:space-y-6">
+        {/* Title row — same shape as the dashboard, Trials and Revenue. */}
+        <div className="flex items-center justify-between gap-3">
+          <div className="min-w-0">
+            <h1 className="text-[22px] font-semibold leading-7 tracking-[-0.02em] text-white lg:text-[26px] lg:leading-[30px]">
+              Messages
+            </h1>
+            <div className="mt-0.5 flex items-center gap-2 text-[12px] text-white">
+              <span
+                className="h-1.5 w-1.5 shrink-0 rounded-full"
+                style={{ background: stats.awaiting > 0 ? SERIOUS : GOOD }}
+              />
+              {stats.awaiting > 0
+                ? `${stats.awaiting} open`
+                : 'Everything answered'}
+            </div>
+          </div>
+          <IconButton onClick={() => refetch()} aria-label="Refresh" disabled={isFetching}>
+            <RefreshCw className={cn('h-4 w-4', isFetching && 'animate-spin')} />
+          </IconButton>
+        </div>
 
         {/*
           The queue, and how long the worst of it has been waiting.
@@ -445,21 +622,36 @@ export default function AdminUserMessages() {
           and the oldest has waited three months. Age of the longest wait is the
           number that says how bad it is, so it leads.
         */}
-        <section className="relative -mx-4 overflow-hidden rounded-none border-y border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-6">
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/70 via-elec-yellow/20 to-transparent" />
+        <Panel tone="accent">
           <div className="grid gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-10">
             <div className="min-w-0">
-              <Eyebrow>Waiting on a reply</Eyebrow>
-              <div className="mt-4 text-[38px] font-semibold leading-none tracking-tight text-white sm:text-[52px]">
+              <Eyebrow>Open threads</Eyebrow>
+              <div className="mt-3 text-[44px] font-semibold leading-[46px] tracking-[-0.03em] text-white lg:text-[56px] lg:leading-[56px]">
                 {stats.awaiting}
               </div>
               <div className="mt-2 text-[13px] text-white">
                 {stats.awaiting === 0
-                  ? 'Nobody is waiting. Everything has been answered.'
+                  ? 'Nothing open. Everything has been marked answered.'
                   : stats.oldestWaitName
-                    ? `Longest wait: ${stats.oldestWaitName}, ${waitLabel(stats.oldestWaitMs)}.`
-                    : `Longest wait ${waitLabel(stats.oldestWaitMs)}.`}
+                    ? `Oldest open thread: ${stats.oldestWaitName}, ${waitLabel(stats.oldestWaitMs)}.`
+                    : `Oldest open thread ${waitLabel(stats.oldestWaitMs)}.`}
               </div>
+              {/*
+                The page cannot see a reply sent from a mail client.
+
+                Users message in-app; the replies go out from Gmail. Travis
+                Wheat was answered within two hours of writing and this page
+                counted him as four months unanswered, because nothing writes
+                that reply back to admin_messages. Saying "waiting on a reply"
+                was stating something the data cannot support — these are
+                threads nobody has marked answered, which is a different claim.
+              */}
+              {stats.awaiting > 0 && (
+                <div className="mt-1.5 text-[12px] leading-[17px] text-white">
+                  Replies sent by email are not visible here — mark a thread answered to take it
+                  out of the queue.
+                </div>
+              )}
 
               {stats.awaiting > 0 && (
                 <div className="mt-5">
@@ -503,12 +695,18 @@ export default function AdminUserMessages() {
               )}
             </div>
 
-            <div className="grid grid-cols-2 gap-px self-start overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.08]">
+            {/*
+              Raised cards, not holes. `bg-[hsl(0_0%_9%)]` is darker than the
+              panel behind it, so a hairline grid of it read as four near-black
+              rectangles punched into the surface — the same inversion fixed on
+              the revenue page. Elevation runs the other way.
+            */}
+            <div className="grid grid-cols-2 gap-2.5 self-start">
               {[
                 {
-                  label: 'Awaiting reply',
+                  label: 'Open',
                   value: stats.awaiting,
-                  sub: 'user spoke last',
+                  sub: 'not marked answered',
                   accent: true,
                   tab: 'all',
                 },
@@ -516,13 +714,15 @@ export default function AdminUserMessages() {
                   label: 'Unopened',
                   value: stats.unreadConversations,
                   sub: `${stats.unread} message${stats.unread === 1 ? '' : 's'}`,
-                  tab: 'unread',
+                  tab: 'all',
                 },
                 {
                   label: 'Longest wait',
                   value: stats.awaiting > 0 ? waitLabel(stats.oldestWaitMs) : '—',
-                  sub: 'oldest unanswered',
-                  tab: 'all',
+                  sub: 'oldest still open',
+                  // Jumps to the threads that have been waiting longest — the
+                  // card names the problem, so it should take you to it.
+                  tab: 'overmonth',
                 },
                 {
                   label: 'Conversations',
@@ -534,7 +734,7 @@ export default function AdminUserMessages() {
                 <button
                   key={c.label}
                   onClick={() => setActiveTab(c.tab as typeof activeTab)}
-                  className="touch-manipulation bg-[hsl(0_0%_9%)] px-4 py-5 text-left transition-colors hover:bg-[hsl(0_0%_12%)]"
+                  className="touch-manipulation rounded-xl border border-white/[0.08] bg-white/[0.035] px-4 py-3.5 text-left transition-colors hover:bg-white/[0.06]"
                 >
                   <div
                     className={cn(
@@ -547,12 +747,12 @@ export default function AdminUserMessages() {
                   <div className="mt-2 text-[10px] font-medium uppercase tracking-[0.14em] text-white">
                     {c.label}
                   </div>
-                  <div className="mt-1 text-[11px] text-white/60">{c.sub}</div>
+                  <div className="mt-1 text-[11px] text-white">{c.sub}</div>
                 </button>
               ))}
             </div>
           </div>
-        </section>
+        </Panel>
 
         <FilterBar
           tabs={tabs}
@@ -573,21 +773,50 @@ export default function AdminUserMessages() {
             onAction={() => setComposeOpen(true)}
           />
         ) : (
-          <ListCard>
-            <ListCardHeader
-              tone="yellow"
-              title="Inbox"
+          <Panel>
+            <SectionHead
+              title={view === 'archived' ? 'Archived' : 'Inbox'}
               meta={
-                stats.unread > 0 ? (
-                  <Pill tone="yellow">{stats.unread} unread</Pill>
-                ) : (
-                  <Pill tone="emerald">Up to date</Pill>
-                )
+                view === 'archived'
+                  ? `${filteredConversations.length} put away`
+                  : stats.unread > 0
+                    ? `${stats.unread} unread`
+                    : 'up to date'
               }
               action="Compose"
               onAction={() => setComposeOpen(true)}
             />
-            <ListBody>
+            {view === 'inbox' && filteredConversations.length > 0 && (
+              <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
+                <span className="text-[12px] text-white">
+                  {filteredConversations.length} shown
+                  {activeTab !== 'all' && ' in this filter'}
+                </span>
+                <button
+                  type="button"
+                  onClick={markAllAnswered}
+                  disabled={archive.isPending}
+                  className="h-11 touch-manipulation rounded-lg border border-white/[0.12] px-3 text-[12px] font-semibold text-white transition-colors hover:bg-white/[0.06] disabled:opacity-50 sm:h-9"
+                >
+                  Mark {filteredConversations.length} answered
+                </button>
+              </div>
+            )}
+            {/* Archived was unreachable until this existed. */}
+            <div className="mt-3">
+              <Segmented<'inbox' | 'archived'>
+                options={[
+                  { key: 'inbox', label: 'Inbox' },
+                  { key: 'archived', label: 'Archived' },
+                ]}
+                value={view}
+                onChange={(v) => {
+                  setView(v);
+                  setSelectedPartnerId(null);
+                }}
+              />
+            </div>
+            <div className="mt-1">
               {filteredConversations.map((conv) => {
                 const unread = conv.unreadCount > 0;
                 /*
@@ -619,12 +848,33 @@ export default function AdminUserMessages() {
                     contentClassName="bg-transparent"
                     // Touch-only, same as the Messages-sheet inbox — wiring a
                     // swipe on desktop just adds a gesture a mouse can't do.
+                    /*
+                      Swipe right archives (or restores, in the Archived tab);
+                      swipe left deletes. Delete is the further, more deliberate
+                      gesture on purpose — archive is the one you want ten times
+                      a day, delete is the one you want to be sure about.
+                    */
                     rightAction={
                       isMobile
+                        ? view === 'archived'
+                          ? {
+                              icon: <ArchiveRestore className="h-4 w-4" />,
+                              label: 'Restore',
+                              onClick: () => unarchiveConversation(conv),
+                            }
+                          : {
+                              icon: <Archive className="h-4 w-4" />,
+                              label: 'Answered',
+                              onClick: () => archiveConversation(conv),
+                            }
+                        : undefined
+                    }
+                    leftAction={
+                      isMobile
                         ? {
-                            icon: <Archive className="h-4 w-4" />,
-                            label: 'Archive',
-                            onClick: () => archiveConversation(conv),
+                            icon: <Trash2 className="h-4 w-4" />,
+                            label: 'Delete',
+                            onClick: () => deleteConversation(conv),
                             variant: 'destructive',
                           }
                         : undefined
@@ -703,12 +953,12 @@ export default function AdminUserMessages() {
                   </SwipeableRow>
                 );
               })}
-            </ListBody>
-          </ListCard>
+            </div>
+          </Panel>
         )}
 
         <Sheet open={!!selectedConversation} onOpenChange={() => setSelectedPartnerId(null)}>
-          <SheetContent side="bottom" className="h-[92vh] rounded-t-3xl p-0 border-0">
+          <SheetContent side="bottom" className="h-[85vh] rounded-t-3xl p-0 border-0">
             <div className="flex flex-col h-full bg-background">
               <div className="flex justify-center pt-3 pb-1">
                 <div className="w-12 h-1.5 rounded-full bg-white/20" />
@@ -749,6 +999,57 @@ export default function AdminUserMessages() {
                       )}
                     </div>
                   </div>
+                  {/*
+                    Swipe is touch-only, so on a desktop these were the only
+                    thing standing between "read a thread" and "no way to clear
+                    it". Archive is the quiet one; delete is separated and
+                    marked, because they mean different things.
+                  */}
+                  {selectedConversation && (
+                    <div className="flex shrink-0 items-center gap-1">
+                      {view !== 'archived' && emailByUserId.get(selectedConversation.partnerId) && (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-11 gap-1.5 rounded-xl px-3 text-[12px] font-semibold touch-manipulation"
+                          onClick={() => replyByEmail(selectedConversation)}
+                        >
+                          <Mail className="h-4 w-4" />
+                          <span className="hidden sm:inline">Reply by email</span>
+                        </Button>
+                      )}
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-11 w-11 rounded-xl touch-manipulation"
+                        aria-label={
+                          view === 'archived' ? 'Restore to inbox' : 'Mark answered'
+                        }
+                        title={view === 'archived' ? 'Restore to inbox' : 'Mark answered'}
+                        onClick={() =>
+                          view === 'archived'
+                            ? unarchiveConversation(selectedConversation)
+                            : archiveConversation(selectedConversation)
+                        }
+                      >
+                        {view === 'archived' ? (
+                          <ArchiveRestore className="h-5 w-5" />
+                        ) : (
+                          <Archive className="h-5 w-5" />
+                        )}
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-11 w-11 rounded-xl text-red-400 touch-manipulation hover:text-red-300"
+                        aria-label="Delete conversation"
+                        title="Delete"
+                        onClick={() => deleteConversation(selectedConversation)}
+                      >
+                        <Trash2 className="h-5 w-5" />
+                      </Button>
+                    </div>
+                  )}
                 </div>
               </SheetHeader>
 

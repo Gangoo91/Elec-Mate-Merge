@@ -1,4 +1,6 @@
 import { copyToClipboard } from '@/utils/clipboard';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { useState } from 'react';
 import { Plus, Trash2, Copy, Check, ChevronDown } from 'lucide-react';
 import {
@@ -120,6 +122,49 @@ const TimeMaterialsCalculator = () => {
       }
     });
   };
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+    const namedMaterials = materials.filter((m) => m.name);
+    return {
+      meta: {
+        title: 'Time & Materials Calculator',
+        subtitle: 'Job cost estimate — labour, materials, markup and VAT',
+      },
+      headline: [
+        { label: 'Grand total (inc. VAT)', value: fmt(result.grandTotal) },
+        { label: 'Subtotal', value: fmt(result.subtotal) },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            { label: 'Hourly rate', value: fmt(parseFloat(hourlyRate) || 0) },
+            { label: 'Hours worked', value: `${hoursWorked || '0'} hrs` },
+            { label: 'Markup', value: `${markupPercent} %` },
+            { label: 'VAT rate', value: `${vatRate} %` },
+          ],
+          items: namedMaterials.length
+            ? namedMaterials.map((m) => `${m.name} — ${m.quantity} × ${fmt(m.unitCost)} = ${fmt(m.quantity * m.unitCost)}`)
+            : undefined,
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'Labour', value: fmt(result.labourTotal) },
+            { label: 'Materials', value: fmt(result.materialsTotal) },
+            { label: `Markup (${markupPercent}%)`, value: fmt(result.markupAmount) },
+            { label: 'Subtotal', value: fmt(result.subtotal) },
+            { label: `VAT (${vatRate}%)`, value: fmt(result.vatAmount) },
+            { label: 'Grand total', value: fmt(result.grandTotal) },
+          ],
+        },
+      ],
+      notes: ['This is a job cost estimate based on the values entered, not a formal quotation.'],
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

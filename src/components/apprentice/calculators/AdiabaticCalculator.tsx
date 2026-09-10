@@ -1,4 +1,6 @@
 import { useMemo, useState, useCallback, useEffect } from 'react';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { copyToClipboard } from '@/utils/clipboard';
 import { Copy, Check, AlertTriangle, ChevronDown, Zap } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -281,6 +283,54 @@ const AdiabaticCalculator = ({ onResult }: AdiabaticCalculatorProps = {}) => {
   };
 
   const canCalculate = mode === 'current' ? !!faultCurrent : !!zs && !!voltage;
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+    return {
+      meta: {
+        title: 'Adiabatic Equation',
+        subtitle: 'Minimum CPC cross-sectional area for the fault current and disconnection time',
+        standard: 'BS 7671:2018+A4:2026 — Reg 543.1.3',
+      },
+      headline: [
+        {
+          label: 'Minimum CSA',
+          value: result.minimumCsa.toFixed(2),
+          unit: 'mm²',
+          verdict: result.isCompliant ? 'pass' : 'fail',
+        },
+        { label: 'Next standard size', value: String(result.roundedCsa), unit: 'mm²' },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            { label: 'Fault current', value: `${result.usedFaultCurrent.toFixed(0)} A` },
+            { label: 'Disconnection time', value: `${result.disconnectionTime} s` },
+            { label: 'Conductor material', value: result.material },
+            { label: 'k factor', value: String(result.k), note: `${result.material}, ${result.maxTemp}` },
+            ...(result.zsMode && result.zsValue
+              ? [{ label: 'Zs used', value: `${result.zsValue} Ω` }]
+              : []),
+            ...(result.voltage ? [{ label: 'Voltage', value: `${result.voltage} V` }] : []),
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'Minimum CSA (S = √(I²t)/k)', value: `${result.minimumCsa.toFixed(2)} mm²` },
+            { label: 'Next standard size', value: `${result.roundedCsa} mm²` },
+            { label: 'Safety margin', value: `${result.safetyMargin.toFixed(1)}%` },
+          ],
+        },
+      ],
+      notes: result.complianceNotes?.length
+        ? result.complianceNotes
+        : ['Calculated using the adiabatic equation, BS 7671 Reg 543.1.3.'],
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

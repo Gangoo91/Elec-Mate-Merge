@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { Info, BookOpen, ChevronDown, AlertTriangle, Zap } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
@@ -291,6 +293,76 @@ const ThreePhasePowerCalculator = () => {
     if (result.pfQuality === 'Acceptable') return 'text-amber-400';
     return 'text-red-400';
   };
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+    return {
+      meta: {
+        title: 'Three Phase Power Calculator',
+        subtitle: 'Apparent, active and reactive power for a three-phase system',
+        standard: 'BS 7671:2018+A4:2026',
+      },
+      headline: [
+        { label: 'Apparent power', value: result.apparentPower.toFixed(2), unit: 'kVA' },
+        { label: 'Active power', value: result.activePower.toFixed(2), unit: 'kW' },
+        { label: 'Line current', value: result.lineCurrent.toFixed(2), unit: 'A' },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            { label: 'Connection', value: connection === 'star' ? 'Star (Y)' : 'Delta (Δ)' },
+            {
+              label:
+                voltageType === 'line-line' ? 'Line voltage (VLL)' : 'Line-to-neutral voltage (VLN)',
+              value: `${voltage} V`,
+            },
+            { label: 'Power factor', value: `${powerFactor} ${pfType}` },
+            { label: 'Frequency', value: `${frequency} Hz` },
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'Apparent power (S)', value: `${result.apparentPower.toFixed(2)} kVA` },
+            { label: 'Active power (P)', value: `${result.activePower.toFixed(2)} kW` },
+            {
+              label: 'Reactive power (Q)',
+              value: `${Math.abs(result.reactivePower).toFixed(2)} kVAR (${pfType === 'lagging' ? 'inductive' : 'capacitive'})`,
+            },
+            { label: 'Line voltage', value: `${result.lineVoltage.toFixed(1)} V` },
+            { label: 'Line current', value: `${result.lineCurrent.toFixed(2)} A` },
+            { label: 'Phase voltage', value: `${result.phaseVoltage.toFixed(1)} V` },
+            { label: 'Phase current', value: `${result.phaseCurrent.toFixed(2)} A` },
+            ...(result.motorInputPower !== undefined
+              ? [{ label: 'Motor input power', value: `${result.motorInputPower.toFixed(2)} kW` }]
+              : []),
+            {
+              label: 'Suggested protection',
+              value: result.protectiveDevice,
+              note: 'Smallest standard rating satisfying Ib ≤ In (Reg 433.1.1)',
+            },
+            ...(result.unbalance !== undefined
+              ? [{ label: 'Current unbalance', value: `${result.unbalance.toFixed(1)}%` }]
+              : []),
+            ...(result.correctionCapacitor !== undefined
+              ? [
+                  {
+                    label: 'PF correction capacitor',
+                    value: `${result.correctionCapacitor.toFixed(2)} kVAR`,
+                  },
+                ]
+              : []),
+          ],
+        },
+      ],
+      notes: result.frequencyMismatch
+        ? [`${frequency} Hz is not the UK nominal supply frequency of 50 Hz (Reg 512.1.3).`]
+        : undefined,
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

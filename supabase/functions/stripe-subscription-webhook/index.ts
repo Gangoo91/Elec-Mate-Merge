@@ -872,7 +872,11 @@ serve(async (req) => {
           limit: 50,
         });
         const activeOrTrialing = allSubs.data.filter(
-          (s) => s.status === 'active' || s.status === 'trialing'
+          // A paused subscription still reports status 'active' (see the
+          // pause_collection note on the isActive check below), so it must be
+          // excluded here too — otherwise a paused sub would keep entitling
+          // the account it belongs to.
+          (s) => !s.pause_collection && (s.status === 'active' || s.status === 'trialing')
         );
         const hasActiveMateSub = activeOrTrialing.some((s) => {
           const priceId = s.items.data[0]?.price?.id;
@@ -1050,8 +1054,17 @@ serve(async (req) => {
           break;
         }
 
-        // Determine if subscription is active
-        const isActive = ['active', 'trialing', 'past_due'].includes(subscription.status);
+        // Determine if subscription is active.
+        //
+        // 🔴 pause_collection has to be checked separately, because Stripe does
+        // NOT change `status` when a subscription is paused — it stays
+        // 'active'. The retention flow pauses with behavior:'void', which stops
+        // the money entirely; without this check the status alone would keep
+        // `subscribed = true` and hand out the full paid product for nothing,
+        // for as long as someone cared to keep re-pausing. Paused means paused.
+        const isPaused = Boolean(subscription.pause_collection);
+        const isActive =
+          !isPaused && ['active', 'trialing', 'past_due'].includes(subscription.status);
 
         // Get the price/tier
         const priceId = subscription.items.data[0]?.price?.id;

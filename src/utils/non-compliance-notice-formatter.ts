@@ -3,6 +3,8 @@
  * Converts camelCase front-end fields to snake_case for the Liquid template.
  */
 import { TRANSPARENT_PIXEL } from '@/utils/resolveSchemeLogo';
+import { brandingFromCompanyProfile } from '@/utils/certBranding';
+import { coverPayloadKeys } from '@/utils/certCoverPayload';
 
 function formatDateUK(dateStr: string): string {
   if (!dateStr) return '';
@@ -107,6 +109,9 @@ export function formatNonComplianceNoticePayload(
     company_address: company.company_address || '',
     company_phone: company.company_phone || data.contractorPhone,
     company_email: company.company_email || data.contractorEmail,
+    // ELE-1671 — this formatter is handed the company_profiles row directly, so
+    // it derives the cover palette itself rather than hopping via formData.
+    ...coverPayloadKeys(brandingFromCompanyProfile(company, '#dc2626')),
     company_logo: company.logo_url || company.logo_data_url || '',
     scheme_logo:
       company.scheme_logo_data_url || company.registration_scheme_logo || TRANSPARENT_PIXEL,

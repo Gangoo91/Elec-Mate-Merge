@@ -1,6 +1,8 @@
 import { supabase } from '@/integrations/supabase/client';
 import { schemeDisplayLabel } from '@/utils/registrationScheme';
 import { TRANSPARENT_PIXEL } from '@/utils/resolveSchemeLogo';
+import { mastheadFor, measureLogoTone, logoTonePreference, type LogoTone } from '@/utils/logoTone';
+import { getSchemeInfo, schemeLogoPath } from '@/constants/schemeLogos';
 
 /**
  * Company branding for certificate PDFs — ONE reader for the whole fleet.
@@ -32,8 +34,17 @@ export interface CertBranding {
   registrationScheme: string;
   registrationNumber: string;
   registrationSchemeLogo: string;
+  /**
+   * The scheme lockup for the WHITE cover masthead (standard artwork) and for
+   * the DARK interior masthead (reversed artwork). Two fields because one image
+   * cannot be legible on both grounds — that pairing is ELE-1669.
+   */
+  schemeLogoLight: string;
+  schemeLogoDark: string;
   /** ELE-1671 — which cover treatment the electrician chose. */
   coverStyle: CertCoverStyle;
+  /** Whether their logo artwork is light or dark — drives the masthead. */
+  logoTone: LogoTone;
   /**
    * The `--em-cover-*` values to spread into the PDF payload. For `house` these
    * are exactly the templates' own Liquid defaults, so sending them changes
@@ -41,6 +52,15 @@ export interface CertBranding {
    */
   cover: CoverPalette;
 }
+
+/**
+ * Which colour drives the cover. `cert_cover_color` is chosen FOR the cover;
+ * `primary_color` is only the fallback for anyone who opted in before that
+ * setting existed. A brand palette is not a cover palette.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const coverBrandOf = (cp: any): string =>
+  hex(cp?.cert_cover_color) || hex(cp?.primary_color) || hex(cp?.accent_color);
 
 /** Normalise a stored hex; returns '' when unusable so the caller's default wins. */
 const hex = (v: unknown): string => {
@@ -158,7 +178,35 @@ export interface CoverPalette {
   cover_fg: string;
   cover_muted: string;
   cover_dim: string;
+  /**
+   * The decorative accent — eyebrow, the rule under the title, the status
+   * value, the left rail.
+   *
+   * 🔴 This is the certificate's HOUSE accent checked against the cover, NOT
+   * the electrician's brand colour. Feeding the brand colour in here makes the
+   * accent a paler shade of the cover it sits on: still legible, but flat, and
+   * it throws away the only contrast the cover has. Gold already clears AA on a
+   * deep brand colour; only a gold-ish cover moves it. Proven by rendering both
+   * ways through PDFMonkey.
+   */
+  accent: string;
+  accentDeep: string;
+  /**
+   * The masthead the logos sit in. Follows the LOGO, not the cover — see
+   * `logoTone.ts`. `schemeLogoVariant` follows the masthead with it, because
+   * that is where the scheme lockup is drawn.
+   */
+  mast_bg: string;
+  mast_fg: string;
+  /** Which scheme lockup the COVER masthead needs (follows `mast_bg`). */
   schemeLogoVariant: 'reversed' | 'standard';
+  /**
+   * Which scheme lockup the INTERIOR page masthead needs. Separate on purpose:
+   * the interior masthead keeps the cover colour on every page, so it is dark
+   * even when the cover masthead is white. Driving both from one value put a
+   * black NICEIC lockup on a navy masthead — ELE-1669, one page further in.
+   */
+  interiorSchemeVariant: 'reversed' | 'standard';
 }
 
 /** The Elec-Mate house cover — byte-for-byte the templates' own defaults. */
@@ -169,10 +217,20 @@ const HOUSE: CoverPalette = {
   cover_fg: '#ffffff',
   cover_muted: '#cbd5e1',
   cover_dim: '#94a3b8',
-  schemeLogoVariant: 'reversed',
+  accent: '#fbbf24',
+  accentDeep: '#f59e0b',
+  mast_bg: '#ffffff',
+  mast_fg: '#0a1628',
+  schemeLogoVariant: 'standard',
+  interiorSchemeVariant: 'reversed',
 };
 
-export const coverPalette = (style: CertCoverStyle, brand: string): CoverPalette => {
+export const coverPalette = (
+  style: CertCoverStyle,
+  brand: string,
+  houseAccent = '#fbbf24',
+  logoTone: LogoTone = 'dark'
+): CoverPalette => {
   if (style === 'print') {
     // ELE-1671 — Billy Joe: "not printer friendly, wastes a lot of ink". Page 1
     // measured 39.3% ink coverage before, 2.3% after: a 94% saving on the cover
@@ -185,7 +243,11 @@ export const coverPalette = (style: CertCoverStyle, brand: string): CoverPalette
       cover_fg: CERT_DARK_BG,
       cover_muted: '#475569',
       cover_dim: '#64748b',
-      schemeLogoVariant: 'standard',
+      accent: readableAccent(houseAccent, houseAccent, '#ffffff'),
+      accentDeep: darken(readableAccent(houseAccent, houseAccent, '#ffffff'), 0.3),
+      ...mastheadFor(logoTone, '#334155'),
+      // Print: the interior masthead goes white too, so the standard lockup.
+      interiorSchemeVariant: 'standard',
     };
   }
 
@@ -202,13 +264,14 @@ export const coverPalette = (style: CertCoverStyle, brand: string): CoverPalette
       cover_fg: fg,
       cover_muted: mix(fg, from, 0.25),
       cover_dim: mix(fg, from, 0.42),
-      // The whole point of the pairing: a pale brand colour gets the standard
-      // dark NICEIC lockup, a deep one gets the reversed white lockup.
-      schemeLogoVariant: towardsLight ? 'reversed' : 'standard',
+      accent: readableAccent(houseAccent, houseAccent, from),
+      accentDeep: darken(readableAccent(houseAccent, houseAccent, from), towardsLight ? 0.18 : 0.3),
+      ...mastheadFor(logoTone, from),
+      interiorSchemeVariant: fg === '#FFFFFF' ? 'reversed' : 'standard',
     };
   }
 
-  return HOUSE;
+  return { ...HOUSE, ...mastheadFor(logoTone, HOUSE.cover_from) }; // house cover is always dark
 };
 
 /** Normalise the stored column; anything unrecognised (or NULL) means house. */
@@ -226,11 +289,19 @@ export const brandingFromCompanyProfile = (
   cp: any,
   fallbackAccent: string
 ): CertBranding => {
-  const brand = hex(cp?.primary_color) || hex(cp?.accent_color);
+  // ELE-1671 — the cover colour is its OWN setting, not the brand palette.
+  // A brand is not a cover: a yellow-and-black brand makes a garish, hard to
+  // read certificate, and driving the cover off `primary_color` forced that on
+  // people. `cert_cover_color` wins; primary_color is only the fallback for
+  // anyone who opted in before this existed.
+  const brand = coverBrandOf(cp);
   const style = certCoverStyle(cp?.cert_cover_style);
+  const pref = logoTonePreference((cp as { cert_logo_tone?: string })?.cert_logo_tone);
+  // Sync path cannot measure; 'auto' assumes dark artwork (the common case).
+  const tone: LogoTone = pref === 'auto' ? 'dark' : pref;
   // Resolved before the accent, because the accent has to be legible against
   // THIS cover — which is no longer always navy.
-  const cover = coverPalette(style, brand);
+  const cover = coverPalette(style, brand, fallbackAccent, tone);
 
   return {
     companyName: cp?.company_name || '',
@@ -285,9 +356,38 @@ export const brandingFromCompanyProfile = (
     // transparent PNG draws nothing and costs ~70 bytes.
     registrationSchemeLogo:
       cp?.scheme_logo_data_url || cp?.registration_scheme_logo || TRANSPARENT_PIXEL,
+    // The sync mapper cannot fetch, so both resolve to the stored value.
+    // `fetchCertBranding` replaces them with the correct per-ground variants.
+    schemeLogoLight: cp?.scheme_logo_data_url || cp?.registration_scheme_logo || TRANSPARENT_PIXEL,
+    schemeLogoDark: cp?.scheme_logo_data_url || cp?.registration_scheme_logo || TRANSPARENT_PIXEL,
     coverStyle: style,
+    logoTone: tone,
     cover,
   };
+};
+
+/**
+ * Swap a scheme lockup for the variant that will be visible on the background
+ * it is about to be drawn on.
+ *
+ * Only ever swaps a BUNDLED asset. If the electrician uploaded their own scheme
+ * logo we leave it exactly as they set it — silently replacing someone's own
+ * artwork would be a worse bug than the one this fixes.
+ */
+const schemeLogoForBackground = async (
+  stored: string,
+  schemeName: string,
+  variant: 'reversed' | 'standard'
+): Promise<string> => {
+  try {
+    const info = schemeName ? getSchemeInfo(schemeName) : undefined;
+    if (!info) return stored;
+    const wanted = schemeLogoPath(info, variant === 'reversed' ? 'dark' : 'light');
+    const { resolveSchemeLogo } = await import('@/utils/resolveSchemeLogo');
+    return (await resolveSchemeLogo(wanted, schemeName)) || stored;
+  } catch {
+    return stored;
+  }
 };
 
 /**
@@ -298,7 +398,36 @@ export const fetchCertBranding = async (fallbackAccent: string): Promise<CertBra
   try {
     const { data } = await supabase.rpc('get_my_company_profile');
     const cp = Array.isArray(data) ? data[0] : data;
-    return brandingFromCompanyProfile(cp, fallbackAccent);
+    const base = brandingFromCompanyProfile(cp, fallbackAccent);
+
+    // ELE-1671 — the masthead has to follow the logo, so when the electrician
+    // has not told us what their artwork is, measure it. Async, which is why it
+    // lives here rather than in the sync mapper, and it cannot fail: an
+    // unreadable logo resolves to 'dark' and the white masthead.
+    const pref = logoTonePreference((cp as { cert_logo_tone?: string })?.cert_logo_tone);
+    const tone = pref === 'auto' ? await measureLogoTone(base.companyLogo) : pref;
+    const cover = coverPalette(base.coverStyle, coverBrandOf(cp), fallbackAccent, tone);
+
+    // 🔴 `registrationSchemeLogo` is left EXACTLY as stored. It is the fallback
+    // for BOTH mastheads on any template that does not yet send the new keys,
+    // and the stored value is now the standard hosted lockup — right for the
+    // white cover masthead, which is the client-facing page. Overriding it with
+    // the interior variant fixed page 2 and broke every cover.
+    //
+    // Instead each masthead gets its OWN key, because one image cannot serve a
+    // white ground and a dark one.
+    const [schemeLogoLight, schemeLogoDark] = await Promise.all([
+      schemeLogoForBackground(base.registrationSchemeLogo, base.registrationScheme, 'standard'),
+      schemeLogoForBackground(base.registrationSchemeLogo, base.registrationScheme, 'reversed'),
+    ]);
+
+    return {
+      ...base,
+      logoTone: tone,
+      cover,
+      schemeLogoLight,
+      schemeLogoDark,
+    };
   } catch {
     return brandingFromCompanyProfile(null, fallbackAccent);
   }

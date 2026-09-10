@@ -1,4 +1,6 @@
 import { useState, useCallback } from 'react';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { copyToClipboard } from '@/utils/clipboard';
 import { Car, Copy, Check, Info, AlertTriangle, CheckCircle, Zap, ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -166,6 +168,75 @@ const EVChargingCalculator = () => {
   };
 
   const hasValidInputs = inputs.batteryCapacity && parseFloat(inputs.batteryCapacity) > 0;
+
+  const buildReport = (): CalcReport | null => {
+    if (!results) return null;
+    return {
+      meta: {
+        title: 'EV Charging Calculation',
+        subtitle: 'Charging energy, cost and circuit design for an EV charge point',
+      },
+      headline: [
+        { label: 'Design current', value: results.designCurrent.toFixed(1), unit: 'A' },
+        { label: 'Recommended cable', value: results.recommendedCable },
+        {
+          label: 'Compliance check',
+          value: results.installationCompliant ? 'Compliant' : 'Issues found',
+          verdict: results.installationCompliant ? 'pass' : 'fail',
+        },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            { label: 'Battery capacity', value: `${inputs.batteryCapacity} kWh` },
+            { label: 'Charger type', value: CHARGER_TYPES[inputs.chargerType].label },
+            { label: 'Current charge', value: `${inputs.currentCharge}%` },
+            { label: 'Target charge', value: `${inputs.targetCharge}%` },
+            { label: 'Supply type', value: EARTHING_SYSTEMS[inputs.supplyType].label },
+            {
+              label: 'Installation location',
+              value:
+                locationOptions.find((o) => o.value === inputs.installationLocation)?.label ??
+                inputs.installationLocation,
+            },
+            { label: 'Cable run length', value: `${inputs.runLength} m` },
+            { label: 'Ambient temperature', value: `${inputs.ambientTemp} °C` },
+            { label: 'Existing load current', value: `${inputs.existingLoadCurrent} A` },
+            {
+              label: 'Electricity rate',
+              value: `${formatCurrency(parseFloat(inputs.electricityRate))}/kWh`,
+            },
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'Energy required', value: `${results.energyRequired.toFixed(1)} kWh` },
+            { label: 'Charging time', value: `${results.chargingTime.toFixed(1)} hours` },
+            { label: 'Charging cost', value: formatCurrency(results.cost) },
+            { label: 'Peak demand', value: `${results.peakDemand.toFixed(1)} kW` },
+            { label: 'Circuit current', value: `${results.circuitCurrent.toFixed(1)} A` },
+            { label: 'Design current', value: `${results.designCurrent.toFixed(1)} A` },
+            { label: 'Recommended cable', value: results.recommendedCable },
+            {
+              label: 'Voltage drop',
+              value: `${results.voltageDrop.toFixed(1)} V (${((results.voltageDrop / 230) * 100).toFixed(1)}%)`,
+            },
+            {
+              label: 'Earth fault loop impedance (Zs)',
+              value: `${results.actualZs.toFixed(2)} Ω`,
+              note: `Max ${results.maxZs} Ω`,
+            },
+            { label: 'Protection', value: results.protectionRequired },
+          ],
+        },
+      ],
+      notes: [...results.warnings, ...results.recommendations],
+    };
+  };
+
+  useProvideCalcReport(results ? buildReport : null);
 
   return (
     <CalculatorCard

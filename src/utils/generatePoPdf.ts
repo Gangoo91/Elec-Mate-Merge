@@ -6,7 +6,13 @@
  */
 import jsPDF from 'jspdf';
 import { supabase } from '@/integrations/supabase/client';
-import { getBrandColour, addAccentBar, readableTextOn, ensureSpace, type RGB } from '@/utils/pdfBrand';
+import {
+  getBrandColour,
+  addAccentBar,
+  readableTextOn,
+  ensureSpace,
+  type RGB,
+} from '@/utils/pdfBrand';
 import type { MaterialOrder, Supplier, POLine } from '@/services/financeService';
 
 const money = (v: number | null | undefined) =>
@@ -40,7 +46,9 @@ export async function generatePoPdf(
   } = await supabase.auth.getUser();
   const { data: company } = await supabase
     .from('company_profiles')
-    .select('company_name, company_phone, company_email, logo_data_url, logo_url, accent_color, primary_color')
+    .select(
+      'company_name, company_phone, company_email, logo_data_url, logo_url, accent_color, primary_color'
+    )
     .eq('user_id', user?.id ?? '')
     .maybeSingle();
   const brandCo = (company as CompanyBrand) ?? null;
@@ -54,7 +62,8 @@ export async function generatePoPdf(
   let y = 18;
 
   // Header — logo or company name left, PO meta right
-  const logo = brandCo?.logo_data_url || null;
+  // ELE-1668 — hosted URL first; the data URL is downscaled and size-capped.
+  const logo = brandCo?.logo_url || brandCo?.logo_data_url || null;
   if (logo && logo.startsWith('data:image')) {
     try {
       const fmt = /^data:image\/(jpe?g)/i.test(logo) ? 'JPEG' : 'PNG';
@@ -79,13 +88,17 @@ export async function generatePoPdf(
   doc.text(order.order_number, pageW - marginX, y + 11, { align: 'right' });
   doc.text(`Date: ${fmtDate(order.order_date)}`, pageW - marginX, y + 16, { align: 'right' });
   if (order.expected_date) {
-    doc.text(`Required by: ${fmtDate(order.expected_date)}`, pageW - marginX, y + 21, { align: 'right' });
+    doc.text(`Required by: ${fmtDate(order.expected_date)}`, pageW - marginX, y + 21, {
+      align: 'right',
+    });
   }
 
   y += order.expected_date ? 30 : 26;
 
   // Company contact line
-  const contactBits = [brandCo?.company_phone, brandCo?.company_email].filter(Boolean).join('  ·  ');
+  const contactBits = [brandCo?.company_phone, brandCo?.company_email]
+    .filter(Boolean)
+    .join('  ·  ');
   if (contactBits) {
     doc.setFontSize(9);
     doc.setTextColor(110, 110, 110);
@@ -99,7 +112,11 @@ export async function generatePoPdf(
   doc.setFontSize(8);
   doc.setTextColor(140, 140, 140);
   doc.text('SUPPLIER', marginX, blockTop);
-  doc.text(order.delivery_mode === 'Collection' ? 'COLLECTION' : 'DELIVER TO', marginX + colW + 8, blockTop);
+  doc.text(
+    order.delivery_mode === 'Collection' ? 'COLLECTION' : 'DELIVER TO',
+    marginX + colW + 8,
+    blockTop
+  );
 
   doc.setFontSize(10);
   doc.setTextColor(30, 30, 30);
@@ -158,7 +175,11 @@ export async function generatePoPdf(
   doc.setTextColor(40, 40, 40);
   doc.setFontSize(9);
   items.forEach((it, idx) => {
-    y = ensureSpace(doc, y, 8, { bottomMargin: 30, topAfterBreak: 20, onNewPage: (d) => addAccentBar(d, brand, 4) });
+    y = ensureSpace(doc, y, 8, {
+      bottomMargin: 30,
+      topAfterBreak: 20,
+      onNewPage: (d) => addAccentBar(d, brand, 4),
+    });
     if (y === 20) drawHeader();
     if (idx % 2 === 1) {
       doc.setFillColor(245, 246, 248);

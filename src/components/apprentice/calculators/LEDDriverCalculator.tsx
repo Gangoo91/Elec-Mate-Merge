@@ -1,4 +1,6 @@
 import { useState, useMemo, useCallback } from 'react';
+import type { CalcReport, CalcVerdict } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { copyToClipboard } from '@/utils/clipboard';
 import { ChevronDown, Copy, Check } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -187,6 +189,58 @@ const LEDDriverCalculator = () => {
     { value: '24', label: '24V' },
     { value: '48', label: '48V' },
   ];
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+    const verdict: CalcVerdict = result.status === 'warning' ? 'warn' : result.status;
+    return {
+      meta: {
+        title: 'LED Driver Calculator',
+        subtitle: `Driver sizing for a ${connectionType} LED array`,
+      },
+      headline: [
+        {
+          label: 'Recommended driver',
+          value: result.nearestStandardDriver,
+          verdict,
+        },
+        { label: 'Driver power', value: result.driverPower.toFixed(2), unit: 'W' },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            { label: 'LED forward voltage', value: `${ledVoltage} V` },
+            { label: 'LED forward current', value: `${ledCurrent} mA` },
+            { label: 'Number of LEDs', value: numLeds },
+            { label: 'Connection type', value: connectionType },
+            { label: 'Supply voltage', value: `${supplyVoltage} V` },
+            { label: 'Driver efficiency', value: efficiency },
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'Total array voltage', value: `${result.totalVoltage.toFixed(1)} V` },
+            { label: 'Total array current', value: `${result.totalCurrentmA.toFixed(0)} mA` },
+            { label: 'LED array power', value: `${result.totalPower.toFixed(2)} W` },
+            { label: 'Driver power', value: `${result.driverPower.toFixed(2)} W` },
+            { label: 'Driver current from supply', value: `${result.driverCurrent.toFixed(3)} A` },
+            { label: 'Power loss (heat)', value: `${result.powerLoss.toFixed(2)} W` },
+            {
+              label: 'Recommended driver (20% headroom)',
+              value: result.nearestStandardDriver,
+              note: `Calculated ${result.recommendedDriverPower.toFixed(1)} W before rounding to nearest standard size`,
+            },
+            { label: 'Connection guidance', value: result.connectionGuidance },
+          ],
+        },
+      ],
+      notes: result.messages.length ? result.messages : undefined,
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

@@ -1,4 +1,6 @@
 import { copyToClipboard } from '@/utils/clipboard';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { useState, useCallback } from 'react';
 import { Copy, Check, CheckCircle, XCircle, AlertTriangle, ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -155,6 +157,53 @@ const RCDTripTimeCalculator = () => {
   };
 
   const canCalculate = rcdRating && testCurrent;
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+    return {
+      meta: {
+        title: 'RCD Trip Time',
+        subtitle: `${result.rating} · ${result.testDescription}`,
+        standard: 'BS 7671:2018+A4:2026 — Reg 643.7.1',
+      },
+      headline: [
+        {
+          label: 'Maximum permitted trip time',
+          value: String(result.maxTripTime),
+          unit: 'ms',
+          verdict:
+            result.isCompliant === undefined ? undefined : result.isCompliant ? 'pass' : 'fail',
+        },
+        ...(result.actualTripTime !== undefined
+          ? [{ label: 'Measured trip time', value: String(result.actualTripTime), unit: 'ms' }]
+          : []),
+      ],
+      sections: [
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'RCD rating', value: result.rating },
+            { label: 'Test current', value: result.testCurrent, note: result.testDescription },
+            { label: 'Maximum permitted trip time', value: `${result.maxTripTime} ms` },
+            ...(result.actualTripTime !== undefined
+              ? [{ label: 'Measured trip time', value: `${result.actualTripTime} ms` }]
+              : []),
+            ...(result.safetyMargin !== undefined
+              ? [{ label: 'Margin', value: `${result.safetyMargin.toFixed(1)}%` }]
+              : []),
+            ...(result.isCompliant !== undefined
+              ? [{ label: 'Assessment', value: result.isCompliant ? 'PASS' : 'FAIL' }]
+              : []),
+          ],
+        },
+      ],
+      notes: [
+        'Maximum trip times are those required by BS 7671 for the test current stated. A measured time within the limit does not on its own confirm the RCD is suitable for the circuit.',
+      ],
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

@@ -1,4 +1,6 @@
 import { copyToClipboard } from '@/utils/clipboard';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { Plus, Trash2, Home, Building, Factory, ChevronDown, Copy, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -487,6 +489,68 @@ const EnergyCostCalculator = () => {
       },
     ];
   }, [result, dayRate, standingCharge, vatRate]);
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+    return {
+      meta: {
+        title: 'Energy Cost Calculator',
+        subtitle: `${environment.charAt(0).toUpperCase()}${environment.slice(1)} — ${appliances.length} appliance${appliances.length === 1 ? '' : 's'}`,
+      },
+      headline: [
+        { label: 'Annual cost (estimate)', value: formatCurrency(result.yearlyCost) },
+        { label: 'Annual consumption', value: result.yearlyKWh.toFixed(0), unit: 'kWh' },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            { label: 'Environment', value: environment },
+            {
+              label: useDualRate ? 'Day rate' : 'Rate',
+              value: `£${dayRate}/kWh`,
+            },
+            ...(useDualRate
+              ? [
+                  { label: 'Night rate', value: `£${nightRate}/kWh` },
+                  { label: 'Night hours', value: `${nightHours} hrs/day` },
+                ]
+              : []),
+            { label: 'Standing charge', value: `£${standingCharge}/day` },
+            { label: 'VAT rate', value: `${vatRate}%` },
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'Daily cost (estimate)', value: formatCurrency(result.dailyCost) },
+            { label: 'Weekly cost (estimate)', value: formatCurrency(result.weeklyCost) },
+            { label: 'Monthly cost (estimate)', value: formatCurrency(result.monthlyCost) },
+            { label: 'Annual cost (estimate)', value: formatCurrency(result.yearlyCost) },
+            { label: 'Annual consumption', value: `${result.yearlyKWh.toFixed(0)} kWh` },
+            { label: 'Annual CO₂', value: `${result.yearlyCO2.toFixed(0)} kg` },
+          ],
+        },
+        ...(result.applianceBreakdown.length > 0
+          ? [
+              {
+                heading: 'Cost by appliance',
+                rows: result.applianceBreakdown.map((item) => ({
+                  label: item.name,
+                  value: `${formatCurrency(item.monthlyCost)}/mo`,
+                  note: `${item.dailyKWh.toFixed(2)} kWh/day · ${item.shareOfTotal.toFixed(1)}% of total`,
+                })),
+              },
+            ]
+          : []),
+      ],
+      notes: [
+        'Costs are estimates based on the rates entered — check your actual bill for exact tariff figures.',
+      ],
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

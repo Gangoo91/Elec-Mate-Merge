@@ -1,4 +1,6 @@
 import { copyToClipboard } from '@/utils/clipboard';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { useState, useCallback } from 'react';
 import { Copy, Check, ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -192,6 +194,85 @@ const LightningProtectionCalculator = () => {
       }
     });
   };
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+
+    return {
+      meta: {
+        title: 'Lightning Protection Calculator',
+        subtitle: 'BS EN 62305-2 risk assessment for lightning protection systems',
+        standard: 'BS EN 62305-2',
+      },
+      headline: [
+        {
+          label: 'Total risk (R)',
+          value: result.totalRisk.toExponential(2),
+          verdict: result.protectionRequired ? 'fail' : 'pass',
+        },
+        { label: 'Tolerable risk (RT)', value: result.tolerableRisk.toExponential(2) },
+        { label: 'SPD requirement', value: `${result.spdType} — Reg 443.4.1` },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            { label: 'Building dimensions', value: `${buildingLength} × ${buildingWidth} × ${buildingHeight} m (L×W×H)` },
+            { label: 'UK region', value: `${ukRegion} (Ng = ${UK_REGIONS[ukRegion]} fl/km²/yr)` },
+            { label: 'Building construction', value: buildingConstruction },
+            { label: 'Roof type', value: roofType },
+            { label: 'Contents risk', value: contentsRisk },
+            { label: 'Occupancy', value: occupancy },
+            { label: 'Existing protection', value: existingProtection },
+            {
+              label: 'Incoming services',
+              value: incomingServices.length ? incomingServices.join(', ') : 'None selected',
+            },
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'Collection area (Ad)', value: `${result.collectionArea.toLocaleString()} m²` },
+            { label: 'Expected strikes (Nd)', value: `${result.expectedStrikes.toExponential(3)} /yr` },
+            { label: 'Risk R1 (injury)', value: result.riskR1.toExponential(2) },
+            { label: 'Risk R2 (physical damage)', value: result.riskR2.toExponential(2) },
+            { label: 'Risk R3 (electrical systems)', value: result.riskR3.toExponential(2) },
+            { label: 'Risk R4 (economic loss)', value: result.riskR4.toExponential(2) },
+            { label: 'Total risk (R)', value: result.totalRisk.toExponential(2) },
+            { label: 'Tolerable risk (RT)', value: result.tolerableRisk.toExponential(2) },
+            {
+              label: 'Structural LPS',
+              value: result.protectionRequired
+                ? `Required${result.lpsClass ? ` — Class ${result.lpsClass}` : ''}`
+                : 'Not indicated',
+            },
+            {
+              label: 'SPDs',
+              value: `${result.spdType} — required (BS 7671 Reg 443.4.1)`,
+              note: result.spdOwnerDeclarationRoute
+                ? 'Omission route: owner written declaration under Reg 443.4.1 only'
+                : 'Omission route not available — Reg 443.4.1 (a)/(b)/(c) applies',
+            },
+            ...(result.costEstimate.max > 0
+              ? [
+                  {
+                    label: 'Indicative cost estimate',
+                    value: `£${result.costEstimate.min.toLocaleString()} – £${result.costEstimate.max.toLocaleString()}`,
+                  },
+                ]
+              : []),
+          ],
+        },
+      ],
+      notes: [
+        result.verdict,
+        'BS 7671 Reg 443.4.1 makes protection against transient overvoltages the default; omission requires a written owner declaration, not a risk score.',
+      ],
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

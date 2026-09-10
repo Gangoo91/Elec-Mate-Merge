@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { Plus, Trash2, ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
@@ -221,6 +223,75 @@ const TrunkingSizeCalculator = () => {
   // (see the fill-rules panel below), and the old description "BS 7671 compliant" overstated
   // the result — BS 7671 sets no trunking space factor, so a fill figure is not on its own a
   // compliance statement.
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+    return {
+      meta: {
+        title: 'Trunking Size',
+        subtitle: 'Minimum trunking size using the 45% space factor',
+      },
+      headline: [
+        {
+          label: 'Recommended size',
+          value: result.recommendedSize,
+          verdict:
+            result.status === 'fail' ? 'fail' : result.status === 'warning' ? 'warn' : 'pass',
+        },
+        ...(isTrunking
+          ? [{ label: 'Fill', value: result.fillPercent.toFixed(1), unit: '%' }]
+          : []),
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            {
+              label: 'Containment type',
+              value:
+                containmentTypeOptions.find((o) => o.value === containmentType)?.label ??
+                containmentType,
+            },
+            ...(isTrunking ? [{ label: 'Circuits in trunking', value: circuits }] : []),
+            ...cables.map((c) => ({
+              label: cableTypeOptions.find((o) => o.value === c.cableType)?.label ?? c.cableType,
+              value: `${c.quantity} × ${c.size} mm²`,
+            })),
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'Recommended size', value: result.recommendedSize, note: result.statusLabel },
+            { label: 'Total cable area', value: `${result.totalCableArea.toFixed(1)} mm²` },
+            ...(isTrunking
+              ? [
+                  {
+                    label: 'Trunking internal area',
+                    value: `${result.recommendedArea.toFixed(0)} mm²`,
+                  },
+                  { label: 'Fill', value: `${result.fillPercent.toFixed(1)}%` },
+                  {
+                    label: 'Grouping factor (Cg)',
+                    value: result.groupingFactor.toFixed(2),
+                    note: `Table 4C1, ${result.circuits} circuit${result.circuits === 1 ? '' : 's'} bunched and enclosed`,
+                  },
+                ]
+              : []),
+            { label: 'Cable count', value: `${result.cableCount}` },
+          ],
+        },
+      ],
+      notes: isTrunking
+        ? [
+            'The 45% space factor is IET On-Site Guide / industry guidance, not a BS 7671 requirement.',
+            "Where more than one circuit shares the trunking, Reg 523.4 requires the Table 4C1 group rating factor to be applied to the cables' current-carrying capacity — a fill pass is not a thermal pass.",
+          ]
+        : undefined,
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
+
   return (
     <CalculatorCard
       category={CAT}

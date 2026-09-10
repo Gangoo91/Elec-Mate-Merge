@@ -116,7 +116,7 @@ export const useFireAlarmSmartForm = () => {
       companyWebsite: companyProfile?.website || profile?.companyWebsite || '',
       // CRITICAL: Use logo_data_url first (for PDF embedding), then logo_url as fallback
       companyLogo:
-        companyProfile?.logo_data_url || companyProfile?.logo_url || profile?.companyLogo || '',
+        companyProfile?.logo_url || companyProfile?.logo_data_url || profile?.companyLogo || '',
       accentColor: companyProfile?.primary_color || '#dc2626',
       registrationSchemeLogo:
         companyProfile?.scheme_logo_data_url ||

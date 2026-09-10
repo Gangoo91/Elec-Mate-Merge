@@ -1,4 +1,6 @@
 import { useState, useMemo } from 'react';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import {
   Zap,
   Info,
@@ -467,6 +469,73 @@ const PowerFactorCorrectionCalculator = () => {
     { value: '0.98', label: '0.98 (Near unity)' },
     { value: '1.00', label: '1.00 (Unity — theoretical)' },
   ];
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+    return {
+      meta: {
+        title: 'Power Factor Correction',
+        subtitle: `${result.currentPF.toFixed(2)} → ${result.targetPF.toFixed(2)} PF, ${phases === '3' ? 'three-phase' : 'single-phase'} ${supplyVoltage} V`,
+        standard: 'BS 7671:2018+A4:2026 — Regs 331.1, 443.4.2, 512.1.2(a)',
+      },
+      headline: [
+        { label: 'Required correction', value: result.requiredKVAR.toFixed(1), unit: 'kVAR' },
+        { label: 'Capacitor bank', value: `${result.capacitorBankSize}`, unit: 'kVAR' },
+        ...(result.annualTotalSavings > 0
+          ? [{ label: 'Annual savings (estimate)', value: `£${result.annualTotalSavings.toFixed(2)}` }]
+          : []),
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            { label: 'Real power', value: `${result.currentKW.toFixed(1)} kW` },
+            { label: 'Current power factor', value: result.currentPF.toFixed(2) },
+            { label: 'Target power factor', value: result.targetPF.toFixed(2) },
+            { label: 'Supply', value: `${supplyVoltage} V, ${phases === '3' ? 'three-phase' : 'single-phase'}` },
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'Current kVA', value: `${result.currentKVA.toFixed(1)} kVA` },
+            { label: 'Target kVA', value: `${result.targetKVA.toFixed(1)} kVA` },
+            { label: 'kVA reduction', value: `${result.percentageReduction.toFixed(1)}%` },
+            { label: 'Current before', value: `${result.currentBefore.toFixed(1)} A` },
+            { label: 'Current after', value: `${result.currentAfter.toFixed(1)} A` },
+            { label: 'Current saved', value: `${result.currentSaved.toFixed(1)} A` },
+            ...(result.annualReactiveSavings > 0
+              ? [{ label: 'Reactive power savings (estimate)', value: `£${result.annualReactiveSavings.toFixed(2)}/year` }]
+              : []),
+            ...(result.annualMDSavings > 0
+              ? [{ label: 'Max demand savings (estimate)', value: `£${result.annualMDSavings.toFixed(2)}/year` }]
+              : []),
+          ],
+        },
+        {
+          heading: 'Capacitor bank specification',
+          rows: [
+            { label: 'Total kVAR', value: `${result.capacitorBankSize} kVAR` },
+            { label: 'Capacitor current', value: `${result.capacitorCurrent.toFixed(1)} A` },
+            { label: 'Protection', value: result.protectiveDeviceLabel },
+            {
+              label: 'Switching',
+              value: result.stagesRecommended === 1 ? 'Fixed' : `Automatic ${result.stagesRecommended}-stage`,
+            },
+          ],
+        },
+      ],
+      notes: [
+        ...result.warnings,
+        'Reg 462.4 / 416.2.5: a means of discharge for residual energy is required, plus a warning label on any enclosure holding a capacitor that may retain a dangerous charge.',
+        ...(result.annualReactiveSavings > 0 || result.annualMDSavings > 0
+          ? ['Annual savings are estimates based on the reactive-power and demand charges entered — check the actual electricity bill for exact figures.']
+          : []),
+      ],
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

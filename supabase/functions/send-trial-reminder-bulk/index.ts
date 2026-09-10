@@ -350,6 +350,13 @@ Deno.serve(async (req) => {
             continue;
           }
 
+          // Also record it in the table the cron, winbacks and the admin
+          // Trials page all read — see the note in send-trial-reminder.
+          await supabase.from('trial_emails_sent').insert({
+            user_id: profile.id,
+            email_type: 'admin_reminder',
+          });
+
           // Log successful send
           await supabase.from('trial_email_sends').insert({
             user_id: profile.id,

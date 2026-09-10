@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import {
   Info,
   CheckCircle2,
@@ -94,6 +96,64 @@ const DiversityFactorCalculator = () => {
     { value: 'single-phase', label: 'Single Phase' },
     { value: 'three-phase', label: 'Three Phase' },
   ];
+
+  const buildReport = (): CalcReport | null => {
+    if (!showResults || !result) return null;
+    return {
+      meta: {
+        title: 'Diversity Factor Calculator',
+        subtitle: 'Diversified demand and current after IET On-Site Guide allowances',
+        standard: 'IET On-Site Guide — Appendix A, Table A2',
+      },
+      headline: [
+        { label: 'Diversified load', value: result.diversifiedLoad.toFixed(2), unit: 'kW' },
+        { label: 'Diversified current', value: result.diversifiedCurrent.toFixed(1), unit: 'A' },
+        { label: 'Diversity factor', value: `${(result.overallDiversityFactor * 100).toFixed(0)}%` },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            {
+              label: 'Installation type',
+              value: locationOptions.find((o) => o.value === location)?.label || location,
+            },
+            { label: 'Supply type', value: supplyType === 'three-phase' ? 'Three phase' : 'Single phase' },
+            { label: 'Supply voltage', value: `${supplyVoltage} V` },
+            { label: 'Total installed load', value: `${result.totalInstalledLoad.toFixed(2)} kW` },
+            { label: 'Total design current', value: `${result.totalDesignCurrent.toFixed(1)} A` },
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'Diversified load', value: `${result.diversifiedLoad.toFixed(2)} kW` },
+            { label: 'Diversified current', value: `${result.diversifiedCurrent.toFixed(1)} A` },
+            {
+              label: 'Overall diversity factor',
+              value: `${(result.overallDiversityFactor * 100).toFixed(0)}%`,
+            },
+            { label: 'Recommended protection', value: getMainDeviceRecommendation() },
+          ],
+        },
+        ...(result.breakdownByType.length
+          ? [
+              {
+                heading: 'Load breakdown by type',
+                rows: result.breakdownByType.map((b) => ({
+                  label: `${b.displayName}${b.count > 1 ? ` (${b.count})` : ''}`,
+                  value: `${b.diversifiedCurrent.toFixed(1)} A / ${b.diversifiedLoad.toFixed(2)} kW`,
+                  note: `${(b.diversityFactor * 100).toFixed(0)}% — ${b.regulation}`,
+                })),
+              },
+            ]
+          : []),
+      ],
+      notes: result.complianceNotes.length ? result.complianceNotes : undefined,
+    };
+  };
+
+  useProvideCalcReport(showResults && result ? buildReport : null);
 
   return (
     <CalculatorCard

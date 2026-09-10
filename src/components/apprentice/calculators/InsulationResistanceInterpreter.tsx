@@ -27,6 +27,8 @@
  * off three inputs would be over-claiming on something that carries liability.
  */
 import { useMemo, useState } from 'react';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import {
   CalculatorCard,
   CalculatorInputGrid,
@@ -68,6 +70,63 @@ const InsulationResistanceInterpreter = () => {
     const prev = parseFloat(previous);
     return interpretIr(mohm, kind, age, prev > 0 ? prev : undefined);
   }, [reading, unit, kind, age, previous]);
+
+  const buildReport = (): CalcReport | null => {
+    if (!verdict) return null;
+
+    const verdictMap: Record<typeof verdict.status, 'pass' | 'fail' | 'warn'> = {
+      fail: 'fail',
+      investigate: 'warn',
+      acceptable: 'pass',
+      excellent: 'pass',
+    };
+
+    return {
+      meta: {
+        title: 'Insulation Resistance Interpreter',
+        subtitle: 'Reading assessed against BS 7671 Table 64',
+        standard: 'BS 7671:2018+A4:2026 — Table 64 (Reg 643.3.2)',
+      },
+      headline: [
+        {
+          label: 'Reading',
+          value: reading,
+          unit: unit === 'G' ? 'GΩ' : 'MΩ',
+          verdict: verdictMap[verdict.status],
+        },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            { label: 'Circuit nominal voltage', value: TABLE_64[kind].label },
+            { label: 'Age of installation', value: AGE_LABEL[age] },
+            ...(previous ? [{ label: 'Previous reading', value: `${previous} MΩ` }] : []),
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'Verdict', value: verdict.headline },
+            {
+              label: 'Test voltage',
+              value: `${verdict.requiredTestVolts} V DC`,
+              note: `Minimum ${verdict.minMohm} MΩ — Table 64`,
+            },
+            { label: 'Assessment', value: verdict.detail },
+            ...(verdict.trend ? [{ label: 'Trend', value: verdict.trend }] : []),
+          ],
+        },
+      ],
+      notes: verdict.guidanceOnly
+        ? [
+            'The pass/fail line comes from Table 64. Everything said about what the reading means for the installation is guidance — GN3 and good practice — not a requirement of the Regulations.',
+          ]
+        : undefined,
+    };
+  };
+
+  useProvideCalcReport(verdict ? buildReport : null);
 
   return (
     <CalculatorCard

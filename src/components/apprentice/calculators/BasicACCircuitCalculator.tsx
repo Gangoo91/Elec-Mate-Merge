@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { Info, BookOpen, ChevronDown, AlertTriangle, Activity } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
@@ -190,6 +192,63 @@ const BasicACCircuitCalculator = () => {
 
   const hasValidInputs = () => voltage && (resistance || reactance || inductance || capacitance);
   const status = getCircuitStatus();
+
+  const buildReport = (): CalcReport | null => {
+    if (!results) return null;
+    return {
+      meta: {
+        title: 'Basic AC Circuit Calculator',
+        subtitle: 'Impedance, current and power for an AC circuit',
+      },
+      headline: [
+        { label: 'Impedance (Z)', value: results.impedance?.toFixed(2) ?? '0', unit: 'Ω' },
+        { label: 'Current (I)', value: results.current?.toFixed(3) ?? '0', unit: 'A' },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            { label: 'Voltage (V RMS)', value: `${voltage} V` },
+            { label: 'Frequency', value: `${frequency} Hz` },
+            ...(resistance ? [{ label: 'Resistance', value: `${resistance} Ω` }] : []),
+            ...(reactance ? [{ label: 'Reactance', value: `${reactance} Ω` }] : []),
+            ...(inductance ? [{ label: 'Inductance', value: `${inductance} mH` }] : []),
+            ...(capacitance ? [{ label: 'Capacitance', value: `${capacitance} µF` }] : []),
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'Impedance (Z)', value: `${results.impedance?.toFixed(2)} Ω` },
+            { label: 'Current (I)', value: `${results.current?.toFixed(3)} A` },
+            { label: 'Phase angle', value: `${results.phaseAngle?.toFixed(1) ?? '0'} °` },
+            { label: 'Power factor', value: `${results.powerFactor?.toFixed(3) ?? '0'}` },
+            { label: 'Active power', value: `${results.activePower?.toFixed(2) ?? '0'} W` },
+            { label: 'Reactive power', value: `${results.reactivePower?.toFixed(2) ?? '0'} VAr` },
+            { label: 'Apparent power', value: `${results.apparentPower?.toFixed(2) ?? '0'} VA` },
+            { label: 'Circuit behaviour', value: results.leadLag ?? '' },
+            ...(results.xrRatio !== undefined && results.xrRatio !== Infinity
+              ? [{ label: 'X/R ratio', value: results.xrRatio.toFixed(2) }]
+              : []),
+            ...(results.resonantFreq
+              ? [{ label: 'Resonant frequency', value: `${results.resonantFreq.toFixed(1)} Hz` }]
+              : []),
+            ...(results.protectiveDeviceRange
+              ? [{ label: 'Indicative protection', value: results.protectiveDeviceRange, note: 'Advisory only' }]
+              : []),
+          ],
+        },
+      ],
+      notes: [
+        ...(results.resonantFreq &&
+        Math.abs(parseFloat(frequency) - results.resonantFreq) < 10
+          ? [`Operating near resonant frequency (${results.resonantFreq.toFixed(1)} Hz) — high currents possible.`]
+          : []),
+      ],
+    };
+  };
+
+  useProvideCalcReport(results ? buildReport : null);
 
   return (
     <CalculatorCard

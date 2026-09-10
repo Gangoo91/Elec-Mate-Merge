@@ -24,6 +24,7 @@ import {
   type FindingSeverity,
   type PlugInSolarAssessmentResult,
 } from '@/lib/plugInSolarAssessment';
+import { coverPayloadKeys } from '@/utils/certCoverPayload';
 import { totalPvModuleDcW, type PlugInSolarData } from '@/types/plug-in-solar';
 import type { CertBranding } from '@/utils/certBranding';
 import { supabase } from '@/integrations/supabase/client';
@@ -47,9 +48,7 @@ export interface PlugInSolarPhotoSets {
  * that suits a half-page plate: full-resolution site photos have blown the PDF
  * size guard on other certificates before.
  */
-export const fetchPlugInSolarPhotos = async (
-  reportId: string,
-): Promise<PlugInSolarPhotoSets> => {
+export const fetchPlugInSolarPhotos = async (reportId: string): Promise<PlugInSolarPhotoSets> => {
   const empty: PlugInSolarPhotoSets = { consumerUnit: [], siting: [] };
   try {
     const {
@@ -78,12 +77,15 @@ export const fetchPlugInSolarPhotos = async (
         transform: { width: 1000, height: 1400, resize: 'contain', quality: 60 },
       }).data.publicUrl;
 
-    return (rows || []).reduce<PlugInSolarPhotoSets>((acc, row) => {
-      const url = publicUrl(row.file_path);
-      if (row.item_id === 'siting') acc.siting.push(url);
-      else acc.consumerUnit.push(url);
-      return acc;
-    }, { consumerUnit: [], siting: [] });
+    return (rows || []).reduce<PlugInSolarPhotoSets>(
+      (acc, row) => {
+        const url = publicUrl(row.file_path);
+        if (row.item_id === 'siting') acc.siting.push(url);
+        else acc.consumerUnit.push(url);
+        return acc;
+      },
+      { consumerUnit: [], siting: [] }
+    );
   } catch {
     return empty;
   }
@@ -225,7 +227,7 @@ export function formatPlugInSolarJson(
   data: PlugInSolarData,
   result: PlugInSolarAssessmentResult,
   branding?: Partial<CertBranding>,
-  photos?: PlugInSolarPhotoSets,
+  photos?: PlugInSolarPhotoSets
 ): Record<string, unknown> {
   const totalDc = totalPvModuleDcW(data);
   const moduleSummary =
@@ -246,6 +248,15 @@ export function formatPlugInSolarJson(
       company_phone: branding?.companyPhone ?? '',
       company_email: branding?.companyEmail ?? '',
       registration_scheme: branding?.registrationScheme ?? '',
+      // ELE-1671 — cover palette + one scheme lockup per masthead.
+      //
+      // Cast because this formatter's `branding` param predates CertBranding and
+      // is typed narrower than what the caller actually passes (the pages all
+      // resolve `fetchCertBranding()`). `coverPayloadKeys` returns {} when the
+      // palette really is absent, so on the default `house` style — or with no
+      // company profile at all — this sends nothing and the template's own
+      // defaults apply. It cannot make a certificate worse.
+      ...coverPayloadKeys(branding as Partial<CertBranding>),
       registration_scheme_logo: branding?.registrationSchemeLogo ?? '',
     },
 
@@ -296,7 +307,11 @@ export function formatPlugInSolarJson(
       rcd_type: RCD_TYPE_LABEL[data.rcdType] ?? DASH,
       rcd_bidirectional: triLabel(data.rcdBidirectionalConfirmed),
       rcd_ma: withUnit(data.rcdRatingMa, 'mA'),
-      socket_condition: triLabel(data.socketConditionSatisfactory, 'Satisfactory', 'Unsatisfactory'),
+      socket_condition: triLabel(
+        data.socketConditionSatisfactory,
+        'Satisfactory',
+        'Unsatisfactory'
+      ),
       connection_method: CONNECTION_LABEL[data.connectionMethod] ?? DASH,
     },
 
@@ -307,7 +322,7 @@ export function formatPlugInSolarJson(
       on_register_label: triLabel(
         data.onEnaTypeTestRegister,
         'Yes — confirmed compliant',
-        'No — not confirmed compliant',
+        'No — not confirmed compliant'
       ),
       ena_reference: text(data.enaRegisterReference),
       declaration_label: triLabel(data.ipsDeclarationPresent),
@@ -339,7 +354,7 @@ export function formatPlugInSolarJson(
       loss_of_mains: triLabel(
         data.lossOfMainsProven,
         'Yes — export ceased on isolation',
-        'Not proven',
+        'Not proven'
       ),
       notes: data.verificationNotes?.trim() ?? '',
     },

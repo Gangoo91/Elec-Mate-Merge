@@ -1,4 +1,6 @@
 import { copyToClipboard } from '@/utils/clipboard';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { useState, useCallback } from 'react';
 import { Copy, Check, CheckCircle, AlertTriangle, ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -319,6 +321,96 @@ const RingCircuitCalculator = () => {
       }
     });
   };
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+    const cable = cableType ? CABLE_DATA[cableType] : undefined;
+
+    return {
+      meta: {
+        title: 'Ring Circuit Calculator',
+        subtitle: 'Ring final circuit continuity — end-to-end and cross-connected readings',
+        standard: 'BS 7671:2018+A4:2026 — Reg 643.2.1, GN3 Ch 2',
+      },
+      headline: [
+        {
+          label: 'R1 + R2 (at midpoint)',
+          value: result.r1PlusR2.toFixed(3),
+          unit: 'Ω',
+          verdict: result.overallPass ? 'pass' : 'fail',
+        },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            { label: 'End-to-end Live (L1–L2)', value: `${result.e2eLive.toFixed(3)} Ω` },
+            { label: 'End-to-end Neutral (N1–N2)', value: `${result.e2eNeutral.toFixed(3)} Ω` },
+            { label: 'End-to-end CPC (E1–E2)', value: `${result.e2eCpc.toFixed(3)} Ω` },
+            { label: 'Live to Neutral (cross-connected)', value: `${result.xLN.toFixed(3)} Ω` },
+            { label: 'Live to CPC (cross-connected)', value: `${result.xLE.toFixed(3)} Ω` },
+            { label: 'Neutral to CPC (cross-connected)', value: `${result.xNE.toFixed(3)} Ω` },
+            ...(cable
+              ? [
+                  { label: 'Cable type', value: cable.label },
+                  { label: 'Ring length', value: `${cableLength} m` },
+                  { label: 'Test temperature', value: `${temperature} °C` },
+                ]
+              : []),
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'R1 (Live)', value: `${result.r1.toFixed(3)} Ω` },
+            { label: 'Rn (Neutral)', value: `${result.rn.toFixed(3)} Ω` },
+            { label: 'R2 (CPC)', value: `${result.r2.toFixed(3)} Ω` },
+            { label: 'R1 + R2 (at midpoint)', value: `${result.r1PlusR2.toFixed(3)} Ω` },
+            {
+              label: 'L–N cross-connection',
+              value: result.lnPass ? 'PASS' : 'FAIL',
+              note: `Measured ${result.xLN.toFixed(3)} Ω, expected up to ${result.expectedLN.toFixed(3)} Ω`,
+            },
+            {
+              label: 'L–CPC cross-connection',
+              value: result.lePass ? 'PASS' : 'FAIL',
+              note: `Measured ${result.xLE.toFixed(3)} Ω, expected up to ${result.expectedLE.toFixed(3)} Ω`,
+            },
+            {
+              label: 'N–CPC cross-connection',
+              value: result.nePass ? 'PASS' : 'FAIL',
+              note: `Measured ${result.xNE.toFixed(3)} Ω, expected up to ${result.expectedNE.toFixed(3)} Ω`,
+            },
+            ...(result.cableComparison
+              ? [
+                  {
+                    label: 'R1 vs cable-expected',
+                    value: result.cableComparison.r1Match ? 'Matches' : 'Discrepancy',
+                    note: `Measured ${result.r1.toFixed(3)} Ω, expected ${result.cableComparison.r1Expected.toFixed(3)} Ω ± ${result.cableComparison.tolerance.toFixed(3)} Ω`,
+                  },
+                  {
+                    label: 'R2 vs cable-expected',
+                    value: result.cableComparison.r2Match ? 'Matches' : 'Discrepancy',
+                    note: `Measured ${result.r2.toFixed(3)} Ω, expected ${result.cableComparison.r2Expected.toFixed(3)} Ω ± ${result.cableComparison.tolerance.toFixed(3)} Ω`,
+                  },
+                ]
+              : []),
+            { label: 'Overall assessment', value: result.overallPass ? 'PASS' : 'ISSUES DETECTED' },
+          ],
+        },
+      ],
+      notes: [
+        'BS 7671 sets no numeric acceptance limit on an end-to-end reading — Regulation 643.2.1 calls for a measurement of resistance, judged by comparison with the calculated conductor resistance.',
+        ...(!result.rnSimilar
+          ? [
+              `End-to-end Live and Neutral differ by ${Math.abs(result.e2eLive - result.e2eNeutral).toFixed(3)} Ω — more than instrument accuracy accounts for. GN3 Ch 2 Reg 2.17 expects them to be of the same order.`,
+            ]
+          : []),
+      ],
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

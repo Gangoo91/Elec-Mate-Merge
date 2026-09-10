@@ -1,4 +1,6 @@
 import { useState, useCallback } from 'react';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { copyToClipboard } from '@/utils/clipboard';
 import { Copy, Check, ChevronDown, Settings } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -251,6 +253,91 @@ const TransformerCalculator = () => {
 
     return steps;
   };
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+    const compliance = getComplianceStatus(result);
+    const verdict: 'pass' | 'fail' | 'warn' =
+      compliance.status === 'compliant' ? 'pass' : compliance.status === 'caution' ? 'warn' : 'fail';
+    const designFaultCurrent = getDesignFaultCurrent(result);
+
+    return {
+      meta: {
+        title: 'Transformer Calculator',
+        subtitle: `${primaryVoltage} V / ${secondaryVoltage} V, ${kvaRating} kVA (${result.transformerType})`,
+        standard: 'BS 7671:2018+A4:2026 — Regs 434.1, 434.5.1, 433.1.1',
+      },
+      headline: [
+        { label: 'Secondary current', value: result.secondaryRatedCurrent.toFixed(1), unit: 'A' },
+        { label: 'Efficiency', value: (result.efficiency * 100).toFixed(1), unit: '%' },
+        {
+          label: 'Fault current',
+          value: (designFaultCurrent / 1000).toFixed(2),
+          unit: 'kA',
+          verdict,
+        },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            { label: 'Primary voltage', value: `${primaryVoltage} V` },
+            { label: 'Secondary voltage', value: `${secondaryVoltage} V` },
+            { label: 'kVA rating', value: `${kvaRating} kVA` },
+            { label: 'Phase', value: phase === 'three' ? 'Three phase' : 'Single phase' },
+            { label: 'Power factor', value: powerFactor },
+            { label: 'Percentage impedance', value: `${percentImpedance}%` },
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'Primary current', value: `${result.primaryRatedCurrent.toFixed(1)} A` },
+            { label: 'Secondary current', value: `${result.secondaryRatedCurrent.toFixed(1)} A` },
+            { label: 'Real power', value: `${result.kw.toFixed(1)} kW` },
+            { label: 'Reactive power', value: `${result.kvar.toFixed(1)} kVAr` },
+            { label: 'Efficiency', value: `${(result.efficiency * 100).toFixed(1)}%` },
+            { label: 'Voltage regulation', value: `${(result.voltageRegulation * 100).toFixed(2)}%` },
+            {
+              label: 'Fault current (transformer only)',
+              value: `${(result.transformerFaultCurrent / 1000).toFixed(2)} kA`,
+            },
+            ...(result.combinedFaultCurrent !== undefined
+              ? [
+                  {
+                    label: 'Fault current (incl. upstream source)',
+                    value: `${(result.combinedFaultCurrent / 1000).toFixed(2)} kA`,
+                  },
+                ]
+              : []),
+          ],
+        },
+        {
+          heading: 'Protection requirements',
+          rows: [
+            {
+              label: 'Recommended MCCB',
+              value: `${getRecommendedMCCB(result.secondaryRatedCurrent)} A`,
+              note: 'Reg 433.1.1(a) — confirm cable Iz before selecting, per Reg 433.1.1(b)',
+            },
+            {
+              label: 'Switchgear breaking capacity',
+              value: getSwitchgearBreakingCapacity(designFaultCurrent),
+              note: 'Reg 434.5.1',
+            },
+            {
+              label: 'Inrush current (typical)',
+              value: `${(result.inrushCurrent / 1000).toFixed(1)} kA for ${result.inrushDuration} s`,
+              note: 'Indicative BS EN 60076 figure — confirm against the actual unit',
+            },
+          ],
+        },
+      ],
+      notes: [...result.warnings, ...result.recommendations],
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

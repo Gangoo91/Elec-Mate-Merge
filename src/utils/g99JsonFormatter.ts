@@ -10,6 +10,7 @@ import { G99FormData, getDefaultG99FormData } from '@/types/g99-commissioning';
 import { supabase } from '@/integrations/supabase/client';
 import type { CertBranding } from '@/utils/certBranding';
 import { ukDate } from '@/utils/certDate';
+import { coverPayloadKeys } from '@/utils/certCoverPayload';
 
 /** Branding the caller resolves via `fetchCertBranding()` — see certBranding.ts. */
 type BrandingOptions = Partial<CertBranding>;
@@ -17,8 +18,7 @@ type BrandingOptions = Partial<CertBranding>;
 /** G99's house colour, used until the electrician sets their own in Settings. */
 export const G99_ACCENT = '#dc2626';
 
-const UUID_REGEX =
-  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 /**
  * Fetch this report's photo evidence and return public URLs (photos: string[]).
@@ -68,10 +68,7 @@ export const fetchG99ReportPhotos = async (reportId: string): Promise<string[]> 
  * Main formatter — transforms G99FormData into the PDF payload.
  * Call this before sending to the generate-g99-commissioning-pdf edge function.
  */
-export const formatG99Json = (
-  formData: Partial<G99FormData>,
-  branding?: BrandingOptions
-) => {
+export const formatG99Json = (formData: Partial<G99FormData>, branding?: BrandingOptions) => {
   // Start with full defaults so every Liquid variable resolves
   const defaults = getDefaultG99FormData();
 
@@ -120,6 +117,11 @@ export const formatG99Json = (
     ...(branding?.companyWebsite && { companyWebsite: branding.companyWebsite }),
     companyAccentColor: branding?.companyAccentColor || G99_ACCENT,
     ...(branding?.registrationSchemeLogo && {
+      // ELE-1671 — cover palette + one scheme lockup per masthead. Cast because this
+      // formatter's `branding` param predates CertBranding and is typed narrower
+      // than what the caller actually passes. `coverPayloadKeys` returns {} when the
+      // palette is genuinely absent, so this can never make a certificate worse.
+      ...coverPayloadKeys(branding as Partial<CertBranding>),
       registrationSchemeLogo: branding.registrationSchemeLogo,
     }),
   };

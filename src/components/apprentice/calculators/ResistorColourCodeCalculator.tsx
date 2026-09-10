@@ -1,4 +1,6 @@
 import { copyToClipboard } from '@/utils/clipboard';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { useState, useCallback } from 'react';
 import { Copy, Check, ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -219,6 +221,46 @@ const ResistorColourCodeCalculator = () => {
   );
   const multiplierColors = Object.entries(colorValues);
   const toleranceColorsList = Object.entries(toleranceColors);
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+    const range = calculateToleranceRange(result.resistance, result.tolerance);
+    return {
+      meta: {
+        title: 'Resistor Colour Code',
+        subtitle: 'Decoded 4-band resistor value',
+      },
+      headline: [
+        { label: 'Resistance', value: result.formattedValue },
+        { label: 'Tolerance', value: result.tolerance },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            { label: 'Band 1 (1st digit)', value: band1 },
+            { label: 'Band 2 (2nd digit)', value: band2 },
+            { label: 'Band 3 (multiplier)', value: band3 },
+            { label: 'Band 4 (tolerance)', value: band4 },
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'Exact value', value: `${result.resistance.toLocaleString()} Ω` },
+            { label: 'Nominal value', value: result.formattedValue },
+            { label: 'Tolerance', value: result.tolerance },
+            {
+              label: 'Actual value range',
+              value: `${formatResistance(range.min)} to ${formatResistance(range.max)}`,
+            },
+          ],
+        },
+      ],
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

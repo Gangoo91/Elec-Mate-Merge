@@ -19,6 +19,7 @@
     "lint:bias": "node scripts/check-answer-bias.mjs",
     "preview": "vite preview",
     "test": "playwright test",
+    "check:cert-cover": "node scripts/check-cert-cover-chain.mjs",
     "check:eicr": "node scripts/check-eicr-correctness.mjs",
     "check:eicr:ci": "node scripts/check-eicr-correctness.mjs --ci",
     "check:cert-mapping": "node scripts/check-cert-mapping.mjs",

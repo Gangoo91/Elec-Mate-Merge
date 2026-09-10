@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { ChevronDown, Info, BookOpen } from 'lucide-react';
 import { starDeltaContent } from './content/star-delta';
@@ -215,6 +217,107 @@ const StarDeltaCalculator = () => {
   };
 
   const labels = getInputLabels();
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+    const isStarToDelta = result.mode === 'star-to-delta';
+
+    const headline: CalcReport['headline'] =
+      impedanceType === 'equal'
+        ? [
+            {
+              label: isStarToDelta ? 'Input (Star)' : 'Input (Delta)',
+              value: `${result.inputZ?.toFixed(2)}`,
+              unit: 'Ω',
+            },
+            {
+              label: isStarToDelta ? 'Output (Delta)' : 'Output (Star)',
+              value: `${result.outputZ?.toFixed(2)}`,
+              unit: 'Ω',
+            },
+          ]
+        : [
+            {
+              label: isStarToDelta ? 'Zab (Delta)' : 'Za (Star)',
+              value: `${result.outputZab?.toFixed(2)}`,
+              unit: 'Ω',
+            },
+          ];
+
+    const resultRows =
+      impedanceType === 'equal'
+        ? [
+            {
+              label: isStarToDelta ? 'Input (Star)' : 'Input (Delta)',
+              value: `${result.inputZ?.toFixed(2)} Ω`,
+            },
+            {
+              label: isStarToDelta ? 'Output (Delta)' : 'Output (Star)',
+              value: `${result.outputZ?.toFixed(2)} Ω`,
+            },
+            { label: 'Line voltage', value: `${result.lineVoltage} V` },
+            { label: 'Line current', value: `${result.lineCurrent?.toFixed(2)} A` },
+            { label: 'Phase voltage (input)', value: `${result.phaseVoltageIn?.toFixed(1)} V` },
+            { label: 'Phase voltage (output)', value: `${result.phaseVoltageOut?.toFixed(1)} V` },
+          ]
+        : [
+            {
+              label: isStarToDelta ? 'Za (Star)' : 'Zab (Delta)',
+              value: `${result.inputZa?.toFixed(2)} Ω`,
+            },
+            {
+              label: isStarToDelta ? 'Zab (Delta)' : 'Za (Star)',
+              value: `${result.outputZab?.toFixed(2)} Ω`,
+            },
+            {
+              label: isStarToDelta ? 'Zb (Star)' : 'Zbc (Delta)',
+              value: `${result.inputZb?.toFixed(2)} Ω`,
+            },
+            {
+              label: isStarToDelta ? 'Zbc (Delta)' : 'Zb (Star)',
+              value: `${result.outputZbc?.toFixed(2)} Ω`,
+            },
+            {
+              label: isStarToDelta ? 'Zc (Star)' : 'Zca (Delta)',
+              value: `${result.inputZc?.toFixed(2)} Ω`,
+            },
+            {
+              label: isStarToDelta ? 'Zca (Delta)' : 'Zc (Star)',
+              value: `${result.outputZca?.toFixed(2)} Ω`,
+            },
+          ];
+
+    return {
+      meta: {
+        title: 'Star-Delta Conversion',
+        subtitle: isStarToDelta
+          ? 'Star (Y) to Delta (Δ) impedance conversion'
+          : 'Delta (Δ) to Star (Y) impedance conversion',
+      },
+      headline,
+      sections: [
+        {
+          heading: 'Inputs',
+          rows:
+            impedanceType === 'equal'
+              ? [
+                  { label: 'Impedance', value: `${result.inputZ?.toFixed(2)} Ω` },
+                  { label: 'Line voltage', value: `${result.lineVoltage} V` },
+                ]
+              : [
+                  { label: isStarToDelta ? 'Za' : 'Zab', value: `${result.inputZa?.toFixed(2)} Ω` },
+                  { label: isStarToDelta ? 'Zb' : 'Zbc', value: `${result.inputZb?.toFixed(2)} Ω` },
+                  { label: isStarToDelta ? 'Zc' : 'Zca', value: `${result.inputZc?.toFixed(2)} Ω` },
+                  { label: 'Line voltage', value: `${result.lineVoltage} V` },
+                ],
+        },
+        { heading: 'Result', rows: resultRows },
+      ],
+      notes: result.notes,
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

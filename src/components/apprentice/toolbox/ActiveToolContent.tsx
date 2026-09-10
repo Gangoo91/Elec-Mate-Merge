@@ -1,4 +1,6 @@
 import { Button } from '@/components/ui/button';
+import { CalcReportProvider } from '@/lib/calculator-report-context';
+import { CalculatorReportAction } from '@/components/calculators/CalculatorReportAction';
 import { ArrowLeft } from 'lucide-react';
 import PowerFactorCalculator from '@/components/apprentice/calculators/PowerFactorCalculator';
 import CableSizingCalculator from '@/components/apprentice/calculators/CableSizingCalculator';
@@ -16,9 +18,23 @@ const ActiveToolContent = ({ activeTool, onClose }: ActiveToolContentProps) => {
   const renderActiveTool = () => {
     switch (activeTool) {
       case 'powerCalculator':
-        return <PowerFactorCalculator />;
+        return (
+          <CalcReportProvider>
+            <div className="mb-3 flex justify-end">
+              <CalculatorReportAction />
+            </div>
+            <PowerFactorCalculator />
+          </CalcReportProvider>
+        );
       case 'cableSizing':
-        return <CableSizingCalculator />;
+        return (
+          <CalcReportProvider>
+            <div className="mb-3 flex justify-end">
+              <CalculatorReportAction />
+            </div>
+            <CableSizingCalculator />
+          </CalcReportProvider>
+        );
       default:
         return (
           <div className="rounded-xl border border-white/[0.10] bg-white/[0.06] p-6 text-center space-y-2">

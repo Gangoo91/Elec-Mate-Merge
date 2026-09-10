@@ -1,5 +1,7 @@
 import { useState, useMemo } from 'react';
 import { copyToClipboard } from '@/utils/clipboard';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { ChevronDown, AlertTriangle, Copy, Check } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
@@ -304,6 +306,67 @@ const MotorStartingCurrentCalculator = () => {
     { value: 'single-layer-tray', label: 'Single layer on perforated tray (item 3)' },
     { value: 'single-layer-ladder', label: 'Single layer on ladder or cleats (item 4)' },
   ];
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+    return {
+      meta: {
+        title: 'Motor Starting Current Calculator',
+        subtitle: 'Starting current, cable sizing and protection coordination',
+      },
+      headline: [
+        { label: 'Full load current', value: result.fullLoadCurrent.toFixed(1), unit: 'A' },
+        { label: 'Starting current', value: result.startingCurrent.toFixed(0), unit: 'A' },
+        {
+          label: 'BS 7671 compliance',
+          value: result.complianceStatus,
+          verdict: result.bs7671Compliant ? 'pass' : 'warn',
+        },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            { label: 'Motor power', value: `${power} kW` },
+            { label: 'Supply voltage', value: `${voltage} V` },
+            { label: 'Phases', value: phases === '3' ? 'Three phase' : 'Single phase' },
+            {
+              label: 'Starting method',
+              value:
+                startingMethodOptions.find((o) => o.value === startingMethod)?.label ||
+                startingMethod,
+            },
+            { label: 'Cable length', value: `${cableLength} m` },
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'Full load current', value: `${result.fullLoadCurrent.toFixed(1)} A` },
+            {
+              label: 'Starting current',
+              value: `${result.startingCurrent.toFixed(0)} A (${result.startingMultiplier.toFixed(1)}×)`,
+            },
+            { label: 'Starting kVA', value: `${result.startingKva.toFixed(1)} kVA` },
+            {
+              label: 'Running voltage drop',
+              value: `${result.voltageDropRunning.toFixed(1)}%`,
+              note: `Table 4Ab limit ${result.voltageDropLimit}%`,
+            },
+            {
+              label: 'Starting voltage drop',
+              value: `${result.voltageDropStarting.toFixed(1)}%`,
+            },
+            { label: 'Recommended cable', value: result.recommendedCableSize },
+            { label: 'Protection', value: result.protectionAnalysis },
+          ],
+        },
+      ],
+      notes: result.warnings.length ? result.warnings : undefined,
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

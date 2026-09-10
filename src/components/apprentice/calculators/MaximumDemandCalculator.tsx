@@ -9,6 +9,8 @@ import {
   Plus,
 } from 'lucide-react';
 import { useState } from 'react';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import {
   CalculatorCard,
   CalculatorDivider,
@@ -271,6 +273,75 @@ const MaximumDemandCalculator = () => {
     setSupplyType(next);
     setSupplyVoltage(next === 'three-phase' ? '400' : '230');
   };
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+    const supplyInfo = calculateSupplyRequirements(result.diversifiedLoad);
+    return {
+      meta: {
+        title: 'Maximum Demand',
+        subtitle: 'Diversified load and supply assessment',
+        standard: 'IET On-Site Guide — Appendix A, Table A2',
+      },
+      headline: [
+        { label: 'Maximum demand', value: result.diversifiedLoad.toFixed(2), unit: 'kW' },
+        { label: 'Diversified current', value: result.diversifiedCurrent.toFixed(1), unit: 'A' },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            {
+              label: 'Installation type',
+              value: location.charAt(0).toUpperCase() + location.slice(1),
+            },
+            {
+              label: 'Supply type',
+              value: supplyType === 'three-phase' ? 'Three phase' : 'Single phase',
+            },
+            { label: 'Voltage', value: `${supplyVoltage} V` },
+            ...loadsWithPower.map((l) => ({
+              label: l.name,
+              value: `${l.power} kW`,
+            })),
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'Connected load', value: `${result.totalInstalledLoad.toFixed(2)} kW` },
+            {
+              label: 'Maximum demand (after diversity)',
+              value: `${result.diversifiedLoad.toFixed(2)} kW`,
+            },
+            { label: 'Diversified current', value: `${result.diversifiedCurrent.toFixed(1)} A` },
+            {
+              label: 'Overall diversity factor',
+              value: `${(result.overallDiversityFactor * 100).toFixed(0)}%`,
+            },
+            {
+              label: 'Total design current (no diversity)',
+              value: `${result.totalDesignCurrent.toFixed(1)} A`,
+              note: 'Reg 536.4.202 — the assembly rating check uses this figure, not the diversified current',
+            },
+            { label: 'Supply assessment', value: supplyInfo.supplyAdequacy },
+            { label: 'Recommended main switch', value: supplyInfo.mainSwitchRecommendation },
+          ],
+        },
+        {
+          heading: 'Load schedule',
+          rows: result.breakdownByType.map((b) => ({
+            label: b.displayName,
+            value: `${b.diversifiedLoad.toFixed(1)} kW`,
+            note: `Installed ${b.installedLoad.toFixed(1)} kW`,
+          })),
+        },
+      ],
+      notes: result.complianceNotes?.length ? result.complianceNotes : undefined,
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

@@ -1,4 +1,6 @@
 import { TRANSPARENT_PIXEL } from '@/utils/resolveSchemeLogo';
+import { brandingFromCompanyProfile } from '@/utils/certBranding';
+import { coverPayloadKeys } from '@/utils/certCoverPayload';
 function formatDateUK(dateStr: string): string {
   if (!dateStr) return '';
   try {
@@ -58,6 +60,9 @@ export function formatLimitationNoticePayload(
     company_address: company.company_address || '',
     company_phone: company.company_phone || data.contractorPhone,
     company_email: company.company_email || data.contractorEmail,
+    // ELE-1671 — this formatter is handed the company_profiles row directly, so
+    // it derives the cover palette itself rather than hopping via formData.
+    ...coverPayloadKeys(brandingFromCompanyProfile(company, '#f59e0b')),
     company_logo: company.logo_url || company.logo_data_url || '',
     scheme_logo:
       company.scheme_logo_data_url || company.registration_scheme_logo || TRANSPARENT_PIXEL,

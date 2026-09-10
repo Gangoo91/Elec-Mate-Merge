@@ -48,6 +48,7 @@ import CertLockBar from '@/components/inspection/CertLockBar';
 import { cn } from '@/lib/utils';
 import { ConflictResolutionDialog } from '@/components/inspection/ConflictResolutionDialog';
 import { scrollToTopForStepChange } from '@/utils/scroll';
+import { coverKeysFromFormData } from '@/utils/certCoverPayload';
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 const REPORT_TYPE = 'pat-testing' as const;
@@ -79,7 +80,7 @@ export default function PATTestingCertificate() {
   const [copiedApplianceData, setCopiedApplianceData] = useState<Partial<Appliance> | null>(null);
 
   // ─── Report sync (replaces all custom sync code) ──────────────────────
-    // Lock + versioning (ELE-1037). enabled:!isLocked below gates autosave.
+  // Lock + versioning (ELE-1037). enabled:!isLocked below gates autosave.
   const {
     isLocked,
     lockedAt,
@@ -94,7 +95,7 @@ export default function PATTestingCertificate() {
     onAmended: (newId) => navigate(`/electrician/inspection-testing/pat-testing/${newId}`),
   });
 
-const {
+  const {
     status: syncStatus,
     saveNow,
     syncNowImmediate,
@@ -194,7 +195,7 @@ const {
       : companyProfile.company_address || '';
 
     return {
-      companyLogo: companyProfile.logo_data_url || companyProfile.logo_url || '',
+      companyLogo: companyProfile.logo_url || companyProfile.logo_data_url || '',
       companyName: companyProfile.company_name || '',
       companyAddress: fullAddress,
       companyPhone: companyProfile.company_phone || '',
@@ -332,6 +333,11 @@ const {
 
       // Prepare PDF data using dedicated formatter
       const pdfData = formatPATTestingJson(formData, {
+        // ELE-1671 — the cover palette rides on the branding object. This merge is
+        // an EXPLICIT FIELD LIST, so without this line the em_* keys are silently
+        // dropped here and the whole cover-branding chain is inert for this
+        // certificate type. Spread, don't enumerate.
+        ...coverKeysFromFormData(branding as unknown as Record<string, unknown>),
         companyLogo: branding?.companyLogo,
         companyName: branding?.companyName,
         companyAddress: branding?.companyAddress,
@@ -497,7 +503,9 @@ const {
       <AlertDialog open={showRecoveryDialog} onOpenChange={setShowRecoveryDialog}>
         <AlertDialogContent className="max-w-[90vw] sm:max-w-md bg-[#111114] border border-white/[0.08] rounded-2xl shadow-2xl">
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-white text-base font-bold">Recover unsaved work?</AlertDialogTitle>
+            <AlertDialogTitle className="text-white text-base font-bold">
+              Recover unsaved work?
+            </AlertDialogTitle>
             <AlertDialogDescription className="text-white text-sm">
               We found an unsaved PAT Testing certificate from{' '}
               {recoveryDraft?.lastModified.toLocaleString()}.
@@ -509,8 +517,18 @@ const {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter className="flex-col gap-2 sm:flex-col sm:space-x-0">
-            <AlertDialogAction onClick={handleRecoverDraft} className="w-full h-11 rounded-xl bg-elec-yellow font-semibold text-black hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation">Recover draft</AlertDialogAction>
-            <AlertDialogCancel onClick={handleDiscardDraft} className="w-full h-11 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white font-medium hover:bg-white/[0.08] active:scale-[0.98] transition-all touch-manipulation mt-0">Start fresh</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleRecoverDraft}
+              className="w-full h-11 rounded-xl bg-elec-yellow font-semibold text-black hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation"
+            >
+              Recover draft
+            </AlertDialogAction>
+            <AlertDialogCancel
+              onClick={handleDiscardDraft}
+              className="w-full h-11 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white font-medium hover:bg-white/[0.08] active:scale-[0.98] transition-all touch-manipulation mt-0"
+            >
+              Start fresh
+            </AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
@@ -557,55 +575,58 @@ const {
       />
 
       <main className="-mx-3 px-4 py-4 pb-36 sm:mx-auto sm:px-4 lg:max-w-[1600px] lg:px-8">
-        <div className={cn(isLocked && 'pointer-events-none select-none opacity-95')} aria-disabled={isLocked || undefined}>
-        <PATTestingFormTabs
+        <div
+          className={cn(isLocked && 'pointer-events-none select-none opacity-95')}
+          aria-disabled={isLocked || undefined}
+        >
+          <PATTestingFormTabs
             reportId={savedReportId}
-          currentTab={tabProps.currentTab}
-          onTabChange={(tab) => {
-            tabProps.setCurrentTab(tab);
-            syncOnTabChange();
-          }}
-          canAccessTab={tabProps.canAccessTab}
-          formData={formData}
-          onUpdate={handleUpdate}
-          tabNavigationProps={{
-            currentTab: tabProps.currentTab,
-            currentTabIndex: tabProps.currentTabIndex,
-            totalTabs: tabProps.tabs.length,
-            canNavigateNext: tabProps.canNavigateNext,
-            canNavigatePrevious: tabProps.canNavigatePrevious,
-            navigateNext: tabProps.navigateNext,
-            navigatePrevious: tabProps.navigatePrevious,
-            getProgressPercentage: tabProps.getProgressPercentage,
-            isCurrentTabComplete: tabProps.isCurrentTabComplete,
-            onGenerateCertificate: handleGenerateCertificate,
-            canGenerateCertificate: !isGenerating,
-            onOpenEmailDialog: () => {
-              if (!savedReportId) {
-                toast.error('Please save the certificate first before emailing.');
-                return;
-              }
-              setShowEmailDialog(true);
-            },
-            whatsApp: {
-              type: 'pat-testing',
-              id: savedReportId || id || 'new',
-              recipientPhone: formData.clientTelephone || '',
-              recipientName: formData.clientName || '',
-              documentLabel: 'PAT Testing Certificate',
-            },
-          }}
-          onGenerateCertificate={handleGenerateCertificate}
-          onCreateInvoice={handleCreateInvoice}
-          onSaveDraft={handleSaveDraft}
-          canGenerateCertificate={!isGenerating}
-          activeApplianceId={activeApplianceId}
-          onOpenAppliance={setActiveApplianceId}
-          onCloseAppliance={() => setActiveApplianceId(null)}
-          copiedApplianceData={copiedApplianceData}
-          onCopyApplianceData={setCopiedApplianceData}
-        />
-      </div>
+            currentTab={tabProps.currentTab}
+            onTabChange={(tab) => {
+              tabProps.setCurrentTab(tab);
+              syncOnTabChange();
+            }}
+            canAccessTab={tabProps.canAccessTab}
+            formData={formData}
+            onUpdate={handleUpdate}
+            tabNavigationProps={{
+              currentTab: tabProps.currentTab,
+              currentTabIndex: tabProps.currentTabIndex,
+              totalTabs: tabProps.tabs.length,
+              canNavigateNext: tabProps.canNavigateNext,
+              canNavigatePrevious: tabProps.canNavigatePrevious,
+              navigateNext: tabProps.navigateNext,
+              navigatePrevious: tabProps.navigatePrevious,
+              getProgressPercentage: tabProps.getProgressPercentage,
+              isCurrentTabComplete: tabProps.isCurrentTabComplete,
+              onGenerateCertificate: handleGenerateCertificate,
+              canGenerateCertificate: !isGenerating,
+              onOpenEmailDialog: () => {
+                if (!savedReportId) {
+                  toast.error('Please save the certificate first before emailing.');
+                  return;
+                }
+                setShowEmailDialog(true);
+              },
+              whatsApp: {
+                type: 'pat-testing',
+                id: savedReportId || id || 'new',
+                recipientPhone: formData.clientTelephone || '',
+                recipientName: formData.clientName || '',
+                documentLabel: 'PAT Testing Certificate',
+              },
+            }}
+            onGenerateCertificate={handleGenerateCertificate}
+            onCreateInvoice={handleCreateInvoice}
+            onSaveDraft={handleSaveDraft}
+            canGenerateCertificate={!isGenerating}
+            activeApplianceId={activeApplianceId}
+            onOpenAppliance={setActiveApplianceId}
+            onCloseAppliance={() => setActiveApplianceId(null)}
+            copiedApplianceData={copiedApplianceData}
+            onCopyApplianceData={setCopiedApplianceData}
+          />
+        </div>
       </main>
 
       {/* Email Certificate Dialog */}

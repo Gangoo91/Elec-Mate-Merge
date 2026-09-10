@@ -143,7 +143,7 @@ export default function ClientHandoutsPage() {
         company_email: cp?.company_email || '',
         company_website: cp?.company_website || '',
         company_address: cp?.company_address || '',
-        company_logo: cp?.logo_data_url || cp?.logo_url || '',
+        company_logo: cp?.logo_url || cp?.logo_data_url || '',
         scheme_logo: cp?.scheme_logo_data_url || '',
         registration_scheme: cp?.registration_scheme || '',
         registration_number: cp?.registration_number || '',

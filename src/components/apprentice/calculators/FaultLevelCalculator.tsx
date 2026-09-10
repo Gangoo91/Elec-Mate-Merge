@@ -1,4 +1,6 @@
 import { copyToClipboard } from '@/utils/clipboard';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { useState, useCallback, useMemo } from 'react';
 import { Copy, Check, ChevronDown, Plus, Trash2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -229,6 +231,58 @@ const FaultLevelCalculator = () => {
     if (!result || result.points.length === 0) return null;
     return result.points.reduce((max, p) => (p.faultCurrent3ph > max.faultCurrent3ph ? p : max));
   }, [result]);
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+    return {
+      meta: {
+        title: 'Fault Level Calculator',
+        subtitle: 'Prospective fault current at each distribution point',
+      },
+      headline: highestFault
+        ? [
+            {
+              label: 'Highest fault current (3-phase)',
+              value: (highestFault.faultCurrent3ph / 1000).toFixed(1),
+              unit: 'kA',
+            },
+            {
+              label: 'Required breaking capacity',
+              value: `${highestFault.breakingCapacity}`,
+              unit: 'kA',
+            },
+          ]
+        : undefined,
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            ...(sourceType === 'transformer'
+              ? [
+                  { label: 'Transformer rating', value: `${transformerKVA} kVA` },
+                  { label: 'Transformer impedance', value: `${transformerImpedance}%` },
+                ]
+              : [{ label: 'Supply Ze', value: `${supplyZe} Ω` }]),
+            { label: 'System voltage (line-line)', value: `${systemVoltage} V` },
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'Source impedance', value: `${result.sourceImpedance.toFixed(4)} Ω` },
+            { label: 'Total impedance', value: `${result.totalImpedance.toFixed(4)} Ω` },
+            ...result.points.map((p) => ({
+              label: p.label,
+              value: `${(p.faultCurrent3ph / 1000).toFixed(2)} kA (3ph) · ${p.faultCurrent1ph.toFixed(0)} A (1ph)`,
+              note: `Z = ${p.cumulativeZ.toFixed(4)} Ω · breaking capacity ${p.breakingCapacity} kA`,
+            })),
+          ],
+        },
+      ],
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

@@ -10,9 +10,10 @@
 import { BESSFormData, getDefaultBESSFormData } from '@/types/bess';
 import { supabase } from '@/integrations/supabase/client';
 import { ukDate } from '@/utils/certDate';
+import { coverPayloadKeys } from '@/utils/certCoverPayload';
+import type { CertBranding } from '@/utils/certBranding';
 
-const UUID_REGEX =
-  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 /**
  * Fetch this report's photo evidence and return public URLs matching
@@ -78,10 +79,7 @@ interface BrandingOptions {
  * Main formatter — transforms BESSFormData into the PDF payload.
  * Call this before sending to the generate-bess-pdf edge function.
  */
-export const formatBESSJson = (
-  formData: Partial<BESSFormData>,
-  branding?: BrandingOptions
-) => {
+export const formatBESSJson = (formData: Partial<BESSFormData>, branding?: BrandingOptions) => {
   // Start with full defaults so every Liquid variable resolves
   const defaults = getDefaultBESSFormData();
 
@@ -147,6 +145,11 @@ export const formatBESSJson = (
 
     // Company branding
     companyLogo: branding?.companyLogo ?? '',
+    // ELE-1671 — cover palette + one scheme lockup per masthead. Cast because this
+    // formatter's `branding` param predates CertBranding and is typed narrower
+    // than what the caller actually passes. `coverPayloadKeys` returns {} when the
+    // palette is genuinely absent, so this can never make a certificate worse.
+    ...coverPayloadKeys(branding as Partial<CertBranding>),
     companyName: branding?.companyName ?? formData.installerCompany ?? '',
     companyAddress: branding?.companyAddress ?? '',
     companyPhone: branding?.companyPhone ?? '',

@@ -77,8 +77,18 @@ const Layout = () => {
         <Header toggleSidebar={toggleSidebar} sidebarCollapsed={desktopCollapsed} />
 
         {/* Main content area with proper spacing for fixed header */}
+        {/*
+          `overflow-x-clip`, not `overflow-x-hidden` — the same trap as the
+          wrapper above, which `main` was missed by.
+
+          `hidden` on one axis forces the other to `auto`, making this a scroll
+          container that never actually scrolls (the document does). Every
+          `sticky` child anchors to it and therefore never sticks: the admin
+          panel's header and tab row slid away with the page and disappeared
+          behind the fixed app header instead of parking under it.
+        */}
         <main
-          className="flex-1 overflow-x-hidden"
+          className="flex-1 overflow-x-clip"
           style={{ paddingTop: 'var(--header-height, 56px)' }}
         >
           {/* iOS Native: Zero gap on mobile, content sits DIRECTLY below header */}

@@ -1,4 +1,6 @@
 import { useMemo, useState } from 'react';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { Link } from 'react-router-dom';
 import {
   LineChart,
@@ -407,6 +409,63 @@ const VoltageDropCalculator = () => {
 
   const upstreamValid = upstreamDrop.trim() === '' || Number(upstreamDrop) >= 0;
   const isValid = Boolean(selectedMvam && current && length && upstreamValid);
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+    return {
+      meta: {
+        title: 'Voltage Drop',
+        subtitle: `${result.atCurrent} A over ${result.atLength} m at ${result.atVoltage} V`,
+        standard: 'BS 7671:2018+A4:2026 — Appendix 4 / Reg 525',
+      },
+      headline: [
+        {
+          label: 'Volt drop',
+          value: result.totalPercentage.toFixed(2),
+          unit: '%',
+          verdict: result.compliant ? 'pass' : 'fail',
+        },
+        { label: 'Voltage at load', value: result.voltageAtLoad.toFixed(1), unit: 'V' },
+      ],
+      sections: [
+        {
+          heading: 'Design inputs',
+          rows: [
+            { label: 'Design current', value: `${result.atCurrent} A` },
+            { label: 'Circuit length', value: `${result.atLength} m` },
+            { label: 'System voltage', value: `${result.atVoltage} V` },
+            { label: 'Cable mV/A/m', value: `${result.mvam}` },
+            {
+              label: 'Supply type',
+              value: result.isPrivate ? 'Private supply' : 'Public distribution',
+            },
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'Volt drop on this circuit', value: `${result.voltageDrop.toFixed(2)} V (${result.percentage.toFixed(2)}%)` },
+            ...(result.upstreamPct
+              ? [{ label: 'Upstream drop already present', value: `${result.upstreamPct.toFixed(2)}%` }]
+              : []),
+            { label: 'Total volt drop', value: `${result.totalPercentage.toFixed(2)}%` },
+            {
+              label: 'Permitted limit',
+              value: `${result.circuitLimit}%`,
+              note: result.relaxation ? `Installation limit ${result.installationLimit}%` : undefined,
+            },
+            { label: 'Voltage at the load', value: `${result.voltageAtLoad.toFixed(1)} V` },
+            { label: 'Maximum compliant run length', value: `${result.maxLength.toFixed(1)} m` },
+          ],
+        },
+      ],
+      notes: [
+        'Volt drop limits are those of BS 7671 Reg 525 for the circuit type stated. mV/A/m values are taken from Appendix 4 for the cable and installation method selected.',
+      ],
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

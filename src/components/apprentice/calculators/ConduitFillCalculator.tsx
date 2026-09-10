@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { Calculator, Info, AlertTriangle, CheckCircle2, BookOpen, ChevronDown } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
@@ -227,6 +229,69 @@ const ConduitFillCalculator = () => {
   }));
 
   const selectedCable = cableSize ? getCableCSA('singles-pvc', parseFloat(cableSize)) : undefined;
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+    return {
+      meta: {
+        title: 'Conduit Fill',
+        subtitle: 'Space-factor check with grouping to BS 7671 Table 4C1',
+      },
+      headline: [
+        {
+          label: 'Fill percentage',
+          value: `${result.fillPercentage}`,
+          unit: '%',
+          verdict: result.suitable ? 'pass' : 'fail',
+        },
+        { label: 'Grouping factor (Cg)', value: result.groupingFactor.toFixed(2) },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            { label: 'Conduit material', value: conduitMaterial === 'pvc' ? 'PVC' : 'Steel' },
+            { label: 'Conduit size', value: `${conduitSize} mm` },
+            { label: 'Cable size', value: `${cableSize} mm²` },
+            { label: 'Number of cables', value: cableQuantity },
+            { label: 'Circuits in conduit', value: circuits },
+            { label: 'Fill target (space factor)', value: `${fillTarget}%` },
+            { label: 'Run length', value: runLength ? `${runLength} m` : 'Not entered' },
+            { label: '90° bends', value: bendCount },
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            {
+              label: 'Fill percentage',
+              value: `${result.fillPercentage}%`,
+              note: `Space factor: ${result.spaceFactor}%`,
+            },
+            { label: 'Maximum cables at this space factor', value: `${result.maxCables}` },
+            {
+              label: 'Grouping factor (Cg)',
+              value: result.groupingFactor.toFixed(2),
+              note: 'Table 4C1, bunched',
+            },
+            { label: 'Typical bend radius', value: `${result.bendRadius} mm` },
+            ...(result.pullTension > 0
+              ? [
+                  {
+                    label: 'Estimated pulling tension',
+                    value: `${result.pullTension} N`,
+                    note: 'Indicative only — not a BS 7671 quantity',
+                  },
+                ]
+              : []),
+          ],
+        },
+      ],
+      notes: result.warnings.length ? result.warnings : undefined,
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

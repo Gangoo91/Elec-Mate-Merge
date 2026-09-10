@@ -1,4 +1,6 @@
 import { useState, useMemo } from 'react';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import {
   Zap,
   Info,
@@ -198,6 +200,75 @@ const ZsValuesCalculator = () => {
       variant: success ? 'success' : 'destructive',
     });
   };
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+
+    return {
+      meta: {
+        title: 'Maximum Zs Values Calculator',
+        subtitle: 'Maximum earth fault loop impedance lookup against a measured circuit Zs',
+        standard: `BS 7671:2018+A4:2026 — ${result.tableRef}`,
+      },
+      headline: [
+        { label: 'Maximum Zs', value: result.maxZs.toFixed(2), unit: 'Ω' },
+        { label: '80% test limit', value: result.testLimit.toFixed(2), unit: 'Ω' },
+        ...(result.calculatedZs !== null
+          ? [
+              {
+                label: 'Circuit Zs',
+                value: result.calculatedZs.toFixed(2),
+                unit: 'Ω',
+                verdict: (result.passesTest ? 'pass' : 'fail') as 'pass' | 'fail',
+              },
+            ]
+          : []),
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            { label: 'Protection device', value: result.deviceDescription },
+            { label: 'Disconnection time', value: `${disconnectionTime} s` },
+            ...(ze ? [{ label: 'Ze (external)', value: `${ze} Ω` }] : []),
+            ...(r1r2 ? [{ label: 'R1+R2', value: `${r1r2} Ω` }] : []),
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'Maximum Zs', value: `${result.maxZs.toFixed(2)} Ω`, note: result.tableRef },
+            { label: '80% test limit', value: `${result.testLimit.toFixed(2)} Ω` },
+            ...(result.calculatedZs !== null
+              ? [
+                  { label: 'Circuit Zs (Ze + R1+R2)', value: `${result.calculatedZs.toFixed(2)} Ω` },
+                  {
+                    label: 'Assessment',
+                    value: result.passesTest ? 'PASS — within 80% test limit' : 'FAIL — exceeds 80% test limit',
+                  },
+                  ...(result.headroom !== null
+                    ? [
+                        {
+                          label: 'Headroom',
+                          value:
+                            result.headroom >= 0
+                              ? `${result.headroom.toFixed(1)}% below limit`
+                              : `${Math.abs(result.headroom).toFixed(1)}% over limit`,
+                        },
+                      ]
+                    : []),
+                ]
+              : []),
+          ],
+        },
+      ],
+      notes: [
+        'BS 7671 tabulated values are at operating temperature; the 80% figure is the customary allowance for conductor temperature at the time of test.',
+      ],
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

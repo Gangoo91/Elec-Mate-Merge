@@ -1,4 +1,6 @@
 import { useState, useCallback } from 'react';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { copyToClipboard } from '@/utils/clipboard';
 import { Copy, Check, ChevronDown, AlertTriangle, CheckCircle2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -399,6 +401,86 @@ const WireGaugeCalculator = () => {
   }));
 
   const hasVoltageDropData = result && parseFloat(length) > 0 && parseFloat(loadCurrent) > 0;
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+    return {
+      meta: {
+        title: 'Wire Gauge Calculator',
+        subtitle: 'AWG/metric conversion with voltage drop analysis',
+        standard: 'BS 7671 — BS 7671 — Appendix 4',
+      },
+      headline: [
+        { label: 'Wire size', value: `AWG ${result.wire.awg}`, unit: `${result.wire.metric} mm²` },
+        {
+          label: 'Effective current capacity',
+          value: formatNumber(result.analysis.effectiveAmpacity, 0),
+          unit: 'A',
+          verdict: result.analysis.adequateCapacity ? 'pass' : 'fail',
+        },
+        ...(hasVoltageDropData
+          ? [
+              {
+                label: 'Voltage drop',
+                value: formatNumber(result.analysis.voltageDropPercentage, 1),
+                unit: '%',
+                verdict: (result.analysis.suitableForLength ? 'pass' : 'fail') as 'pass' | 'fail',
+              },
+            ]
+          : []),
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            {
+              label: 'Wire size',
+              value: inputMode === 'awg' ? `AWG ${awgSize}` : `${metricSize} mm²`,
+            },
+            ...(length ? [{ label: 'Cable length', value: `${length} m` }] : []),
+            ...(loadCurrent ? [{ label: 'Load current', value: `${loadCurrent} A` }] : []),
+            { label: 'System voltage', value: `${systemVoltage} V` },
+            { label: 'Installation method', value: installationType },
+            { label: 'Ambient temperature', value: `${ambientTemp} °C` },
+            { label: 'Cables in group', value: cableGrouping },
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'Wire', value: `AWG ${result.wire.awg} (${result.wire.metric} mm²)` },
+            { label: 'Diameter', value: `${formatNumber(result.wire.diameter, 2)} mm` },
+            { label: 'Resistance', value: `${formatNumber(result.wire.resistance, 1)} mΩ/m` },
+            { label: 'Temperature derating', value: `${formatNumber(result.analysis.temperatureDerating * 100)} %` },
+            { label: 'Grouping factor', value: formatNumber(result.analysis.groupingFactor, 2) },
+            { label: 'Effective current capacity', value: `${formatNumber(result.analysis.effectiveAmpacity, 0)} A` },
+            ...(hasVoltageDropData
+              ? [
+                  { label: 'Voltage drop', value: `${formatNumber(result.analysis.voltageDrop, 1)} V (${formatNumber(result.analysis.voltageDropPercentage, 1)}%)` },
+                  {
+                    label: 'Power loss',
+                    value:
+                      result.analysis.powerLoss >= 1000
+                        ? `${formatNumber(result.analysis.powerLoss / 1000, 1)} kW`
+                        : `${formatNumber(result.analysis.powerLoss, 0)} W`,
+                  },
+                  { label: 'Efficiency', value: `${formatNumber(result.analysis.efficiency, 1)} %` },
+                  {
+                    label: 'Assessment',
+                    value: result.analysis.suitableForLength
+                      ? 'Meets BS 7671 voltage drop requirements (≤5%)'
+                      : 'Exceeds BS 7671 voltage drop limits',
+                  },
+                ]
+              : []),
+          ],
+        },
+      ],
+      notes: result.warnings.length ? result.warnings : undefined,
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

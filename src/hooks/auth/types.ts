@@ -15,6 +15,13 @@ export type ProfileType = {
   subscribed?: boolean;
   subscription_tier?: string | null;
   subscription_end?: string | null;
+  /**
+   * Which system is billing this account — written by the Stripe webhook and
+   * the RevenueCat webhook. It was missing here while `Subscriptions.tsx` read
+   * it to decide where to send someone who wants to cancel, so that read was a
+   * standing type error and the value was implicitly `any`.
+   */
+  subscription_source?: 'stripe' | 'revenuecat' | string | null;
   free_access_granted?: boolean;
   onboarding_completed?: boolean;
   ecs_card_type?: string;

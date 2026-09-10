@@ -1,4 +1,6 @@
 import { useState, useCallback, useMemo } from 'react';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { copyToClipboard } from '@/utils/clipboard';
 import { Copy, Check, ChevronDown, AlertTriangle, Settings } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -243,6 +245,76 @@ export function GridTieInverterCalculator() {
     toast({ title: 'Copied to clipboard' });
     setTimeout(() => setCopied(false), 2000);
   };
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+    return {
+      meta: {
+        title: 'Grid-Tie Inverter Calculator',
+        subtitle: `${result.dcArrayPower} kWp array on a ${result.inverterAcPower} kW inverter`,
+        standard: 'BS 7671:2018+A4:2026 — Section 712 · G98/G99',
+      },
+      headline: [
+        { label: 'Annual generation', value: result.yearlyGeneration.toFixed(0), unit: 'kWh' },
+        {
+          label: 'Annual value (estimate)',
+          value: `£${result.totalAnnualValue.toFixed(2)}`,
+        },
+        {
+          label: 'Grid connection',
+          value: result.isG98 ? 'G98' : 'G99',
+          verdict: result.isG98 ? 'pass' : 'warn',
+        },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            { label: 'DC array size', value: `${result.dcArrayPower} kWp` },
+            { label: 'Inverter', value: `${result.inverterAcPower} kW` },
+            { label: 'Inverter efficiency', value: `${(result.inverterEfficiency * 100).toFixed(1)}%` },
+            { label: 'Peak sun hours', value: `${result.psh} h/day` },
+            { label: 'Self-consumption', value: `${(result.selfConsumptionPct * 100).toFixed(0)}%` },
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'DC:AC ratio', value: result.dcAcRatio.toFixed(2) },
+            { label: 'Daily generation', value: `${result.dailyGeneration.toFixed(1)} kWh` },
+            { label: 'Annual generation', value: `${result.yearlyGeneration.toFixed(0)} kWh` },
+            {
+              label: 'Bill savings (estimate)',
+              value: `£${result.billSavings.toFixed(2)}`,
+            },
+            {
+              label: 'Export income (estimate)',
+              value: `£${result.exportIncome.toFixed(2)}`,
+            },
+            {
+              label: 'Total annual value (estimate)',
+              value: `£${result.totalAnnualValue.toFixed(2)}`,
+            },
+            ...(result.paybackYears > 0
+              ? [{ label: 'Payback period (estimate)', value: `${result.paybackYears.toFixed(1)} years` }]
+              : []),
+            { label: 'AC current', value: `${result.acCurrent.toFixed(1)} A` },
+            { label: 'Recommended MCB', value: `${result.recommendedMcb} A` },
+          ],
+        },
+      ],
+      notes: [
+        'Financial figures are estimates based on the retail and SEG rates entered — actual returns depend on the tariff agreed with the supplier and are not guaranteed.',
+        ...(result.clippingLoss > 0
+          ? [
+              `Clipping loss of ${result.clippingLoss.toFixed(0)} kWh/yr — DC:AC ratio of ${result.dcAcRatio.toFixed(2)} causes inverter saturation during peak irradiance.`,
+            ]
+          : []),
+      ],
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

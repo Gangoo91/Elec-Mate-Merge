@@ -77,6 +77,121 @@ type RcChurn = {
   }>;
 };
 
+/**
+ * All-time store revenue, from RevenueCat's revenue chart.
+ *
+ * `/metrics/overview` exposes a `revenue` metric, but it is a rolling 28-day
+ * window — reporting it as "gross through the business" would have been wrong
+ * by an order of magnitude. The charts endpoint takes an explicit date range,
+ * so this asks for monthly buckets from before the first ever store sale and
+ * sums them.
+ *
+ * Returns null rather than 0 on any failure: a missing number must not render
+ * as "we have taken nothing".
+ */
+async function fetchRcGross(
+  rcApiKey: string
+): Promise<{
+  allTime: number;
+  monthly: Array<{ month: string; amount: number }>;
+  daily: Array<{ day: string; amount: number }>;
+  measure: string | null;
+} | null> {
+  try {
+    const now = new Date();
+    const iso = (d: Date) => d.toISOString().slice(0, 10);
+
+    /*
+      resolution 2 = month, resolution 0 = day (same codes the churn chart uses).
+      Monthly runs from before the first store sale for the all-time total;
+      daily covers the window the revenue page plots.
+    */
+    const fetchChart = async (resolution: '0' | '2', start: string) => {
+      const url =
+        'https://api.revenuecat.com/v2/projects/proj5dd5e597/charts/revenue' +
+        `?resolution=${resolution}&start_date=${start}&end_date=${iso(now)}&currency=GBP`;
+      const r = await fetch(url, { headers: { Authorization: `Bearer ${rcApiKey}` } });
+      if (!r.ok) {
+        console.warn('RevenueCat revenue chart returned', r.status, await r.text());
+        return null;
+      }
+      return r.json();
+    };
+
+    const dailyStart = iso(new Date(now.getTime() - 120 * 86400 * 1000));
+    const [monthlyJson, dailyJson] = await Promise.all([
+      fetchChart('2', '2024-01-01'),
+      fetchChart('0', dailyStart),
+    ]);
+    if (!monthlyJson) return null;
+    const json = monthlyJson as {
+      // RevenueCat labels measures with `display_name`, and the currency unit is
+      // "$" regardless of the currency requested — there is no `id` or `name`.
+      measures?: Array<{ display_name?: string; unit?: string; description?: string }>;
+      values?: Array<{ cohort: number; measure: number; value: number }>;
+    };
+    if (!Array.isArray(json.values) || json.values.length === 0) return null;
+
+    /*
+      The chart returns EVERY measure interleaved — three rows per month here,
+      one of which is a transaction COUNT. Summing the lot gave £4,599.77
+      against a true £4,231.77, because 368 transactions were being added to the
+      money. `measure` is an index into `measures`, so the revenue series has to
+      be selected by name rather than assumed to be the only one present.
+    */
+    const measures = json.measures ?? [];
+    const revenueIdx = measures.findIndex(
+      (m) => (m.display_name ?? '').toLowerCase() === 'revenue' && m.unit === '$'
+    );
+    if (revenueIdx < 0) {
+      console.warn(
+        'RevenueCat revenue chart: no Revenue measure in',
+        JSON.stringify(measures.map((m) => m.display_name))
+      );
+      return null;
+    }
+
+    const byMonth = new Map<string, number>();
+    for (const v of json.values) {
+      if (v.measure !== revenueIdx) continue;
+      const month = new Date(v.cohort * 1000).toISOString().slice(0, 7);
+      byMonth.set(month, (byMonth.get(month) ?? 0) + (v.value || 0));
+    }
+    const monthly = [...byMonth.entries()]
+      .map(([month, amount]) => ({ month, amount: Math.round(amount * 100) / 100 }))
+      .sort((a, b) => a.month.localeCompare(b.month));
+
+    // The daily series carries its own `measures`, so resolve the revenue index
+    // against that response rather than reusing the monthly one.
+    const dj = dailyJson as typeof json | null;
+    const dailyMeasures = dj?.measures ?? [];
+    const dailyIdx = dailyMeasures.findIndex(
+      (m) => (m.display_name ?? '').toLowerCase() === 'revenue' && m.unit === '$'
+    );
+    const byDay = new Map<string, number>();
+    if (dj?.values && dailyIdx >= 0) {
+      for (const v of dj.values) {
+        if (v.measure !== dailyIdx) continue;
+        const day = new Date(v.cohort * 1000).toISOString().slice(0, 10);
+        byDay.set(day, (byDay.get(day) ?? 0) + (v.value || 0));
+      }
+    }
+    const daily = [...byDay.entries()]
+      .map(([day, amount]) => ({ day, amount: Math.round(amount * 100) / 100 }))
+      .sort((a, b) => a.day.localeCompare(b.day));
+
+    return {
+      allTime: Math.round(monthly.reduce((t, m) => t + m.amount, 0) * 100) / 100,
+      monthly,
+      daily,
+      measure: measures[revenueIdx]?.display_name ?? null,
+    };
+  } catch (e) {
+    console.warn('RevenueCat revenue chart failed (non-fatal):', e);
+    return null;
+  }
+}
+
 const RC_CHURN_CACHE_KEY = 'revenuecat_churn';
 const RC_CHURN_FRESH_MS = 6 * 60 * 60 * 1000;
 
@@ -469,6 +584,9 @@ Deno.serve(async (req) => {
     // RevenueCat MRR/revenue — cached, kicked off before the DB work
     const rcMetrics = await rcMetricsPromise;
     const rcChurn = await rcChurnPromise;
+    // All-time store gross. Non-fatal: null renders as "unavailable", never £0.
+    const rcKey = Deno.env.get('REVENUECAT_API_V2_KEY');
+    const rcGross = rcKey ? await fetchRcGross(rcKey) : null;
 
     // Today's row of the overview's history line — the store half. The
     // Stripe function writes the other half of the same row.
@@ -496,6 +614,7 @@ Deno.serve(async (req) => {
         tiersBySource,
         totalSubscribers: Object.values(bySource).reduce((a, b) => a + b, 0),
         revenuecat: rcMetrics,
+        gross: rcGross,
         churn: rcChurn,
         trialUsers,
         paidUsers,

@@ -7,6 +7,8 @@
 
 import { useCallback, useMemo, useEffect, useState } from 'react';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
+import { brandingFromCompanyProfile } from '@/utils/certBranding';
+import { coverPayloadKeys } from '@/utils/certCoverPayload';
 
 // ============================================================================
 // Types
@@ -170,7 +172,20 @@ export function useMinorWorksSmartForm() {
       : companyProfile.company_address || '';
 
     return {
-      companyLogo: companyProfile.logo_data_url || companyProfile.logo_url || '',
+      // 🔴 Do NOT re-derive branding by hand here.
+      //
+      // This block used to build its own copy of what `brandingFromCompanyProfile`
+      // already does, and it drifted: when the logo order was corrected for
+      // ELE-1668 (hosted URL first, because the data URL is downscaled to 320px),
+      // the fix landed in certBranding and NOT in these five hooks — so EV,
+      // emergency lighting, BESS, lightning protection and minor works kept
+      // shipping blurred logos for weeks after the bug was "fixed".
+      //
+      // Spreading the shared reader means there is one implementation to correct,
+      // and it brings the ELE-1671 cover palette along for free.
+      ...brandingFromCompanyProfile(companyProfile, '#d69e2e'),
+      ...coverPayloadKeys(brandingFromCompanyProfile(companyProfile, '#d69e2e')),
+      companyLogo: companyProfile.logo_url || companyProfile.logo_data_url || '',
       companyName: companyProfile.company_name || '',
       companyAddress: fullAddress,
       companyPhone: companyProfile.company_phone || '',

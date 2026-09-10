@@ -4,6 +4,8 @@
  * smoke-co-alarm / testing-only / minor-works templates).
  */
 import { TRANSPARENT_PIXEL } from '@/utils/resolveSchemeLogo';
+import { brandingFromCompanyProfile } from '@/utils/certBranding';
+import { coverPayloadKeys } from '@/utils/certCoverPayload';
 
 /** Disconnection's house colour, used until the electrician sets their own. */
 export const DISCONNECTION_ACCENT = '#f59e0b';
@@ -86,6 +88,9 @@ export function formatDisconnectionCertificatePayload(
     companyAddress: company.company_address || '',
     companyPhone: company.company_phone || data.contractorPhone || '',
     companyEmail: company.company_email || data.contractorEmail || '',
+    // ELE-1671 — this formatter is handed the company_profiles row directly, so
+    // it derives the cover palette itself rather than hopping via formData.
+    ...coverPayloadKeys(brandingFromCompanyProfile(company, '#f59e0b')),
     companyLogo: company.logo_url || company.logo_data_url || '',
     schemeLogo:
       company.scheme_logo_data_url || company.registration_scheme_logo || TRANSPARENT_PIXEL,

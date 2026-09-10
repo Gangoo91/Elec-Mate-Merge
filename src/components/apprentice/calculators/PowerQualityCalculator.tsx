@@ -1,4 +1,6 @@
 import { useState, useCallback } from 'react';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { copyToClipboard } from '@/utils/clipboard';
 import { Copy, Check, ChevronDown, CheckCircle, XCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -197,6 +199,81 @@ const PowerQualityCalculator = () => {
     if (num === 3) return '3rd';
     return `${num}th`;
   };
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+    return {
+      meta: {
+        title: 'Power Quality & THD',
+        subtitle: 'Harmonic analysis for BS 7671 18th Edition compliance',
+        standard: 'BS 7671 (18th Edition) · IEEE 519 · G5/5',
+      },
+      headline: [
+        {
+          label: 'THDi (current)',
+          value: result.thdiCurrent.toFixed(2),
+          unit: '%',
+          verdict:
+            result.complianceStatus === 'compliant'
+              ? 'pass'
+              : result.complianceStatus === 'borderline'
+                ? 'warn'
+                : 'fail',
+        },
+        { label: 'K-Factor', value: result.kFactor.toFixed(1) },
+        { label: 'Power quality rating', value: result.powerQualityRating.toUpperCase() },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            {
+              label: 'System type',
+              value: systemType === 'three-phase' ? 'Three phase' : 'Single phase',
+            },
+            {
+              label: 'Load type',
+              value:
+                loadType === 'non-linear' ? 'Non-linear' : loadType === 'linear' ? 'Linear' : 'Mixed',
+            },
+            { label: 'Fundamental current (I₁)', value: `${fundamentalCurrent} A` },
+            { label: 'Fundamental voltage (V₁)', value: `${fundamentalVoltage} V` },
+            { label: 'Frequency', value: `${frequency} Hz` },
+            { label: 'Displacement PF', value: displacementPF },
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            {
+              label: 'THDi (current)',
+              value: `${result.thdiCurrent.toFixed(2)}%`,
+              note: 'IEEE 519 limit: 5%',
+            },
+            { label: 'RMS current', value: `${result.rmsCurrentTotal.toFixed(2)} A` },
+            { label: 'Crest factor', value: result.crestFactorCurrent.toFixed(2) },
+            { label: 'K-Factor', value: result.kFactor.toFixed(1) },
+            { label: 'True power factor', value: result.truePowerFactor.toFixed(2) },
+            { label: 'Transformer derating', value: `${result.transformerDerating}%` },
+            ...(systemType === 'three-phase'
+              ? [
+                  {
+                    label: 'Neutral current (triplen harmonics)',
+                    value: `${result.neutralCurrent.toFixed(2)} A`,
+                  },
+                ]
+              : []),
+            { label: 'BS 7671', value: result.bs7671Compliance ? 'Compliant' : 'Non-compliant' },
+            { label: 'IEEE 519', value: result.ieeeCompliance ? 'Compliant' : 'Non-compliant' },
+            { label: 'G5/5 Code', value: result.gCode5Compliance ? 'Compliant' : 'Non-compliant' },
+          ],
+        },
+      ],
+      notes: result.practicalGuidance?.length ? result.practicalGuidance : undefined,
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

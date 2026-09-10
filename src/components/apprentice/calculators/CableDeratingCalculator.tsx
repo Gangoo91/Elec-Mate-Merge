@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import {
   Cable,
   Info,
@@ -528,6 +530,88 @@ const CableDeratingCalculator = () => {
   const hasValidInputs = () => {
     return !!baseRating;
   };
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+    const cableTypeLabel = cableTypes.find((t) => t.value === cableType)?.label ?? cableType;
+    const installMethodLabel =
+      installationMethods.find((m) => m.value === installationMethod)?.label ?? installationMethod;
+    const thermalInsulationLabel =
+      thermalInsulationTypes.find((t) => t.value === thermalInsulation)?.label ?? thermalInsulation;
+    const deviceTypeLabel = deviceTypes.find((d) => d.value === deviceType)?.label ?? deviceType;
+    const isBuried = installationMethod.includes('d');
+
+    return {
+      meta: {
+        title: 'Cable Derating Calculator',
+        subtitle: 'Derated current-carrying capacity for the stated installation conditions',
+        standard: 'BS 7671:2018+A4:2026 — Appendix 4',
+      },
+      headline: [
+        {
+          label: 'Derated cable capacity (Iz)',
+          value: result.finalRating.toFixed(1),
+          unit: 'A',
+          ...(result.compliance
+            ? { verdict: result.compliance.overallCompliant ? ('pass' as const) : ('fail' as const) }
+            : {}),
+        },
+        { label: 'Total derating', value: `-${result.deratingPercentage.toFixed(1)}`, unit: '%' },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            { label: 'Base current rating (It)', value: `${baseRating} A` },
+            { label: 'Cable type', value: cableTypeLabel },
+            { label: 'Installation method', value: installMethodLabel },
+            { label: 'Ambient temperature', value: `${ambientTemp} °C` },
+            { label: 'Number of circuits', value: numberOfCables },
+            { label: 'Thermal insulation', value: thermalInsulationLabel },
+            ...(isBuried
+              ? [
+                  { label: 'Cable-to-cable clearance', value: burialClearance },
+                  { label: 'Soil thermal resistivity', value: `${soilThermalResistivity} K·m/W` },
+                ]
+              : []),
+            { label: 'Protective device type', value: deviceTypeLabel },
+            ...(designCurrent ? [{ label: 'Design current (Ib)', value: `${designCurrent} A` }] : []),
+            { label: 'Device rating (In)', value: `${deviceRating} A` },
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'Temperature factor (Ca)', value: result.temperatureFactor.toFixed(3) },
+            { label: 'Grouping factor (Cg)', value: result.groupingFactor.toFixed(3) },
+            { label: 'Thermal insulation factor (Ci)', value: result.thermalInsulationFactor.toFixed(3) },
+            { label: 'Soil factor (Cs)', value: result.soilFactor.toFixed(3) },
+            ...(result.deviceFactor < 1
+              ? [{ label: 'BS 3036 fuse factor (Cf)', value: result.deviceFactor.toFixed(3) }]
+              : []),
+            ...(result.buriedFactor < 1
+              ? [{ label: 'Buried factor (Cc)', value: result.buriedFactor.toFixed(3) }]
+              : []),
+            { label: 'Derated capacity (Iz)', value: `${result.finalRating.toFixed(1)} A` },
+            ...(result.compliance
+              ? [
+                  { label: 'Design current (Ib)', value: `${result.compliance.Ib} A` },
+                  { label: 'Device rating (In)', value: `${result.compliance.In} A` },
+                  {
+                    label: 'Ib ≤ In ≤ Iz',
+                    value: result.compliance.overallCompliant ? 'COMPLIANT' : 'NON-COMPLIANT',
+                  },
+                  { label: 'Safety margin', value: `${result.compliance.safetyMargin.toFixed(1)} %` },
+                ]
+              : []),
+          ],
+        },
+      ],
+      notes: result.warnings.length ? result.warnings : undefined,
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

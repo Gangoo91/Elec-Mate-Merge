@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react';
 import { copyToClipboard } from '@/utils/clipboard';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import {
   Wind,
   Copy,
@@ -438,6 +440,80 @@ export function WindPowerCalculator() {
     exportRate &&
     annualConsumption &&
     selfConsumptionRate;
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+    const preset = getSelectedTurbine();
+    return {
+      meta: {
+        title: 'Wind Power Calculator',
+        subtitle: 'Estimated annual energy production and financial return',
+        standard: 'G98/G99',
+      },
+      headline: [
+        {
+          label: 'Net annual energy',
+          value: result.netAEP.toLocaleString(undefined, { maximumFractionDigits: 0 }),
+          unit: 'kWh',
+        },
+        { label: 'Capacity factor', value: result.capacityFactor.toFixed(1), unit: '%' },
+        { label: 'Simple payback', value: result.paybackPeriod.toFixed(1), unit: 'years' },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            { label: 'Turbine', value: preset?.label ?? turbineModel },
+            { label: 'Hub height', value: `${hubHeight} m` },
+            { label: 'Wind speed (at 10 m)', value: `${averageWindSpeed} mph` },
+            {
+              label: 'Terrain',
+              value: terrainTypes.find((t) => t.value === terrain)?.label || terrain,
+            },
+            {
+              label: 'Site altitude',
+              value: altitudeBands.find((a) => a.value === altitude)?.label || `${altitude} m`,
+            },
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            {
+              label: 'Wind speed at hub',
+              value: `${(result.windSpeedAtHub * 2.23694).toFixed(1)} mph`,
+            },
+            { label: 'Gross annual energy', value: `${result.grossAEP.toFixed(0)} kWh` },
+            { label: 'Net annual energy', value: `${result.netAEP.toFixed(0)} kWh` },
+            { label: 'Average power', value: `${result.averagePower.toFixed(2)} kW` },
+            { label: 'Annual value', value: `£${result.yearlyValue.toFixed(0)}` },
+            {
+              label: 'Self-consumed',
+              value: `${result.selfConsumption.toLocaleString(undefined, { maximumFractionDigits: 0 })} kWh`,
+            },
+            {
+              label: 'Grid export',
+              value: `${result.gridExport.toLocaleString(undefined, { maximumFractionDigits: 0 })} kWh`,
+            },
+            { label: 'System cost', value: `£${result.costEstimate.totalCost.toLocaleString()}` },
+            { label: 'Simple payback', value: `${result.paybackPeriod.toFixed(1)} years` },
+            { label: 'CO₂ savings', value: `${result.co2Savings.toFixed(0)} kg/yr` },
+            {
+              label: 'Planning',
+              value: result.planningEligibility.permittedDevelopment
+                ? 'May qualify for Permitted Development'
+                : 'Full planning permission required',
+            },
+          ],
+        },
+      ],
+      notes: [
+        'NOABL database typically overestimates wind speeds by ~23%. 12+ months of on-site anemometer data is strongly recommended.',
+      ],
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

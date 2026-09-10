@@ -28,6 +28,7 @@ export interface AdminInboxMessage {
   read_at: string | null;
   created_at: string;
   archived_at: string | null;
+  deleted_at?: string | null;
   sender: InboxProfile | null;
   recipient: InboxProfile | null;
 }
@@ -101,6 +102,7 @@ export function useAdminInbox(enabled = true, view: 'inbox' | 'archived' = 'inbo
           read_at,
           created_at,
           archived_at,
+          deleted_at,
           sender:profiles!admin_messages_sender_id_fkey(id, full_name, avatar_url, role, admin_role),
           recipient:profiles!admin_messages_recipient_id_fkey(id, full_name, avatar_url, role, admin_role)
         `
@@ -114,9 +116,23 @@ export function useAdminInbox(enabled = true, view: 'inbox' | 'archived' = 'inbo
 
       const conversationMap = new Map<string, AdminConversation>();
 
-      const rows = ((data as AdminInboxMessage[] | null) ?? []).filter((m) =>
-        view === 'archived' ? !!m.archived_at : !m.archived_at
-      );
+      /*
+        Deleted rows never surface, in either view.
+
+        This hook feeds the admin inbox page, the header dropdown and the
+        employer chat view, so filtering here is what makes a delete mean the
+        same thing everywhere rather than only on the screen it was pressed.
+      */
+      /*
+        `as unknown as` because `deleted_at` is not in the generated Supabase
+        types yet — the column is live, `src/integrations/supabase/types.ts` is
+        stale. Same reason `as never` appears on the RPC calls elsewhere in
+        hooks/. AdminInboxMessage above is the contract until types are
+        regenerated.
+      */
+      const rows = ((data as unknown as AdminInboxMessage[] | null) ?? [])
+        .filter((m) => !m.deleted_at)
+        .filter((m) => (view === 'archived' ? !!m.archived_at : !m.archived_at));
 
       rows.forEach((msg) => {
         // Identify by admin ROLE, not by "is it me" — inbound messages are
@@ -207,6 +223,36 @@ export function useArchiveConversation() {
       const { error } = await supabase
         .from('admin_messages')
         .update({ archived_at: archived ? new Date().toISOString() : null })
+        .in('id', messageIds);
+      if (error) throw error;
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ADMIN_INBOX_QUERY_KEY }),
+  });
+}
+
+/**
+ * Soft-delete or restore messages.
+ *
+ * Sets `deleted_at` rather than removing the row: a support thread is the
+ * record of what somebody reported, and a mis-tap on a phone must not destroy
+ * it. Every read path filters deleted rows out, so it disappears immediately;
+ * the Undo on the toast passes the same ids back with `deleted: false`.
+ *
+ * Deliberately separate from archiving. Archive means "handled, out of my
+ * inbox" and is reversible from the Archived tab; delete means "this should not
+ * be here" and is only reversible from the toast.
+ */
+export function useDeleteMessages() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ messageIds, deleted }: { messageIds: string[]; deleted: boolean }) => {
+      if (!messageIds.length) return;
+      const { error } = await supabase
+        .from('admin_messages')
+        // See the note on the select: `deleted_at` is not in the generated
+        // types yet, so the payload is cast rather than the column invented.
+        .update({ deleted_at: deleted ? new Date().toISOString() : null } as never)
         .in('id', messageIds);
       if (error) throw error;
     },

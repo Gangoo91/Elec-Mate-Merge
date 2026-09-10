@@ -57,6 +57,7 @@ import { useCertLock } from '@/hooks/useCertLock';
 import CertLockBar from '@/components/inspection/CertLockBar';
 import { cn } from '@/lib/utils';
 import { scrollToTopForStepChange } from '@/utils/scroll';
+import { coverKeysFromFormData } from '@/utils/certCoverPayload';
 
 const REPORT_TYPE = 'solar-pv' as const;
 
@@ -169,7 +170,7 @@ export default function SolarPVCertificate() {
       : companyProfile.company_address || '';
 
     return {
-      companyLogo: companyProfile.logo_data_url || companyProfile.logo_url || '',
+      companyLogo: companyProfile.logo_url || companyProfile.logo_data_url || '',
       companyName: companyProfile.company_name || '',
       companyAddress: fullAddress,
       companyPhone: companyProfile.company_phone || '',
@@ -443,6 +444,11 @@ export default function SolarPVCertificate() {
         if (branding) {
           dataWithCertNumber = {
             ...dataWithCertNumber,
+            // ELE-1671 — the cover palette rides on the branding object. This merge is
+            // an EXPLICIT FIELD LIST, so without this line the em_* keys are silently
+            // dropped here and the whole cover-branding chain is inert for this
+            // certificate type. Spread, don't enumerate.
+            ...coverKeysFromFormData(branding as unknown as Record<string, unknown>),
             companyLogo: branding.companyLogo || dataWithCertNumber.companyLogo,
             companyName:
               branding.companyName ||
@@ -652,9 +658,7 @@ export default function SolarPVCertificate() {
       <CertShellHeader
         onBack={() => navigate('/electrician/inspection-testing?section=specialist')}
         title="Solar PV"
-        subtitle={
-          formData.certificateNumber ? `${formData.certificateNumber} · BS EN 62446` : null
-        }
+        subtitle={formData.certificateNumber ? `${formData.certificateNumber} · BS EN 62446` : null}
         isSaving={isSaving}
         onManualSave={handleSaveDraft}
         syncStatus={syncStatus}

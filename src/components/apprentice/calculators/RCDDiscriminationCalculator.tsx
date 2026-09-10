@@ -1,4 +1,6 @@
 import { copyToClipboard } from '@/utils/clipboard';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { useState, useCallback } from 'react';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -333,6 +335,64 @@ const RCDDiscriminationCalculator = () => {
 
   const canCalculate =
     upstreamRCD.rating && downstreamRCD.rating && upstreamRCD.type && downstreamRCD.type;
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+
+    const verdictMap: Record<DiscriminationResult['complianceStatus'], 'pass' | 'fail' | 'warn'> = {
+      compliant: 'pass',
+      marginal: 'warn',
+      'non-compliant': 'fail',
+    };
+
+    return {
+      meta: {
+        title: 'RCD Discrimination Calculator',
+        subtitle: 'Selective operation between upstream and downstream RCDs',
+        ...(result.regulatoryReference ? { standard: result.regulatoryReference } : {}),
+      },
+      headline: [
+        {
+          label: 'Discrimination',
+          value: result.discriminates ? 'Discriminates' : 'No discrimination',
+          verdict: verdictMap[result.complianceStatus],
+        },
+        { label: 'Current ratio', value: `${result.currentRatio.toFixed(1)}:1` },
+        { label: 'Time difference', value: `${result.timeDifference}`, unit: 'ms' },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            {
+              label: 'Upstream RCD',
+              value: `${result.upstreamRating} mA, ${upstreamRCD.type}`,
+              note: `Trip time ${result.upstreamTime} ms`,
+            },
+            {
+              label: 'Downstream RCD',
+              value: `${result.downstreamRating} mA, ${downstreamRCD.type}`,
+              note: `Trip time ${result.downstreamTime} ms`,
+            },
+            ...(downstreamRCD.circuitType ? [{ label: 'Circuit type', value: downstreamRCD.circuitType }] : []),
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'Current ratio', value: `${result.currentRatio.toFixed(1)}:1` },
+            { label: 'Time difference', value: `${result.timeDifference} ms` },
+            { label: 'Risk level', value: result.riskLevel.toUpperCase() },
+            { label: 'Compliance status', value: result.complianceStatus.toUpperCase() },
+            { label: 'Recommendation', value: result.recommendation },
+          ],
+        },
+      ],
+      notes: result.improvements.length ? result.improvements : undefined,
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

@@ -10,6 +10,8 @@ import {
   ChevronDown,
   Info,
 } from 'lucide-react';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
 import { useEffect, useMemo, useState } from 'react';
@@ -481,6 +483,67 @@ const CableCurrentCapacityCalculator = () => {
       </span>
     );
   };
+
+  const buildReport = (): CalcReport | null => {
+    if (!result || result.finalCapacity <= 0) return null;
+    const compliance = result.compliance;
+    return {
+      meta: {
+        title: 'Cable Current Capacity Calculator',
+        subtitle: 'Current-carrying capacity (Iz) after correction factors',
+        standard: result.standard,
+      },
+      headline: [
+        { label: 'Final capacity (Iz)', value: result.finalCapacity.toFixed(1), unit: 'A' },
+        ...(compliance
+          ? [
+              {
+                label: 'Ib ≤ In ≤ Iz',
+                value: compliance.overallCompliant ? 'Compliant' : 'Non-compliant',
+                verdict: compliance.overallCompliant ? ('pass' as const) : ('fail' as const),
+              },
+            ]
+          : []),
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            {
+              label: 'Cable type',
+              value: cableTypes.find((t) => t.value === cableType)?.label || cableType,
+            },
+            { label: 'Cable size', value: `${cableSize} mm²` },
+            { label: 'Phase', value: phase === 'threePhase' ? 'Three-phase' : 'Single-phase' },
+            { label: 'Installation method', value: result.referenceMethod },
+            { label: 'Ambient temperature', value: `${ambientTemp} °C` },
+            ...(compliance
+              ? [
+                  { label: 'Design current (Ib)', value: `${compliance.Ib} A` },
+                  { label: 'Device rating (In)', value: `${compliance.In} A` },
+                ]
+              : []),
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'Base capacity', value: `${result.baseCapacity} A` },
+            { label: 'Temperature factor', value: result.tempCorrectionFactor.toFixed(3) },
+            { label: 'Grouping factor', value: result.groupingCorrectionFactor.toFixed(2) },
+            { label: 'Soil factor', value: result.soilCorrectionFactor.toFixed(3) },
+            { label: 'Final capacity (Iz)', value: `${result.finalCapacity.toFixed(1)} A` },
+            ...(compliance
+              ? [{ label: 'Safety margin', value: `${compliance.safetyMargin.toFixed(1)}%` }]
+              : []),
+          ],
+        },
+      ],
+      notes: result.warnings.length ? result.warnings : undefined,
+    };
+  };
+
+  useProvideCalcReport(result && result.finalCapacity > 0 ? buildReport : null);
 
   return (
     <CalculatorCard

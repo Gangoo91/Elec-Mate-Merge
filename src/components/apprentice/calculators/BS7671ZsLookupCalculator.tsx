@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { Search, BookOpen, FileText, ChevronDown } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { DropdownTabs } from '@/components/ui/dropdown-tabs';
@@ -25,6 +27,18 @@ import {
   CalculatorPanes,
 } from '@/components/calculators/shared';
 import { bs7671ZsLookupContent } from './content/bs7671-zs-lookup';
+
+/** What the compliance check pushes — declared so neither the check nor the
+ *  client-PDF report needs an `any` cast. */
+interface CompliantDevice {
+  device: string;
+  curve: string;
+  rating: string;
+  maxZs: string;
+  testZs: string;
+  margin: string;
+  tableRef: string;
+}
 
 const BS7671ZsLookupCalculator = () => {
   const isMobile = useIsMobile();
@@ -108,7 +122,7 @@ const BS7671ZsLookupCalculator = () => {
     const zsValue = parseFloat(measuredZs);
     if (isNaN(zsValue)) return;
 
-    const compliantDevices: any[] = [];
+    const compliantDevices: CompliantDevice[] = [];
     const data = getZsData();
     const tableRef = disconnectionTime === '0.4' ? 'Table 41.3/41.2' : 'Table 41.3/41.4';
 
@@ -324,6 +338,80 @@ const BS7671ZsLookupCalculator = () => {
       content: <ZsLookupStandards />,
     },
   ];
+
+  const buildReport = (): CalcReport | null => {
+    if (searchType === 'device' && results.length > 0) {
+      return {
+        meta: {
+          title: 'BS 7671 Zs Lookup',
+          subtitle: `Maximum earth fault loop impedance — ${disconnectionTimes[disconnectionTime]}`,
+          standard: 'BS 7671:2018+A4:2026',
+        },
+        sections: [
+          {
+            heading: 'Device lookup results',
+            rows: results.map((item) => ({
+              label: `${item.device} ${item.curve !== 'N/A' ? item.curve : ''} ${item.rating}`.trim(),
+              value: `Max Zs ${item.maxZs} · 80% test ${item.testZs}`,
+              note: item.tableRef,
+            })),
+          },
+        ],
+        notes: [
+          '80% test values account for conductor temperature rise under fault conditions (Reg 643.7.2 allowance).',
+        ],
+      };
+    }
+
+    if (searchType === 'compliance' && complianceCheck) {
+      const compliant = complianceCheck.compliantDevices as CompliantDevice[];
+      return {
+        meta: {
+          title: 'BS 7671 Zs Compliance Check',
+          subtitle: `Measured Zs against maximum values — ${disconnectionTimes[disconnectionTime]}`,
+          standard: 'BS 7671:2018+A4:2026',
+        },
+        headline: [
+          { label: 'Measured Zs', value: `${complianceCheck.measuredZs}`, unit: 'Ω' },
+          {
+            label: 'Compliant devices found',
+            value: `${compliant.length}`,
+            verdict: compliant.length > 0 ? 'pass' : 'fail',
+          },
+        ],
+        sections:
+          compliant.length > 0
+            ? [
+                {
+                  heading: 'Compliant devices',
+                  rows: compliant.slice(0, 20).map((item) => ({
+                    label: `${item.device} ${item.curve !== 'N/A' ? item.curve : ''} ${item.rating}`.trim(),
+                    value: `Max Zs ${item.maxZs} · margin ${item.margin}`,
+                    note: item.tableRef,
+                  })),
+                },
+              ]
+            : [
+                {
+                  heading: 'Result',
+                  items: ['The measured Zs exceeds all maximum values in BS 7671 for the devices checked.'],
+                },
+              ],
+        notes:
+          compliant.length > 20
+            ? [`Showing the top 20 results of ${compliant.length} compliant devices.`]
+            : undefined,
+      };
+    }
+
+    return null;
+  };
+
+  useProvideCalcReport(
+    (searchType === 'device' && results.length > 0) || (searchType === 'compliance' && !!complianceCheck)
+      ? buildReport
+      : null
+  );
 
   return (
     <div className="space-y-4">

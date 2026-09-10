@@ -1,4 +1,6 @@
 import { useState, useCallback } from 'react';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import {
   AreaChart,
   Area,
@@ -372,6 +374,71 @@ const SolarPVCalculator = () => {
     toast({ title: 'Copied to clipboard' });
     setTimeout(() => setCopied(false), 2000);
   };
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+    return {
+      meta: {
+        title: 'Solar PV System Calculator',
+        subtitle: `${systemSize} kWp system — ${location}, ${roofOrientation} facing`,
+      },
+      headline: [
+        { label: 'Annual generation', value: result.annualGeneration.toLocaleString(), unit: 'kWh' },
+        { label: 'Annual savings (estimate)', value: `£${result.annualSavings.toFixed(2)}` },
+        { label: 'Payback period (estimate)', value: result.paybackPeriod.toFixed(1), unit: 'years' },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            { label: 'System size', value: `${systemSize} kWp` },
+            { label: 'Location', value: `${location} (${result.irradiance} kWh/m²/yr)` },
+            { label: 'Orientation', value: roofOrientation },
+            { label: 'Tilt', value: `${roofTilt}°` },
+            { label: 'Performance ratio', value: `${result.systemPR}%` },
+            { label: 'Self-consumption rate', value: `${selfConsumptionRate}%` },
+            { label: 'Electricity rate', value: `£${electricityRate}/kWh` },
+            { label: 'SEG export rate', value: `£${exportRate}/kWh` },
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'Annual generation', value: `${result.annualGeneration.toLocaleString()} kWh` },
+            { label: 'Daily generation', value: `${result.dailyGeneration} kWh` },
+            { label: 'Self-consumed energy', value: `${result.selfConsumedEnergy.toLocaleString()} kWh` },
+            { label: 'Exported energy', value: `${result.exportedEnergy.toLocaleString()} kWh` },
+            {
+              label: 'Self-consumption savings (estimate)',
+              value: `£${result.savingsFromSelfConsumption.toFixed(2)}`,
+            },
+            {
+              label: 'Export income (estimate)',
+              value: `£${result.incomeFromExport.toFixed(2)}`,
+            },
+            {
+              label: 'Total annual savings (estimate)',
+              value: `£${result.annualSavings.toFixed(2)}`,
+            },
+            {
+              label: 'Estimated system cost',
+              value: `£${result.costEstimate.totalCost.toLocaleString()}`,
+              note: result.costEstimate.category,
+            },
+            { label: 'Payback period (estimate)', value: `${result.paybackPeriod} years` },
+            { label: 'CO₂ saved per year', value: `${result.co2Savings} kg` },
+            { label: 'Grid connection', value: result.dnoConnectionType },
+          ],
+        },
+      ],
+      notes: [
+        'Financial figures are estimates based on the tariff and export rates entered — actual savings depend on the supplier agreement and are not guaranteed.',
+        `Lifetime generation over 25 years: ${(result.lifetimeGeneration / 1000).toFixed(1)} MWh, allowing for panel degradation.`,
+      ],
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

@@ -1,4 +1,6 @@
 import { copyToClipboard } from '@/utils/clipboard';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { useState } from 'react';
 import { Battery, ChevronDown, AlertTriangle, Plus, X, Clock, Copy, Check } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -205,6 +207,75 @@ const BatteryBackupCalculator = () => {
   const getTotalLoadWatts = () => loads.reduce((sum, load) => sum + load.watts, 0);
   const selectedChemistry = BATTERY_CHEMISTRIES[chemistry];
   const selectedInverter = INVERTER_TYPES[inverterType];
+
+  const buildReport = (): CalcReport | null => {
+    if (!results) return null;
+    const totalLoad = getTotalLoadWatts();
+    const runtimeMet = targetHours ? results.runtime >= targetHours : null;
+
+    return {
+      meta: {
+        title: 'Battery Backup Calculator',
+        subtitle: `${selectedChemistry.name} battery bank — ${mode === 'runtime' ? 'runtime estimate' : 'capacity sizing'}`,
+        standard: 'BS 7671:2018+A4:2026 — Chapter 57 (stationary secondary batteries)',
+      },
+      headline: [
+        mode === 'runtime'
+          ? {
+              label: 'Estimated runtime',
+              value: formatRuntime(results.runtime),
+              verdict: runtimeMet === null ? undefined : runtimeMet ? 'pass' : 'fail',
+            }
+          : { label: 'Required capacity', value: (results.requiredAh ?? 0).toFixed(0), unit: 'Ah' },
+        { label: 'DC current', value: results.dcCurrent.toFixed(1), unit: 'A' },
+        { label: 'Min inverter rating', value: results.recommendedVA.toFixed(0), unit: 'VA' },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            { label: 'Battery chemistry', value: selectedChemistry.name },
+            { label: 'Nominal voltage', value: `${nominalVoltage} V` },
+            { label: 'Capacity', value: `${capacityAh} Ah` },
+            { label: 'Inverter type', value: selectedInverter.name },
+            { label: 'Total connected load', value: `${totalLoad} W` },
+            ...(targetHours ? [{ label: 'Target runtime', value: `${targetHours} h` }] : []),
+          ],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            { label: 'Usable energy', value: `${results.usableEnergyWh.toFixed(0)} Wh` },
+            { label: 'DC current', value: `${results.dcCurrent.toFixed(1)} A` },
+            {
+              label: 'C-rate',
+              value: `${results.cRate.toFixed(2)} C`,
+              note: `Max recommended ${selectedChemistry.maxCRate}C for ${selectedChemistry.name}`,
+            },
+            { label: 'Average load', value: `${results.averagePower.toFixed(0)} W` },
+            { label: 'Peak load', value: `${results.peakPower.toFixed(0)} W` },
+            { label: 'Surge (inrush) load', value: `${results.surgePower.toFixed(0)} W` },
+            { label: 'Min inverter rating', value: `${results.recommendedVA.toFixed(0)} VA` },
+            mode === 'runtime'
+              ? { label: 'Estimated runtime', value: formatRuntime(results.runtime) }
+              : { label: 'Required capacity', value: `${(results.requiredAh ?? 0).toFixed(0)} Ah` },
+          ],
+        },
+      ],
+      notes: [
+        'BS 7671 sets no backup duration — the required runtime comes from the application (BS 5266-1 for emergency lighting, the operational requirement for a UPS).',
+        ...(runtimeMet === null
+          ? []
+          : [
+              runtimeMet
+                ? `Meets the ${targetHours} h target entered.`
+                : `Below the ${targetHours} h target entered.`,
+            ]),
+      ],
+    };
+  };
+
+  useProvideCalcReport(results ? buildReport : null);
 
   return (
     <CalculatorCard
