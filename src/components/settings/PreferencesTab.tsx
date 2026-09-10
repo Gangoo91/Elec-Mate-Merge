@@ -34,6 +34,11 @@ const PreferencesTab = () => {
       ? [{ id: 'college', label: 'College Hub', locked: false }]
       : []),
     { id: 'wellbeing', label: 'Wellbeing Hub', locked: false },
+    // ELE-1670 — `EditorialHubGrid` has always filtered this card through
+    // `isHubVisible('refer-a-mate')`, but it was never listed here, so there was
+    // no switch anywhere in the app to turn it off. Users asking "how do I hide
+    // the refer-a-mate tile?" were right: they couldn't.
+    { id: 'refer-a-mate', label: 'Bring a Mate', locked: false },
   ];
 
   // Certificate preferences — persisted per-user in user_settings
@@ -60,11 +65,7 @@ const PreferencesTab = () => {
               checked={hub.locked || isHubVisible(hub.id)}
               onCheckedChange={(v) => {
                 toggleHub({ hubId: hub.id, visible: v });
-                toast(
-                  v
-                    ? `${hub.label} added to dashboard`
-                    : `${hub.label} hidden from dashboard`
-                );
+                toast(v ? `${hub.label} added to dashboard` : `${hub.label} hidden from dashboard`);
               }}
               disabled={hub.locked}
             />

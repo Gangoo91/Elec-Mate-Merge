@@ -1,6 +1,7 @@
 /**
  * Formats Permit to Work form data into PDF Monkey payload.
  */
+import { TRANSPARENT_PIXEL } from '@/utils/resolveSchemeLogo';
 
 function formatDateUK(dateStr: string): string {
   if (!dateStr) return '';
@@ -18,11 +19,18 @@ interface CompanyInfo {
   company_address?: string;
   company_phone?: string;
   company_email?: string;
-  company_logo?: string;
   company_tagline?: string;
   registration_scheme?: string;
   registration_number?: string;
   registration_scheme_logo?: string;
+  // The real `company_profiles` columns. This interface declared a
+  // `company_logo` that is not a column, while the body read `logo_data_url` /
+  // `logo_url`, which are — the declared and used shapes had drifted apart.
+  logo_data_url?: string;
+  logo_url?: string;
+  // What SchemeLogoPicker actually writes; reading only
+  // `registration_scheme_logo` missed it.
+  scheme_logo_data_url?: string;
 }
 
 export function formatPermitToWorkPayload(
@@ -134,8 +142,9 @@ export function formatPermitToWorkPayload(
     company_address: company.company_address || '',
     company_phone: company.company_phone || data.contractorPhone,
     company_email: company.company_email || data.contractorEmail,
-    company_logo: company.logo_data_url || company.logo_url || '',
+    company_logo: company.logo_url || company.logo_data_url || '',
     company_tagline: company.company_tagline || '',
-    registration_scheme_logo: company.registration_scheme_logo || '',
+    registration_scheme_logo:
+      company.scheme_logo_data_url || company.registration_scheme_logo || TRANSPARENT_PIXEL,
   };
 }

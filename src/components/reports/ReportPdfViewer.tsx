@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { cn } from '@/lib/utils';
+import { cn, isIOSDevice } from '@/lib/utils';
 import {
   Dialog,
   DialogContent,
@@ -68,6 +68,16 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
   const { toast } = useToast();
   const navigate = useNavigate();
   const isMobile = useIsMobile();
+  /**
+   * ELE-1667 — whether to offer the PDF as a tap-to-open file rather than an
+   * inline `<iframe>`.
+   *
+   * This is deliberately NOT just `isMobile`. That is a 1024px viewport test,
+   * and an iPad in landscape sails past it, so iPads were served the iframe and
+   * got a permanently blank preview: no browser on iOS can render a blob-URL
+   * PDF in a frame. The device, not the window width, is what decides here.
+   */
+  const useFileHandoffPreview = isMobile || isIOSDevice();
 
   // Clean up blob URL when component unmounts or dialog closes
   useEffect(() => {
@@ -282,13 +292,15 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
         });
 
         // Single version — versioning columns don't exist on reports table
-        setVersions([{
-          id: reportData.id,
-          version: reportData.edit_version || 1,
-          created_at: reportData.created_at,
-          certificate_number: reportData.certificate_number,
-          is_latest_version: true,
-        }]);
+        setVersions([
+          {
+            id: reportData.id,
+            version: reportData.edit_version || 1,
+            created_at: reportData.created_at,
+            certificate_number: reportData.certificate_number,
+            is_latest_version: true,
+          },
+        ]);
 
         // Smart PDF retrieval - check validity before using cached URL
         const validUrl = await getValidPdfUrl(reportData);
@@ -351,7 +363,8 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
       else if (rt === 'isolation-cert') edgeFunctionName = 'generate-isolation-cert-pdf';
       else if (rt === 'permit-to-work') edgeFunctionName = 'generate-permit-to-work-pdf';
       else if (rt === 'limitation-notice') edgeFunctionName = 'generate-limitation-notice-pdf';
-      else if (rt === 'non-compliance-notice') edgeFunctionName = 'generate-non-compliance-notice-pdf';
+      else if (rt === 'non-compliance-notice')
+        edgeFunctionName = 'generate-non-compliance-notice-pdf';
       else if (rt === 'completion-notice') edgeFunctionName = 'generate-completion-notice-pdf';
       else if (rt === 'disconnection') edgeFunctionName = 'generate-disconnection-certificate-pdf';
       else edgeFunctionName = `generate-${rt}-pdf`;
@@ -377,7 +390,9 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
         console.log('[ReportPdfViewer] Using saved pdf_payload');
         dataForPdf = reportData.pdf_payload;
       } else {
-        console.log(`[ReportPdfViewer] No pdf_payload, attempting on-the-fly format for ${reportType}`);
+        console.log(
+          `[ReportPdfViewer] No pdf_payload, attempting on-the-fly format for ${reportType}`
+        );
         if (reportType === 'eicr') {
           const { formatEICRJson } = await import('@/utils/eicrJsonFormatter');
           dataForPdf = await formatEICRJson(reportData.data, reportData.report_id);
@@ -394,11 +409,15 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
           const formatted = await formatFireAlarmPayload(reportType, reportData.data);
           if (formatted) dataForPdf = formatted;
         } else if (reportType === 'emergency-lighting' || reportType === 'emergency lighting') {
-          const { formatEmergencyLightingJson } = await import('@/utils/emergencyLightingJsonFormatter');
+          const { formatEmergencyLightingJson } =
+            await import('@/utils/emergencyLightingJsonFormatter');
           dataForPdf = formatEmergencyLightingJson(reportData.data);
         } else if (reportType === 'disconnection') {
-          const { formatDisconnectionCertificatePayload } = await import('@/utils/disconnection-certificate-formatter');
-          dataForPdf = formatDisconnectionCertificatePayload(reportData.data as Record<string, any>);
+          const { formatDisconnectionCertificatePayload } =
+            await import('@/utils/disconnection-certificate-formatter');
+          dataForPdf = formatDisconnectionCertificatePayload(
+            reportData.data as Record<string, any>
+          );
         } else if (reportType === 'eic') {
           /*
            * ELE-1596 — EIC generated a completely blank PDF.
@@ -434,11 +453,7 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
             .select('*')
             .eq('user_id', reportData.user_id)
             .maybeSingle();
-          dataForPdf = await formatEicJson(
-            reportData.data,
-            ownerProfile,
-            reportData.report_id
-          );
+          dataForPdf = await formatEicJson(reportData.data, ownerProfile, reportData.report_id);
         }
         /*
          * ⚠️ Minor Works is deliberately NOT formatted here, and must not be.
@@ -467,9 +482,8 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
       // unless the latest review is approved AND the report content hash still
       // matches what the QS signed, so this can never stamp an edited cert.
       try {
-        const { getLatestApprovedQsReview, formatQsReviewDate } = await import(
-          '@/utils/qsReviewPdf'
-        );
+        const { getLatestApprovedQsReview, formatQsReviewDate } =
+          await import('@/utils/qsReviewPdf');
         const qsReview = await getLatestApprovedQsReview(reportData.report_id);
         if (qsReview && dataForPdf && typeof dataForPdf === 'object') {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -501,9 +515,7 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
       // broken images in PDFMonkey. This is a safety net — formatters that
       // already resolved the logos will pass through unchanged.
       try {
-        const { resolveSchemeLogo, resolveCompanyLogo } = await import(
-          '@/utils/resolveSchemeLogo'
-        );
+        const { resolveSchemeLogo, resolveCompanyLogo } = await import('@/utils/resolveSchemeLogo');
         const fd = dataForPdf as Record<string, unknown>;
         const resolvedScheme = await resolveSchemeLogo(
           (fd.registration_scheme_logo as string) ||
@@ -847,18 +859,17 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
               <p className="text-xs text-white mt-1">This may take a moment</p>
             </div>
           ) : blobUrl ? (
-            isMobile ? (
+            useFileHandoffPreview ? (
               <div className="absolute inset-0 flex flex-col items-center justify-center p-6">
                 <div className="p-4 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20 mb-5">
                   <FileText className="h-10 w-10 text-elec-yellow" />
                 </div>
-                <p className="text-sm font-medium text-white text-center mb-1">
-                  PDF Ready
-                </p>
-                <p className="text-xs text-white text-center mb-5">
-                  Tap below to view or share
-                </p>
-                <Button onClick={handleDownload} className="h-12 px-8 rounded-xl bg-elec-yellow text-black font-semibold hover:bg-yellow-400 touch-manipulation active:scale-[0.98]">
+                <p className="text-sm font-medium text-white text-center mb-1">PDF Ready</p>
+                <p className="text-xs text-white text-center mb-5">Tap below to view or share</p>
+                <Button
+                  onClick={handleDownload}
+                  className="h-12 px-8 rounded-xl bg-elec-yellow text-black font-semibold hover:bg-yellow-400 touch-manipulation active:scale-[0.98]"
+                >
                   <Download className="h-5 w-5 mr-2" />
                   Open PDF
                 </Button>
@@ -880,7 +891,10 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
               {previewError && (
                 <p className="text-xs text-red-400 mb-4 max-w-md text-center">{previewError}</p>
               )}
-              <Button onClick={handleDownload} className="h-12 px-6 rounded-xl bg-elec-yellow text-black font-semibold hover:bg-yellow-400 touch-manipulation active:scale-[0.98]">
+              <Button
+                onClick={handleDownload}
+                className="h-12 px-6 rounded-xl bg-elec-yellow text-black font-semibold hover:bg-yellow-400 touch-manipulation active:scale-[0.98]"
+              >
                 <Download className="h-4 w-4 mr-2" />
                 Download PDF
               </Button>
@@ -932,7 +946,10 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
       {/* Mobile: Bottom Sheet */}
       {isMobile && (
         <Sheet open={open} onOpenChange={onOpenChange}>
-          <SheetContent side="bottom" className="h-[80vh] p-0 rounded-t-2xl flex flex-col bg-background">
+          <SheetContent
+            side="bottom"
+            className="h-[80vh] p-0 rounded-t-2xl flex flex-col bg-background"
+          >
             <SheetHeader className="px-4 pt-4 pb-3 border-b border-white/[0.06] flex-shrink-0">
               <SheetDescription className="sr-only">
                 View and manage certificate PDF
@@ -1014,7 +1031,13 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
                       <Loader2 className={cn('h-4 w-4', isGenerating && 'animate-spin')} />
                     </Button>
                   )}
-                  <Button variant="outline" size="sm" onClick={handleEdit} disabled={isGenerating} className="rounded-xl text-white border-white/[0.08] hover:bg-white/10">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleEdit}
+                    disabled={isGenerating}
+                    className="rounded-xl text-white border-white/[0.08] hover:bg-white/10"
+                  >
                     <Edit className="h-4 w-4 mr-2" />
                     Edit
                   </Button>
@@ -1054,11 +1077,20 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter className="gap-2 sm:gap-0">
-            <AlertDialogCancel className="rounded-xl text-white border-white/[0.08] hover:bg-white/10">Cancel</AlertDialogCancel>
-            <Button variant="outline" onClick={navigateToForm} className="rounded-xl text-white border-white/[0.08] hover:bg-white/10">
+            <AlertDialogCancel className="rounded-xl text-white border-white/[0.08] hover:bg-white/10">
+              Cancel
+            </AlertDialogCancel>
+            <Button
+              variant="outline"
+              onClick={navigateToForm}
+              className="rounded-xl text-white border-white/[0.08] hover:bg-white/10"
+            >
               Edit V{currentVersion?.version}
             </Button>
-            <AlertDialogAction onClick={handleCreateNewVersion} className="rounded-xl bg-elec-yellow text-black font-semibold hover:bg-yellow-400">
+            <AlertDialogAction
+              onClick={handleCreateNewVersion}
+              className="rounded-xl bg-elec-yellow text-black font-semibold hover:bg-yellow-400"
+            >
               Create V{(currentVersion?.version || 0) + 1}
             </AlertDialogAction>
           </AlertDialogFooter>

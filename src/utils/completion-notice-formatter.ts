@@ -2,18 +2,24 @@
  * Formats Completion Notice form data into PDF Monkey payload.
  * Converts camelCase front-end fields to snake_case for the Liquid template.
  */
+import { TRANSPARENT_PIXEL } from '@/utils/resolveSchemeLogo';
 
 function formatDateUK(dateStr: string): string {
   if (!dateStr) return '';
   try {
     const d = new Date(dateStr);
-    return isNaN(d.getTime()) ? dateStr : d.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    return isNaN(d.getTime())
+      ? dateStr
+      : d.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
   } catch {
     return dateStr;
   }
 }
 
-export function formatCompletionNoticePayload(data: Record<string, any>, company: Record<string, any> = {}): Record<string, unknown> {
+export function formatCompletionNoticePayload(
+  data: Record<string, any>,
+  company: Record<string, any> = {}
+): Record<string, unknown> {
   return {
     reference_number: data.referenceNumber,
     date: formatDateUK(data.date),
@@ -96,7 +102,8 @@ export function formatCompletionNoticePayload(data: Record<string, any>, company
     company_address: company.company_address || '',
     company_phone: company.company_phone || data.contractorPhone,
     company_email: company.company_email || data.contractorEmail,
-    company_logo: company.logo_data_url || company.logo_url || '',
-    scheme_logo: company.scheme_logo_data_url || company.registration_scheme_logo || '',
+    company_logo: company.logo_url || company.logo_data_url || '',
+    scheme_logo:
+      company.scheme_logo_data_url || company.registration_scheme_logo || TRANSPARENT_PIXEL,
   };
 }

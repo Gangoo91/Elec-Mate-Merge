@@ -1,6 +1,7 @@
 /**
  * Formats Isolation Certificate form data into PDF Monkey payload.
  */
+import { TRANSPARENT_PIXEL } from '@/utils/resolveSchemeLogo';
 
 interface IsolationFormData {
   referenceNumber: string;
@@ -68,11 +69,20 @@ interface CompanyInfo {
   company_address?: string;
   company_phone?: string;
   company_email?: string;
-  company_logo?: string;
   company_tagline?: string;
   registration_scheme?: string;
   registration_number?: string;
   registration_scheme_logo?: string;
+  // The real `company_profiles` logo columns. This interface used to declare a
+  // `company_logo` that does not exist as a column while the body below read
+  // `logo_data_url` / `logo_url`, which are the ones that do — so the declared
+  // shape and the used shape had drifted apart.
+  logo_data_url?: string;
+  logo_url?: string;
+  // Preferred over `registration_scheme_logo`: this is what SchemeLogoPicker
+  // writes, and reading only the latter meant an electrician who picked their
+  // scheme in Settings still got no logo on an isolation certificate.
+  scheme_logo_data_url?: string;
 }
 
 function formatDateUK(dateStr: string): string {
@@ -164,8 +174,14 @@ export function formatIsolationCertPayload(
     company_address: company.company_address || '',
     company_phone: company.company_phone || data.contractorPhone,
     company_email: company.company_email || data.contractorEmail,
-    company_logo: company.logo_data_url || company.logo_url || '',
+    // ELE-1668 — hosted URL first, data URL second. See `certBranding.ts`: the
+    // data URL gets downscaled and can be stripped by the payload size guard,
+    // the hosted object is fetched by the renderer at full resolution.
+    company_logo: company.logo_url || company.logo_data_url || '',
     company_tagline: company.company_tagline || '',
-    registration_scheme_logo: company.registration_scheme_logo || '',
+    // ELE-1581 / ELE-1669 — never '': the template renders this `<img>`
+    // unconditionally, so an empty src draws Chrome's broken-image glyph.
+    registration_scheme_logo:
+      company.scheme_logo_data_url || company.registration_scheme_logo || TRANSPARENT_PIXEL,
   };
 }

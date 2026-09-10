@@ -80,3 +80,25 @@ export function isLowPowerDevice(): boolean {
 
   return false;
 }
+
+/**
+ * True on any iOS or iPadOS device, native app or browser.
+ *
+ * Not the same question as `useIsMobile()`, which is a 1024px VIEWPORT check.
+ * The two were conflated in the certificate viewer and that is what ELE-1667
+ * was: an iPad in landscape is 1180–1366px wide, so it counted as "desktop"
+ * and was handed a `<iframe src="blob:…pdf">`. WKWebView — which backs both the
+ * native app and every browser on iOS — cannot render a PDF from a blob URL in
+ * an iframe, so the frame just sits there empty. iPhones were fine, because
+ * they fell under the breakpoint and took the button path instead.
+ *
+ * ⚠️ iPadOS 13+ deliberately reports a desktop Safari user-agent
+ * ("Macintosh; Intel Mac OS X"), so a `/iPad/` test alone silently misses every
+ * modern iPad — the exact device in the bug report. The touch-point check is
+ * what catches it: a real Mac reports `maxTouchPoints === 0`.
+ */
+export function isIOSDevice(): boolean {
+  if (typeof navigator === 'undefined') return false;
+  if (/iPad|iPhone|iPod/.test(navigator.userAgent)) return true;
+  return /Mac/.test(navigator.userAgent) && navigator.maxTouchPoints > 1;
+}

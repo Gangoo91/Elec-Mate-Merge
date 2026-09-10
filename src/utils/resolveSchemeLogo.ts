@@ -50,39 +50,76 @@ const isRelativePath = (s: string): boolean => s.startsWith('/');
 // whole EICR PDF fails to generate (ELE-1177). Downscale any oversized logo
 // data URL before it reaches the PDF payload. Returns the original on any
 // failure — never blocks PDF generation.
-const LOGO_MAX_DIM = 320;
-const LOGO_INLINE_LIMIT_BYTES = 120 * 1024; // ~120KB — above this, downscale
+//
+// ELE-1668 — this used to be a single hard pass at 320px, which is where the
+// "logo goes blurry when I zoom in" reports came from. 320px is roughly 100dpi
+// at the size a letterhead logo actually prints, so it looked soft on screen
+// and worse on paper. Worth being precise about what the constraint really is:
+// it was never "logos must be small", it was "the whole JSON payload must stay
+// under ~800KB, and `pdfDataOptimizer` strips any preserved logo over 150KB".
+//
+// So the cap is a BYTE budget, not a pixel one. Start at a dimension that
+// prints cleanly and step down only as far as the budget actually forces.
+// Most logos are flat-colour artwork that stay tiny as PNG even at 1024px, so
+// in practice they now keep 3× the resolution they had — and only a
+// photographic logo gets stepped down at all.
+//
+// Note this path is now the FALLBACK, not the norm: `certBranding` prefers the
+// hosted `logo_url`, which skips inlining (and therefore this function) whole.
+const LOGO_DIM_LADDER = [1024, 768, 512, 320] as const;
+// Sits just under `PRESERVE_MAX_BYTES` (150KB) in `pdfDataOptimizer.ts`. Above
+// that the optimiser strips the logo entirely, so overshooting here trades a
+// slightly soft logo for no logo at all. Keep the two in step.
+const LOGO_BUDGET_BYTES = 140 * 1024;
+// Below this, leave the image completely alone — re-encoding a small logo can
+// only lose quality.
+const LOGO_INLINE_LIMIT_BYTES = 120 * 1024;
+
+/** Decoded byte estimate for a base64 data URL (base64 is ~4/3 of the bytes). */
+const dataUrlBytes = (s: string): number => s.length * 0.75;
 
 export const downscaleLogoDataUrl = async (dataUrl: string): Promise<string> => {
   if (!dataUrl || !isDataUrl(dataUrl)) return dataUrl;
-  // Cheap size estimate: base64 decodes to ~0.75× its string length.
-  if (dataUrl.length * 0.75 <= LOGO_INLINE_LIMIT_BYTES) return dataUrl;
+  if (dataUrlBytes(dataUrl) <= LOGO_INLINE_LIMIT_BYTES) return dataUrl;
   if (typeof document === 'undefined') return dataUrl; // SSR / non-DOM guard
   try {
     return await new Promise<string>((resolve) => {
       const img = new Image();
       img.onload = () => {
         try {
-          let { width, height } = img;
-          if (!width || !height) return resolve(dataUrl);
-          if (width > LOGO_MAX_DIM || height > LOGO_MAX_DIM) {
-            if (width >= height) {
-              height = Math.round((height * LOGO_MAX_DIM) / width);
-              width = LOGO_MAX_DIM;
-            } else {
-              width = Math.round((width * LOGO_MAX_DIM) / height);
-              height = LOGO_MAX_DIM;
-            }
+          const { width: srcW, height: srcH } = img;
+          if (!srcW || !srcH) return resolve(dataUrl);
+
+          let best: string | null = null;
+
+          for (const maxDim of LOGO_DIM_LADDER) {
+            // Never upscale: a 400px logo stays 400px even at the 1024 rung.
+            const scale = Math.min(1, maxDim / Math.max(srcW, srcH));
+            const width = Math.max(1, Math.round(srcW * scale));
+            const height = Math.max(1, Math.round(srcH * scale));
+
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            if (!ctx) return resolve(dataUrl);
+            // Logos are line art and type; a good resampler is the difference
+            // between crisp edges and mush when stepping down from 4000px.
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
+            ctx.drawImage(img, 0, 0, width, height);
+
+            // PNG preserves logo transparency, which JPEG would flatten to
+            // black on the dark certificate cover.
+            const out = canvas.toDataURL('image/png');
+            if (!out) continue;
+            // Remember the first (largest) rung as the floor, so a logo that
+            // never fits the budget still comes back smaller than it started.
+            if (!best || out.length < best.length) best = out;
+            if (dataUrlBytes(out) <= LOGO_BUDGET_BYTES) break;
           }
-          const canvas = document.createElement('canvas');
-          canvas.width = width;
-          canvas.height = height;
-          const ctx = canvas.getContext('2d');
-          if (!ctx) return resolve(dataUrl);
-          ctx.drawImage(img, 0, 0, width, height);
-          // PNG preserves logo transparency; a 320px logo is only a few KB.
-          const out = canvas.toDataURL('image/png');
-          resolve(out && out.length < dataUrl.length ? out : dataUrl);
+
+          resolve(best && best.length < dataUrl.length ? best : dataUrl);
         } catch {
           resolve(dataUrl);
         }
@@ -95,8 +132,7 @@ export const downscaleLogoDataUrl = async (dataUrl: string): Promise<string> => 
   }
 };
 
-const matchesBundledScheme = (path: string): boolean =>
-  SCHEMES.some((s) => path === s.logoPath);
+const matchesBundledScheme = (path: string): boolean => SCHEMES.some((s) => path === s.logoPath);
 
 /**
  * 1×1 fully transparent PNG.
